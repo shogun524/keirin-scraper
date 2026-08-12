@@ -257,6 +257,53 @@ def compute_third_place_candidates(racers, winner_idx, second_idx, base_scores, 
 
 
 # ============================================================
+# 全号車マトリクス（表4：各号車が仮に1着だった場合の2着確率／
+#                  表5：さらに2着も確定したうえでの3着確率）
+# ============================================================
+def compute_second_place_matrix(racers, base_scores, dominant, line_map,
+                                 adv_bonus, adv_penalty, line_follow_bonus, sharpness):
+    """
+    戻り値: {winner_car: [{"car":.., "name":.., "prob":.., "same_line":..}, ...]}
+    """
+    matrix = {}
+    for i, r in enumerate(racers):
+        candidates = compute_second_place_candidates(
+            racers, i, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+        matrix[r["car"]] = candidates
+    return matrix
+
+
+def compute_third_place_matrix(racers, base_scores, dominant, line_map,
+                                adv_bonus, adv_penalty, line_follow_bonus, sharpness,
+                                second_place_matrix=None):
+    """
+    各号車が仮に1着だった場合、その号車における最有力2着候補を自動選定した上で、
+    3着候補の確率を算出する。
+    戻り値: {winner_car: {"second_car": int, "candidates": [...]}}
+    """
+    if second_place_matrix is None:
+        second_place_matrix = compute_second_place_matrix(
+            racers, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+
+    matrix = {}
+    if len(racers) <= 2:
+        return matrix
+    for i, r in enumerate(racers):
+        second_candidates = second_place_matrix.get(r["car"], [])
+        if not second_candidates:
+            continue
+        second_car = second_candidates[0]["car"]
+        second_idx = next((j for j, rr in enumerate(racers) if rr["car"] == second_car), None)
+        if second_idx is None:
+            continue
+        third_candidates = compute_third_place_candidates(
+            racers, i, second_idx, base_scores, dominant, line_map,
+            adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+        matrix[r["car"]] = {"second_car": second_car, "candidates": third_candidates}
+    return matrix
+
+
+# ============================================================
 # ライン予想テキストの解析（並び予想: "← 4先行 1追込 6押え先 2追込 7押え先 3追込 5追込"）
 # 「追込」だけが同じラインの継続を表し、それ以外の役割語（先行・押え先・自在・追い上げ等）は
 # 新しいラインの先頭を表す、という競輪の並び予想表記の慣例に基づいて解析する。
@@ -352,14 +399,23 @@ def predict_race(racers, line_prediction_text, settings=None):
     close_group = [r for r in rows if top["adjusted"] - r["adjusted"] <= s["close_threshold"]]
     most_reliable = max(close_group, key=lambda r: r["confidence"]["score"]) if len(close_group) >= 2 else None
 
+    second_place_matrix = compute_second_place_matrix(
+        racers, base_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
+    third_place_matrix = compute_third_place_matrix(
+        racers, base_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
+        second_place_matrix=second_place_matrix)
+
     return {
         "rows": rows,
         "top": top,
         "second_candidates": second_candidates[:5],
         "third_candidates": third_candidates[:5],
+        "second_place_matrix": second_place_matrix,
+        "third_place_matrix": third_place_matrix,
         "kimarite_ratio": kimarite_ratio,
         "pace_index": pace_index,
         "line_map": line_map,
+        "line_prediction_text": line_prediction_text,
         "close_group": close_group,
         "most_reliable": most_reliable,
         "is_high_prob": top["adjusted"] >= s["th_high"],

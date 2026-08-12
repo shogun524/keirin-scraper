@@ -9,6 +9,7 @@ GitHub Pages で公開する docs/ 以下のファイルを生成する。
 """
 
 import datetime
+from zoneinfo import ZoneInfo
 from model import KIMARITE_LABELS, KIMARITE
 
 VENUE_NAMES = {
@@ -131,6 +132,102 @@ def svg_donut_chart(kimarite_ratio, size=150):
     </div>"""
 
 
+def render_kimarite_table(kimarite_ratio):
+    cells = "".join(f"<th>{KIMARITE_LABELS[t]}</th>" for t in KIMARITE)
+    vals = "".join(f"<td>{kimarite_ratio.get(t,0):.1f}%</td>" for t in KIMARITE)
+    return f"""
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>"""
+
+
+def render_second_third_lists(result):
+    html = ""
+    if result["second_candidates"]:
+        html += "<div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'>"
+        for idx, c in enumerate(result["second_candidates"][:5], 1):
+            same = "（同ライン）" if c["same_line"] else ""
+            html += f"<tr><td>{idx}</td><td>{c['car']}号車 {c['name']}{same}</td><td>{c['prob']:.1f}%</td></tr>"
+        html += "</table></div>"
+    if result["third_candidates"]:
+        html += "<div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'>"
+        for idx, c in enumerate(result["third_candidates"][:5], 1):
+            same = "（同ライン）" if c["same_line"] else ""
+            html += f"<tr><td>{idx}</td><td>{c['car']}号車 {c['name']}{same}</td><td>{c['prob']:.1f}%</td></tr>"
+        html += "</table></div>"
+    return html
+
+
+def render_second_place_matrix_table(racers, matrix):
+    by_car = sorted(racers, key=lambda r: r["car"])
+    header = "<th>1着↓＼2着→</th>" + "".join(f"<th>{r['car']}</th>" for r in by_car)
+    rows_html = ""
+    for winner in by_car:
+        candidates = {c["car"]: c for c in matrix.get(winner["car"], [])}
+        cells = f"<td><b>{winner['car']} {winner['name']}</b></td>"
+        for cand in by_car:
+            if cand["car"] == winner["car"]:
+                cells += '<td class="diag">—</td>'
+            else:
+                c = candidates.get(cand["car"])
+                cls = "same-line" if (c and c["same_line"]) else ""
+                cells += f'<td class="{cls}">{c["prob"]:.1f}%</td>' if c else '<td>-</td>'
+        rows_html += f"<tr>{cells}</tr>"
+    return f"""
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr>{header}</tr></thead><tbody>{rows_html}</tbody></table></div>"""
+
+
+def render_third_place_matrix_table(racers, matrix):
+    by_car = sorted(racers, key=lambda r: r["car"])
+    header = "<th>1着↓＼3着→（2着自動選定）</th>" + "".join(f"<th>{r['car']}</th>" for r in by_car)
+    rows_html = ""
+    for winner in by_car:
+        entry = matrix.get(winner["car"])
+        if not entry:
+            cells = f"<td><b>{winner['car']} {winner['name']}</b></td>" + "".join('<td class="diag">-</td>' for _ in by_car)
+            rows_html += f"<tr>{cells}</tr>"
+            continue
+        second_car = entry["second_car"]
+        candidates = {c["car"]: c for c in entry["candidates"]}
+        cells = f"<td><b>{winner['car']} {winner['name']}</b><br><span class='dim' style='font-size:10px;'>2着想定:{second_car}号車</span></td>"
+        for cand in by_car:
+            if cand["car"] in (winner["car"], second_car):
+                cells += '<td class="diag">—</td>'
+            else:
+                c = candidates.get(cand["car"])
+                cls = "same-line" if (c and c["same_line"]) else ""
+                cells += f'<td class="{cls}">{c["prob"]:.1f}%</td>' if c else '<td>-</td>'
+        rows_html += f"<tr>{cells}</tr>"
+    return f"""
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr>{header}</tr></thead><tbody>{rows_html}</tbody></table></div>"""
+
+
+def render_line_info_block(result):
+    raw_text = (result.get("line_prediction_text") or "").strip()
+    line_map = result.get("line_map") or {}
+    if not raw_text and not line_map:
+        return ('<div class="line-info-block warn">⚠ このレースは並び予想（ライン情報）を検出できませんでした。'
+                '決まり手予測・展開補正はライン情報なし（各選手の脚質のみ）で計算されています。</div>')
+
+    by_line = {}
+    for car, info in line_map.items():
+        by_line.setdefault(info["line_index"], []).append((info["position"], car))
+    parts = []
+    for li in sorted(by_line):
+        members = sorted(by_line[li])
+        if len(members) == 1:
+            parts.append(f"{members[0][1]}号車（単騎）")
+        else:
+            parts.append(" → ".join(f"{car}号車" for _, car in members))
+    parsed_str = "　／　".join(parts) if parts else "（解析できませんでした）"
+    return (f'<div class="line-info-block ok">サイトから検出した並び予想: 「{raw_text}」<br>'
+            f'解釈結果: {parsed_str}</div>')
+
+
 def render_race_card(race_data, tab_id):
     info = race_data["race_info"]
     result = race_data["prediction"]
@@ -160,22 +257,6 @@ def render_race_card(race_data, tab_id):
           <td>{r['confidence']['score']:.0f}</td>
         </tr>"""
 
-    second_html = ""
-    if result["second_candidates"]:
-        second_html = "<h4>2着候補</h4><table class='sub'>"
-        for c in result["second_candidates"][:3]:
-            same = "（同ライン）" if c["same_line"] else ""
-            second_html += f"<tr><td>{c['car']}号車 {c['name']}{same}</td><td>{c['prob']:.1f}%</td></tr>"
-        second_html += "</table>"
-
-    third_html = ""
-    if result["third_candidates"]:
-        third_html = "<h4>3着候補</h4><table class='sub'>"
-        for c in result["third_candidates"][:3]:
-            same = "（同ライン）" if c["same_line"] else ""
-            third_html += f"<tr><td>{c['car']}号車 {c['name']}{same}</td><td>{c['prob']:.1f}%</td></tr>"
-        third_html += "</table>"
-
     close_note = ""
     if result["most_reliable"] and result["most_reliable"]["car"] != top["car"]:
         mr = result["most_reliable"]
@@ -190,7 +271,11 @@ def render_race_card(race_data, tab_id):
     )
 
     bar_chart = svg_bar_chart(result["rows"])
-    donut_chart = svg_donut_chart(result["kimarite_ratio"])
+    line_info_html = render_line_info_block(result)
+    kimarite_table_html = render_kimarite_table(result["kimarite_ratio"])
+    second_third_html = render_second_third_lists(result)
+    second_matrix_html = render_second_place_matrix_table(result["rows"], result["second_place_matrix"])
+    third_matrix_html = render_third_place_matrix_table(result["rows"], result["third_place_matrix"])
 
     return f"""
     <div id="{tab_id}" class="race-panel" style="display:none;">
@@ -201,20 +286,21 @@ def render_race_card(race_data, tab_id):
         </div>
         <div class="{banner_class}">{banner_text}</div>
         {close_note}
+        {line_info_html}
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>{rows_html}</tbody>
         </table>
-        <div class="sub-wrap">{second_html}{third_html}</div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           {bar_chart}
         </div>
-        <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          {donut_chart}
-        </div>
+
+        <div class="chart-block">{kimarite_table_html}</div>
+        <div class="chart-block sub-wrap">{second_third_html}</div>
+        <div class="chart-block">{second_matrix_html}</div>
+        <div class="chart-block">{third_matrix_html}</div>
       </div>
     </div>"""
 
@@ -243,6 +329,15 @@ RACE_PANEL_STYLE = """
   table.sub td{ padding:2px 8px 2px 0; }
   .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
   .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  .kimarite-table th, .kimarite-table td{ text-align:center; }
+  .matrix-scroll{ overflow-x:auto; }
+  table.matrix{ font-size:10.5px; }
+  table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
+  table.matrix td.diag{ background:#f0ece0; color:var(--ink-soft); }
+  table.matrix td.same-line{ background:#e3f0ff; font-weight:700; }
+  .line-info-block{ font-size:12px; border-radius:6px; padding:8px 10px; margin:8px 0; }
+  .line-info-block.ok{ background:#e7f3ea; color:#2f7a4f; border:1px solid #b9dcc3; }
+  .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:3px; }
@@ -360,6 +455,7 @@ def render_index(all_race_data, date=None):
     <span class="date">{date_str}</span>
   </div>
   <p>本日開催している競輪場だけ明るく表示されます。タップするとレース一覧に進みます。</p>
+  <p style="color:#8fa0b5;font-size:11px;">最終更新: {datetime.datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")} (JST)</p>
 </header>
 <main>
   <h2 class="section">本日の開催場</h2>
