@@ -309,20 +309,27 @@ def compute_third_place_matrix(racers, base_scores, dominant, line_map,
 # 新しいラインの先頭を表す、という競輪の並び予想表記の慣例に基づいて解析する。
 # ============================================================
 def parse_line_prediction_text(text):
+    """
+    並び予想テキストの解析。スペース区切りの有無に依存せず、
+    「数字＋役割語」の並びを正規表現で直接抜き出す方式（例：
+    "4先行1追込6押え先2追込" のようにスペースが無い場合にも対応）。
+    全角数字にも対応するため、事前に半角へ正規化する。
+    """
     if not text:
         return {}
-    text = text.replace("←", " ").strip()
-    tokens = text.split()
+    import re as _re
+    # 全角数字→半角数字に正規化
+    zen = "０１２３４５６７８９"
+    han = "0123456789"
+    text = text.translate(str.maketrans(zen, han))
+    text = text.replace("←", " ").replace("→", " ")
+
+    pairs = _re.findall(r"(\d+)\s*(先行|追込|押え先|自在|追い上げ|捲|差|逃)", text)
+
     lines = []
     current = []
-    for tok in tokens:
-        m = None
-        import re
-        match = re.match(r"^(\d+)(.+)$", tok)
-        if not match:
-            continue
-        car = int(match.group(1))
-        role = match.group(2)
+    for car_str, role in pairs:
+        car = int(car_str)
         if role == "追込" and current:
             current.append(car)
         else:
