@@ -34,16 +34,19 @@ def _get(url, **kwargs):
 def find_todays_venues(date=None):
     """
     当日開催されている競輪場スラッグと kaisaiDateId の組を抽出する。
-    「本日の開催」トップページは掲載が絞られている場合があるため、
-    まず /kaisai/YYYY/MM/DD/ の開催一覧ページを正として使い、
-    トップページはそこで拾えなかった分の補完として使う。
+
+    重要な注意点：kaisaiDateId に埋め込まれている日付は「開催が始まった日
+    （初日の日付）」であり、複数日開催（2日目・最終日など）では「今日の日付」
+    と一致しない。そのため日付の突き合わせでは判定せず、/kaisai/YYYY/MM/DD/
+    という「その日専用のURL」に載っている競輪場＝今日開催中、とみなす
+    （このページ自体が既に「今日」に絞り込まれているため）。
+
     戻り値: [{"venue": "gifu", "kaisai_date_id": "43202608120100"}, ...]
     """
     date = date or datetime.date.today()
-    date_ymd = date.strftime("%Y%m%d")
-    venues = {}
+    venues = {}  # slug -> kaisai_date_id （venueごとに1つ、最初に見つかったものを採用）
 
-    # 1. 開催一覧ページ（最も網羅的）
+    # 1. 開催一覧ページ（最も網羅的。URL自体が「今日」に絞られている）
     kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
     try:
         html = _get(kaisai_url)
@@ -52,13 +55,12 @@ def find_todays_venues(date=None):
             m = re.search(r"/([a-z]+)/racecard/(\d{14})/", a["href"])
             if m:
                 slug, kdid = m.group(1), m.group(2)
-                if kdid[2:10] == date_ymd:
-                    venues[kdid] = slug
+                venues.setdefault(slug, kdid)
         print(f"[INFO] 開催一覧ページから {len(venues)} 開催を検出しました。")
     except requests.RequestException as e:
         print(f"[WARN] 開催一覧ページの取得に失敗しました: {e}")
 
-    # 2. トップページ（フォールバック・補完用）
+    # 2. トップページ（フォールバック・補完用。同様に日付での絞り込みはしない）
     try:
         html2 = _get(BASE + "/")
         soup2 = BeautifulSoup(html2, "html.parser")
@@ -66,24 +68,17 @@ def find_todays_venues(date=None):
         for a in soup2.find_all("a", href=True):
             m = re.search(r"/([a-z]+)/racecard/(\d{14})/", a["href"])
             if not m:
-                m2 = re.search(r"kaisaiDateId=(\d{14})", a["href"])
-                if m2:
-                    kdid = m2.group(1)
-                    if kdid[2:10] == date_ymd and kdid not in venues:
-                        # スラッグ不明。venue_slugs から後で解決を試みる
-                        venues.setdefault(kdid, None)
-                    continue
                 continue
             slug, kdid = m.group(1), m.group(2)
-            if kdid[2:10] == date_ymd and kdid not in venues:
-                venues[kdid] = slug
+            if slug not in venues:
+                venues[slug] = kdid
                 found_top += 1
         if found_top:
             print(f"[INFO] トップページから追加で {found_top} 開催を検出しました。")
     except requests.RequestException as e:
         print(f"[WARN] トップページの取得に失敗しました: {e}")
 
-    result = [{"venue": slug, "kaisai_date_id": kdid} for kdid, slug in venues.items() if slug]
+    result = [{"venue": slug, "kaisai_date_id": kdid} for slug, kdid in venues.items() if slug]
     print(f"[INFO] 本日開催中と判定した競輪場: {[r['venue'] for r in result]}")
     return result
 
