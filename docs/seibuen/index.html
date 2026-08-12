@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西武園競輪 AI予想 2026年08月12日</title>
+<style>
+  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:19px; }
+  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
+  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+
+  main{ max-width:720px; margin:0 auto; padding:14px 10px 60px; }
+  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; }
+  .tab-btn{ flex:0 0 auto; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 14px;
+            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); }
+  .tab-btn.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
+  .race-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; }
+  .race-head{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }
+  .race-head .raceno{ background:var(--navy); color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }
+  .race-head .title{ color:var(--ink-soft); font-size:13px; }
+  .banner-high{ background:#fff4de; border:1px solid var(--gold); border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
+  .banner-normal{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
+  .note{ font-size:12px; color:#b5482f; margin:4px 0; }
+  table.main{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.main th, table.main td{ border:1px solid var(--border); padding:5px; text-align:center; }
+  table.main th{ background:#f0ece0; }
+  .dim{ color:var(--ink-soft); font-size:10px; }
+  .car{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.15); }
+  .sub-wrap{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
+  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); }
+  table.sub{ font-size:12px; border-collapse:collapse; }
+  table.sub td{ padding:2px 8px 2px 0; }
+  .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
+  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  @media (max-width:420px){
+    table.main{ font-size:10.5px; }
+    table.main th, table.main td{ padding:3px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="../index.html">西武園競輪</a></h1>
+    <span class="date">2026年08月12日</span>
+  </div>
+  <p>タブでレースを切り替えられます。</p>
+</header>
+<main>
+  <div class="tab-bar"><button class="tab-btn" onclick="showTab('race1', this)">1R</button><button class="tab-btn" onclick="showTab('race2', this)">2R</button><button class="tab-btn" onclick="showTab('race3', this)">3R</button><button class="tab-btn" onclick="showTab('race4', this)">4R</button><button class="tab-btn" onclick="showTab('race5', this)">5R</button><button class="tab-btn" onclick="showTab('race6', this)">6R</button><button class="tab-btn" onclick="showTab('race7', this)">7R</button></div>
+  
+    <div id="race1" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">1R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-normal">拮抗レース。最有力は3号車 五味田 奈穂（30.5%）</div>
+        
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>五味田 奈穂</td>
+          <td>L1</td>
+          <td>捲り<br><span class="dim">(60%)</span></td>
+          <td>単騎</td>
+          <td><b>30.5%</b></td>
+          <td>69</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>細田 愛未</td>
+          <td>L1</td>
+          <td>マーク<br><span class="dim">(75%)</span></td>
+          <td>単騎</td>
+          <td><b>29.1%</b></td>
+          <td>66</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>山口 優依</td>
+          <td>L1</td>
+          <td>マーク<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>19.2%</b></td>
+          <td>50</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>吉村 美有紀</td>
+          <td>L1</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>12.8%</b></td>
+          <td>66</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>是永 ゆうき</td>
+          <td>L1</td>
+          <td>捲り<br><span class="dim">(33%)</span></td>
+          <td>単騎</td>
+          <td><b>6.7%</b></td>
+          <td>63</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>田口 梓乃</td>
+          <td>L1</td>
+          <td>マーク<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>0.9%</b></td>
+          <td>37</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>大和 久保美</td>
+          <td>L1</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>0.8%</b></td>
+          <td>54</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>7号車 細田 愛未</td><td>76.9%</td></tr><tr><td>6号車 山口 優依</td><td>18.3%</td></tr><tr><td>1号車 吉村 美有紀</td><td>4.6%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>6号車 山口 優依</td><td>60.6%</td></tr><tr><td>1号車 吉村 美有紀</td><td>37.6%</td></tr><tr><td>5号車 是永 ゆうき</td><td>1.8%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="88.8" width="28" height="57.2" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="84.8" font-size="10" text-anchor="middle" fill="#1b2430">12.8%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="142.1" width="28" height="3.9" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="138.1" font-size="10" text-anchor="middle" fill="#1b2430">0.9%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="10.0" width="28" height="136.0" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">30.5%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="142.2" width="28" height="3.8" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="138.2" font-size="10" text-anchor="middle" fill="#1b2430">0.8%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="116.0" width="28" height="30.0" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="112.0" font-size="10" text-anchor="middle" fill="#1b2430">6.7%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="60.4" width="28" height="85.6" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="56.4" font-size="10" text-anchor="middle" fill="#1b2430">19.2%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="16.4" width="28" height="129.6" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="12.4" font-size="10" text-anchor="middle" fill="#1b2430">29.1%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 118.4,21.4 L98.9,45.5 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M118.4,21.4 A69.0,69.0 0 0 1 143.9,79.1 L112.9,77.3 A38.0,38.0 0 0 0 98.9,45.5 Z" fill="#e07a1f"/><path d="M143.9,79.1 A69.0,69.0 0 0 1 96.3,140.6 L86.7,111.1 A38.0,38.0 0 0 0 112.9,77.3 Z" fill="#1f5fc4"/><path d="M96.3,140.6 A69.0,69.0 0 1 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 1 0 86.7,111.1 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 11%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 15%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 19%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 55%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+    <div id="race2" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">2R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-normal">拮抗レース。最有力は1号車 田中 まい（32.3%）</div>
+        
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>田中 まい</td>
+          <td>L1</td>
+          <td>マーク<br><span class="dim">(40%)</span></td>
+          <td>単騎</td>
+          <td><b>32.3%</b></td>
+          <td>76</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>岩元 杏奈</td>
+          <td>L1</td>
+          <td>捲り<br><span class="dim">(56%)</span></td>
+          <td>単騎</td>
+          <td><b>29.6%</b></td>
+          <td>68</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>枝光 美奈</td>
+          <td>L1</td>
+          <td>マーク<br><span class="dim">(60%)</span></td>
+          <td>単騎</td>
+          <td><b>16.1%</b></td>
+          <td>66</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>塩田 日海</td>
+          <td>L1</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>14.7%</b></td>
+          <td>64</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>布居</td>
+          <td>L1</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>5.5%</b></td>
+          <td>63</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>萩原 瑞生</td>
+          <td>L1</td>
+          <td>差し<br><span class="dim">(40%)</span></td>
+          <td>単騎</td>
+          <td><b>0.9%</b></td>
+          <td>50</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>齊藤 由紀</td>
+          <td>L1</td>
+          <td>逃げ<br><span class="dim">(25%)</span></td>
+          <td>単騎</td>
+          <td><b>0.9%</b></td>
+          <td>43</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>4号車 岩元 杏奈</td><td>89.5%</td></tr><tr><td>7号車 塩田 日海</td><td>6.7%</td></tr><tr><td>2号車 枝光 美奈</td><td>3.6%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>7号車 塩田 日海</td><td>63.6%</td></tr><tr><td>2号車 枝光 美奈</td><td>34.4%</td></tr><tr><td>5号車 布居</td><td>2.0%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="10.0" width="28" height="136.0" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">32.3%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="78.4" width="28" height="67.6" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="74.4" font-size="10" text-anchor="middle" fill="#1b2430">16.1%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="142.1" width="28" height="3.9" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="138.1" font-size="10" text-anchor="middle" fill="#1b2430">0.9%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="21.1" width="28" height="124.9" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="17.1" font-size="10" text-anchor="middle" fill="#1b2430">29.6%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="123.0" width="28" height="23.0" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="119.0" font-size="10" text-anchor="middle" fill="#1b2430">5.5%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="142.2" width="28" height="3.8" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="138.2" font-size="10" text-anchor="middle" fill="#1b2430">0.9%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="84.0" width="28" height="62.0" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="80.0" font-size="10" text-anchor="middle" fill="#1b2430">14.7%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 116.1,19.6 L97.6,44.5 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M116.1,19.6 A69.0,69.0 0 0 1 143.2,85.3 L112.5,80.7 A38.0,38.0 0 0 0 97.6,44.5 Z" fill="#e07a1f"/><path d="M143.2,85.3 A69.0,69.0 0 0 1 21.5,118.6 L45.6,99.0 A38.0,38.0 0 0 0 112.5,80.7 Z" fill="#1f5fc4"/><path d="M21.5,118.6 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 45.6,99.0 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 10%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 17%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 37%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 36%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+    <div id="race3" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">3R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-normal">拮抗レース。最有力は7号車 大中 拓磨（36.0%）</div>
+        
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>大中 拓磨</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(31%)</span></td>
+          <td>単騎</td>
+          <td><b>36.0%</b></td>
+          <td>76</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>浦山 一栄</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>21.4%</b></td>
+          <td>69</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>樫村 伸平</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>17.2%</b></td>
+          <td>52</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>牧田 賢也</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(33%)</span></td>
+          <td>単騎</td>
+          <td><b>15.7%</b></td>
+          <td>54</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>藤光 健一</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>5.2%</b></td>
+          <td>54</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>橋本 祐司</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(88%)</span></td>
+          <td>単騎</td>
+          <td><b>3.5%</b></td>
+          <td>71</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>菊池 崇訓</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>1.1%</b></td>
+          <td>54</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>2号車 浦山 一栄</td><td>62.4%</td></tr><tr><td>3号車 樫村 伸平</td><td>27.9%</td></tr><tr><td>4号車 牧田 賢也</td><td>9.1%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>3号車 樫村 伸平</td><td>74.9%</td></tr><tr><td>4号車 牧田 賢也</td><td>24.5%</td></tr><tr><td>5号車 藤光 健一</td><td>0.5%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="132.8" width="28" height="13.2" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="128.8" font-size="10" text-anchor="middle" fill="#1b2430">3.5%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="65.3" width="28" height="80.7" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="61.3" font-size="10" text-anchor="middle" fill="#1b2430">21.4%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="81.0" width="28" height="65.0" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="77.0" font-size="10" text-anchor="middle" fill="#1b2430">17.2%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="86.6" width="28" height="59.4" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="82.6" font-size="10" text-anchor="middle" fill="#1b2430">15.7%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="126.5" width="28" height="19.5" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="122.5" font-size="10" text-anchor="middle" fill="#1b2430">5.2%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="141.9" width="28" height="4.1" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="137.9" font-size="10" text-anchor="middle" fill="#1b2430">1.1%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="10.0" width="28" height="136.0" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">36.0%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 112.5,17.1 L95.7,43.2 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M112.5,17.1 A69.0,69.0 0 0 1 138.3,47.6 L109.8,59.9 A38.0,38.0 0 0 0 95.7,43.2 Z" fill="#e07a1f"/><path d="M138.3,47.6 A69.0,69.0 0 0 1 25.1,122.7 L47.6,101.2 A38.0,38.0 0 0 0 109.8,59.9 Z" fill="#1f5fc4"/><path d="M25.1,122.7 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 47.6,101.2 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 9%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 9%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 44%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 37%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+    <div id="race4" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">4R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-normal">拮抗レース。最有力は1号車 堀 勝政（25.2%）</div>
+        <p class='note'>⚠ 予測1着率が拮抗しています。信頼度が最も高いのは 7号車 村松 俊弥（信頼度72）です。</p>
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>堀 勝政</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(57%)</span></td>
+          <td>単騎</td>
+          <td><b>25.2%</b></td>
+          <td>69</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>白井 一機</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(40%)</span></td>
+          <td>単騎</td>
+          <td><b>20.6%</b></td>
+          <td>22</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>村松 俊弥</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>19.2%</b></td>
+          <td>72</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>磯村 蓮太</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(40%)</span></td>
+          <td>単騎</td>
+          <td><b>16.6%</b></td>
+          <td>56</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>佐藤 凱王</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>10.1%</b></td>
+          <td>29</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>桂馬 将人</td>
+          <td>A3</td>
+          <td>捲り<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>7.3%</b></td>
+          <td>68</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>平澤 秀信</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.1%</b></td>
+          <td>41</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>4号車 白井 一機</td><td>41.6%</td></tr><tr><td>7号車 村松 俊弥</td><td>31.6%</td></tr><tr><td>3号車 磯村 蓮太</td><td>21.8%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>3号車 磯村 蓮太</td><td>55.1%</td></tr><tr><td>7号車 村松 俊弥</td><td>32.3%</td></tr><tr><td>5号車 佐藤 凱王</td><td>9.1%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="10.0" width="28" height="136.0" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">25.2%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="106.9" width="28" height="39.1" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="102.9" font-size="10" text-anchor="middle" fill="#1b2430">7.3%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="56.3" width="28" height="89.7" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="52.3" font-size="10" text-anchor="middle" fill="#1b2430">16.6%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="34.9" width="28" height="111.1" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="30.9" font-size="10" text-anchor="middle" fill="#1b2430">20.6%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="91.7" width="28" height="54.3" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="87.7" font-size="10" text-anchor="middle" fill="#1b2430">10.1%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="140.2" width="28" height="5.8" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="136.2" font-size="10" text-anchor="middle" fill="#1b2430">1.1%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="42.5" width="28" height="103.5" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="38.5" font-size="10" text-anchor="middle" fill="#1b2430">19.2%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 141.5,56.6 L111.6,64.9 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M141.5,56.6 A69.0,69.0 0 0 1 130.2,116.4 L105.4,97.8 A38.0,38.0 0 0 0 111.6,64.9 Z" fill="#e07a1f"/><path d="M130.2,116.4 A69.0,69.0 0 0 1 34.7,131.0 L52.8,105.8 A38.0,38.0 0 0 0 105.4,97.8 Z" fill="#1f5fc4"/><path d="M34.7,131.0 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 52.8,105.8 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 21%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 15%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 25%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 40%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+    <div id="race5" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">5R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-high">4号車 大村 涼兼 が本命（予測1着率 53.2%）</div>
+        
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="background:#fff4de;">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>大村 涼兼</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>53.2%</b></td>
+          <td>47</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>須藤 雄太</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(40%)</span></td>
+          <td>単騎</td>
+          <td><b>24.9%</b></td>
+          <td>29</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>伊藤 嘉浩</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(43%)</span></td>
+          <td>単騎</td>
+          <td><b>10.0%</b></td>
+          <td>70</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>林 洋二</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>7.0%</b></td>
+          <td>68</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>深井 高志</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.6%</b></td>
+          <td>44</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>小林 宏年</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.6%</b></td>
+          <td>63</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>藤本 龍也</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.6%</b></td>
+          <td>36</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>3号車 須藤 雄太</td><td>95.1%</td></tr><tr><td>1号車 伊藤 嘉浩</td><td>3.8%</td></tr><tr><td>7号車 林 洋二</td><td>1.0%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>1号車 伊藤 嘉浩</td><td>59.3%</td></tr><tr><td>7号車 林 洋二</td><td>40.1%</td></tr><tr><td>5号車 小林 宏年</td><td>0.2%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="120.6" width="28" height="25.4" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="116.6" font-size="10" text-anchor="middle" fill="#1b2430">10.0%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="141.8" width="28" height="4.2" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="137.8" font-size="10" text-anchor="middle" fill="#1b2430">1.6%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="82.3" width="28" height="63.7" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="78.3" font-size="10" text-anchor="middle" fill="#1b2430">24.9%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="10.0" width="28" height="136.0" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">53.2%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="141.8" width="28" height="4.2" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="137.8" font-size="10" text-anchor="middle" fill="#1b2430">1.6%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="141.8" width="28" height="4.2" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="137.8" font-size="10" text-anchor="middle" fill="#1b2430">1.6%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="128.2" width="28" height="17.8" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="124.2" font-size="10" text-anchor="middle" fill="#1b2430">7.0%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 139.3,49.9 L110.4,61.2 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M139.3,49.9 A69.0,69.0 0 0 1 143.6,67.5 L112.7,70.9 A38.0,38.0 0 0 0 110.4,61.2 Z" fill="#e07a1f"/><path d="M143.6,67.5 A69.0,69.0 0 0 1 57.2,141.7 L65.2,111.7 A38.0,38.0 0 0 0 112.7,70.9 Z" fill="#1f5fc4"/><path d="M57.2,141.7 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 65.2,111.7 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 19%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 4%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 31%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 46%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+    <div id="race6" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">6R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-normal">拮抗レース。最有力は2号車 冨倉 巧（35.3%）</div>
+        
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>冨倉 巧</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(71%)</span></td>
+          <td>単騎</td>
+          <td><b>35.3%</b></td>
+          <td>59</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>石田 宏樹</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(50%)</span></td>
+          <td>単騎</td>
+          <td><b>23.2%</b></td>
+          <td>71</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>及川 裕奨</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(43%)</span></td>
+          <td>単騎</td>
+          <td><b>20.9%</b></td>
+          <td>70</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>南 大輔</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>16.3%</b></td>
+          <td>63</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>畠山 裕行</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.4%</b></td>
+          <td>59</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>遠澤 健二</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>1.4%</b></td>
+          <td>52</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>藤縄 洋介</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(57%)</span></td>
+          <td>単騎</td>
+          <td><b>1.4%</b></td>
+          <td>69</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>5号車 及川 裕奨</td><td>49.6%</td></tr><tr><td>3号車 石田 宏樹</td><td>30.8%</td></tr><tr><td>7号車 南 大輔</td><td>19.6%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>3号車 石田 宏樹</td><td>79.5%</td></tr><tr><td>7号車 南 大輔</td><td>20.5%</td></tr><tr><td>1号車 畠山 裕行</td><td>0.0%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="140.5" width="28" height="5.5" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="136.5" font-size="10" text-anchor="middle" fill="#1b2430">1.4%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="10.0" width="28" height="136.0" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">35.3%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="56.8" width="28" height="89.2" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="52.8" font-size="10" text-anchor="middle" fill="#1b2430">23.2%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="140.6" width="28" height="5.4" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="136.6" font-size="10" text-anchor="middle" fill="#1b2430">1.4%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="65.4" width="28" height="80.6" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="61.4" font-size="10" text-anchor="middle" fill="#1b2430">20.9%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="140.6" width="28" height="5.4" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="136.6" font-size="10" text-anchor="middle" fill="#1b2430">1.4%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="83.3" width="28" height="62.7" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="79.3" font-size="10" text-anchor="middle" fill="#1b2430">16.3%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 136.2,43.1 L108.6,57.4 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M136.2,43.1 A69.0,69.0 0 0 1 142.0,91.4 L111.9,84.0 A38.0,38.0 0 0 0 108.6,57.4 Z" fill="#e07a1f"/><path d="M142.0,91.4 A69.0,69.0 0 0 1 37.4,132.8 L54.3,106.8 A38.0,38.0 0 0 0 111.9,84.0 Z" fill="#1f5fc4"/><path d="M37.4,132.8 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 54.3,106.8 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 17%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 11%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 30%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 41%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+    <div id="race7" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">7R</span>
+          <span class="title">S B</span>
+        </div>
+        <div class="banner-normal">拮抗レース。最有力は5号車 佐藤 譲士郎（37.1%）</div>
+        
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>佐藤 譲士郎</td>
+          <td>A3</td>
+          <td>逃げ<br><span class="dim">(42%)</span></td>
+          <td>単騎</td>
+          <td><b>37.1%</b></td>
+          <td>78</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>小林 和彦</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>24.9%</b></td>
+          <td>68</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>浦崎 貴史</td>
+          <td>A3</td>
+          <td>マーク<br><span class="dim">(67%)</span></td>
+          <td>単騎</td>
+          <td><b>14.1%</b></td>
+          <td>50</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>長崎 達也</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(71%)</span></td>
+          <td>単騎</td>
+          <td><b>12.9%</b></td>
+          <td>70</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>佐藤 康恭</td>
+          <td>A3</td>
+          <td>捲り<br><span class="dim">(57%)</span></td>
+          <td>単騎</td>
+          <td><b>8.7%</b></td>
+          <td>69</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>沼川 夢久</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.1%</b></td>
+          <td>63</td>
+        </tr>
+        <tr style="">
+          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>梶山 大輔</td>
+          <td>A3</td>
+          <td>差し<br><span class="dim">(100%)</span></td>
+          <td>単騎</td>
+          <td><b>1.1%</b></td>
+          <td>46</td>
+        </tr></tbody>
+        </table>
+        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>1号車 小林 和彦</td><td>79.1%</td></tr><tr><td>3号車 浦崎 貴史</td><td>10.9%</td></tr><tr><td>2号車 長崎 達也</td><td>7.8%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>3号車 浦崎 貴史</td><td>67.3%</td></tr><tr><td>2号車 長崎 達也</td><td>19.5%</td></tr><tr><td>4号車 佐藤 康恭</td><td>13.3%</td></tr></table></div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      
+        <rect x="15.8" y="54.7" width="28" height="91.3" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="29.8" y="50.7" font-size="10" text-anchor="middle" fill="#1b2430">24.9%</text>
+        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
+        <rect x="59.5" y="98.8" width="28" height="47.2" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="73.5" y="94.8" font-size="10" text-anchor="middle" fill="#1b2430">12.9%</text>
+        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
+        <rect x="103.2" y="94.2" width="28" height="51.8" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="117.2" y="90.2" font-size="10" text-anchor="middle" fill="#1b2430">14.1%</text>
+        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
+        <rect x="147.0" y="114.0" width="28" height="32.0" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="161.0" y="110.0" font-size="10" text-anchor="middle" fill="#1b2430">8.7%</text>
+        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
+        <rect x="190.8" y="10.0" width="28" height="136.0" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="204.8" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">37.1%</text>
+        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
+              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
+        <rect x="234.5" y="141.9" width="28" height="4.1" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="248.5" y="137.9" font-size="10" text-anchor="middle" fill="#1b2430">1.1%</text>
+        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
+        <rect x="278.2" y="141.9" width="28" height="4.1" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="292.2" y="137.9" font-size="10" text-anchor="middle" fill="#1b2430">1.1%</text>
+        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
+              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
+    </svg>
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 115.7,19.3 L97.4,44.3 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M115.7,19.3 A69.0,69.0 0 0 1 143.4,66.2 L112.6,70.1 A38.0,38.0 0 0 0 97.4,44.3 Z" fill="#e07a1f"/><path d="M143.4,66.2 A69.0,69.0 0 1 1 8.4,56.8 L38.4,65.0 A38.0,38.0 0 1 0 112.6,70.1 Z" fill="#1f5fc4"/><path d="M8.4,56.8 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 38.4,65.0 Z" fill="#2f8f4e"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 10%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 13%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 56%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 21%</div></div>
+    </div>
+        </div>
+      </div>
+    </div>
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.race-panel').forEach(function(p){ p.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).style.display = '';
+  btn.classList.add('active');
+}
+window.addEventListener('DOMContentLoaded', function(){
+  var first = document.querySelector('.tab-btn');
+  if(first) first.click();
+});
+</script>
+</body>
+</html>
