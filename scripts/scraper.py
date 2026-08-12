@@ -39,14 +39,17 @@ def find_todays_venues(date=None):
     （初日の日付）」であり、複数日開催（2日目・最終日など）では「今日の日付」
     と一致しない。そのため日付の突き合わせでは判定せず、/kaisai/YYYY/MM/DD/
     という「その日専用のURL」に載っている競輪場＝今日開催中、とみなす
-    （このページ自体が既に「今日」に絞り込まれているため）。
+    （このページ自体が既に「今日」に絞り込まれているため、これ単体で十分）。
+
+    ※ トップページ（ホーム）は「本日の開催」だけでなく「明日の開催」も同じ
+      パターンのリンクで載っているため、補完用として使うと翌日分まで誤って
+      拾ってしまう。そのため使わない。
 
     戻り値: [{"venue": "gifu", "kaisai_date_id": "43202608120100"}, ...]
     """
     date = date or datetime.date.today()
-    venues = {}  # slug -> kaisai_date_id （venueごとに1つ、最初に見つかったものを採用）
+    venues = {}  # slug -> kaisai_date_id
 
-    # 1. 開催一覧ページ（最も網羅的。URL自体が「今日」に絞られている）
     kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
     try:
         html = _get(kaisai_url)
@@ -59,24 +62,6 @@ def find_todays_venues(date=None):
         print(f"[INFO] 開催一覧ページから {len(venues)} 開催を検出しました。")
     except requests.RequestException as e:
         print(f"[WARN] 開催一覧ページの取得に失敗しました: {e}")
-
-    # 2. トップページ（フォールバック・補完用。同様に日付での絞り込みはしない）
-    try:
-        html2 = _get(BASE + "/")
-        soup2 = BeautifulSoup(html2, "html.parser")
-        found_top = 0
-        for a in soup2.find_all("a", href=True):
-            m = re.search(r"/([a-z]+)/racecard/(\d{14})/", a["href"])
-            if not m:
-                continue
-            slug, kdid = m.group(1), m.group(2)
-            if slug not in venues:
-                venues[slug] = kdid
-                found_top += 1
-        if found_top:
-            print(f"[INFO] トップページから追加で {found_top} 開催を検出しました。")
-    except requests.RequestException as e:
-        print(f"[WARN] トップページの取得に失敗しました: {e}")
 
     result = [{"venue": slug, "kaisai_date_id": kdid} for slug, kdid in venues.items() if slug]
     print(f"[INFO] 本日開催中と判定した競輪場: {[r['venue'] for r in result]}")
