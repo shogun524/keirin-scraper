@@ -31,6 +31,54 @@ def _get(url, **kwargs):
     return resp.text
 
 
+def _extract_todays_links_from_kaisai_html(html):
+    """
+    開催一覧ページのHTMLから、競輪場ごとに「本日」の racecard リンクを抽出する。
+
+    通常のＦ１／Ｆ２開催は当日のタブ分しかリンクが出ないため単純に1つ拾えば良いが、
+    Ｇ１等の大きな開催では初日〜最終日まで全日程分のリンクがまとめて出ることがあり、
+    その場合は先頭（＝初日）を拾ってしまうと日付がズレる。
+    そのため、競輪場の見出し（"XX競輪" へのリンク）を区切りとしてブロックに分割し、
+    各ブロック内で「本日」という文字列に最も近い（直後の）racecard リンクを選ぶ。
+    """
+    venues = {}
+    heading_pattern = re.compile(r'href="https://keirin\.kdreams\.jp/([a-z]+)/"')
+    headings = [(m.start(), m.group(1)) for m in heading_pattern.finditer(html)]
+
+    racecard_pattern = re.compile(r'href="[^"]*/([a-z]+)/racecard/(\d{14})/[^"]*"')
+    today_marker_positions = [m.start() for m in re.finditer("本日", html)]
+
+    for idx, (pos, slug) in enumerate(headings):
+        if slug in venues:
+            continue
+        block_start = pos
+        block_end = headings[idx + 1][0] if idx + 1 < len(headings) else len(html)
+        block = html[block_start:block_end]
+
+        links_in_block = [
+            (m.start(), m.group(2))
+            for m in racecard_pattern.finditer(block)
+            if m.group(1) == slug
+        ]
+        if not links_in_block:
+            continue
+        if len(links_in_block) == 1:
+            venues[slug] = links_in_block[0][1]
+            continue
+
+        # 複数ある場合（G1等）は、ブロック内の「本日」マーカーに最も近い（直後の）ものを選ぶ
+        block_today_positions = [p - block_start for p in today_marker_positions if block_start <= p < block_end]
+        if block_today_positions:
+            today_pos = block_today_positions[0]
+            after = [(p, kdid) for p, kdid in links_in_block if p >= today_pos]
+            chosen = min(after, key=lambda x: x[0]) if after else min(links_in_block, key=lambda x: x[0])
+        else:
+            chosen = min(links_in_block, key=lambda x: x[0])
+        venues[slug] = chosen[1]
+
+    return venues
+
+
 def find_todays_venues(date=None):
     """
     当日開催されている競輪場スラッグと kaisaiDateId の組を抽出する。
@@ -53,12 +101,7 @@ def find_todays_venues(date=None):
     kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
     try:
         html = _get(kaisai_url)
-        soup = BeautifulSoup(html, "html.parser")
-        for a in soup.find_all("a", href=True):
-            m = re.search(r"/([a-z]+)/racecard/(\d{14})/", a["href"])
-            if m:
-                slug, kdid = m.group(1), m.group(2)
-                venues.setdefault(slug, kdid)
+        venues = _extract_todays_links_from_kaisai_html(html)
         print(f"[INFO] 開催一覧ページから {len(venues)} 開催を検出しました。")
     except requests.RequestException as e:
         print(f"[WARN] 開催一覧ページの取得に失敗しました: {e}")
@@ -273,13 +316,29 @@ def parse_race_detail(html, venue, race_no):
     race_title = race_title_match.group(1).strip() if race_title_match else ""
 
     line_pred_text = ""
+    line_role_re = re.compile(r"\d+\s*(先行|追込|押え先|自在|追い上げ|捲|差|逃)")
     for i, ln in enumerate(lines):
-        if "並び予想" in ln:
-            candidate = ln.replace("並び予想", "").strip()
-            if not candidate and i + 1 < len(lines):
-                candidate = lines[i + 1]
-            line_pred_text = candidate
-            break
+        if "並び予想" not in ln:
+            continue
+        # 同じ行に本文がある場合はそれを使う。無ければ後続の行を数行先まで探す
+        # （サイト側のレイアウト変更で見出しと本文が同じ行に無いケースに対応するため）
+        candidate = ln.replace("並び予想", "").strip()
+        if not line_role_re.search(candidate):
+            for j in range(i + 1, min(i + 6, len(lines))):
+                if line_role_re.search(lines[j]):
+                    candidate = lines[j]
+                    break
+        line_pred_text = candidate
+        break
+
+    if not line_pred_text:
+        # 「並び予想」というラベル自体が見つからなかった場合の最終手段：
+        # ページ全体から「数字+役割語」が3つ以上連続する箇所を並び予想とみなす
+        seq_re = re.compile(
+            r"((?:\d+\s*(?:先行|追込|押え先|自在|追い上げ|捲|差|逃)\s*){3,})")
+        m = seq_re.search(full_text)
+        if m:
+            line_pred_text = m.group(1).strip()
 
     racers = parse_racer_tokens(full_text)
 
