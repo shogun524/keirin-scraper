@@ -33,56 +33,58 @@ def _get(url, **kwargs):
 
 def find_todays_venues(date=None):
     """
-    トップページの「本日の開催」欄から、当日開催中の競輪場スラッグと
-    kaisaiDateId の組を抽出する。
-    戻り値: [{"venue": "gifu", "kaisai_date_id": "43202608120100", "name": "岐阜"}, ...]
+    当日開催されている競輪場スラッグと kaisaiDateId の組を抽出する。
+    「本日の開催」トップページは掲載が絞られている場合があるため、
+    まず /kaisai/YYYY/MM/DD/ の開催一覧ページを正として使い、
+    トップページはそこで拾えなかった分の補完として使う。
+    戻り値: [{"venue": "gifu", "kaisai_date_id": "43202608120100"}, ...]
     """
     date = date or datetime.date.today()
-    html = _get(BASE + "/")
-    soup = BeautifulSoup(html, "html.parser")
-
+    date_ymd = date.strftime("%Y%m%d")
     venues = {}
-    # 競輪場リンク（例: https://keirin.kdreams.jp/gifu/）から venue slug を取得
-    venue_slugs = {}
-    for a in soup.find_all("a", href=True):
-        m = re.match(r"^https://keirin\.kdreams\.jp/([a-z]+)/$", a["href"])
-        if m:
-            venue_slugs[m.group(1)] = a.get_text(strip=True)
 
-    # kaisaiDateId を含むリンク（投票・出走表など）から当日の開催情報を推定
-    for a in soup.find_all("a", href=True):
-        m = re.search(r"kaisaiDateId=(\d{14})", a["href"])
-        if not m:
-            m = re.search(r"/racecard/(\d{14})/", a["href"])
-        if not m:
-            continue
-        kaisai_date_id = m.group(1)
-        # kaisaiDateId の中に YYYYMMDD が埋め込まれている（例: 43 202608 12 0100）
-        date_part = kaisai_date_id[2:10]
-        if date_part != date.strftime("%Y%m%d"):
-            continue
-        venue_code = kaisai_date_id[:2]
-        # venue slug は URL 内の別リンクから拾う必要があるため、後段で racecard 一覧ページを見て確定させる
-        venues.setdefault(kaisai_date_id, venue_code)
-
-    # 開催一覧ページ（/kaisai/YYYY/MM/DD/）からも同様に補完する
+    # 1. 開催一覧ページ（最も網羅的）
     kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
     try:
-        html2 = _get(kaisai_url)
-        soup2 = BeautifulSoup(html2, "html.parser")
-        for a in soup2.find_all("a", href=True):
+        html = _get(kaisai_url)
+        soup = BeautifulSoup(html, "html.parser")
+        for a in soup.find_all("a", href=True):
             m = re.search(r"/([a-z]+)/racecard/(\d{14})/", a["href"])
             if m:
                 slug, kdid = m.group(1), m.group(2)
-                date_part = kdid[2:10]
-                if date_part == date.strftime("%Y%m%d"):
+                if kdid[2:10] == date_ymd:
                     venues[kdid] = slug
-    except requests.RequestException:
-        pass
+        print(f"[INFO] 開催一覧ページから {len(venues)} 開催を検出しました。")
+    except requests.RequestException as e:
+        print(f"[WARN] 開催一覧ページの取得に失敗しました: {e}")
 
-    result = []
-    for kdid, slug in venues.items():
-        result.append({"venue": slug, "kaisai_date_id": kdid})
+    # 2. トップページ（フォールバック・補完用）
+    try:
+        html2 = _get(BASE + "/")
+        soup2 = BeautifulSoup(html2, "html.parser")
+        found_top = 0
+        for a in soup2.find_all("a", href=True):
+            m = re.search(r"/([a-z]+)/racecard/(\d{14})/", a["href"])
+            if not m:
+                m2 = re.search(r"kaisaiDateId=(\d{14})", a["href"])
+                if m2:
+                    kdid = m2.group(1)
+                    if kdid[2:10] == date_ymd and kdid not in venues:
+                        # スラッグ不明。venue_slugs から後で解決を試みる
+                        venues.setdefault(kdid, None)
+                    continue
+                continue
+            slug, kdid = m.group(1), m.group(2)
+            if kdid[2:10] == date_ymd and kdid not in venues:
+                venues[kdid] = slug
+                found_top += 1
+        if found_top:
+            print(f"[INFO] トップページから追加で {found_top} 開催を検出しました。")
+    except requests.RequestException as e:
+        print(f"[WARN] トップページの取得に失敗しました: {e}")
+
+    result = [{"venue": slug, "kaisai_date_id": kdid} for kdid, slug in venues.items() if slug]
+    print(f"[INFO] 本日開催中と判定した競輪場: {[r['venue'] for r in result]}")
     return result
 
 
@@ -97,15 +99,14 @@ def find_race_urls_for_venue(venue, kaisai_date_id):
 
     races = {}
     for a in soup.find_all("a", href=True):
-        m = re.search(rf"/{venue}/racedetail/(\d{{16}})/?$", a["href"])
-        if not m:
-            # クエリパラメータ付きのURLも許容
-            m = re.search(rf"/{venue}/racedetail/(\d{{16}})/?\?", a["href"])
+        m = re.search(rf"/{venue}/racedetail/(\d{{14,18}})/?(?:\?|$)", a["href"])
         if m:
             race_id = m.group(1)
             race_no = int(race_id[-2:])
-            races[race_no] = f"{BASE}/{venue}/racedetail/{race_id}/"
+            if 1 <= race_no <= 12:
+                races[race_no] = f"{BASE}/{venue}/racedetail/{race_id}/"
 
+    print(f"[INFO] {venue}: racecard一覧から {len(races)} レース分のURLを検出しました。")
     return [{"race_no": no, "url": races[no]} for no in sorted(races)]
 
 
@@ -336,6 +337,7 @@ def fetch_all_todays_races(date=None):
         except requests.RequestException as e:
             print(f"[WARN] {v['venue']} のレース一覧取得に失敗: {e}")
             continue
+        venue_success = 0
         for r in race_urls:
             try:
                 race_info, racers, line_pred_text = fetch_race(v["venue"], r["race_no"], r["url"])
@@ -351,4 +353,7 @@ def fetch_all_todays_races(date=None):
                 "line_prediction_text": line_pred_text,
                 "url": r["url"],
             })
+            venue_success += 1
+        print(f"[INFO] {v['venue']}: {venue_success}/{len(race_urls)} レースの取得に成功しました。")
+    print(f"[INFO] 合計 {len(all_races)} レース分のデータを取得しました（開催 {len(venues)} 場）。")
     return all_races
