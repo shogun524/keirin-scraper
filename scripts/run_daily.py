@@ -3,20 +3,21 @@
 毎朝実行するメインスクリプト。
 1. 本日開催のレースを全てスクレイピング
 2. 各レースをAIモデルで計算
-3. docs/index.html にレポートを書き出す（GitHub Pagesで公開される）
+3. docs/index.html（競輪場一覧）と docs/{venue}/index.html（レース一覧・タブ切替）を書き出す
+   （GitHub Pagesで公開される）
 """
 
 import os
-import sys
 import datetime
 import traceback
 from zoneinfo import ZoneInfo
 
 from scraper import fetch_all_todays_races
 from model import predict_race
-from report import render_report
+from report import render_index, render_venue_page
 
 JST = ZoneInfo("Asia/Tokyo")
+DOCS_DIR = os.path.join(os.path.dirname(__file__), "..", "docs")
 
 
 def main():
@@ -42,13 +43,26 @@ def main():
             result = None
         all_race_data.append({"race_info": race["race_info"], "prediction": result})
 
-    html = render_report(all_race_data, today)
+    os.makedirs(DOCS_DIR, exist_ok=True)
 
-    docs_path = os.path.join(os.path.dirname(__file__), "..", "docs", "index.html")
-    with open(docs_path, "w", encoding="utf-8") as f:
-        f.write(html)
-
+    # トップページ（競輪場一覧）
+    index_html = render_index(all_race_data, today)
+    with open(os.path.join(DOCS_DIR, "index.html"), "w", encoding="utf-8") as f:
+        f.write(index_html)
     print("[INFO] docs/index.html を書き出しました。")
+
+    # 競輪場ごとのページ（レース一覧・タブ切替）
+    by_venue = {}
+    for rd in all_race_data:
+        by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)
+
+    for venue, races_for_venue in by_venue.items():
+        venue_dir = os.path.join(DOCS_DIR, venue)
+        os.makedirs(venue_dir, exist_ok=True)
+        venue_html = render_venue_page(venue, races_for_venue, today)
+        with open(os.path.join(venue_dir, "index.html"), "w", encoding="utf-8") as f:
+            f.write(venue_html)
+        print(f"[INFO] docs/{venue}/index.html を書き出しました。")
 
     if len(races) == 0:
         print("[WARN] 取得できたレースが0件でした。サイト構造が変わっている可能性があります。")

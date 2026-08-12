@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 1日分のレース予測結果を、スマホでそのまま見られる静的HTMLレポートに変換する。
-GitHub Pages で公開する docs/index.html を生成する。
+GitHub Pages で公開する docs/ 以下のファイルを生成する。
+
+構成：
+  docs/index.html        … 競輪場の一覧（本日開催しているところだけ明るく表示）
+  docs/{venue}/index.html … その競輪場のレース一覧（タブでレースを切り替え）
 """
 
 import datetime
-from model import KIMARITE_LABELS
+from model import KIMARITE_LABELS, KIMARITE
 
 VENUE_NAMES = {
     "hakodate": "函館", "aomori": "青森", "iwakitaira": "いわき平",
@@ -21,25 +25,119 @@ VENUE_NAMES = {
     "kokura": "小倉", "kurume": "久留米", "takeo": "武雄", "sasebo": "佐世保",
     "beppu": "別府", "kumamoto": "熊本",
 }
+VENUE_GRID = [
+    ["hakodate", "aomori", "iwakitaira", "yahiko"],
+    ["maebashi", "toride", "utsunomiya", "omiya"],
+    ["seibuen", "keiokaku", "tachikawa", "matsudo"],
+    ["chiba", "kawasaki", "hiratsuka", "odawara"],
+    ["ito", "shizuoka", "nagoya", "gifu"],
+    ["ogaki", "toyohashi", "toyama", "matsusaka"],
+    ["yokkaichi", "fukui", "nara", "mukomachi"],
+    ["wakayama", "kishiwada", "tamano", "hiroshima"],
+    ["hofu", "takamatsu", "komatsushima", "kochi"],
+    ["matsuyama", "kokura", "kurume", "takeo"],
+    ["sasebo", "beppu", "kumamoto"],
+]
+
+CAR_COLORS = {
+    1: ("#ffffff", "#1b2430"), 2: ("#1b1b1b", "#ffffff"), 3: ("#d8322a", "#ffffff"),
+    4: ("#1f5fc4", "#ffffff"), 5: ("#e8c221", "#1b2430"), 6: ("#2f8f4e", "#ffffff"),
+    7: ("#e07a1f", "#ffffff"), 8: ("#e2699a", "#ffffff"), 9: ("#3fb8c9", "#1b2430"),
+}
+KIMARITE_COLORS = {"逃": "#c1443b", "捲": "#e07a1f", "差": "#1f5fc4", "マ": "#2f8f4e"}
+
+COMMON_STYLE = """
+  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:19px; }
+  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
+  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+"""
 
 
 def car_color(car):
-    colors = {
-        1: ("#ffffff", "#1b2430"), 2: ("#1b1b1b", "#ffffff"), 3: ("#d8322a", "#ffffff"),
-        4: ("#1f5fc4", "#ffffff"), 5: ("#e8c221", "#1b2430"), 6: ("#2f8f4e", "#ffffff"),
-        7: ("#e07a1f", "#ffffff"), 8: ("#e2699a", "#ffffff"), 9: ("#3fb8c9", "#1b2430"),
-    }
-    return colors.get(((car - 1) % 9) + 1, ("#888", "#fff"))
+    return CAR_COLORS.get(((car - 1) % 9) + 1, ("#888", "#fff"))
 
 
-def render_race_card(race_data):
+def svg_bar_chart(rows, height=170):
+    by_car = sorted(rows, key=lambda r: r["car"])
+    n = len(by_car)
+    width = max(n * 46, 260)
+    max_val = max((r["adjusted"] for r in by_car), default=1) or 1
+    bar_w = 28
+    gap = (width - n * bar_w) / (n + 1)
+    plot_h = height - 34
+
+    bars = ""
+    for i, r in enumerate(by_car):
+        x = gap + i * (bar_w + gap)
+        h = max((r["adjusted"] / max_val) * plot_h, 2)
+        y = plot_h - h + 10
+        bg, fg = car_color(r["car"])
+        bars += f"""
+        <rect x="{x:.1f}" y="{y:.1f}" width="{bar_w}" height="{h:.1f}" fill="{bg}" stroke="#1b2430" stroke-width="1" rx="3"/>
+        <text x="{x+bar_w/2:.1f}" y="{y-4:.1f}" font-size="10" text-anchor="middle" fill="#1b2430">{r['adjusted']:.1f}%</text>
+        <text x="{x+bar_w/2:.1f}" y="{plot_h+24:.1f}" font-size="11" text-anchor="middle" fill="{fg}"
+              style="paint-order:stroke; stroke:{bg}; stroke-width:5px;">{r['car']}</text>"""
+
+    return f"""<svg viewBox="0 0 {width} {height}" width="100%" style="max-width:{width}px; display:block; margin:0 auto;">
+      <line x1="0" y1="{plot_h+10:.1f}" x2="{width}" y2="{plot_h+10:.1f}" stroke="#d8d2c2" stroke-width="1"/>
+      {bars}
+    </svg>"""
+
+
+def svg_donut_chart(kimarite_ratio, size=150):
+    cx = cy = size / 2
+    r_outer = size / 2 - 6
+    r_inner = r_outer * 0.55
+    total = sum(kimarite_ratio.values()) or 1
+    start_angle = -90
+    paths = ""
+    legend = ""
+    import math as _m
+    for t in KIMARITE:
+        val = kimarite_ratio.get(t, 0)
+        frac = val / total
+        angle = frac * 360
+        end_angle = start_angle + angle
+        large_arc = 1 if angle > 180 else 0
+
+        def pt(a, r):
+            rad = _m.radians(a)
+            return cx + r * _m.cos(rad), cy + r * _m.sin(rad)
+
+        x1o, y1o = pt(start_angle, r_outer)
+        x2o, y2o = pt(end_angle, r_outer)
+        x1i, y1i = pt(end_angle, r_inner)
+        x2i, y2i = pt(start_angle, r_inner)
+        color = KIMARITE_COLORS[t]
+        if frac > 0.001:
+            paths += (f'<path d="M{x1o:.1f},{y1o:.1f} A{r_outer:.1f},{r_outer:.1f} 0 {large_arc} 1 {x2o:.1f},{y2o:.1f} '
+                       f'L{x1i:.1f},{y1i:.1f} A{r_inner:.1f},{r_inner:.1f} 0 {large_arc} 0 {x2i:.1f},{y2i:.1f} Z" '
+                       f'fill="{color}"/>')
+        legend += (f'<div style="display:flex;align-items:center;gap:5px;font-size:11.5px;">'
+                   f'<span style="width:10px;height:10px;border-radius:2px;background:{color};display:inline-block;"></span>'
+                   f'{KIMARITE_LABELS[t]} {val:.0f}%</div>')
+        start_angle = end_angle
+
+    return f"""<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <svg viewBox="0 0 {size} {size}" width="{size}" height="{size}">{paths}</svg>
+      <div style="display:flex;flex-direction:column;gap:4px;">{legend}</div>
+    </div>"""
+
+
+def render_race_card(race_data, tab_id):
     info = race_data["race_info"]
     result = race_data["prediction"]
     if not result:
-        return ""
-    venue_name = VENUE_NAMES.get(info["venue"], info["venue"])
-    title = info.get("title", "")
+        return f'<div id="{tab_id}" class="race-panel" style="display:none;"><p>このレースはデータを取得できませんでした。</p></div>'
 
+    title = info.get("title", "")
     top = result["top"]
     high_prob = result["is_high_prob"]
 
@@ -56,7 +154,7 @@ def render_race_card(race_data):
           <td><span class="car" style="background:{bg};color:{fg}">{r['car']}</span></td>
           <td>{r['name']}</td>
           <td>{r['rank']}</td>
-          <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')} ({r['kimarite_prediction']['ratio']*100:.0f}%)</td>
+          <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')}<br><span class="dim">({r['kimarite_prediction']['ratio']*100:.0f}%)</span></td>
           <td>{line_label}</td>
           <td><b>{r['adjusted']:.1f}%</b></td>
           <td>{r['confidence']['score']:.0f}</td>
@@ -91,39 +189,148 @@ def render_race_card(race_data):
         f"拮抗レース。最有力は{top['car']}号車 {top['name']}（{top['adjusted']:.1f}%）"
     )
 
+    bar_chart = svg_bar_chart(result["rows"])
+    donut_chart = svg_donut_chart(result["kimarite_ratio"])
+
     return f"""
-    <div class="race-card">
-      <div class="race-head">
-        <span class="venue">{venue_name}</span>
-        <span class="raceno">{info['race_no']}R</span>
-        <span class="title">{title}</span>
+    <div id="{tab_id}" class="race-panel" style="display:none;">
+      <div class="race-card">
+        <div class="race-head">
+          <span class="raceno">{info['race_no']}R</span>
+          <span class="title">{title}</span>
+        </div>
+        <div class="{banner_class}">{banner_text}</div>
+        {close_note}
+        <table class="main">
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <tbody>{rows_html}</tbody>
+        </table>
+        <div class="sub-wrap">{second_html}{third_html}</div>
+
+        <div class="chart-block">
+          <h4>号車別 予測1着率</h4>
+          {bar_chart}
+        </div>
+        <div class="chart-block">
+          <h4>決まり手構成比（AI予測ベース）</h4>
+          {donut_chart}
+        </div>
       </div>
-      <div class="{banner_class}">{banner_text}</div>
-      {close_note}
-      <table class="main">
-        <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
-        <tbody>{rows_html}</tbody>
-      </table>
-      <div class="sub-wrap">{second_html}{third_html}</div>
     </div>"""
 
 
-def render_report(all_race_data, date=None):
-    date = date or datetime.date.today()
-    date_str = date.strftime("%Y年%m月%d日")
+RACE_PANEL_STYLE = """
+  main{ max-width:720px; margin:0 auto; padding:14px 10px 60px; }
+  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; }
+  .tab-btn{ flex:0 0 auto; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 14px;
+            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); }
+  .tab-btn.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
+  .race-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; }
+  .race-head{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }
+  .race-head .raceno{ background:var(--navy); color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }
+  .race-head .title{ color:var(--ink-soft); font-size:13px; }
+  .banner-high{ background:#fff4de; border:1px solid var(--gold); border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
+  .banner-normal{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
+  .note{ font-size:12px; color:#b5482f; margin:4px 0; }
+  table.main{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.main th, table.main td{ border:1px solid var(--border); padding:5px; text-align:center; }
+  table.main th{ background:#f0ece0; }
+  .dim{ color:var(--ink-soft); font-size:10px; }
+  .car{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.15); }
+  .sub-wrap{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
+  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); }
+  table.sub{ font-size:12px; border-collapse:collapse; }
+  table.sub td{ padding:2px 8px 2px 0; }
+  .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
+  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  @media (max-width:420px){
+    table.main{ font-size:10.5px; }
+    table.main th, table.main td{ padding:3px; }
+  }
+"""
 
-    # 開催場ごとにグループ化
+TAB_SCRIPT = """
+function showTab(id, btn){
+  document.querySelectorAll('.race-panel').forEach(function(p){ p.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).style.display = '';
+  btn.classList.add('active');
+}
+window.addEventListener('DOMContentLoaded', function(){
+  var first = document.querySelector('.tab-btn');
+  if(first) first.click();
+});
+"""
+
+
+def render_venue_page(venue, races, date):
+    date_str = date.strftime("%Y年%m月%d日")
+    venue_name = VENUE_NAMES.get(venue, venue)
+    races = sorted(races, key=lambda r: r["race_info"]["race_no"])
+
+    tabs = ""
+    panels = ""
+    for r in races:
+        no = r["race_info"]["race_no"]
+        tab_id = f"race{no}"
+        tabs += f'<button class="tab-btn" onclick="showTab(\'{tab_id}\', this)">{no}R</button>'
+        panels += render_race_card(r, tab_id)
+
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{venue_name}競輪 AI予想 {date_str}</title>
+<style>{COMMON_STYLE}{RACE_PANEL_STYLE}</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="../index.html">{venue_name}競輪</a></h1>
+    <span class="date">{date_str}</span>
+  </div>
+  <p>タブでレースを切り替えられます。</p>
+</header>
+<main>
+  <div class="tab-bar">{tabs if tabs else "<p>本日このレース場のデータは取得できませんでした。</p>"}</div>
+  {panels}
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>{TAB_SCRIPT}</script>
+</body>
+</html>"""
+
+
+def render_index(all_race_data, date=None):
+    date = date or datetime.date.today()
+    weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
+    date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
+
     by_venue = {}
     for rd in all_race_data:
         v = rd["race_info"]["venue"]
         by_venue.setdefault(v, []).append(rd)
 
-    venue_sections = ""
-    for venue, races in by_venue.items():
-        races.sort(key=lambda r: r["race_info"]["race_no"])
-        venue_name = VENUE_NAMES.get(venue, venue)
-        cards = "".join(render_race_card(r) for r in races)
-        venue_sections += f"<section class='venue-section'><h2>{venue_name}競輪</h2>{cards}</section>"
+    def venue_card(slug):
+        name = VENUE_NAMES.get(slug, slug)
+        races = by_venue.get(slug)
+        if not races:
+            return f'<div class="venue-card inactive"><span class="vname">{name}</span></div>'
+
+        races_sorted = sorted(races, key=lambda r: r["race_info"]["race_no"])
+        race_count = len(races_sorted)
+        rough = any(rd["prediction"] and not rd["prediction"]["is_high_prob"] for rd in races_sorted)
+        badge = '<span class="tag rough">荒れ注意</span>' if rough else ""
+        return f"""
+        <a class="venue-card active" href="{slug}/index.html">
+          <span class="vname">{name}</span>
+          <span class="meta">{race_count}レース{badge}</span>
+        </a>"""
+
+    rows_html = ""
+    for row in VENUE_GRID:
+        rows_html += '<div class="venue-row">' + "".join(venue_card(v) for v in row) + '</div>'
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -132,43 +339,31 @@ def render_report(all_race_data, date=None):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>競輪AI予想 {date_str}</title>
 <style>
-  body {{ margin:0; background:#f6f3ec; color:#1b2430; font-family:"Hiragino Sans","Yu Gothic",sans-serif; }}
-  header {{ background:#0e1b2b; color:#fff; padding:20px 16px; }}
-  header h1 {{ margin:0; font-size:20px; }}
-  header p {{ margin:6px 0 0; color:#b9c3d4; font-size:13px; }}
-  main {{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }}
-  .venue-section {{ margin-bottom:28px; }}
-  .venue-section h2 {{ font-size:16px; border-bottom:2px solid #0e1b2b; padding-bottom:6px; }}
-  .race-card {{ background:#fff; border:1px solid #d8d2c2; border-radius:8px; padding:14px; margin-bottom:14px; }}
-  .race-head {{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }}
-  .race-head .venue {{ font-weight:700; }}
-  .race-head .raceno {{ background:#0e1b2b; color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }}
-  .race-head .title {{ color:#5b6472; font-size:13px; }}
-  .banner-high {{ background:#fff4de; border:1px solid #d8a94a; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }}
-  .banner-normal {{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }}
-  .note {{ font-size:12px; color:#b5482f; margin:4px 0; }}
-  table.main {{ width:100%; border-collapse:collapse; font-size:12px; }}
-  table.main th, table.main td {{ border:1px solid #d8d2c2; padding:5px; text-align:center; }}
-  table.main th {{ background:#f0ece0; }}
-  .car {{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.15); }}
-  .sub-wrap {{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }}
-  .sub-wrap h4 {{ font-size:12px; margin:0 0 4px; color:#5b6472; }}
-  table.sub {{ font-size:12px; border-collapse:collapse; }}
-  table.sub td {{ padding:2px 8px 2px 0; }}
-  footer {{ text-align:center; color:#5b6472; font-size:11px; padding:20px; }}
-  @media (max-width:420px) {{
-    table.main {{ font-size:10.5px; }}
-    table.main th, table.main td {{ padding:3px; }}
-  }}
+{COMMON_STYLE}
+  main{{ max-width:900px; margin:0 auto; padding:16px 10px 60px; }}
+  h2.section{{ font-size:14px; color:var(--ink-soft); margin:0 0 10px; }}
+  .venue-row{{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:8px; }}
+  .venue-card{{ border-radius:8px; padding:14px 10px; min-height:64px; display:flex; flex-direction:column; justify-content:center; gap:4px; }}
+  .venue-card.active{{ background:#fff; border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,.06); }}
+  .venue-card.active .vname{{ font-weight:800; font-size:14px; color:var(--ink); }}
+  .venue-card.active .meta{{ font-size:11px; color:var(--ink-soft); }}
+  .venue-card.inactive{{ background:#eee9dd; opacity:.55; }}
+  .venue-card.inactive .vname{{ font-size:13px; color:#9a9488; }}
+  .tag.rough{{ display:inline-block; margin-left:4px; background:#f4d9b0; color:#8a5a12; border-radius:4px; padding:0 4px; font-size:10px; }}
+  @media (max-width:520px){{ .venue-row{{ grid-template-columns:repeat(2,1fr); }} }}
 </style>
 </head>
 <body>
 <header>
-  <h1>競輪AI予想 {date_str}</h1>
-  <p>毎朝自動更新・全開催場のレースを掲載しています。閾値を超えた本命がいない場合は「拮抗レース」と表示されます。</p>
+  <div class="top-row">
+    <h1>競輪AI予想</h1>
+    <span class="date">{date_str}</span>
+  </div>
+  <p>本日開催している競輪場だけ明るく表示されます。タップするとレース一覧に進みます。</p>
 </header>
 <main>
-{venue_sections if venue_sections else "<p style='text-align:center;color:#5b6472;'>本日は取得できたレースがありませんでした。</p>"}
+  <h2 class="section">本日の開催場</h2>
+  {rows_html if by_venue else "<p style='text-align:center;color:#5b6472;'>本日は取得できたレースがありませんでした。</p>"}
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
 </body>
