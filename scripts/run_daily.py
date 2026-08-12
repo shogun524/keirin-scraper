@@ -17,7 +17,7 @@ from report import render_report
 
 JST = ZoneInfo("Asia/Tokyo")
 
-
+import os
 def main():
     # GitHub Actionsのランナーは基本的にUTCで動くため、日本時間の「今日」を明示的に計算する
     today = datetime.datetime.now(JST).date()
@@ -43,8 +43,8 @@ def main():
 
     html = render_report(all_race_data, today)
 
-    with open("docs/index.html", "w", encoding="utf-8") as f:
-        f.write(html)
+   docs_path = os.path.join(os.path.dirname(__file__), "..", "docs", "index.html")
+   with open(docs_path, "w", encoding="utf-8") as f:
 
     print("[INFO] docs/index.html を書き出しました。")
 
