@@ -39,6 +39,15 @@
   table.sub td{ padding:2px 8px 2px 0; }
   .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
   .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  .kimarite-table th, .kimarite-table td{ text-align:center; }
+  .matrix-scroll{ overflow-x:auto; }
+  table.matrix{ font-size:10.5px; }
+  table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
+  table.matrix td.diag{ background:#f0ece0; color:var(--ink-soft); }
+  table.matrix td.same-line{ background:#e3f0ff; font-weight:700; }
+  .line-info-block{ font-size:12px; border-radius:6px; padding:8px 10px; margin:8px 0; }
+  .line-info-block.ok{ background:#e7f3ea; color:#2f7a4f; border:1px solid #b9dcc3; }
+  .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:3px; }
@@ -64,6 +73,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は7号車 西森 一稀（27.4%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -131,10 +142,8 @@
           <td>71</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>4号車 小田 恭介</td><td>48.5%</td></tr><tr><td>3号車 中澤 央治</td><td>20.4%</td></tr><tr><td>1号車 荻野</td><td>17.4%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>3号車 中澤 央治</td><td>39.6%</td></tr><tr><td>1号車 荻野</td><td>33.7%</td></tr><tr><td>2号車 谷口 幸司</td><td>26.6%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -168,13 +177,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 143.5,83.6 L112.7,79.7 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M143.5,83.6 A69.0,69.0 0 0 1 139.4,99.9 L110.4,88.7 A38.0,38.0 0 0 0 112.7,79.7 Z" fill="#e07a1f"/><path d="M139.4,99.9 A69.0,69.0 0 0 1 18.2,114.2 L43.8,96.5 A38.0,38.0 0 0 0 110.4,88.7 Z" fill="#1f5fc4"/><path d="M18.2,114.2 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 43.8,96.5 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 27%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 4%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 35%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 35%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>27.0%</td><td>3.9%</td><td>34.5%</td><td>34.6%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>4号車 小田 恭介</td><td>48.5%</td></tr><tr><td>2</td><td>3号車 中澤 央治</td><td>20.4%</td></tr><tr><td>3</td><td>1号車 荻野</td><td>17.4%</td></tr><tr><td>4</td><td>2号車 谷口 幸司</td><td>13.7%</td></tr><tr><td>5</td><td>6号車 立花 成泰</td><td>0.0%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>3号車 中澤 央治</td><td>39.6%</td></tr><tr><td>2</td><td>1号車 荻野</td><td>33.7%</td></tr><tr><td>3</td><td>2号車 谷口 幸司</td><td>26.6%</td></tr><tr><td>4</td><td>6号車 立花 成泰</td><td>0.0%</td></tr><tr><td>5</td><td>5号車 葛西 雄太郎</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 荻野</b></td><td class="diag">—</td><td class="">4.3%</td><td class="">6.4%</td><td class="">37.7%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">51.6%</td></tr><tr><td><b>2 谷口 幸司</b></td><td class="">5.6%</td><td class="diag">—</td><td class="">2.7%</td><td class="">38.7%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">53.0%</td></tr><tr><td><b>3 中澤 央治</b></td><td class="">5.7%</td><td class="">1.8%</td><td class="diag">—</td><td class="">39.0%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">53.5%</td></tr><tr><td><b>4 小田 恭介</b></td><td class="">14.7%</td><td class="">11.6%</td><td class="">17.3%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="">56.3%</td></tr><tr><td><b>5 葛西 雄太郎</b></td><td class="">10.4%</td><td class="">8.2%</td><td class="">12.3%</td><td class="">29.1%</td><td class="diag">—</td><td class="">0.0%</td><td class="">39.9%</td></tr><tr><td><b>6 立花 成泰</b></td><td class="">2.2%</td><td class="">4.2%</td><td class="">6.3%</td><td class="">36.8%</td><td class="">0.0%</td><td class="diag">—</td><td class="">50.5%</td></tr><tr><td><b>7 西森 一稀</b></td><td class="">17.4%</td><td class="">13.7%</td><td class="">20.4%</td><td class="">48.5%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 荻野</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="diag">—</td><td class="">16.6%</td><td class="">24.7%</td><td class="">58.7%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr><tr><td><b>2 谷口 幸司</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">23.4%</td><td class="diag">—</td><td class="">11.2%</td><td class="">65.4%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr><tr><td><b>3 中澤 央治</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">24.3%</td><td class="">7.8%</td><td class="diag">—</td><td class="">67.9%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr><tr><td><b>4 小田 恭介</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">33.7%</td><td class="">26.6%</td><td class="">39.6%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr><tr><td><b>5 葛西 雄太郎</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">22.0%</td><td class="">17.4%</td><td class="">25.9%</td><td class="">34.8%</td><td class="diag">—</td><td class="">0.0%</td><td class="diag">—</td></tr><tr><td><b>6 立花 成泰</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">7.9%</td><td class="">15.3%</td><td class="">22.8%</td><td class="">54.1%</td><td class="">0.0%</td><td class="diag">—</td><td class="diag">—</td></tr><tr><td><b>7 西森 一稀</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">33.7%</td><td class="">26.6%</td><td class="">39.6%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race2" class="race-panel" style="display:none;">
@@ -185,6 +201,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は4号車 森田 康嗣（27.6%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -252,10 +270,8 @@
           <td>49</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>1号車 堀越 翔己</td><td>65.5%</td></tr><tr><td>7号車 立石 拓也</td><td>27.5%</td></tr><tr><td>2号車 山崎 敦雄</td><td>7.0%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>7号車 立石 拓也</td><td>79.6%</td></tr><tr><td>2号車 山崎 敦雄</td><td>20.4%</td></tr><tr><td>3号車 阿部 充宏</td><td>0.0%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -289,13 +305,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 141.4,56.3 L111.5,64.7 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M141.4,56.3 A69.0,69.0 0 0 1 122.2,125.4 L100.9,102.7 A38.0,38.0 0 0 0 111.5,64.7 Z" fill="#e07a1f"/><path d="M122.2,125.4 A69.0,69.0 0 0 1 11.9,47.2 L40.3,59.7 A38.0,38.0 0 0 0 100.9,102.7 Z" fill="#1f5fc4"/><path d="M11.9,47.2 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 40.3,59.7 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 21%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 17%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 44%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 18%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>20.6%</td><td>17.4%</td><td>43.6%</td><td>18.4%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>1号車 堀越 翔己</td><td>65.5%</td></tr><tr><td>2</td><td>7号車 立石 拓也</td><td>27.5%</td></tr><tr><td>3</td><td>2号車 山崎 敦雄</td><td>7.0%</td></tr><tr><td>4</td><td>3号車 阿部 充宏</td><td>0.0%</td></tr><tr><td>5</td><td>6号車 土井 慎二</td><td>0.0%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>7号車 立石 拓也</td><td>79.6%</td></tr><tr><td>2</td><td>2号車 山崎 敦雄</td><td>20.4%</td></tr><tr><td>3</td><td>3号車 阿部 充宏</td><td>0.0%</td></tr><tr><td>4</td><td>6号車 土井 慎二</td><td>0.0%</td></tr><tr><td>5</td><td>5号車 新井 剛央</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 堀越 翔己</b></td><td class="diag">—</td><td class="">10.1%</td><td class="">0.0%</td><td class="">50.4%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">39.5%</td></tr><tr><td><b>2 山崎 敦雄</b></td><td class="">51.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">27.4%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">21.5%</td></tr><tr><td><b>3 阿部 充宏</b></td><td class="">48.5%</td><td class="">5.2%</td><td class="diag">—</td><td class="">25.9%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">20.4%</td></tr><tr><td><b>4 森田 康嗣</b></td><td class="">65.5%</td><td class="">7.0%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="">27.5%</td></tr><tr><td><b>5 新井 剛央</b></td><td class="">48.5%</td><td class="">5.2%</td><td class="">0.0%</td><td class="">25.9%</td><td class="diag">—</td><td class="">0.0%</td><td class="">20.3%</td></tr><tr><td><b>6 土井 慎二</b></td><td class="">27.6%</td><td class="">7.3%</td><td class="">0.0%</td><td class="">36.4%</td><td class="">0.0%</td><td class="diag">—</td><td class="">28.6%</td></tr><tr><td><b>7 立石 拓也</b></td><td class="">60.9%</td><td class="">6.6%</td><td class="">0.0%</td><td class="">32.6%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 堀越 翔己</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="diag">—</td><td class="">20.4%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="">79.6%</td></tr><tr><td><b>2 山崎 敦雄</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">0.0%</td><td class="">56.0%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">44.0%</td></tr><tr><td><b>3 阿部 充宏</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">10.1%</td><td class="diag">—</td><td class="">50.4%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">39.5%</td></tr><tr><td><b>4 森田 康嗣</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">20.4%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="">79.6%</td></tr><tr><td><b>5 新井 剛央</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">10.1%</td><td class="">0.0%</td><td class="">50.4%</td><td class="diag">—</td><td class="">0.0%</td><td class="">39.5%</td></tr><tr><td><b>6 土井 慎二</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">65.5%</td><td class="">7.0%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="diag">—</td><td class="">27.5%</td></tr><tr><td><b>7 立石 拓也</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">16.8%</td><td class="">0.0%</td><td class="">83.2%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race3" class="race-panel" style="display:none;">
@@ -306,6 +329,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は5号車 古屋 琢晶（27.7%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -373,10 +398,8 @@
           <td>66</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>3号車 宮下 貴之</td><td>47.4%</td></tr><tr><td>2号車 藤田 真</td><td>39.6%</td></tr><tr><td>7号車 坂上 忠克</td><td>12.7%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>2号車 藤田 真</td><td>75.3%</td></tr><tr><td>7号車 坂上 忠克</td><td>24.2%</td></tr><tr><td>4号車 池田 伍功羽</td><td>0.5%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -410,13 +433,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 128.0,30.8 L104.1,50.7 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M128.0,30.8 A69.0,69.0 0 0 1 127.0,120.4 L103.6,100.0 A38.0,38.0 0 0 0 104.1,50.7 Z" fill="#e07a1f"/><path d="M127.0,120.4 A69.0,69.0 0 0 1 6.5,83.1 L37.3,79.4 A38.0,38.0 0 0 0 103.6,100.0 Z" fill="#1f5fc4"/><path d="M6.5,83.1 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 37.3,79.4 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 14%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 22%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 37%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 27%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>13.9%</td><td>22.5%</td><td>36.7%</td><td>26.9%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>3号車 宮下 貴之</td><td>47.4%</td></tr><tr><td>2</td><td>2号車 藤田 真</td><td>39.6%</td></tr><tr><td>3</td><td>7号車 坂上 忠克</td><td>12.7%</td></tr><tr><td>4</td><td>4号車 池田 伍功羽</td><td>0.2%</td></tr><tr><td>5</td><td>6号車 城戸崎 隆史</td><td>0.0%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>2号車 藤田 真</td><td>75.3%</td></tr><tr><td>2</td><td>7号車 坂上 忠克</td><td>24.2%</td></tr><tr><td>3</td><td>4号車 池田 伍功羽</td><td>0.5%</td></tr><tr><td>4</td><td>6号車 城戸崎 隆史</td><td>0.0%</td></tr><tr><td>5</td><td>1号車 関根 彰人</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 関根 彰人</b></td><td class="diag">—</td><td class="">26.1%</td><td class="">12.7%</td><td class="">0.2%</td><td class="">52.6%</td><td class="">0.0%</td><td class="">8.4%</td></tr><tr><td><b>2 藤田 真</b></td><td class="">0.0%</td><td class="diag">—</td><td class="">33.9%</td><td class="">0.1%</td><td class="">56.9%</td><td class="">0.0%</td><td class="">9.1%</td></tr><tr><td><b>3 宮下 貴之</b></td><td class="">0.0%</td><td class="">30.0%</td><td class="diag">—</td><td class="">0.2%</td><td class="">60.2%</td><td class="">0.0%</td><td class="">9.6%</td></tr><tr><td><b>4 池田 伍功羽</b></td><td class="">0.0%</td><td class="">10.3%</td><td class="">30.4%</td><td class="diag">—</td><td class="">51.1%</td><td class="">0.0%</td><td class="">8.2%</td></tr><tr><td><b>5 古屋 琢晶</b></td><td class="">0.0%</td><td class="">39.6%</td><td class="">47.4%</td><td class="">0.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">12.7%</td></tr><tr><td><b>6 城戸崎 隆史</b></td><td class="">0.0%</td><td class="">23.0%</td><td class="">27.6%</td><td class="">0.1%</td><td class="">46.3%</td><td class="diag">—</td><td class="">3.0%</td></tr><tr><td><b>7 坂上 忠克</b></td><td class="">0.0%</td><td class="">23.7%</td><td class="">28.4%</td><td class="">0.1%</td><td class="">47.7%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 関根 彰人</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="diag">—</td><td class="">55.1%</td><td class="">26.8%</td><td class="">0.3%</td><td class="diag">—</td><td class="">0.0%</td><td class="">17.7%</td></tr><tr><td><b>2 藤田 真</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">0.0%</td><td class="diag">—</td><td class="">78.7%</td><td class="">0.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">21.1%</td></tr><tr><td><b>3 宮下 貴之</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">0.0%</td><td class="">75.3%</td><td class="diag">—</td><td class="">0.5%</td><td class="diag">—</td><td class="">0.0%</td><td class="">24.2%</td></tr><tr><td><b>4 池田 伍功羽</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">0.0%</td><td class="">21.1%</td><td class="">62.2%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.0%</td><td class="">16.7%</td></tr><tr><td><b>5 古屋 琢晶</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">0.0%</td><td class="">75.3%</td><td class="diag">—</td><td class="">0.5%</td><td class="diag">—</td><td class="">0.0%</td><td class="">24.2%</td></tr><tr><td><b>6 城戸崎 隆史</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">0.0%</td><td class="">42.8%</td><td class="">51.3%</td><td class="">0.3%</td><td class="diag">—</td><td class="diag">—</td><td class="">5.6%</td></tr><tr><td><b>7 坂上 忠克</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">0.0%</td><td class="">45.4%</td><td class="">54.4%</td><td class="">0.3%</td><td class="diag">—</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race4" class="race-panel" style="display:none;">
@@ -427,6 +457,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は4号車 平根 優大（39.0%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -494,10 +526,8 @@
           <td>66</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>7号車 芳野 匠</td><td>42.9%</td></tr><tr><td>5号車 奥原</td><td>23.1%</td></tr><tr><td>1号車 三木 健正</td><td>19.6%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>1号車 三木 健正</td><td>45.1%</td></tr><tr><td>2号車 岩城 佑典</td><td>33.3%</td></tr><tr><td>5号車 奥原</td><td>21.6%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -531,13 +561,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 138.4,47.8 L109.9,60.1 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M138.4,47.8 A69.0,69.0 0 0 1 113.5,132.3 L96.2,106.5 A38.0,38.0 0 0 0 109.9,60.1 Z" fill="#e07a1f"/><path d="M113.5,132.3 A69.0,69.0 0 0 1 6.3,81.7 L37.2,78.7 A38.0,38.0 0 0 0 96.2,106.5 Z" fill="#1f5fc4"/><path d="M6.3,81.7 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 37.2,78.7 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 19%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 22%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 33%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 27%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>18.6%</td><td>22.0%</td><td>32.9%</td><td>26.6%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>7号車 芳野 匠</td><td>42.9%</td></tr><tr><td>2</td><td>5号車 奥原</td><td>23.1%</td></tr><tr><td>3</td><td>1号車 三木 健正</td><td>19.6%</td></tr><tr><td>4</td><td>2号車 岩城 佑典</td><td>14.4%</td></tr><tr><td>5</td><td>3号車 佐藤 謙</td><td>0.0%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>1号車 三木 健正</td><td>45.1%</td></tr><tr><td>2</td><td>2号車 岩城 佑典</td><td>33.3%</td></tr><tr><td>3</td><td>5号車 奥原</td><td>21.6%</td></tr><tr><td>4</td><td>6号車 北川 紋部</td><td>0.0%</td></tr><tr><td>5</td><td>3号車 佐藤 謙</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 三木 健正</b></td><td class="diag">—</td><td class="">0.7%</td><td class="">0.0%</td><td class="">91.6%</td><td class="">2.7%</td><td class="">0.0%</td><td class="">5.0%</td></tr><tr><td><b>2 岩城 佑典</b></td><td class="">0.9%</td><td class="diag">—</td><td class="">0.0%</td><td class="">91.4%</td><td class="">2.7%</td><td class="">0.0%</td><td class="">5.0%</td></tr><tr><td><b>3 佐藤 謙</b></td><td class="">2.3%</td><td class="">1.7%</td><td class="diag">—</td><td class="">92.8%</td><td class="">1.1%</td><td class="">0.0%</td><td class="">2.0%</td></tr><tr><td><b>4 平根 優大</b></td><td class="">19.6%</td><td class="">14.4%</td><td class="">0.0%</td><td class="diag">—</td><td class="">23.1%</td><td class="">0.0%</td><td class="">42.9%</td></tr><tr><td><b>5 奥原</b></td><td class="">2.3%</td><td class="">1.7%</td><td class="">0.0%</td><td class="">93.9%</td><td class="diag">—</td><td class="">0.0%</td><td class="">2.1%</td></tr><tr><td><b>6 北川 紋部</b></td><td class="">2.2%</td><td class="">1.6%</td><td class="">0.0%</td><td class="">88.7%</td><td class="">2.6%</td><td class="diag">—</td><td class="">4.8%</td></tr><tr><td><b>7 芳野 匠</b></td><td class="">2.4%</td><td class="">1.7%</td><td class="">0.0%</td><td class="">94.8%</td><td class="">1.1%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 三木 健正</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="diag">—</td><td class="">8.2%</td><td class="">0.0%</td><td class="diag">—</td><td class="">32.2%</td><td class="">0.0%</td><td class="">59.7%</td></tr><tr><td><b>2 岩城 佑典</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">10.7%</td><td class="diag">—</td><td class="">0.0%</td><td class="diag">—</td><td class="">31.3%</td><td class="">0.0%</td><td class="">58.0%</td></tr><tr><td><b>3 佐藤 謙</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">32.2%</td><td class="">23.8%</td><td class="diag">—</td><td class="diag">—</td><td class="">15.4%</td><td class="">0.0%</td><td class="">28.6%</td></tr><tr><td><b>4 平根 優大</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">45.1%</td><td class="">33.3%</td><td class="">0.0%</td><td class="diag">—</td><td class="">21.6%</td><td class="">0.0%</td><td class="diag">—</td></tr><tr><td><b>5 奥原</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">38.1%</td><td class="">28.1%</td><td class="">0.0%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.0%</td><td class="">33.8%</td></tr><tr><td><b>6 北川 紋部</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">19.6%</td><td class="">14.4%</td><td class="">0.0%</td><td class="diag">—</td><td class="">23.1%</td><td class="diag">—</td><td class="">42.9%</td></tr><tr><td><b>7 芳野 匠</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">45.1%</td><td class="">33.3%</td><td class="">0.0%</td><td class="diag">—</td><td class="">21.6%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race5" class="race-panel" style="display:none;">
@@ -548,6 +585,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は1号車 疋田 力也（17.9%）</div>
         <p class='note'>⚠ 予測1着率が拮抗しています。信頼度が最も高いのは 4号車 船山 真生（信頼度81）です。</p>
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -615,10 +654,8 @@
           <td>70</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>4号車 船山 真生</td><td>41.6%</td></tr><tr><td>5号車 野口 正則</td><td>25.9%</td></tr><tr><td>7号車 上川 直紀</td><td>10.5%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>5号車 野口 正則</td><td>44.3%</td></tr><tr><td>7号車 上川 直紀</td><td>18.0%</td></tr><tr><td>6号車 近藤 修康</td><td>17.1%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -652,13 +689,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 131.6,35.5 L106.1,53.3 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M131.6,35.5 A69.0,69.0 0 0 1 115.1,131.2 L97.0,105.9 A38.0,38.0 0 0 0 106.1,53.3 Z" fill="#e07a1f"/><path d="M115.1,131.2 A69.0,69.0 0 0 1 6.3,81.6 L37.2,78.6 A38.0,38.0 0 0 0 97.0,105.9 Z" fill="#1f5fc4"/><path d="M6.3,81.6 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 37.2,78.6 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 15%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 25%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 33%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 27%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>15.3%</td><td>24.8%</td><td>33.3%</td><td>26.5%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>4号車 船山 真生</td><td>41.6%</td></tr><tr><td>2</td><td>5号車 野口 正則</td><td>25.9%</td></tr><tr><td>3</td><td>7号車 上川 直紀</td><td>10.5%</td></tr><tr><td>4</td><td>6号車 近藤 修康</td><td>10.0%</td></tr><tr><td>5</td><td>3号車 保科 千春</td><td>6.2%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>5号車 野口 正則</td><td>44.3%</td></tr><tr><td>2</td><td>7号車 上川 直紀</td><td>18.0%</td></tr><tr><td>3</td><td>6号車 近藤 修康</td><td>17.1%</td></tr><tr><td>4</td><td>3号車 保科 千春</td><td>10.6%</td></tr><tr><td>5</td><td>2号車 中村 健志</td><td>10.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 疋田 力也</b></td><td class="diag">—</td><td class="">5.9%</td><td class="">6.2%</td><td class="">41.6%</td><td class="">25.9%</td><td class="">10.0%</td><td class="">10.5%</td></tr><tr><td><b>2 中村 健志</b></td><td class="">32.8%</td><td class="diag">—</td><td class="">4.4%</td><td class="">29.7%</td><td class="">7.5%</td><td class="">7.1%</td><td class="">18.5%</td></tr><tr><td><b>3 保科 千春</b></td><td class="">30.8%</td><td class="">3.9%</td><td class="diag">—</td><td class="">27.9%</td><td class="">17.3%</td><td class="">2.7%</td><td class="">17.3%</td></tr><tr><td><b>4 船山 真生</b></td><td class="">38.4%</td><td class="">4.9%</td><td class="">5.2%</td><td class="diag">—</td><td class="">21.6%</td><td class="">8.3%</td><td class="">21.6%</td></tr><tr><td><b>5 野口 正則</b></td><td class="">34.8%</td><td class="">1.8%</td><td class="">4.7%</td><td class="">31.5%</td><td class="diag">—</td><td class="">7.6%</td><td class="">19.6%</td></tr><tr><td><b>6 近藤 修康</b></td><td class="">31.1%</td><td class="">4.0%</td><td class="">1.7%</td><td class="">28.2%</td><td class="">17.5%</td><td class="diag">—</td><td class="">17.5%</td></tr><tr><td><b>7 上川 直紀</b></td><td class="">17.2%</td><td class="">5.4%</td><td class="">5.7%</td><td class="">38.5%</td><td class="">23.9%</td><td class="">9.2%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 疋田 力也</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="diag">—</td><td class="">10.0%</td><td class="">10.6%</td><td class="diag">—</td><td class="">44.3%</td><td class="">17.1%</td><td class="">18.0%</td></tr><tr><td><b>2 中村 健志</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">7.9%</td><td class="">52.8%</td><td class="">13.3%</td><td class="">12.7%</td><td class="">13.3%</td></tr><tr><td><b>3 保科 千春</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">6.7%</td><td class="diag">—</td><td class="">47.3%</td><td class="">29.4%</td><td class="">4.6%</td><td class="">11.9%</td></tr><tr><td><b>4 船山 真生</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">10.0%</td><td class="">10.6%</td><td class="diag">—</td><td class="">44.3%</td><td class="">17.1%</td><td class="">18.0%</td></tr><tr><td><b>5 野口 正則</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">3.4%</td><td class="">8.8%</td><td class="">58.9%</td><td class="diag">—</td><td class="">14.1%</td><td class="">14.8%</td></tr><tr><td><b>6 近藤 修康</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">6.8%</td><td class="">2.9%</td><td class="">48.2%</td><td class="">30.0%</td><td class="diag">—</td><td class="">12.1%</td></tr><tr><td><b>7 上川 直紀</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">28.0%</td><td class="">8.8%</td><td class="">9.3%</td><td class="diag">—</td><td class="">38.9%</td><td class="">15.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race6" class="race-panel" style="display:none;">
@@ -669,6 +713,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は2号車 中嶋 宣成（35.1%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -736,10 +782,8 @@
           <td>54</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>3号車 長谷部 龍一</td><td>79.2%</td></tr><tr><td>7号車 佐々木 和紀</td><td>18.1%</td></tr><tr><td>6号車 吉川 起也</td><td>2.1%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>7号車 佐々木 和紀</td><td>92.2%</td></tr><tr><td>6号車 吉川 起也</td><td>4.3%</td></tr><tr><td>1号車 隅田 洋介</td><td>2.9%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -773,13 +817,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 140.5,53.4 L111.0,63.1 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M140.5,53.4 A69.0,69.0 0 0 1 106.8,136.2 L92.5,108.7 A38.0,38.0 0 0 0 111.0,63.1 Z" fill="#e07a1f"/><path d="M106.8,136.2 A69.0,69.0 0 0 1 6.2,69.8 L37.2,72.2 A38.0,38.0 0 0 0 92.5,108.7 Z" fill="#1f5fc4"/><path d="M6.2,69.8 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 37.2,72.2 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 20%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 22%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 34%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 24%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>19.9%</td><td>22.5%</td><td>33.8%</td><td>23.8%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>3号車 長谷部 龍一</td><td>79.2%</td></tr><tr><td>2</td><td>7号車 佐々木 和紀</td><td>18.1%</td></tr><tr><td>3</td><td>6号車 吉川 起也</td><td>2.1%</td></tr><tr><td>4</td><td>1号車 隅田 洋介</td><td>0.6%</td></tr><tr><td>5</td><td>5号車 山本 紳貴</td><td>0.1%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>7号車 佐々木 和紀</td><td>92.2%</td></tr><tr><td>2</td><td>6号車 吉川 起也</td><td>4.3%</td></tr><tr><td>3</td><td>1号車 隅田 洋介</td><td>2.9%</td></tr><tr><td>4</td><td>5号車 山本 紳貴</td><td>0.4%</td></tr><tr><td>5</td><td>4号車 久保田 泰弘</td><td>0.2%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 隅田 洋介</b></td><td class="diag">—</td><td class="">52.7%</td><td class="">37.6%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">1.0%</td><td class="">8.6%</td></tr><tr><td><b>2 中嶋 宣成</b></td><td class="">0.6%</td><td class="diag">—</td><td class="">79.2%</td><td class="">0.0%</td><td class="">0.1%</td><td class="">2.1%</td><td class="">18.1%</td></tr><tr><td><b>3 長谷部 龍一</b></td><td class="">0.5%</td><td class="">93.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.0%</td><td class="">0.3%</td><td class="">6.1%</td></tr><tr><td><b>4 久保田 泰弘</b></td><td class="">0.4%</td><td class="">73.1%</td><td class="">21.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.6%</td><td class="">4.8%</td></tr><tr><td><b>5 山本 紳貴</b></td><td class="">0.4%</td><td class="">75.2%</td><td class="">21.8%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.6%</td><td class="">2.0%</td></tr><tr><td><b>6 吉川 起也</b></td><td class="">0.4%</td><td class="">84.1%</td><td class="">9.9%</td><td class="">0.0%</td><td class="">0.0%</td><td class="diag">—</td><td class="">5.6%</td></tr><tr><td><b>7 佐々木 和紀</b></td><td class="">0.4%</td><td class="">76.8%</td><td class="">22.2%</td><td class="">0.0%</td><td class="">0.0%</td><td class="">0.6%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 隅田 洋介</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">79.6%</td><td class="">0.0%</td><td class="">0.1%</td><td class="">2.1%</td><td class="">18.2%</td></tr><tr><td><b>2 中嶋 宣成</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">2.9%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.2%</td><td class="">0.4%</td><td class="">4.3%</td><td class="">92.2%</td></tr><tr><td><b>3 長谷部 龍一</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="">2.9%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.2%</td><td class="">0.4%</td><td class="">4.3%</td><td class="">92.2%</td></tr><tr><td><b>4 久保田 泰弘</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="">0.6%</td><td class="diag">—</td><td class="">79.2%</td><td class="diag">—</td><td class="">0.1%</td><td class="">2.1%</td><td class="">18.1%</td></tr><tr><td><b>5 山本 紳貴</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="">0.6%</td><td class="diag">—</td><td class="">88.8%</td><td class="">0.1%</td><td class="diag">—</td><td class="">2.3%</td><td class="">8.2%</td></tr><tr><td><b>6 吉川 起也</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="">1.1%</td><td class="diag">—</td><td class="">63.1%</td><td class="">0.1%</td><td class="">0.1%</td><td class="diag">—</td><td class="">35.5%</td></tr><tr><td><b>7 佐々木 和紀</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="">0.7%</td><td class="diag">—</td><td class="">96.7%</td><td class="">0.1%</td><td class="">0.0%</td><td class="">2.5%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race7" class="race-panel" style="display:none;">
@@ -790,6 +841,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は1号車 上田 尭弥（31.8%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -857,10 +910,8 @@
           <td>21</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>2号車 佐山 寛明</td><td>78.4%</td></tr><tr><td>3号車 早坂 秀悟</td><td>16.7%</td></tr><tr><td>5号車 松田 治之</td><td>3.6%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>3号車 早坂 秀悟</td><td>58.1%</td></tr><tr><td>5号車 松田 治之</td><td>30.7%</td></tr><tr><td>7号車 庄子 信弘</td><td>11.1%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -894,13 +945,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 124.9,27.3 L102.4,48.8 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M124.9,27.3 A69.0,69.0 0 0 1 76.5,144.0 L75.9,112.9 A38.0,38.0 0 0 0 102.4,48.8 Z" fill="#e07a1f"/><path d="M76.5,144.0 A69.0,69.0 0 0 1 54.7,9.1 L63.8,38.7 A38.0,38.0 0 0 0 75.9,112.9 Z" fill="#1f5fc4"/><path d="M54.7,9.1 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 63.8,38.7 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 13%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 37%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 46%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 5%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>12.9%</td><td>36.8%</td><td>45.6%</td><td>4.8%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>2号車 佐山 寛明</td><td>78.4%</td></tr><tr><td>2</td><td>3号車 早坂 秀悟</td><td>16.7%</td></tr><tr><td>3</td><td>5号車 松田 治之</td><td>3.6%</td></tr><tr><td>4</td><td>7号車 庄子 信弘</td><td>1.3%</td></tr><tr><td>5</td><td>4号車 佐方 良行</td><td>0.0%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>3号車 早坂 秀悟</td><td>58.1%</td></tr><tr><td>2</td><td>5号車 松田 治之</td><td>30.7%</td></tr><tr><td>3</td><td>7号車 庄子 信弘</td><td>11.1%</td></tr><tr><td>4</td><td>6号車 佐藤 健太</td><td>0.0%</td></tr><tr><td>5</td><td>4号車 佐方 良行</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 上田 尭弥</b></td><td class="diag">—</td><td class="">78.4%</td><td class="">16.7%</td><td class="">0.0%</td><td class="">3.6%</td><td class="">0.0%</td><td class="">1.3%</td></tr><tr><td><b>2 佐山 寛明</b></td><td class="">91.6%</td><td class="diag">—</td><td class="">4.9%</td><td class="">0.0%</td><td class="">2.6%</td><td class="">0.0%</td><td class="">0.9%</td></tr><tr><td><b>3 早坂 秀悟</b></td><td class="">77.6%</td><td class="">19.4%</td><td class="diag">—</td><td class="">0.0%</td><td class="">2.2%</td><td class="">0.0%</td><td class="">0.8%</td></tr><tr><td><b>4 佐方 良行</b></td><td class="">74.5%</td><td class="">18.6%</td><td class="">4.0%</td><td class="diag">—</td><td class="">2.1%</td><td class="">0.0%</td><td class="">0.8%</td></tr><tr><td><b>5 松田 治之</b></td><td class="">57.1%</td><td class="">35.2%</td><td class="">7.5%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.2%</td></tr><tr><td><b>6 佐藤 健太</b></td><td class="">56.7%</td><td class="">34.9%</td><td class="">7.5%</td><td class="">0.0%</td><td class="">0.6%</td><td class="diag">—</td><td class="">0.2%</td></tr><tr><td><b>7 庄子 信弘</b></td><td class="">56.8%</td><td class="">35.0%</td><td class="">7.5%</td><td class="">0.0%</td><td class="">0.6%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 上田 尭弥</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">58.1%</td><td class="">0.0%</td><td class="">30.7%</td><td class="">0.0%</td><td class="">11.1%</td></tr><tr><td><b>2 佐山 寛明</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">58.1%</td><td class="">0.0%</td><td class="">30.7%</td><td class="">0.0%</td><td class="">11.1%</td></tr><tr><td><b>3 早坂 秀悟</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">86.7%</td><td class="diag">—</td><td class="">0.0%</td><td class="">9.8%</td><td class="">0.0%</td><td class="">3.5%</td></tr><tr><td><b>4 佐方 良行</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">73.2%</td><td class="">15.6%</td><td class="diag">—</td><td class="">8.2%</td><td class="">0.0%</td><td class="">3.0%</td></tr><tr><td><b>5 松田 治之</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">82.0%</td><td class="">17.5%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.6%</td></tr><tr><td><b>6 佐藤 健太</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">80.7%</td><td class="">17.2%</td><td class="">0.0%</td><td class="">1.5%</td><td class="diag">—</td><td class="">0.5%</td></tr><tr><td><b>7 庄子 信弘</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">81.2%</td><td class="">17.3%</td><td class="">0.0%</td><td class="">1.5%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race8" class="race-panel" style="display:none;">
@@ -911,6 +969,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は1号車 土屋 壮登（25.6%）</div>
         <p class='note'>⚠ 予測1着率が拮抗しています。信頼度が最も高いのは 2号車 田村 大（信頼度71）です。</p>
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -978,10 +1038,8 @@
           <td>64</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>5号車 河合 佑弥</td><td>68.6%</td></tr><tr><td>2号車 田村 大</td><td>28.6%</td></tr><tr><td>7号車 佐々木 翔一</td><td>1.1%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>2号車 田村 大</td><td>80.6%</td></tr><tr><td>7号車 佐々木 翔一</td><td>7.9%</td></tr><tr><td>4号車 高原 仁志</td><td>6.2%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -1015,13 +1073,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 141.8,92.1 L111.8,84.4 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M141.8,92.1 A69.0,69.0 0 0 1 113.9,132.0 L96.4,106.4 A38.0,38.0 0 0 0 111.8,84.4 Z" fill="#e07a1f"/><path d="M113.9,132.0 A69.0,69.0 0 1 1 39.0,16.1 L55.2,42.6 A38.0,38.0 0 1 0 96.4,106.4 Z" fill="#1f5fc4"/><path d="M39.0,16.1 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 55.2,42.6 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 29%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 11%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 51%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 9%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>29.0%</td><td>11.5%</td><td>50.8%</td><td>8.7%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>5号車 河合 佑弥</td><td>68.6%</td></tr><tr><td>2</td><td>2号車 田村 大</td><td>28.6%</td></tr><tr><td>3</td><td>7号車 佐々木 翔一</td><td>1.1%</td></tr><tr><td>4</td><td>4号車 高原 仁志</td><td>0.9%</td></tr><tr><td>5</td><td>3号車 佐伯 翔</td><td>0.8%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>2号車 田村 大</td><td>80.6%</td></tr><tr><td>2</td><td>7号車 佐々木 翔一</td><td>7.9%</td></tr><tr><td>3</td><td>4号車 高原 仁志</td><td>6.2%</td></tr><tr><td>4</td><td>3号車 佐伯 翔</td><td>5.3%</td></tr><tr><td>5</td><td>6号車 荒川 仁</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 土屋 壮登</b></td><td class="diag">—</td><td class="">28.6%</td><td class="">0.8%</td><td class="">0.9%</td><td class="">68.6%</td><td class="">0.0%</td><td class="">1.1%</td></tr><tr><td><b>2 田村 大</b></td><td class="">66.3%</td><td class="diag">—</td><td class="">1.8%</td><td class="">2.1%</td><td class="">27.0%</td><td class="">0.0%</td><td class="">2.7%</td></tr><tr><td><b>3 佐伯 翔</b></td><td class="">21.8%</td><td class="">22.5%</td><td class="diag">—</td><td class="">0.7%</td><td class="">54.1%</td><td class="">0.0%</td><td class="">0.9%</td></tr><tr><td><b>4 高原 仁志</b></td><td class="">21.8%</td><td class="">22.5%</td><td class="">0.6%</td><td class="diag">—</td><td class="">54.1%</td><td class="">0.0%</td><td class="">0.9%</td></tr><tr><td><b>5 河合 佑弥</b></td><td class="">78.7%</td><td class="">13.3%</td><td class="">2.2%</td><td class="">2.6%</td><td class="diag">—</td><td class="">0.0%</td><td class="">3.2%</td></tr><tr><td><b>6 荒川 仁</b></td><td class="">59.6%</td><td class="">10.1%</td><td class="">1.6%</td><td class="">1.9%</td><td class="">24.3%</td><td class="diag">—</td><td class="">2.4%</td></tr><tr><td><b>7 佐々木 翔一</b></td><td class="">21.9%</td><td class="">22.6%</td><td class="">0.6%</td><td class="">0.7%</td><td class="">54.2%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 土屋 壮登</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="diag">—</td><td class="">80.6%</td><td class="">5.3%</td><td class="">6.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">7.9%</td></tr><tr><td><b>2 田村 大</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">2.5%</td><td class="">2.9%</td><td class="">90.9%</td><td class="">0.0%</td><td class="">3.7%</td></tr><tr><td><b>3 佐伯 翔</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">67.0%</td><td class="">28.0%</td><td class="diag">—</td><td class="">2.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">2.7%</td></tr><tr><td><b>4 高原 仁志</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">67.3%</td><td class="">28.1%</td><td class="">1.8%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.0%</td><td class="">2.8%</td></tr><tr><td><b>5 河合 佑弥</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">80.6%</td><td class="">5.3%</td><td class="">6.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">7.9%</td></tr><tr><td><b>6 荒川 仁</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">27.4%</td><td class="">1.8%</td><td class="">2.1%</td><td class="">65.9%</td><td class="diag">—</td><td class="">2.7%</td></tr><tr><td><b>7 佐々木 翔一</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">67.7%</td><td class="">28.3%</td><td class="">1.9%</td><td class="">2.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race9" class="race-panel" style="display:none;">
@@ -1032,6 +1097,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は4号車 市橋 司優人（26.9%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -1099,10 +1166,8 @@
           <td>43</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>3号車 望月 永悟</td><td>43.0%</td></tr><tr><td>1号車 坂本 健太郎</td><td>32.6%</td></tr><tr><td>2号車 上杉 嘉槻</td><td>18.2%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>1号車 坂本 健太郎</td><td>57.3%</td></tr><tr><td>2号車 上杉 嘉槻</td><td>32.0%</td></tr><tr><td>7号車 鈴木 謙太郎</td><td>9.8%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -1136,13 +1201,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 143.8,69.8 L112.8,72.2 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M143.8,69.8 A69.0,69.0 0 0 1 111.1,133.8 L94.9,107.3 A38.0,38.0 0 0 0 112.8,72.2 Z" fill="#e07a1f"/><path d="M111.1,133.8 A69.0,69.0 0 0 1 10.7,100.1 L39.6,88.8 A38.0,38.0 0 0 0 94.9,107.3 Z" fill="#1f5fc4"/><path d="M10.7,100.1 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 39.6,88.8 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 24%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 17%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 28%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 31%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>23.8%</td><td>17.4%</td><td>27.9%</td><td>30.9%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>3号車 望月 永悟</td><td>43.0%</td></tr><tr><td>2</td><td>1号車 坂本 健太郎</td><td>32.6%</td></tr><tr><td>3</td><td>2号車 上杉 嘉槻</td><td>18.2%</td></tr><tr><td>4</td><td>7号車 鈴木 謙太郎</td><td>5.6%</td></tr><tr><td>5</td><td>5号車 山下 一輝</td><td>0.5%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>1号車 坂本 健太郎</td><td>57.3%</td></tr><tr><td>2</td><td>2号車 上杉 嘉槻</td><td>32.0%</td></tr><tr><td>3</td><td>7号車 鈴木 謙太郎</td><td>9.8%</td></tr><tr><td>4</td><td>5号車 山下 一輝</td><td>0.9%</td></tr><tr><td>5</td><td>6号車 水谷 良和</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 坂本 健太郎</b></td><td class="diag">—</td><td class="">8.5%</td><td class="">20.1%</td><td class="">68.6%</td><td class="">0.1%</td><td class="">0.0%</td><td class="">2.6%</td></tr><tr><td><b>2 上杉 嘉槻</b></td><td class="">14.5%</td><td class="diag">—</td><td class="">19.1%</td><td class="">65.2%</td><td class="">0.2%</td><td class="">0.0%</td><td class="">1.0%</td></tr><tr><td><b>3 望月 永悟</b></td><td class="">16.0%</td><td class="">8.9%</td><td class="diag">—</td><td class="">72.0%</td><td class="">0.3%</td><td class="">0.0%</td><td class="">2.7%</td></tr><tr><td><b>4 市橋 司優人</b></td><td class="">32.6%</td><td class="">18.2%</td><td class="">43.0%</td><td class="diag">—</td><td class="">0.5%</td><td class="">0.0%</td><td class="">5.6%</td></tr><tr><td><b>5 山下 一輝</b></td><td class="">5.8%</td><td class="">8.0%</td><td class="">19.0%</td><td class="">64.7%</td><td class="diag">—</td><td class="">0.0%</td><td class="">2.5%</td></tr><tr><td><b>6 水谷 良和</b></td><td class="">5.8%</td><td class="">8.0%</td><td class="">19.0%</td><td class="">64.6%</td><td class="">0.1%</td><td class="diag">—</td><td class="">2.5%</td></tr><tr><td><b>7 鈴木 謙太郎</b></td><td class="">14.2%</td><td class="">3.2%</td><td class="">18.7%</td><td class="">63.7%</td><td class="">0.2%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 坂本 健太郎</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="diag">—</td><td class="">27.2%</td><td class="">64.2%</td><td class="diag">—</td><td class="">0.3%</td><td class="">0.0%</td><td class="">8.3%</td></tr><tr><td><b>2 上杉 嘉槻</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">41.6%</td><td class="diag">—</td><td class="">54.8%</td><td class="diag">—</td><td class="">0.7%</td><td class="">0.0%</td><td class="">2.9%</td></tr><tr><td><b>3 望月 永悟</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">57.3%</td><td class="">32.0%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.9%</td><td class="">0.0%</td><td class="">9.8%</td></tr><tr><td><b>4 市橋 司優人</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">57.3%</td><td class="">32.0%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.9%</td><td class="">0.0%</td><td class="">9.8%</td></tr><tr><td><b>5 山下 一輝</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">16.5%</td><td class="">22.7%</td><td class="">53.8%</td><td class="diag">—</td><td class="diag">—</td><td class="">0.0%</td><td class="">7.0%</td></tr><tr><td><b>6 水谷 良和</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">16.5%</td><td class="">22.7%</td><td class="">53.6%</td><td class="diag">—</td><td class="">0.3%</td><td class="diag">—</td><td class="">6.9%</td></tr><tr><td><b>7 鈴木 謙太郎</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">39.0%</td><td class="">8.8%</td><td class="">51.5%</td><td class="diag">—</td><td class="">0.6%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race10" class="race-panel" style="display:none;">
@@ -1153,6 +1225,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は1号車 高久保 雄介（35.0%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -1220,10 +1294,8 @@
           <td>56</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>3号車 原 誠宏</td><td>60.8%</td></tr><tr><td>2号車 中村 龍吉</td><td>27.5%</td></tr><tr><td>7号車 福田 滉</td><td>11.3%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>2号車 中村 龍吉</td><td>80.7%</td></tr><tr><td>7号車 福田 滉</td><td>18.7%</td></tr><tr><td>5号車 大洞 翔平</td><td>0.5%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -1257,13 +1329,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 138.2,47.4 L109.8,59.8 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M138.2,47.4 A69.0,69.0 0 0 1 143.4,83.8 L112.6,79.9 A38.0,38.0 0 0 0 109.8,59.8 Z" fill="#e07a1f"/><path d="M143.4,83.8 A69.0,69.0 0 1 1 37.0,17.4 L54.1,43.3 A38.0,38.0 0 1 0 112.6,79.9 Z" fill="#1f5fc4"/><path d="M37.0,17.4 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 54.1,43.3 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 18%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 9%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 64%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 9%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>18.5%</td><td>8.6%</td><td>63.7%</td><td>9.3%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>3号車 原 誠宏</td><td>60.8%</td></tr><tr><td>2</td><td>2号車 中村 龍吉</td><td>27.5%</td></tr><tr><td>3</td><td>7号車 福田 滉</td><td>11.3%</td></tr><tr><td>4</td><td>5号車 大洞 翔平</td><td>0.3%</td></tr><tr><td>5</td><td>4号車 上野 雅彦</td><td>0.0%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>2号車 中村 龍吉</td><td>80.7%</td></tr><tr><td>2</td><td>7号車 福田 滉</td><td>18.7%</td></tr><tr><td>3</td><td>5号車 大洞 翔平</td><td>0.5%</td></tr><tr><td>4</td><td>4号車 上野 雅彦</td><td>0.1%</td></tr><tr><td>5</td><td>6号車 高橋 昇平</td><td>0.0%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 高久保 雄介</b></td><td class="diag">—</td><td class="">27.5%</td><td class="">60.8%</td><td class="">0.0%</td><td class="">0.3%</td><td class="">0.0%</td><td class="">11.3%</td></tr><tr><td><b>2 中村 龍吉</b></td><td class="">72.4%</td><td class="diag">—</td><td class="">23.2%</td><td class="">0.0%</td><td class="">0.1%</td><td class="">0.0%</td><td class="">4.3%</td></tr><tr><td><b>3 原 誠宏</b></td><td class="">82.9%</td><td class="">12.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">0.1%</td><td class="">0.0%</td><td class="">4.9%</td></tr><tr><td><b>4 上野 雅彦</b></td><td class="">71.1%</td><td class="">1.7%</td><td class="">22.8%</td><td class="diag">—</td><td class="">0.1%</td><td class="">0.0%</td><td class="">4.2%</td></tr><tr><td><b>5 大洞 翔平</b></td><td class="">65.5%</td><td class="">9.5%</td><td class="">21.0%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.0%</td><td class="">3.9%</td></tr><tr><td><b>6 高橋 昇平</b></td><td class="">65.5%</td><td class="">9.5%</td><td class="">21.0%</td><td class="">0.0%</td><td class="">0.1%</td><td class="diag">—</td><td class="">3.9%</td></tr><tr><td><b>7 福田 滉</b></td><td class="">68.1%</td><td class="">9.9%</td><td class="">21.9%</td><td class="">0.0%</td><td class="">0.1%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 高久保 雄介</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="diag">—</td><td class="">80.7%</td><td class="diag">—</td><td class="">0.1%</td><td class="">0.5%</td><td class="">0.0%</td><td class="">18.7%</td></tr><tr><td><b>2 中村 龍吉</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">84.0%</td><td class="">0.0%</td><td class="">0.4%</td><td class="">0.0%</td><td class="">15.6%</td></tr><tr><td><b>3 原 誠宏</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">80.7%</td><td class="diag">—</td><td class="">0.1%</td><td class="">0.5%</td><td class="">0.0%</td><td class="">18.7%</td></tr><tr><td><b>4 上野 雅彦</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">13.4%</td><td class="">72.8%</td><td class="diag">—</td><td class="">0.4%</td><td class="">0.0%</td><td class="">13.5%</td></tr><tr><td><b>5 大洞 翔平</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">40.3%</td><td class="">50.3%</td><td class="">0.1%</td><td class="diag">—</td><td class="">0.0%</td><td class="">9.3%</td></tr><tr><td><b>6 高橋 昇平</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">40.2%</td><td class="">50.2%</td><td class="">0.1%</td><td class="">0.2%</td><td class="diag">—</td><td class="">9.3%</td></tr><tr><td><b>7 福田 滉</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">44.3%</td><td class="">55.4%</td><td class="">0.1%</td><td class="">0.3%</td><td class="">0.0%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race11" class="race-panel" style="display:none;">
@@ -1274,6 +1353,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は7号車 北井 佑季（34.6%）</div>
         
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -1341,10 +1422,8 @@
           <td>68</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>5号車 牧田 悠生</td><td>72.3%</td></tr><tr><td>1号車 菊地 圭尚</td><td>21.2%</td></tr><tr><td>3号車 岡田 亮太</td><td>3.0%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>1号車 菊地 圭尚</td><td>60.1%</td></tr><tr><td>3号車 岡田 亮太</td><td>21.3%</td></tr><tr><td>2号車 村上 翔馬</td><td>14.2%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -1378,13 +1457,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 142.4,89.8 L112.1,83.1 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M142.4,89.8 A69.0,69.0 0 0 1 68.8,143.7 L71.6,112.8 A38.0,38.0 0 0 0 112.1,83.1 Z" fill="#e07a1f"/><path d="M68.8,143.7 A69.0,69.0 0 0 1 12.4,46.0 L40.6,59.0 A38.0,38.0 0 0 0 71.6,112.8 Z" fill="#1f5fc4"/><path d="M12.4,46.0 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 40.6,59.0 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 28%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 23%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 30%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 18%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>28.4%</td><td>23.0%</td><td>30.5%</td><td>18.1%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>5号車 牧田 悠生</td><td>72.3%</td></tr><tr><td>2</td><td>1号車 菊地 圭尚</td><td>21.2%</td></tr><tr><td>3</td><td>3号車 岡田 亮太</td><td>3.0%</td></tr><tr><td>4</td><td>2号車 村上 翔馬</td><td>2.0%</td></tr><tr><td>5</td><td>6号車 佐野 梅一</td><td>1.3%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>1号車 菊地 圭尚</td><td>60.1%</td></tr><tr><td>2</td><td>3号車 岡田 亮太</td><td>21.3%</td></tr><tr><td>3</td><td>2号車 村上 翔馬</td><td>14.2%</td></tr><tr><td>4</td><td>6号車 佐野 梅一</td><td>3.8%</td></tr><tr><td>5</td><td>4号車 坂田 章</td><td>0.6%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 菊地 圭尚</b></td><td class="diag">—</td><td class="">0.4%</td><td class="">0.7%</td><td class="">0.0%</td><td class="">6.4%</td><td class="">0.1%</td><td class="">92.3%</td></tr><tr><td><b>2 村上 翔馬</b></td><td class="">4.1%</td><td class="diag">—</td><td class="">0.2%</td><td class="">0.0%</td><td class="">13.9%</td><td class="">0.3%</td><td class="">81.5%</td></tr><tr><td><b>3 岡田 亮太</b></td><td class="">4.1%</td><td class="">0.2%</td><td class="diag">—</td><td class="">0.0%</td><td class="">14.0%</td><td class="">0.3%</td><td class="">81.5%</td></tr><tr><td><b>4 坂田 章</b></td><td class="">4.1%</td><td class="">0.4%</td><td class="">0.6%</td><td class="diag">—</td><td class="">13.8%</td><td class="">0.3%</td><td class="">80.9%</td></tr><tr><td><b>5 牧田 悠生</b></td><td class="">2.0%</td><td class="">0.5%</td><td class="">0.7%</td><td class="">0.0%</td><td class="diag">—</td><td class="">0.1%</td><td class="">96.7%</td></tr><tr><td><b>6 佐野 梅一</b></td><td class="">1.8%</td><td class="">0.4%</td><td class="">0.7%</td><td class="">0.0%</td><td class="">6.3%</td><td class="diag">—</td><td class="">90.7%</td></tr><tr><td><b>7 北井 佑季</b></td><td class="">21.2%</td><td class="">2.0%</td><td class="">3.0%</td><td class="">0.1%</td><td class="">72.3%</td><td class="">1.3%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 菊地 圭尚</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="diag">—</td><td class="">5.8%</td><td class="">8.7%</td><td class="">0.2%</td><td class="">83.7%</td><td class="">1.5%</td><td class="diag">—</td></tr><tr><td><b>2 村上 翔馬</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">22.0%</td><td class="diag">—</td><td class="">1.3%</td><td class="">0.1%</td><td class="">75.2%</td><td class="">1.4%</td><td class="diag">—</td></tr><tr><td><b>3 岡田 亮太</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">22.1%</td><td class="">0.9%</td><td class="diag">—</td><td class="">0.1%</td><td class="">75.5%</td><td class="">1.4%</td><td class="diag">—</td></tr><tr><td><b>4 坂田 章</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">21.2%</td><td class="">2.0%</td><td class="">3.1%</td><td class="diag">—</td><td class="">72.4%</td><td class="">1.3%</td><td class="diag">—</td></tr><tr><td><b>5 牧田 悠生</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">60.1%</td><td class="">14.2%</td><td class="">21.3%</td><td class="">0.6%</td><td class="diag">—</td><td class="">3.8%</td><td class="diag">—</td></tr><tr><td><b>6 佐野 梅一</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">19.9%</td><td class="">4.7%</td><td class="">7.1%</td><td class="">0.2%</td><td class="">68.1%</td><td class="diag">—</td><td class="diag">—</td></tr><tr><td><b>7 北井 佑季</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">60.1%</td><td class="">14.2%</td><td class="">21.3%</td><td class="">0.6%</td><td class="diag">—</td><td class="">3.8%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
     <div id="race12" class="race-panel" style="display:none;">
@@ -1395,6 +1481,8 @@
         </div>
         <div class="banner-normal">拮抗レース。最有力は3号車 酒井 雄多（20.6%）</div>
         <p class='note'>⚠ 予測1着率が拮抗しています。信頼度が最も高いのは 5号車 河村 雅章（信頼度78）です。</p>
+        <div class="line-info-block ok">サイトから検出した並び予想: 「←」<br>解釈結果: （解析できませんでした）</div>
+        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
           <tbody>
@@ -1462,10 +1550,8 @@
           <td>64</td>
         </tr></tbody>
         </table>
-        <div class="sub-wrap"><h4>2着候補</h4><table class='sub'><tr><td>5号車 河村 雅章</td><td>53.8%</td></tr><tr><td>7号車 山下 渡</td><td>28.2%</td></tr><tr><td>6号車 山賀 雅仁</td><td>5.3%</td></tr></table><h4>3着候補</h4><table class='sub'><tr><td>7号車 山下 渡</td><td>70.5%</td></tr><tr><td>2号車 緒方 将樹</td><td>10.7%</td></tr><tr><td>1号車 島川 将貴</td><td>8.4%</td></tr></table></div>
 
         <div class="chart-block">
-          <h4>号車別 予測1着率</h4>
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
       <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
       
@@ -1499,13 +1585,20 @@
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
         </div>
+
         <div class="chart-block">
-          <h4>決まり手構成比（AI予測ベース）</h4>
-          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <svg viewBox="0 0 150 150" width="150" height="150"><path d="M75.0,6.0 A69.0,69.0 0 0 1 97.3,9.7 L87.3,39.1 A38.0,38.0 0 0 0 75.0,37.0 Z" fill="#c1443b"/><path d="M97.3,9.7 A69.0,69.0 0 0 1 123.4,124.2 L101.6,102.0 A38.0,38.0 0 0 0 87.3,39.1 Z" fill="#e07a1f"/><path d="M123.4,124.2 A69.0,69.0 0 0 1 13.1,44.6 L40.9,58.3 A38.0,38.0 0 0 0 101.6,102.0 Z" fill="#1f5fc4"/><path d="M13.1,44.6 A69.0,69.0 0 0 1 75.0,6.0 L75.0,37.0 A38.0,38.0 0 0 0 40.9,58.3 Z" fill="#2f8f4e"/></svg>
-      <div style="display:flex;flex-direction:column;gap:4px;"><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#c1443b;display:inline-block;"></span>逃げ 5%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#e07a1f;display:inline-block;"></span>捲り 32%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1f5fc4;display:inline-block;"></span>差し 45%</div><div style="display:flex;align-items:center;gap:5px;font-size:11.5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2f8f4e;display:inline-block;"></span>マーク 18%</div></div>
-    </div>
-        </div>
+    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
+    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
+    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>5.2%</td><td>32.4%</td><td>44.6%</td><td>17.7%</td></tr></tbody></table></div>
+        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>5号車 河村 雅章</td><td>53.8%</td></tr><tr><td>2</td><td>7号車 山下 渡</td><td>28.2%</td></tr><tr><td>3</td><td>6号車 山賀 雅仁</td><td>5.3%</td></tr><tr><td>4</td><td>4号車 大西 貴晃</td><td>5.0%</td></tr><tr><td>5</td><td>2号車 緒方 将樹</td><td>4.3%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>7号車 山下 渡</td><td>70.5%</td></tr><tr><td>2</td><td>2号車 緒方 将樹</td><td>10.7%</td></tr><tr><td>3</td><td>1号車 島川 将貴</td><td>8.4%</td></tr><tr><td>4</td><td>6号車 山賀 雅仁</td><td>5.4%</td></tr><tr><td>5</td><td>4号車 大西 貴晃</td><td>5.1%</td></tr></table></div></div>
+        <div class="chart-block">
+    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 島川 将貴</b></td><td class="diag">—</td><td class="">3.3%</td><td class="">25.9%</td><td class="">3.8%</td><td class="">41.3%</td><td class="">4.1%</td><td class="">21.6%</td></tr><tr><td><b>2 緒方 将樹</b></td><td class="">2.6%</td><td class="diag">—</td><td class="">26.0%</td><td class="">3.9%</td><td class="">41.6%</td><td class="">4.1%</td><td class="">21.8%</td></tr><tr><td><b>3 酒井 雄多</b></td><td class="">3.3%</td><td class="">4.3%</td><td class="diag">—</td><td class="">5.0%</td><td class="">53.8%</td><td class="">5.3%</td><td class="">28.2%</td></tr><tr><td><b>4 大西 貴晃</b></td><td class="">5.4%</td><td class="">6.8%</td><td class="">53.9%</td><td class="diag">—</td><td class="">14.2%</td><td class="">1.4%</td><td class="">18.3%</td></tr><tr><td><b>5 河村 雅章</b></td><td class="">6.1%</td><td class="">7.8%</td><td class="">61.9%</td><td class="">1.5%</td><td class="diag">—</td><td class="">1.6%</td><td class="">21.0%</td></tr><tr><td><b>6 山賀 雅仁</b></td><td class="">5.4%</td><td class="">6.8%</td><td class="">54.0%</td><td class="">1.3%</td><td class="">14.2%</td><td class="diag">—</td><td class="">18.3%</td></tr><tr><td><b>7 山下 渡</b></td><td class="">5.0%</td><td class="">6.3%</td><td class="">50.0%</td><td class="">3.0%</td><td class="">32.4%</td><td class="">3.2%</td><td class="diag">—</td></tr></tbody></table></div></div>
+        <div class="chart-block">
+    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
+    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
+    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 島川 将貴</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="diag">—</td><td class="">6.1%</td><td class="">47.9%</td><td class="">2.9%</td><td class="diag">—</td><td class="">3.1%</td><td class="">40.1%</td></tr><tr><td><b>2 緒方 将樹</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">4.8%</td><td class="diag">—</td><td class="">48.5%</td><td class="">2.9%</td><td class="diag">—</td><td class="">3.1%</td><td class="">40.6%</td></tr><tr><td><b>3 酒井 雄多</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">8.4%</td><td class="">10.7%</td><td class="diag">—</td><td class="">5.1%</td><td class="diag">—</td><td class="">5.4%</td><td class="">70.5%</td></tr><tr><td><b>4 大西 貴晃</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">5.6%</td><td class="">7.1%</td><td class="diag">—</td><td class="diag">—</td><td class="">36.5%</td><td class="">3.6%</td><td class="">47.2%</td></tr><tr><td><b>5 河村 雅章</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">8.4%</td><td class="">10.7%</td><td class="diag">—</td><td class="">5.1%</td><td class="diag">—</td><td class="">5.4%</td><td class="">70.5%</td></tr><tr><td><b>6 山賀 雅仁</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">5.6%</td><td class="">7.2%</td><td class="diag">—</td><td class="">3.4%</td><td class="">36.6%</td><td class="diag">—</td><td class="">47.3%</td></tr><tr><td><b>7 山下 渡</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">4.7%</td><td class="">5.9%</td><td class="diag">—</td><td class="">7.0%</td><td class="">75.0%</td><td class="">7.4%</td><td class="diag">—</td></tr></tbody></table></div></div>
       </div>
     </div>
 </main>
