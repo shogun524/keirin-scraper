@@ -153,10 +153,15 @@ def compute_line_adjustment(racers, line_map, kimarite_ratio, position_strength,
     return adj
 
 
-def compute_adjusted_rates(base_scores, adj_mults):
+def compute_adjusted_rates(base_scores, adj_mults, sharpness=1):
     raw = [max(s * a, 0) for s, a in zip(base_scores, adj_mults)]
     total = sum(raw) or 1.0
-    return [(v / total) * 100 for v in raw]
+    rates = [(v / total) * 100 for v in raw]
+    if sharpness and sharpness != 1:
+        powered = [max(v, 0.001) ** sharpness for v in rates]
+        psum = sum(powered) or 1.0
+        rates = [(p / psum) * 100 for p in powered]
+    return rates
 
 
 def compute_confidence(racers):
@@ -304,6 +309,93 @@ def compute_third_place_matrix(racers, base_scores, dominant, line_map,
 
 
 # ============================================================
+# 3連単フォーメーション
+# 1着・2着・3着それぞれに複数の候補をまとめて提示する（フォーメーション買い）。
+# ・1着軸：予測1着率が高い上位n1車
+# ・2着候補：各1着軸から見た2着候補の上位n2車を統合（重複除去）
+# ・3着候補：各(1着軸,2着候補)の組み合わせから見た3着候補の上位n3車を統合
+# 実際に成立する組み合わせと、その合計確率（カバー率）・点数を算出する。
+# ============================================================
+def compute_formation_bet(racers, base_scores, dominant, line_map, final_rates,
+                           adv_bonus, adv_penalty, line_follow_bonus, sharpness, n1, n2, n3):
+    n = len(racers)
+    if n < 3:
+        return None
+
+    sorted_by_rate = sorted(
+        [{"car": r["car"], "name": r["name"], "idx": i, "rate": final_rates[i]} for i, r in enumerate(racers)],
+        key=lambda x: -x["rate"])
+    first_candidates = [x["car"] for x in sorted_by_rate[:n1]]
+
+    second_pool = []
+    second_cache = {}
+    for fc in first_candidates:
+        wi = next(i for i, r in enumerate(racers) if r["car"] == fc)
+        cands = compute_second_place_candidates(
+            racers, wi, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+        second_cache[fc] = cands
+        for c in cands[:n2]:
+            if c["car"] not in second_pool:
+                second_pool.append(c["car"])
+
+    third_pool = []
+    third_cache = {}
+    for fc in first_candidates:
+        wi = next(i for i, r in enumerate(racers) if r["car"] == fc)
+        for sc in second_pool:
+            if sc == fc:
+                continue
+            si = next(i for i, r in enumerate(racers) if r["car"] == sc)
+            cands = compute_third_place_candidates(
+                racers, wi, si, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+            third_cache[(fc, sc)] = cands
+            for c in cands[:n3]:
+                if c["car"] not in third_pool:
+                    third_pool.append(c["car"])
+
+    combos = []
+    for fc in first_candidates:
+        wi = next(i for i, r in enumerate(racers) if r["car"] == fc)
+        first_prob = final_rates[wi] / 100
+        if first_prob <= 0:
+            continue
+        second_by_car = {c["car"]: c for c in second_cache.get(fc, [])}
+        for sc in second_pool:
+            if sc == fc or sc not in second_by_car:
+                continue
+            second_prob = second_by_car[sc]["prob"] / 100
+            if second_prob <= 0:
+                continue
+            third_by_car = {c["car"]: c for c in third_cache.get((fc, sc), [])}
+            for tc in third_pool:
+                if tc in (fc, sc) or tc not in third_by_car:
+                    continue
+                third_prob = third_by_car[tc]["prob"] / 100
+                if third_prob <= 0:
+                    continue
+                fc_name = next(r["name"] for r in racers if r["car"] == fc)
+                sc_name = next(r["name"] for r in racers if r["car"] == sc)
+                tc_name = next(r["name"] for r in racers if r["car"] == tc)
+                combos.append({
+                    "first": fc, "first_name": fc_name,
+                    "second": sc, "second_name": sc_name,
+                    "third": tc, "third_name": tc_name,
+                    "prob": first_prob * second_prob * third_prob * 100,
+                })
+    combos.sort(key=lambda x: -x["prob"])
+    total_prob = sum(c["prob"] for c in combos)
+
+    return {
+        "first_candidates": first_candidates,
+        "second_candidates": second_pool,
+        "third_candidates": third_pool,
+        "combos": combos,
+        "total_combos": len(combos),
+        "total_prob": total_prob,
+    }
+
+
+# ============================================================
 # ライン予想テキストの解析（並び予想: "← 4先行 1追込 6押え先 2追込 7押え先 3追込 5追込"）
 # 「追込」だけが同じラインの継続を表し、それ以外の役割語（先行・押え先・自在・追い上げ等）は
 # 新しいラインの先頭を表す、という競輪の並び予想表記の慣例に基づいて解析する。
@@ -355,6 +447,7 @@ DEFAULT_SETTINGS = {
     "line_strength": 30, "line_support": 8, "solo_penalty": 6,
     "line_follow_bonus": 45, "adv_bonus": 10, "adv_penalty": 15,
     "sharpness": 3.5,
+    "formation_n1": 2, "formation_n2": 4, "formation_n3": 5,
 }
 
 
@@ -380,7 +473,7 @@ def predict_race(racers, line_prediction_text, settings=None):
     line_adj = compute_line_adjustment(
         racers, line_map, kimarite_ratio, s["line_strength"], s["line_support"], s["solo_penalty"])
     adj = [k * l for k, l in zip(kimarite_adj, line_adj)]
-    final_rates = compute_adjusted_rates(base_scores, adj)
+    final_rates = compute_adjusted_rates(base_scores, adj, s["sharpness"])
 
     rows = []
     for i, r in enumerate(racers):
@@ -412,6 +505,11 @@ def predict_race(racers, line_prediction_text, settings=None):
         racers, base_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
         second_place_matrix=second_place_matrix)
 
+    formation = compute_formation_bet(
+        racers, base_scores, dominant, line_map, final_rates,
+        s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
+        s["formation_n1"], s["formation_n2"], s["formation_n3"])
+
     return {
         "rows": rows,
         "top": top,
@@ -419,6 +517,7 @@ def predict_race(racers, line_prediction_text, settings=None):
         "third_candidates": third_candidates[:5],
         "second_place_matrix": second_place_matrix,
         "third_place_matrix": third_place_matrix,
+        "formation": formation,
         "kimarite_ratio": kimarite_ratio,
         "pace_index": pace_index,
         "line_map": line_map,

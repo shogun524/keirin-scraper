@@ -315,6 +315,9 @@ def parse_race_detail(html, venue, race_no):
     race_title_match = re.search(r"([ＡＢＦS][A-Za-z0-9級予選特選準決勝一般ＧＩＩＩＩＩ　 ]{1,20})", full_text)
     race_title = race_title_match.group(1).strip() if race_title_match else ""
 
+    deadline_match = re.search(r"締切(?:時間)?\s*(\d{1,2}:\d{2})", full_text)
+    deadline = deadline_match.group(1) if deadline_match else None
+
     line_pred_text = ""
     line_role_re = re.compile(r"\d+\s*(先行|追込|押え先|自在|追い上げ|捲|差|逃)")
     for i, ln in enumerate(lines):
@@ -352,13 +355,32 @@ def parse_race_detail(html, venue, race_no):
         unique_racers.append(r)
     unique_racers.sort(key=lambda r: r["car"])
 
-    race_info = {"venue": venue, "race_no": race_no, "title": race_title}
+    race_info = {"venue": venue, "race_no": race_no, "title": race_title, "deadline": deadline}
     return race_info, unique_racers, line_pred_text
 
 
 def fetch_race(venue, race_no, url):
     html = _get(url)
     race_info, racers, line_pred_text = parse_race_detail(html, venue, race_no)
+
+    if not line_pred_text:
+        # 診断用ログ：なぜ拾えなかったのか手がかりを残す
+        in_raw_html = "並び予想" in html
+        print(f"[DEBUG] {venue} {race_no}R: 並び予想を検出できませんでした。"
+              f"（生HTML内に文字列「並び予想」を含むか: {in_raw_html}）")
+        if in_raw_html:
+            pos = html.find("並び予想")
+            snippet = re.sub(r"\s+", " ", html[pos:pos + 300])
+            print(f"[DEBUG] 該当箇所の生HTML抜粋: {snippet}")
+        else:
+            # 「並び」だけでも探してみる（表記ゆれの可能性）
+            if "並び" in html:
+                pos = html.find("並び")
+                snippet = re.sub(r"\s+", " ", html[pos:pos + 200])
+                print(f"[DEBUG] 「並び」を含む箇所の生HTML抜粋: {snippet}")
+            else:
+                print("[DEBUG] 生HTML内に「並び」という文字列自体が見つかりませんでした。")
+
     return race_info, racers, line_pred_text
 
 

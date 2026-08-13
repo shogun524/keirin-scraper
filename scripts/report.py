@@ -206,6 +206,35 @@ def render_third_place_matrix_table(racers, matrix):
     <div class="matrix-scroll"><table class="main matrix"><thead><tr>{header}</tr></thead><tbody>{rows_html}</tbody></table></div>"""
 
 
+def render_formation_table(formation):
+    if not formation:
+        return "<h4>表6：3連単フォーメーション</h4><p class='dim'>選手数が少ないため計算できません。</p>"
+
+    def badges(cars):
+        return " ".join(f"<span class='car-mini'>{c}</span>" for c in cars)
+
+    rows_html = ""
+    for idx, c in enumerate(formation["combos"], 1):
+        highlight = "background:#fff4de;" if idx <= 3 else ""
+        rows_html += (f"<tr style='{highlight}'><td>{idx}</td>"
+                      f"<td>{c['first']} → {c['second']} → {c['third']}</td>"
+                      f"<td>{c['first_name']} → {c['second_name']} → {c['third_name']}</td>"
+                      f"<td><b>{c['prob']:.1f}%</b></td></tr>")
+
+    return f"""
+    <h4>表6：3連単フォーメーション</h4>
+    <p class="dim" style="margin:0 0 6px;">1着軸・2着候補・3着候補をそれぞれ複数車まとめた「フォーメーション買い」形式です。</p>
+    <div class="formation-summary">
+      <div><span class="f-label">1着軸</span>{badges(formation['first_candidates'])}</div>
+      <div><span class="f-label">2着候補</span>{badges(formation['second_candidates'])}</div>
+      <div><span class="f-label">3着候補</span>{badges(formation['third_candidates'])}</div>
+      <div><span class="f-label">点数</span><b>{formation['total_combos']}点</b>
+        <span class="f-label" style="margin-left:10px;">カバー率</span><b>約{formation['total_prob']:.1f}%</b></div>
+    </div>
+    <table class="main"><thead><tr><th>順位</th><th>組み合わせ</th><th>選手名</th><th>確率</th></tr></thead>
+    <tbody>{rows_html}</tbody></table>"""
+
+
 def render_line_info_block(result):
     raw_text = (result.get("line_prediction_text") or "").strip()
     line_map = result.get("line_map") or {}
@@ -276,13 +305,17 @@ def render_race_card(race_data, tab_id):
     second_third_html = render_second_third_lists(result)
     second_matrix_html = render_second_place_matrix_table(result["rows"], result["second_place_matrix"])
     third_matrix_html = render_third_place_matrix_table(result["rows"], result["third_place_matrix"])
+    formation_html = render_formation_table(result.get("formation"))
 
+    deadline = info.get("deadline")
+    deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
     return f"""
     <div id="{tab_id}" class="race-panel" style="display:none;">
       <div class="race-card">
         <div class="race-head">
           <span class="raceno">{info['race_no']}R</span>
           <span class="title">{title}</span>
+          {deadline_html}
         </div>
         <div class="{banner_class}">{banner_text}</div>
         {close_note}
@@ -301,6 +334,7 @@ def render_race_card(race_data, tab_id):
         <div class="chart-block sub-wrap">{second_third_html}</div>
         <div class="chart-block">{second_matrix_html}</div>
         <div class="chart-block">{third_matrix_html}</div>
+        <div class="chart-block">{formation_html}</div>
       </div>
     </div>"""
 
@@ -309,12 +343,15 @@ RACE_PANEL_STYLE = """
   main{ max-width:720px; margin:0 auto; padding:14px 10px 60px; }
   .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; }
   .tab-btn{ flex:0 0 auto; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 14px;
-            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); }
+            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); text-align:center; }
+  .tab-btn .tab-deadline{ font-size:10px; font-weight:400; color:var(--ink-soft); }
+  .tab-btn.active .tab-deadline{ color:#cdd7e3; }
   .tab-btn.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
   .race-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; }
   .race-head{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }
   .race-head .raceno{ background:var(--navy); color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }
   .race-head .title{ color:var(--ink-soft); font-size:13px; }
+  .race-head .deadline{ margin-left:auto; background:#f0ece0; border-radius:4px; padding:1px 8px; font-size:12px; color:var(--ink); font-weight:700; }
   .banner-high{ background:#fff4de; border:1px solid var(--gold); border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
   .banner-normal{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
   .note{ font-size:12px; color:#b5482f; margin:4px 0; }
@@ -338,6 +375,11 @@ RACE_PANEL_STYLE = """
   .line-info-block{ font-size:12px; border-radius:6px; padding:8px 10px; margin:8px 0; }
   .line-info-block.ok{ background:#e7f3ea; color:#2f7a4f; border:1px solid #b9dcc3; }
   .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
+  .formation-summary{ background:#f7f5ee; border:1px dashed var(--border); border-radius:8px; padding:10px 12px; margin-bottom:10px; font-size:13px; }
+  .formation-summary > div{ margin-bottom:5px; }
+  .f-label{ display:inline-block; min-width:56px; color:var(--ink-soft); font-size:11.5px; margin-right:4px; }
+  .car-mini{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%;
+             background:var(--navy); color:#fff; font-size:11px; font-weight:700; margin-right:2px; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:3px; }
@@ -358,17 +400,41 @@ window.addEventListener('DOMContentLoaded', function(){
 """
 
 
-def render_venue_page(venue, races, date):
+def _minutes_until_deadline(deadline_str, now):
+    """
+    "HH:MM" 形式の締切時刻と現在時刻(datetime)から、締切までの残り分数を返す。
+    すでに締切を過ぎている場合は非常に大きな値を返し、並び替えで後方に回す。
+    締切時刻が取得できていない場合も同様に後方に回す。
+    """
+    if not deadline_str:
+        return 10**9
+    try:
+        h, m = map(int, deadline_str.split(":"))
+    except (ValueError, AttributeError):
+        return 10**9
+    deadline_minutes = h * 60 + m
+    now_minutes = now.hour * 60 + now.minute
+    diff = deadline_minutes - now_minutes
+    if diff < -5:  # 5分以上過ぎているものは「終了」扱いで後方へ
+        return 10**9 + (-diff)
+    return diff if diff >= 0 else 0
+
+
+def render_venue_page(venue, races, date, now=None):
+    now = now or datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
     date_str = date.strftime("%Y年%m月%d日")
     venue_name = VENUE_NAMES.get(venue, venue)
-    races = sorted(races, key=lambda r: r["race_info"]["race_no"])
+    # 現在時刻に一番近い締切のレースを先頭に表示する
+    races = sorted(races, key=lambda r: _minutes_until_deadline(r["race_info"].get("deadline"), now))
 
     tabs = ""
     panels = ""
     for r in races:
         no = r["race_info"]["race_no"]
+        deadline = r["race_info"].get("deadline")
         tab_id = f"race{no}"
-        tabs += f'<button class="tab-btn" onclick="showTab(\'{tab_id}\', this)">{no}R</button>'
+        label = f"{no}R" + (f"<br><span class='tab-deadline'>{deadline}</span>" if deadline else "")
+        tabs += f'<button class="tab-btn" onclick="showTab(\'{tab_id}\', this)">{label}</button>'
         panels += render_race_card(r, tab_id)
 
     return f"""<!DOCTYPE html>
@@ -385,7 +451,7 @@ def render_venue_page(venue, races, date):
     <h1>&larr; <a href="../index.html">{venue_name}競輪</a></h1>
     <span class="date">{date_str}</span>
   </div>
-  <p>タブでレースを切り替えられます。</p>
+  <p>タブでレースを切り替えられます（現在時刻に締切が近い順）。</p>
 </header>
 <main>
   <div class="tab-bar">{tabs if tabs else "<p>本日このレース場のデータは取得できませんでした。</p>"}</div>
@@ -397,8 +463,9 @@ def render_venue_page(venue, races, date):
 </html>"""
 
 
-def render_index(all_race_data, date=None):
+def render_index(all_race_data, date=None, now=None):
     date = date or datetime.date.today()
+    now = now or datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
     weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
     date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
 
@@ -406,6 +473,37 @@ def render_index(all_race_data, date=None):
     for rd in all_race_data:
         v = rd["race_info"]["venue"]
         by_venue.setdefault(v, []).append(rd)
+
+    # 各競輪場について、現在時刻に一番近い（＝次に締切を迎える）レースを求める
+    venue_next_deadline = {}  # slug -> (minutes_until, race_no, deadline_str)
+    for slug, races in by_venue.items():
+        best = None
+        for rd in races:
+            info = rd["race_info"]
+            mins = _minutes_until_deadline(info.get("deadline"), now)
+            if best is None or mins < best[0]:
+                best = (mins, info["race_no"], info.get("deadline"))
+        if best:
+            venue_next_deadline[slug] = best
+
+    # 全競輪場の中で、今もっとも締切が近いところ
+    featured_html = ""
+    if venue_next_deadline:
+        featured_slug = min(venue_next_deadline, key=lambda s: venue_next_deadline[s][0])
+        mins, race_no, deadline_str = venue_next_deadline[featured_slug]
+        name = VENUE_NAMES.get(featured_slug, featured_slug)
+        if deadline_str is None:
+            time_note = ""
+        elif mins >= 10**9:
+            time_note = f"締切 {deadline_str}（発売終了）"
+        else:
+            time_note = f"締切 {deadline_str}（あと約{mins}分）"
+        featured_html = f"""
+        <a class="featured-card" href="{featured_slug}/index.html">
+          <span class="featured-label">締切が最も近いレース場</span>
+          <span class="featured-name">{name}競輪 {race_no}R</span>
+          <span class="featured-time">{time_note}</span>
+        </a>"""
 
     def venue_card(slug):
         name = VENUE_NAMES.get(slug, slug)
@@ -417,10 +515,15 @@ def render_index(all_race_data, date=None):
         race_count = len(races_sorted)
         rough = any(rd["prediction"] and not rd["prediction"]["is_high_prob"] for rd in races_sorted)
         badge = '<span class="tag rough">荒れ注意</span>' if rough else ""
+        next_info = venue_next_deadline.get(slug)
+        deadline_badge = ""
+        if next_info and next_info[2] and next_info[0] < 10**9:
+            deadline_badge = f'<span class="meta-deadline">次走 {next_info[2]}</span>'
         return f"""
         <a class="venue-card active" href="{slug}/index.html">
           <span class="vname">{name}</span>
           <span class="meta">{race_count}レース{badge}</span>
+          {deadline_badge}
         </a>"""
 
     rows_html = ""
@@ -444,7 +547,13 @@ def render_index(all_race_data, date=None):
   .venue-card.active .meta{{ font-size:11px; color:var(--ink-soft); }}
   .venue-card.inactive{{ background:#eee9dd; opacity:.55; }}
   .venue-card.inactive .vname{{ font-size:13px; color:#9a9488; }}
+  .venue-card .meta-deadline{{ font-size:10px; color:#b5482f; font-weight:700; }}
   .tag.rough{{ display:inline-block; margin-left:4px; background:#f4d9b0; color:#8a5a12; border-radius:4px; padding:0 4px; font-size:10px; }}
+  .featured-card{{ display:flex; flex-direction:column; gap:2px; background:linear-gradient(135deg,#fff4de,#fbe9c9);
+                    border:1px solid var(--gold); border-radius:8px; padding:12px 14px; margin-bottom:16px; }}
+  .featured-label{{ font-size:11px; color:#8a5a12; font-weight:700; }}
+  .featured-name{{ font-size:16px; font-weight:800; color:var(--ink); }}
+  .featured-time{{ font-size:12.5px; color:#8a5a12; }}
   @media (max-width:520px){{ .venue-row{{ grid-template-columns:repeat(2,1fr); }} }}
 </style>
 </head>
@@ -458,6 +567,7 @@ def render_index(all_race_data, date=None):
   <p style="color:#8fa0b5;font-size:11px;">最終更新: {datetime.datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")} (JST)</p>
 </header>
 <main>
+  {featured_html}
   <h2 class="section">本日の開催場</h2>
   {rows_html if by_venue else "<p style='text-align:center;color:#5b6472;'>本日は取得できたレースがありませんでした。</p>"}
 </main>
