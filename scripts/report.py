@@ -554,22 +554,26 @@ def render_index(all_race_data, date=None, now=None):
       const races = ALL_RACES_DATA;
       const nowJstMinutes = getNowJstMinutes();
 
-      // 「締切が最も近いレース場」カード
-      const box = document.getElementById('featuredCardBox');
+      // 「まもなく締切のレース」一覧（1件だけだと直前すぎて買えないことがあるため、近い順に複数件表示する）
+      const box = document.getElementById('upcomingListBox');
       if(races.length && box){
-        let best = null, bestMins = Infinity;
-        races.forEach(function(r){
-          const mins = minutesUntilDeadline(r.deadline, nowJstMinutes);
-          if(mins < bestMins){ bestMins = mins; best = r; }
+        const withMins = races.map(function(r){
+          return {r: r, mins: minutesUntilDeadline(r.deadline, nowJstMinutes)};
         });
-        if(best){
-          let timeNote;
-          if(bestMins >= 1e9){ timeNote = '締切 ' + best.deadline + '（発売終了）'; }
-          else { timeNote = '締切 ' + best.deadline + '（あと約' + bestMins + '分）'; }
-          box.innerHTML = '<a class="featured-card" href="' + best.venue + '/index.html">' +
-            '<span class="featured-label">締切が最も近いレース場</span>' +
-            '<span class="featured-name">' + best.name + '競輪 ' + best.race_no + 'R</span>' +
-            '<span class="featured-time">' + timeNote + '</span></a>';
+        withMins.sort(function(a,b){ return a.mins - b.mins; });
+        const upcoming = withMins.filter(function(x){ return x.mins < 1e9; }).slice(0, 8);
+        if(upcoming.length){
+          let html = '<h2 class="section">まもなく締切のレース</h2><div class="upcoming-list">';
+          upcoming.forEach(function(x, idx){
+            const r = x.r;
+            const soon = x.mins <= 5 ? ' soon' : '';
+            html += '<a class="upcoming-row' + soon + '" href="' + r.venue + '/index.html">' +
+              '<span class="up-rank">' + (idx+1) + '</span>' +
+              '<span class="up-name">' + r.name + '競輪 ' + r.race_no + 'R</span>' +
+              '<span class="up-time">' + r.deadline + '（あと約' + x.mins + '分）</span></a>';
+          });
+          html += '</div>';
+          box.innerHTML = html;
         }
       }
 
@@ -612,11 +616,14 @@ def render_index(all_race_data, date=None, now=None):
   .venue-card.inactive{{ background:#eee9dd; opacity:.55; }}
   .venue-card.inactive .vname{{ font-size:13px; color:#9a9488; }}
   .venue-card.active .meta.next-race-meta{{ font-size:11px; color:#b5482f; font-weight:700; }}
-  .featured-card{{ display:flex; flex-direction:column; gap:2px; background:linear-gradient(135deg,#fff4de,#fbe9c9);
-                    border:1px solid var(--gold); border-radius:8px; padding:12px 14px; margin-bottom:16px; }}
-  .featured-label{{ font-size:11px; color:#8a5a12; font-weight:700; }}
-  .featured-name{{ font-size:16px; font-weight:800; color:var(--ink); }}
-  .featured-time{{ font-size:12.5px; color:#8a5a12; }}
+  .upcoming-list{{ display:flex; flex-direction:column; gap:6px; margin-bottom:20px; }}
+  .upcoming-row{{ display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--border);
+                  border-radius:8px; padding:9px 12px; font-size:13px; }}
+  .upcoming-row.soon{{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }}
+  .up-rank{{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%;
+             background:var(--navy); color:#fff; font-size:11px; font-weight:700; flex:0 0 auto; }}
+  .up-name{{ font-weight:700; color:var(--ink); flex:1; }}
+  .up-time{{ font-size:12px; color:#8a5a12; font-weight:700; white-space:nowrap; }}
   @media (max-width:520px){{ .venue-row{{ grid-template-columns:repeat(2,1fr); }} }}
 </style>
 </head>
@@ -630,7 +637,7 @@ def render_index(all_race_data, date=None, now=None):
   <p style="color:#8fa0b5;font-size:11px;">最終更新: {datetime.datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")} (JST)</p>
 </header>
 <main>
-  <div id="featuredCardBox"></div>
+  <div id="upcomingListBox"></div>
   <h2 class="section">本日の開催場</h2>
   {rows_html if by_venue else "<p style='text-align:center;color:#5b6472;'>本日は取得できたレースがありませんでした。</p>"}
 </main>

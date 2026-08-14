@@ -11,16 +11,14 @@ import math
 # 学習済みモデル（2020〜2025年・43,650レース／出走306,577人分のデータで学習）
 # ============================================================
 MODEL = {
-    "intercept": 0.08025409628633257,
-    "field_size_weight": 0.00853568299742552,
+    "intercept": -2.2616982157477947,
+    "field_size_weight": -0.14499,
     "weights": {
-        "総評": -0.17441777667716216, "枠番": 0.0030596892764230155, "ギヤ倍数": 0.043544445460426275,
-        "競走得点": -0.006948280966864034, "年齢": 0.0011073490366931872, "期別": -0.006020843473665809,
-        "×": 0.0112119209187471, "▲": 0.0010803586778149069, "△": 0.005733939297667219,
-        "○": 0.010015564675994619, "◎": 0.037199070221735596, "注": 0.004132824493750195, "★": 0.025401795838274687,
-        "両": 0.0047269896598747165, "追": -0.02957627880837295, "逃": 0.024849289147551967,
-        "A1": -0.016776242355594165, "A2": -0.02402381564712001, "A3": -0.032634468028605916,
-        "L1": -0.009585017758308476, "S1": 0.02608815611052486, "S2": -0.004735058188392152, "SS": 0.06166644587262267,
+        "総評": -0.96958, "枠番": -0.13012, "ギヤ倍数": 0.62829,
+        "競走得点": 0.49021, "年齢": -0.53961, "期別": 0.28119,
+        "×": 1.76224, "▲": 0.43882, "△": 1.22149,
+        "○": 2.10183, "◎": 3.21779, "注": 0.90767, "★": -0.05684,
+        "両": -0.6957, "追": -0.89212, "逃": -0.62603,
     },
 }
 RANK_NORM_COLS = ["総評", "枠番", "ギヤ倍数", "競走得点", "年齢", "期別"]
@@ -52,6 +50,54 @@ def rank_normalize(values):
     return [sorted_vals.index(v) / (n - 1) for v in values]
 
 
+OLD_MODEL = {
+    "intercept": 0.08025409628633257,
+    "field_size_weight": 0.00853568299742552,
+    "weights": {
+        "総評": -0.17441777667716216, "枠番": 0.0030596892764230155, "ギヤ倍数": 0.043544445460426275,
+        "競走得点": -0.006948280966864034, "年齢": 0.0011073490366931872, "期別": -0.006020843473665809,
+        "×": 0.0112119209187471, "▲": 0.0010803586778149069, "△": 0.005733939297667219,
+        "○": 0.010015564675994619, "◎": 0.037199070221735596, "注": 0.004132824493750195, "★": 0.025401795838274687,
+        "両": 0.0047269896598747165, "追": -0.02957627880837295, "逃": 0.024849289147551967,
+        "A1": -0.016776242355594165, "A2": -0.02402381564712001, "A3": -0.032634468028605916,
+        "L1": -0.009585017758308476, "S1": 0.02608815611052486, "S2": -0.004735058188392152, "SS": 0.06166644587262267,
+    },
+}
+
+
+def compute_old_model_place_rates(racers):
+    """
+    旧モデル（Ridge回帰・複数着順を含む実績ベース）による「予測3着内率」の参考値。
+    新モデル（ロジスティック回帰）が純粋な勝率であるのに対し、旧モデルは総合的な
+    実績の強さを反映した値に近いため、3着以内（複勝圏）に来る強さの目安として使う。
+    毎レース必ず3人が3着以内に入るため、100%ではなく min(3,頭数)×100% を
+    合計値として正規化する。
+    """
+    cols = {}
+    field_map = {"総評": "souhyou", "枠番": "waku", "ギヤ倍数": "gear", "競走得点": "score", "年齢": "age", "期別": "period"}
+    for c in RANK_NORM_COLS:
+        cols[c] = rank_normalize([r[field_map[c]] for r in racers])
+    field_size = len(racers)
+
+    raw = []
+    for i, r in enumerate(racers):
+        s = OLD_MODEL["intercept"]
+        for c in RANK_NORM_COLS:
+            s += OLD_MODEL["weights"][c] * cols[c][i]
+        s += OLD_MODEL["field_size_weight"] * field_size
+        if r.get("mark") in MARKS:
+            s += OLD_MODEL["weights"][r["mark"]]
+        if r.get("tactic") in TACTICS:
+            s += OLD_MODEL["weights"][r["tactic"]]
+        if r.get("rank") in RANKS:
+            s += OLD_MODEL["weights"][r["rank"]]
+        raw.append(max(s, 0.005))
+
+    slots = min(3, len(racers))
+    total = sum(raw) or 1.0
+    return [min((v / total) * 100 * slots, 99) for v in raw]
+
+
 def compute_base_scores(racers):
     """racers: list of dict with souhyou, waku, gear, score, age, period, mark, tactic, rank"""
     cols = {}
@@ -62,17 +108,19 @@ def compute_base_scores(racers):
     field_size = len(racers)
     scores = []
     for i, r in enumerate(racers):
-        s = MODEL["intercept"]
+        z = MODEL["intercept"]
         for c in RANK_NORM_COLS:
-            s += MODEL["weights"][c] * cols[c][i]
-        s += MODEL["field_size_weight"] * field_size
+            z += MODEL["weights"][c] * cols[c][i]
+        z += MODEL["field_size_weight"] * field_size
         if r.get("mark") in MARKS:
-            s += MODEL["weights"][r["mark"]]
+            z += MODEL["weights"][r["mark"]]
         if r.get("tactic") in TACTICS:
-            s += MODEL["weights"][r["tactic"]]
-        if r.get("rank") in RANKS:
-            s += MODEL["weights"][r["rank"]]
-        scores.append(max(s, 0.005))
+            z += MODEL["weights"][r["tactic"]]
+        # 級班（RANKS）は競走得点との相関が強く学習を不安定にするため、
+        # 新モデルでは特徴量から除外している（表示・他の補正では引き続き使用）
+        # ロジスティック回帰なのでシグモイド関数で0〜1の確率に変換する
+        p = 1 / (1 + math.exp(-z))
+        scores.append(max(p, 0.001))
     return scores
 
 
@@ -93,7 +141,7 @@ def compute_kimarite_prediction(racers, line_map):
         if info and info["line_size"] > 1:
             pos_key = min(info["position"], 3)
             context = LINE_CONTEXT_KIMARITE_PRIOR[pos_key]
-            personal_weight = 0.3 + 0.5 * sample_weight
+            personal_weight = 0.55 + 0.35 * sample_weight  # 実績厚いほど本人傾向重視（0.55〜0.9。以前は0.3〜0.8）
             probs = {t: personal_weight * personal[t] + (1 - personal_weight) * context[t] for t in KIMARITE}
 
         s = sum(probs.values()) or 1.0
@@ -103,24 +151,30 @@ def compute_kimarite_prediction(racers, line_map):
     return results
 
 
-def compute_kimarite_adjustment(racers, dominant, solo_bonus, cong_penalty, chase_bonus):
+def compute_kimarite_adjustment(racers, dominant, kimarite_ratio):
     front_weight = [d["probs"]["逃"] + d["probs"]["捲"] * 0.6 for d in dominant]
     total_front = sum(front_weight)
     pace_index = (total_front / len(racers)) if racers else 0.0
     nige_count = sum(1 for d in dominant if d["type"] == "逃")
 
-    adj = []
+    dev_scores = []
     for i, r in enumerate(racers):
         d = dominant[i]
-        mult = 1.0
         confidence_factor = max(0.0, min(1.0, (d["ratio"] - 0.25) / 0.75))
+        # レース全体の決まり手構成の中で、自分の予測決まり手がどれだけ主流か（0〜1）。
+        # これが無いと「独走できそうか」だけを見てしまい、レース全体では滅多に決まらない
+        # 決まり手（構成比が最も低いもの）を予測された選手まで高く評価してしまう。
+        composition_share = (kimarite_ratio.get(d["type"], 25.0) / 100) if kimarite_ratio else 0.25
+
+        situational = 0.25
         if d["type"] in ("逃", "捲"):
-            share = (front_weight[i] / total_front) if total_front > 0 else 1.0
-            mult *= 1 + (solo_bonus / 100 * share - cong_penalty / 100 * (1 - share)) * confidence_factor
+            situational = (front_weight[i] / total_front) if total_front > 0 else 1.0 / len(racers)
         elif d["type"] in ("差", "マ"):
-            mult *= 1 + chase_bonus / 100 * pace_index * 2 * confidence_factor
-        adj.append(max(mult, 0.3))
-    return adj, nige_count, pace_index
+            situational = pace_index
+
+        dev_scores.append(confidence_factor * composition_share * (0.5 + 0.5 * situational))
+
+    return dev_scores, nige_count, pace_index
 
 
 def compute_kimarite_ratio(dominant):
@@ -153,15 +207,22 @@ def compute_line_adjustment(racers, line_map, kimarite_ratio, position_strength,
     return adj
 
 
-def compute_adjusted_rates(base_scores, adj_mults, sharpness=1):
-    raw = [max(s * a, 0) for s, a in zip(base_scores, adj_mults)]
+def compute_adjusted_rates(base_scores, line_adj_mults, dev_scores, development_weight, sharpness=1):
+    w = max(0.0, min(0.8, development_weight / 100))  # 0〜0.8にクリップ（基礎スコアの重みを完全にゼロにはしない）
+    raw = []
+    for i, s in enumerate(base_scores):
+        base_term = max(s, 0.0005) ** (1 - w)
+        dev_term = (max(dev_scores[i] if dev_scores else 0, 0.01) + 0.02) ** w
+        raw.append(max(base_term * dev_term * line_adj_mults[i], 0))
+    # 表示用：基礎スコア単体に対して最終的に何倍になったか（展開補正の目安として使う）
+    effective_mult = [raw[i] / max(base_scores[i], 0.0005) for i in range(len(base_scores))]
     total = sum(raw) or 1.0
     rates = [(v / total) * 100 for v in raw]
     if sharpness and sharpness != 1:
         powered = [max(v, 0.001) ** sharpness for v in rates]
         psum = sum(powered) or 1.0
         rates = [(p / psum) * 100 for p in powered]
-    return rates
+    return rates, effective_mult, raw
 
 
 def compute_confidence(racers):
@@ -178,6 +239,22 @@ def compute_confidence(racers):
         score = (sample_factor * 0.6 + rentai_rate * 0.4) * 100
         results.append({"total": total, "rentai_rate": rentai_rate, "score": score})
     return results
+
+
+def apply_confidence_shrinkage(base_scores, confidence, shrink_strength):
+    """
+    信頼度シュリンケージ：信頼度が低い（サンプルが薄い・不安定な）選手の
+    基礎スコアを、レース平均側へ引き寄せる。これにより「信頼度」が単なる
+    表示用の別指標ではなく、実際に1着率の計算に反映されるようになる。
+    """
+    avg = sum(base_scores) / len(base_scores) if base_scores else 0
+    s = max(0.0, min(1.0, shrink_strength / 100))
+    result = []
+    for score, conf in zip(base_scores, confidence):
+        conf_weight = max(0.0, min(1.0, conf["score"] / 100))
+        shrink_amount = s * (1 - conf_weight)
+        result.append(score * (1 - shrink_amount) + avg * shrink_amount)
+    return result
 
 
 def sharpen_probabilities(scored, exponent):
@@ -402,10 +479,14 @@ def compute_formation_bet(racers, base_scores, dominant, line_map, final_rates,
 # ============================================================
 def parse_line_prediction_text(text):
     """
-    並び予想テキストの解析。スペース区切りの有無に依存せず、
-    「数字＋役割語」の並びを正規表現で直接抜き出す方式（例：
-    "4先行1追込6押え先2追込" のようにスペースが無い場合にも対応）。
-    全角数字にも対応するため、事前に半角へ正規化する。
+    並び予想テキストの解析。以下の2つの形式に対応する。
+    1. スクレイピングしたサイトのテキスト形式（例："4先行1追込6押え先2追込"）
+       スペース区切りの有無に依存せず、「数字＋役割語」の並びを正規表現で
+       直接抜き出す方式。全角数字にも対応するため、事前に半角へ正規化する。
+    2. 手動入力のハイフン・カンマ記法（例："5-1,4,6-2,3-7"）
+       keirin_predictor_v2.html（スタンドアロン版）と同じ書式。
+       同じラインは先頭→後方をハイフンでつなぎ、ライン同士はカンマで区切る。
+       役割語が1つも見つからなかった場合にこちらの形式として解釈する。
     """
     if not text:
         return {}
@@ -417,6 +498,10 @@ def parse_line_prediction_text(text):
     text = text.replace("←", " ").replace("→", " ")
 
     pairs = _re.findall(r"(\d+)\s*(先行|追込|押え先|自在|追い上げ|追上|捲|差|逃)", text)
+
+    if not pairs:
+        # 役割語が見つからない場合は、ハイフン・カンマ記法として解釈する
+        return _parse_line_hyphen_notation(text)
 
     lines = []
     current = []
@@ -438,15 +523,35 @@ def parse_line_prediction_text(text):
     return line_map
 
 
+def _parse_line_hyphen_notation(text):
+    """"5-1,4,6-2,3-7" のようなハイフン・カンマ記法を解析する。"""
+    import re as _re
+    line_map = {}
+    groups = [g.strip() for g in _re.split(r"[,、，\n]", text) if g.strip()]
+    for gi, g in enumerate(groups):
+        cars_str = [s for s in _re.split(r"[-－―ー\s]+", g) if s]
+        cars = []
+        for s in cars_str:
+            try:
+                n = int(s)
+                if n > 0:
+                    cars.append(n)
+            except ValueError:
+                continue
+        for pos, car in enumerate(cars):
+            line_map[car] = {"line_index": gi, "position": pos + 1, "line_size": len(cars)}
+    return line_map
+
+
 # ============================================================
 # レース全体の予測を計算するメイン関数
 # ============================================================
 DEFAULT_SETTINGS = {
     "th_high": 45, "th_list": 10, "close_threshold": 8,
-    "solo_bonus": 18, "cong_penalty": 18, "chase_bonus": 10,
+    "development_weight": 55,
     "line_strength": 30, "line_support": 8, "solo_penalty": 6,
     "line_follow_bonus": 45, "adv_bonus": 10, "adv_penalty": 15,
-    "sharpness": 3.5,
+    "sharpness": 1.3, "confidence_shrink": 20,
     "formation_n1": 2, "formation_n2": 4, "formation_n3": 5,
 }
 
@@ -464,49 +569,51 @@ def predict_race(racers, line_prediction_text, settings=None):
         return None
 
     line_map = parse_line_prediction_text(line_prediction_text)
-    base_scores = compute_base_scores(racers)
+    base_scores_raw = compute_base_scores(racers)
     confidence = compute_confidence(racers)
+    base_scores = apply_confidence_shrinkage(base_scores_raw, confidence, s["confidence_shrink"])
     dominant = compute_kimarite_prediction(racers, line_map)
     kimarite_ratio = compute_kimarite_ratio(dominant)
-    kimarite_adj, nige_count, pace_index = compute_kimarite_adjustment(
-        racers, dominant, s["solo_bonus"], s["cong_penalty"], s["chase_bonus"])
+    dev_scores, nige_count, pace_index = compute_kimarite_adjustment(racers, dominant, kimarite_ratio)
     line_adj = compute_line_adjustment(
         racers, line_map, kimarite_ratio, s["line_strength"], s["line_support"], s["solo_penalty"])
-    adj = [k * l for k, l in zip(kimarite_adj, line_adj)]
-    final_rates = compute_adjusted_rates(base_scores, adj, s["sharpness"])
+    final_rates, effective_mult, combined_scores = compute_adjusted_rates(
+        base_scores, line_adj, dev_scores, s["development_weight"], s["sharpness"])
+    old_model_place_rates = compute_old_model_place_rates(racers)
 
     rows = []
     for i, r in enumerate(racers):
         rows.append({
-            **r, "base": base_scores[i], "adj": adj[i], "adjusted": final_rates[i],
+            **r, "base": base_scores[i], "adj": effective_mult[i], "adjusted": final_rates[i],
             "dominant_type": dominant[i]["type"], "kimarite_prediction": dominant[i],
-            "line_info": line_map.get(r["car"]), "confidence": confidence[i], "idx": i,
+            "line_info": line_map.get(r["car"]), "confidence": confidence[i],
+            "old_model_place_rate": old_model_place_rates[i], "idx": i,
         })
     rows.sort(key=lambda x: -x["adjusted"])
 
     top = rows[0]
     second_candidates = compute_second_place_candidates(
-        racers, top["idx"], base_scores, dominant, line_map,
+        racers, top["idx"], combined_scores, dominant, line_map,
         s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
 
     third_candidates = []
     if second_candidates and len(racers) > 2:
         second_idx = second_candidates[0]["idx"]
         third_candidates = compute_third_place_candidates(
-            racers, top["idx"], second_idx, base_scores, dominant, line_map,
+            racers, top["idx"], second_idx, combined_scores, dominant, line_map,
             s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
 
     close_group = [r for r in rows if top["adjusted"] - r["adjusted"] <= s["close_threshold"]]
     most_reliable = max(close_group, key=lambda r: r["confidence"]["score"]) if len(close_group) >= 2 else None
 
     second_place_matrix = compute_second_place_matrix(
-        racers, base_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
     third_place_matrix = compute_third_place_matrix(
-        racers, base_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
         second_place_matrix=second_place_matrix)
 
     formation = compute_formation_bet(
-        racers, base_scores, dominant, line_map, final_rates,
+        racers, combined_scores, dominant, line_map, final_rates,
         s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
         s["formation_n1"], s["formation_n2"], s["formation_n3"])
 
