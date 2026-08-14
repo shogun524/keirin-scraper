@@ -416,7 +416,7 @@ def parse_line_prediction_text(text):
     text = text.translate(str.maketrans(zen, han))
     text = text.replace("←", " ").replace("→", " ")
 
-    pairs = _re.findall(r"(\d+)\s*(先行|追込|押え先|自在|追い上げ|捲|差|逃)", text)
+    pairs = _re.findall(r"(\d+)\s*(先行|追込|押え先|自在|追い上げ|追上|捲|差|逃)", text)
 
     lines = []
     current = []

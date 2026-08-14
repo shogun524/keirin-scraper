@@ -393,9 +393,39 @@ function showTab(id, btn){
   document.getElementById(id).style.display = '';
   btn.classList.add('active');
 }
+
+// 「HH:MM」形式の締切時刻と、日本時間での現在時刻から、締切までの残り分数を返す。
+// 開いた瞬間のブラウザの時計を使うため、ページ生成時刻に関わらず常に正しく判定できる。
+function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+  if(!deadlineStr) return 1e9;
+  const parts = deadlineStr.split(':');
+  if(parts.length !== 2) return 1e9;
+  const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+  const diff = deadlineMinutes - nowJstMinutes;
+  if(diff < -5) return 1e9 + (-diff); // 5分以上過ぎているものは終了扱いで後方へ
+  return diff < 0 ? 0 : diff;
+}
+
+function getNowJstMinutes(){
+  // タイムゾーンに関わらず、日本時間（Asia/Tokyo）の「今」の分を取得する
+  const parts = new Intl.DateTimeFormat('ja-JP', {
+    timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+  }).formatToParts(new Date());
+  const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+  const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+  return h*60 + m;
+}
+
 window.addEventListener('DOMContentLoaded', function(){
-  var first = document.querySelector('.tab-btn');
-  if(first) first.click();
+  const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+  if(tabs.length === 0) return;
+  const nowJstMinutes = getNowJstMinutes();
+  let best = tabs[0], bestMins = Infinity;
+  tabs.forEach(function(t){
+    const mins = minutesUntilDeadline(t.getAttribute('data-deadline'), nowJstMinutes);
+    if(mins < bestMins){ bestMins = mins; best = t; }
+  });
+  best.click();
 });
 """
 
@@ -421,20 +451,19 @@ def _minutes_until_deadline(deadline_str, now):
 
 
 def render_venue_page(venue, races, date, now=None):
-    now = now or datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
     date_str = date.strftime("%Y年%m月%d日")
     venue_name = VENUE_NAMES.get(venue, venue)
-    # 現在時刻に一番近い締切のレースを先頭に表示する
-    races = sorted(races, key=lambda r: _minutes_until_deadline(r["race_info"].get("deadline"), now))
+    # レース番号順に並べる（「今に一番近いレース」の判定は開いた瞬間にブラウザ側のJSで行う）
+    races = sorted(races, key=lambda r: r["race_info"]["race_no"])
 
     tabs = ""
     panels = ""
     for r in races:
         no = r["race_info"]["race_no"]
-        deadline = r["race_info"].get("deadline")
+        deadline = r["race_info"].get("deadline") or ""
         tab_id = f"race{no}"
         label = f"{no}R" + (f"<br><span class='tab-deadline'>{deadline}</span>" if deadline else "")
-        tabs += f'<button class="tab-btn" onclick="showTab(\'{tab_id}\', this)">{label}</button>'
+        tabs += f'<button class="tab-btn" data-deadline="{deadline}" onclick="showTab(\'{tab_id}\', this)">{label}</button>'
         panels += render_race_card(r, tab_id)
 
     return f"""<!DOCTYPE html>
@@ -451,7 +480,7 @@ def render_venue_page(venue, races, date, now=None):
     <h1>&larr; <a href="../index.html">{venue_name}競輪</a></h1>
     <span class="date">{date_str}</span>
   </div>
-  <p>タブでレースを切り替えられます（現在時刻に締切が近い順）。</p>
+  <p>タブでレースを切り替えられます。開いた時点で現在時刻に締切が一番近いレースが自動で開きます。</p>
 </header>
 <main>
   <div class="tab-bar">{tabs if tabs else "<p>本日このレース場のデータは取得できませんでした。</p>"}</div>
@@ -464,8 +493,8 @@ def render_venue_page(venue, races, date, now=None):
 
 
 def render_index(all_race_data, date=None, now=None):
+    import json
     date = date or datetime.date.today()
-    now = now or datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
     weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
     date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
 
@@ -474,36 +503,12 @@ def render_index(all_race_data, date=None, now=None):
         v = rd["race_info"]["venue"]
         by_venue.setdefault(v, []).append(rd)
 
-    # 各競輪場について、現在時刻に一番近い（＝次に締切を迎える）レースを求める
-    venue_next_deadline = {}  # slug -> (minutes_until, race_no, deadline_str)
-    for slug, races in by_venue.items():
-        best = None
-        for rd in races:
-            info = rd["race_info"]
-            mins = _minutes_until_deadline(info.get("deadline"), now)
-            if best is None or mins < best[0]:
-                best = (mins, info["race_no"], info.get("deadline"))
-        if best:
-            venue_next_deadline[slug] = best
-
-    # 全競輪場の中で、今もっとも締切が近いところ
-    featured_html = ""
-    if venue_next_deadline:
-        featured_slug = min(venue_next_deadline, key=lambda s: venue_next_deadline[s][0])
-        mins, race_no, deadline_str = venue_next_deadline[featured_slug]
-        name = VENUE_NAMES.get(featured_slug, featured_slug)
-        if deadline_str is None:
-            time_note = ""
-        elif mins >= 10**9:
-            time_note = f"締切 {deadline_str}（発売終了）"
-        else:
-            time_note = f"締切 {deadline_str}（あと約{mins}分）"
-        featured_html = f"""
-        <a class="featured-card" href="{featured_slug}/index.html">
-          <span class="featured-label">締切が最も近いレース場</span>
-          <span class="featured-name">{name}競輪 {race_no}R</span>
-          <span class="featured-time">{time_note}</span>
-        </a>"""
+    # 全レースの (venue, race_no, deadline) をJSに渡し、開いた瞬間に一番近いものを選ばせる
+    all_races_json = json.dumps([
+        {"venue": rd["race_info"]["venue"], "name": VENUE_NAMES.get(rd["race_info"]["venue"], rd["race_info"]["venue"]),
+         "race_no": rd["race_info"]["race_no"], "deadline": rd["race_info"].get("deadline")}
+        for rd in all_race_data if rd["race_info"].get("deadline")
+    ], ensure_ascii=False)
 
     def venue_card(slug):
         name = VENUE_NAMES.get(slug, slug)
@@ -512,23 +517,82 @@ def render_index(all_race_data, date=None, now=None):
             return f'<div class="venue-card inactive"><span class="vname">{name}</span></div>'
 
         races_sorted = sorted(races, key=lambda r: r["race_info"]["race_no"])
-        race_count = len(races_sorted)
-        rough = any(rd["prediction"] and not rd["prediction"]["is_high_prob"] for rd in races_sorted)
-        badge = '<span class="tag rough">荒れ注意</span>' if rough else ""
-        next_info = venue_next_deadline.get(slug)
-        deadline_badge = ""
-        if next_info and next_info[2] and next_info[0] < 10**9:
-            deadline_badge = f'<span class="meta-deadline">次走 {next_info[2]}</span>'
+        races_json = json.dumps([
+            {"race_no": r["race_info"]["race_no"], "deadline": r["race_info"].get("deadline")}
+            for r in races_sorted
+        ], ensure_ascii=False)
+        races_json_attr = races_json.replace('"', "&quot;")
         return f"""
-        <a class="venue-card active" href="{slug}/index.html">
+        <a class="venue-card active" href="{slug}/index.html" data-races="{races_json_attr}">
           <span class="vname">{name}</span>
-          <span class="meta">{race_count}レース{badge}</span>
-          {deadline_badge}
+          <span class="meta next-race-meta">…</span>
         </a>"""
 
     rows_html = ""
     for row in VENUE_GRID:
         rows_html += '<div class="venue-row">' + "".join(venue_card(v) for v in row) + '</div>'
+
+    index_script = """
+    function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+      if(!deadlineStr) return 1e9;
+      const parts = deadlineStr.split(':');
+      if(parts.length !== 2) return 1e9;
+      const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+      const diff = deadlineMinutes - nowJstMinutes;
+      if(diff < -5) return 1e9 + (-diff);
+      return diff < 0 ? 0 : diff;
+    }
+    function getNowJstMinutes(){
+      const parts = new Intl.DateTimeFormat('ja-JP', {
+        timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+      const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+      return h*60 + m;
+    }
+    window.addEventListener('DOMContentLoaded', function(){
+      const races = ALL_RACES_DATA;
+      const nowJstMinutes = getNowJstMinutes();
+
+      // 「締切が最も近いレース場」カード
+      const box = document.getElementById('featuredCardBox');
+      if(races.length && box){
+        let best = null, bestMins = Infinity;
+        races.forEach(function(r){
+          const mins = minutesUntilDeadline(r.deadline, nowJstMinutes);
+          if(mins < bestMins){ bestMins = mins; best = r; }
+        });
+        if(best){
+          let timeNote;
+          if(bestMins >= 1e9){ timeNote = '締切 ' + best.deadline + '（発売終了）'; }
+          else { timeNote = '締切 ' + best.deadline + '（あと約' + bestMins + '分）'; }
+          box.innerHTML = '<a class="featured-card" href="' + best.venue + '/index.html">' +
+            '<span class="featured-label">締切が最も近いレース場</span>' +
+            '<span class="featured-name">' + best.name + '競輪 ' + best.race_no + 'R</span>' +
+            '<span class="featured-time">' + timeNote + '</span></a>';
+        }
+      }
+
+      // 各競輪場カードの「次走」表示（現在時刻に一番近いレース番号・締切）
+      document.querySelectorAll('.venue-card[data-races]').forEach(function(card){
+        let venueRaces;
+        try { venueRaces = JSON.parse(card.getAttribute('data-races')); } catch(e){ venueRaces = []; }
+        const metaEl = card.querySelector('.next-race-meta');
+        if(!metaEl) return;
+        let best = null, bestMins = Infinity;
+        venueRaces.forEach(function(r){
+          const mins = minutesUntilDeadline(r.deadline, nowJstMinutes);
+          if(mins < bestMins){ bestMins = mins; best = r; }
+        });
+        if(!best){ metaEl.textContent = venueRaces.length + 'レース'; return; }
+        if(bestMins >= 1e9){
+          metaEl.textContent = '本日終了';
+        } else {
+          metaEl.textContent = '次走 ' + best.race_no + 'R（' + (best.deadline || '') + '）';
+        }
+      });
+    });
+    """.replace("ALL_RACES_DATA", all_races_json)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -547,8 +611,7 @@ def render_index(all_race_data, date=None, now=None):
   .venue-card.active .meta{{ font-size:11px; color:var(--ink-soft); }}
   .venue-card.inactive{{ background:#eee9dd; opacity:.55; }}
   .venue-card.inactive .vname{{ font-size:13px; color:#9a9488; }}
-  .venue-card .meta-deadline{{ font-size:10px; color:#b5482f; font-weight:700; }}
-  .tag.rough{{ display:inline-block; margin-left:4px; background:#f4d9b0; color:#8a5a12; border-radius:4px; padding:0 4px; font-size:10px; }}
+  .venue-card.active .meta.next-race-meta{{ font-size:11px; color:#b5482f; font-weight:700; }}
   .featured-card{{ display:flex; flex-direction:column; gap:2px; background:linear-gradient(135deg,#fff4de,#fbe9c9);
                     border:1px solid var(--gold); border-radius:8px; padding:12px 14px; margin-bottom:16px; }}
   .featured-label{{ font-size:11px; color:#8a5a12; font-weight:700; }}
@@ -567,10 +630,11 @@ def render_index(all_race_data, date=None, now=None):
   <p style="color:#8fa0b5;font-size:11px;">最終更新: {datetime.datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")} (JST)</p>
 </header>
 <main>
-  {featured_html}
+  <div id="featuredCardBox"></div>
   <h2 class="section">本日の開催場</h2>
   {rows_html if by_venue else "<p style='text-align:center;color:#5b6472;'>本日は取得できたレースがありませんでした。</p>"}
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>{index_script}</script>
 </body>
 </html>"""

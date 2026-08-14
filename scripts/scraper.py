@@ -204,8 +204,10 @@ def _extract_age_period_rank(t):
 
 def parse_racer_tokens(full_text):
     """並び予想より前の本体テーブル部分から、トークン走査で選手データを抽出する"""
-    # 「並び予想」以降（コメント・オッズ等）は解析対象から除外
-    body = full_text.split("並び予想")[0]
+    # ライン予想（並び予想／ライン予想／隊列予想など）以降（コメント・オッズ等）は解析対象から除外
+    body = full_text
+    for lbl in ("並び予想", "ライン予想", "予想ライン", "隊列予想"):
+        body = body.split(lbl)[0]
     tokens = body.split()
     racers = []
     pos = 0
@@ -318,27 +320,32 @@ def parse_race_detail(html, venue, race_no):
     deadline_match = re.search(r"締切(?:時間)?\s*(\d{1,2}:\d{2})", full_text)
     deadline = deadline_match.group(1) if deadline_match else None
 
+    # 並び予想の役割語（サイトの表記ゆれに対応：追い上げ／追上 など）
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|捲|差|逃"
+    line_role_re = re.compile(rf"\d+\s*(?:{ROLE_WORDS})")
+    seq_re = re.compile(rf"((?:\d+\s*(?:{ROLE_WORDS})\s*){{3,}})")
+
     line_pred_text = ""
-    line_role_re = re.compile(r"\d+\s*(先行|追込|押え先|自在|追い上げ|捲|差|逃)")
-    for i, ln in enumerate(lines):
-        if "並び予想" not in ln:
-            continue
-        # 同じ行に本文がある場合はそれを使う。無ければ後続の行を数行先まで探す
-        # （サイト側のレイアウト変更で見出しと本文が同じ行に無いケースに対応するため）
-        candidate = ln.replace("並び予想", "").strip()
-        if not line_role_re.search(candidate):
-            for j in range(i + 1, min(i + 6, len(lines))):
-                if line_role_re.search(lines[j]):
-                    candidate = lines[j]
-                    break
-        line_pred_text = candidate
-        break
+    line_labels = ("並び予想", "ライン予想", "予想ライン", "隊列予想")
+    label_pos = None
+    for lbl in line_labels:
+        p = full_text.find(lbl)
+        if p != -1 and (label_pos is None or p < label_pos):
+            label_pos = p
+
+    if label_pos is not None:
+        # ラベル発見位置以降のテキストから、決まり手の並び（数字+役割語が3つ以上連続する箇所）を探す。
+        # サイトによっては「4」「自在」のように数字と役割語が別々の行になっているが、
+        # full_text は行を半角スペースで連結したものなので、"4 自在" のように1個のスペースを挟んだ
+        # 形で連続しており、\s* を挟む正規表現でそのまま拾える。
+        after_label = full_text[label_pos:]
+        m = seq_re.search(after_label)
+        if m:
+            line_pred_text = m.group(1).strip()
 
     if not line_pred_text:
-        # 「並び予想」というラベル自体が見つからなかった場合の最終手段：
+        # ラベル自体が見つからなかった場合の最終手段：
         # ページ全体から「数字+役割語」が3つ以上連続する箇所を並び予想とみなす
-        seq_re = re.compile(
-            r"((?:\d+\s*(?:先行|追込|押え先|自在|追い上げ|捲|差|逃)\s*){3,})")
         m = seq_re.search(full_text)
         if m:
             line_pred_text = m.group(1).strip()
