@@ -11,7 +11,7 @@ GitHub Pages で公開する docs/ 以下のファイルを生成する。
 import datetime
 from zoneinfo import ZoneInfo
 from model import KIMARITE_LABELS, KIMARITE
-from venue_data import VENUE_BANK_DATA, bank_class, straight_tendency
+from venue_data import VENUE_BANK_DATA, bank_class, straight_tendency, kimarite_venue_average
 
 VENUE_NAMES = {
     "hakodate": "函館", "aomori": "青森", "iwakitaira": "いわき平",
@@ -136,13 +136,97 @@ def svg_donut_chart(kimarite_ratio, size=150):
     </div>"""
 
 
-def render_kimarite_table(kimarite_ratio):
+def svg_track_diagram(circumference, literal_straight, center_cant, width=360, height=220):
+    """
+    競輪場のコースレイアウト概略図（スタジアム形＝直線+半円のトラック）。
+    周長（333/400/500）に応じてサイズと縦横比を変え、実際の規模差を反映する。
+    数値の正確なジオメトリ図ではなく、相対的な形の違いを伝える模式図。
+    """
+    bclass = bank_class(circumference)
+    # 周長クラスごとの縦横比・相対サイズ（333は小回りでほぼ正円に近く、500は大回りで縦長）
+    profiles = {
+        "333": {"scale": 0.72, "aspect": 1.35},
+        "400": {"scale": 0.86, "aspect": 1.55},
+        "500": {"scale": 1.00, "aspect": 1.85},
+    }
+    profile = profiles.get(bclass, profiles["400"])
+
+    cx, cy = width / 2, height / 2 + 6
+    track_w = (width - 60) * profile["scale"]
+    track_h = track_w / profile["aspect"]
+    r = track_h / 2  # コーナー半径
+    straight_len = max(track_w - track_h, 20)  # 直線部分の長さ（模式的）
+
+    x_left = cx - straight_len / 2
+    x_right = cx + straight_len / 2
+    y_top = cy - r
+    y_bottom = cy + r
+
+    outer_path = (
+        f"M{x_left:.1f},{y_top:.1f} "
+        f"L{x_right:.1f},{y_top:.1f} "
+        f"A{r:.1f},{r:.1f} 0 0 1 {x_right:.1f},{y_bottom:.1f} "
+        f"L{x_left:.1f},{y_bottom:.1f} "
+        f"A{r:.1f},{r:.1f} 0 0 1 {x_left:.1f},{y_top:.1f} Z"
+    )
+    inner_r = r * 0.66
+    inner_track_w = straight_len
+    ix_left, ix_right = cx - inner_track_w / 2, cx + inner_track_w / 2
+    iy_top, iy_bottom = cy - inner_r, cy + inner_r
+    inner_path = (
+        f"M{ix_left:.1f},{iy_top:.1f} "
+        f"L{ix_right:.1f},{iy_top:.1f} "
+        f"A{inner_r:.1f},{inner_r:.1f} 0 0 1 {ix_right:.1f},{iy_bottom:.1f} "
+        f"L{ix_left:.1f},{iy_bottom:.1f} "
+        f"A{inner_r:.1f},{inner_r:.1f} 0 0 1 {ix_left:.1f},{iy_top:.1f} Z"
+    )
+
+    # ホームストレッチ（ゴール線側の直線）をハイライトし、みなし直線の長さを注記する
+    finish_x = x_right - straight_len * 0.12
+    straight_label = f"みなし直線 {literal_straight}m" if literal_straight is not None else ""
+    cant_label = f"カント {center_cant}" if center_cant else ""
+
+    return f"""<svg viewBox="0 0 {width} {height}" width="100%" style="max-width:{width}px; display:block; margin:0 auto;">
+      <path d="{outer_path}" fill="none" stroke="#0e1b2b" stroke-width="14" stroke-linejoin="round"/>
+      <path d="{outer_path}" fill="#f6f3ec" stroke="#d8a94a" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="{inner_path}" fill="none" stroke="#b8ab8a" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="{x_right - 6:.1f}" y1="{y_top+7:.1f}" x2="{x_right - 6:.1f}" y2="{y_bottom-7:.1f}" stroke="#c1443b" stroke-width="2"/>
+      <text x="{cx:.1f}" y="{y_top - 14:.1f}" font-size="13" text-anchor="middle" fill="#0e1b2b" font-weight="700">1周 {circumference or '—'}</text>
+      <text x="{cx:.1f}" y="{y_bottom + 22:.1f}" font-size="11" text-anchor="middle" fill="#5b6472">{straight_label}</text>
+      <text x="{cx:.1f}" y="{y_bottom + 36:.1f}" font-size="10" text-anchor="middle" fill="#8a9099">{cant_label}</text>
+      <text x="{x_right - 6:.1f}" y="{y_top:.1f}" font-size="9.5" text-anchor="end" fill="#c1443b">ゴール</text>
+    </svg>"""
+
+
+def render_kimarite_table(kimarite_ratio, venue_slug=None):
+    venue_avg = kimarite_venue_average(venue_slug) if venue_slug else None
+    venue_name = VENUE_NAMES.get(venue_slug, venue_slug) if venue_slug else ""
+
     cells = "".join(f"<th>{KIMARITE_LABELS[t]}</th>" for t in KIMARITE)
-    vals = "".join(f"<td>{kimarite_ratio.get(t,0):.1f}%</td>" for t in KIMARITE)
+    vals = ""
+    for t in KIMARITE:
+        v = kimarite_ratio.get(t, 0)
+        delta_html = ""
+        if venue_avg and t in venue_avg:
+            diff = v - venue_avg[t]
+            if abs(diff) >= 0.1:
+                arrow = "↑" if diff > 0 else "↓"
+                cls = "delta-up" if diff > 0 else "delta-down"
+                delta_html = f'<br><span class="{cls}">{abs(diff):.1f}%{arrow}</span>'
+        vals += f"<td>{v:.1f}%{delta_html}</td>"
+
+    avg_note = ""
+    if venue_avg:
+        avg_note = (f"<p class='dim' style='margin:4px 0 0;'>矢印は{venue_name}競輪の場平均"
+                     f"（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p>")
+    else:
+        avg_note = "<p class='dim' style='margin:4px 0 0;'>この競輪場の場平均データはまだありません。</p>"
+
     return f"""
     <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
     <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
-    <table class="main kimarite-table"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>"""
+    <table class="main kimarite-table"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>
+    {avg_note}"""
 
 
 def render_second_place_matrix_table(racers, matrix):
@@ -256,7 +340,7 @@ def render_race_card(race_data, tab_id):
 
     bar_chart = svg_bar_chart(result["rows"])
     line_info_html = render_line_info_block(result, title)
-    kimarite_table_html = render_kimarite_table(result["kimarite_ratio"])
+    kimarite_table_html = render_kimarite_table(result["kimarite_ratio"], info.get("venue"))
     second_matrix_html = render_second_place_matrix_table(result["rows"], result["second_place_matrix"])
     third_matrix_html = render_third_place_matrix_table(result["rows"], result["third_place_matrix"])
 
@@ -317,6 +401,8 @@ RACE_PANEL_STYLE = """
   .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
   .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
   .kimarite-table th, .kimarite-table td{ text-align:center; }
+  .delta-up{ color:#c1443b; font-size:11px; font-weight:700; }
+  .delta-down{ color:#1f5fc4; font-size:11px; font-weight:700; }
   .matrix-scroll{ overflow-x:auto; }
   table.matrix{ font-size:10.5px; }
   table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
@@ -620,7 +706,7 @@ def render_venues_page(date=None):
 
         rows_html += f"""
         <tr>
-          <td class="vname-cell">{name} {bclass_badge}</td>
+          <td class="vname-cell"><a href="{slug}/bank.html">{name}</a> {bclass_badge}</td>
           <td>{fmt(d.get('literal_straight'), 'm')} {tendency_badge}</td>
           <td>{fmt(d.get('center_cant'))}</td>
           <td>{fmt(d.get('straight_cant'))}</td>
@@ -646,6 +732,7 @@ def render_venues_page(date=None):
   .table-scroll{{ overflow-x:auto; }}
   table.venues{{ width:100%; border-collapse:collapse; font-size:12px; background:#fff; }}
   table.venues th, table.venues td{{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }}
+  table.venues td.vname-cell a{{ color:var(--navy); text-decoration:underline; }}
   table.venues th{{ background:#f0ece0; position:sticky; top:0; }}
   table.venues td.vname-cell, table.venues th:first-child{{ text-align:left; white-space:nowrap; font-weight:700; }}
   .bclass-badge{{ display:inline-block; border-radius:4px; padding:0 5px; font-size:10px; font-weight:700; margin-left:4px; }}
@@ -686,5 +773,116 @@ def render_venues_page(date=None):
   </div>
 </main>
 <footer>データ出典：keirin-brother.com「競輪場のバンクの特徴」（元データ: KEIRIN.JP）、決まり手出現率は競輪CLUBデータ分析。物理的な施設特性のため、更新頻度は低いです。</footer>
+</body>
+</html>"""
+
+
+def render_venue_bank_page(slug, date=None):
+    date = date or datetime.date.today()
+    weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
+    date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
+    name = VENUE_NAMES.get(slug, slug)
+    d = VENUE_BANK_DATA.get(slug, {})
+
+    if d.get("note"):
+        body = f'<p class="dim" style="text-align:center;padding:30px 10px;">{d["note"]}</p>'
+        return f"""<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{name}競輪 データ | 競輪AI予想</title><style>{COMMON_STYLE}</style></head>
+<body><header><div class="top-row"><h1>&larr; <a href="../venues.html">{name}競輪</a></h1></div></header>
+<main style="max-width:700px;margin:0 auto;padding:16px 10px;">{body}</main></body></html>"""
+
+    bclass = bank_class(d.get("circumference"))
+    tendency = straight_tendency(d.get("literal_straight"))
+    track_svg = svg_track_diagram(d.get("circumference"), d.get("literal_straight"), d.get("center_cant"))
+
+    avg1 = kimarite_venue_average(slug) or {}
+    kimarite_1st_table = ""
+    if avg1:
+        cells = "".join(f"<th>{KIMARITE_LABELS[t]}</th>" for t in KIMARITE)
+        vals = "".join(f"<td>{avg1.get(t,0):.1f}%</td>" for t in KIMARITE)
+        kimarite_1st_table = f"""
+        <table class="main"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>"""
+
+    kimarite_2nd_table = ""
+    if d.get("nige_2nd") is not None:
+        kimarite_2nd_table = f"""
+        <table class="main">
+          <thead><tr><th>逃げ</th><th>差し</th><th>捲り</th><th>マーク</th></tr></thead>
+          <tbody><tr>
+            <td>{d.get('nige_2nd',0):.1f}%</td><td>{d.get('sashi_2nd',0):.1f}%</td>
+            <td>{d.get('makuri_2nd',0):.1f}%</td><td>{d.get('mark_2nd',0):.1f}%</td>
+          </tr></tbody>
+        </table>"""
+
+    bclass_badge = f'<span class="bclass-badge bclass-{bclass}">{bclass}バンク</span>' if bclass else ""
+    tendency_note = f"<p class='dim' style='margin:4px 0 0;'>みなし直線の傾向：<b>{tendency}</b></p>" if tendency else ""
+
+    def stat_row(label, value):
+        return f'<div class="stat-row"><span class="stat-label">{label}</span><span class="stat-value">{value}</span></div>'
+
+    stats_html = "".join([
+        stat_row("周長", d.get("circumference") or "—"),
+        stat_row("みなし直線", f"{d.get('literal_straight')}m" if d.get("literal_straight") is not None else "—"),
+        stat_row("センター部路面傾斜（カント）", d.get("center_cant") or "—"),
+        stat_row("直線部路面傾斜", d.get("straight_cant") or "—"),
+        stat_row("ホーム幅員", f"{d.get('home_width')}m" if d.get("home_width") is not None else "—"),
+        stat_row("バック幅員", f"{d.get('back_width')}m" if d.get("back_width") is not None else "—"),
+        stat_row("センター幅員", f"{d.get('center_width')}m" if d.get("center_width") is not None else "—"),
+        stat_row("バンクレコード", f"{d.get('record_time')}（{d.get('record_holder')} {d.get('record_date')}）"
+                 if d.get("record_time") else "—"),
+    ])
+
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{name}競輪 バンクデータ | 競輪AI予想</title>
+<style>
+{COMMON_STYLE}{RACE_PANEL_STYLE}
+  .stat-row{{ display:flex; justify-content:space-between; padding:7px 4px; border-bottom:1px solid var(--border); font-size:13px; }}
+  .stat-row:last-child{{ border-bottom:none; }}
+  .stat-label{{ color:var(--ink-soft); }}
+  .stat-value{{ font-weight:700; }}
+  .track-card{{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; margin-bottom:14px; }}
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="../venues.html">{name}競輪</a></h1>
+    <span class="date">{date_str}</span>
+  </div>
+  <p class="tagline">{bclass_badge if bclass else ""}</p>
+</header>
+<main style="max-width:720px;margin:0 auto;padding:14px 10px 60px;">
+  <div class="track-card">
+    <h4 style="text-align:center;">コースレイアウト（模式図）</h4>
+    {track_svg}
+    {tendency_note}
+  </div>
+
+  <div class="track-card">
+    <h4>バンク基本データ</h4>
+    {stats_html}
+  </div>
+
+  <div class="track-card">
+    <h4>決まり手の場平均（1着・A級7車ベース）</h4>
+    <p class="dim" style="margin:0 0 8px;">元データが逃げ・差し・捲りの1着出現率のみのため、マークは残差（100%からの引き算）で算出した参考値です。各レースの「決まり手構成」表では、この場平均との差分を↑↓で表示します。</p>
+    {kimarite_1st_table}
+  </div>
+
+  <div class="track-card">
+    <h4>決まり手の場平均（2着・A級7車ベース）</h4>
+    {kimarite_2nd_table if kimarite_2nd_table else "<p class='dim'>データなし</p>"}
+  </div>
+
+  <div class="track-card">
+    <a href="index.html" style="font-size:13px;">この競輪場の本日のレース予想を見る &rarr;</a>
+  </div>
+</main>
+<footer>データ出典：keirin-brother.com「競輪場のバンクの特徴」（元データ: KEIRIN.JP）、決まり手出現率は競輪CLUBデータ分析。</footer>
 </body>
 </html>"""

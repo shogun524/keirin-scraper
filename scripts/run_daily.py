@@ -17,7 +17,7 @@ from zoneinfo import ZoneInfo
 
 from scraper import fetch_all_todays_races
 from model import predict_race
-from report import render_index, render_venue_page, render_venues_page, VENUE_NAMES
+from report import render_index, render_venue_page, render_venues_page, render_venue_bank_page, VENUE_NAMES
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS_DIR = os.path.join(os.path.dirname(__file__), "..", "docs")
@@ -96,6 +96,17 @@ def main():
         with open(os.path.join(venue_dir, "index.html"), "w", encoding="utf-8") as f:
             f.write(venue_html)
         print(f"[INFO] docs/{venue}/index.html を書き出しました。")
+
+    # 全43競輪場のバンクデータページ（本日開催していない場も含め、常に全場分を書き出す。
+    # clean_stale_venue_dirs で本日非開催の場のフォルダごと削除されるため、その後に
+    # 改めて全場分を用意することでリンク切れを防ぐ）
+    for venue in VENUE_NAMES:
+        venue_dir = os.path.join(DOCS_DIR, venue)
+        os.makedirs(venue_dir, exist_ok=True)
+        bank_html = render_venue_bank_page(venue, today)
+        with open(os.path.join(venue_dir, "bank.html"), "w", encoding="utf-8") as f:
+            f.write(bank_html)
+    print(f"[INFO] docs/{{venue}}/bank.html を全{len(VENUE_NAMES)}場分書き出しました。")
 
     # 通知チェック用の軽量な締切一覧キャッシュ（毎回スクレイピングし直さずに済むように）
     deadlines_cache = [
