@@ -88,12 +88,6 @@
     {
       "venue": "keiokaku",
       "venue_name": "京王閣",
-      "race_no": 4,
-      "deadline": "11:46"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
       "race_no": 5,
       "deadline": "12:08"
     },
@@ -114,6 +108,12 @@
       "venue_name": "京王閣",
       "race_no": 8,
       "deadline": "13:14"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 9,
+      "deadline": "13:36"
     },
     {
       "venue": "keiokaku",
@@ -184,8 +184,8 @@
     {
       "venue": "nara",
       "venue_name": "奈良",
-      "race_no": 10,
-      "deadline": "14:11"
+      "race_no": 9,
+      "deadline": "13:47"
     },
     {
       "venue": "nara",
@@ -244,8 +244,8 @@
     {
       "venue": "maebashi",
       "venue_name": "前橋",
-      "race_no": 9,
-      "deadline": "23:15"
+      "race_no": 8,
+      "deadline": "22:55"
     },
     {
       "venue": "shizuoka",
@@ -360,6 +360,12 @@
       "venue_name": "伊東",
       "race_no": 3,
       "deadline": "16:26"
+    },
+    {
+      "venue": "ito",
+      "venue_name": "伊東",
+      "race_no": 4,
+      "deadline": "16:55"
     },
     {
       "venue": "ito",
