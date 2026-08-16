@@ -13,7 +13,7 @@ import re
 import time
 import datetime
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 BASE = "https://keirin.kdreams.jp"
 HEADERS = {
@@ -33,20 +33,23 @@ def _get(url, **kwargs):
 
 def _extract_todays_links_from_kaisai_html(html):
     """
-    開催一覧ページのHTMLから、競輪場ごとに「本日」の racecard リンクを抽出する。
+    ページのHTMLから、競輪場ごとに「本日」の racecard リンクを抽出する。
 
-    通常のＦ１／Ｆ２開催は当日のタブ分しかリンクが出ないため単純に1つ拾えば良いが、
-    Ｇ１等の大きな開催では初日〜最終日まで全日程分のリンクがまとめて出ることがあり、
-    その場合は先頭（＝初日）を拾ってしまうと日付がズレる。
-    そのため、競輪場の見出し（"XX競輪" へのリンク）を区切りとしてブロックに分割し、
-    各ブロック内で「本日」という文字列に最も近い（直後の）racecard リンクを選ぶ。
+    以前は「本日」という文字列に近いリンクを探す方式だったが、正確なDOM構造への
+    依存が強く、G1等の複数日開催で誤ったリンクを拾ってしまうことがあった。
+    実際にトップページ（https://keirin.kdreams.jp/）を直接確認したところ、
+    「本日の開催」欄では、競輪場ごとに「今日の日程」のracecardリンクのみが
+    存在し、過去の日程には「結果」リンクしか無いことが分かった
+    （つまり racecard リンクは1競輪場につき1つしか出ない）。
+    そのため、競輪場の見出しリンク（"?l-id=..." のクエリパラメータが付くことが
+    ある）を区切りとしてブロックに分割し、各ブロック内の racecard リンクを
+    そのまま採用する（「本日」の文字列検索には依存しない）。
     """
     venues = {}
-    heading_pattern = re.compile(r'href="https://keirin\.kdreams\.jp/([a-z]+)/"')
+    heading_pattern = re.compile(r'href="https://keirin\.kdreams\.jp/([a-z]+)/(?:\?[^"]*)?"')
     headings = [(m.start(), m.group(1)) for m in heading_pattern.finditer(html)]
 
     racecard_pattern = re.compile(r'href="[^"]*/([a-z]+)/racecard/(\d{14})/[^"]*"')
-    today_marker_positions = [m.start() for m in re.finditer("本日", html)]
 
     for idx, (pos, slug) in enumerate(headings):
         if slug in venues:
@@ -55,26 +58,10 @@ def _extract_todays_links_from_kaisai_html(html):
         block_end = headings[idx + 1][0] if idx + 1 < len(headings) else len(html)
         block = html[block_start:block_end]
 
-        links_in_block = [
-            (m.start(), m.group(2))
-            for m in racecard_pattern.finditer(block)
-            if m.group(1) == slug
-        ]
-        if not links_in_block:
-            continue
-        if len(links_in_block) == 1:
-            venues[slug] = links_in_block[0][1]
-            continue
-
-        # 複数ある場合（G1等）は、ブロック内の「本日」マーカーに最も近い（直後の）ものを選ぶ
-        block_today_positions = [p - block_start for p in today_marker_positions if block_start <= p < block_end]
-        if block_today_positions:
-            today_pos = block_today_positions[0]
-            after = [(p, kdid) for p, kdid in links_in_block if p >= today_pos]
-            chosen = min(after, key=lambda x: x[0]) if after else min(links_in_block, key=lambda x: x[0])
-        else:
-            chosen = min(links_in_block, key=lambda x: x[0])
-        venues[slug] = chosen[1]
+        for m in racecard_pattern.finditer(block):
+            if m.group(1) == slug:
+                venues[slug] = m.group(2)
+                break
 
     return venues
 
@@ -85,24 +72,43 @@ def find_todays_venues(date=None):
 
     重要な注意点：kaisaiDateId に埋め込まれている日付は「開催が始まった日
     （初日の日付）」であり、複数日開催（2日目・最終日など）では「今日の日付」
-    と一致しない。そのため日付の突き合わせでは判定せず、/kaisai/YYYY/MM/DD/
-    という「その日専用のURL」に載っている競輪場＝今日開催中、とみなす
-    （このページ自体が既に「今日」に絞り込まれているため、これ単体で十分）。
+    と一致しない。そのため日付の突き合わせでは判定しない。
 
-    ※ トップページ（ホーム）は「本日の開催」だけでなく「明日の開催」も同じ
-      パターンのリンクで載っているため、補完用として使うと翌日分まで誤って
-      拾ってしまう。そのため使わない。
+    実際にトップページの構造を直接確認した結果、「本日の開催」欄が最も
+    信頼できる情報源だった（競輪場ごとに今日の日程のracecardリンクが
+    1つだけ存在し、過去の日程には結果リンクしか無い）。
+    「本日の開催」〜「明日の開催」の間だけを対象にすることで、翌日分の
+    混入も防ぐ。/kaisai/YYYY/MM/DD/ ページは補完用として残す。
 
     戻り値: [{"venue": "gifu", "kaisai_date_id": "43202608120100"}, ...]
     """
     date = date or datetime.date.today()
     venues = {}  # slug -> kaisai_date_id
 
-    kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
     try:
-        html = _get(kaisai_url)
-        venues = _extract_todays_links_from_kaisai_html(html)
-        print(f"[INFO] 開催一覧ページから {len(venues)} 開催を検出しました。")
+        html = _get(BASE + "/")
+        today_pos = html.find("本日の開催")
+        tomorrow_pos = html.find("明日の開催")
+        if today_pos != -1:
+            end = tomorrow_pos if tomorrow_pos != -1 and tomorrow_pos > today_pos else len(html)
+            today_section = html[today_pos:end]
+            venues = _extract_todays_links_from_kaisai_html(today_section)
+        print(f"[INFO] トップページ「本日の開催」欄から {len(venues)} 開催を検出しました。")
+    except requests.RequestException as e:
+        print(f"[WARN] トップページの取得に失敗しました: {e}")
+
+    # 補完用：/kaisai/日付/ ページにしか出ていない競輪場があれば追加で拾う
+    try:
+        kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
+        html2 = _get(kaisai_url)
+        extra = _extract_todays_links_from_kaisai_html(html2)
+        added = 0
+        for slug, kdid in extra.items():
+            if slug not in venues:
+                venues[slug] = kdid
+                added += 1
+        if added:
+            print(f"[INFO] 開催一覧ページから追加で {added} 開催を検出しました。")
     except requests.RequestException as e:
         print(f"[WARN] 開催一覧ページの取得に失敗しました: {e}")
 
