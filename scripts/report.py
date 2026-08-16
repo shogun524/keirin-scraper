@@ -56,6 +56,7 @@ COMMON_STYLE = """
   header h1{ margin:0; font-size:19px; }
   header .date{ color:var(--gold); font-size:13px; font-weight:700; }
   header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
+  header p.tagline{ font-style:italic; color:#cdd7e3; }
   a{ color:inherit; text-decoration:none; }
   footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
 """
@@ -141,23 +142,6 @@ def render_kimarite_table(kimarite_ratio):
     <table class="main kimarite-table"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>"""
 
 
-def render_second_third_lists(result):
-    html = ""
-    if result["second_candidates"]:
-        html += "<div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'>"
-        for idx, c in enumerate(result["second_candidates"][:5], 1):
-            same = "（同ライン）" if c["same_line"] else ""
-            html += f"<tr><td>{idx}</td><td>{c['car']}号車 {c['name']}{same}</td><td>{c['prob']:.1f}%</td></tr>"
-        html += "</table></div>"
-    if result["third_candidates"]:
-        html += "<div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'>"
-        for idx, c in enumerate(result["third_candidates"][:5], 1):
-            same = "（同ライン）" if c["same_line"] else ""
-            html += f"<tr><td>{idx}</td><td>{c['car']}号車 {c['name']}{same}</td><td>{c['prob']:.1f}%</td></tr>"
-        html += "</table></div>"
-    return html
-
-
 def render_second_place_matrix_table(racers, matrix):
     by_car = sorted(racers, key=lambda r: r["car"])
     header = "<th>1着↓＼2着→</th>" + "".join(f"<th>{r['car']}</th>" for r in by_car)
@@ -206,55 +190,30 @@ def render_third_place_matrix_table(racers, matrix):
     <div class="matrix-scroll"><table class="main matrix"><thead><tr>{header}</tr></thead><tbody>{rows_html}</tbody></table></div>"""
 
 
-def render_formation_table(formation):
-    if not formation:
-        return "<h4>表6：3連単フォーメーション</h4><p class='dim'>選手数が少ないため計算できません。</p>"
+def render_line_info_block(result, race_title=""):
+    # ガールズ競輪（全員単騎、女子選手7名）はライン概念が無いため表示しない
+    if "ガールズ" in (race_title or ""):
+        return ""
 
-    def badges(cars):
-        return " ".join(f"<span class='car-mini'>{c}</span>" for c in cars)
-
-    rows_html = ""
-    for idx, c in enumerate(formation["combos"], 1):
-        highlight = "background:#fff4de;" if idx <= 3 else ""
-        rows_html += (f"<tr style='{highlight}'><td>{idx}</td>"
-                      f"<td>{c['first']} → {c['second']} → {c['third']}</td>"
-                      f"<td>{c['first_name']} → {c['second_name']} → {c['third_name']}</td>"
-                      f"<td><b>{c['prob']:.1f}%</b></td></tr>")
-
-    return f"""
-    <h4>表6：3連単フォーメーション</h4>
-    <p class="dim" style="margin:0 0 6px;">1着軸・2着候補・3着候補をそれぞれ複数車まとめた「フォーメーション買い」形式です。</p>
-    <div class="formation-summary">
-      <div><span class="f-label">1着軸</span>{badges(formation['first_candidates'])}</div>
-      <div><span class="f-label">2着候補</span>{badges(formation['second_candidates'])}</div>
-      <div><span class="f-label">3着候補</span>{badges(formation['third_candidates'])}</div>
-      <div><span class="f-label">点数</span><b>{formation['total_combos']}点</b>
-        <span class="f-label" style="margin-left:10px;">カバー率</span><b>約{formation['total_prob']:.1f}%</b></div>
-    </div>
-    <table class="main"><thead><tr><th>順位</th><th>組み合わせ</th><th>選手名</th><th>確率</th></tr></thead>
-    <tbody>{rows_html}</tbody></table>"""
-
-
-def render_line_info_block(result):
-    raw_text = (result.get("line_prediction_text") or "").strip()
     line_map = result.get("line_map") or {}
-    if not raw_text and not line_map:
-        return ('<div class="line-info-block warn">⚠ このレースは並び予想（ライン情報）を検出できませんでした。'
-                '決まり手予測・展開補正はライン情報なし（各選手の脚質のみ）で計算されています。</div>')
+    if not line_map:
+        return ('<div class="line-info-block warn">⚠ 並び予想を検出できませんでした。'
+                '決まり手予測・展開補正はライン情報なしで計算されています。</div>')
 
     by_line = {}
     for car, info in line_map.items():
         by_line.setdefault(info["line_index"], []).append((info["position"], car))
+
+    def badge(car):
+        bg, fg = car_color(car)
+        return f'<span class="car" style="background:{bg};color:{fg}">{car}</span>'
+
     parts = []
     for li in sorted(by_line):
         members = sorted(by_line[li])
-        if len(members) == 1:
-            parts.append(f"{members[0][1]}号車（単騎）")
-        else:
-            parts.append(" → ".join(f"{car}号車" for _, car in members))
-    parsed_str = "　／　".join(parts) if parts else "（解析できませんでした）"
-    return (f'<div class="line-info-block ok">サイトから検出した並び予想: 「{raw_text}」<br>'
-            f'解釈結果: {parsed_str}</div>')
+        cars_html = '<span class="line-arrow">→</span>'.join(badge(car) for _, car in members)
+        parts.append(f'<span class="line-group">{cars_html}</span>')
+    return '<div class="line-info-block ok">' + "".join(parts) + '</div>'
 
 
 def render_race_card(race_data, tab_id):
@@ -287,26 +246,16 @@ def render_race_card(race_data, tab_id):
           <td>{r.get('old_model_place_rate', 0):.1f}%</td>
         </tr>"""
 
-    close_note = ""
-    if result["most_reliable"] and result["most_reliable"]["car"] != top["car"]:
-        mr = result["most_reliable"]
-        close_note = (f"<p class='note'>⚠ 予測1着率が拮抗しています。信頼度が最も高いのは "
-                       f"{mr['car']}号車 {mr['name']}（信頼度{mr['confidence']['score']:.0f}）です。</p>")
-
-    banner_class = "banner-high" if high_prob else "banner-normal"
-    banner_text = (
-        f"{top['car']}号車 {top['name']} が本命（予測1着率 {top['adjusted']:.1f}%）"
-        if high_prob else
-        f"拮抗レース。最有力は{top['car']}号車 {top['name']}（{top['adjusted']:.1f}%）"
-    )
+    banner_html = ""
+    if high_prob:
+        banner_html = (f'<div class="banner-high">{top["car"]}号車 {top["name"]} が本命'
+                        f'（予測1着率 {top["adjusted"]:.1f}%）</div>')
 
     bar_chart = svg_bar_chart(result["rows"])
-    line_info_html = render_line_info_block(result)
+    line_info_html = render_line_info_block(result, title)
     kimarite_table_html = render_kimarite_table(result["kimarite_ratio"])
-    second_third_html = render_second_third_lists(result)
     second_matrix_html = render_second_place_matrix_table(result["rows"], result["second_place_matrix"])
     third_matrix_html = render_third_place_matrix_table(result["rows"], result["third_place_matrix"])
-    formation_html = render_formation_table(result.get("formation"))
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
@@ -318,8 +267,7 @@ def render_race_card(race_data, tab_id):
           <span class="title">{title}</span>
           {deadline_html}
         </div>
-        <div class="{banner_class}">{banner_text}</div>
-        {close_note}
+        {banner_html}
         {line_info_html}
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
@@ -332,10 +280,8 @@ def render_race_card(race_data, tab_id):
         </div>
 
         <div class="chart-block">{kimarite_table_html}</div>
-        <div class="chart-block sub-wrap">{second_third_html}</div>
         <div class="chart-block">{second_matrix_html}</div>
         <div class="chart-block">{third_matrix_html}</div>
-        <div class="chart-block">{formation_html}</div>
       </div>
     </div>"""
 
@@ -373,14 +319,11 @@ RACE_PANEL_STYLE = """
   table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
   table.matrix td.diag{ background:#f0ece0; color:var(--ink-soft); }
   table.matrix td.same-line{ background:#e3f0ff; font-weight:700; }
-  .line-info-block{ font-size:12px; border-radius:6px; padding:8px 10px; margin:8px 0; }
-  .line-info-block.ok{ background:#e7f3ea; color:#2f7a4f; border:1px solid #b9dcc3; }
+  .line-info-block{ font-size:12px; border-radius:6px; padding:9px 10px; margin:8px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .line-info-block.ok{ background:#e7f3ea; border:1px solid #b9dcc3; }
   .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
-  .formation-summary{ background:#f7f5ee; border:1px dashed var(--border); border-radius:8px; padding:10px 12px; margin-bottom:10px; font-size:13px; }
-  .formation-summary > div{ margin-bottom:5px; }
-  .f-label{ display:inline-block; min-width:56px; color:var(--ink-soft); font-size:11.5px; margin-right:4px; }
-  .car-mini{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%;
-             background:var(--navy); color:#fff; font-size:11px; font-weight:700; margin-right:2px; }
+  .line-group{ display:inline-flex; align-items:center; gap:3px; }
+  .line-arrow{ color:var(--ink-soft); font-size:11px; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:3px; }
@@ -481,7 +424,6 @@ def render_venue_page(venue, races, date, now=None):
     <h1>&larr; <a href="../index.html">{venue_name}競輪</a></h1>
     <span class="date">{date_str}</span>
   </div>
-  <p>タブでレースを切り替えられます。開いた時点で現在時刻に締切が一番近いレースが自動で開きます。</p>
 </header>
 <main>
   <div class="tab-bar">{tabs if tabs else "<p>本日このレース場のデータは取得できませんでした。</p>"}</div>
@@ -634,8 +576,7 @@ def render_index(all_race_data, date=None, now=None):
     <h1>競輪AI予想</h1>
     <span class="date">{date_str}</span>
   </div>
-  <p>本日開催している競輪場だけ明るく表示されます。タップするとレース一覧に進みます。</p>
-  <p style="color:#8fa0b5;font-size:11px;">最終更新: {datetime.datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")} (JST)</p>
+  <p class="tagline">今日、どこで、どの目を買うか。</p>
 </header>
 <main>
   <div id="upcomingListBox"></div>
