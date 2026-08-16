@@ -71,7 +71,7 @@
   <p>タブでレースを切り替えられます。開いた時点で現在時刻に締切が一番近いレースが自動で開きます。</p>
 </header>
 <main>
-  <div class="tab-bar"><button class="tab-btn" data-deadline="15:22" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>15:22</span></button><button class="tab-btn" data-deadline="15:54" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>15:54</span></button><button class="tab-btn" data-deadline="16:26" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>16:26</span></button><button class="tab-btn" data-deadline="16:55" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>16:55</span></button><button class="tab-btn" data-deadline="17:24" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>17:24</span></button><button class="tab-btn" data-deadline="17:53" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>17:53</span></button><button class="tab-btn" data-deadline="18:22" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>18:22</span></button><button class="tab-btn" data-deadline="18:51" onclick="showTab('race8', this)">8R<br><span class='tab-deadline'>18:51</span></button><button class="tab-btn" data-deadline="19:20" onclick="showTab('race9', this)">9R<br><span class='tab-deadline'>19:20</span></button><button class="tab-btn" data-deadline="19:48" onclick="showTab('race10', this)">10R<br><span class='tab-deadline'>19:48</span></button><button class="tab-btn" data-deadline="20:15" onclick="showTab('race11', this)">11R<br><span class='tab-deadline'>20:15</span></button></div>
+  <div class="tab-bar"><button class="tab-btn" data-deadline="15:22" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>15:22</span></button><button class="tab-btn" data-deadline="15:54" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>15:54</span></button><button class="tab-btn" data-deadline="16:26" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>16:26</span></button><button class="tab-btn" data-deadline="17:24" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>17:24</span></button><button class="tab-btn" data-deadline="17:53" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>17:53</span></button><button class="tab-btn" data-deadline="18:22" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>18:22</span></button><button class="tab-btn" data-deadline="18:51" onclick="showTab('race8', this)">8R<br><span class='tab-deadline'>18:51</span></button><button class="tab-btn" data-deadline="19:20" onclick="showTab('race9', this)">9R<br><span class='tab-deadline'>19:20</span></button><button class="tab-btn" data-deadline="19:48" onclick="showTab('race10', this)">10R<br><span class='tab-deadline'>19:48</span></button><button class="tab-btn" data-deadline="20:15" onclick="showTab('race11', this)">11R<br><span class='tab-deadline'>20:15</span></button></div>
   
     <div id="race1" class="race-panel" style="display:none;">
       <div class="race-card">
@@ -85,7 +85,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「3 先行 7 追込 4 追込 1 押え先 5 追込 6 押え先 2 追込」<br>解釈結果: 3号車 → 7号車 → 4号車　／　1号車 → 5号車　／　6号車 → 2号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -95,6 +95,7 @@
           <td>先頭</td>
           <td><b>33.6%</b></td>
           <td>45</td>
+          <td>98.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -104,6 +105,7 @@
           <td>2番手</td>
           <td><b>21.9%</b></td>
           <td>66</td>
+          <td>81.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -113,6 +115,7 @@
           <td>先頭</td>
           <td><b>15.1%</b></td>
           <td>49</td>
+          <td>55.5%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -122,6 +125,7 @@
           <td>先頭</td>
           <td><b>9.3%</b></td>
           <td>50</td>
+          <td>3.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -131,6 +135,7 @@
           <td>2番手</td>
           <td><b>9.1%</b></td>
           <td>68</td>
+          <td>26.3%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -140,6 +145,7 @@
           <td>3番手</td>
           <td><b>5.8%</b></td>
           <td>69</td>
+          <td>10.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -149,6 +155,7 @@
           <td>2番手</td>
           <td><b>5.1%</b></td>
           <td>29</td>
+          <td>25.1%</td>
         </tr></tbody>
         </table>
 
@@ -226,7 +233,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「4 先行 3 追込 1 追込 7 追込 6 押え先 2 追込 5 追込」<br>解釈結果: 4号車 → 3号車 → 1号車 → 7号車　／　6号車 → 2号車 → 5号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -236,6 +243,7 @@
           <td>2番手</td>
           <td><b>24.9%</b></td>
           <td>65</td>
+          <td>38.9%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -245,6 +253,7 @@
           <td>先頭</td>
           <td><b>21.7%</b></td>
           <td>60</td>
+          <td>93.6%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -254,6 +263,7 @@
           <td>3番手</td>
           <td><b>16.0%</b></td>
           <td>71</td>
+          <td>90.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -263,6 +273,7 @@
           <td>3番手</td>
           <td><b>14.4%</b></td>
           <td>76</td>
+          <td>28.5%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -272,6 +283,7 @@
           <td>2番手</td>
           <td><b>12.0%</b></td>
           <td>41</td>
+          <td>41.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -281,6 +293,7 @@
           <td>4番手</td>
           <td><b>7.5%</b></td>
           <td>34</td>
+          <td>3.6%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -290,6 +303,7 @@
           <td>先頭</td>
           <td><b>3.6%</b></td>
           <td>69</td>
+          <td>3.6%</td>
         </tr></tbody>
         </table>
 
@@ -367,7 +381,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「1 先行 5 追込 4 追込 7 押え先 2 追込 3 押え先 6 追込」<br>解釈結果: 1号車 → 5号車 → 4号車　／　7号車 → 2号車　／　3号車 → 6号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -377,6 +391,7 @@
           <td>先頭</td>
           <td><b>40.1%</b></td>
           <td>60</td>
+          <td>99.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -386,6 +401,7 @@
           <td>2番手</td>
           <td><b>16.2%</b></td>
           <td>67</td>
+          <td>70.4%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -395,6 +411,7 @@
           <td>先頭</td>
           <td><b>13.4%</b></td>
           <td>78</td>
+          <td>31.5%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -404,6 +421,7 @@
           <td>先頭</td>
           <td><b>10.3%</b></td>
           <td>50</td>
+          <td>9.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -413,6 +431,7 @@
           <td>2番手</td>
           <td><b>10.0%</b></td>
           <td>66</td>
+          <td>60.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -422,6 +441,7 @@
           <td>2番手</td>
           <td><b>5.5%</b></td>
           <td>17</td>
+          <td>3.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -431,6 +451,7 @@
           <td>3番手</td>
           <td><b>4.4%</b></td>
           <td>64</td>
+          <td>3.2%</td>
         </tr></tbody>
         </table>
 
@@ -496,147 +517,6 @@
     <tbody><tr style='background:#fff4de;'><td>1</td><td>1 → 5 → 7</td><td>鈴木 那樹 → 山本 → 吉松 賢二</td><td><b>4.4%</b></td></tr><tr style='background:#fff4de;'><td>2</td><td>1 → 5 → 3</td><td>鈴木 那樹 → 山本 → 猪野 泰介</td><td><b>3.4%</b></td></tr><tr style='background:#fff4de;'><td>3</td><td>1 → 5 → 2</td><td>鈴木 那樹 → 山本 → 鈴木 宏章</td><td><b>3.3%</b></td></tr><tr style=''><td>4</td><td>5 → 1 → 7</td><td>山本 → 鈴木 那樹 → 吉松 賢二</td><td><b>2.7%</b></td></tr><tr style=''><td>5</td><td>1 → 7 → 5</td><td>鈴木 那樹 → 吉松 賢二 → 山本</td><td><b>2.6%</b></td></tr><tr style=''><td>6</td><td>1 → 2 → 5</td><td>鈴木 那樹 → 鈴木 宏章 → 山本</td><td><b>2.6%</b></td></tr><tr style=''><td>7</td><td>1 → 5 → 4</td><td>鈴木 那樹 → 山本 → 石井 孝</td><td><b>2.5%</b></td></tr><tr style=''><td>8</td><td>1 → 2 → 7</td><td>鈴木 那樹 → 鈴木 宏章 → 吉松 賢二</td><td><b>2.1%</b></td></tr><tr style=''><td>9</td><td>5 → 1 → 3</td><td>山本 → 鈴木 那樹 → 猪野 泰介</td><td><b>2.1%</b></td></tr><tr style=''><td>10</td><td>1 → 3 → 5</td><td>鈴木 那樹 → 猪野 泰介 → 山本</td><td><b>2.0%</b></td></tr><tr style=''><td>11</td><td>5 → 1 → 2</td><td>山本 → 鈴木 那樹 → 鈴木 宏章</td><td><b>2.0%</b></td></tr><tr style=''><td>12</td><td>1 → 5 → 6</td><td>鈴木 那樹 → 山本 → 嶋貫 高大</td><td><b>1.8%</b></td></tr><tr style=''><td>13</td><td>1 → 7 → 2</td><td>鈴木 那樹 → 吉松 賢二 → 鈴木 宏章</td><td><b>1.6%</b></td></tr><tr style=''><td>14</td><td>5 → 1 → 4</td><td>山本 → 鈴木 那樹 → 石井 孝</td><td><b>1.6%</b></td></tr><tr style=''><td>15</td><td>5 → 7 → 1</td><td>山本 → 吉松 賢二 → 鈴木 那樹</td><td><b>1.4%</b></td></tr><tr style=''><td>16</td><td>5 → 1 → 6</td><td>山本 → 鈴木 那樹 → 嶋貫 高大</td><td><b>1.1%</b></td></tr><tr style=''><td>17</td><td>5 → 3 → 1</td><td>山本 → 猪野 泰介 → 鈴木 那樹</td><td><b>1.1%</b></td></tr><tr style=''><td>18</td><td>1 → 3 → 2</td><td>鈴木 那樹 → 猪野 泰介 → 鈴木 宏章</td><td><b>1.0%</b></td></tr><tr style=''><td>19</td><td>1 → 2 → 3</td><td>鈴木 那樹 → 鈴木 宏章 → 猪野 泰介</td><td><b>0.9%</b></td></tr><tr style=''><td>20</td><td>1 → 7 → 3</td><td>鈴木 那樹 → 吉松 賢二 → 猪野 泰介</td><td><b>0.8%</b></td></tr><tr style=''><td>21</td><td>1 → 3 → 7</td><td>鈴木 那樹 → 猪野 泰介 → 吉松 賢二</td><td><b>0.8%</b></td></tr><tr style=''><td>22</td><td>1 → 7 → 6</td><td>鈴木 那樹 → 吉松 賢二 → 嶋貫 高大</td><td><b>0.7%</b></td></tr><tr style=''><td>23</td><td>5 → 2 → 1</td><td>山本 → 鈴木 宏章 → 鈴木 那樹</td><td><b>0.7%</b></td></tr><tr style=''><td>24</td><td>1 → 3 → 6</td><td>鈴木 那樹 → 猪野 泰介 → 嶋貫 高大</td><td><b>0.7%</b></td></tr><tr style=''><td>25</td><td>1 → 7 → 4</td><td>鈴木 那樹 → 吉松 賢二 → 石井 孝</td><td><b>0.6%</b></td></tr><tr style=''><td>26</td><td>1 → 2 → 4</td><td>鈴木 那樹 → 鈴木 宏章 → 石井 孝</td><td><b>0.6%</b></td></tr><tr style=''><td>27</td><td>1 → 2 → 6</td><td>鈴木 那樹 → 鈴木 宏章 → 嶋貫 高大</td><td><b>0.5%</b></td></tr><tr style=''><td>28</td><td>1 → 3 → 4</td><td>鈴木 那樹 → 猪野 泰介 → 石井 孝</td><td><b>0.4%</b></td></tr><tr style=''><td>29</td><td>5 → 7 → 2</td><td>山本 → 吉松 賢二 → 鈴木 宏章</td><td><b>0.3%</b></td></tr><tr style=''><td>30</td><td>5 → 2 → 7</td><td>山本 → 鈴木 宏章 → 吉松 賢二</td><td><b>0.2%</b></td></tr><tr style=''><td>31</td><td>5 → 3 → 7</td><td>山本 → 猪野 泰介 → 吉松 賢二</td><td><b>0.2%</b></td></tr><tr style=''><td>32</td><td>5 → 7 → 3</td><td>山本 → 吉松 賢二 → 猪野 泰介</td><td><b>0.2%</b></td></tr><tr style=''><td>33</td><td>5 → 3 → 2</td><td>山本 → 猪野 泰介 → 鈴木 宏章</td><td><b>0.2%</b></td></tr><tr style=''><td>34</td><td>5 → 7 → 4</td><td>山本 → 吉松 賢二 → 石井 孝</td><td><b>0.2%</b></td></tr><tr style=''><td>35</td><td>5 → 3 → 6</td><td>山本 → 猪野 泰介 → 嶋貫 高大</td><td><b>0.1%</b></td></tr><tr style=''><td>36</td><td>5 → 2 → 3</td><td>山本 → 鈴木 宏章 → 猪野 泰介</td><td><b>0.1%</b></td></tr><tr style=''><td>37</td><td>5 → 3 → 4</td><td>山本 → 猪野 泰介 → 石井 孝</td><td><b>0.1%</b></td></tr><tr style=''><td>38</td><td>5 → 7 → 6</td><td>山本 → 吉松 賢二 → 嶋貫 高大</td><td><b>0.1%</b></td></tr><tr style=''><td>39</td><td>5 → 2 → 4</td><td>山本 → 鈴木 宏章 → 石井 孝</td><td><b>0.1%</b></td></tr><tr style=''><td>40</td><td>5 → 2 → 6</td><td>山本 → 鈴木 宏章 → 嶋貫 高大</td><td><b>0.0%</b></td></tr></tbody></table></div>
       </div>
     </div>
-    <div id="race4" class="race-panel" style="display:none;">
-      <div class="race-card">
-        <div class="race-head">
-          <span class="raceno">4R</span>
-          <span class="title">S B</span>
-          <span class="deadline">締切 16:55</span>
-        </div>
-        <div class="banner-normal">拮抗レース。最有力は7号車 吉川 敬介（32.2%）</div>
-        
-        <div class="line-info-block ok">サイトから検出した並び予想: 「7 先行 4 追込 1 追込 5 自在 3 追込 2 追込 6 追上」<br>解釈結果: 7号車 → 4号車 → 1号車　／　5号車 → 3号車 → 2号車　／　6号車（単騎）</div>
-        <h4>表1：号車別 予測1着率</h4>
-        <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
-          <tbody>
-        <tr style="">
-          <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
-          <td>吉川 敬介</td>
-          <td>A3</td>
-          <td>捲り<br><span class="dim">(54%)</span></td>
-          <td>先頭</td>
-          <td><b>32.2%</b></td>
-          <td>70</td>
-        </tr>
-        <tr style="">
-          <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
-          <td>渡邊 政幸</td>
-          <td>A3</td>
-          <td>マーク<br><span class="dim">(70%)</span></td>
-          <td>2番手</td>
-          <td><b>24.3%</b></td>
-          <td>63</td>
-        </tr>
-        <tr style="">
-          <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
-          <td>田村 純一</td>
-          <td>A3</td>
-          <td>捲り<br><span class="dim">(63%)</span></td>
-          <td>先頭</td>
-          <td><b>16.7%</b></td>
-          <td>79</td>
-        </tr>
-        <tr style="">
-          <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
-          <td>工藤 考生</td>
-          <td>A3</td>
-          <td>マーク<br><span class="dim">(76%)</span></td>
-          <td>3番手</td>
-          <td><b>12.1%</b></td>
-          <td>74</td>
-        </tr>
-        <tr style="">
-          <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
-          <td>小林 大能</td>
-          <td>A3</td>
-          <td>マーク<br><span class="dim">(54%)</span></td>
-          <td>3番手</td>
-          <td><b>5.9%</b></td>
-          <td>69</td>
-        </tr>
-        <tr style="">
-          <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
-          <td>中野</td>
-          <td>A3</td>
-          <td>差し<br><span class="dim">(47%)</span></td>
-          <td>2番手</td>
-          <td><b>5.5%</b></td>
-          <td>75</td>
-        </tr>
-        <tr style="">
-          <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
-          <td>眞原 健一</td>
-          <td>A3</td>
-          <td>差し<br><span class="dim">(50%)</span></td>
-          <td>先頭</td>
-          <td><b>3.3%</b></td>
-          <td>52</td>
-        </tr></tbody>
-        </table>
-
-        <div class="chart-block">
-          <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
-      
-        <rect x="15.8" y="94.7" width="28" height="51.3" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="29.8" y="90.7" font-size="10" text-anchor="middle" fill="#1b2430">12.1%</text>
-        <text x="29.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
-              style="paint-order:stroke; stroke:#ffffff; stroke-width:5px;">1</text>
-        <rect x="59.5" y="121.2" width="28" height="24.8" fill="#1b1b1b" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="73.5" y="117.2" font-size="10" text-anchor="middle" fill="#1b2430">5.9%</text>
-        <text x="73.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
-              style="paint-order:stroke; stroke:#1b1b1b; stroke-width:5px;">2</text>
-        <rect x="103.2" y="122.6" width="28" height="23.4" fill="#d8322a" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="117.2" y="118.6" font-size="10" text-anchor="middle" fill="#1b2430">5.5%</text>
-        <text x="117.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
-              style="paint-order:stroke; stroke:#d8322a; stroke-width:5px;">3</text>
-        <rect x="147.0" y="43.4" width="28" height="102.6" fill="#1f5fc4" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="161.0" y="39.4" font-size="10" text-anchor="middle" fill="#1b2430">24.3%</text>
-        <text x="161.0" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
-              style="paint-order:stroke; stroke:#1f5fc4; stroke-width:5px;">4</text>
-        <rect x="190.8" y="75.4" width="28" height="70.6" fill="#e8c221" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="204.8" y="71.4" font-size="10" text-anchor="middle" fill="#1b2430">16.7%</text>
-        <text x="204.8" y="160.0" font-size="11" text-anchor="middle" fill="#1b2430"
-              style="paint-order:stroke; stroke:#e8c221; stroke-width:5px;">5</text>
-        <rect x="234.5" y="132.0" width="28" height="14.0" fill="#2f8f4e" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="248.5" y="128.0" font-size="10" text-anchor="middle" fill="#1b2430">3.3%</text>
-        <text x="248.5" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
-              style="paint-order:stroke; stroke:#2f8f4e; stroke-width:5px;">6</text>
-        <rect x="278.2" y="10.0" width="28" height="136.0" fill="#e07a1f" stroke="#1b2430" stroke-width="1" rx="3"/>
-        <text x="292.2" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">32.2%</text>
-        <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
-              style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
-    </svg>
-        </div>
-
-        <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
-    <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>10.2%</td><td>19.8%</td><td>28.0%</td><td>42.0%</td></tr></tbody></table></div>
-        <div class="chart-block sub-wrap"><div><h4>表3：2着候補（本命が1着になった場合）</h4><table class='sub'><tr><td>1</td><td>4号車 渡邊 政幸（同ライン）</td><td>46.8%</td></tr><tr><td>2</td><td>1号車 工藤 考生（同ライン）</td><td>17.3%</td></tr><tr><td>3</td><td>5号車 田村 純一</td><td>16.1%</td></tr><tr><td>4</td><td>2号車 小林 大能</td><td>7.9%</td></tr><tr><td>5</td><td>3号車 中野</td><td>7.5%</td></tr></table></div><div><h4>3着候補（本命が1着・表3の最有力候補が2着の場合）</h4><table class='sub'><tr><td>1</td><td>1号車 工藤 考生（同ライン）</td><td>38.0%</td></tr><tr><td>2</td><td>5号車 田村 純一</td><td>29.7%</td></tr><tr><td>3</td><td>3号車 中野</td><td>13.7%</td></tr><tr><td>4</td><td>2号車 小林 大能</td><td>10.4%</td></tr><tr><td>5</td><td>6号車 眞原 健一</td><td>8.2%</td></tr></table></div></div>
-        <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 工藤 考生</b></td><td class="diag">—</td><td class="">4.3%</td><td class="">5.6%</td><td class="same-line">35.2%</td><td class="">16.9%</td><td class="">3.4%</td><td class="same-line">34.6%</td></tr><tr><td><b>2 小林 大能</b></td><td class="">10.0%</td><td class="diag">—</td><td class="same-line">9.1%</td><td class="">19.9%</td><td class="same-line">20.3%</td><td class="">3.8%</td><td class="">36.9%</td></tr><tr><td><b>3 中野</b></td><td class="">11.7%</td><td class="same-line">8.1%</td><td class="diag">—</td><td class="">23.5%</td><td class="same-line">23.2%</td><td class="">2.3%</td><td class="">31.2%</td></tr><tr><td><b>4 渡邊 政幸</b></td><td class="same-line">18.6%</td><td class="">4.5%</td><td class="">5.9%</td><td class="diag">—</td><td class="">17.9%</td><td class="">3.6%</td><td class="same-line">49.4%</td></tr><tr><td><b>5 田村 純一</b></td><td class="">15.8%</td><td class="same-line">8.1%</td><td class="same-line">10.3%</td><td class="">31.6%</td><td class="diag">—</td><td class="">4.3%</td><td class="">29.9%</td></tr><tr><td><b>6 眞原 健一</b></td><td class="">12.8%</td><td class="">6.2%</td><td class="">4.2%</td><td class="">25.5%</td><td class="">17.6%</td><td class="diag">—</td><td class="">33.8%</td></tr><tr><td><b>7 吉川 敬介</b></td><td class="same-line">17.3%</td><td class="">7.9%</td><td class="">7.5%</td><td class="same-line">46.8%</td><td class="">16.1%</td><td class="">4.5%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 工藤 考生</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="diag">—</td><td class="">4.9%</td><td class="">8.0%</td><td class="diag">—</td><td class="">24.0%</td><td class="">4.8%</td><td class="same-line">58.4%</td></tr><tr><td><b>2 小林 大能</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="same-line">17.5%</td><td class="diag">—</td><td class="same-line">10.0%</td><td class="same-line">43.8%</td><td class="same-line">24.0%</td><td class="">4.7%</td><td class="diag">—</td></tr><tr><td><b>3 中野</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="same-line">16.6%</td><td class="same-line">10.0%</td><td class="diag">—</td><td class="same-line">41.6%</td><td class="same-line">28.6%</td><td class="">3.2%</td><td class="diag">—</td></tr><tr><td><b>4 渡邊 政幸</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="same-line">38.0%</td><td class="">10.4%</td><td class="">13.7%</td><td class="diag">—</td><td class="">29.7%</td><td class="">8.2%</td><td class="diag">—</td></tr><tr><td><b>5 田村 純一</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="same-line">21.2%</td><td class="same-line">8.2%</td><td class="same-line">9.7%</td><td class="diag">—</td><td class="diag">—</td><td class="">4.6%</td><td class="same-line">56.3%</td></tr><tr><td><b>6 眞原 健一</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="same-line">18.9%</td><td class="">9.1%</td><td class="">6.1%</td><td class="same-line">47.4%</td><td class="">18.5%</td><td class="diag">—</td><td class="diag">—</td></tr><tr><td><b>7 吉川 敬介</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="same-line">38.0%</td><td class="">10.4%</td><td class="">13.7%</td><td class="diag">—</td><td class="">29.7%</td><td class="">8.2%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表6：3連単フォーメーション</h4>
-    <p class="dim" style="margin:0 0 6px;">1着軸・2着候補・3着候補をそれぞれ複数車まとめた「フォーメーション買い」形式です。</p>
-    <div class="formation-summary">
-      <div><span class="f-label">1着軸</span><span class='car-mini'>7</span> <span class='car-mini'>4</span></div>
-      <div><span class="f-label">2着候補</span><span class='car-mini'>4</span> <span class='car-mini'>1</span> <span class='car-mini'>5</span> <span class='car-mini'>2</span> <span class='car-mini'>7</span> <span class='car-mini'>3</span></div>
-      <div><span class="f-label">3着候補</span><span class='car-mini'>1</span> <span class='car-mini'>5</span> <span class='car-mini'>3</span> <span class='car-mini'>2</span> <span class='car-mini'>6</span> <span class='car-mini'>4</span> <span class='car-mini'>7</span></div>
-      <div><span class="f-label">点数</span><b>50点</b>
-        <span class="f-label" style="margin-left:10px;">カバー率</span><b>約54.1%</b></div>
-    </div>
-    <table class="main"><thead><tr><th>順位</th><th>組み合わせ</th><th>選手名</th><th>確率</th></tr></thead>
-    <tbody><tr style='background:#fff4de;'><td>1</td><td>7 → 4 → 1</td><td>吉川 敬介 → 渡邊 政幸 → 工藤 考生</td><td><b>5.7%</b></td></tr><tr style='background:#fff4de;'><td>2</td><td>4 → 7 → 1</td><td>渡邊 政幸 → 吉川 敬介 → 工藤 考生</td><td><b>4.6%</b></td></tr><tr style='background:#fff4de;'><td>3</td><td>7 → 4 → 5</td><td>吉川 敬介 → 渡邊 政幸 → 田村 純一</td><td><b>4.5%</b></td></tr><tr style=''><td>4</td><td>4 → 7 → 5</td><td>渡邊 政幸 → 吉川 敬介 → 田村 純一</td><td><b>3.6%</b></td></tr><tr style=''><td>5</td><td>7 → 1 → 4</td><td>吉川 敬介 → 工藤 考生 → 渡邊 政幸</td><td><b>3.1%</b></td></tr><tr style=''><td>6</td><td>7 → 5 → 4</td><td>吉川 敬介 → 田村 純一 → 渡邊 政幸</td><td><b>2.7%</b></td></tr><tr style=''><td>7</td><td>4 → 1 → 7</td><td>渡邊 政幸 → 工藤 考生 → 吉川 敬介</td><td><b>2.6%</b></td></tr><tr style=''><td>8</td><td>4 → 5 → 7</td><td>渡邊 政幸 → 田村 純一 → 吉川 敬介</td><td><b>2.4%</b></td></tr><tr style=''><td>9</td><td>7 → 4 → 3</td><td>吉川 敬介 → 渡邊 政幸 → 中野</td><td><b>2.1%</b></td></tr><tr style=''><td>10</td><td>4 → 7 → 3</td><td>渡邊 政幸 → 吉川 敬介 → 中野</td><td><b>1.6%</b></td></tr><tr style=''><td>11</td><td>7 → 4 → 2</td><td>吉川 敬介 → 渡邊 政幸 → 小林 大能</td><td><b>1.6%</b></td></tr><tr style=''><td>12</td><td>4 → 7 → 2</td><td>渡邊 政幸 → 吉川 敬介 → 小林 大能</td><td><b>1.2%</b></td></tr><tr style=''><td>13</td><td>7 → 4 → 6</td><td>吉川 敬介 → 渡邊 政幸 → 眞原 健一</td><td><b>1.2%</b></td></tr><tr style=''><td>14</td><td>7 → 1 → 5</td><td>吉川 敬介 → 工藤 考生 → 田村 純一</td><td><b>1.2%</b></td></tr><tr style=''><td>15</td><td>7 → 2 → 4</td><td>吉川 敬介 → 小林 大能 → 渡邊 政幸</td><td><b>1.1%</b></td></tr><tr style=''><td>16</td><td>4 → 1 → 5</td><td>渡邊 政幸 → 工藤 考生 → 田村 純一</td><td><b>1.1%</b></td></tr><tr style=''><td>17</td><td>7 → 5 → 1</td><td>吉川 敬介 → 田村 純一 → 工藤 考生</td><td><b>1.1%</b></td></tr><tr style=''><td>18</td><td>7 → 3 → 4</td><td>吉川 敬介 → 中野 → 渡邊 政幸</td><td><b>1.0%</b></td></tr><tr style=''><td>19</td><td>4 → 7 → 6</td><td>渡邊 政幸 → 吉川 敬介 → 眞原 健一</td><td><b>1.0%</b></td></tr><tr style=''><td>20</td><td>4 → 5 → 1</td><td>渡邊 政幸 → 田村 純一 → 工藤 考生</td><td><b>0.9%</b></td></tr><tr style=''><td>21</td><td>7 → 3 → 5</td><td>吉川 敬介 → 中野 → 田村 純一</td><td><b>0.7%</b></td></tr><tr style=''><td>22</td><td>4 → 3 → 7</td><td>渡邊 政幸 → 中野 → 吉川 敬介</td><td><b>0.7%</b></td></tr><tr style=''><td>23</td><td>7 → 5 → 3</td><td>吉川 敬介 → 田村 純一 → 中野</td><td><b>0.6%</b></td></tr><tr style=''><td>24</td><td>7 → 2 → 5</td><td>吉川 敬介 → 小林 大能 → 田村 純一</td><td><b>0.6%</b></td></tr><tr style=''><td>25</td><td>7 → 1 → 3</td><td>吉川 敬介 → 工藤 考生 → 中野</td><td><b>0.6%</b></td></tr><tr style=''><td>26</td><td>4 → 2 → 7</td><td>渡邊 政幸 → 小林 大能 → 吉川 敬介</td><td><b>0.5%</b></td></tr><tr style=''><td>27</td><td>7 → 5 → 2</td><td>吉川 敬介 → 田村 純一 → 小林 大能</td><td><b>0.5%</b></td></tr><tr style=''><td>28</td><td>7 → 2 → 1</td><td>吉川 敬介 → 小林 大能 → 工藤 考生</td><td><b>0.4%</b></td></tr><tr style=''><td>29</td><td>4 → 5 → 3</td><td>渡邊 政幸 → 田村 純一 → 中野</td><td><b>0.4%</b></td></tr><tr style=''><td>30</td><td>7 → 1 → 2</td><td>吉川 敬介 → 工藤 考生 → 小林 大能</td><td><b>0.4%</b></td></tr><tr style=''><td>31</td><td>7 → 3 → 1</td><td>吉川 敬介 → 中野 → 工藤 考生</td><td><b>0.4%</b></td></tr><tr style=''><td>32</td><td>4 → 1 → 3</td><td>渡邊 政幸 → 工藤 考生 → 中野</td><td><b>0.4%</b></td></tr><tr style=''><td>33</td><td>4 → 5 → 2</td><td>渡邊 政幸 → 田村 純一 → 小林 大能</td><td><b>0.4%</b></td></tr><tr style=''><td>34</td><td>4 → 3 → 5</td><td>渡邊 政幸 → 中野 → 田村 純一</td><td><b>0.4%</b></td></tr><tr style=''><td>35</td><td>7 → 1 → 6</td><td>吉川 敬介 → 工藤 考生 → 眞原 健一</td><td><b>0.3%</b></td></tr><tr style=''><td>36</td><td>7 → 5 → 6</td><td>吉川 敬介 → 田村 純一 → 眞原 健一</td><td><b>0.3%</b></td></tr><tr style=''><td>37</td><td>4 → 3 → 1</td><td>渡邊 政幸 → 中野 → 工藤 考生</td><td><b>0.3%</b></td></tr><tr style=''><td>38</td><td>7 → 2 → 3</td><td>吉川 敬介 → 小林 大能 → 中野</td><td><b>0.3%</b></td></tr><tr style=''><td>39</td><td>7 → 3 → 2</td><td>吉川 敬介 → 中野 → 小林 大能</td><td><b>0.2%</b></td></tr><tr style=''><td>40</td><td>4 → 2 → 5</td><td>渡邊 政幸 → 小林 大能 → 田村 純一</td><td><b>0.2%</b></td></tr><tr style=''><td>41</td><td>4 → 1 → 2</td><td>渡邊 政幸 → 工藤 考生 → 小林 大能</td><td><b>0.2%</b></td></tr><tr style=''><td>42</td><td>4 → 1 → 6</td><td>渡邊 政幸 → 工藤 考生 → 眞原 健一</td><td><b>0.2%</b></td></tr><tr style=''><td>43</td><td>4 → 2 → 1</td><td>渡邊 政幸 → 小林 大能 → 工藤 考生</td><td><b>0.2%</b></td></tr><tr style=''><td>44</td><td>4 → 5 → 6</td><td>渡邊 政幸 → 田村 純一 → 眞原 健一</td><td><b>0.2%</b></td></tr><tr style=''><td>45</td><td>4 → 3 → 2</td><td>渡邊 政幸 → 中野 → 小林 大能</td><td><b>0.1%</b></td></tr><tr style=''><td>46</td><td>7 → 2 → 6</td><td>吉川 敬介 → 小林 大能 → 眞原 健一</td><td><b>0.1%</b></td></tr><tr style=''><td>47</td><td>4 → 2 → 3</td><td>渡邊 政幸 → 小林 大能 → 中野</td><td><b>0.1%</b></td></tr><tr style=''><td>48</td><td>7 → 3 → 6</td><td>吉川 敬介 → 中野 → 眞原 健一</td><td><b>0.1%</b></td></tr><tr style=''><td>49</td><td>4 → 2 → 6</td><td>渡邊 政幸 → 小林 大能 → 眞原 健一</td><td><b>0.0%</b></td></tr><tr style=''><td>50</td><td>4 → 3 → 6</td><td>渡邊 政幸 → 中野 → 眞原 健一</td><td><b>0.0%</b></td></tr></tbody></table></div>
-      </div>
-    </div>
     <div id="race5" class="race-panel" style="display:none;">
       <div class="race-card">
         <div class="race-head">
@@ -649,7 +529,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「7 先行 6 自在 1 押え先 2 追込 3 自在 4 追込 5 追込」<br>解釈結果: 7号車（単騎）　／　6号車（単騎）　／　1号車 → 2号車　／　3号車 → 4号車 → 5号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="background:#fff4de;">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -659,6 +539,7 @@
           <td>先頭</td>
           <td><b>46.7%</b></td>
           <td>83</td>
+          <td>99.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -668,6 +549,7 @@
           <td>先頭</td>
           <td><b>16.5%</b></td>
           <td>81</td>
+          <td>99.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -677,6 +559,7 @@
           <td>先頭</td>
           <td><b>10.6%</b></td>
           <td>67</td>
+          <td>45.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -686,6 +569,7 @@
           <td>2番手</td>
           <td><b>8.9%</b></td>
           <td>35</td>
+          <td>28.3%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -695,6 +579,7 @@
           <td>先頭</td>
           <td><b>6.6%</b></td>
           <td>43</td>
+          <td>10.5%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -704,6 +589,7 @@
           <td>3番手</td>
           <td><b>5.7%</b></td>
           <td>34</td>
+          <td>2.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -713,6 +599,7 @@
           <td>2番手</td>
           <td><b>5.0%</b></td>
           <td>43</td>
+          <td>2.8%</td>
         </tr></tbody>
         </table>
 
@@ -790,7 +677,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「3 自在 4 自在 5 押え先 6 自在」<br>解釈結果: 3号車（単騎）　／　4号車（単騎）　／　5号車（単騎）　／　6号車（単騎）</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="background:#fff4de;">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -800,6 +687,7 @@
           <td>単騎</td>
           <td><b>46.4%</b></td>
           <td>89</td>
+          <td>99.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -809,6 +697,7 @@
           <td>先頭</td>
           <td><b>15.0%</b></td>
           <td>41</td>
+          <td>40.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -818,6 +707,7 @@
           <td>先頭</td>
           <td><b>14.0%</b></td>
           <td>26</td>
+          <td>27.6%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -827,6 +717,7 @@
           <td>単騎</td>
           <td><b>9.7%</b></td>
           <td>64</td>
+          <td>28.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -836,6 +727,7 @@
           <td>先頭</td>
           <td><b>7.3%</b></td>
           <td>50</td>
+          <td>24.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -845,6 +737,7 @@
           <td>先頭</td>
           <td><b>5.5%</b></td>
           <td>71</td>
+          <td>69.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -854,6 +747,7 @@
           <td>単騎</td>
           <td><b>2.0%</b></td>
           <td>36</td>
+          <td>2.5%</td>
         </tr></tbody>
         </table>
 
@@ -931,7 +825,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「3 先行 4 追込 5 追込 6 押え先 2 追込 7 押え先 1 追込」<br>解釈結果: 3号車 → 4号車 → 5号車　／　6号車 → 2号車　／　7号車 → 1号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -941,6 +835,7 @@
           <td>2番手</td>
           <td><b>39.0%</b></td>
           <td>73</td>
+          <td>75.4%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -950,6 +845,7 @@
           <td>先頭</td>
           <td><b>25.6%</b></td>
           <td>71</td>
+          <td>84.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -959,6 +855,7 @@
           <td>2番手</td>
           <td><b>11.3%</b></td>
           <td>64</td>
+          <td>51.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -968,6 +865,7 @@
           <td>2番手</td>
           <td><b>9.6%</b></td>
           <td>73</td>
+          <td>54.4%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -977,6 +875,7 @@
           <td>3番手</td>
           <td><b>8.5%</b></td>
           <td>60</td>
+          <td>3.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -986,6 +885,7 @@
           <td>先頭</td>
           <td><b>3.5%</b></td>
           <td>73</td>
+          <td>18.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -995,6 +895,7 @@
           <td>先頭</td>
           <td><b>2.5%</b></td>
           <td>66</td>
+          <td>13.4%</td>
         </tr></tbody>
         </table>
 
@@ -1072,7 +973,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「3 先行 1 追込 5 追込 6 追込 7 押え先 4 追込 2 追込」<br>解釈結果: 3号車 → 1号車 → 5号車 → 6号車　／　7号車 → 4号車 → 2号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -1082,6 +983,7 @@
           <td>2番手</td>
           <td><b>40.1%</b></td>
           <td>73</td>
+          <td>94.4%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -1091,6 +993,7 @@
           <td>先頭</td>
           <td><b>23.2%</b></td>
           <td>73</td>
+          <td>90.3%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -1100,6 +1003,7 @@
           <td>先頭</td>
           <td><b>13.1%</b></td>
           <td>79</td>
+          <td>94.4%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -1109,6 +1013,7 @@
           <td>2番手</td>
           <td><b>9.6%</b></td>
           <td>64</td>
+          <td>3.6%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -1118,6 +1023,7 @@
           <td>3番手</td>
           <td><b>6.9%</b></td>
           <td>64</td>
+          <td>3.6%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -1127,6 +1033,7 @@
           <td>3番手</td>
           <td><b>4.0%</b></td>
           <td>68</td>
+          <td>10.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -1136,6 +1043,7 @@
           <td>4番手</td>
           <td><b>3.1%</b></td>
           <td>71</td>
+          <td>3.6%</td>
         </tr></tbody>
         </table>
 
@@ -1213,7 +1121,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「1 先行 4 追込 5 押え先 2 追込 7 追込 3 追込 6 追上」<br>解釈結果: 1号車 → 4号車　／　5号車 → 2号車 → 7号車 → 3号車　／　6号車（単騎）</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -1223,6 +1131,7 @@
           <td>2番手</td>
           <td><b>35.1%</b></td>
           <td>54</td>
+          <td>96.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -1232,6 +1141,7 @@
           <td>2番手</td>
           <td><b>19.8%</b></td>
           <td>60</td>
+          <td>58.3%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -1241,6 +1151,7 @@
           <td>先頭</td>
           <td><b>14.0%</b></td>
           <td>57</td>
+          <td>90.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -1250,6 +1161,7 @@
           <td>3番手</td>
           <td><b>10.5%</b></td>
           <td>54</td>
+          <td>4.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -1259,6 +1171,7 @@
           <td>先頭</td>
           <td><b>9.0%</b></td>
           <td>39</td>
+          <td>4.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -1268,6 +1181,7 @@
           <td>4番手</td>
           <td><b>8.5%</b></td>
           <td>63</td>
+          <td>4.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -1277,6 +1191,7 @@
           <td>先頭</td>
           <td><b>3.2%</b></td>
           <td>68</td>
+          <td>43.5%</td>
         </tr></tbody>
         </table>
 
@@ -1354,7 +1269,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「4 先行 7 追込 1 追込 3 追込 2 押え先 5 追込 6 追上」<br>解釈結果: 4号車 → 7号車 → 1号車 → 3号車　／　2号車 → 5号車　／　6号車（単騎）</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -1364,6 +1279,7 @@
           <td>先頭</td>
           <td><b>31.1%</b></td>
           <td>68</td>
+          <td>99.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -1373,6 +1289,7 @@
           <td>2番手</td>
           <td><b>24.1%</b></td>
           <td>56</td>
+          <td>98.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -1382,6 +1299,7 @@
           <td>2番手</td>
           <td><b>10.9%</b></td>
           <td>66</td>
+          <td>24.3%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -1391,6 +1309,7 @@
           <td>先頭</td>
           <td><b>10.6%</b></td>
           <td>68</td>
+          <td>48.9%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -1400,6 +1319,7 @@
           <td>3番手</td>
           <td><b>10.4%</b></td>
           <td>40</td>
+          <td>14.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -1409,6 +1329,7 @@
           <td>4番手</td>
           <td><b>9.0%</b></td>
           <td>61</td>
+          <td>3.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -1418,6 +1339,7 @@
           <td>先頭</td>
           <td><b>3.8%</b></td>
           <td>36</td>
+          <td>3.2%</td>
         </tr></tbody>
         </table>
 
@@ -1495,7 +1417,7 @@
         <div class="line-info-block ok">サイトから検出した並び予想: 「5 先行 3 追込 7 追込 2 押え先 6 追込 4 押え先 1 追込」<br>解釈結果: 5号車 → 3号車 → 7号車　／　2号車 → 6号車　／　4号車 → 1号車</div>
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -1505,6 +1427,7 @@
           <td>2番手</td>
           <td><b>40.1%</b></td>
           <td>66</td>
+          <td>83.1%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -1514,6 +1437,7 @@
           <td>2番手</td>
           <td><b>19.4%</b></td>
           <td>66</td>
+          <td>46.8%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -1523,6 +1447,7 @@
           <td>先頭</td>
           <td><b>14.3%</b></td>
           <td>71</td>
+          <td>45.9%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -1532,6 +1457,7 @@
           <td>3番手</td>
           <td><b>10.3%</b></td>
           <td>79</td>
+          <td>19.9%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -1541,6 +1467,7 @@
           <td>先頭</td>
           <td><b>6.0%</b></td>
           <td>60</td>
+          <td>43.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -1550,6 +1477,7 @@
           <td>2番手</td>
           <td><b>5.9%</b></td>
           <td>57</td>
+          <td>19.2%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -1559,6 +1487,7 @@
           <td>先頭</td>
           <td><b>4.1%</b></td>
           <td>57</td>
+          <td>42.0%</td>
         </tr></tbody>
         </table>
 
