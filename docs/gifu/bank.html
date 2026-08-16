@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岐阜競輪 バンクデータ | 競輪AI予想</title>
+<style>
+
+  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:19px; }
+  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
+  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
+  header p.tagline{ font-style:italic; color:#cdd7e3; }
+  header nav.top-nav{ margin-top:8px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd7e3; border-bottom:1px solid rgba(255,255,255,.3); }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+
+  main{ max-width:720px; margin:0 auto; padding:14px 10px 60px; }
+  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; }
+  .tab-btn{ flex:0 0 auto; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 14px;
+            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); text-align:center; }
+  .tab-btn .tab-deadline{ font-size:10px; font-weight:400; color:var(--ink-soft); }
+  .tab-btn.active .tab-deadline{ color:#cdd7e3; }
+  .tab-btn.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
+  .race-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; }
+  .race-head{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }
+  .race-head .raceno{ background:var(--navy); color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }
+  .race-head .title{ color:var(--ink-soft); font-size:13px; }
+  .race-head .deadline{ margin-left:auto; background:#f0ece0; border-radius:4px; padding:1px 8px; font-size:12px; color:var(--ink); font-weight:700; }
+  .banner-high{ background:#fff4de; border:1px solid var(--gold); border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
+  .banner-normal{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
+  .note{ font-size:12px; color:#b5482f; margin:4px 0; }
+  table.main{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.main th, table.main td{ border:1px solid var(--border); padding:5px; text-align:center; }
+  table.main th{ background:#f0ece0; }
+  .dim{ color:var(--ink-soft); font-size:10px; }
+  .car{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.15); }
+  .sub-wrap{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
+  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); }
+  table.sub{ font-size:12px; border-collapse:collapse; }
+  table.sub td{ padding:2px 8px 2px 0; }
+  .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
+  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  .kimarite-table th, .kimarite-table td{ text-align:center; }
+  .delta-up{ color:#c1443b; font-size:11px; font-weight:700; }
+  .delta-down{ color:#1f5fc4; font-size:11px; font-weight:700; }
+  .matrix-scroll{ overflow-x:auto; }
+  table.matrix{ font-size:10.5px; }
+  table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
+  table.matrix td.diag{ background:#f0ece0; color:var(--ink-soft); }
+  table.matrix td.same-line{ background:#e3f0ff; font-weight:700; }
+  .line-info-block{ font-size:12px; border-radius:6px; padding:9px 10px; margin:8px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .line-info-block.ok{ background:#e7f3ea; border:1px solid #b9dcc3; }
+  .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
+  .line-group{ display:inline-flex; align-items:center; gap:3px; }
+  .line-arrow{ color:var(--ink-soft); font-size:11px; }
+  @media (max-width:420px){
+    table.main{ font-size:10.5px; }
+    table.main th, table.main td{ padding:3px; }
+  }
+
+  .stat-row{ display:flex; justify-content:space-between; padding:7px 4px; border-bottom:1px solid var(--border); font-size:13px; }
+  .stat-row:last-child{ border-bottom:none; }
+  .stat-label{ color:var(--ink-soft); }
+  .stat-value{ font-weight:700; }
+  .track-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; margin-bottom:14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="../venues.html">岐阜競輪</a></h1>
+    <span class="date">2026年08月16日(日)</span>
+  </div>
+  <p class="tagline"><span class="bclass-badge bclass-400">400バンク</span></p>
+</header>
+<main style="max-width:720px;margin:0 auto;padding:14px 10px 60px;">
+  <div class="track-card">
+    <h4 style="text-align:center;">コースレイアウト（模式図）</h4>
+    <svg viewBox="0 0 360 220" width="100%" style="max-width:360px; display:block; margin:0 auto;">
+      <path d="M134.2,32.8 L225.8,32.8 A83.2,83.2 0 0 1 225.8,199.2 L134.2,199.2 A83.2,83.2 0 0 1 134.2,32.8 Z" fill="none" stroke="#0e1b2b" stroke-width="14" stroke-linejoin="round"/>
+      <path d="M134.2,32.8 L225.8,32.8 A83.2,83.2 0 0 1 225.8,199.2 L134.2,199.2 A83.2,83.2 0 0 1 134.2,32.8 Z" fill="#f6f3ec" stroke="#d8a94a" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M134.2,61.1 L225.8,61.1 A54.9,54.9 0 0 1 225.8,170.9 L134.2,170.9 A54.9,54.9 0 0 1 134.2,61.1 Z" fill="none" stroke="#b8ab8a" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="219.8" y1="39.8" x2="219.8" y2="192.2" stroke="#c1443b" stroke-width="2"/>
+      <text x="180.0" y="18.8" font-size="13" text-anchor="middle" fill="#0e1b2b" font-weight="700">1周 400m</text>
+      <text x="180.0" y="221.2" font-size="11" text-anchor="middle" fill="#5b6472">みなし直線 59.3m</text>
+      <text x="180.0" y="235.2" font-size="10" text-anchor="middle" fill="#8a9099">カント 32°15′7″</text>
+      <text x="219.8" y="32.8" font-size="9.5" text-anchor="end" fill="#c1443b">ゴール</text>
+    </svg>
+    <p class='dim' style='margin:4px 0 0;'>みなし直線の傾向：<b>差し有利</b></p>
+  </div>
+
+  <div class="track-card">
+    <h4>バンク基本データ</h4>
+    <div class="stat-row"><span class="stat-label">周長</span><span class="stat-value">400m</span></div><div class="stat-row"><span class="stat-label">みなし直線</span><span class="stat-value">59.3m</span></div><div class="stat-row"><span class="stat-label">センター部路面傾斜（カント）</span><span class="stat-value">32°15′7″</span></div><div class="stat-row"><span class="stat-label">直線部路面傾斜</span><span class="stat-value">2°51′45″</span></div><div class="stat-row"><span class="stat-label">ホーム幅員</span><span class="stat-value">10.2m</span></div><div class="stat-row"><span class="stat-label">バック幅員</span><span class="stat-value">9.0m</span></div><div class="stat-row"><span class="stat-label">センター幅員</span><span class="stat-value">7.4m</span></div><div class="stat-row"><span class="stat-label">バンクレコード</span><span class="stat-value">10.7秒（伊勢崎彰大 2004/08/14）</span></div>
+  </div>
+
+  <div class="track-card">
+    <h4>決まり手の場平均（1着・A級7車ベース）</h4>
+    <p class="dim" style="margin:0 0 8px;">元データが逃げ・差し・捲りの1着出現率のみのため、マークは残差（100%からの引き算）で算出した参考値です。各レースの「決まり手構成」表では、この場平均との差分を↑↓で表示します。</p>
+    
+        <table class="main"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>26.8%</td><td>26.3%</td><td>46.8%</td><td>0.1%</td></tr></tbody></table>
+  </div>
+
+  <div class="track-card">
+    <h4>決まり手の場平均（2着・A級7車ベース）</h4>
+    
+        <table class="main">
+          <thead><tr><th>逃げ</th><th>差し</th><th>捲り</th><th>マーク</th></tr></thead>
+          <tbody><tr>
+            <td>21.4%</td><td>26.4%</td>
+            <td>12.4%</td><td>39.5%</td>
+          </tr></tbody>
+        </table>
+  </div>
+
+  <div class="track-card">
+    <a href="index.html" style="font-size:13px;">この競輪場の本日のレース予想を見る &rarr;</a>
+  </div>
+</main>
+<footer>データ出典：keirin-brother.com「競輪場のバンクの特徴」（元データ: KEIRIN.JP）、決まり手出現率は競輪CLUBデータ分析。</footer>
+</body>
+</html>
