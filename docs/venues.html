@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全競輪場データ | 競輪AI予想</title>
+<style>
+
+  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:19px; }
+  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
+  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
+  header p.tagline{ font-style:italic; color:#cdd7e3; }
+  header nav.top-nav{ margin-top:8px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd7e3; border-bottom:1px solid rgba(255,255,255,.3); }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+
+  main{ max-width:1100px; margin:0 auto; padding:16px 10px 60px; }
+  h2.section{ font-size:14px; color:var(--ink-soft); margin:18px 0 10px; }
+  .table-scroll{ overflow-x:auto; }
+  table.venues{ width:100%; border-collapse:collapse; font-size:12px; background:#fff; }
+  table.venues th, table.venues td{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }
+  table.venues th{ background:#f0ece0; position:sticky; top:0; }
+  table.venues td.vname-cell, table.venues th:first-child{ text-align:left; white-space:nowrap; font-weight:700; }
+  .bclass-badge{ display:inline-block; border-radius:4px; padding:0 5px; font-size:10px; font-weight:700; margin-left:4px; }
+  .bclass-333{ background:#e3f0ff; color:#1f5fc4; }
+  .bclass-400{ background:#f0ece0; color:#5b6472; }
+  .bclass-500{ background:#fde3e3; color:#c1443b; }
+  .tendency-badge{ display:block; font-size:9.5px; color:var(--ink-soft); font-weight:400; margin-top:1px; white-space:nowrap; }
+  .dim{ color:var(--ink-soft); font-size:10.5px; }
+  .legend{ background:#f7f5ee; border:1px dashed var(--border); border-radius:8px; padding:10px 12px; font-size:12px; color:var(--ink-soft); margin-bottom:14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">全競輪場データ</a></h1>
+    <span class="date">2026年08月16日(日)</span>
+  </div>
+  <p class="tagline">全国43場のバンク特性を1枚で。</p>
+</header>
+<main>
+  <div class="legend">
+    周長バッジ：<span class="bclass-badge bclass-333">333</span>は小回り・先行有利の傾向、
+    <span class="bclass-badge bclass-500">500</span>は大回り・差し有利の傾向、
+    <span class="bclass-badge bclass-400">400</span>はその中間（全国で最も多い標準的なバンク）です。
+    決まり手出現率はA級7車・2021〜2025年の集計（参考値）。
+  </div>
+  <div class="table-scroll">
+    <table class="venues">
+      <thead>
+        <tr>
+          <th>競輪場</th><th>みなし直線</th><th>センターカント</th><th>直線カント</th>
+          <th>ホーム幅員</th><th>バック幅員</th><th>センター幅員</th><th>バンクレコード</th>
+          <th>逃げ1着率</th><th>差し1着率</th><th>捲り1着率</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="vname-cell">函館 <span class="bclass-badge bclass-400">400</span></td>
+          <td>51.3m <span class="tendency-badge">標準</span></td>
+          <td>30°36′51″</td>
+          <td>3°26′1″</td>
+          <td>10.8m</td>
+          <td>9.8m</td>
+          <td>7.8m</td>
+          <td>10.6秒<br><span class="dim">脇本雄太</span></td>
+          <td>30.0%</td>
+          <td>44.9%</td>
+          <td>24.9%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">青森 <span class="bclass-badge bclass-400">400</span></td>
+          <td>58.9m <span class="tendency-badge">差し有利</span></td>
+          <td>32°15′07″</td>
+          <td>2°51′45″</td>
+          <td>10.8m</td>
+          <td>9.8m</td>
+          <td>7.8m</td>
+          <td>10.5秒<br><span class="dim">ベイリー</span></td>
+          <td>24.8%</td>
+          <td>49.2%</td>
+          <td>25.7%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">いわき平 <span class="bclass-badge bclass-400">400</span></td>
+          <td>62.7m <span class="tendency-badge">差し有利</span></td>
+          <td>32°54′45″</td>
+          <td>3°26′1″</td>
+          <td>10.0m</td>
+          <td>10.0m</td>
+          <td>7.3m</td>
+          <td>10.5秒<br><span class="dim">山崎芳仁</span></td>
+          <td>25.5%</td>
+          <td>50.1%</td>
+          <td>24.6%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">弥彦 <span class="bclass-badge bclass-400">400</span></td>
+          <td>63.1m <span class="tendency-badge">差し有利</span></td>
+          <td>32°24′17″</td>
+          <td>2°51′45″</td>
+          <td>10.1m</td>
+          <td>9.0m</td>
+          <td>7.3m</td>
+          <td>10.6秒<br><span class="dim">山崎芳仁</span></td>
+          <td>24.8%</td>
+          <td>50.4%</td>
+          <td>24.7%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">前橋 <span class="bclass-badge bclass-333">333</span></td>
+          <td>46.7m <span class="tendency-badge">標準</span></td>
+          <td>36°0′0″</td>
+          <td>4°0′0″</td>
+          <td>9.9m</td>
+          <td>9.9m</td>
+          <td>9.9m</td>
+          <td>8.8秒<br><span class="dim">中川誠一郎</span></td>
+          <td>37.6%</td>
+          <td>34.7%</td>
+          <td>27.5%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">取手 <span class="bclass-badge bclass-400">400</span></td>
+          <td>54.8m <span class="tendency-badge">標準</span></td>
+          <td>31°30′25″</td>
+          <td>2°51′44″</td>
+          <td>10.0m</td>
+          <td>10.0m</td>
+          <td>7.5m</td>
+          <td>10.7秒<br><span class="dim">吉岡稔真</span></td>
+          <td>28.9%</td>
+          <td>45.2%</td>
+          <td>26.1%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">宇都宮 <span class="bclass-badge bclass-500">500</span></td>
+          <td>63.3m <span class="tendency-badge">差し有利</span></td>
+          <td>25°47′44″</td>
+          <td>2°51′44″</td>
+          <td>10.3m</td>
+          <td>11.3m</td>
+          <td>8.3m</td>
+          <td>13.1秒<br><span class="dim">中川誠一郎</span></td>
+          <td>28.1%</td>
+          <td>47.8%</td>
+          <td>24.3%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">大宮 <span class="bclass-badge bclass-500">500</span></td>
+          <td>66.7m <span class="tendency-badge">差し有利</span></td>
+          <td>26°16′40″</td>
+          <td>3°26′1″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.5m</td>
+          <td>12.8秒<br><span class="dim">ブフリ</span></td>
+          <td>25.6%</td>
+          <td>51.3%</td>
+          <td>23.0%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">西武園 <span class="bclass-badge bclass-400">400</span></td>
+          <td>47.6m <span class="tendency-badge">標準</span></td>
+          <td>29°26′54″</td>
+          <td>2°51′45″</td>
+          <td>11.0m</td>
+          <td>10.0m</td>
+          <td>7.5m</td>
+          <td>10.6秒<br><span class="dim">會田正一</span></td>
+          <td>33.4%</td>
+          <td>42.7%</td>
+          <td>23.9%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">京王閣 <span class="bclass-badge bclass-400">400</span></td>
+          <td>51.5m <span class="tendency-badge">標準</span></td>
+          <td>32°10′34″</td>
+          <td>2°51′44″</td>
+          <td>10.3m</td>
+          <td>9.0m</td>
+          <td>7.5m</td>
+          <td>10.4秒<br><span class="dim">パーキンス</span></td>
+          <td>28.0%</td>
+          <td>46.2%</td>
+          <td>25.8%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">立川 <span class="bclass-badge bclass-400">400</span></td>
+          <td>58.0m <span class="tendency-badge">差し有利</span></td>
+          <td>31°13′6″</td>
+          <td>2°17′27″</td>
+          <td>9.7m</td>
+          <td>8.7m</td>
+          <td>7.7m</td>
+          <td>10.6秒<br><span class="dim">深谷知広</span></td>
+          <td>26.9%</td>
+          <td>48.1%</td>
+          <td>25.2%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">松戸 <span class="bclass-badge bclass-333">333</span></td>
+          <td>38.2m <span class="tendency-badge">逃げ・捲り有利</span></td>
+          <td>29°44′42″</td>
+          <td>3°1′2″</td>
+          <td>11.1m</td>
+          <td>9.6m</td>
+          <td>8.1m</td>
+          <td>9.0秒<br><span class="dim">中村浩士</span></td>
+          <td>35.9%</td>
+          <td>32.9%</td>
+          <td>31.3%</td>
+        </tr>
+            <tr>
+              <td class="vname-cell">千葉</td>
+              <td colspan="9" class="dim">250競走のみ開催のためバンクデータなし</td>
+            </tr>
+        <tr>
+          <td class="vname-cell">川崎 <span class="bclass-badge bclass-400">400</span></td>
+          <td>58.0m <span class="tendency-badge">差し有利</span></td>
+          <td>32°10′14″</td>
+          <td>3°26′1″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>8.3m</td>
+          <td>10.5秒<br><span class="dim">脇本雄太</span></td>
+          <td>28.9%</td>
+          <td>44.6%</td>
+          <td>25.9%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">平塚 <span class="bclass-badge bclass-400">400</span></td>
+          <td>54.2m <span class="tendency-badge">標準</span></td>
+          <td>31°28′37″</td>
+          <td>3°26′1″</td>
+          <td>11.0m</td>
+          <td>9.3m</td>
+          <td>7.5m</td>
+          <td>10.4秒<br><span class="dim">荒井崇博</span></td>
+          <td>27.1%</td>
+          <td>45.6%</td>
+          <td>27.3%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">小田原 <span class="bclass-badge bclass-333">333</span></td>
+          <td>36.1m <span class="tendency-badge">逃げ・捲り有利</span></td>
+          <td>35°34′12″</td>
+          <td>3°26′1″</td>
+          <td>11.3m</td>
+          <td>9.0m</td>
+          <td>7.5m</td>
+          <td>8.7秒<br><span class="dim">ボティシャー</span></td>
+          <td>29.1%</td>
+          <td>42.8%</td>
+          <td>28.1%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">伊東 <span class="bclass-badge bclass-333">333</span></td>
+          <td>46.6m <span class="tendency-badge">標準</span></td>
+          <td>34°41′9″</td>
+          <td>3°26′1″</td>
+          <td>11.0m</td>
+          <td>9.3m</td>
+          <td>7.8m</td>
+          <td>8.9秒<br><span class="dim">山田庸平</span></td>
+          <td>31.2%</td>
+          <td>39.3%</td>
+          <td>29.5%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">静岡 <span class="bclass-badge bclass-400">400</span></td>
+          <td>56.4m <span class="tendency-badge">標準</span></td>
+          <td>30°43′22″</td>
+          <td>2°51′45″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.5m</td>
+          <td>10.8秒<br><span class="dim">佐藤仁</span></td>
+          <td>26.6%</td>
+          <td>44.7%</td>
+          <td>28.3%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">名古屋 <span class="bclass-badge bclass-400">400</span></td>
+          <td>58.8m <span class="tendency-badge">差し有利</span></td>
+          <td>34°1′47″</td>
+          <td>2°51′45″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.3m</td>
+          <td>10.4秒<br><span class="dim">パーキンス</span></td>
+          <td>26.8%</td>
+          <td>44.9%</td>
+          <td>28.6%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">岐阜 <span class="bclass-badge bclass-400">400</span></td>
+          <td>59.3m <span class="tendency-badge">差し有利</span></td>
+          <td>32°15′7″</td>
+          <td>2°51′45″</td>
+          <td>10.2m</td>
+          <td>9.0m</td>
+          <td>7.4m</td>
+          <td>10.7秒<br><span class="dim">伊勢崎彰大</span></td>
+          <td>26.8%</td>
+          <td>46.8%</td>
+          <td>26.3%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">大垣 <span class="bclass-badge bclass-400">400</span></td>
+          <td>56.0m <span class="tendency-badge">標準</span></td>
+          <td>30°37′8″</td>
+          <td>2°51′45″</td>
+          <td>10.2m</td>
+          <td>9.0m</td>
+          <td>7.4m</td>
+          <td>10.5秒<br><span class="dim">ネイワンド</span></td>
+          <td>27.9%</td>
+          <td>45.4%</td>
+          <td>26.4%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">豊橋 <span class="bclass-badge bclass-400">400</span></td>
+          <td>60.3m <span class="tendency-badge">差し有利</span></td>
+          <td>33°50′22″</td>
+          <td>2°17′26″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.8m</td>
+          <td>10.5秒<br><span class="dim">金子貴志</span></td>
+          <td>25.9%</td>
+          <td>45.3%</td>
+          <td>28.8%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">富山 <span class="bclass-badge bclass-333">333</span></td>
+          <td>43.0m <span class="tendency-badge">逃げ・捲り有利</span></td>
+          <td>33°41′24″</td>
+          <td>3°26′1″</td>
+          <td>10.2m</td>
+          <td>9.2m</td>
+          <td>6.4m</td>
+          <td>8.8秒<br><span class="dim">山口拳矢</span></td>
+          <td>30.1%</td>
+          <td>36.9%</td>
+          <td>33.4%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">松阪 <span class="bclass-badge bclass-400">400</span></td>
+          <td>61.5m <span class="tendency-badge">差し有利</span></td>
+          <td>34°25′29″</td>
+          <td>2°51′45″</td>
+          <td>10.9m</td>
+          <td>9.0m</td>
+          <td>7.7m</td>
+          <td>10.4秒<br><span class="dim">井上昌己</span></td>
+          <td>25.5%</td>
+          <td>47.6%</td>
+          <td>27.0%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">四日市 <span class="bclass-badge bclass-400">400</span></td>
+          <td>62.4m <span class="tendency-badge">差し有利</span></td>
+          <td>32°15′7″</td>
+          <td>2°51′45″</td>
+          <td>13.3m</td>
+          <td>11.5m</td>
+          <td>8.5m</td>
+          <td>10.5秒<br><span class="dim">ボス</span></td>
+          <td>26.3%</td>
+          <td>46.3%</td>
+          <td>27.1%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">福井 <span class="bclass-badge bclass-400">400</span></td>
+          <td>52.8m <span class="tendency-badge">標準</span></td>
+          <td>31°28′37″</td>
+          <td>2°51′45″</td>
+          <td>10.5m</td>
+          <td>9.0m</td>
+          <td>7.5m</td>
+          <td>10.5秒<br><span class="dim">脇本雄太</span></td>
+          <td>29.6%</td>
+          <td>40.4%</td>
+          <td>29.6%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">奈良 <span class="bclass-badge bclass-333">333</span></td>
+          <td>38.0m <span class="tendency-badge">逃げ・捲り有利</span></td>
+          <td>33°25′47″</td>
+          <td>4°51′48″</td>
+          <td>10.8m</td>
+          <td>7.8m</td>
+          <td>7.8m</td>
+          <td>8.9秒<br><span class="dim">太田海也</span></td>
+          <td>36.8%</td>
+          <td>31.8%</td>
+          <td>30.3%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">向日町 <span class="bclass-badge bclass-400">400</span></td>
+          <td>47.3m <span class="tendency-badge">標準</span></td>
+          <td>30°29′7″</td>
+          <td>3°26′1″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.6m</td>
+          <td>10.4秒<br><span class="dim">深谷知広</span></td>
+          <td>28.9%</td>
+          <td>45.2%</td>
+          <td>24.2%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">和歌山 <span class="bclass-badge bclass-400">400</span></td>
+          <td>59.9m <span class="tendency-badge">差し有利</span></td>
+          <td>32°15′7″</td>
+          <td>2°51′45″</td>
+          <td>11.4m</td>
+          <td>9.3m</td>
+          <td>7.7m</td>
+          <td>10.6秒<br><span class="dim">ペルビス</span></td>
+          <td>23.9%</td>
+          <td>49.2%</td>
+          <td>25.9%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">岸和田 <span class="bclass-badge bclass-400">400</span></td>
+          <td>56.7m <span class="tendency-badge">標準</span></td>
+          <td>30°56′0″</td>
+          <td>2°51′45″</td>
+          <td>10.2m</td>
+          <td>10.1m</td>
+          <td>7.3m</td>
+          <td>10.3秒<br><span class="dim">ペルビス</span></td>
+          <td>28.0%</td>
+          <td>43.0%</td>
+          <td>28.7%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">玉野 <span class="bclass-badge bclass-400">400</span></td>
+          <td>47.9m <span class="tendency-badge">標準</span></td>
+          <td>30°37′33″</td>
+          <td>3°26′1″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.5m</td>
+          <td>10.5秒<br><span class="dim">太田竜馬</span></td>
+          <td>26.6%</td>
+          <td>45.5%</td>
+          <td>27.7%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">広島 <span class="bclass-badge bclass-400">400</span></td>
+          <td>57.9m <span class="tendency-badge">標準</span></td>
+          <td>32°31′40″</td>
+          <td>3°26′1″</td>
+          <td>10.5m</td>
+          <td>8.5m</td>
+          <td>7.3m</td>
+          <td>10.8秒<br><span class="dim">石橋慎太郎</span></td>
+          <td>20.4%</td>
+          <td>47.5%</td>
+          <td>32.3%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">防府 <span class="bclass-badge bclass-333">333</span></td>
+          <td>42.5m <span class="tendency-badge">逃げ・捲り有利</span></td>
+          <td>34°41′9″</td>
+          <td>4°34′26″</td>
+          <td>10.2m</td>
+          <td>9.1m</td>
+          <td>7.4m</td>
+          <td>8.8秒<br><span class="dim">新田祐大</span></td>
+          <td>32.2%</td>
+          <td>34.2%</td>
+          <td>32.7%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">高松 <span class="bclass-badge bclass-400">400</span></td>
+          <td>54.8m <span class="tendency-badge">標準</span></td>
+          <td>33°15′50″</td>
+          <td>2°51′45″</td>
+          <td>11.0m</td>
+          <td>9.0m</td>
+          <td>8.0m</td>
+          <td>10.6秒<br><span class="dim">高城信雄</span></td>
+          <td>26.0%</td>
+          <td>44.3%</td>
+          <td>29.4%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">小松島 <span class="bclass-badge bclass-400">400</span></td>
+          <td>55.5m <span class="tendency-badge">標準</span></td>
+          <td>29°46′27″</td>
+          <td>2°51′45″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>8.3m</td>
+          <td>10.5秒<br><span class="dim">吉村和之</span></td>
+          <td>25.2%</td>
+          <td>46.9%</td>
+          <td>27.9%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">高知 <span class="bclass-badge bclass-500">500</span></td>
+          <td>52.0m <span class="tendency-badge">標準</span></td>
+          <td>24°29′51″</td>
+          <td>3°26′1″</td>
+          <td>11.3m</td>
+          <td>10.8m</td>
+          <td>7.8m</td>
+          <td>13.1秒<br><span class="dim">島川将貴</span></td>
+          <td>22.9%</td>
+          <td>51.3%</td>
+          <td>25.1%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">松山 <span class="bclass-badge bclass-400">400</span></td>
+          <td>58.6m <span class="tendency-badge">差し有利</span></td>
+          <td>34°1′48″</td>
+          <td>2°51′45″</td>
+          <td>10.3m</td>
+          <td>9.3m</td>
+          <td>7.3m</td>
+          <td>10.5秒<br><span class="dim">ペルビス</span></td>
+          <td>25.7%</td>
+          <td>46.2%</td>
+          <td>28.5%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">小倉 <span class="bclass-badge bclass-400">400</span></td>
+          <td>56.9m <span class="tendency-badge">標準</span></td>
+          <td>34°1′48″</td>
+          <td>3°26′1″</td>
+          <td>11.0m</td>
+          <td>10.0m</td>
+          <td>8.0m</td>
+          <td>10.5秒<br><span class="dim">エスクレド</span></td>
+          <td>27.2%</td>
+          <td>43.7%</td>
+          <td>28.7%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">久留米 <span class="bclass-badge bclass-400">400</span></td>
+          <td>50.7m <span class="tendency-badge">標準</span></td>
+          <td>31°28′37″</td>
+          <td>3°26′1″</td>
+          <td>11.0m</td>
+          <td>10.0m</td>
+          <td>9.0m</td>
+          <td>10.4秒<br><span class="dim">グレーツァー</span></td>
+          <td>27.6%</td>
+          <td>41.6%</td>
+          <td>30.0%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">武雄 <span class="bclass-badge bclass-400">400</span></td>
+          <td>64.4m <span class="tendency-badge">差し有利</span></td>
+          <td>32°0′19″</td>
+          <td>2°17′26″</td>
+          <td>9.7m</td>
+          <td>8.7m</td>
+          <td>7.4m</td>
+          <td>10.6秒<br><span class="dim">寺崎浩平</span></td>
+          <td>24.4%</td>
+          <td>46.5%</td>
+          <td>28.6%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">佐世保 <span class="bclass-badge bclass-400">400</span></td>
+          <td>40.2m <span class="tendency-badge">逃げ・捲り有利</span></td>
+          <td>31°28′37″</td>
+          <td>3°26′1″</td>
+          <td>10.0m</td>
+          <td>9.0m</td>
+          <td>7.5m</td>
+          <td>10.6秒<br><span class="dim">中川誠一郎</span></td>
+          <td>26.5%</td>
+          <td>45.4%</td>
+          <td>27.6%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">別府 <span class="bclass-badge bclass-400">400</span></td>
+          <td>59.9m <span class="tendency-badge">差し有利</span></td>
+          <td>33°41′24″</td>
+          <td>2°51′45″</td>
+          <td>10.0m</td>
+          <td>9.0m</td>
+          <td>8.0m</td>
+          <td>10.5秒<br><span class="dim">ボス</span></td>
+          <td>29.4%</td>
+          <td>41.1%</td>
+          <td>29.1%</td>
+        </tr>
+        <tr>
+          <td class="vname-cell">熊本 <span class="bclass-badge bclass-400">400</span></td>
+          <td>60.3m <span class="tendency-badge">差し有利</span></td>
+          <td>34°15′29″</td>
+          <td>2°51′45″</td>
+          <td>10.0m</td>
+          <td>9.0m</td>
+          <td>8.0m</td>
+          <td>10.7秒<br><span class="dim">嘉永泰斗</span></td>
+          <td>28.2%</td>
+          <td>42.8%</td>
+          <td>28.7%</td>
+        </tr></tbody>
+    </table>
+  </div>
+</main>
+<footer>データ出典：keirin-brother.com「競輪場のバンクの特徴」（元データ: KEIRIN.JP）、決まり手出現率は競輪CLUBデータ分析。物理的な施設特性のため、更新頻度は低いです。</footer>
+</body>
+</html>
