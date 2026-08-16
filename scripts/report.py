@@ -284,6 +284,7 @@ def render_race_card(race_data, tab_id):
           <td>{line_label}</td>
           <td><b>{r['adjusted']:.1f}%</b></td>
           <td>{r['confidence']['score']:.0f}</td>
+          <td>{r.get('old_model_place_rate', 0):.1f}%</td>
         </tr>"""
 
     close_note = ""
@@ -322,7 +323,7 @@ def render_race_card(race_data, tab_id):
         {line_info_html}
         <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
           <tbody>{rows_html}</tbody>
         </table>
 

@@ -115,20 +115,33 @@ def find_race_urls_for_venue(venue, kaisai_date_id):
     """
     venue の racecard 一覧ページから、その日の各レースの racedetail URL を取得する。
     戻り値: [{"race_no": 1, "url": "https://.../gifu/racedetail/.../"}, ...]
+
+    注意：racecard ページには「他の日程のレースへのショートカットリンク」等、
+    今回リクエストした日程（kaisai_date_id）以外のレースへのリンクが紛れ込んでいる
+    ことがある。race_no（末尾2桁）だけで辞書に格納すると、後から現れた別日程の
+    リンクに上書きされて、日程がズレたレースを取得してしまう危険があるため、
+    race_id の先頭14桁が今回リクエストした kaisai_date_id と一致するものだけを採用する。
     """
     url = f"{BASE}/{venue}/racecard/{kaisai_date_id}/"
     html = _get(url)
     soup = BeautifulSoup(html, "html.parser")
 
     races = {}
+    skipped_other_day = 0
     for a in soup.find_all("a", href=True):
         m = re.search(rf"/{venue}/racedetail/(\d{{14,18}})/?(?:\?|$)", a["href"])
-        if m:
-            race_id = m.group(1)
-            race_no = int(race_id[-2:])
-            if 1 <= race_no <= 12:
-                races[race_no] = f"{BASE}/{venue}/racedetail/{race_id}/"
+        if not m:
+            continue
+        race_id = m.group(1)
+        if len(race_id) < 16 or race_id[:14] != kaisai_date_id:
+            skipped_other_day += 1
+            continue
+        race_no = int(race_id[-2:])
+        if 1 <= race_no <= 12:
+            races[race_no] = f"{BASE}/{venue}/racedetail/{race_id}/"
 
+    if skipped_other_day:
+        print(f"[INFO] {venue}: 別日程宛と判定して読み飛ばしたリンクが {skipped_other_day} 件ありました。")
     print(f"[INFO] {venue}: racecard一覧から {len(races)} レース分のURLを検出しました。")
     return [{"race_no": no, "url": races[no]} for no in sorted(races)]
 

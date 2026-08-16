@@ -9,6 +9,7 @@
 """
 
 import os
+import json
 import shutil
 import datetime
 import traceback
@@ -89,6 +90,20 @@ def main():
         with open(os.path.join(venue_dir, "index.html"), "w", encoding="utf-8") as f:
             f.write(venue_html)
         print(f"[INFO] docs/{venue}/index.html を書き出しました。")
+
+    # 通知チェック用の軽量な締切一覧キャッシュ（毎回スクレイピングし直さずに済むように）
+    deadlines_cache = [
+        {
+            "venue": rd["race_info"]["venue"],
+            "venue_name": VENUE_NAMES.get(rd["race_info"]["venue"], rd["race_info"]["venue"]),
+            "race_no": rd["race_info"]["race_no"],
+            "deadline": rd["race_info"].get("deadline"),
+        }
+        for rd in all_race_data if rd["race_info"].get("deadline")
+    ]
+    with open(os.path.join(DOCS_DIR, "_deadlines.json"), "w", encoding="utf-8") as f:
+        json.dump({"date": today.isoformat(), "races": deadlines_cache}, f, ensure_ascii=False, indent=2)
+    print(f"[INFO] docs/_deadlines.json を書き出しました（{len(deadlines_cache)}件）。")
 
     if len(races) == 0:
         print("[WARN] 取得できたレースが0件でした。サイト構造が変わっている可能性があります。")
