@@ -11,6 +11,7 @@ GitHub Pages で公開する docs/ 以下のファイルを生成する。
 import datetime
 from zoneinfo import ZoneInfo
 from model import KIMARITE_LABELS, KIMARITE
+from venue_data import VENUE_BANK_DATA, bank_class, straight_tendency
 
 VENUE_NAMES = {
     "hakodate": "函館", "aomori": "青森", "iwakitaira": "いわき平",
@@ -57,6 +58,8 @@ COMMON_STYLE = """
   header .date{ color:var(--gold); font-size:13px; font-weight:700; }
   header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
   header p.tagline{ font-style:italic; color:#cdd7e3; }
+  header nav.top-nav{ margin-top:8px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd7e3; border-bottom:1px solid rgba(255,255,255,.3); }
   a{ color:inherit; text-decoration:none; }
   footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
 """
@@ -577,6 +580,7 @@ def render_index(all_race_data, date=None, now=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">今日、どこで、どの目を買うか。</p>
+  <nav class="top-nav"><a href="venues.html">全競輪場データ &rarr;</a></nav>
 </header>
 <main>
   <div id="upcomingListBox"></div>
@@ -585,5 +589,102 @@ def render_index(all_race_data, date=None, now=None):
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
 <script>{index_script}</script>
+</body>
+</html>"""
+
+
+def render_venues_page(date=None):
+    date = date or datetime.date.today()
+    weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
+    date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
+
+    def fmt(v, unit=""):
+        return f"{v}{unit}" if v is not None else "—"
+
+    rows_html = ""
+    for slug, name in VENUE_NAMES.items():
+        d = VENUE_BANK_DATA.get(slug, {})
+        bclass = bank_class(d.get("circumference"))
+        tendency = straight_tendency(d.get("literal_straight"))
+        bclass_badge = f'<span class="bclass-badge bclass-{bclass}">{bclass}</span>' if bclass else ""
+        tendency_badge = f'<span class="tendency-badge">{tendency}</span>' if tendency else ""
+        note = d.get("note")
+
+        if note:
+            rows_html += f"""
+            <tr>
+              <td class="vname-cell">{name}</td>
+              <td colspan="9" class="dim">{note}</td>
+            </tr>"""
+            continue
+
+        rows_html += f"""
+        <tr>
+          <td class="vname-cell">{name} {bclass_badge}</td>
+          <td>{fmt(d.get('literal_straight'), 'm')} {tendency_badge}</td>
+          <td>{fmt(d.get('center_cant'))}</td>
+          <td>{fmt(d.get('straight_cant'))}</td>
+          <td>{fmt(d.get('home_width'), 'm')}</td>
+          <td>{fmt(d.get('back_width'), 'm')}</td>
+          <td>{fmt(d.get('center_width'), 'm')}</td>
+          <td>{fmt(d.get('record_time'))}<br><span class="dim">{fmt(d.get('record_holder'))}</span></td>
+          <td>{fmt(d.get('nige_1st'), '%')}</td>
+          <td>{fmt(d.get('sashi_1st'), '%')}</td>
+          <td>{fmt(d.get('makuri_1st'), '%')}</td>
+        </tr>"""
+
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全競輪場データ | 競輪AI予想</title>
+<style>
+{COMMON_STYLE}
+  main{{ max-width:1100px; margin:0 auto; padding:16px 10px 60px; }}
+  h2.section{{ font-size:14px; color:var(--ink-soft); margin:18px 0 10px; }}
+  .table-scroll{{ overflow-x:auto; }}
+  table.venues{{ width:100%; border-collapse:collapse; font-size:12px; background:#fff; }}
+  table.venues th, table.venues td{{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }}
+  table.venues th{{ background:#f0ece0; position:sticky; top:0; }}
+  table.venues td.vname-cell, table.venues th:first-child{{ text-align:left; white-space:nowrap; font-weight:700; }}
+  .bclass-badge{{ display:inline-block; border-radius:4px; padding:0 5px; font-size:10px; font-weight:700; margin-left:4px; }}
+  .bclass-333{{ background:#e3f0ff; color:#1f5fc4; }}
+  .bclass-400{{ background:#f0ece0; color:#5b6472; }}
+  .bclass-500{{ background:#fde3e3; color:#c1443b; }}
+  .tendency-badge{{ display:block; font-size:9.5px; color:var(--ink-soft); font-weight:400; margin-top:1px; white-space:nowrap; }}
+  .dim{{ color:var(--ink-soft); font-size:10.5px; }}
+  .legend{{ background:#f7f5ee; border:1px dashed var(--border); border-radius:8px; padding:10px 12px; font-size:12px; color:var(--ink-soft); margin-bottom:14px; }}
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">全競輪場データ</a></h1>
+    <span class="date">{date_str}</span>
+  </div>
+  <p class="tagline">全国43場のバンク特性を1枚で。</p>
+</header>
+<main>
+  <div class="legend">
+    周長バッジ：<span class="bclass-badge bclass-333">333</span>は小回り・先行有利の傾向、
+    <span class="bclass-badge bclass-500">500</span>は大回り・差し有利の傾向、
+    <span class="bclass-badge bclass-400">400</span>はその中間（全国で最も多い標準的なバンク）です。
+    決まり手出現率はA級7車・2021〜2025年の集計（参考値）。
+  </div>
+  <div class="table-scroll">
+    <table class="venues">
+      <thead>
+        <tr>
+          <th>競輪場</th><th>みなし直線</th><th>センターカント</th><th>直線カント</th>
+          <th>ホーム幅員</th><th>バック幅員</th><th>センター幅員</th><th>バンクレコード</th>
+          <th>逃げ1着率</th><th>差し1着率</th><th>捲り1着率</th>
+        </tr>
+      </thead>
+      <tbody>{rows_html}</tbody>
+    </table>
+  </div>
+</main>
+<footer>データ出典：keirin-brother.com「競輪場のバンクの特徴」（元データ: KEIRIN.JP）、決まり手出現率は競輪CLUBデータ分析。物理的な施設特性のため、更新頻度は低いです。</footer>
 </body>
 </html>"""

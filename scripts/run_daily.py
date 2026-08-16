@@ -17,7 +17,7 @@ from zoneinfo import ZoneInfo
 
 from scraper import fetch_all_todays_races
 from model import predict_race
-from report import render_index, render_venue_page, VENUE_NAMES
+from report import render_index, render_venue_page, render_venues_page, VENUE_NAMES
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS_DIR = os.path.join(os.path.dirname(__file__), "..", "docs")
@@ -81,6 +81,12 @@ def main():
     with open(os.path.join(DOCS_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_html)
     print("[INFO] docs/index.html を書き出しました。")
+
+    # 全競輪場データページ（バンク情報。物理的な施設特性なので日々変わらない）
+    venues_html = render_venues_page(today)
+    with open(os.path.join(DOCS_DIR, "venues.html"), "w", encoding="utf-8") as f:
+        f.write(venues_html)
+    print("[INFO] docs/venues.html を書き出しました。")
 
     # 競輪場ごとのページ（レース一覧・タブ切替）
     for venue, races_for_venue in by_venue.items():
