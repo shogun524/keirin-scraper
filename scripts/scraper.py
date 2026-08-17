@@ -60,21 +60,24 @@ def _extract_todays_links_from_kaisai_html(html):
     """
     ページのHTMLから、競輪場ごとに「本日」の racecard リンクを抽出する。
 
-    以前は「本日」という文字列に近いリンクを探す方式だったが、正確なDOM構造への
-    依存が強く、G1等の複数日開催で誤ったリンクを拾ってしまうことがあった。
-    実際にトップページ（https://keirin.kdreams.jp/）を直接確認したところ、
-    「本日の開催」欄では、競輪場ごとに「今日の日程」のracecardリンクのみが
-    存在し、過去の日程には「結果」リンクしか無いことが分かった
-    （つまり racecard リンクは1競輪場につき1つしか出ない）。
-    そのため、競輪場の見出しリンク（"?l-id=..." のクエリパラメータが付くことが
-    ある）を区切りとしてブロックに分割し、各ブロック内の racecard リンクを
-    そのまま採用する（「本日」の文字列検索には依存しない）。
+    実際に https://keirin.kdreams.jp/midnight/ のページ構造を直接確認したところ、
+    複数日開催では「初日」「2日目」「最終日」それぞれに個別の出走表リンクが
+    存在しており（1競輪場につき1リンクだけ、という以前の想定は誤りだった）、
+    「本日」という文字列は該当する日程のタブラベルに直接付与される形
+    （例："最終日本日"）で、その直後に該当日のracecardリンクが続く。
+    そのため、単純にブロック内最初のリンクを採用すると、今日が初日でない
+    競輪場（2日目・最終日）で常に初日のデータを拾ってしまう不具合があった。
+
+    正しくは、競輪場の見出しでブロックに区切ったうえで、ブロック内に
+    複数の racecard リンクがある場合は「本日」という文字列に最も近い
+    （直後の）ものを選ぶ。1つしか無ければそれを採用する。
     """
     venues = {}
     heading_pattern = re.compile(r'href="https://keirin\.kdreams\.jp/([a-z]+)/(?:\?[^"]*)?"')
     headings = [(m.start(), m.group(1)) for m in heading_pattern.finditer(html)]
 
     racecard_pattern = re.compile(r'href="[^"]*/([a-z]+)/racecard/(\d{14})/[^"]*"')
+    today_marker_positions = [m.start() for m in re.finditer("本日", html)]
 
     for idx, (pos, slug) in enumerate(headings):
         if slug in venues:
@@ -83,10 +86,27 @@ def _extract_todays_links_from_kaisai_html(html):
         block_end = headings[idx + 1][0] if idx + 1 < len(headings) else len(html)
         block = html[block_start:block_end]
 
-        for m in racecard_pattern.finditer(block):
-            if m.group(1) == slug:
-                venues[slug] = m.group(2)
-                break
+        links_in_block = [
+            (m.start(), m.group(2))
+            for m in racecard_pattern.finditer(block)
+            if m.group(1) == slug
+        ]
+        if not links_in_block:
+            continue
+        if len(links_in_block) == 1:
+            venues[slug] = links_in_block[0][1]
+            continue
+
+        # 複数ある場合は、ブロック内の「本日」マーカーに最も近い（直後の）ものを選ぶ
+        block_today_positions = [p - block_start for p in today_marker_positions if block_start <= p < block_end]
+        if block_today_positions:
+            today_pos = block_today_positions[0]
+            after = [(p, kdid) for p, kdid in links_in_block if p >= today_pos]
+            chosen = min(after, key=lambda x: x[0]) if after else min(links_in_block, key=lambda x: x[0])
+        else:
+            # 「本日」マーカーが見つからない場合は先頭を採用（従来動作へのフォールバック）
+            chosen = min(links_in_block, key=lambda x: x[0])
+        venues[slug] = chosen[1]
 
     return venues
 
