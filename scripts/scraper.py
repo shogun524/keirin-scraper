@@ -174,7 +174,67 @@ def find_todays_venues(date=None):
     return result
 
 
-def find_race_urls_for_venue(venue, kaisai_date_id):
+def _racecard_page_date(html):
+    """
+    racecard一覧ページの <title> / meta description には、必ずその日程の
+    実際のカレンダー日付が "YYYY年MM月DD日" の形で入っている（サーバー側で
+    確実にレンダリングされるため、"本日" バッジのような表示に依存する方式より
+    確実に判定できる）。見つからなければ None を返す。
+    """
+    m = re.search(r"(\d{4})年(\d{1,2})月(\d{1,2})日", html[:3000])
+    if not m:
+        return None
+    return (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+
+
+def resolve_correct_kaisai_date_id(venue, kaisai_date_id, date):
+    """
+    venue の racecard ページを実際に取得し、ページに表示されている日付が
+    期待する日付（date）と一致するか検証する。一致しなければ、日程番号
+    （kaisai_date_id の11〜12桁目）を 01〜09 まで順に変えて再取得し、
+    日付が一致するものを探す。
+
+    背景：開催一覧ページ内の「本日」マーカーやリンクの並び順に基づいて
+    正しい日程を推定する方式は、サイト側のページ構造の変化に弱く、
+    複数日開催で誤った日（初日など）を掴んでしまう不具合が繰り返し発生した。
+    racecardページの<title>に実際の日付が明記されていることを利用し、
+    実際にページを取得して確認する、より確実な方式に切り替える。
+
+    戻り値: (正しいkaisai_date_id, そのページのHTML) のタプル。見つからなければ (元のkaisai_date_id, 元のHTML)。
+    """
+    url = f"{BASE}/{venue}/racecard/{kaisai_date_id}/"
+    html = _get(url)
+    page_date = _racecard_page_date(html)
+    expected = (date.year, date.month, date.day)
+
+    if page_date == expected:
+        return kaisai_date_id, html
+
+    if page_date is not None:
+        print(f"[WARN] {venue}: racecardページの表示日付{page_date}が本日{expected}と一致しません。"
+              f"日程番号を変えて再取得を試みます。")
+
+    prefix = kaisai_date_id[:10]   # 競輪場コード(2) + 開催開始日(8)
+    session = kaisai_date_id[12:]  # 末尾2桁（通常00）
+    for day_no in range(1, 10):
+        candidate_id = f"{prefix}{day_no:02d}{session}"
+        if candidate_id == kaisai_date_id:
+            continue  # 既に試した
+        try:
+            candidate_html = _get(f"{BASE}/{venue}/racecard/{candidate_id}/")
+        except requests.RequestException:
+            continue
+        candidate_date = _racecard_page_date(candidate_html)
+        if candidate_date == expected:
+            print(f"[INFO] {venue}: 日程番号{day_no:02d}で本日({expected})のページを発見しました。")
+            return candidate_id, candidate_html
+
+    print(f"[WARN] {venue}: 日程番号を1〜9まで試しましたが、本日({expected})に一致するページが見つかりませんでした。"
+          f"元のページ（{kaisai_date_id}）をそのまま使用します。")
+    return kaisai_date_id, html
+
+
+def find_race_urls_for_venue(venue, kaisai_date_id, date=None):
     """
     venue の racecard 一覧ページから、その日の各レースの racedetail URL を取得する。
     戻り値: [{"race_no": 1, "url": "https://.../gifu/racedetail/.../"}, ...]
@@ -184,9 +244,17 @@ def find_race_urls_for_venue(venue, kaisai_date_id):
     ことがある。race_no（末尾2桁）だけで辞書に格納すると、後から現れた別日程の
     リンクに上書きされて、日程がズレたレースを取得してしまう危険があるため、
     race_id の先頭14桁が今回リクエストした kaisai_date_id と一致するものだけを採用する。
+
+    さらに、そもそも渡された kaisai_date_id 自体が「今日」を指していない
+    ケース（複数日開催で日程を取り違えている）があるため、まず
+    resolve_correct_kaisai_date_id で実際のページの表示日付を検証し、
+    必要なら正しい日程番号に補正してから処理する。
     """
-    url = f"{BASE}/{venue}/racecard/{kaisai_date_id}/"
-    html = _get(url)
+    if date is not None:
+        kaisai_date_id, html = resolve_correct_kaisai_date_id(venue, kaisai_date_id, date)
+    else:
+        html = _get(f"{BASE}/{venue}/racecard/{kaisai_date_id}/")
+
     soup = BeautifulSoup(html, "html.parser")
 
     races = {}
@@ -495,7 +563,7 @@ def fetch_all_todays_races(date=None):
     all_races = []
     for v in venues:
         try:
-            race_urls = find_race_urls_for_venue(v["venue"], v["kaisai_date_id"])
+            race_urls = find_race_urls_for_venue(v["venue"], v["kaisai_date_id"], date)
         except requests.RequestException as e:
             print(f"[WARN] {v['venue']} のレース一覧取得に失敗: {e}")
             continue
