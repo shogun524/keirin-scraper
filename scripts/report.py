@@ -136,27 +136,20 @@ def svg_donut_chart(kimarite_ratio, size=150):
     </div>"""
 
 
-def svg_track_diagram(circumference, literal_straight, center_cant, width=360, height=220):
+def svg_track_diagram(circumference, literal_straight, center_cant, width=360, height=260):
     """
     競輪場のコースレイアウト概略図（スタジアム形＝直線+半円のトラック）。
-    周長（333/400/500）に応じてサイズと縦横比を変え、実際の規模差を反映する。
+    周長（333/400/500）に応じて直線部分の長さを変え、実際の規模差を反映する。
+    コーナー半径は固定にすることで、どのクラスでもラベルがviewBox内に収まるようにしている。
     数値の正確なジオメトリ図ではなく、相対的な形の違いを伝える模式図。
     """
     bclass = bank_class(circumference)
-    # 周長クラスごとの縦横比・相対サイズ（333は小回りでほぼ正円に近く、500は大回りで縦長）
-    profiles = {
-        "333": {"scale": 0.72, "aspect": 1.35},
-        "400": {"scale": 0.86, "aspect": 1.55},
-        "500": {"scale": 1.00, "aspect": 1.85},
-    }
-    profile = profiles.get(bclass, profiles["400"])
+    # 周長クラスごとの直線部分の長さ（333は小回りで直線が短く、500は大回りで直線が長い）
+    straight_lengths = {"333": 46, "400": 78, "500": 118}
+    straight_len = straight_lengths.get(bclass, straight_lengths["400"])
+    r = 62  # コーナー半径（固定。これによりどのクラスでも縦方向のレイアウトが揃う）
 
-    cx, cy = width / 2, height / 2 + 6
-    track_w = (width - 60) * profile["scale"]
-    track_h = track_w / profile["aspect"]
-    r = track_h / 2  # コーナー半径
-    straight_len = max(track_w - track_h, 20)  # 直線部分の長さ（模式的）
-
+    cx, cy = width / 2, height / 2 - 4
     x_left = cx - straight_len / 2
     x_right = cx + straight_len / 2
     y_top = cy - r
@@ -170,8 +163,7 @@ def svg_track_diagram(circumference, literal_straight, center_cant, width=360, h
         f"A{r:.1f},{r:.1f} 0 0 1 {x_left:.1f},{y_top:.1f} Z"
     )
     inner_r = r * 0.66
-    inner_track_w = straight_len
-    ix_left, ix_right = cx - inner_track_w / 2, cx + inner_track_w / 2
+    ix_left, ix_right = cx - straight_len / 2, cx + straight_len / 2
     iy_top, iy_bottom = cy - inner_r, cy + inner_r
     inner_path = (
         f"M{ix_left:.1f},{iy_top:.1f} "
@@ -181,8 +173,6 @@ def svg_track_diagram(circumference, literal_straight, center_cant, width=360, h
         f"A{inner_r:.1f},{inner_r:.1f} 0 0 1 {ix_left:.1f},{iy_top:.1f} Z"
     )
 
-    # ホームストレッチ（ゴール線側の直線）をハイライトし、みなし直線の長さを注記する
-    finish_x = x_right - straight_len * 0.12
     straight_label = f"みなし直線 {literal_straight}m" if literal_straight is not None else ""
     cant_label = f"カント {center_cant}" if center_cant else ""
 
@@ -191,10 +181,10 @@ def svg_track_diagram(circumference, literal_straight, center_cant, width=360, h
       <path d="{outer_path}" fill="#f6f3ec" stroke="#d8a94a" stroke-width="1.5" stroke-linejoin="round"/>
       <path d="{inner_path}" fill="none" stroke="#b8ab8a" stroke-width="1" stroke-dasharray="3,3"/>
       <line x1="{x_right - 6:.1f}" y1="{y_top+7:.1f}" x2="{x_right - 6:.1f}" y2="{y_bottom-7:.1f}" stroke="#c1443b" stroke-width="2"/>
-      <text x="{cx:.1f}" y="{y_top - 14:.1f}" font-size="13" text-anchor="middle" fill="#0e1b2b" font-weight="700">1周 {circumference or '—'}</text>
-      <text x="{cx:.1f}" y="{y_bottom + 22:.1f}" font-size="11" text-anchor="middle" fill="#5b6472">{straight_label}</text>
-      <text x="{cx:.1f}" y="{y_bottom + 36:.1f}" font-size="10" text-anchor="middle" fill="#8a9099">{cant_label}</text>
-      <text x="{x_right - 6:.1f}" y="{y_top:.1f}" font-size="9.5" text-anchor="end" fill="#c1443b">ゴール</text>
+      <text x="{cx:.1f}" y="{y_top - 16:.1f}" font-size="14" text-anchor="middle" fill="#0e1b2b" font-weight="700">1周 {circumference or '—'}</text>
+      <text x="{cx:.1f}" y="{y_bottom + 24:.1f}" font-size="11" text-anchor="middle" fill="#5b6472">{straight_label}</text>
+      <text x="{cx:.1f}" y="{y_bottom + 40:.1f}" font-size="10" text-anchor="middle" fill="#8a9099">{cant_label}</text>
+      <text x="{x_right - 6:.1f}" y="{y_top - 2:.1f}" font-size="9.5" text-anchor="end" fill="#c1443b">ゴール</text>
     </svg>"""
 
 

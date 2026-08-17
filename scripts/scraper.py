@@ -23,12 +23,32 @@ HEADERS = {
 REQUEST_INTERVAL_SEC = 1.5  # サイトへの負荷を抑えるための最低待機時間
 
 
-def _get(url, **kwargs):
-    resp = requests.get(url, headers=HEADERS, timeout=20, **kwargs)
+def _get(url, bust_cache=False, **kwargs):
+    headers = dict(HEADERS)
+    if bust_cache:
+        # 中間キャッシュ（CDN等）が古いページを返している疑いがある場合に使う。
+        # クエリパラメータで実質的に別URL扱いにしつつ、明示的にキャッシュ無効化も指定する。
+        headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        headers["Pragma"] = "no-cache"
+        sep = "&" if "?" in url else "?"
+        url = f"{url}{sep}_ts={int(time.time())}"
+    resp = requests.get(url, headers=headers, timeout=20, **kwargs)
     resp.raise_for_status()
     resp.encoding = resp.apparent_encoding or "utf-8"
     time.sleep(REQUEST_INTERVAL_SEC)
     return resp.text
+
+
+def _page_shows_date(html, date):
+    """
+    ページ内に「本日 YYYY年M月D日」という表記があれば、それが期待する日付と
+    一致するかを確認する。表記が見つからない場合は None（判定不能）を返す。
+    """
+    m = re.search(r"本日\s*(\d{4})年(\d{1,2})月(\d{1,2})日", html)
+    if not m:
+        return None
+    y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    return (y, mo, d) == (date.year, date.month, date.day)
 
 
 def _extract_todays_links_from_kaisai_html(html):
@@ -87,6 +107,18 @@ def find_todays_venues(date=None):
 
     try:
         html = _get(BASE + "/")
+        date_ok = _page_shows_date(html, date)
+        if date_ok is False:
+            print(f"[WARN] トップページに表示されている日付が本日({date})と一致しません。"
+                  f"キャッシュされた古いページの可能性があるため、キャッシュ回避して再取得します。")
+            html = _get(BASE + "/", bust_cache=True)
+            date_ok = _page_shows_date(html, date)
+            if date_ok is False:
+                print(f"[WARN] 再取得後も日付が一致しませんでした。サイト側の表示遅延の可能性があります。"
+                      f"（このまま処理を続けますが、結果が本日分でない可能性があります）")
+        elif date_ok is None:
+            print("[WARN] トップページから「本日 YYYY年M月D日」の表記を検出できず、日付の検証をスキップしました。")
+
         today_pos = html.find("本日の開催")
         tomorrow_pos = html.find("明日の開催")
         if today_pos != -1:
