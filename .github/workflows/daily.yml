@@ -26,6 +26,8 @@ jobs:
 
       - name: 予想を生成
         working-directory: scripts
+        env:
+          PYTHONIOENCODING: "utf-8"
         run: python run_daily.py
 
       - name: 生成結果をコミット
