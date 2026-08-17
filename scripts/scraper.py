@@ -44,7 +44,7 @@ def _page_shows_date(html, date):
     ページ内に「本日 YYYY年M月D日」という表記があれば、それが期待する日付と
     一致するかを確認する。表記が見つからない場合は None（判定不能）を返す。
     """
-    m = re.search(r"本日\s*(\d{4})年(\d{1,2})月(\d{1,2})日", html)
+    m = re.search(r"本日[^\d]{0,80}(\d{4})年(\d{1,2})月(\d{1,2})日", html)
     if not m:
         return None
     y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
@@ -94,11 +94,11 @@ def find_todays_venues(date=None):
     （初日の日付）」であり、複数日開催（2日目・最終日など）では「今日の日付」
     と一致しない。そのため日付の突き合わせでは判定しない。
 
-    実際にトップページの構造を直接確認した結果、「本日の開催」欄が最も
-    信頼できる情報源だった（競輪場ごとに今日の日程のracecardリンクが
-    1つだけ存在し、過去の日程には結果リンクしか無い）。
-    「本日の開催」〜「明日の開催」の間だけを対象にすることで、翌日分の
-    混入も防ぐ。/kaisai/YYYY/MM/DD/ ページは補完用として残す。
+    情報源は /kaisai/YYYY/MM/DD/ を主とする。このURL自体に日付が明示されている
+    ため、CDN等にキャッシュされていても「違う日の内容」を掴む心配が無い
+    （トップページの「本日の開催」は、URLが日付非依存のため、キャッシュされると
+    古い日の内容のまま返ってくることがあり、実際に運用中に発生した）。
+    トップページは補完用としてのみ使う。
 
     戻り値: [{"venue": "gifu", "kaisai_date_id": "43202608120100"}, ...]
     """
@@ -106,43 +106,43 @@ def find_todays_venues(date=None):
     venues = {}  # slug -> kaisai_date_id
 
     try:
-        html = _get(BASE + "/")
-        date_ok = _page_shows_date(html, date)
-        if date_ok is False:
-            print(f"[WARN] トップページに表示されている日付が本日({date})と一致しません。"
-                  f"キャッシュされた古いページの可能性があるため、キャッシュ回避して再取得します。")
-            html = _get(BASE + "/", bust_cache=True)
-            date_ok = _page_shows_date(html, date)
-            if date_ok is False:
-                print(f"[WARN] 再取得後も日付が一致しませんでした。サイト側の表示遅延の可能性があります。"
-                      f"（このまま処理を続けますが、結果が本日分でない可能性があります）")
-        elif date_ok is None:
-            print("[WARN] トップページから「本日 YYYY年M月D日」の表記を検出できず、日付の検証をスキップしました。")
-
-        today_pos = html.find("本日の開催")
-        tomorrow_pos = html.find("明日の開催")
-        if today_pos != -1:
-            end = tomorrow_pos if tomorrow_pos != -1 and tomorrow_pos > today_pos else len(html)
-            today_section = html[today_pos:end]
-            venues = _extract_todays_links_from_kaisai_html(today_section)
-        print(f"[INFO] トップページ「本日の開催」欄から {len(venues)} 開催を検出しました。")
-    except requests.RequestException as e:
-        print(f"[WARN] トップページの取得に失敗しました: {e}")
-
-    # 補完用：/kaisai/日付/ ページにしか出ていない競輪場があれば追加で拾う
-    try:
         kaisai_url = f"{BASE}/kaisai/{date.strftime('%Y/%m/%d')}/"
-        html2 = _get(kaisai_url)
-        extra = _extract_todays_links_from_kaisai_html(html2)
-        added = 0
-        for slug, kdid in extra.items():
-            if slug not in venues:
-                venues[slug] = kdid
-                added += 1
-        if added:
-            print(f"[INFO] 開催一覧ページから追加で {added} 開催を検出しました。")
+        html = _get(kaisai_url)
+        venues = _extract_todays_links_from_kaisai_html(html)
+        print(f"[INFO] 開催一覧ページ（{date}）から {len(venues)} 開催を検出しました。")
     except requests.RequestException as e:
         print(f"[WARN] 開催一覧ページの取得に失敗しました: {e}")
+
+    # 補完用：トップページの「本日の開催」欄にしか出ていない競輪場があれば追加で拾う。
+    # トップページはURLが日付非依存でキャッシュに弱いため、表示日付を検証し、
+    # ズレていればキャッシュ回避して再取得する。
+    try:
+        html2 = _get(BASE + "/")
+        date_ok = _page_shows_date(html2, date)
+        if date_ok is False:
+            print(f"[WARN] トップページに表示されている日付が本日({date})と一致しません。キャッシュ回避して再取得します。")
+            html2 = _get(BASE + "/", bust_cache=True)
+            date_ok = _page_shows_date(html2, date)
+            if date_ok is False:
+                print("[WARN] 再取得後も日付が一致しませんでした。トップページの補完はスキップします。")
+                html2 = None
+
+        if html2 is not None:
+            today_pos = html2.find("本日の開催")
+            tomorrow_pos = html2.find("明日の開催")
+            extra = {}
+            if today_pos != -1:
+                end = tomorrow_pos if tomorrow_pos != -1 and tomorrow_pos > today_pos else len(html2)
+                extra = _extract_todays_links_from_kaisai_html(html2[today_pos:end])
+            added = 0
+            for slug, kdid in extra.items():
+                if slug not in venues:
+                    venues[slug] = kdid
+                    added += 1
+            if added:
+                print(f"[INFO] トップページから追加で {added} 開催を検出しました。")
+    except requests.RequestException as e:
+        print(f"[WARN] トップページの取得に失敗しました: {e}")
 
     result = [{"venue": slug, "kaisai_date_id": kdid} for slug, kdid in venues.items() if slug]
     print(f"[INFO] 本日開催中と判定した競輪場: {[r['venue'] for r in result]}")
@@ -402,6 +402,12 @@ def parse_race_detail(html, venue, race_no):
             line_pred_text = m.group(1).strip()
 
     racers = parse_racer_tokens(full_text)
+
+    if not racers:
+        # 選手データが1件も取れなかった場合の診断ログ：
+        # 次に同じ失敗が起きたときに原因を特定できるよう、実際のテキストの一部を残す
+        snippet = re.sub(r"\s+", " ", full_text[:600])
+        print(f"[DEBUG] {venue} {race_no}R: 選手データの解析に失敗しました。テキスト冒頭600文字: {snippet}")
 
     # 重複除去（車番ベース、最初の一致を優先）
     seen = set()
