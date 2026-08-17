@@ -410,9 +410,12 @@ def parse_race_detail(html, venue, race_no):
 
     if not racers:
         # 選手データが1件も取れなかった場合の診断ログ：
-        # 次に同じ失敗が起きたときに原因を特定できるよう、実際のテキストの一部を残す
+        # print() 表示自体の文字コードで文字化けして見える可能性があるため、
+        # unicode_escape で機種依存しない形式でも併記する
         snippet = re.sub(r"\s+", " ", full_text[:600])
+        snippet_escaped = snippet.encode("unicode_escape").decode("ascii")
         print(f"[DEBUG] {venue} {race_no}R: 選手データの解析に失敗しました。テキスト冒頭600文字: {snippet}")
+        print(f"[DEBUG] {venue} {race_no}R: 同内容をunicode_escapeで表示: {snippet_escaped[:600]}")
 
     # 重複除去（車番ベース、最初の一致を優先）
     seen = set()
@@ -430,6 +433,15 @@ def parse_race_detail(html, venue, race_no):
 
 def fetch_race(venue, race_no, url):
     html = _get(url)
+
+    # 文字コード診断：既知の日本語文字列（"選手名"）が正しく含まれているかを確認する。
+    # 含まれていなければ、_get() のUTF-8固定が効いていないか、そもそもサイト側の
+    # 応答内容自体が想定と異なっている可能性が高い。
+    if "選手名" not in html and "レース" not in html:
+        sample = html[:120].encode("unicode_escape").decode("ascii")
+        print(f"[DEBUG] {venue} {race_no}R: 既知の日本語文字列を検出できませんでした。"
+              f"文字コード診断が必要かもしれません。冒頭120文字(unicode_escape): {sample}")
+
     race_info, racers, line_pred_text = parse_race_detail(html, venue, race_no)
 
     if not line_pred_text:

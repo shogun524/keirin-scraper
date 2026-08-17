@@ -9,11 +9,22 @@
 """
 
 import os
+import sys
 import json
 import shutil
 import datetime
 import traceback
 from zoneinfo import ZoneInfo
+
+# ログ出力（GitHub Actionsのコンソール）が実行環境のロケール設定次第で
+# UTF-8以外にフォールバックし、日本語が文字化けして見えることがある。
+# ここで明示的にUTF-8へ固定し、print() の表示自体が原因で「文字化けしている
+# ように見える」ケースを切り分けられるようにする。
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except AttributeError:
+    pass  # Python 3.6以前など reconfigure が無い環境では何もしない
 
 from scraper import fetch_all_todays_races
 from model import predict_race
