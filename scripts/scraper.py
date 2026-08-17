@@ -34,7 +34,12 @@ def _get(url, bust_cache=False, **kwargs):
         url = f"{url}{sep}_ts={int(time.time())}"
     resp = requests.get(url, headers=headers, timeout=20, **kwargs)
     resp.raise_for_status()
-    resp.encoding = resp.apparent_encoding or "utf-8"
+    # 文字コードは明示的にUTF-8固定にする。
+    # resp.apparent_encoding（chardet等によるヒューリスティック自動判定）は、
+    # 日本語UTF-8ページを誤ってキリル文字系エンコーディング等と誤判定し、
+    # ページ全体が文字化けすることがあった（このサイトはUTF-8で配信されるため、
+    # 自動判定に頼らずUTF-8で固定する方が確実）。
+    resp.encoding = "utf-8"
     time.sleep(REQUEST_INTERVAL_SEC)
     return resp.text
 
