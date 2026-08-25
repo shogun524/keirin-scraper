@@ -546,7 +546,7 @@ def fetch_race(venue, race_no, url):
               f"（生HTML内に文字列「並び予想」を含むか: {in_raw_html}）")
         if in_raw_html:
             pos = html.find("並び予想")
-            snippet = re.sub(r"\s+", " ", html[pos:pos + 300])
+            snippet = re.sub(r"\s+", " ", html[pos:pos + 1200])
             print(f"[DEBUG] 該当箇所の生HTML抜粋: {snippet}")
         else:
             # 「並び」だけでも探してみる（表記ゆれの可能性）
