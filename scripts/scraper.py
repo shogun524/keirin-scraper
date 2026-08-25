@@ -416,6 +416,11 @@ def parse_racer_tokens(full_text):
             if pos >= n or not (_is_gear(tokens[pos]) or _is_num(tokens[pos])):
                 raise ValueError("ギヤ倍数が見つかりません")
             gear = float(tokens[pos]); pos += 1
+            # ギヤ倍数変更（例："3.93\n3.92"のように新旧2つの値が並ぶ）に対応。
+            # 直後にもう一つギヤ倍数らしき値（[3-4].xx）が続く場合は変更後の値として
+            # 読み飛ばす（後続の競走得点の位置がズレるのを防ぐ）
+            if pos < n and _is_gear(tokens[pos]):
+                gear = float(tokens[pos]); pos += 1
 
             if pos >= n or not _is_num(tokens[pos]):
                 raise ValueError("競走得点が見つかりません")
@@ -464,10 +469,12 @@ def parse_race_detail(html, venue, race_no):
     deadline_match = re.search(r"締切(?:時間)?\s*(\d{1,2}:\d{2})", full_text)
     deadline = deadline_match.group(1) if deadline_match else None
 
-    # 並び予想の役割語（サイトの表記ゆれに対応：追い上げ／追上 など）
-    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|捲|差|逃"
+    # 並び予想の役割語（サイトの表記ゆれに対応：追い上げ／追上、競り合い区間を示す「競り」など）
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|捲|差|逃"
     line_role_re = re.compile(rf"\d+\s*(?:{ROLE_WORDS})")
-    seq_re = re.compile(rf"((?:\d+\s*(?:{ROLE_WORDS})\s*){{3,}})")
+    # 「(4競り5競り)(3競り7競り)」のように括弧で競り合いペアを示す表記にも対応するため、
+    # 数字・役割語の前後にある丸括弧も連続とみなして拾う
+    seq_re = re.compile(rf"((?:[（(]?\s*\d+\s*(?:{ROLE_WORDS})\s*[）)]?\s*){{3,}})")
 
     line_pred_text = ""
     line_labels = ("並び予想", "ライン予想", "予想ライン", "隊列予想")

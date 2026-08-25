@@ -483,6 +483,9 @@ def parse_line_prediction_text(text):
     1. スクレイピングしたサイトのテキスト形式（例："4先行1追込6押え先2追込"）
        スペース区切りの有無に依存せず、「数字＋役割語」の並びを正規表現で
        直接抜き出す方式。全角数字にも対応するため、事前に半角へ正規化する。
+       「(4競り5競り)(3競り7競り)」のように括弧で競り合いペアを示す表記にも対応する
+       （括弧の開始は新しいラインの区切りとして扱い、括弧内の「競り」は「追込」と
+       同様に同じラインへの継続とみなす）。
     2. 手動入力のハイフン・カンマ記法（例："5-1,4,6-2,3-7"）
        keirin_predictor_v2.html（スタンドアロン版）と同じ書式。
        同じラインは先頭→後方をハイフンでつなぎ、ライン同士はカンマで区切る。
@@ -497,7 +500,8 @@ def parse_line_prediction_text(text):
     text = text.translate(str.maketrans(zen, han))
     text = text.replace("←", " ").replace("→", " ")
 
-    pairs = _re.findall(r"(\d+)\s*(先行|追込|押え先|自在|追い上げ|追上|捲|差|逃)", text)
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|捲|差|逃"
+    pairs = _re.findall(rf"([（(]?)\s*(\d+)\s*({ROLE_WORDS})", text)
 
     if not pairs:
         # 役割語が見つからない場合は、ハイフン・カンマ記法として解釈する
@@ -505,9 +509,14 @@ def parse_line_prediction_text(text):
 
     lines = []
     current = []
-    for car_str, role in pairs:
+    for paren, car_str, role in pairs:
         car = int(car_str)
-        if role == "追込" and current:
+        if paren in ("(", "（"):
+            # 括弧の開始＝新しい競り合いグループの先頭
+            if current:
+                lines.append(current)
+            current = [car]
+        elif role in ("追込", "競り") and current:
             current.append(car)
         else:
             if current:
