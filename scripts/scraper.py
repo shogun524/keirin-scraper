@@ -470,7 +470,7 @@ def parse_race_detail(html, venue, race_no):
     deadline = deadline_match.group(1) if deadline_match else None
 
     # 並び予想の役割語（サイトの表記ゆれに対応：追い上げ／追上、競り合い区間を示す「競り」など）
-    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|捲|差|逃"
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|カマシ|捲|差|逃"
     line_role_re = re.compile(rf"\d+\s*(?:{ROLE_WORDS})")
     # 「(4競り5競り)(3競り7競り)」のように括弧で競り合いペアを示す表記にも対応するため、
     # 数字・役割語の前後にある丸括弧も連続とみなして拾う

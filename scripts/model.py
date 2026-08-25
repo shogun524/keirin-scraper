@@ -500,7 +500,7 @@ def parse_line_prediction_text(text):
     text = text.translate(str.maketrans(zen, han))
     text = text.replace("←", " ").replace("→", " ")
 
-    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|捲|差|逃"
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|カマシ|捲|差|逃"
     pairs = _re.findall(rf"([（(]?)\s*(\d+)\s*({ROLE_WORDS})", text)
 
     if not pairs:
