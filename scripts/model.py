@@ -500,7 +500,7 @@ def parse_line_prediction_text(text):
     text = text.translate(str.maketrans(zen, han))
     text = text.replace("←", " ").replace("→", " ")
 
-    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|カマシ|捲|差|逃"
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|カマシ|イン待|捲|差|逃"
     pairs = _re.findall(rf"([（(]?)\s*(\d+)\s*({ROLE_WORDS})", text)
 
     if not pairs:
@@ -589,6 +589,12 @@ def predict_race(racers, line_prediction_text, settings=None):
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
         base_scores, line_adj, dev_scores, s["development_weight"], s["sharpness"])
     old_model_place_rates = compute_old_model_place_rates(racers)
+    # 整合性の担保：「3着内率」は理屈上「1着率」を必ず上回っていなければならない
+    # （1着になった時点で3着内には入っているため）。しかし1着率（新モデル）と
+    # 3着内率（旧モデル）は別々のモデルで独立に計算しているため、まれに
+    # 3着内率が1着率を下回るという矛盾した表示になることがあった。
+    # 3着内率を「1着率を下回らない」よう底上げして整合性を保つ。
+    old_model_place_rates = [max(p, final_rates[i]) for i, p in enumerate(old_model_place_rates)]
 
     rows = []
     for i, r in enumerate(racers):

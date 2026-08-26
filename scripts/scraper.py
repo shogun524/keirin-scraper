@@ -470,7 +470,7 @@ def parse_race_detail(html, venue, race_no):
     deadline = deadline_match.group(1) if deadline_match else None
 
     # 並び予想の役割語（サイトの表記ゆれに対応：追い上げ／追上、競り合い区間を示す「競り」など）
-    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|カマシ|捲|差|逃"
+    ROLE_WORDS = "先行|追込|押え先|自在|追い上げ|追上|競り|カマシ|イン待|捲|差|逃"
     line_role_re = re.compile(rf"\d+\s*(?:{ROLE_WORDS})")
     # 「(4競り5競り)(3競り7競り)」のように括弧で競り合いペアを示す表記にも対応するため、
     # 数字・役割語の前後にある丸括弧も連続とみなして拾う
@@ -521,6 +521,17 @@ def parse_race_detail(html, venue, race_no):
         seen.add(r["car"])
         unique_racers.append(r)
     unique_racers.sort(key=lambda r: r["car"])
+
+    # 車番が飛んでいないかチェック（例：1〜7号車のはずが6号車しか無い、など）。
+    # 選手データの解析自体は成功している（racers=0 にはならない）ため、これまで
+    # 気づきにくかった「一部の号車だけ抜け落ちる」不具合を検出するための診断ログ。
+    if unique_racers:
+        found_cars = {r["car"] for r in unique_racers}
+        max_car = max(found_cars)
+        missing = sorted(set(range(1, max_car + 1)) - found_cars)
+        if missing:
+            print(f"[WARN] {venue} {race_no}R: 車番が飛んでいます（欠けている号車: {missing}）。"
+                  f"検出できた号車: {sorted(found_cars)}")
 
     race_info = {"venue": venue, "race_no": race_no, "title": race_title, "deadline": deadline}
     return race_info, unique_racers, line_pred_text
