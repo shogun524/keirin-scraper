@@ -551,7 +551,15 @@ def fetch_race(venue, race_no, url):
     race_info, racers, line_pred_text = parse_race_detail(html, venue, race_no)
 
     if not line_pred_text:
-        # 診断用ログ：なぜ拾えなかったのか手がかりを残す
+        # サイト自体が「並び予想がありません」というエラー表示を出しているケースがある
+        # （ライン予想の提供元データが無いなど、こちら側のバグではなくサイト側の
+        # データ欠落）。この場合は紛らわしい警告を出さず、その旨を明確にログする。
+        if "一行並び予想がありません" in html or "並び予想がありません" in html:
+            print(f"[INFO] {venue} {race_no}R: サイト側に並び予想データがありません"
+                  f"（「一行並び予想がありません」の表示を検出）。ライン情報なしで計算します。")
+            return race_info, racers, line_pred_text
+
+        # 診断用ログ：それ以外の原因で拾えなかった場合の手がかりを残す
         in_raw_html = "並び予想" in html
         print(f"[DEBUG] {venue} {race_no}R: 並び予想を検出できませんでした。"
               f"（生HTML内に文字列「並び予想」を含むか: {in_raw_html}）")
