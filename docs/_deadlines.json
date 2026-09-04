@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-04",
+  "date": "2026-09-05",
   "races": [
     {
       "venue": "aomori",
@@ -290,132 +290,6 @@
       "deadline": "20:12"
     },
     {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 1,
-      "deadline": "20:44"
-    },
-    {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 2,
-      "deadline": "21:08"
-    },
-    {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 3,
-      "deadline": "21:32"
-    },
-    {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 4,
-      "deadline": "21:56"
-    },
-    {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 5,
-      "deadline": "22:22"
-    },
-    {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 6,
-      "deadline": "22:49"
-    },
-    {
-      "venue": "yahiko",
-      "venue_name": "弥彦",
-      "race_no": 7,
-      "deadline": "23:16"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 1,
-      "deadline": "20:36"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 2,
-      "deadline": "21:00"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 3,
-      "deadline": "21:24"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 4,
-      "deadline": "21:48"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 5,
-      "deadline": "22:13"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 6,
-      "deadline": "22:40"
-    },
-    {
-      "venue": "ito",
-      "venue_name": "伊東",
-      "race_no": 7,
-      "deadline": "23:07"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 1,
-      "deadline": "20:52"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 2,
-      "deadline": "21:16"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 3,
-      "deadline": "21:40"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 4,
-      "deadline": "22:04"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 5,
-      "deadline": "22:31"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 6,
-      "deadline": "22:58"
-    },
-    {
-      "venue": "tamano",
-      "venue_name": "玉野",
-      "race_no": 7,
-      "deadline": "23:25"
-    },
-    {
       "venue": "toyama",
       "venue_name": "富山",
       "race_no": 1,
@@ -498,6 +372,114 @@
       "venue_name": "防府",
       "race_no": 7,
       "deadline": "10:35"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 1,
+      "deadline": "20:35"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 2,
+      "deadline": "20:55"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 3,
+      "deadline": "21:15"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 4,
+      "deadline": "21:35"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 5,
+      "deadline": "21:55"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 6,
+      "deadline": "22:15"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 7,
+      "deadline": "22:35"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 8,
+      "deadline": "22:55"
+    },
+    {
+      "venue": "matsusaka",
+      "venue_name": "松阪",
+      "race_no": 9,
+      "deadline": "23:15"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 1,
+      "deadline": "20:45"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 2,
+      "deadline": "21:05"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 3,
+      "deadline": "21:25"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 4,
+      "deadline": "21:45"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 5,
+      "deadline": "22:05"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 6,
+      "deadline": "22:25"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 7,
+      "deadline": "22:45"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 8,
+      "deadline": "23:05"
+    },
+    {
+      "venue": "kurume",
+      "venue_name": "久留米",
+      "race_no": 9,
+      "deadline": "23:25"
     }
   ]
 }
