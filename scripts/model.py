@@ -385,6 +385,50 @@ def compute_third_place_matrix(racers, base_scores, dominant, line_map,
     return matrix
 
 
+def compute_marginal_place_rates(final_rates, rows, second_place_matrix, third_place_matrix):
+    """
+    「予測3着内率」を、実際にモデルが計算した2着・3着の確率分布を積み上げて
+    P(1着)+P(2着)+P(3着) として算出する。
+
+    以前は別モデル（旧Ridge回帰）による独立した参考値を使っていたが、1着率
+    （新モデル）と全く別に計算されているため、たまに1着率を下回るという
+    論理的に矛盾した表示になってしまっていた（「3着内に入ったら、ほぼ1着に
+    しか来ない」ように見える不自然な結果はこれが原因）。
+    同じモデルの計算結果を積み上げる方式にすることで、1着率との整合性が
+    構造的に保証され、2着・3着で入ってくる現実的なばらつきも反映される。
+
+    ※ 3着確率は、表5と同じく「各1着候補について最有力な2着候補を1つだけ
+      自動選定し、その条件下での3着確率」を使う近似計算（すべての2着候補の
+      組み合わせを網羅的に積分してはいない）。表4・表5の表示とも一貫性がある。
+    """
+    first_by_car = {r["car"]: r["adjusted"] / 100 for r in rows}
+    second_marginal = {r["car"]: 0.0 for r in rows}
+    third_marginal = {r["car"]: 0.0 for r in rows}
+
+    for y_car, candidates in second_place_matrix.items():
+        y_prob = first_by_car.get(y_car, 0.0)
+        for c in candidates:
+            second_marginal[c["car"]] = second_marginal.get(c["car"], 0.0) + y_prob * (c["prob"] / 100)
+
+    for y_car, entry in third_place_matrix.items():
+        y_prob = first_by_car.get(y_car, 0.0)
+        z_car = entry["second_car"]
+        z_prob = 0.0
+        for c in second_place_matrix.get(y_car, []):
+            if c["car"] == z_car:
+                z_prob = c["prob"] / 100
+                break
+        for c in entry["candidates"]:
+            third_marginal[c["car"]] = third_marginal.get(c["car"], 0.0) + y_prob * z_prob * (c["prob"] / 100)
+
+    place_rates = {}
+    for r in rows:
+        car = r["car"]
+        total = first_by_car.get(car, 0.0) + second_marginal.get(car, 0.0) + third_marginal.get(car, 0.0)
+        place_rates[car] = min(total * 100, 99.5)
+    return place_rates
+
+
 # ============================================================
 # 3連単フォーメーション
 # 1着・2着・3着それぞれに複数の候補をまとめて提示する（フォーメーション買い）。
@@ -588,21 +632,13 @@ def predict_race(racers, line_prediction_text, settings=None):
         racers, line_map, kimarite_ratio, s["line_strength"], s["line_support"], s["solo_penalty"])
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
         base_scores, line_adj, dev_scores, s["development_weight"], s["sharpness"])
-    old_model_place_rates = compute_old_model_place_rates(racers)
-    # 整合性の担保：「3着内率」は理屈上「1着率」を必ず上回っていなければならない
-    # （1着になった時点で3着内には入っているため）。しかし1着率（新モデル）と
-    # 3着内率（旧モデル）は別々のモデルで独立に計算しているため、まれに
-    # 3着内率が1着率を下回るという矛盾した表示になることがあった。
-    # 3着内率を「1着率を下回らない」よう底上げして整合性を保つ。
-    old_model_place_rates = [max(p, final_rates[i]) for i, p in enumerate(old_model_place_rates)]
 
     rows = []
     for i, r in enumerate(racers):
         rows.append({
             **r, "base": base_scores[i], "adj": effective_mult[i], "adjusted": final_rates[i],
             "dominant_type": dominant[i]["type"], "kimarite_prediction": dominant[i],
-            "line_info": line_map.get(r["car"]), "confidence": confidence[i],
-            "old_model_place_rate": old_model_place_rates[i], "idx": i,
+            "line_info": line_map.get(r["car"]), "confidence": confidence[i], "idx": i,
         })
     rows.sort(key=lambda x: -x["adjusted"])
 
@@ -626,6 +662,12 @@ def predict_race(racers, line_prediction_text, settings=None):
     third_place_matrix = compute_third_place_matrix(
         racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
         second_place_matrix=second_place_matrix)
+
+    # 「予測3着内率」を、同じモデルのP(1着)+P(2着)+P(3着)の積み上げから算出する
+    # （1着率との整合性が構造的に保証される。詳細は関数のdocstring参照）
+    marginal_place_rates = compute_marginal_place_rates(final_rates, rows, second_place_matrix, third_place_matrix)
+    for row in rows:
+        row["place_rate"] = marginal_place_rates.get(row["car"], row["adjusted"])
 
     formation = compute_formation_bet(
         racers, combined_scores, dominant, line_map, final_rates,
