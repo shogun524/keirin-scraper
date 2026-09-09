@@ -49,20 +49,39 @@ CAR_COLORS = {
 KIMARITE_COLORS = {"逃": "#c1443b", "捲": "#e07a1f", "差": "#1f5fc4", "マ": "#2f8f4e"}
 
 COMMON_STYLE = """
-  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
   *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
   body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
-  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
-  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:19px; }
-  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
-  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
-  header p.tagline{ font-style:italic; color:#cdd7e3; }
-  header nav.top-nav{ margin-top:8px; }
-  header nav.top-nav a{ font-size:12px; color:#cdd7e3; border-bottom:1px solid rgba(255,255,255,.3); }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
   a{ color:inherit; text-decoration:none; }
-  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 """
+
+GATE_STRIPE_CAR_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+def gate_stripe_html():
+    """9車の公式カラーを並べた帯。競輪の発走ゲートの並びをモチーフにした共通の装飾要素。"""
+    bars = "".join(f'<span style="background:{car_color(c)[0]};"></span>' for c in GATE_STRIPE_CAR_ORDER)
+    return f'<div class="gate-stripe">{bars}</div>'
 
 
 def car_color(car):
@@ -91,7 +110,7 @@ def svg_bar_chart(rows, height=170):
               style="paint-order:stroke; stroke:{bg}; stroke-width:5px;">{r['car']}</text>"""
 
     return f"""<svg viewBox="0 0 {width} {height}" width="100%" style="max-width:{width}px; display:block; margin:0 auto;">
-      <line x1="0" y1="{plot_h+10:.1f}" x2="{width}" y2="{plot_h+10:.1f}" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="{plot_h+10:.1f}" x2="{width}" y2="{plot_h+10:.1f}" stroke="var(--line)" stroke-width="1"/>
       {bars}
     </svg>"""
 
@@ -178,13 +197,13 @@ def svg_track_diagram(circumference, literal_straight, center_cant, width=360, h
 
     return f"""<svg viewBox="0 0 {width} {height}" width="100%" style="max-width:{width}px; display:block; margin:0 auto;">
       <path d="{outer_path}" fill="none" stroke="#0e1b2b" stroke-width="14" stroke-linejoin="round"/>
-      <path d="{outer_path}" fill="#f6f3ec" stroke="#d8a94a" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="{outer_path}" fill="#f6f3ec" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
       <path d="{inner_path}" fill="none" stroke="#b8ab8a" stroke-width="1" stroke-dasharray="3,3"/>
-      <line x1="{x_right - 6:.1f}" y1="{y_top+7:.1f}" x2="{x_right - 6:.1f}" y2="{y_bottom-7:.1f}" stroke="#c1443b" stroke-width="2"/>
+      <line x1="{x_right - 6:.1f}" y1="{y_top+7:.1f}" x2="{x_right - 6:.1f}" y2="{y_bottom-7:.1f}" stroke="var(--brick)" stroke-width="2"/>
       <text x="{cx:.1f}" y="{y_top - 16:.1f}" font-size="14" text-anchor="middle" fill="#0e1b2b" font-weight="700">1周 {circumference or '—'}</text>
-      <text x="{cx:.1f}" y="{y_bottom + 24:.1f}" font-size="11" text-anchor="middle" fill="#5b6472">{straight_label}</text>
+      <text x="{cx:.1f}" y="{y_bottom + 24:.1f}" font-size="11" text-anchor="middle" fill="var(--ink-soft)">{straight_label}</text>
       <text x="{cx:.1f}" y="{y_bottom + 40:.1f}" font-size="10" text-anchor="middle" fill="#8a9099">{cant_label}</text>
-      <text x="{x_right - 6:.1f}" y="{y_top - 2:.1f}" font-size="9.5" text-anchor="end" fill="#c1443b">ゴール</text>
+      <text x="{x_right - 6:.1f}" y="{y_top - 2:.1f}" font-size="9.5" text-anchor="end" fill="var(--brick)">ゴール</text>
     </svg>"""
 
 
@@ -213,58 +232,54 @@ def render_kimarite_table(kimarite_ratio, venue_slug=None):
         avg_note = "<p class='dim' style='margin:4px 0 0;'>この競輪場の場平均データはまだありません。</p>"
 
     return f"""
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     {avg_note}"""
 
 
-def render_second_place_matrix_table(racers, matrix):
-    by_car = sorted(racers, key=lambda r: r["car"])
-    header = "<th>1着↓＼2着→</th>" + "".join(f"<th>{r['car']}</th>" for r in by_car)
-    rows_html = ""
-    for winner in by_car:
-        candidates = {c["car"]: c for c in matrix.get(winner["car"], [])}
-        cells = f"<td><b>{winner['car']} {winner['name']}</b></td>"
-        for cand in by_car:
-            if cand["car"] == winner["car"]:
-                cells += '<td class="diag">—</td>'
-            else:
-                c = candidates.get(cand["car"])
-                cls = "same-line" if (c and c["same_line"]) else ""
-                cells += f'<td class="{cls}">{c["prob"]:.1f}%</td>' if c else '<td>-</td>'
-        rows_html += f"<tr>{cells}</tr>"
-    return f"""
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr>{header}</tr></thead><tbody>{rows_html}</tbody></table></div>"""
+import json as _json
 
 
-def render_third_place_matrix_table(racers, matrix):
+def build_matrix_payload(racers, second_place_matrix, third_place_matrix, top_car):
+    """タップ式ウィジェット用に、2着・3着の確率データをJSON化する。"""
     by_car = sorted(racers, key=lambda r: r["car"])
-    header = "<th>1着↓＼3着→（2着自動選定）</th>" + "".join(f"<th>{r['car']}</th>" for r in by_car)
-    rows_html = ""
-    for winner in by_car:
-        entry = matrix.get(winner["car"])
-        if not entry:
-            cells = f"<td><b>{winner['car']} {winner['name']}</b></td>" + "".join('<td class="diag">-</td>' for _ in by_car)
-            rows_html += f"<tr>{cells}</tr>"
-            continue
-        second_car = entry["second_car"]
-        candidates = {c["car"]: c for c in entry["candidates"]}
-        cells = f"<td><b>{winner['car']} {winner['name']}</b><br><span class='dim' style='font-size:10px;'>2着想定:{second_car}号車</span></td>"
-        for cand in by_car:
-            if cand["car"] in (winner["car"], second_car):
-                cells += '<td class="diag">—</td>'
-            else:
-                c = candidates.get(cand["car"])
-                cls = "same-line" if (c and c["same_line"]) else ""
-                cells += f'<td class="{cls}">{c["prob"]:.1f}%</td>' if c else '<td>-</td>'
-        rows_html += f"<tr>{cells}</tr>"
+    name_by_car = {r["car"]: r["name"] for r in by_car}
+
+    def entry(car, name, prob):
+        bg, fg = car_color(car)
+        return {"car": car, "name": name, "prob": round(prob, 1), "bg": bg, "fg": fg}
+
+    data = {}
+    for r in by_car:
+        car = r["car"]
+        second_list = [entry(c["car"], name_by_car.get(c["car"], ""), c["prob"])
+                       for c in second_place_matrix.get(car, [])]
+        third_entry = third_place_matrix.get(car)
+        third_list = []
+        third_second_car = None
+        if third_entry:
+            third_second_car = third_entry["second_car"]
+            third_list = [entry(c["car"], name_by_car.get(c["car"], ""), c["prob"])
+                          for c in third_entry["candidates"]]
+        data[str(car)] = {"second": second_list, "third_second_car": third_second_car, "third": third_list}
+
+    cars_meta = [{"car": r["car"], **dict(zip(("bg", "fg"), car_color(r["car"])))} for r in by_car]
+    return {"default": top_car, "cars": cars_meta, "data": data}
+
+
+def render_matrix_widget(tab_id, payload):
+    payload_json = _json.dumps(payload, ensure_ascii=False)
     return f"""
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr>{header}</tr></thead><tbody>{rows_html}</tbody></table></div>"""
+    <div class="mw" data-tab="{tab_id}">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="{tab_id}_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="{tab_id}_bars2"></div>
+      <div class="mw-label" id="{tab_id}_label3"></div>
+      <div class="mw-bars" id="{tab_id}_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{{}}; window.MATRIX_DATA["{tab_id}"]={payload_json};</script>"""
 
 
 def render_line_info_block(result, race_title=""):
@@ -320,7 +335,7 @@ def render_race_card(race_data, tab_id):
           <td>{line_label}</td>
           <td><b>{r['adjusted']:.1f}%</b></td>
           <td>{r['confidence']['score']:.0f}</td>
-          <td>{r.get('old_model_place_rate', 0):.1f}%</td>
+          <td>{r.get('place_rate', 0):.1f}%</td>
         </tr>"""
 
     banner_html = ""
@@ -331,14 +346,15 @@ def render_race_card(race_data, tab_id):
     bar_chart = svg_bar_chart(result["rows"])
     line_info_html = render_line_info_block(result, title)
     kimarite_table_html = render_kimarite_table(result["kimarite_ratio"], info.get("venue"))
-    second_matrix_html = render_second_place_matrix_table(result["rows"], result["second_place_matrix"])
-    third_matrix_html = render_third_place_matrix_table(result["rows"], result["third_place_matrix"])
+    matrix_payload = build_matrix_payload(result["rows"], result["second_place_matrix"], result["third_place_matrix"], top["car"])
+    matrix_widget_html = render_matrix_widget(tab_id, matrix_payload)
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
+    pick_color = car_color(top["car"])[0]
     return f"""
     <div id="{tab_id}" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:{pick_color};">
         <div class="race-head">
           <span class="raceno">{info['race_no']}R</span>
           <span class="title">{title}</span>
@@ -346,66 +362,77 @@ def render_race_card(race_data, tab_id):
         </div>
         {banner_html}
         {line_info_html}
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>{rows_html}</tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           {bar_chart}
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">{kimarite_table_html}</div>
-        <div class="chart-block">{second_matrix_html}</div>
-        <div class="chart-block">{third_matrix_html}</div>
+        <div class="chart-block">{matrix_widget_html}</div>
       </div>
     </div>"""
 
 
 RACE_PANEL_STYLE = """
-  main{ max-width:720px; margin:0 auto; padding:14px 10px 60px; }
-  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; }
-  .tab-btn{ flex:0 0 auto; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 14px;
-            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); text-align:center; }
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:14px 2px 14px; -webkit-overflow-scrolling:touch; }
+  .tab-btn{ flex:0 0 auto; background:var(--paper); border:1px solid var(--line); border-radius:3px; padding:7px 13px;
+            font-size:13px; font-weight:600; cursor:pointer; color:var(--ink); text-align:center; }
   .tab-btn .tab-deadline{ font-size:10px; font-weight:400; color:var(--ink-soft); }
-  .tab-btn.active .tab-deadline{ color:#cdd7e3; }
-  .tab-btn.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
-  .race-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; }
-  .race-head{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }
-  .race-head .raceno{ background:var(--navy); color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }
-  .race-head .title{ color:var(--ink-soft); font-size:13px; }
-  .race-head .deadline{ margin-left:auto; background:#f0ece0; border-radius:4px; padding:1px 8px; font-size:12px; color:var(--ink); font-weight:700; }
-  .banner-high{ background:#fff4de; border:1px solid var(--gold); border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
-  .banner-normal{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
-  .note{ font-size:12px; color:#b5482f; margin:4px 0; }
+  .tab-btn.active .tab-deadline{ color:#cfe0d5; }
+  .tab-btn.active{ background:var(--board); color:#fff; border-color:var(--board); }
+  .race-card{ background:var(--paper); border:1px solid var(--line); border-top:3px solid var(--pick-color,var(--board));
+              border-radius:2px; padding:16px; }
+  .race-head{ display:flex; gap:10px; align-items:baseline; margin-bottom:10px; flex-wrap:wrap; }
+  .race-head .raceno{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:17px; color:var(--board); }
+  .race-head .title{ color:var(--ink-soft); font-size:12.5px; }
+  .race-head .deadline{ margin-left:auto; background:var(--paper2); border-radius:3px; padding:2px 9px; font-size:12px; color:var(--ink); font-weight:600; }
+  .banner-high{ background:linear-gradient(120deg,#fbf1de,#f5e5c2); border:1px solid var(--gold); border-radius:3px;
+                padding:9px 11px; font-size:13.5px; margin-bottom:10px; }
+  .banner-normal{ background:var(--paper2); border-radius:3px; padding:9px 11px; font-size:13.5px; margin-bottom:10px; color:var(--ink-soft); }
+  .note{ font-size:12px; color:var(--brick); margin:4px 0; }
   table.main{ width:100%; border-collapse:collapse; font-size:12px; }
-  table.main th, table.main td{ border:1px solid var(--border); padding:5px; text-align:center; }
-  table.main th{ background:#f0ece0; }
+  table.main th{ background:var(--board); color:#e9ecea; font-weight:500; padding:6px 4px; border-bottom:2px solid var(--gold); }
+  table.main td{ padding:6px 4px; text-align:center; border-bottom:1px solid var(--line); }
+  table.main tbody tr:nth-child(even){ background:rgba(198,154,78,.06); }
   .dim{ color:var(--ink-soft); font-size:10px; }
-  .car{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.15); }
+  .car{ display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:50%;
+        font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.18); }
   .sub-wrap{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
-  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); }
+  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); font-weight:600; }
   table.sub{ font-size:12px; border-collapse:collapse; }
   table.sub td{ padding:2px 8px 2px 0; }
-  .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
-  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  .chart-block{ margin-top:18px; border-top:1px solid var(--line); padding-top:14px; }
+  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 10px; text-align:center; font-weight:600; }
   .kimarite-table th, .kimarite-table td{ text-align:center; }
-  .delta-up{ color:#c1443b; font-size:11px; font-weight:700; }
-  .delta-down{ color:#1f5fc4; font-size:11px; font-weight:700; }
-  .matrix-scroll{ overflow-x:auto; }
-  table.matrix{ font-size:10.5px; }
-  table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
-  table.matrix td.diag{ background:#f0ece0; color:var(--ink-soft); }
-  table.matrix td.same-line{ background:#e3f0ff; font-weight:700; }
-  .line-info-block{ font-size:12px; border-radius:6px; padding:9px 10px; margin:8px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-  .line-info-block.ok{ background:#e7f3ea; border:1px solid #b9dcc3; }
-  .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
+  .kimarite-table td{ font-family:ui-monospace,"SF Mono",Menlo,monospace; }
+  .delta-up{ color:var(--brick); font-size:11px; font-weight:700; }
+  .delta-down{ color:var(--slate); font-size:11px; font-weight:700; }
+  .mw-label{ font-size:12px; color:var(--ink-soft); margin:14px 0 8px; font-weight:600; }
+  .mw-label:first-child{ margin-top:0; }
+  .mw-chips{ display:flex; gap:6px; flex-wrap:wrap; }
+  .mw-chip{ width:34px; height:34px; border-radius:50%; border:2px solid var(--line); background:var(--paper);
+            font-size:14px; font-weight:700; color:var(--ink); cursor:pointer; }
+  .mw-chip.active{ border-color:transparent; box-shadow:0 0 0 2px var(--board); }
+  .mw-bar-row{ display:flex; align-items:center; gap:8px; padding:5px 0; }
+  .mw-bar-name{ font-size:12px; color:var(--ink); flex:0 0 auto; width:64px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .mw-bar-track{ flex:1; height:9px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .mw-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,var(--pine),#4c8a68); border-radius:5px; }
+  .mw-bar-val{ flex:0 0 auto; width:30px; text-align:right; font-size:13px; font-weight:700; color:var(--pine); }
+  .line-info-block{ font-size:12px; border-radius:3px; padding:10px 11px; margin:10px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .line-info-block.ok{ background:#eef4ec; border:1px solid #c7dcc0; }
+  .line-info-block.warn{ background:var(--paper2); color:#8a5a12; border:1px solid #e0cfa0; }
   .line-group{ display:inline-flex; align-items:center; gap:3px; }
   .line-arrow{ color:var(--ink-soft); font-size:11px; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
-    table.main th, table.main td{ padding:3px; }
+    table.main th, table.main td{ padding:4px 3px; }
   }
 """
 
@@ -439,8 +466,53 @@ function getNowJstMinutes(){
   return h*60 + m;
 }
 
+// タップ式の2着・3着ウィジェット（表4・表5の代わり）
+function barRowHtml(c){
+  const pct = Math.min(Math.max(c.prob, 2), 100);
+  return '<div class="mw-bar-row">' +
+    '<span class="car" style="background:'+c.bg+';color:'+c.fg+';">'+c.car+'</span>' +
+    '<span class="mw-bar-name">'+c.name+'</span>' +
+    '<span class="mw-bar-track"><span class="mw-bar-fill" style="width:'+pct+'%;"></span></span>' +
+    '<span class="mw-bar-val num">'+c.prob.toFixed(0)+'</span>' +
+  '</div>';
+}
+function renderMatrixWidget(tabId){
+  const payload = window.MATRIX_DATA && window.MATRIX_DATA[tabId];
+  if(!payload) return;
+  const car = payload.selected || payload.default;
+  const chipsEl = document.getElementById(tabId+'_chips1');
+  if(!chipsEl) return;
+  chipsEl.innerHTML = payload.cars.map(function(c){
+    const isActive = c.car === car;
+    const bg = isActive ? c.bg : 'transparent';
+    const fg = isActive ? c.fg : 'inherit';
+    return '<button type="button" class="mw-chip'+(isActive?' active':'')+'" ' +
+      'style="background:'+bg+';color:'+fg+';border-color:'+c.bg+';" ' +
+      'onclick="selectMatrixFirst(\\''+tabId+'\\','+c.car+')">'+c.car+'</button>';
+  }).join('');
+  const data = payload.data[String(car)] || {second:[], third:[]};
+  document.getElementById(tabId+'_bars2').innerHTML =
+    data.second.length ? data.second.map(barRowHtml).join('') : '<p class="dim">データがありません</p>';
+  const label3El = document.getElementById(tabId+'_label3');
+  const bars3El = document.getElementById(tabId+'_bars3');
+  if(data.third_second_car){
+    label3El.textContent = car+'→'+data.third_second_car+'（2着自動選定）のとき3着に来るのは';
+    bars3El.innerHTML = data.third.length ? data.third.map(barRowHtml).join('') : '<p class="dim">データがありません</p>';
+  } else {
+    label3El.textContent = '';
+    bars3El.innerHTML = '';
+  }
+}
+function selectMatrixFirst(tabId, car){
+  window.MATRIX_DATA[tabId].selected = car;
+  renderMatrixWidget(tabId);
+}
+
 window.addEventListener('DOMContentLoaded', function(){
   const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+  if(window.MATRIX_DATA){
+    Object.keys(window.MATRIX_DATA).forEach(renderMatrixWidget);
+  }
   if(tabs.length === 0) return;
   const nowJstMinutes = getNowJstMinutes();
   let best = tabs[0], bestMins = Infinity;
@@ -503,6 +575,7 @@ def render_venue_page(venue, races, date, now=None):
     <h1>&larr; <a href="../index.html">{venue_name}競輪</a></h1>
     <span class="date">{date_str}</span>
   </div>
+  {gate_stripe_html()}
 </header>
 <main>
   <div class="tab-bar">{tabs if tabs else "<p>本日このレース場のデータは取得できませんでした。</p>"}</div>
@@ -657,11 +730,12 @@ def render_index(all_race_data, date=None, now=None):
   </div>
   <p class="tagline">今日、どこで、どの目を買うか。</p>
   <nav class="top-nav"><a href="venues.html">全競輪場データ &rarr;</a></nav>
+  {gate_stripe_html()}
 </header>
 <main>
   <div id="upcomingListBox"></div>
   <h2 class="section">本日の開催場</h2>
-  {rows_html if by_venue else "<p style='text-align:center;color:#5b6472;'>本日は取得できたレースがありませんでした。</p>"}
+  {rows_html if by_venue else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
 <script>{index_script}</script>
@@ -723,12 +797,12 @@ def render_venues_page(date=None):
   table.venues{{ width:100%; border-collapse:collapse; font-size:12px; background:#fff; }}
   table.venues th, table.venues td{{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }}
   table.venues td.vname-cell a{{ color:var(--navy); text-decoration:underline; }}
-  table.venues th{{ background:#f0ece0; position:sticky; top:0; }}
+  table.venues th{{ background:var(--paper2); position:sticky; top:0; }}
   table.venues td.vname-cell, table.venues th:first-child{{ text-align:left; white-space:nowrap; font-weight:700; }}
   .bclass-badge{{ display:inline-block; border-radius:4px; padding:0 5px; font-size:10px; font-weight:700; margin-left:4px; }}
-  .bclass-333{{ background:#e3f0ff; color:#1f5fc4; }}
-  .bclass-400{{ background:#f0ece0; color:#5b6472; }}
-  .bclass-500{{ background:#fde3e3; color:#c1443b; }}
+  .bclass-333{{ background:#e3f0ff; color:var(--slate); }}
+  .bclass-400{{ background:var(--paper2); color:var(--ink-soft); }}
+  .bclass-500{{ background:#fde3e3; color:var(--brick); }}
   .tendency-badge{{ display:block; font-size:9.5px; color:var(--ink-soft); font-weight:400; margin-top:1px; white-space:nowrap; }}
   .dim{{ color:var(--ink-soft); font-size:10.5px; }}
   .legend{{ background:#f7f5ee; border:1px dashed var(--border); border-radius:8px; padding:10px 12px; font-size:12px; color:var(--ink-soft); margin-bottom:14px; }}
@@ -741,6 +815,7 @@ def render_venues_page(date=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">全国43場のバンク特性を1枚で。</p>
+  {gate_stripe_html()}
 </header>
 <main>
   <div class="legend">
@@ -845,6 +920,7 @@ def render_venue_bank_page(slug, date=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">{bclass_badge if bclass else ""}</p>
+  {gate_stripe_html()}
 </header>
 <main style="max-width:720px;margin:0 auto;padding:14px 10px 60px;">
   <div class="track-card">
