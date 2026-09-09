@@ -6,19 +6,30 @@
 <title>全競輪場データ | 競輪AI予想</title>
 <style>
 
-  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
   *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
   body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
-  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
-  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:19px; }
-  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
-  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
-  header p.tagline{ font-style:italic; color:#cdd7e3; }
-  header nav.top-nav{ margin-top:8px; }
-  header nav.top-nav a{ font-size:12px; color:#cdd7e3; border-bottom:1px solid rgba(255,255,255,.3); }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
   a{ color:inherit; text-decoration:none; }
-  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 
   main{ max-width:1100px; margin:0 auto; padding:16px 10px 60px; }
   h2.section{ font-size:14px; color:var(--ink-soft); margin:18px 0 10px; }
@@ -26,12 +37,12 @@
   table.venues{ width:100%; border-collapse:collapse; font-size:12px; background:#fff; }
   table.venues th, table.venues td{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }
   table.venues td.vname-cell a{ color:var(--navy); text-decoration:underline; }
-  table.venues th{ background:#f0ece0; position:sticky; top:0; }
+  table.venues th{ background:var(--paper2); position:sticky; top:0; }
   table.venues td.vname-cell, table.venues th:first-child{ text-align:left; white-space:nowrap; font-weight:700; }
   .bclass-badge{ display:inline-block; border-radius:4px; padding:0 5px; font-size:10px; font-weight:700; margin-left:4px; }
-  .bclass-333{ background:#e3f0ff; color:#1f5fc4; }
-  .bclass-400{ background:#f0ece0; color:#5b6472; }
-  .bclass-500{ background:#fde3e3; color:#c1443b; }
+  .bclass-333{ background:#e3f0ff; color:var(--slate); }
+  .bclass-400{ background:var(--paper2); color:var(--ink-soft); }
+  .bclass-500{ background:#fde3e3; color:var(--brick); }
   .tendency-badge{ display:block; font-size:9.5px; color:var(--ink-soft); font-weight:400; margin-top:1px; white-space:nowrap; }
   .dim{ color:var(--ink-soft); font-size:10.5px; }
   .legend{ background:#f7f5ee; border:1px dashed var(--border); border-radius:8px; padding:10px 12px; font-size:12px; color:var(--ink-soft); margin-bottom:14px; }
@@ -44,6 +55,7 @@
     <span class="date">2026年09月09日(水)</span>
   </div>
   <p class="tagline">全国43場のバンク特性を1枚で。</p>
+  <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#3fb8c9;"></span></div>
 </header>
 <main>
   <div class="legend">

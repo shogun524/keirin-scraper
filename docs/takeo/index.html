@@ -5,62 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>武雄競輪 AI予想 2026年09月09日</title>
 <style>
-  :root{ --navy:#0e1b2b; --navy2:#132540; --paper:#f6f3ec; --ink:#1b2430; --ink-soft:#5b6472; --border:#d8d2c2; --gold:#d8a94a; }
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
   *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
   body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
-  header{ background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; }
-  header .top-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:19px; }
-  header .date{ color:var(--gold); font-size:13px; font-weight:700; }
-  header p{ margin:8px 0 0; color:#b9c3d4; font-size:12.5px; }
-  header p.tagline{ font-style:italic; color:#cdd7e3; }
-  header nav.top-nav{ margin-top:8px; }
-  header nav.top-nav a{ font-size:12px; color:#cdd7e3; border-bottom:1px solid rgba(255,255,255,.3); }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
   a{ color:inherit; text-decoration:none; }
-  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:24px 10px; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 
-  main{ max-width:720px; margin:0 auto; padding:14px 10px 60px; }
-  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; }
-  .tab-btn{ flex:0 0 auto; background:#fff; border:1px solid var(--border); border-radius:6px; padding:8px 14px;
-            font-size:13px; font-weight:700; cursor:pointer; color:var(--ink); text-align:center; }
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:14px 2px 14px; -webkit-overflow-scrolling:touch; }
+  .tab-btn{ flex:0 0 auto; background:var(--paper); border:1px solid var(--line); border-radius:3px; padding:7px 13px;
+            font-size:13px; font-weight:600; cursor:pointer; color:var(--ink); text-align:center; }
   .tab-btn .tab-deadline{ font-size:10px; font-weight:400; color:var(--ink-soft); }
-  .tab-btn.active .tab-deadline{ color:#cdd7e3; }
-  .tab-btn.active{ background:var(--navy); color:#fff; border-color:var(--navy); }
-  .race-card{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:14px; }
-  .race-head{ display:flex; gap:8px; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; }
-  .race-head .raceno{ background:var(--navy); color:#fff; border-radius:4px; padding:1px 8px; font-size:13px; }
-  .race-head .title{ color:var(--ink-soft); font-size:13px; }
-  .race-head .deadline{ margin-left:auto; background:#f0ece0; border-radius:4px; padding:1px 8px; font-size:12px; color:var(--ink); font-weight:700; }
-  .banner-high{ background:#fff4de; border:1px solid var(--gold); border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
-  .banner-normal{ background:#f0ece0; border-radius:6px; padding:8px 10px; font-size:13.5px; margin-bottom:8px; }
-  .note{ font-size:12px; color:#b5482f; margin:4px 0; }
+  .tab-btn.active .tab-deadline{ color:#cfe0d5; }
+  .tab-btn.active{ background:var(--board); color:#fff; border-color:var(--board); }
+  .race-card{ background:var(--paper); border:1px solid var(--line); border-top:3px solid var(--pick-color,var(--board));
+              border-radius:2px; padding:16px; }
+  .race-head{ display:flex; gap:10px; align-items:baseline; margin-bottom:10px; flex-wrap:wrap; }
+  .race-head .raceno{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:17px; color:var(--board); }
+  .race-head .title{ color:var(--ink-soft); font-size:12.5px; }
+  .race-head .deadline{ margin-left:auto; background:var(--paper2); border-radius:3px; padding:2px 9px; font-size:12px; color:var(--ink); font-weight:600; }
+  .banner-high{ background:linear-gradient(120deg,#fbf1de,#f5e5c2); border:1px solid var(--gold); border-radius:3px;
+                padding:9px 11px; font-size:13.5px; margin-bottom:10px; }
+  .banner-normal{ background:var(--paper2); border-radius:3px; padding:9px 11px; font-size:13.5px; margin-bottom:10px; color:var(--ink-soft); }
+  .note{ font-size:12px; color:var(--brick); margin:4px 0; }
   table.main{ width:100%; border-collapse:collapse; font-size:12px; }
-  table.main th, table.main td{ border:1px solid var(--border); padding:5px; text-align:center; }
-  table.main th{ background:#f0ece0; }
+  table.main th{ background:var(--board); color:#e9ecea; font-weight:500; padding:6px 4px; border-bottom:2px solid var(--gold); }
+  table.main td{ padding:6px 4px; text-align:center; border-bottom:1px solid var(--line); }
+  table.main tbody tr:nth-child(even){ background:rgba(198,154,78,.06); }
   .dim{ color:var(--ink-soft); font-size:10px; }
-  .car{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.15); }
+  .car{ display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:50%;
+        font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.18); }
   .sub-wrap{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
-  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); }
+  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); font-weight:600; }
   table.sub{ font-size:12px; border-collapse:collapse; }
   table.sub td{ padding:2px 8px 2px 0; }
-  .chart-block{ margin-top:16px; border-top:1px solid var(--border); padding-top:12px; }
-  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; text-align:center; }
+  .chart-block{ margin-top:18px; border-top:1px solid var(--line); padding-top:14px; }
+  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 10px; text-align:center; font-weight:600; }
   .kimarite-table th, .kimarite-table td{ text-align:center; }
-  .delta-up{ color:#c1443b; font-size:11px; font-weight:700; }
-  .delta-down{ color:#1f5fc4; font-size:11px; font-weight:700; }
-  .matrix-scroll{ overflow-x:auto; }
-  table.matrix{ font-size:10.5px; }
-  table.matrix th, table.matrix td{ padding:4px; white-space:nowrap; }
-  table.matrix td.diag{ background:#f0ece0; color:var(--ink-soft); }
-  table.matrix td.same-line{ background:#e3f0ff; font-weight:700; }
-  .line-info-block{ font-size:12px; border-radius:6px; padding:9px 10px; margin:8px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-  .line-info-block.ok{ background:#e7f3ea; border:1px solid #b9dcc3; }
-  .line-info-block.warn{ background:#fff4de; color:#8a5a12; border:1px solid #e8c98a; }
+  .kimarite-table td{ font-family:ui-monospace,"SF Mono",Menlo,monospace; }
+  .delta-up{ color:var(--brick); font-size:11px; font-weight:700; }
+  .delta-down{ color:var(--slate); font-size:11px; font-weight:700; }
+  .mw-label{ font-size:12px; color:var(--ink-soft); margin:14px 0 8px; font-weight:600; }
+  .mw-label:first-child{ margin-top:0; }
+  .mw-chips{ display:flex; gap:6px; flex-wrap:wrap; }
+  .mw-chip{ width:34px; height:34px; border-radius:50%; border:2px solid var(--line); background:var(--paper);
+            font-size:14px; font-weight:700; color:var(--ink); cursor:pointer; }
+  .mw-chip.active{ border-color:transparent; box-shadow:0 0 0 2px var(--board); }
+  .mw-bar-row{ display:flex; align-items:center; gap:8px; padding:5px 0; }
+  .mw-bar-name{ font-size:12px; color:var(--ink); flex:0 0 auto; width:64px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .mw-bar-track{ flex:1; height:9px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .mw-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,var(--pine),#4c8a68); border-radius:5px; }
+  .mw-bar-val{ flex:0 0 auto; width:30px; text-align:right; font-size:13px; font-weight:700; color:var(--pine); }
+  .line-info-block{ font-size:12px; border-radius:3px; padding:10px 11px; margin:10px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .line-info-block.ok{ background:#eef4ec; border:1px solid #c7dcc0; }
+  .line-info-block.warn{ background:var(--paper2); color:#8a5a12; border:1px solid #e0cfa0; }
   .line-group{ display:inline-flex; align-items:center; gap:3px; }
   .line-arrow{ color:var(--ink-soft); font-size:11px; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
-    table.main th, table.main td{ padding:3px; }
+    table.main th, table.main td{ padding:4px 3px; }
   }
 </style>
 </head>
@@ -70,12 +92,13 @@
     <h1>&larr; <a href="../index.html">武雄競輪</a></h1>
     <span class="date">2026年09月09日</span>
   </div>
+  <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#3fb8c9;"></span></div>
 </header>
 <main>
   <div class="tab-bar"><button class="tab-btn" data-deadline="08:25" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>08:25</span></button><button class="tab-btn" data-deadline="08:45" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>08:45</span></button><button class="tab-btn" data-deadline="09:05" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>09:05</span></button><button class="tab-btn" data-deadline="09:25" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>09:25</span></button><button class="tab-btn" data-deadline="09:45" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>09:45</span></button><button class="tab-btn" data-deadline="10:05" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>10:05</span></button><button class="tab-btn" data-deadline="10:25" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>10:25</span></button></div>
   
     <div id="race1" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#e8c221;">
         <div class="race-head">
           <span class="raceno">1R</span>
           <span class="title">S B</span>
@@ -83,9 +106,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -95,7 +117,7 @@
           <td>2番手</td>
           <td><b>41.7%</b></td>
           <td>77</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -105,7 +127,7 @@
           <td>先頭</td>
           <td><b>18.6%</b></td>
           <td>63</td>
-          <td>91.6%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -115,7 +137,7 @@
           <td>先頭</td>
           <td><b>11.7%</b></td>
           <td>50</td>
-          <td>55.7%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -125,7 +147,7 @@
           <td>2番手</td>
           <td><b>11.2%</b></td>
           <td>61</td>
-          <td>11.2%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -135,7 +157,7 @@
           <td>2番手</td>
           <td><b>7.5%</b></td>
           <td>54</td>
-          <td>7.5%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -145,7 +167,7 @@
           <td>先頭</td>
           <td><b>5.0%</b></td>
           <td>64</td>
-          <td>43.5%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -155,13 +177,14 @@
           <td>3番手</td>
           <td><b>4.3%</b></td>
           <td>63</td>
-          <td>4.3%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="109.3" width="28" height="36.7" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="105.3" font-size="10" text-anchor="middle" fill="#1b2430">11.2%</text>
@@ -192,25 +215,28 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>19.6%<br><span class="delta-down">4.8%↓</span></td><td>22.4%<br><span class="delta-down">6.2%↓</span></td><td>46.5%</td><td>11.4%<br><span class="delta-up">10.9%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 相澤 恵一</b></td><td class="diag">—</td><td class="">15.4%</td><td class="">24.5%</td><td class="">7.1%</td><td class="">39.4%</td><td class="">4.1%</td><td class="same-line">9.5%</td></tr><tr><td><b>2 楠本 政明</b></td><td class="">12.4%</td><td class="diag">—</td><td class="">20.5%</td><td class="same-line">11.9%</td><td class="">46.1%</td><td class="same-line">5.0%</td><td class="">4.0%</td></tr><tr><td><b>3 白井 輝</b></td><td class="">11.3%</td><td class="">11.7%</td><td class="diag">—</td><td class="">7.6%</td><td class="same-line">60.1%</td><td class="">4.3%</td><td class="">5.0%</td></tr><tr><td><b>4 檀 雄二</b></td><td class="">9.5%</td><td class="same-line">19.8%</td><td class="">22.0%</td><td class="diag">—</td><td class="">35.4%</td><td class="same-line">7.3%</td><td class="">5.9%</td></tr><tr><td><b>5 山村 慮太</b></td><td class="">13.5%</td><td class="">19.5%</td><td class="same-line">44.5%</td><td class="">9.0%</td><td class="diag">—</td><td class="">5.1%</td><td class="">8.4%</td></tr><tr><td><b>6 重 一徳</b></td><td class="">9.5%</td><td class="same-line">14.6%</td><td class="">21.9%</td><td class="same-line">12.7%</td><td class="">35.3%</td><td class="diag">—</td><td class="">5.9%</td></tr><tr><td><b>7 佐藤 康恭</b></td><td class="same-line">16.7%</td><td class="">8.6%</td><td class="">19.2%</td><td class="">7.8%</td><td class="">43.2%</td><td class="">4.4%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 相澤 恵一</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="diag">—</td><td class="">24.2%</td><td class="same-line">48.5%</td><td class="">9.0%</td><td class="diag">—</td><td class="">5.2%</td><td class="same-line">13.1%</td></tr><tr><td><b>2 楠本 政明</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">16.5%</td><td class="diag">—</td><td class="same-line">47.9%</td><td class="same-line">19.4%</td><td class="diag">—</td><td class="same-line">8.8%</td><td class="">7.3%</td></tr><tr><td><b>3 白井 輝</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">24.3%</td><td class="">35.1%</td><td class="diag">—</td><td class="">16.2%</td><td class="diag">—</td><td class="">9.3%</td><td class="">15.1%</td></tr><tr><td><b>4 檀 雄二</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">11.8%</td><td class="same-line">26.7%</td><td class="same-line">42.5%</td><td class="diag">—</td><td class="diag">—</td><td class="same-line">9.8%</td><td class="">9.1%</td></tr><tr><td><b>5 山村 慮太</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">24.3%</td><td class="">35.1%</td><td class="diag">—</td><td class="">16.2%</td><td class="diag">—</td><td class="">9.3%</td><td class="">15.1%</td></tr><tr><td><b>6 重 一徳</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">11.6%</td><td class="same-line">20.9%</td><td class="same-line">41.7%</td><td class="same-line">16.9%</td><td class="diag">—</td><td class="diag">—</td><td class="">8.9%</td></tr><tr><td><b>7 佐藤 康恭</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="same-line">26.1%</td><td class="">15.3%</td><td class="same-line">43.1%</td><td class="">9.9%</td><td class="diag">—</td><td class="">5.6%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race1">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race1_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race1_bars2"></div>
+      <div class="mw-label" id="race1_label3"></div>
+      <div class="mw-bars" id="race1_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race1"]={"default": 5, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 5, "name": "山村 慮太", "prob": 39.4, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "白井 輝", "prob": 24.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 15.4, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 9.5, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 7.1, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 4.1, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 3, "name": "白井 輝", "prob": 48.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 24.2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 13.1, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 9.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 5.2, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "2": {"second": [{"car": 5, "name": "山村 慮太", "prob": 46.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "白井 輝", "prob": 20.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 12.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "檀 雄二", "prob": 11.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 5.0, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 4.0, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 3, "name": "白井 輝", "prob": 47.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 19.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 16.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "重 一徳", "prob": 8.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 7.3, "bg": "#e07a1f", "fg": "#ffffff"}]}, "3": {"second": [{"car": 5, "name": "山村 慮太", "prob": 60.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "楠本 政明", "prob": 11.7, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 11.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "檀 雄二", "prob": 7.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 5.0, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 4.3, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 2, "name": "楠本 政明", "prob": 35.1, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 24.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "檀 雄二", "prob": 16.2, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 15.1, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 9.3, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "4": {"second": [{"car": 5, "name": "山村 慮太", "prob": 35.4, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "白井 輝", "prob": 22.0, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 19.8, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 9.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "重 一徳", "prob": 7.3, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 5.9, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 3, "name": "白井 輝", "prob": 42.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 26.7, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 11.8, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "重 一徳", "prob": 9.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 9.1, "bg": "#e07a1f", "fg": "#ffffff"}]}, "5": {"second": [{"car": 3, "name": "白井 輝", "prob": 44.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 19.5, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 13.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "檀 雄二", "prob": 9.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 8.4, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 5.1, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 3, "third": [{"car": 2, "name": "楠本 政明", "prob": 35.1, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 24.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "檀 雄二", "prob": 16.2, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "佐藤 康恭", "prob": 15.1, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 9.3, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "6": {"second": [{"car": 5, "name": "山村 慮太", "prob": 35.3, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "白井 輝", "prob": 21.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 14.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 12.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 9.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "佐藤 康恭", "prob": 5.9, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 3, "name": "白井 輝", "prob": 41.7, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "楠本 政明", "prob": 20.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 16.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 11.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "佐藤 康恭", "prob": 8.9, "bg": "#e07a1f", "fg": "#ffffff"}]}, "7": {"second": [{"car": 5, "name": "山村 慮太", "prob": 43.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "白井 輝", "prob": 19.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 16.7, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "楠本 政明", "prob": 8.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 7.8, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 4.4, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 3, "name": "白井 輝", "prob": 43.1, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "相澤 恵一", "prob": 26.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "楠本 政明", "prob": 15.3, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "檀 雄二", "prob": 9.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "重 一徳", "prob": 5.6, "bg": "#2f8f4e", "fg": "#ffffff"}]}}};</script></div>
       </div>
     </div>
     <div id="race2" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#ffffff;">
         <div class="race-head">
           <span class="raceno">2R</span>
           <span class="title">S B</span>
@@ -218,9 +244,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -230,7 +255,7 @@
           <td>2番手</td>
           <td><b>33.0%</b></td>
           <td>69</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -240,7 +265,7 @@
           <td>先頭</td>
           <td><b>23.0%</b></td>
           <td>70</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -250,7 +275,7 @@
           <td>先頭</td>
           <td><b>20.3%</b></td>
           <td>37</td>
-          <td>54.4%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -260,7 +285,7 @@
           <td>2番手</td>
           <td><b>7.2%</b></td>
           <td>72</td>
-          <td>12.2%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -270,7 +295,7 @@
           <td>3番手</td>
           <td><b>6.3%</b></td>
           <td>44</td>
-          <td>6.3%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -280,7 +305,7 @@
           <td>2番手</td>
           <td><b>5.2%</b></td>
           <td>75</td>
-          <td>23.7%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -290,13 +315,14 @@
           <td>先頭</td>
           <td><b>5.0%</b></td>
           <td>70</td>
-          <td>5.0%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="10.0" width="28" height="136.0" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">33.0%</text>
@@ -327,25 +353,28 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>21.5%<br><span class="delta-down">2.9%↓</span></td><td>17.9%<br><span class="delta-down">10.7%↓</span></td><td>31.0%<br><span class="delta-down">15.5%↓</span></td><td>29.7%<br><span class="delta-up">29.2%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 田中 弘章</b></td><td class="diag">—</td><td class="">6.5%</td><td class="">6.6%</td><td class="">6.7%</td><td class="same-line">42.4%</td><td class="same-line">11.5%</td><td class="">26.2%</td></tr><tr><td><b>2 森 佑樹</b></td><td class="">36.1%</td><td class="diag">—</td><td class="">7.9%</td><td class="same-line">8.2%</td><td class="">25.1%</td><td class="">6.8%</td><td class="">15.9%</td></tr><tr><td><b>3 志村 正洋</b></td><td class="">25.6%</td><td class="">5.4%</td><td class="diag">—</td><td class="">5.7%</td><td class="">24.9%</td><td class="">6.8%</td><td class="same-line">31.6%</td></tr><tr><td><b>4 高嶋 一朗</b></td><td class="">34.7%</td><td class="same-line">7.5%</td><td class="">7.6%</td><td class="diag">—</td><td class="">24.1%</td><td class="">4.7%</td><td class="">21.4%</td></tr><tr><td><b>5 廣田 樹里</b></td><td class="same-line">51.6%</td><td class="">5.5%</td><td class="">7.9%</td><td class="">5.7%</td><td class="diag">—</td><td class="same-line">7.2%</td><td class="">22.2%</td></tr><tr><td><b>6 川添 輝彦</b></td><td class="same-line">43.8%</td><td class="">4.6%</td><td class="">6.7%</td><td class="">3.5%</td><td class="same-line">22.5%</td><td class="diag">—</td><td class="">18.8%</td></tr><tr><td><b>7 小川 佑希也</b></td><td class="">40.6%</td><td class="">4.4%</td><td class="same-line">12.7%</td><td class="">6.4%</td><td class="">28.2%</td><td class="">7.7%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 田中 弘章</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="diag">—</td><td class="">11.5%</td><td class="">11.8%</td><td class="">12.0%</td><td class="diag">—</td><td class="same-line">18.1%</td><td class="">46.6%</td></tr><tr><td><b>2 森 佑樹</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">8.2%</td><td class="same-line">10.4%</td><td class="same-line">45.9%</td><td class="same-line">12.5%</td><td class="">23.0%</td></tr><tr><td><b>3 志村 正洋</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">38.3%</td><td class="">5.8%</td><td class="diag">—</td><td class="">8.5%</td><td class="">37.2%</td><td class="">10.1%</td><td class="diag">—</td></tr><tr><td><b>4 高嶋 一朗</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="same-line">9.2%</td><td class="">7.5%</td><td class="diag">—</td><td class="same-line">42.2%</td><td class="same-line">11.5%</td><td class="">29.6%</td></tr><tr><td><b>5 廣田 樹里</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">11.5%</td><td class="">11.8%</td><td class="">12.0%</td><td class="diag">—</td><td class="same-line">18.1%</td><td class="">46.6%</td></tr><tr><td><b>6 川添 輝彦</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">7.9%</td><td class="">8.2%</td><td class="">5.9%</td><td class="same-line">45.8%</td><td class="diag">—</td><td class="">32.2%</td></tr><tr><td><b>7 小川 佑希也</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">6.6%</td><td class="same-line">16.6%</td><td class="">9.5%</td><td class="same-line">52.9%</td><td class="same-line">14.4%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race2">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race2_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race2_bars2"></div>
+      <div class="mw-label" id="race2_label3"></div>
+      <div class="mw-bars" id="race2_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race2"]={"default": 1, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 5, "name": "廣田 樹里", "prob": 42.4, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 26.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 11.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 6.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 6.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 6.5, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 7, "name": "小川 佑希也", "prob": 46.6, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 18.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 12.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 11.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 11.5, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "2": {"second": [{"car": 1, "name": "田中 弘章", "prob": 36.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "廣田 樹里", "prob": 25.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 15.9, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 8.2, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 7.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 6.8, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 5, "name": "廣田 樹里", "prob": 45.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 23.0, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 12.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 10.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 8.2, "bg": "#d8322a", "fg": "#ffffff"}]}, "3": {"second": [{"car": 7, "name": "小川 佑希也", "prob": 31.6, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 1, "name": "田中 弘章", "prob": 25.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "廣田 樹里", "prob": 24.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "川添 輝彦", "prob": 6.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 5.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 5.4, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 1, "name": "田中 弘章", "prob": 38.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "廣田 樹里", "prob": 37.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "川添 輝彦", "prob": 10.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 8.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 5.8, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "4": {"second": [{"car": 1, "name": "田中 弘章", "prob": 34.7, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "廣田 樹里", "prob": 24.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 21.4, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 7.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 7.5, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 4.7, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 5, "name": "廣田 樹里", "prob": 42.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 29.6, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 11.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 9.2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 7.5, "bg": "#d8322a", "fg": "#ffffff"}]}, "5": {"second": [{"car": 1, "name": "田中 弘章", "prob": 51.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 22.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 7.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 7.2, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 5.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 5.5, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 7, "name": "小川 佑希也", "prob": 46.6, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 18.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 12.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 11.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 11.5, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "6": {"second": [{"car": 1, "name": "田中 弘章", "prob": 43.8, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "廣田 樹里", "prob": 22.5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 18.8, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 6.7, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 4.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 3.5, "bg": "#1f5fc4", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 5, "name": "廣田 樹里", "prob": 45.8, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "小川 佑希也", "prob": 32.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "志村 正洋", "prob": 8.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 7.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 5.9, "bg": "#1f5fc4", "fg": "#ffffff"}]}, "7": {"second": [{"car": 1, "name": "田中 弘章", "prob": 40.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "廣田 樹里", "prob": 28.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "志村 正洋", "prob": 12.7, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 7.7, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 6.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 4.4, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 5, "name": "廣田 樹里", "prob": 52.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "志村 正洋", "prob": 16.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "川添 輝彦", "prob": 14.4, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "高嶋 一朗", "prob": 9.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "森 佑樹", "prob": 6.6, "bg": "#1b1b1b", "fg": "#ffffff"}]}}};</script></div>
       </div>
     </div>
     <div id="race3" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#ffffff;">
         <div class="race-head">
           <span class="raceno">3R</span>
           <span class="title">S B</span>
@@ -353,9 +382,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -365,7 +393,7 @@
           <td>先頭</td>
           <td><b>32.9%</b></td>
           <td>59</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -375,7 +403,7 @@
           <td>2番手</td>
           <td><b>23.5%</b></td>
           <td>41</td>
-          <td>24.2%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -385,7 +413,7 @@
           <td>2番手</td>
           <td><b>12.9%</b></td>
           <td>60</td>
-          <td>44.6%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -395,7 +423,7 @@
           <td>先頭</td>
           <td><b>12.6%</b></td>
           <td>71</td>
-          <td>84.4%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -405,7 +433,7 @@
           <td>2番手</td>
           <td><b>10.3%</b></td>
           <td>66</td>
-          <td>13.8%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -415,7 +443,7 @@
           <td>3番手</td>
           <td><b>5.0%</b></td>
           <td>62</td>
-          <td>5.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -425,13 +453,14 @@
           <td>先頭</td>
           <td><b>2.8%</b></td>
           <td>58</td>
-          <td>18.4%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="10.0" width="28" height="136.0" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">32.9%</text>
@@ -462,25 +491,28 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>20.5%<br><span class="delta-down">3.9%↓</span></td><td>19.4%<br><span class="delta-down">9.2%↓</span></td><td>46.4%</td><td>13.7%<br><span class="delta-up">13.2%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 鶴 健志</b></td><td class="diag">—</td><td class="">16.6%</td><td class="">13.3%</td><td class="same-line">43.4%</td><td class="">16.2%</td><td class="same-line">6.8%</td><td class="">3.7%</td></tr><tr><td><b>2 臼井 昌巨</b></td><td class="">40.3%</td><td class="diag">—</td><td class="">9.1%</td><td class="">20.6%</td><td class="same-line">22.1%</td><td class="">4.4%</td><td class="">3.5%</td></tr><tr><td><b>3 小磯 知也</b></td><td class="">41.6%</td><td class="">11.6%</td><td class="diag">—</td><td class="">21.3%</td><td class="">15.9%</td><td class="">4.5%</td><td class="same-line">5.1%</td></tr><tr><td><b>4 真崎 章徳</b></td><td class="same-line">54.6%</td><td class="">10.7%</td><td class="">8.6%</td><td class="diag">—</td><td class="">14.6%</td><td class="same-line">8.3%</td><td class="">3.3%</td></tr><tr><td><b>5 森川 康輔</b></td><td class="">35.7%</td><td class="same-line">20.0%</td><td class="">11.2%</td><td class="">25.5%</td><td class="diag">—</td><td class="">5.4%</td><td class="">2.2%</td></tr><tr><td><b>6 原 司</b></td><td class="same-line">34.7%</td><td class="">9.1%</td><td class="">7.3%</td><td class="same-line">33.5%</td><td class="">12.5%</td><td class="diag">—</td><td class="">2.8%</td></tr><tr><td><b>7 土居 佑次</b></td><td class="">33.5%</td><td class="">13.1%</td><td class="same-line">15.1%</td><td class="">24.0%</td><td class="">9.2%</td><td class="">5.1%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 鶴 健志</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="diag">—</td><td class="">24.0%</td><td class="">19.3%</td><td class="diag">—</td><td class="">32.8%</td><td class="same-line">16.5%</td><td class="">7.4%</td></tr><tr><td><b>2 臼井 昌巨</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="">12.2%</td><td class="same-line">48.8%</td><td class="same-line">26.1%</td><td class="same-line">8.3%</td><td class="">4.7%</td></tr><tr><td><b>3 小磯 知也</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">15.3%</td><td class="diag">—</td><td class="same-line">49.4%</td><td class="">20.9%</td><td class="same-line">8.4%</td><td class="same-line">6.0%</td></tr><tr><td><b>4 真崎 章徳</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">24.0%</td><td class="">19.3%</td><td class="diag">—</td><td class="">32.8%</td><td class="same-line">16.5%</td><td class="">7.4%</td></tr><tr><td><b>5 森川 康輔</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="same-line">25.6%</td><td class="">16.3%</td><td class="same-line">46.9%</td><td class="diag">—</td><td class="same-line">7.9%</td><td class="">3.2%</td></tr><tr><td><b>6 原 司</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">14.9%</td><td class="">12.0%</td><td class="same-line">48.1%</td><td class="">20.4%</td><td class="diag">—</td><td class="">4.6%</td></tr><tr><td><b>7 土居 佑次</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">18.5%</td><td class="same-line">18.7%</td><td class="same-line">42.6%</td><td class="">12.9%</td><td class="same-line">7.2%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race3">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race3_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race3_bars2"></div>
+      <div class="mw-label" id="race3_label3"></div>
+      <div class="mw-bars" id="race3_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race3"]={"default": 1, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 4, "name": "真崎 章徳", "prob": 43.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "臼井 昌巨", "prob": 16.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 16.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "小磯 知也", "prob": 13.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 6.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 3.7, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 4, "third": [{"car": 5, "name": "森川 康輔", "prob": 32.8, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 24.0, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 19.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 16.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 7.4, "bg": "#e07a1f", "fg": "#ffffff"}]}, "2": {"second": [{"car": 1, "name": "鶴 健志", "prob": 40.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "森川 康輔", "prob": 22.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "真崎 章徳", "prob": 20.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 9.1, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 4.4, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 3.5, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 4, "name": "真崎 章徳", "prob": 48.8, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 26.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 3, "name": "小磯 知也", "prob": 12.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 8.3, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 4.7, "bg": "#e07a1f", "fg": "#ffffff"}]}, "3": {"second": [{"car": 1, "name": "鶴 健志", "prob": 41.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "真崎 章徳", "prob": 21.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 15.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 11.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 5.1, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 4.5, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 4, "name": "真崎 章徳", "prob": 49.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 20.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 15.3, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 8.4, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 6.0, "bg": "#e07a1f", "fg": "#ffffff"}]}, "4": {"second": [{"car": 1, "name": "鶴 健志", "prob": 54.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "森川 康輔", "prob": 14.6, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 10.7, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 8.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 8.3, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 3.3, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 5, "name": "森川 康輔", "prob": 32.8, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 24.0, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 19.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 16.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 7.4, "bg": "#e07a1f", "fg": "#ffffff"}]}, "5": {"second": [{"car": 1, "name": "鶴 健志", "prob": 35.7, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "真崎 章徳", "prob": 25.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "臼井 昌巨", "prob": 20.0, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 11.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 5.4, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 2.2, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 4, "name": "真崎 章徳", "prob": 46.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "臼井 昌巨", "prob": 25.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 16.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "原 司", "prob": 7.9, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 3.2, "bg": "#e07a1f", "fg": "#ffffff"}]}, "6": {"second": [{"car": 1, "name": "鶴 健志", "prob": 34.7, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "真崎 章徳", "prob": 33.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 12.5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 9.1, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 7.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 2.8, "bg": "#e07a1f", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 4, "name": "真崎 章徳", "prob": 48.1, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 20.4, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "臼井 昌巨", "prob": 14.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 12.0, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 7, "name": "土居 佑次", "prob": 4.6, "bg": "#e07a1f", "fg": "#ffffff"}]}, "7": {"second": [{"car": 1, "name": "鶴 健志", "prob": 33.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "真崎 章徳", "prob": 24.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 15.1, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "臼井 昌巨", "prob": 13.1, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 9.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "原 司", "prob": 5.1, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 4, "name": "真崎 章徳", "prob": 42.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "小磯 知也", "prob": 18.7, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "臼井 昌巨", "prob": 18.5, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "森川 康輔", "prob": 12.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "原 司", "prob": 7.2, "bg": "#2f8f4e", "fg": "#ffffff"}]}}};</script></div>
       </div>
     </div>
     <div id="race4" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#ffffff;">
         <div class="race-head">
           <span class="raceno">4R</span>
           <span class="title">S B</span>
@@ -488,9 +520,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -500,7 +531,7 @@
           <td>2番手</td>
           <td><b>28.4%</b></td>
           <td>82</td>
-          <td>87.2%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -510,7 +541,7 @@
           <td>先頭</td>
           <td><b>21.1%</b></td>
           <td>81</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -520,7 +551,7 @@
           <td>先頭</td>
           <td><b>20.5%</b></td>
           <td>52</td>
-          <td>56.9%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -530,7 +561,7 @@
           <td>2番手</td>
           <td><b>10.6%</b></td>
           <td>72</td>
-          <td>20.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -540,7 +571,7 @@
           <td>3番手</td>
           <td><b>10.4%</b></td>
           <td>37</td>
-          <td>21.1%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -550,7 +581,7 @@
           <td>3番手</td>
           <td><b>4.8%</b></td>
           <td>63</td>
-          <td>4.8%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -560,13 +591,14 @@
           <td>先頭</td>
           <td><b>4.1%</b></td>
           <td>48</td>
-          <td>4.1%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="10.0" width="28" height="136.0" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="6.0" font-size="10" text-anchor="middle" fill="#1b2430">28.4%</text>
@@ -597,25 +629,28 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>19.0%<br><span class="delta-down">5.4%↓</span></td><td>9.0%<br><span class="delta-down">19.6%↓</span></td><td>37.2%<br><span class="delta-down">9.3%↓</span></td><td>34.8%<br><span class="delta-up">34.3%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 山本 恵太郎</b></td><td class="diag">—</td><td class="">24.0%</td><td class="same-line">17.5%</td><td class="">12.4%</td><td class="">5.7%</td><td class="">4.9%</td><td class="same-line">35.5%</td></tr><tr><td><b>2 財満 伊織</b></td><td class="">36.3%</td><td class="diag">—</td><td class="">13.3%</td><td class="same-line">19.3%</td><td class="same-line">6.5%</td><td class="">5.3%</td><td class="">19.3%</td></tr><tr><td><b>3 今村 俊雄</b></td><td class="same-line">39.5%</td><td class="">19.8%</td><td class="diag">—</td><td class="">10.3%</td><td class="">4.7%</td><td class="">4.0%</td><td class="same-line">21.7%</td></tr><tr><td><b>4 松丸 裕紀</b></td><td class="">28.7%</td><td class="same-line">29.5%</td><td class="">10.5%</td><td class="diag">—</td><td class="same-line">7.0%</td><td class="">3.0%</td><td class="">21.3%</td></tr><tr><td><b>5 横瀬 聡</b></td><td class="">28.5%</td><td class="same-line">21.7%</td><td class="">10.5%</td><td class="same-line">15.2%</td><td class="diag">—</td><td class="">3.0%</td><td class="">21.2%</td></tr><tr><td><b>6 菊池 崇訓</b></td><td class="">31.1%</td><td class="">22.4%</td><td class="">11.4%</td><td class="">8.3%</td><td class="">3.8%</td><td class="diag">—</td><td class="">23.1%</td></tr><tr><td><b>7 角田 吏</b></td><td class="same-line">47.4%</td><td class="">17.0%</td><td class="same-line">12.9%</td><td class="">12.3%</td><td class="">5.6%</td><td class="">4.8%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 山本 恵太郎</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="diag">—</td><td class="">30.9%</td><td class="same-line">27.8%</td><td class="">22.3%</td><td class="">10.2%</td><td class="">8.7%</td><td class="diag">—</td></tr><tr><td><b>2 財満 伊織</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="diag">—</td><td class="same-line">21.2%</td><td class="same-line">21.4%</td><td class="same-line">7.8%</td><td class="">6.7%</td><td class="same-line">42.9%</td></tr><tr><td><b>3 今村 俊雄</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">30.7%</td><td class="diag">—</td><td class="">15.9%</td><td class="">7.2%</td><td class="">6.2%</td><td class="same-line">40.0%</td></tr><tr><td><b>4 松丸 裕紀</b><br><span class='dim' style='font-size:10px;'>2着想定:2号車</span></td><td class="">45.1%</td><td class="diag">—</td><td class="">16.6%</td><td class="diag">—</td><td class="same-line">9.7%</td><td class="">4.7%</td><td class="">24.0%</td></tr><tr><td><b>5 横瀬 聡</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="same-line">26.8%</td><td class="same-line">17.2%</td><td class="same-line">17.4%</td><td class="diag">—</td><td class="">3.9%</td><td class="same-line">34.8%</td></tr><tr><td><b>6 菊池 崇訓</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">28.7%</td><td class="same-line">18.5%</td><td class="">10.6%</td><td class="">4.8%</td><td class="diag">—</td><td class="same-line">37.4%</td></tr><tr><td><b>7 角田 吏</b><br><span class='dim' style='font-size:10px;'>2着想定:1号車</span></td><td class="diag">—</td><td class="">30.9%</td><td class="same-line">27.8%</td><td class="">22.3%</td><td class="">10.2%</td><td class="">8.7%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race4">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race4_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race4_bars2"></div>
+      <div class="mw-label" id="race4_label3"></div>
+      <div class="mw-bars" id="race4_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race4"]={"default": 1, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 7, "name": "角田 吏", "prob": 35.5, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "財満 伊織", "prob": 24.0, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 17.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 12.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 5.7, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 4.9, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 2, "name": "財満 伊織", "prob": 30.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 27.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 22.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 10.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 8.7, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "2": {"second": [{"car": 1, "name": "山本 恵太郎", "prob": 36.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "松丸 裕紀", "prob": 19.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "角田 吏", "prob": 19.3, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 13.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 6.5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 5.3, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 7, "name": "角田 吏", "prob": 42.9, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 21.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 21.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 7.8, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 6.7, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "3": {"second": [{"car": 1, "name": "山本 恵太郎", "prob": 39.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "角田 吏", "prob": 21.7, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "財満 伊織", "prob": 19.8, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 10.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 4.7, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 4.0, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 7, "name": "角田 吏", "prob": 40.0, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "財満 伊織", "prob": 30.7, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 15.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 7.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 6.2, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "4": {"second": [{"car": 2, "name": "財満 伊織", "prob": 29.5, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "山本 恵太郎", "prob": 28.7, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "角田 吏", "prob": 21.3, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 10.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 7.0, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 3.0, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 2, "third": [{"car": 1, "name": "山本 恵太郎", "prob": 45.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "角田 吏", "prob": 24.0, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 16.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 9.7, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 4.7, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "5": {"second": [{"car": 1, "name": "山本 恵太郎", "prob": 28.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "財満 伊織", "prob": 21.7, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 7, "name": "角田 吏", "prob": 21.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 15.2, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 10.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "菊池 崇訓", "prob": 3.0, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 7, "name": "角田 吏", "prob": 34.8, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "財満 伊織", "prob": 26.8, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 17.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 17.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "菊池 崇訓", "prob": 3.9, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "6": {"second": [{"car": 1, "name": "山本 恵太郎", "prob": 31.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 7, "name": "角田 吏", "prob": 23.1, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "財満 伊織", "prob": 22.4, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 11.4, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 8.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 3.8, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 1, "third": [{"car": 7, "name": "角田 吏", "prob": 37.4, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "財満 伊織", "prob": 28.7, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 18.5, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 10.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 4.8, "bg": "#e8c221", "fg": "#1b2430"}]}, "7": {"second": [{"car": 1, "name": "山本 恵太郎", "prob": 47.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "財満 伊織", "prob": 17.0, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 12.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 12.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 5.6, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 4.8, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 1, "third": [{"car": 2, "name": "財満 伊織", "prob": 30.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "name": "今村 俊雄", "prob": 27.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "松丸 裕紀", "prob": 22.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "横瀬 聡", "prob": 10.2, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "name": "菊池 崇訓", "prob": 8.7, "bg": "#2f8f4e", "fg": "#ffffff"}]}}};</script></div>
       </div>
     </div>
     <div id="race5" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#e07a1f;">
         <div class="race-head">
           <span class="raceno">5R</span>
           <span class="title">S B</span>
@@ -623,9 +658,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -635,7 +669,7 @@
           <td>先頭</td>
           <td><b>30.1%</b></td>
           <td>72</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -645,7 +679,7 @@
           <td>2番手</td>
           <td><b>24.2%</b></td>
           <td>63</td>
-          <td>73.1%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -655,7 +689,7 @@
           <td>先頭</td>
           <td><b>14.1%</b></td>
           <td>76</td>
-          <td>67.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -665,7 +699,7 @@
           <td>2番手</td>
           <td><b>9.7%</b></td>
           <td>69</td>
-          <td>16.1%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -675,7 +709,7 @@
           <td>先頭</td>
           <td><b>9.4%</b></td>
           <td>52</td>
-          <td>9.4%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -685,7 +719,7 @@
           <td>3番手</td>
           <td><b>6.9%</b></td>
           <td>66</td>
-          <td>6.9%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -695,13 +729,14 @@
           <td>3番手</td>
           <td><b>5.6%</b></td>
           <td>50</td>
-          <td>5.6%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="114.8" width="28" height="31.2" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="110.8" font-size="10" text-anchor="middle" fill="#1b2430">6.9%</text>
@@ -732,25 +767,28 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>16.7%<br><span class="delta-down">7.7%↓</span></td><td>11.8%<br><span class="delta-down">16.8%↓</span></td><td>41.3%<br><span class="delta-down">5.2%↓</span></td><td>30.2%<br><span class="delta-up">29.7%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 志村 達也</b></td><td class="diag">—</td><td class="">4.2%</td><td class="same-line">14.4%</td><td class="same-line">15.4%</td><td class="">25.0%</td><td class="">9.7%</td><td class="">31.2%</td></tr><tr><td><b>2 亀井 宏佳</b></td><td class="">4.9%</td><td class="diag">—</td><td class="">6.8%</td><td class="">13.8%</td><td class="same-line">34.0%</td><td class="">9.2%</td><td class="same-line">31.4%</td></tr><tr><td><b>3 光岡 義洋</b></td><td class="same-line">10.1%</td><td class="">4.1%</td><td class="diag">—</td><td class="same-line">20.6%</td><td class="">24.7%</td><td class="">9.6%</td><td class="">30.8%</td></tr><tr><td><b>4 布居</b></td><td class="same-line">8.9%</td><td class="">6.9%</td><td class="same-line">16.9%</td><td class="diag">—</td><td class="">29.5%</td><td class="">11.5%</td><td class="">26.3%</td></tr><tr><td><b>5 黒崎 直行</b></td><td class="">7.8%</td><td class="same-line">9.1%</td><td class="">10.9%</td><td class="">15.9%</td><td class="diag">—</td><td class="">7.6%</td><td class="same-line">48.7%</td></tr><tr><td><b>6 取鳥 敬一</b></td><td class="">8.3%</td><td class="">6.7%</td><td class="">11.6%</td><td class="">16.8%</td><td class="">20.6%</td><td class="diag">—</td><td class="">36.0%</td></tr><tr><td><b>7 吉川 敬介</b></td><td class="">9.0%</td><td class="same-line">7.8%</td><td class="">12.7%</td><td class="">13.1%</td><td class="same-line">45.1%</td><td class="">12.3%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 志村 達也</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="diag">—</td><td class="same-line">7.9%</td><td class="same-line">17.0%</td><td class="same-line">19.7%</td><td class="same-line">42.4%</td><td class="">13.1%</td><td class="diag">—</td></tr><tr><td><b>2 亀井 宏佳</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">7.0%</td><td class="diag">—</td><td class="">9.8%</td><td class="">19.9%</td><td class="diag">—</td><td class="">9.5%</td><td class="same-line">53.8%</td></tr><tr><td><b>3 光岡 義洋</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="same-line">12.1%</td><td class="same-line">7.9%</td><td class="diag">—</td><td class="same-line">24.6%</td><td class="same-line">42.3%</td><td class="">13.1%</td><td class="diag">—</td></tr><tr><td><b>4 布居</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="same-line">9.8%</td><td class="same-line">10.0%</td><td class="same-line">17.2%</td><td class="diag">—</td><td class="diag">—</td><td class="">9.5%</td><td class="same-line">53.5%</td></tr><tr><td><b>5 黒崎 直行</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">17.1%</td><td class="same-line">17.6%</td><td class="">24.0%</td><td class="">24.8%</td><td class="diag">—</td><td class="">16.6%</td><td class="diag">—</td></tr><tr><td><b>6 取鳥 敬一</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">11.0%</td><td class="same-line">9.0%</td><td class="">15.4%</td><td class="">16.0%</td><td class="same-line">48.5%</td><td class="diag">—</td><td class="diag">—</td></tr><tr><td><b>7 吉川 敬介</b><br><span class='dim' style='font-size:10px;'>2着想定:5号車</span></td><td class="">17.1%</td><td class="same-line">17.6%</td><td class="">24.0%</td><td class="">24.8%</td><td class="diag">—</td><td class="">16.6%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race5">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race5_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race5_bars2"></div>
+      <div class="mw-label" id="race5_label3"></div>
+      <div class="mw-bars" id="race5_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race5"]={"default": 7, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 7, "name": "吉川 敬介", "prob": 31.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 5, "name": "黒崎 直行", "prob": 25.0, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 15.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 14.4, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 9.7, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 4.2, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 5, "name": "黒崎 直行", "prob": 42.4, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 19.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 17.0, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 13.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 7.9, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "2": {"second": [{"car": 5, "name": "黒崎 直行", "prob": 34.0, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "吉川 敬介", "prob": 31.4, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "布居", "prob": 13.8, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 9.2, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 6.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 4.9, "bg": "#ffffff", "fg": "#1b2430"}], "third_second_car": 5, "third": [{"car": 7, "name": "吉川 敬介", "prob": 53.8, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "布居", "prob": 19.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 9.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 9.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 7.0, "bg": "#ffffff", "fg": "#1b2430"}]}, "3": {"second": [{"car": 7, "name": "吉川 敬介", "prob": 30.8, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 5, "name": "黒崎 直行", "prob": 24.7, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 20.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 10.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "取鳥 敬一", "prob": 9.6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 4.1, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 5, "name": "黒崎 直行", "prob": 42.3, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 24.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 13.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 12.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "亀井 宏佳", "prob": 7.9, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "4": {"second": [{"car": 5, "name": "黒崎 直行", "prob": 29.5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 7, "name": "吉川 敬介", "prob": 26.3, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 16.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 11.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 8.9, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "亀井 宏佳", "prob": 6.9, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 7, "name": "吉川 敬介", "prob": 53.5, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 17.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 10.0, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 9.8, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "取鳥 敬一", "prob": 9.5, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "5": {"second": [{"car": 7, "name": "吉川 敬介", "prob": 48.7, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "布居", "prob": 15.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 10.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 9.1, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 7.8, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "取鳥 敬一", "prob": 7.6, "bg": "#2f8f4e", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 4, "name": "布居", "prob": 24.8, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 24.0, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 17.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 17.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "取鳥 敬一", "prob": 16.6, "bg": "#2f8f4e", "fg": "#ffffff"}]}, "6": {"second": [{"car": 7, "name": "吉川 敬介", "prob": 36.0, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 5, "name": "黒崎 直行", "prob": 20.6, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 16.8, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 11.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 8.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "亀井 宏佳", "prob": 6.7, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 5, "name": "黒崎 直行", "prob": 48.5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 16.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 15.4, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 11.0, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "亀井 宏佳", "prob": 9.0, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "7": {"second": [{"car": 5, "name": "黒崎 直行", "prob": 45.1, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "布居", "prob": 13.1, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 12.7, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "取鳥 敬一", "prob": 12.3, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 9.0, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "亀井 宏佳", "prob": 7.8, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 5, "third": [{"car": 4, "name": "布居", "prob": 24.8, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 3, "name": "光岡 義洋", "prob": 24.0, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 2, "name": "亀井 宏佳", "prob": 17.6, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "志村 達也", "prob": 17.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 6, "name": "取鳥 敬一", "prob": 16.6, "bg": "#2f8f4e", "fg": "#ffffff"}]}}};</script></div>
       </div>
     </div>
     <div id="race6" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#d8322a;">
         <div class="race-head">
           <span class="raceno">6R</span>
           <span class="title">S B</span>
@@ -758,9 +796,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -770,7 +807,7 @@
           <td>2番手</td>
           <td><b>26.7%</b></td>
           <td>24</td>
-          <td>60.3%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -780,7 +817,7 @@
           <td>2番手</td>
           <td><b>21.7%</b></td>
           <td>57</td>
-          <td>38.3%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -790,7 +827,7 @@
           <td>先頭</td>
           <td><b>17.2%</b></td>
           <td>73</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -800,7 +837,7 @@
           <td>3番手</td>
           <td><b>12.3%</b></td>
           <td>24</td>
-          <td>12.3%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -810,7 +847,7 @@
           <td>先頭</td>
           <td><b>9.0%</b></td>
           <td>62</td>
-          <td>45.8%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -820,7 +857,7 @@
           <td>先頭</td>
           <td><b>7.6%</b></td>
           <td>56</td>
-          <td>48.3%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -830,13 +867,14 @@
           <td>2番手</td>
           <td><b>5.5%</b></td>
           <td>54</td>
-          <td>5.5%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="107.1" width="28" height="38.9" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="103.1" font-size="10" text-anchor="middle" fill="#1b2430">7.6%</text>
@@ -867,25 +905,28 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>13.3%<br><span class="delta-down">11.1%↓</span></td><td>19.6%<br><span class="delta-down">9.0%↓</span></td><td>24.6%<br><span class="delta-down">21.9%↓</span></td><td>42.4%<br><span class="delta-up">41.9%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 ラモス レオ</b></td><td class="diag">—</td><td class="">7.0%</td><td class="">28.9%</td><td class="">18.7%</td><td class="same-line">8.6%</td><td class="">13.3%</td><td class="">23.5%</td></tr><tr><td><b>2 大室 翔</b></td><td class="">5.6%</td><td class="diag">—</td><td class="">27.1%</td><td class="">17.6%</td><td class="">5.6%</td><td class="">12.5%</td><td class="same-line">31.6%</td></tr><tr><td><b>3 中野 彰人</b></td><td class="">9.5%</td><td class="">11.2%</td><td class="diag">—</td><td class="same-line">30.9%</td><td class="">6.9%</td><td class="same-line">22.0%</td><td class="">19.4%</td></tr><tr><td><b>4 岸川 哲也</b></td><td class="">8.0%</td><td class="">9.4%</td><td class="same-line">40.2%</td><td class="diag">—</td><td class="">5.8%</td><td class="same-line">13.7%</td><td class="">22.8%</td></tr><tr><td><b>5 仙石 淳</b></td><td class="same-line">11.2%</td><td class="">9.2%</td><td class="">27.3%</td><td class="">17.6%</td><td class="diag">—</td><td class="">12.6%</td><td class="">22.2%</td></tr><tr><td><b>6 田崎 良太郎</b></td><td class="">8.1%</td><td class="">9.5%</td><td class="same-line">40.6%</td><td class="same-line">19.4%</td><td class="">5.9%</td><td class="diag">—</td><td class="">16.5%</td></tr><tr><td><b>7 川上 修平</b></td><td class="">10.7%</td><td class="same-line">18.1%</td><td class="">26.8%</td><td class="">24.2%</td><td class="">7.8%</td><td class="">12.4%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 ラモス レオ</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="diag">—</td><td class="">9.7%</td><td class="diag">—</td><td class="same-line">32.9%</td><td class="same-line">10.6%</td><td class="same-line">23.5%</td><td class="">23.4%</td></tr><tr><td><b>2 大室 翔</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">9.7%</td><td class="diag">—</td><td class="">34.0%</td><td class="">30.7%</td><td class="">9.9%</td><td class="">15.7%</td><td class="diag">—</td></tr><tr><td><b>3 中野 彰人</b><br><span class='dim' style='font-size:10px;'>2着想定:4号車</span></td><td class="">14.3%</td><td class="">16.9%</td><td class="diag">—</td><td class="diag">—</td><td class="">10.4%</td><td class="same-line">29.2%</td><td class="">29.2%</td></tr><tr><td><b>4 岸川 哲也</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">14.3%</td><td class="">16.9%</td><td class="diag">—</td><td class="diag">—</td><td class="">10.4%</td><td class="same-line">29.2%</td><td class="">29.2%</td></tr><tr><td><b>5 仙石 淳</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="same-line">13.5%</td><td class="">12.6%</td><td class="diag">—</td><td class="same-line">30.5%</td><td class="diag">—</td><td class="same-line">21.8%</td><td class="">21.7%</td></tr><tr><td><b>6 田崎 良太郎</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">13.5%</td><td class="">15.9%</td><td class="diag">—</td><td class="same-line">38.5%</td><td class="">9.8%</td><td class="diag">—</td><td class="">22.2%</td></tr><tr><td><b>7 川上 修平</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">12.4%</td><td class="same-line">18.3%</td><td class="diag">—</td><td class="same-line">35.2%</td><td class="">9.0%</td><td class="same-line">25.1%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race6">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race6_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race6_bars2"></div>
+      <div class="mw-label" id="race6_label3"></div>
+      <div class="mw-bars" id="race6_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race6"]={"default": 3, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 3, "name": "中野 彰人", "prob": 28.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 23.5, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "岸川 哲也", "prob": 18.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 13.3, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 5, "name": "仙石 淳", "prob": 8.6, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "大室 翔", "prob": 7.0, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 3, "third": [{"car": 4, "name": "岸川 哲也", "prob": 32.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 23.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 23.4, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 5, "name": "仙石 淳", "prob": 10.6, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "大室 翔", "prob": 9.7, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "2": {"second": [{"car": 7, "name": "川上 修平", "prob": 31.6, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "中野 彰人", "prob": 27.1, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "岸川 哲也", "prob": 17.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 12.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 5, "name": "仙石 淳", "prob": 5.6, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 1, "name": "ラモス レオ", "prob": 5.6, "bg": "#ffffff", "fg": "#1b2430"}], "third_second_car": 7, "third": [{"car": 3, "name": "中野 彰人", "prob": 34.0, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "岸川 哲也", "prob": 30.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 15.7, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 5, "name": "仙石 淳", "prob": 9.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 1, "name": "ラモス レオ", "prob": 9.7, "bg": "#ffffff", "fg": "#1b2430"}]}, "3": {"second": [{"car": 4, "name": "岸川 哲也", "prob": 30.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 22.0, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 19.4, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 11.2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 9.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 6.9, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 4, "third": [{"car": 6, "name": "田崎 良太郎", "prob": 29.2, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 29.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 16.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 14.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 10.4, "bg": "#e8c221", "fg": "#1b2430"}]}, "4": {"second": [{"car": 3, "name": "中野 彰人", "prob": 40.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 22.8, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 13.7, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 9.4, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 8.0, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 5.8, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 3, "third": [{"car": 6, "name": "田崎 良太郎", "prob": 29.2, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 29.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 16.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 14.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 10.4, "bg": "#e8c221", "fg": "#1b2430"}]}, "5": {"second": [{"car": 3, "name": "中野 彰人", "prob": 27.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 22.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "岸川 哲也", "prob": 17.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 12.6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 11.2, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "大室 翔", "prob": 9.2, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 3, "third": [{"car": 4, "name": "岸川 哲也", "prob": 30.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 21.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 21.7, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 13.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "大室 翔", "prob": 12.6, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "6": {"second": [{"car": 3, "name": "中野 彰人", "prob": 40.6, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "岸川 哲也", "prob": 19.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 16.5, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 9.5, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 8.1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 5.9, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 3, "third": [{"car": 4, "name": "岸川 哲也", "prob": 38.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 7, "name": "川上 修平", "prob": 22.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 15.9, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 13.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 9.8, "bg": "#e8c221", "fg": "#1b2430"}]}, "7": {"second": [{"car": 3, "name": "中野 彰人", "prob": 26.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "岸川 哲也", "prob": 24.2, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 18.1, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 12.4, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 10.7, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 7.8, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 3, "third": [{"car": 4, "name": "岸川 哲也", "prob": 35.2, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "田崎 良太郎", "prob": 25.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 2, "name": "大室 翔", "prob": 18.3, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 1, "name": "ラモス レオ", "prob": 12.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "仙石 淳", "prob": 9.0, "bg": "#e8c221", "fg": "#1b2430"}]}}};</script></div>
       </div>
     </div>
     <div id="race7" class="race-panel" style="display:none;">
-      <div class="race-card">
+      <div class="race-card" style="--pick-color:#e07a1f;">
         <div class="race-head">
           <span class="raceno">7R</span>
           <span class="title">S B</span>
@@ -893,9 +934,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <h4>表1：号車別 予測1着率</h4>
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率<br><span style="font-weight:400;font-size:9px;">(旧モデル)</span></th></tr></thead>
+          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>
         <tr style="">
           <td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
@@ -905,7 +945,7 @@
           <td>先頭</td>
           <td><b>43.6%</b></td>
           <td>89</td>
-          <td>99.0%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
@@ -915,7 +955,7 @@
           <td>2番手</td>
           <td><b>15.2%</b></td>
           <td>74</td>
-          <td>60.8%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
@@ -925,7 +965,7 @@
           <td>先頭</td>
           <td><b>11.5%</b></td>
           <td>45</td>
-          <td>11.5%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
@@ -935,7 +975,7 @@
           <td>3番手</td>
           <td><b>8.6%</b></td>
           <td>52</td>
-          <td>8.6%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
@@ -945,7 +985,7 @@
           <td>先頭</td>
           <td><b>7.2%</b></td>
           <td>76</td>
-          <td>57.2%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
@@ -955,7 +995,7 @@
           <td>先頭</td>
           <td><b>7.2%</b></td>
           <td>24</td>
-          <td>20.2%</td>
+          <td>0.0%</td>
         </tr>
         <tr style="">
           <td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
@@ -965,13 +1005,14 @@
           <td>2番手</td>
           <td><b>6.7%</b></td>
           <td>56</td>
-          <td>6.7%</td>
+          <td>0.0%</td>
         </tr></tbody>
         </table>
+        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           <svg viewBox="0 0 322 170" width="100%" style="max-width:322px; display:block; margin:0 auto;">
-      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="#d8d2c2" stroke-width="1"/>
+      <line x1="0" y1="146.0" x2="322" y2="146.0" stroke="var(--line)" stroke-width="1"/>
       
         <rect x="15.8" y="123.4" width="28" height="22.6" fill="#ffffff" stroke="#1b2430" stroke-width="1" rx="3"/>
         <text x="29.8" y="119.4" font-size="10" text-anchor="middle" fill="#1b2430">7.2%</text>
@@ -1002,21 +1043,24 @@
         <text x="292.2" y="160.0" font-size="11" text-anchor="middle" fill="#ffffff"
               style="paint-order:stroke; stroke:#e07a1f; stroke-width:5px;">7</text>
     </svg>
+          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">
-    <h4>表2：レース全体の決まり手構成（AI予測ベース）</h4>
-    <p class="dim" style="margin:0 0 6px;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <table class="main kimarite-table"><thead><tr><th>逃げ</th><th>捲り</th><th>差し</th><th>マーク</th></tr></thead><tbody><tr><td>15.7%<br><span class="delta-down">8.7%↓</span></td><td>11.2%<br><span class="delta-down">17.4%↓</span></td><td>47.3%<br><span class="delta-up">0.8%↑</span></td><td>25.8%<br><span class="delta-up">25.3%↑</span></td></tr></tbody></table>
+    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     <p class='dim' style='margin:4px 0 0;'>矢印は武雄競輪の場平均（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p></div>
         <div class="chart-block">
-    <h4>表4：号車別「仮に1着だった場合」の2着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車、横＝その場合に2着に来る号車。同ラインの組み合わせは背景色で強調しています。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼2着→</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 小出 慎也</b></td><td class="diag">—</td><td class="">7.5%</td><td class="">15.9%</td><td class="">8.9%</td><td class="same-line">10.0%</td><td class="">12.1%</td><td class="">45.6%</td></tr><tr><td><b>2 齋藤 輝彦</b></td><td class="">8.3%</td><td class="diag">—</td><td class="">17.4%</td><td class="">7.0%</td><td class="">7.7%</td><td class="">9.5%</td><td class="">50.1%</td></tr><tr><td><b>3 作田 悦章</b></td><td class="">6.9%</td><td class="">6.8%</td><td class="diag">—</td><td class="same-line">11.6%</td><td class="">4.5%</td><td class="">10.9%</td><td class="same-line">59.2%</td></tr><tr><td><b>4 後田 康成</b></td><td class="">7.6%</td><td class="">5.4%</td><td class="same-line">22.8%</td><td class="diag">—</td><td class="">7.0%</td><td class="">8.7%</td><td class="same-line">48.5%</td></tr><tr><td><b>5 金田 健一郎</b></td><td class="same-line">11.3%</td><td class="">7.8%</td><td class="">11.8%</td><td class="">9.3%</td><td class="diag">—</td><td class="">12.5%</td><td class="">47.3%</td></tr><tr><td><b>6 近内 三孝</b></td><td class="">8.6%</td><td class="">6.1%</td><td class="">18.1%</td><td class="">7.3%</td><td class="">7.9%</td><td class="diag">—</td><td class="">52.0%</td></tr><tr><td><b>7 才迫 勇馬</b></td><td class="">11.4%</td><td class="">11.3%</td><td class="same-line">34.2%</td><td class="same-line">14.3%</td><td class="">10.5%</td><td class="">18.2%</td><td class="diag">—</td></tr></tbody></table></div></div>
-        <div class="chart-block">
-    <h4>表5：号車別「仮に1着だった場合」の3着確率（全号車マトリクス）</h4>
-    <p class="dim" style="margin:0 0 6px;">縦＝仮に1着になったと仮定する号車（2着は表4の最有力候補を自動選定）、横＝その場合に3着に来る号車。</p>
-    <div class="matrix-scroll"><table class="main matrix"><thead><tr><th>1着↓＼3着→（2着自動選定）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><b>1 小出 慎也</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="diag">—</td><td class="">13.1%</td><td class="same-line">34.8%</td><td class="same-line">15.7%</td><td class="same-line">15.3%</td><td class="">21.0%</td><td class="diag">—</td></tr><tr><td><b>2 齋藤 輝彦</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">14.5%</td><td class="diag">—</td><td class="same-line">38.3%</td><td class="same-line">17.3%</td><td class="">13.4%</td><td class="">16.5%</td><td class="diag">—</td></tr><tr><td><b>3 作田 悦章</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">17.4%</td><td class="">17.3%</td><td class="diag">—</td><td class="same-line">26.0%</td><td class="">11.5%</td><td class="">27.8%</td><td class="diag">—</td></tr><tr><td><b>4 後田 康成</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">15.6%</td><td class="">11.1%</td><td class="same-line">41.2%</td><td class="diag">—</td><td class="">14.4%</td><td class="">17.8%</td><td class="diag">—</td></tr><tr><td><b>5 金田 健一郎</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="same-line">16.4%</td><td class="">12.9%</td><td class="same-line">34.4%</td><td class="same-line">15.5%</td><td class="diag">—</td><td class="">20.8%</td><td class="diag">—</td></tr><tr><td><b>6 近内 三孝</b><br><span class='dim' style='font-size:10px;'>2着想定:7号車</span></td><td class="">15.5%</td><td class="">11.0%</td><td class="same-line">40.9%</td><td class="same-line">18.4%</td><td class="">14.3%</td><td class="diag">—</td><td class="diag">—</td></tr><tr><td><b>7 才迫 勇馬</b><br><span class='dim' style='font-size:10px;'>2着想定:3号車</span></td><td class="">17.4%</td><td class="">17.3%</td><td class="diag">—</td><td class="same-line">26.0%</td><td class="">11.5%</td><td class="">27.8%</td><td class="diag">—</td></tr></tbody></table></div></div>
+    <div class="mw" data-tab="race7">
+      <div class="mw-label">1着候補を選ぶ</div>
+      <div class="mw-chips" id="race7_chips1"></div>
+      <div class="mw-label">2着の目安</div>
+      <div class="mw-bars" id="race7_bars2"></div>
+      <div class="mw-label" id="race7_label3"></div>
+      <div class="mw-bars" id="race7_bars3"></div>
+    </div>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <script>window.MATRIX_DATA=window.MATRIX_DATA||{}; window.MATRIX_DATA["race7"]={"default": 7, "cars": [{"car": 1, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 6, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 7, "bg": "#e07a1f", "fg": "#ffffff"}], "data": {"1": {"second": [{"car": 7, "name": "才迫 勇馬", "prob": 45.6, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "作田 悦章", "prob": 15.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 12.1, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 5, "name": "金田 健一郎", "prob": 10.0, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "後田 康成", "prob": 8.9, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "齋藤 輝彦", "prob": 7.5, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 3, "name": "作田 悦章", "prob": 34.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 21.0, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 15.7, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 5, "name": "金田 健一郎", "prob": 15.3, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 13.1, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "2": {"second": [{"car": 7, "name": "才迫 勇馬", "prob": 50.1, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "作田 悦章", "prob": 17.4, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 9.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 8.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "金田 健一郎", "prob": 7.7, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "後田 康成", "prob": 7.0, "bg": "#1f5fc4", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 3, "name": "作田 悦章", "prob": 38.3, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 17.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 16.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 14.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "金田 健一郎", "prob": 13.4, "bg": "#e8c221", "fg": "#1b2430"}]}, "3": {"second": [{"car": 7, "name": "才迫 勇馬", "prob": 59.2, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 11.6, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 10.9, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 6.9, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 6.8, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "金田 健一郎", "prob": 4.5, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 7, "third": [{"car": 6, "name": "近内 三孝", "prob": 27.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 26.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 17.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 17.3, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "金田 健一郎", "prob": 11.5, "bg": "#e8c221", "fg": "#1b2430"}]}, "4": {"second": [{"car": 7, "name": "才迫 勇馬", "prob": 48.5, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "作田 悦章", "prob": 22.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 8.7, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 7.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "金田 健一郎", "prob": 7.0, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 5.4, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 3, "name": "作田 悦章", "prob": 41.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 17.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 15.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "金田 健一郎", "prob": 14.4, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 11.1, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "5": {"second": [{"car": 7, "name": "才迫 勇馬", "prob": 47.3, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 12.5, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 3, "name": "作田 悦章", "prob": 11.8, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 11.3, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "後田 康成", "prob": 9.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "齋藤 輝彦", "prob": 7.8, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 3, "name": "作田 悦章", "prob": 34.4, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 20.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 16.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 4, "name": "後田 康成", "prob": 15.5, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "齋藤 輝彦", "prob": 12.9, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "6": {"second": [{"car": 7, "name": "才迫 勇馬", "prob": 52.0, "bg": "#e07a1f", "fg": "#ffffff"}, {"car": 3, "name": "作田 悦章", "prob": 18.1, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 8.6, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "金田 健一郎", "prob": 7.9, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 4, "name": "後田 康成", "prob": 7.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 2, "name": "齋藤 輝彦", "prob": 6.1, "bg": "#1b1b1b", "fg": "#ffffff"}], "third_second_car": 7, "third": [{"car": 3, "name": "作田 悦章", "prob": 40.9, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 18.4, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 15.5, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 5, "name": "金田 健一郎", "prob": 14.3, "bg": "#e8c221", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 11.0, "bg": "#1b1b1b", "fg": "#ffffff"}]}, "7": {"second": [{"car": 3, "name": "作田 悦章", "prob": 34.2, "bg": "#d8322a", "fg": "#ffffff"}, {"car": 6, "name": "近内 三孝", "prob": 18.2, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 14.3, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 11.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 11.3, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "金田 健一郎", "prob": 10.5, "bg": "#e8c221", "fg": "#1b2430"}], "third_second_car": 3, "third": [{"car": 6, "name": "近内 三孝", "prob": 27.8, "bg": "#2f8f4e", "fg": "#ffffff"}, {"car": 4, "name": "後田 康成", "prob": 26.0, "bg": "#1f5fc4", "fg": "#ffffff"}, {"car": 1, "name": "小出 慎也", "prob": 17.4, "bg": "#ffffff", "fg": "#1b2430"}, {"car": 2, "name": "齋藤 輝彦", "prob": 17.3, "bg": "#1b1b1b", "fg": "#ffffff"}, {"car": 5, "name": "金田 健一郎", "prob": 11.5, "bg": "#e8c221", "fg": "#1b2430"}]}}};</script></div>
       </div>
     </div>
 </main>
@@ -1051,8 +1095,53 @@ function getNowJstMinutes(){
   return h*60 + m;
 }
 
+// タップ式の2着・3着ウィジェット（表4・表5の代わり）
+function barRowHtml(c){
+  const pct = Math.min(Math.max(c.prob, 2), 100);
+  return '<div class="mw-bar-row">' +
+    '<span class="car" style="background:'+c.bg+';color:'+c.fg+';">'+c.car+'</span>' +
+    '<span class="mw-bar-name">'+c.name+'</span>' +
+    '<span class="mw-bar-track"><span class="mw-bar-fill" style="width:'+pct+'%;"></span></span>' +
+    '<span class="mw-bar-val num">'+c.prob.toFixed(0)+'</span>' +
+  '</div>';
+}
+function renderMatrixWidget(tabId){
+  const payload = window.MATRIX_DATA && window.MATRIX_DATA[tabId];
+  if(!payload) return;
+  const car = payload.selected || payload.default;
+  const chipsEl = document.getElementById(tabId+'_chips1');
+  if(!chipsEl) return;
+  chipsEl.innerHTML = payload.cars.map(function(c){
+    const isActive = c.car === car;
+    const bg = isActive ? c.bg : 'transparent';
+    const fg = isActive ? c.fg : 'inherit';
+    return '<button type="button" class="mw-chip'+(isActive?' active':'')+'" ' +
+      'style="background:'+bg+';color:'+fg+';border-color:'+c.bg+';" ' +
+      'onclick="selectMatrixFirst(\''+tabId+'\','+c.car+')">'+c.car+'</button>';
+  }).join('');
+  const data = payload.data[String(car)] || {second:[], third:[]};
+  document.getElementById(tabId+'_bars2').innerHTML =
+    data.second.length ? data.second.map(barRowHtml).join('') : '<p class="dim">データがありません</p>';
+  const label3El = document.getElementById(tabId+'_label3');
+  const bars3El = document.getElementById(tabId+'_bars3');
+  if(data.third_second_car){
+    label3El.textContent = car+'→'+data.third_second_car+'（2着自動選定）のとき3着に来るのは';
+    bars3El.innerHTML = data.third.length ? data.third.map(barRowHtml).join('') : '<p class="dim">データがありません</p>';
+  } else {
+    label3El.textContent = '';
+    bars3El.innerHTML = '';
+  }
+}
+function selectMatrixFirst(tabId, car){
+  window.MATRIX_DATA[tabId].selected = car;
+  renderMatrixWidget(tabId);
+}
+
 window.addEventListener('DOMContentLoaded', function(){
   const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+  if(window.MATRIX_DATA){
+    Object.keys(window.MATRIX_DATA).forEach(renderMatrixWidget);
+  }
   if(tabs.length === 0) return;
   const nowJstMinutes = getNowJstMinutes();
   let best = tabs[0], bestMins = Infinity;
