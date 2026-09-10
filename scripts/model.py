@@ -385,6 +385,31 @@ def compute_third_place_matrix(racers, base_scores, dominant, line_map,
     return matrix
 
 
+def compute_full_third_place_data(racers, base_scores, dominant, line_map,
+                                   adv_bonus, adv_penalty, line_follow_bonus, sharpness):
+    """
+    「1着候補→2着候補→3着候補」をすべてタップで選べるようにするため、
+    あり得る (1着, 2着) の組み合わせすべてについて3着候補を計算しておく
+    （最有力の2着だけに絞らない全網羅版）。9車立てでも 9×8=72通りなので
+    計算コストは軽い。
+    戻り値: {winner_car: {second_car: [third_candidates...]}}
+    """
+    result = {}
+    n = len(racers)
+    if n <= 2:
+        return result
+    for i, r in enumerate(racers):
+        result[r["car"]] = {}
+        for j, r2 in enumerate(racers):
+            if i == j:
+                continue
+            third_candidates = compute_third_place_candidates(
+                racers, i, j, base_scores, dominant, line_map,
+                adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+            result[r["car"]][r2["car"]] = third_candidates
+    return result
+
+
 def compute_marginal_place_rates(final_rates, rows, second_place_matrix, third_place_matrix):
     """
     「予測3着内率」を、実際にモデルが計算した2着・3着の確率分布を積み上げて
@@ -662,6 +687,8 @@ def predict_race(racers, line_prediction_text, settings=None):
     third_place_matrix = compute_third_place_matrix(
         racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
         second_place_matrix=second_place_matrix)
+    full_third_place_data = compute_full_third_place_data(
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
 
     # 「予測3着内率」を、同じモデルのP(1着)+P(2着)+P(3着)の積み上げから算出する
     # （1着率との整合性が構造的に保証される。詳細は関数のdocstring参照）
@@ -681,6 +708,7 @@ def predict_race(racers, line_prediction_text, settings=None):
         "third_candidates": third_candidates[:5],
         "second_place_matrix": second_place_matrix,
         "third_place_matrix": third_place_matrix,
+        "full_third_place_data": full_third_place_data,
         "formation": formation,
         "kimarite_ratio": kimarite_ratio,
         "pace_index": pace_index,
