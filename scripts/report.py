@@ -44,7 +44,7 @@ VENUE_GRID = [
 CAR_COLORS = {
     1: ("#ffffff", "#1b2430"), 2: ("#1b1b1b", "#ffffff"), 3: ("#d8322a", "#ffffff"),
     4: ("#1f5fc4", "#ffffff"), 5: ("#e8c221", "#1b2430"), 6: ("#2f8f4e", "#ffffff"),
-    7: ("#e07a1f", "#ffffff"), 8: ("#e2699a", "#ffffff"), 9: ("#3fb8c9", "#1b2430"),
+    7: ("#e07a1f", "#ffffff"), 8: ("#e2699a", "#ffffff"), 9: ("#8a5fb0", "#ffffff"),
 }
 KIMARITE_COLORS = {"逃": "#c1443b", "捲": "#e07a1f", "差": "#1f5fc4", "マ": "#2f8f4e"}
 
@@ -240,8 +240,8 @@ def render_kimarite_table(kimarite_ratio, venue_slug=None):
 import json as _json
 
 
-def build_matrix_payload(racers, second_place_matrix, third_place_matrix, top_car):
-    """タップ式ウィジェット用に、2着・3着の確率データをJSON化する。"""
+def build_matrix_payload(racers, second_place_matrix, full_third_place_data, top_car):
+    """タップ式ウィジェット用に、1着→2着→3着の確率データを全組み合わせ分JSON化する。"""
     by_car = sorted(racers, key=lambda r: r["car"])
     name_by_car = {r["car"]: r["name"] for r in by_car}
 
@@ -254,14 +254,12 @@ def build_matrix_payload(racers, second_place_matrix, third_place_matrix, top_ca
         car = r["car"]
         second_list = [entry(c["car"], name_by_car.get(c["car"], ""), c["prob"])
                        for c in second_place_matrix.get(car, [])]
-        third_entry = third_place_matrix.get(car)
-        third_list = []
-        third_second_car = None
-        if third_entry:
-            third_second_car = third_entry["second_car"]
-            third_list = [entry(c["car"], name_by_car.get(c["car"], ""), c["prob"])
-                          for c in third_entry["candidates"]]
-        data[str(car)] = {"second": second_list, "third_second_car": third_second_car, "third": third_list}
+        third_by_second = {
+            str(second_car): [entry(c["car"], name_by_car.get(c["car"], ""), c["prob"]) for c in candidates]
+            for second_car, candidates in full_third_place_data.get(car, {}).items()
+        }
+        default_second = second_list[0]["car"] if second_list else None
+        data[str(car)] = {"second": second_list, "third_by_second": third_by_second, "default_second": default_second}
 
     cars_meta = [{"car": r["car"], **dict(zip(("bg", "fg"), car_color(r["car"])))} for r in by_car]
     return {"default": top_car, "cars": cars_meta, "data": data}
@@ -273,12 +271,12 @@ def render_matrix_widget(tab_id, payload):
     <div class="mw" data-tab="{tab_id}">
       <div class="mw-label">1着候補を選ぶ</div>
       <div class="mw-chips" id="{tab_id}_chips1"></div>
-      <div class="mw-label">2着の目安</div>
-      <div class="mw-bars" id="{tab_id}_bars2"></div>
+      <div class="mw-label">2着候補を選ぶ</div>
+      <div class="mw-bars mw-tappable" id="{tab_id}_bars2"></div>
       <div class="mw-label" id="{tab_id}_label3"></div>
       <div class="mw-bars" id="{tab_id}_bars3"></div>
     </div>
-    <p class="dim" style="margin:8px 0 0;">号車をタップすると、その号車が1着になった場合の2着・3着候補に切り替わります。3着は2着の最有力候補（自動選定）を前提にした確率です。</p>
+    <p class="dim" style="margin:8px 0 0;">号車をタップすると1着・2着の組み合わせを切り替えられ、3着候補もその組み合わせに応じて連動します。</p>
     <script>window.MATRIX_DATA=window.MATRIX_DATA||{{}}; window.MATRIX_DATA["{tab_id}"]={payload_json};</script>"""
 
 
@@ -346,7 +344,7 @@ def render_race_card(race_data, tab_id):
     bar_chart = svg_bar_chart(result["rows"])
     line_info_html = render_line_info_block(result, title)
     kimarite_table_html = render_kimarite_table(result["kimarite_ratio"], info.get("venue"))
-    matrix_payload = build_matrix_payload(result["rows"], result["second_place_matrix"], result["third_place_matrix"], top["car"])
+    matrix_payload = build_matrix_payload(result["rows"], result["second_place_matrix"], result["full_third_place_data"], top["car"])
     matrix_widget_html = render_matrix_widget(tab_id, matrix_payload)
 
     deadline = info.get("deadline")
@@ -421,6 +419,9 @@ RACE_PANEL_STYLE = """
             font-size:14px; font-weight:700; color:var(--ink); cursor:pointer; }
   .mw-chip.active{ border-color:transparent; box-shadow:0 0 0 2px var(--board); }
   .mw-bar-row{ display:flex; align-items:center; gap:8px; padding:5px 0; }
+  .mw-bar-row-tap{ cursor:pointer; border-radius:4px; padding:5px 4px; margin:0 -4px; }
+  .mw-bar-row-tap.active{ background:rgba(198,154,78,.16); }
+  .mw-bar-row-tap:not(.active) .mw-bar-fill{ opacity:.55; }
   .mw-bar-name{ font-size:12px; color:var(--ink); flex:0 0 auto; width:64px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .mw-bar-track{ flex:1; height:9px; background:var(--paper2); border-radius:5px; overflow:hidden; }
   .mw-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,var(--pine),#4c8a68); border-radius:5px; }
@@ -467,9 +468,11 @@ function getNowJstMinutes(){
 }
 
 // タップ式の2着・3着ウィジェット（表4・表5の代わり）
-function barRowHtml(c){
+function barRowHtml(c, tappable, onclickAttr){
   const pct = Math.min(Math.max(c.prob, 2), 100);
-  return '<div class="mw-bar-row">' +
+  const activeCls = c.active ? ' active' : '';
+  const clickAttr = tappable ? ' onclick="'+onclickAttr+'"' : '';
+  return '<div class="mw-bar-row'+(tappable?' mw-bar-row-tap':'')+activeCls+'"'+clickAttr+'>' +
     '<span class="car" style="background:'+c.bg+';color:'+c.fg+';">'+c.car+'</span>' +
     '<span class="mw-bar-name">'+c.name+'</span>' +
     '<span class="mw-bar-track"><span class="mw-bar-fill" style="width:'+pct+'%;"></span></span>' +
@@ -490,14 +493,20 @@ function renderMatrixWidget(tabId){
       'style="background:'+bg+';color:'+fg+';border-color:'+c.bg+';" ' +
       'onclick="selectMatrixFirst(\\''+tabId+'\\','+c.car+')">'+c.car+'</button>';
   }).join('');
-  const data = payload.data[String(car)] || {second:[], third:[]};
-  document.getElementById(tabId+'_bars2').innerHTML =
-    data.second.length ? data.second.map(barRowHtml).join('') : '<p class="dim">データがありません</p>';
+  const data = payload.data[String(car)] || {second:[], third_by_second:{}};
+  const secondCar = payload.selectedSecond && payload.selectedSecond[car] ? payload.selectedSecond[car] : data.default_second;
+  const bars2El = document.getElementById(tabId+'_bars2');
+  bars2El.innerHTML = data.second.length ? data.second.map(function(c2){
+    const marked = Object.assign({}, c2, {active: c2.car === secondCar});
+    return barRowHtml(marked, true, 'selectMatrixSecond(\\''+tabId+'\\','+car+','+c2.car+')');
+  }).join('') : '<p class="dim">データがありません</p>';
+
   const label3El = document.getElementById(tabId+'_label3');
   const bars3El = document.getElementById(tabId+'_bars3');
-  if(data.third_second_car){
-    label3El.textContent = car+'→'+data.third_second_car+'（2着自動選定）のとき3着に来るのは';
-    bars3El.innerHTML = data.third.length ? data.third.map(barRowHtml).join('') : '<p class="dim">データがありません</p>';
+  const thirdList = secondCar ? (data.third_by_second[String(secondCar)] || []) : [];
+  if(secondCar){
+    label3El.textContent = car+'→'+secondCar+'のとき3着に来るのは';
+    bars3El.innerHTML = thirdList.length ? thirdList.map(function(c3){ return barRowHtml(c3, false); }).join('') : '<p class="dim">データがありません</p>';
   } else {
     label3El.textContent = '';
     bars3El.innerHTML = '';
@@ -505,6 +514,12 @@ function renderMatrixWidget(tabId){
 }
 function selectMatrixFirst(tabId, car){
   window.MATRIX_DATA[tabId].selected = car;
+  renderMatrixWidget(tabId);
+}
+function selectMatrixSecond(tabId, firstCar, secondCar){
+  const payload = window.MATRIX_DATA[tabId];
+  payload.selectedSecond = payload.selectedSecond || {};
+  payload.selectedSecond[firstCar] = secondCar;
   renderMatrixWidget(tabId);
 }
 
