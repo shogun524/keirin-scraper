@@ -537,6 +537,26 @@ def parse_race_detail(html, venue, race_no):
     return race_info, unique_racers, line_pred_text
 
 
+def extract_betting_volume(full_text):
+    """
+    「発売票数19,594 2026/09/01 19:45現在」のような表記から、投票の盛り上がり具合
+    （オッズの動きの簡易な代替指標）として、発売票数と更新時刻を抽出する。
+    3連単オッズの完全な組み合わせ表（1着候補ごとの2着×3着マトリクス）はJSでの
+    切り替えを伴い、実際の生HTML構造を確認できていないため、まずは正規表現だけで
+    安定して拾える「発売票数」を時系列で記録するところから始める
+    （run_daily.py が毎時これを記録し、docs/_odds_history.json に蓄積する）。
+    戻り値: {"ticket_total": int, "as_of": "2026/09/01 19:45"} または None
+    """
+    m = re.search(r"発売票数\s*([\d,]+)\s*(\d{4}/\d{1,2}/\d{1,2}\s*\d{1,2}:\d{2})\s*現在", full_text)
+    if not m:
+        return None
+    try:
+        ticket_total = int(m.group(1).replace(",", ""))
+    except ValueError:
+        return None
+    return {"ticket_total": ticket_total, "as_of": m.group(2)}
+
+
 def fetch_race(venue, race_no, url):
     html = _get(url)
 
@@ -549,6 +569,9 @@ def fetch_race(venue, race_no, url):
               f"文字コード診断が必要かもしれません。冒頭120文字(unicode_escape): {sample}")
 
     race_info, racers, line_pred_text = parse_race_detail(html, venue, race_no)
+
+    full_text_for_odds = " ".join(_clean_text(html))
+    race_info["betting_volume"] = extract_betting_volume(full_text_for_odds)
 
     if not line_pred_text:
         # サイト自体が「並び予想がありません」というエラー表示を出しているケースがある
@@ -577,6 +600,94 @@ def fetch_race(venue, race_no, url):
                 print("[DEBUG] 生HTML内に「並び」という文字列自体が見つかりませんでした。")
 
     return race_info, racers, line_pred_text
+
+
+RESULT_KIMARITE_SET = {"逃", "捲", "差", "マ"}
+RESULT_MARK_SET = {"×", "▲", "△", "○", "◎", "注", "★"}
+
+
+def parse_race_result(html, venue, race_no):
+    """
+    racedetail ページに ?pageType=result を付けた「結果」ページから、着順・車番・
+    選手名・決まり手を抽出する（当地成績の自前集計のため）。
+    ヘッダー行は「予想｜着順｜車番｜選手名｜着差｜上り｜決まり手｜S／B」の並びで
+    あることを確認済み（各セルはBeautifulSoupのget_text("\\n")で1行ずつに
+    分かれる）。決まり手（逃・捲・差・マのいずれか1文字）は他の項目と衝突しない
+    閉じた語彙なので、これを行の区切りとして使い、その手前にある最初の2つの
+    数字（着順・車番）と最初の非数字・非マーク文字列（選手名）を拾う方式にした。
+    ※ この方式はヘッダーの実HTML構造の確認結果を基に組んだが、まだ実際の
+    「結果」ページ全体の生ログでは検証できていない。うまく拾えないケースが
+    あれば、他のパーサー同様、実際のログを見ながら調整する。
+    解析に失敗した場合は例外を投げずNoneを返し、[DEBUG]ログで手がかりを残す。
+    戻り値: [{"finish":1,"car":3,"name":"田中 誇士","kimarite":"逃"}, ...] または None
+    """
+    lines = _clean_text(html)
+    full_text = " ".join(lines)
+
+    if "まだ確定していません" in full_text or ("結果" in full_text and "ありません" in full_text):
+        return None  # レースがまだ終わっていない（正常系。ログ不要）
+
+    try:
+        header_idx = lines.index("決まり手")
+    except ValueError:
+        print(f"[DEBUG] {venue} {race_no}R(結果): 「決まり手」列見出しが見つからず、結果を解析できませんでした。")
+        return None
+
+    data_start = header_idx + 1
+    if data_start < len(lines) and lines[data_start] in ("S／B", "S/B"):
+        data_start += 1  # ヘッダー行自体の最後のセル（S／B列見出し）を読み飛ばす
+
+    def _is_digit_1to9(t):
+        return t.isdigit() and 1 <= int(t) <= 9
+
+    results = []
+    buf = []
+    data = lines[data_start:]
+    i = 0
+    while i < len(data):
+        token = data[i]
+        if token in RESULT_KIMARITE_SET:
+            digits = [t for t in buf if _is_digit_1to9(t)]
+            names = [t for t in buf if not t.isdigit() and t not in RESULT_MARK_SET]
+            if len(digits) >= 2 and names:
+                results.append({
+                    "finish": int(digits[0]), "car": int(digits[1]),
+                    "name": names[0], "kimarite": token,
+                })
+            buf = []
+            if len(results) >= 9:
+                break
+            # 決まり手の直後には、次の行の予想マーク/着順よりも先に、その行の
+            # S／B列の値（空でなければ1トークン）が挟まっていることがある。
+            # 次のトークンがマークでも1〜9の数字でもなければ、そのS／B値とみなして
+            # 読み飛ばす。
+            if i + 1 < len(data) and data[i + 1] not in RESULT_MARK_SET and not _is_digit_1to9(data[i + 1]):
+                i += 1
+        else:
+            buf.append(token)
+        i += 1
+
+    if not results:
+        snippet = " | ".join(lines[header_idx:header_idx + 60])
+        print(f"[DEBUG] {venue} {race_no}R(結果): 着順データの解析に失敗しました。抜粋: {snippet}")
+        return None
+
+    results.sort(key=lambda r: r["finish"])
+    return results
+
+
+def extract_race_id_from_url(url):
+    """racedetail URLから16桁のrace_idを取り出す（結果ページ取得用）"""
+    m = re.search(r"/racedetail/(\d{14,18})/?", url)
+    return m.group(1) if m else None
+
+
+def fetch_race_result(venue, race_id):
+    """race_id: racedetail URLに含まれる16桁のID（kaisai_date_id14桁+race_no2桁）"""
+    url = f"{BASE}/{venue}/racedetail/{race_id}/?pageType=result"
+    html = _get(url)
+    race_no = int(race_id[-2:])
+    return parse_race_result(html, venue, race_no)
 
 
 def fetch_all_todays_races(date=None):
