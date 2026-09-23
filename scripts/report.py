@@ -207,33 +207,38 @@ def svg_track_diagram(circumference, literal_straight, center_cant, width=360, h
     </svg>"""
 
 
+KIMARITE_DISPLAY = [t for t in KIMARITE if t != "マ"]  # マーク（マ）は表示から除外
+
+
 def render_kimarite_table(kimarite_ratio, venue_slug=None):
     venue_avg = kimarite_venue_average(venue_slug) if venue_slug else None
     venue_name = VENUE_NAMES.get(venue_slug, venue_slug) if venue_slug else ""
 
-    cells = "".join(f"<th>{KIMARITE_LABELS[t]}</th>" for t in KIMARITE)
+    cells = "".join(f"<th>{KIMARITE_LABELS[t]}</th>" for t in KIMARITE_DISPLAY)
     vals = ""
-    for t in KIMARITE:
+    for t in KIMARITE_DISPLAY:
         v = kimarite_ratio.get(t, 0)
-        delta_html = ""
         if venue_avg and t in venue_avg:
             diff = v - venue_avg[t]
-            if abs(diff) >= 0.1:
+            if abs(diff) < 0.1:
+                cell_html = '<span class="dim">±0.0%</span>'
+            else:
                 arrow = "↑" if diff > 0 else "↓"
                 cls = "delta-up" if diff > 0 else "delta-down"
-                delta_html = f'<br><span class="{cls}">{abs(diff):.1f}%{arrow}</span>'
-        vals += f"<td>{v:.1f}%{delta_html}</td>"
+                cell_html = f'<span class="{cls}">{abs(diff):.1f}%{arrow}</span>'
+        else:
+            cell_html = '<span class="dim">-</span>'
+        vals += f"<td>{cell_html}</td>"
 
     avg_note = ""
     if venue_avg:
-        avg_note = (f"<p class='dim' style='margin:4px 0 0;'>矢印は{venue_name}競輪の場平均"
-                     f"（1着・A級7車ベース、<a href='bank.html'>詳細</a>）との差分です。</p>")
+        avg_note = (f"<p class='dim' style='margin:4px 0 0;'>{venue_name}競輪の場平均"
+                     f"（1着・A級7車ベース、<a href='bank.html'>詳細</a>）と比べた今回の予測構成比の上昇率／低下率です。</p>")
     else:
         avg_note = "<p class='dim' style='margin:4px 0 0;'>この競輪場の場平均データはまだありません。</p>"
 
     return f"""
     <table class="main kimarite-table"><thead><tr>{cells}</tr></thead><tbody><tr>{vals}</tr></tbody></table>
-    <p class="dim" style="margin:6px 0 0;">各号車の「予測決まり手」の確率分布を合計した構成比です。過去の実績そのままではなく、ライン位置なども加味した今回のレースの予測値です。</p>
     {avg_note}"""
 
 
@@ -376,6 +381,18 @@ def render_race_card(race_data, tab_id):
         cr_html = ""
         if cr:
             cr_html = f'<br><span class="dim">当地{cr["races"]}走{cr["wins"]}勝{cr["top3"]}連対</span>'
+
+        base_pct = r["base"] * 100
+        adjusted_pct = r["adjusted"]
+        rise = adjusted_pct - base_pct
+        if abs(rise) < 0.05:
+            rise_html = '<span class="dim">±0.0pt</span>'
+        else:
+            arrow = "↑" if rise > 0 else "↓"
+            cls = "delta-up" if rise > 0 else "delta-down"
+            rise_html = f'<span class="{cls}">{abs(rise):.1f}pt{arrow}</span>'
+        rate_html = f'<b>{adjusted_pct:.1f}%</b><br><span class="dim">基礎{base_pct:.1f}%</span><br>{rise_html}'
+
         rows_html += f"""
         <tr style="{highlight}">
           <td><span class="car" style="background:{bg};color:{fg}">{r['car']}</span></td>
@@ -383,7 +400,7 @@ def render_race_card(race_data, tab_id):
           <td>{r['rank']}</td>
           <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')}<br><span class="dim">({r['kimarite_prediction']['ratio']*100:.0f}%)</span></td>
           <td>{line_label}</td>
-          <td><b>{r['adjusted']:.1f}%</b></td>
+          <td>{rate_html}</td>
           <td>{r['confidence']['score']:.0f}</td>
           <td>{r.get('place_rate', 0):.1f}%</td>
         </tr>"""
@@ -404,6 +421,20 @@ def render_race_card(race_data, tab_id):
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
     pick_color = car_color(top["car"])[0]
+    has_trifecta = bool(result.get("trifecta") and result["trifecta"].get("combos"))
+    subtab_bar_html = ""
+    if has_trifecta:
+        subtab_bar_html = f"""
+        <div class="subtab-bar">
+          <button class="subtab-btn active" id="{tab_id}_subbtn_main" onclick="showSubTab('{tab_id}','main',this)">予想</button>
+          <button class="subtab-btn" id="{tab_id}_subbtn_tf" onclick="showSubTab('{tab_id}','tf',this)">3連単</button>
+        </div>"""
+    trifecta_block_html = ""
+    if has_trifecta:
+        trifecta_block_html = f"""
+    <div id="{tab_id}_sub_tf" class="subtab-panel" style="display:none;">
+      {trifecta_html}
+    </div>"""
     return f"""
     <div id="{tab_id}" class="race-panel" style="display:none;">
       <div class="race-card" style="--pick-color:{pick_color};">
@@ -415,11 +446,13 @@ def render_race_card(race_data, tab_id):
         {banner_html}
         {line_info_html}
         {odds_trend_html}
+        {subtab_bar_html}
+    <div id="{tab_id}_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>{rows_html}</tbody>
         </table>
-        <p class="dim" style="margin:6px 0 0;">予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
+        <p class="dim" style="margin:6px 0 0;">予測1着率は「基礎」（ライン・決まり手・バンク補正前のモデル単体の値）から、各種補正でどれだけ上昇／低下したか（pt）を示しています。予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           {bar_chart}
@@ -428,7 +461,8 @@ def render_race_card(race_data, tab_id):
 
         <div class="chart-block">{kimarite_table_html}</div>
         <div class="chart-block">{matrix_widget_html}</div>
-        <div class="chart-block">{trifecta_html}</div>
+    </div>
+    {trifecta_block_html}
       </div>
     </div>"""
 
@@ -494,6 +528,11 @@ RACE_PANEL_STYLE = """
   .tf-combo{ flex:1; display:flex; align-items:center; gap:5px; }
   .tf-arrow{ color:var(--ink-soft); font-size:12px; }
   .tf-prob{ flex:0 0 auto; font-size:13px; font-weight:700; color:var(--brick); min-width:52px; text-align:right; }
+  .subtab-bar{ display:flex; gap:6px; margin:12px 0 10px; border-bottom:1px solid var(--line); }
+  .subtab-btn{ background:none; border:none; border-bottom:2px solid transparent; padding:7px 4px; margin-bottom:-1px;
+               font-size:13px; font-weight:600; color:var(--ink-soft); cursor:pointer; }
+  .subtab-btn.active{ color:var(--board); border-bottom-color:var(--gold); }
+  .subtab-panel{ }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -505,6 +544,19 @@ function showTab(id, btn){
   document.querySelectorAll('.race-panel').forEach(function(p){ p.style.display = 'none'; });
   document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById(id).style.display = '';
+  btn.classList.add('active');
+}
+
+// レースパネル内の「予想」「3連単」サブタブ切り替え
+function showSubTab(tabId, which, btn){
+  var mainPanel = document.getElementById(tabId + '_sub_main');
+  var tfPanel = document.getElementById(tabId + '_sub_tf');
+  if(mainPanel) mainPanel.style.display = (which === 'main') ? '' : 'none';
+  if(tfPanel) tfPanel.style.display = (which === 'tf') ? '' : 'none';
+  var bar = btn.parentElement;
+  if(bar){
+    bar.querySelectorAll('.subtab-btn').forEach(function(b){ b.classList.remove('active'); });
+  }
   btn.classList.add('active');
 }
 
