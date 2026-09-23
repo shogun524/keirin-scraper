@@ -644,7 +644,7 @@ DEFAULT_SETTINGS = {
     "line_strength": 30, "line_support": 8, "solo_penalty": 6,
     "line_follow_bonus": 45, "adv_bonus": 10, "adv_penalty": 15,
     "sharpness": 1.3, "confidence_shrink": 20,
-    "trifecta_max_combos": 6,
+    "trifecta_max_combos": 999,  # 実質無制限（7車立て210通り／9車立て504通りまで、全組み合わせを一覧表示するため）
     "bank_affinity_strength": 15,
 }
 
