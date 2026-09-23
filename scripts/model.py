@@ -7,6 +7,8 @@
 
 import math
 
+from venue_data import kimarite_venue_average
+
 # ============================================================
 # 学習済みモデル（2020〜2025年・43,650レース／出走306,577人分のデータで学習）
 # ============================================================
@@ -455,90 +457,102 @@ def compute_marginal_place_rates(final_rates, rows, second_place_matrix, third_p
 
 
 # ============================================================
-# 3連単フォーメーション
-# 1着・2着・3着それぞれに複数の候補をまとめて提示する（フォーメーション買い）。
-# ・1着軸：予測1着率が高い上位n1車
-# ・2着候補：各1着軸から見た2着候補の上位n2車を統合（重複除去）
-# ・3着候補：各(1着軸,2着候補)の組み合わせから見た3着候補の上位n3車を統合
-# 実際に成立する組み合わせと、その合計確率（カバー率）・点数を算出する。
+# 3連単の自動組み立て
+# 1着率×2着条件付き確率×3着条件付き確率（決まり手率・ライン補正を織り込み済み）
+# から、あり得る(1着,2着,3着)の組み合わせすべての「真の同時確率」を計算し、
+# 確率が高い順に上位N点を提示する。
+# 「指数が大きい順に単純に組む」方式ではない点に注意：例えば単独の1着率は
+# 一番低い車でも、実際に1着になった車との相性（ライン・決まり手）が良ければ
+# 2着・3着の条件付き確率が高くなり、結果として上位に来ることがある。
 # ============================================================
-def compute_formation_bet(racers, base_scores, dominant, line_map, final_rates,
-                           adv_bonus, adv_penalty, line_follow_bonus, sharpness, n1, n2, n3):
-    n = len(racers)
+def compute_trifecta_combos(rows, second_place_matrix, full_third_place_data, max_combos=6):
+    """
+    rows: predict_race内で組み立て済みの各車の行データ（"car","name","adjusted"を含む）
+    second_place_matrix: {1着車: [2着候補(prob付き), ...]}
+    full_third_place_data: {1着車: {2着車: [3着候補(prob付き), ...]}}
+    戻り値: {
+        "combos": [{"first":,"first_name":,"second":,"second_name":,
+                     "third":,"third_name":,"prob":}, ...]（確率降順、上位max_combos件）,
+        "total_combos_possible": 全組み合わせ数（n×(n-1)×(n-2)）,
+        "coverage": 上位max_combos件の確率合計（%）,
+        "total_prob_check": 全組み合わせの確率合計（%、100%に近いはずの健全性チェック用）,
+    }
+    """
+    n = len(rows)
     if n < 3:
         return None
 
-    sorted_by_rate = sorted(
-        [{"car": r["car"], "name": r["name"], "idx": i, "rate": final_rates[i]} for i, r in enumerate(racers)],
-        key=lambda x: -x["rate"])
-    first_candidates = [x["car"] for x in sorted_by_rate[:n1]]
+    name_by_car = {r["car"]: r["name"] for r in rows}
+    first_prob_by_car = {r["car"]: r["adjusted"] / 100 for r in rows}
 
-    second_pool = []
-    second_cache = {}
-    for fc in first_candidates:
-        wi = next(i for i, r in enumerate(racers) if r["car"] == fc)
-        cands = compute_second_place_candidates(
-            racers, wi, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
-        second_cache[fc] = cands
-        for c in cands[:n2]:
-            if c["car"] not in second_pool:
-                second_pool.append(c["car"])
-
-    third_pool = []
-    third_cache = {}
-    for fc in first_candidates:
-        wi = next(i for i, r in enumerate(racers) if r["car"] == fc)
-        for sc in second_pool:
-            if sc == fc:
-                continue
-            si = next(i for i, r in enumerate(racers) if r["car"] == sc)
-            cands = compute_third_place_candidates(
-                racers, wi, si, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
-            third_cache[(fc, sc)] = cands
-            for c in cands[:n3]:
-                if c["car"] not in third_pool:
-                    third_pool.append(c["car"])
-
-    combos = []
-    for fc in first_candidates:
-        wi = next(i for i, r in enumerate(racers) if r["car"] == fc)
-        first_prob = final_rates[wi] / 100
+    all_combos = []
+    for first_car, first_prob in first_prob_by_car.items():
         if first_prob <= 0:
             continue
-        second_by_car = {c["car"]: c for c in second_cache.get(fc, [])}
-        for sc in second_pool:
-            if sc == fc or sc not in second_by_car:
-                continue
-            second_prob = second_by_car[sc]["prob"] / 100
+        seconds = second_place_matrix.get(first_car, [])
+        for sc in seconds:
+            second_car = sc["car"]
+            second_prob = sc["prob"] / 100
             if second_prob <= 0:
                 continue
-            third_by_car = {c["car"]: c for c in third_cache.get((fc, sc), [])}
-            for tc in third_pool:
-                if tc in (fc, sc) or tc not in third_by_car:
-                    continue
-                third_prob = third_by_car[tc]["prob"] / 100
+            thirds = full_third_place_data.get(first_car, {}).get(second_car, [])
+            for tc in thirds:
+                third_car = tc["car"]
+                third_prob = tc["prob"] / 100
                 if third_prob <= 0:
                     continue
-                fc_name = next(r["name"] for r in racers if r["car"] == fc)
-                sc_name = next(r["name"] for r in racers if r["car"] == sc)
-                tc_name = next(r["name"] for r in racers if r["car"] == tc)
-                combos.append({
-                    "first": fc, "first_name": fc_name,
-                    "second": sc, "second_name": sc_name,
-                    "third": tc, "third_name": tc_name,
-                    "prob": first_prob * second_prob * third_prob * 100,
+                joint = first_prob * second_prob * third_prob
+                all_combos.append({
+                    "first": first_car, "first_name": name_by_car.get(first_car, ""),
+                    "second": second_car, "second_name": name_by_car.get(second_car, ""),
+                    "third": third_car, "third_name": name_by_car.get(third_car, ""),
+                    "prob": joint * 100,
                 })
-    combos.sort(key=lambda x: -x["prob"])
-    total_prob = sum(c["prob"] for c in combos)
+
+    all_combos.sort(key=lambda x: -x["prob"])
+    total_prob_check = sum(c["prob"] for c in all_combos)
+    top = all_combos[:max_combos]
+    coverage = sum(c["prob"] for c in top)
 
     return {
-        "first_candidates": first_candidates,
-        "second_candidates": second_pool,
-        "third_candidates": third_pool,
-        "combos": combos,
-        "total_combos": len(combos),
-        "total_prob": total_prob,
+        "combos": top,
+        "total_combos_possible": n * (n - 1) * (n - 2),
+        "coverage": coverage,
+        "total_prob_check": total_prob_check,
     }
+
+
+# ============================================================
+# バンク特性×脚質の相性
+# レース場ごとの決まり手構成（場平均。venue_data.kimarite_venue_average）と、
+# 各選手の予測決まり手（compute_kimarite_prediction の確率分布）を照らし合わせ、
+# 「その選手が得意な決まり手が、その競輪場では出やすいかどうか」を1着率に
+# 追加で反映する。例えば差し脚質の選手でも、直線が長く差しが決まりやすい
+# バンクでは追加のプラス補正が乗る。
+# ============================================================
+def compute_bank_tactic_affinity(dominant, venue_slug, affinity_strength):
+    """
+    戻り値: 各選手のスコアに掛け合わせる倍率のリスト（1.0が中立）。
+    venue_slugのバンクデータが無い場合や、affinity_strengthが0の場合は
+    全員1.0（補正なし）を返す。
+    """
+    n = len(dominant)
+    if not venue_slug or not affinity_strength:
+        return [1.0] * n
+    venue_avg = kimarite_venue_average(venue_slug)
+    if not venue_avg:
+        return [1.0] * n
+
+    strength = max(0.0, min(1.0, affinity_strength / 100))
+    mults = []
+    for d in dominant:
+        probs = d["probs"]
+        # 各決まり手について「場平均(25%基準)からの乖離」を、その選手が
+        # その決まり手で来る確率で重み付けして合算する（-1〜+1程度の範囲）。
+        affinity = sum(probs.get(t, 0.0) * (venue_avg.get(t, 25.0) - 25.0) / 25.0 for t in KIMARITE)
+        mult = 1 + strength * affinity
+        mults.append(max(mult, 0.6))
+    return mults
 
 
 # ============================================================
@@ -630,16 +644,18 @@ DEFAULT_SETTINGS = {
     "line_strength": 30, "line_support": 8, "solo_penalty": 6,
     "line_follow_bonus": 45, "adv_bonus": 10, "adv_penalty": 15,
     "sharpness": 1.3, "confidence_shrink": 20,
-    "formation_n1": 2, "formation_n2": 4, "formation_n3": 5,
+    "trifecta_max_combos": 6,
+    "bank_affinity_strength": 15,
 }
 
 
-def predict_race(racers, line_prediction_text, settings=None):
+def predict_race(racers, line_prediction_text, settings=None, venue_slug=None):
     """
     racers: list of dict, each with:
       car, name, mark, rank, tactic, souhyou, waku, gear, score, age, period,
       kimarite: {"逃":n,"捲":n,"差":n,"マ":n}, finishes: {"f1":n,"f2":n,"f3":n,"fo":n}
     line_prediction_text: raw "並び予想" string from the site
+    venue_slug: レース場のスラッグ（バンク特性×脚質の相性補正に使用。省略時は補正なし）
     Returns a dict with full prediction results.
     """
     s = {**DEFAULT_SETTINGS, **(settings or {})}
@@ -655,8 +671,10 @@ def predict_race(racers, line_prediction_text, settings=None):
     dev_scores, nige_count, pace_index = compute_kimarite_adjustment(racers, dominant, kimarite_ratio)
     line_adj = compute_line_adjustment(
         racers, line_map, kimarite_ratio, s["line_strength"], s["line_support"], s["solo_penalty"])
+    bank_affinity_mult = compute_bank_tactic_affinity(dominant, venue_slug, s["bank_affinity_strength"])
+    combined_adj = [line_adj[i] * bank_affinity_mult[i] for i in range(len(racers))]
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
-        base_scores, line_adj, dev_scores, s["development_weight"], s["sharpness"])
+        base_scores, combined_adj, dev_scores, s["development_weight"], s["sharpness"])
 
     rows = []
     for i, r in enumerate(racers):
@@ -664,6 +682,7 @@ def predict_race(racers, line_prediction_text, settings=None):
             **r, "base": base_scores[i], "adj": effective_mult[i], "adjusted": final_rates[i],
             "dominant_type": dominant[i]["type"], "kimarite_prediction": dominant[i],
             "line_info": line_map.get(r["car"]), "confidence": confidence[i], "idx": i,
+            "bank_affinity_mult": bank_affinity_mult[i],
         })
     rows.sort(key=lambda x: -x["adjusted"])
 
@@ -696,10 +715,7 @@ def predict_race(racers, line_prediction_text, settings=None):
     for row in rows:
         row["place_rate"] = marginal_place_rates.get(row["car"], row["adjusted"])
 
-    formation = compute_formation_bet(
-        racers, combined_scores, dominant, line_map, final_rates,
-        s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
-        s["formation_n1"], s["formation_n2"], s["formation_n3"])
+    trifecta = compute_trifecta_combos(rows, second_place_matrix, full_third_place_data, s["trifecta_max_combos"])
 
     return {
         "rows": rows,
@@ -709,7 +725,7 @@ def predict_race(racers, line_prediction_text, settings=None):
         "second_place_matrix": second_place_matrix,
         "third_place_matrix": third_place_matrix,
         "full_third_place_data": full_third_place_data,
-        "formation": formation,
+        "trifecta": trifecta,
         "kimarite_ratio": kimarite_ratio,
         "pace_index": pace_index,
         "line_map": line_map,
@@ -717,5 +733,6 @@ def predict_race(racers, line_prediction_text, settings=None):
         "close_group": close_group,
         "most_reliable": most_reliable,
         "is_high_prob": top["adjusted"] >= s["th_high"],
+        "venue_slug": venue_slug,
         "settings": s,
     }
