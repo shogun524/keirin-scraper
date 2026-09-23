@@ -84,6 +84,13 @@
   .line-info-block.warn{ background:var(--paper2); color:#8a5a12; border:1px solid #e0cfa0; }
   .line-group{ display:inline-flex; align-items:center; gap:3px; }
   .line-arrow{ color:var(--ink-soft); font-size:11px; }
+  .tf-list{ display:flex; flex-direction:column; gap:2px; }
+  .tf-row{ display:flex; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); }
+  .tf-row:first-child{ background:rgba(198,154,78,.10); border-radius:3px; }
+  .tf-rank{ flex:0 0 auto; width:18px; text-align:center; font-size:12px; font-weight:700; color:var(--ink-soft); }
+  .tf-combo{ flex:1; display:flex; align-items:center; gap:5px; }
+  .tf-arrow{ color:var(--ink-soft); font-size:12px; }
+  .tf-prob{ flex:0 0 auto; font-size:13px; font-weight:700; color:var(--brick); min-width:52px; text-align:right; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
