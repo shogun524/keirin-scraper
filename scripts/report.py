@@ -303,13 +303,17 @@ def render_trifecta_list(trifecta):
           <span class="tf-prob">{c['prob']:.2f}%</span>
         </div>"""
 
-    coverage = trifecta.get("coverage", 0)
     n_shown = len(trifecta["combos"])
+    total_possible = trifecta.get("total_combos_possible", n_shown)
+    all_shown = n_shown >= total_possible
+    coverage_note = (f"全{n_shown}通りを表示しています（確率降順）。"
+                      if all_shown else
+                      f"確率が高い順に上位{n_shown}／全{total_possible}通りを表示しています"
+                      f"（合計カバー率は約{trifecta.get('coverage', 0):.1f}%）。")
     return f"""
     <div class="tf-list">{rows_html}</div>
     <p class="dim" style="margin:8px 0 0;">1着率×2着条件付き確率×3着条件付き確率（決まり手率・ライン補正を織り込み済み）から
-    算出した真の同時確率が高い順に上位{n_shown}点を表示しています（単純に指数が大きい順に組んだものではありません）。
-    上位{n_shown}点の合計カバー率は約{coverage:.1f}%です。</p>"""
+    算出した真の同時確率が高い順に並べています（単純に指数が大きい順に組んだものではありません）。{coverage_note}</p>"""
 
 
 def render_odds_trend_block(info):
