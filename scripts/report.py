@@ -280,6 +280,54 @@ def render_matrix_widget(tab_id, payload):
     <script>window.MATRIX_DATA=window.MATRIX_DATA||{{}}; window.MATRIX_DATA["{tab_id}"]={payload_json};</script>"""
 
 
+def render_trifecta_list(trifecta):
+    """3連単の自動組み立て結果（1着率×2-3着条件付き確率の真の同時確率が高い順）を描画する。"""
+    if not trifecta or not trifecta.get("combos"):
+        return ""
+
+    def badge(car):
+        bg, fg = car_color(car)
+        return f'<span class="car" style="background:{bg};color:{fg}">{car}</span>'
+
+    rows_html = ""
+    for i, c in enumerate(trifecta["combos"]):
+        rows_html += f"""
+        <div class="tf-row">
+          <span class="tf-rank">{i + 1}</span>
+          <span class="tf-combo">{badge(c['first'])}<span class="tf-arrow">→</span>{badge(c['second'])}<span class="tf-arrow">→</span>{badge(c['third'])}</span>
+          <span class="tf-prob">{c['prob']:.2f}%</span>
+        </div>"""
+
+    coverage = trifecta.get("coverage", 0)
+    n_shown = len(trifecta["combos"])
+    return f"""
+    <div class="tf-list">{rows_html}</div>
+    <p class="dim" style="margin:8px 0 0;">1着率×2着条件付き確率×3着条件付き確率（決まり手率・ライン補正を織り込み済み）から
+    算出した真の同時確率が高い順に上位{n_shown}点を表示しています（単純に指数が大きい順に組んだものではありません）。
+    上位{n_shown}点の合計カバー率は約{coverage:.1f}%です。</p>"""
+
+
+def render_odds_trend_block(info):
+    """
+    投票の盛り上がり（発売票数の伸び）を表示する。十分なスナップショットが
+    蓄積されるまでは何も表示しない（1〜2回の実行だけでは「動き」とは言えないため）。
+    """
+    trend = info.get("odds_trend")
+    if not trend or trend.get("snapshot_count", 0) < 2:
+        return ""
+    growth = trend["growth_pct"]
+    if growth >= 15:
+        arrow, cls = "↑↑", "delta-up"
+    elif growth >= 3:
+        arrow, cls = "↑", "delta-up"
+    elif growth <= -3:
+        arrow, cls = "↓", "delta-down"
+    else:
+        arrow, cls = "→", "dim"
+    return (f'<p class="dim" style="margin:2px 0 0;">投票状況: {trend["latest"]:,}票 '
+            f'<span class="{cls}">{arrow} 初回計測比 {growth:+.0f}%</span></p>')
+
+
 def render_line_info_block(result, race_title=""):
     # ガールズ競輪（全員単騎、女子選手7名）はライン概念が無いため表示しない
     if "ガールズ" in (race_title or ""):
@@ -324,10 +372,14 @@ def render_race_card(race_data, tab_id):
         if r["line_info"]:
             pos = r["line_info"]["position"]
             line_label = "先頭" if pos == 1 else f"{pos}番手"
+        cr = r.get("course_record")
+        cr_html = ""
+        if cr:
+            cr_html = f'<br><span class="dim">当地{cr["races"]}走{cr["wins"]}勝{cr["top3"]}連対</span>'
         rows_html += f"""
         <tr style="{highlight}">
           <td><span class="car" style="background:{bg};color:{fg}">{r['car']}</span></td>
-          <td>{r['name']}</td>
+          <td>{r['name']}{cr_html}</td>
           <td>{r['rank']}</td>
           <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')}<br><span class="dim">({r['kimarite_prediction']['ratio']*100:.0f}%)</span></td>
           <td>{line_label}</td>
@@ -343,9 +395,11 @@ def render_race_card(race_data, tab_id):
 
     bar_chart = svg_bar_chart(result["rows"])
     line_info_html = render_line_info_block(result, title)
+    odds_trend_html = render_odds_trend_block(info)
     kimarite_table_html = render_kimarite_table(result["kimarite_ratio"], info.get("venue"))
     matrix_payload = build_matrix_payload(result["rows"], result["second_place_matrix"], result["full_third_place_data"], top["car"])
     matrix_widget_html = render_matrix_widget(tab_id, matrix_payload)
+    trifecta_html = render_trifecta_list(result.get("trifecta"))
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
@@ -360,6 +414,7 @@ def render_race_card(race_data, tab_id):
         </div>
         {banner_html}
         {line_info_html}
+        {odds_trend_html}
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>{rows_html}</tbody>
@@ -373,6 +428,7 @@ def render_race_card(race_data, tab_id):
 
         <div class="chart-block">{kimarite_table_html}</div>
         <div class="chart-block">{matrix_widget_html}</div>
+        <div class="chart-block">{trifecta_html}</div>
       </div>
     </div>"""
 
@@ -431,6 +487,13 @@ RACE_PANEL_STYLE = """
   .line-info-block.warn{ background:var(--paper2); color:#8a5a12; border:1px solid #e0cfa0; }
   .line-group{ display:inline-flex; align-items:center; gap:3px; }
   .line-arrow{ color:var(--ink-soft); font-size:11px; }
+  .tf-list{ display:flex; flex-direction:column; gap:2px; }
+  .tf-row{ display:flex; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); }
+  .tf-row:first-child{ background:rgba(198,154,78,.10); border-radius:3px; }
+  .tf-rank{ flex:0 0 auto; width:18px; text-align:center; font-size:12px; font-weight:700; color:var(--ink-soft); }
+  .tf-combo{ flex:1; display:flex; align-items:center; gap:5px; }
+  .tf-arrow{ color:var(--ink-soft); font-size:12px; }
+  .tf-prob{ flex:0 0 auto; font-size:13px; font-weight:700; color:var(--brick); min-width:52px; text-align:right; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
