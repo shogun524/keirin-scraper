@@ -285,35 +285,54 @@ def render_matrix_widget(tab_id, payload):
     <script>window.MATRIX_DATA=window.MATRIX_DATA||{{}}; window.MATRIX_DATA["{tab_id}"]={payload_json};</script>"""
 
 
-def render_trifecta_list(trifecta):
-    """3連単の自動組み立て結果（1着率×2-3着条件付き確率の真の同時確率が高い順）を描画する。"""
+def build_trifecta_payload(trifecta, rows):
+    """
+    3連単の全組み合わせを1着候補（車番）ごとにグループ化し、タップ式ウィジェット用に
+    JSON化する。以前は確率降順の一本のリストで全件（7車立て210通り／9車立て504通り）を
+    並べていたが、件数が多く見づらいという指摘を受け、1着候補をタップして絞り込む方式にした。
+    戻り値: {"default": 車番, "cars": [{"car":,"bg":,"fg":,"total":その車が1着の合計確率}, ...],
+             "groups": {"車番文字列": [{"second":,"second_name":,"third":,"third_name":,"prob":}, ...]}}
+    """
     if not trifecta or not trifecta.get("combos"):
-        return ""
+        return None
 
-    def badge(car):
+    groups = {}
+    car_totals = {}
+    for c in trifecta["combos"]:
+        car = c["first"]
+        groups.setdefault(str(car), []).append({
+            "second": c["second"], "second_name": c["second_name"],
+            "third": c["third"], "third_name": c["third_name"],
+            "prob": round(c["prob"], 2),
+        })
+        car_totals[car] = car_totals.get(car, 0) + c["prob"]
+
+    for lst in groups.values():
+        lst.sort(key=lambda x: -x["prob"])
+
+    cars_meta = []
+    for car in sorted(car_totals, key=lambda c: -car_totals[c]):
         bg, fg = car_color(car)
-        return f'<span class="car" style="background:{bg};color:{fg}">{car}</span>'
+        cars_meta.append({"car": car, "bg": bg, "fg": fg, "total": round(car_totals[car], 1)})
 
-    rows_html = ""
-    for i, c in enumerate(trifecta["combos"]):
-        rows_html += f"""
-        <div class="tf-row">
-          <span class="tf-rank">{i + 1}</span>
-          <span class="tf-combo">{badge(c['first'])}<span class="tf-arrow">→</span>{badge(c['second'])}<span class="tf-arrow">→</span>{badge(c['third'])}</span>
-          <span class="tf-prob">{c['prob']:.2f}%</span>
-        </div>"""
+    default_car = cars_meta[0]["car"] if cars_meta else None
+    total_possible = trifecta.get("total_combos_possible", len(trifecta["combos"]))
+    return {"default": default_car, "cars": cars_meta, "groups": groups, "total_possible": total_possible}
 
-    n_shown = len(trifecta["combos"])
-    total_possible = trifecta.get("total_combos_possible", n_shown)
-    all_shown = n_shown >= total_possible
-    coverage_note = (f"全{n_shown}通りを表示しています（確率降順）。"
-                      if all_shown else
-                      f"確率が高い順に上位{n_shown}／全{total_possible}通りを表示しています"
-                      f"（合計カバー率は約{trifecta.get('coverage', 0):.1f}%）。")
+
+def render_trifecta_groups(tab_id, payload):
+    """1着候補（車番）をタップすると、その車が1着になる場合の3連単をすべて確率順に表示する。"""
+    if not payload:
+        return ""
+    payload_json = _json.dumps(payload, ensure_ascii=False)
     return f"""
-    <div class="tf-list">{rows_html}</div>
+    <div class="mw-label">1着候補をタップして3連単を絞り込む（カッコ内はその車が1着になる3連単の合計確率）</div>
+    <div class="mw-chips" id="{tab_id}_tf_chips"></div>
+    <div class="tf-list" id="{tab_id}_tf_list"></div>
     <p class="dim" style="margin:8px 0 0;">1着率×2着条件付き確率×3着条件付き確率（決まり手率・ライン補正を織り込み済み）から
-    算出した真の同時確率が高い順に並べています（単純に指数が大きい順に組んだものではありません）。{coverage_note}</p>"""
+    算出した真の同時確率が高い順に並べています（単純に指数が大きい順に組んだものではありません）。
+    全{payload.get('total_possible', 0)}通りのうち、選んだ1着候補が絡む分だけを表示しています。</p>
+    <script>window.TRIFECTA_DATA=window.TRIFECTA_DATA||{{}}; window.TRIFECTA_DATA["{tab_id}"]={payload_json};</script>"""
 
 
 def render_odds_trend_block(info):
@@ -420,12 +439,13 @@ def render_race_card(race_data, tab_id):
     kimarite_table_html = render_kimarite_table(result["kimarite_ratio"], info.get("venue"))
     matrix_payload = build_matrix_payload(result["rows"], result["second_place_matrix"], result["full_third_place_data"], top["car"])
     matrix_widget_html = render_matrix_widget(tab_id, matrix_payload)
-    trifecta_html = render_trifecta_list(result.get("trifecta"))
+    trifecta_payload = build_trifecta_payload(result.get("trifecta"), result["rows"])
+    trifecta_html = render_trifecta_groups(tab_id, trifecta_payload)
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
     pick_color = car_color(top["car"])[0]
-    has_trifecta = bool(result.get("trifecta") and result["trifecta"].get("combos"))
+    has_trifecta = bool(trifecta_payload)
     subtab_bar_html = ""
     if has_trifecta:
         subtab_bar_html = f"""
@@ -512,6 +532,9 @@ RACE_PANEL_STYLE = """
   .mw-chip{ width:34px; height:34px; border-radius:50%; border:2px solid var(--line); background:var(--paper);
             font-size:14px; font-weight:700; color:var(--ink); cursor:pointer; }
   .mw-chip.active{ border-color:transparent; box-shadow:0 0 0 2px var(--board); }
+  .tf-chip{ min-width:44px; height:auto; border-radius:8px; border:2px solid var(--line); background:var(--paper);
+            font-size:13px; font-weight:700; color:var(--ink); cursor:pointer; padding:5px 8px; line-height:1.3; }
+  .tf-chip .mw-chip-sub{ display:block; font-size:9px; font-weight:600; opacity:.85; }
   .mw-bar-row{ display:flex; align-items:center; gap:8px; padding:5px 0; }
   .mw-bar-row-tap{ cursor:pointer; border-radius:4px; padding:5px 4px; margin:0 -4px; }
   .mw-bar-row-tap.active{ background:rgba(198,154,78,.16); }
@@ -642,10 +665,53 @@ function selectMatrixSecond(tabId, firstCar, secondCar){
   renderMatrixWidget(tabId);
 }
 
+// 3連単一覧（1着候補ごとにタップで絞り込み）
+function renderTrifectaGroups(tabId){
+  const payload = window.TRIFECTA_DATA && window.TRIFECTA_DATA[tabId];
+  if(!payload) return;
+  const car = payload.selected || payload.default;
+  const chipsEl = document.getElementById(tabId+'_tf_chips');
+  if(!chipsEl) return;
+  chipsEl.innerHTML = payload.cars.map(function(c){
+    const isActive = c.car === car;
+    const bg = isActive ? c.bg : 'transparent';
+    const fg = isActive ? c.fg : 'inherit';
+    return '<button type="button" class="tf-chip'+(isActive?' active':'')+'"' +
+      ' style="background:'+bg+';color:'+fg+';border-color:'+c.bg+';"' +
+      ' onclick="selectTrifectaCar(\\''+tabId+'\\','+c.car+')">'+c.car+'号車<span class="mw-chip-sub">'+c.total.toFixed(1)+'%</span></button>';
+  }).join('');
+  const list = payload.groups[String(car)] || [];
+  const listEl = document.getElementById(tabId+'_tf_list');
+  listEl.innerHTML = list.length ? list.map(function(c, i){
+    return '<div class="tf-row">' +
+      '<span class="tf-rank">'+(i+1)+'</span>' +
+      '<span class="tf-combo">' +
+        '<span class="car" style="background:'+payload.cars.find(function(x){return x.car===car;}).bg+';color:'+payload.cars.find(function(x){return x.car===car;}).fg+';">'+car+'</span>' +
+        '<span class="tf-arrow">\\u2192</span>' +
+        '<span class="car" style="background:'+carColorLookup(payload,c.second).bg+';color:'+carColorLookup(payload,c.second).fg+';">'+c.second+'</span>' +
+        '<span class="tf-arrow">\\u2192</span>' +
+        '<span class="car" style="background:'+carColorLookup(payload,c.third).bg+';color:'+carColorLookup(payload,c.third).fg+';">'+c.third+'</span>' +
+      '</span>' +
+      '<span class="tf-prob">'+c.prob.toFixed(2)+'%</span>' +
+    '</div>';
+  }).join('') : '<p class="dim">データがありません</p>';
+}
+function carColorLookup(payload, car){
+  const found = payload.cars.find(function(x){ return x.car === car; });
+  return found || {bg:'#888', fg:'#fff'};
+}
+function selectTrifectaCar(tabId, car){
+  window.TRIFECTA_DATA[tabId].selected = car;
+  renderTrifectaGroups(tabId);
+}
+
 window.addEventListener('DOMContentLoaded', function(){
   const tabs = Array.from(document.querySelectorAll('.tab-btn'));
   if(window.MATRIX_DATA){
     Object.keys(window.MATRIX_DATA).forEach(renderMatrixWidget);
+  }
+  if(window.TRIFECTA_DATA){
+    Object.keys(window.TRIFECTA_DATA).forEach(renderTrifectaGroups);
   }
   if(tabs.length === 0) return;
   const nowJstMinutes = getNowJstMinutes();
