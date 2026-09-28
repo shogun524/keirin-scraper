@@ -407,16 +407,22 @@ def render_development_block(payload):
         for s in payload["scenarios"]
     )
     top_bg, top_fg = car_color(payload["top_pick"])
+    deep_upset = payload.get("deep_upset_probability", 0.0)
     return f"""
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを{payload['trials']:,}通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:{top_bg};color:{top_fg};">{payload['top_pick']}</span>
-      が1着にならない確率（波乱度）: <b>{payload['upset_probability']:.1f}%</b></p>
+      が1着にならない確率: <b>{payload['upset_probability']:.1f}%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>{deep_upset:.1f}%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を{payload['trials']:,}通り試行した参考情報）</div>
     <div class="dev-scenarios">{scenario_rows}</div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して{payload['trials']:,}回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>"""
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    {payload['trials']:,}回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>"""
 
 
 def render_line_info_block(result, race_title=""):
