@@ -50,6 +50,49 @@ def _classify_scenario(nige_realized, makuri_realized):
     return "sashi"
 
 
+# 決まり手ごとの「レース進行に対する位置取りの伸び方」。0%〜100%地点の5チェックポイント
+# における、最終到達距離に対する到達割合（0〜1）。逃げは早く仕掛けて逃げ切りを図る
+# ため序盤から伸び、差しは終盤まで脚を溜めて最後に伸びる、という一般的な脚質の
+# イメージをアニメーションの動きとして表現するための簡易カーブ（実データからの
+# 回帰ではなく、決まり手の定義から素直に作った目安の形）。
+POSITION_CURVES = {
+    "逃": [0.35, 0.62, 0.80, 0.92, 1.0],
+    "捲": [0.15, 0.35, 0.65, 0.88, 1.0],
+    "差": [0.10, 0.22, 0.40, 0.68, 1.0],
+    "マ": [0.25, 0.50, 0.72, 0.90, 1.0],
+}
+ANIMATION_CHECKPOINTS = 5
+
+
+def build_animation(rows, sample_run):
+    """
+    1回分の試行（sample_run: {"realized":{car:決まり手}, "order":[car,...]（着順）}）から、
+    レース展開を再生するためのチェックポイントごとの位置データを作る。
+    戻り値: {"checkpoints": int, "cars":[{"car","name","bg","fg","positions":[0-100の5点]}], "final_order":[car,...]}
+    """
+    if not rows or not sample_run:
+        return None
+    order = sample_run["order"]
+    realized = sample_run["realized"]
+    n = len(order)
+    rank_of = {car: i for i, car in enumerate(order)}
+    name_by_car = {r["car"]: r.get("name", "") for r in rows}
+
+    cars_payload = []
+    for car in order:
+        rank = rank_of[car]
+        target = max(100 - rank * (30 / max(n - 1, 1)), 55)  # 最下位でも55%までは進む（見た目の間延び防止）
+        curve = POSITION_CURVES.get(realized.get(car), POSITION_CURVES["マ"])
+        positions = [round(target * c, 1) for c in curve]
+        cars_payload.append({"car": car, "name": name_by_car.get(car, ""), "positions": positions})
+
+    return {
+        "checkpoints": ANIMATION_CHECKPOINTS,
+        "cars": cars_payload,
+        "final_order": order,
+    }
+
+
 def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4, top_picks_per_scenario=3):
     """
     rows: predict_race() が返す result["rows"]（各要素に 'car','name','adjusted',
@@ -79,6 +122,7 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4, top_p
 
     scenario_counts = {k: 0 for k in SCENARIO_LABELS}
     scenario_win_counts = {k: {c: 0 for c in cars} for k in SCENARIO_LABELS}
+    scenario_sample_run = {}  # アニメーション再生用：パターンごとに直近の1試行を保存
 
     for _ in range(trials):
         realized = {}
@@ -111,6 +155,11 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4, top_p
 
         order = sorted(cars, key=lambda c: math.log(scores[c]) + _gumbel_noise(rng), reverse=True)
         scenario_win_counts[scenario_key][order[0]] += 1
+        scenario_sample_run[scenario_key] = {"realized": dict(realized), "order": order}
+
+    # アニメーション再生用の代表試行：最も多く出たパターンから1つ選ぶ
+    majority_key = max(scenario_counts, key=lambda k: scenario_counts[k])
+    sample_run = scenario_sample_run.get(majority_key)
 
     scenarios = []
     for key, count in sorted(scenario_counts.items(), key=lambda x: -x[1]):
@@ -132,4 +181,5 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4, top_p
     return {
         "trials": trials,
         "scenarios": scenarios[:top_scenarios],
+        "animation": build_animation(rows, sample_run),
     }
