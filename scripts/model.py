@@ -744,7 +744,19 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         row["place_rate"] = marginal_place_rates.get(row["car"], row["adjusted"])
 
     trifecta = compute_trifecta_combos(rows, second_place_matrix, full_third_place_data, s["trifecta_max_combos"])
+
+    # 展開シミュレーション：決まり手パターンの分布（先行決着/捲り決着/差し決着など）は
+    # モンテカルロ試行で算出するが、「本命が飛ぶ確率（波乱度）」「大波乱指数」は
+    # シミュレーションのノイズを混ぜず、真の同時確率ベースで calibration 済みの
+    # adjusted（rowsは既にadjusted降順にソート済み）から直接・厳密に計算する。
+    # （race_simulation.py のモジュールdocstringに詳しい経緯を記載）
     development_simulation = simulate_race_development(rows, trials=s["simulation_trials"])
+    if development_simulation:
+        development_simulation["top_pick"] = rows[0]["car"]
+        development_simulation["upset_probability"] = 100.0 - rows[0]["adjusted"]
+        development_simulation["deep_upset_probability"] = (
+            sum(r["adjusted"] for r in rows[3:]) if len(rows) > 3 else 0.0
+        )
 
     return {
         "rows": rows,
