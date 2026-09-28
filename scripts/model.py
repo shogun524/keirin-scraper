@@ -8,6 +8,9 @@
 import math
 
 from venue_data import kimarite_venue_average
+from race_simulation import simulate_race_development
+from rivalry_records import get_rivalry_summary, rivalry_multiplier
+from form_records import get_form_trend, form_multiplier
 
 # ============================================================
 # 学習済みモデル（2020〜2025年・43,650レース／出走306,577人分のデータで学習）
@@ -646,16 +649,22 @@ DEFAULT_SETTINGS = {
     "sharpness": 1.3, "confidence_shrink": 20,
     "trifecta_max_combos": 999,  # 実質無制限（7車立て210通り／9車立て504通りまで、全組み合わせを一覧表示するため）
     "bank_affinity_strength": 15,
+    "rivalry_strength": 12,
+    "form_strength": 8,
+    "simulation_trials": 3000,
 }
 
 
-def predict_race(racers, line_prediction_text, settings=None, venue_slug=None):
+def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
+                  rivalry_records=None, form_records=None):
     """
     racers: list of dict, each with:
       car, name, mark, rank, tactic, souhyou, waku, gear, score, age, period,
       kimarite: {"逃":n,"捲":n,"差":n,"マ":n}, finishes: {"f1":n,"f2":n,"f3":n,"fo":n}
     line_prediction_text: raw "並び予想" string from the site
     venue_slug: レース場のスラッグ（バンク特性×脚質の相性補正に使用。省略時は補正なし）
+    rivalry_records: rivalry_records.update_rivalry_records() が返す蓄積データ（省略時は補正なし）
+    form_records: form_records.update_form_records() が返す蓄積データ（省略時は補正なし）
     Returns a dict with full prediction results.
     """
     s = {**DEFAULT_SETTINGS, **(settings or {})}
@@ -672,7 +681,24 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None):
     line_adj = compute_line_adjustment(
         racers, line_map, kimarite_ratio, s["line_strength"], s["line_support"], s["solo_penalty"])
     bank_affinity_mult = compute_bank_tactic_affinity(dominant, venue_slug, s["bank_affinity_strength"])
-    combined_adj = [line_adj[i] * bank_affinity_mult[i] for i in range(len(racers))]
+
+    all_names = [r["name"] for r in racers]
+    rivalry_summaries = []
+    rivalry_mult = []
+    form_trends = []
+    form_mult = []
+    for r in racers:
+        rsum = get_rivalry_summary(rivalry_records, r["name"], all_names) if rivalry_records else None
+        rivalry_summaries.append(rsum)
+        rivalry_mult.append(rivalry_multiplier(rsum, s["rivalry_strength"] / 100))
+        ftrend = get_form_trend(form_records, r["name"]) if form_records else None
+        form_trends.append(ftrend)
+        form_mult.append(form_multiplier(ftrend, s["form_strength"] / 100))
+
+    combined_adj = [
+        line_adj[i] * bank_affinity_mult[i] * rivalry_mult[i] * form_mult[i]
+        for i in range(len(racers))
+    ]
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
         base_scores, combined_adj, dev_scores, s["development_weight"], s["sharpness"])
 
@@ -683,6 +709,8 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None):
             "dominant_type": dominant[i]["type"], "kimarite_prediction": dominant[i],
             "line_info": line_map.get(r["car"]), "confidence": confidence[i], "idx": i,
             "bank_affinity_mult": bank_affinity_mult[i],
+            "rivalry_summary": rivalry_summaries[i], "rivalry_mult": rivalry_mult[i],
+            "form_trend": form_trends[i], "form_mult": form_mult[i],
         })
     rows.sort(key=lambda x: -x["adjusted"])
 
@@ -716,6 +744,7 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None):
         row["place_rate"] = marginal_place_rates.get(row["car"], row["adjusted"])
 
     trifecta = compute_trifecta_combos(rows, second_place_matrix, full_third_place_data, s["trifecta_max_combos"])
+    development_simulation = simulate_race_development(rows, trials=s["simulation_trials"])
 
     return {
         "rows": rows,
@@ -726,6 +755,7 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None):
         "third_place_matrix": third_place_matrix,
         "full_third_place_data": full_third_place_data,
         "trifecta": trifecta,
+        "development_simulation": development_simulation,
         "kimarite_ratio": kimarite_ratio,
         "pace_index": pace_index,
         "line_map": line_map,
