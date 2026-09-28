@@ -2,19 +2,31 @@
 """
 展開シミュレーション（モンテカルロ）。
 
-model.py の予測1着率（adjusted）や決まり手予測分布は、あくまで「期待値としての
-強さ」を示す静的な数値。実際のレースは「その日その瞬間にどの決まり手が実現するか」
-という一回性の展開に左右されるため、ここでは各選手の決まり手予測分布から
-決まり手を都度サンプリングし、レース展開（先行争いの激しさ・捲りの有無など）に
-応じたボーナス/ペナルティを load させた上で、多数回（デフォルト3000回）の
-架空レースを繰り返して集計する。
+【設計方針・改訂履歴】
+当初は「本命が1着にならない確率（波乱度）」もこのモジュールの独自シミュレーション
+（決まり手をランダムに再サンプリングし、展開に応じたボーナス/ペナルティを掛けて
+架空レースを繰り返す）から算出していたが、これは以下の理由で不正確だった：
+  ・model.py の adjusted（1着率）は、各選手の2着・3着候補まで含めた真の同時確率
+    計算から導かれ、かつ過去実績との calibration 検証済みの値である一方、
+  ・本モジュールのボーナス係数（1.35や0.75など）は経験則的な仮の値で、キャリブ
+    レーションされていない。そのため「本命が飛ぶ確率」を本モジュールのシミュレー
+    ション結果（win_freq）から出すと、画面上部に表示される「予測1着率」と数字が
+    食い違い、どちらが正しいのか分からなくなる（このプロジェクトでは以前から
+    「1着率・決まり手・confidence が矛盾しないこと」を重視して confidence
+    shrinkage 等を入れてきた経緯があり、それに反する）。
 
-目的は「予測1着率を上書きする新しい確率」を作ることではなく、
-・本命が飛ぶ確率（波乱度）
-・レースがどんな展開パターンになりやすいか（先行決着／捲り決着／差し決着 など）
-を、既存の予測とは違う角度から示す参考情報を提供すること。そのため既存の
-adjusted（真の同時確率ベースの1着率）はそのまま残し、本モジュールの結果は
-別枠の「展開シミュレーション」として表示する。
+そこで現在の設計では、
+  ・「波乱度」（本命が1着にならない確率）と「大波乱指数」（4着評価以下の選手が
+    1着になる確率）は、model.py 側で adjusted 確率から直接・厳密に計算する
+    （100 - adjusted[0] のような単純な引き算で求まり、シミュレーションのノイズが
+    入り込まない）。
+  ・本モジュールが担うのは「レースがどんな決まり手パターンで決着しやすいか」
+    （先行逃げ切り／先行争いの乱戦／捲り決着／差し決着）という、model.py の
+    数値からは直接読み取れない切り口の参考情報のみに限定する。この分類は各選手の
+    決まり手予測分布（kimarite_prediction.probs）から実際に決まり手をサンプリング
+    した結果だけで決まり、ボーナス係数の影響を受けないため、恣意性が入らない。
+  ・ボーナス係数付きのスコアリングは、各シナリオの「代表的な上位3頭」という
+    添え物（あくまでイメージを示す例示）の算出にのみ使う。
 """
 
 import math
@@ -52,11 +64,10 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4):
           'kimarite_prediction':{'probs':{...}} が必要）
     戻り値: {
       "trials": int,
-      "top_pick": car,
-      "win_freq": {car: %},          # シミュレーション上の1着率（サニティチェック用にも使える）
-      "upset_probability": %,         # 本命（adjusted最大の選手）が1着にならない確率
       "scenarios": [ {"key","label","share","example_top3":[car,car,car]}, ... ],
     }
+    「本命が飛ぶ確率」等の1着率そのものはここでは返さない（model.py 側で
+    adjusted から厳密に計算するため。上のdocstring参照）。
     データが2人未満（レース不成立）なら None。
     """
     if not rows or len(rows) < 2:
@@ -66,9 +77,7 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4):
     cars = [r["car"] for r in rows]
     probs_by_car = {r["car"]: r["kimarite_prediction"]["probs"] for r in rows}
     base_by_car = {r["car"]: max(r["adjusted"], 0.1) for r in rows}
-    top_pick = max(rows, key=lambda r: r["adjusted"])["car"]
 
-    win_counts = {c: 0 for c in cars}
     scenario_counts = {k: 0 for k in SCENARIO_LABELS}
     scenario_example = {}
 
@@ -85,29 +94,26 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4):
         scenario_key = _classify_scenario(nige_realized, makuri_realized)
         scenario_counts[scenario_key] += 1
 
-        scores = {}
-        for c in cars:
-            base = base_by_car[c]
-            rt = realized[c]
-            bonus = 1.0
-            if rt == "逃":
-                bonus = 1.35 if len(nige_realized) == 1 else 0.75
-            elif rt == "捲":
-                bonus = 1.25 if len(makuri_realized) <= 1 else 1.0
-                bonus *= 1.15 if len(nige_realized) <= 1 else 0.9
-            elif rt == "差":
-                bonus = 1.15 if (nige_realized or makuri_realized) else 0.9
-            else:  # マーク
-                bonus = 1.05 if (nige_realized or makuri_realized) else 0.85
-            scores[c] = base * bonus
-
-        order = sorted(cars, key=lambda c: math.log(scores[c]) + _gumbel_noise(rng), reverse=True)
-        win_counts[order[0]] += 1
         if scenario_key not in scenario_example:
+            # このシナリオの「代表例」を1つだけ、展開ボーナスを加味したスコアで作る
+            # （あくまでイメージ用の例示であり、確率の算出には使わない）
+            scores = {}
+            for c in cars:
+                base = base_by_car[c]
+                rt = realized[c]
+                bonus = 1.0
+                if rt == "逃":
+                    bonus = 1.35 if len(nige_realized) == 1 else 0.75
+                elif rt == "捲":
+                    bonus = 1.25 if len(makuri_realized) <= 1 else 1.0
+                    bonus *= 1.15 if len(nige_realized) <= 1 else 0.9
+                elif rt == "差":
+                    bonus = 1.15 if (nige_realized or makuri_realized) else 0.9
+                else:  # マーク
+                    bonus = 1.05 if (nige_realized or makuri_realized) else 0.85
+                scores[c] = base * bonus
+            order = sorted(cars, key=lambda c: math.log(scores[c]) + _gumbel_noise(rng), reverse=True)
             scenario_example[scenario_key] = order[:3]
-
-    win_freq = {c: win_counts[c] / trials * 100 for c in cars}
-    upset_probability = 100.0 - win_freq.get(top_pick, 0.0)
 
     scenarios = []
     for key, count in sorted(scenario_counts.items(), key=lambda x: -x[1]):
@@ -122,8 +128,5 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4):
 
     return {
         "trials": trials,
-        "top_pick": top_pick,
-        "win_freq": win_freq,
-        "upset_probability": upset_probability,
         "scenarios": scenarios[:top_scenarios],
     }
