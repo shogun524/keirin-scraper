@@ -32,6 +32,10 @@ from scraper import fetch_all_todays_races
 from model import predict_race
 from report import render_index, render_venue_page, render_venues_page, render_venue_bank_page, VENUE_NAMES
 from course_records import update_course_records, get_course_record
+from rivalry_records import update_rivalry_records
+from form_records import update_form_records
+from odds_alerts import compute_odds_value_alerts
+from retrain_check import check_retrain_trigger
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS_DIR = os.path.join(os.path.dirname(__file__), "..", "docs")
@@ -137,16 +141,54 @@ def main():
 
     print(f"[INFO] {len(races)} レース分のデータを取得しました。")
 
+    os.makedirs(DOCS_DIR, exist_ok=True)
+
+    # 当地成績・対戦履歴・直近の調子の自前集計：締切を過ぎている（＝結果が出ている
+    # 可能性が高い）レースだけ結果ページの取得を試みる（締切前のレースに毎回
+    # アクセスするのを避けるための判定）。predict_race() が対戦履歴・調子を補正に
+    # 使うため、予測を計算する前にこれらを更新しておく必要がある。
+    now_hm = datetime.datetime.now(JST).strftime("%H:%M")
+    finished_candidates = [
+        {"venue": race["race_info"]["venue"], "race_no": race["race_info"]["race_no"], "url": race["url"]}
+        for race in races
+        if race["race_info"].get("deadline") and race["race_info"]["deadline"] < now_hm
+    ]
+
+    try:
+        course_records, course_newly_processed = update_course_records(DOCS_DIR, finished_candidates, now_str)
+    except Exception as e:
+        print(f"[WARN] 当地成績（自前集計）の更新に失敗しました: {e}")
+        course_records, course_newly_processed = {}, 0
+
+    try:
+        rivalry_records, _ = update_rivalry_records(DOCS_DIR, finished_candidates, now_str)
+    except Exception as e:
+        print(f"[WARN] 対戦履歴（自前集計）の更新に失敗しました: {e}")
+        rivalry_records = {}
+
+    try:
+        form_records, _ = update_form_records(DOCS_DIR, finished_candidates, today.isoformat(), now_str)
+    except Exception as e:
+        print(f"[WARN] 直近の調子（自前集計）の更新に失敗しました: {e}")
+        form_records = {}
+
+    try:
+        check_retrain_trigger(DOCS_DIR, course_newly_processed, today.isoformat())
+    except Exception as e:
+        print(f"[WARN] 再学習トリガーの判定に失敗しました: {e}")
+
     all_race_data = []
     for race in races:
         try:
-            result = predict_race(race["racers"], race["line_prediction_text"], venue_slug=race["race_info"]["venue"])
+            result = predict_race(
+                race["racers"], race["line_prediction_text"],
+                venue_slug=race["race_info"]["venue"],
+                rivalry_records=rivalry_records, form_records=form_records,
+            )
         except Exception as e:
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
             result = None
         all_race_data.append({"race_info": race["race_info"], "prediction": result})
-
-    os.makedirs(DOCS_DIR, exist_ok=True)
 
     try:
         odds_trends = update_odds_history(all_race_data, today, now_str)
@@ -158,19 +200,15 @@ def main():
         race_key = f"{info['venue']}_{info['race_no']}_{today.isoformat()}"
         info["odds_trend"] = odds_trends.get(race_key)
 
-    # 当地成績の自前集計：締切を過ぎている（＝結果が出ている可能性が高い）レースだけ
-    # 結果ページの取得を試みる。締切前のレースに毎回アクセスするのを避けるための判定。
-    now_hm = datetime.datetime.now(JST).strftime("%H:%M")
-    finished_candidates = [
-        {"venue": race["race_info"]["venue"], "race_no": race["race_info"]["race_no"], "url": race["url"]}
-        for race in races
-        if race["race_info"].get("deadline") and race["race_info"]["deadline"] < now_hm
-    ]
     try:
-        course_records, _ = update_course_records(DOCS_DIR, finished_candidates, now_str)
+        odds_alerts = compute_odds_value_alerts(all_race_data)
+        alerted_keys = {(a["venue"], a["race_no"]) for a in odds_alerts}
     except Exception as e:
-        print(f"[WARN] 当地成績（自前集計）の更新に失敗しました: {e}")
-        course_records = {}
+        print(f"[WARN] オッズ妙味アラートの判定に失敗しました: {e}")
+        alerted_keys = set()
+    for rd in all_race_data:
+        info = rd["race_info"]
+        info["odds_value_alert"] = (info["venue"], info["race_no"]) in alerted_keys
 
     for rd in all_race_data:
         if not rd["prediction"]:
