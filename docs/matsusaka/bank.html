@@ -99,7 +99,16 @@
                font-size:13px; font-weight:600; color:var(--ink-soft); cursor:pointer; }
   .subtab-btn.active{ color:var(--board); border-bottom-color:var(--gold); }
   .subtab-panel{ }
+  .value-alert-badge{ background:#fdecc8; border:1px solid var(--gold); color:#8a5a12; border-radius:3px;
+                       padding:2px 8px; font-size:11px; font-weight:700; }
+  .dev-scenarios{ display:flex; flex-direction:column; gap:8px; }
+  .dev-scenario-row{ display:flex; align-items:center; gap:8px; }
+  .dev-scenario-label{ flex:0 0 auto; width:150px; font-size:12px; color:var(--ink); }
+  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .dev-scenario-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,#b8763f,#d9a862); border-radius:5px; }
+  .dev-scenario-pct{ flex:0 0 auto; width:48px; text-align:right; font-size:13px; font-weight:700; color:#b8763f; }
   @media (max-width:420px){
+    .dev-scenario-label{ width:96px; font-size:10.5px; }
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
   }
