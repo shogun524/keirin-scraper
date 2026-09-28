@@ -11,6 +11,7 @@ from venue_data import kimarite_venue_average
 from race_simulation import simulate_race_development
 from rivalry_records import get_rivalry_summary, rivalry_multiplier
 from form_records import get_form_trend, form_multiplier
+from hole_index import compute_hole_candidates
 
 # ============================================================
 # 学習済みモデル（2020〜2025年・43,650レース／出走306,577人分のデータで学習）
@@ -745,18 +746,17 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
 
     trifecta = compute_trifecta_combos(rows, second_place_matrix, full_third_place_data, s["trifecta_max_combos"])
 
-    # 展開シミュレーション：決まり手パターンの分布（先行決着/捲り決着/差し決着など）は
-    # モンテカルロ試行で算出するが、「本命が飛ぶ確率（波乱度）」「大波乱指数」は
-    # シミュレーションのノイズを混ぜず、真の同時確率ベースで calibration 済みの
-    # adjusted（rowsは既にadjusted降順にソート済み）から直接・厳密に計算する。
-    # （race_simulation.py のモジュールdocstringに詳しい経緯を記載）
+    # 展開シミュレーション：決まり手の実現パターン（先行決着/捲り決着/差し決着など）
+    # ごとに、そのパターンが起きた場合に条件付きで誰が1着になりやすいかを
+    # モンテカルロ試行で算出する（詳細は race_simulation.py のdocstring参照）。
     development_simulation = simulate_race_development(rows, trials=s["simulation_trials"])
-    if development_simulation:
-        development_simulation["top_pick"] = rows[0]["car"]
-        development_simulation["upset_probability"] = 100.0 - rows[0]["adjusted"]
-        development_simulation["deep_upset_probability"] = (
-            sum(r["adjusted"] for r in rows[3:]) if len(rows) > 3 else 0.0
-        )
+
+    # 穴目指数：記者印（mark、既にモデルの特徴量として使われている＝大方の下馬評を
+    # 反映）だけで並べた順位と、モデル総合評価（adjusted）の順位のズレ、および
+    # ライン・バンク相性・対戦相性・調子補正によるトータルの倍率（adj）を材料に、
+    # 「下馬評ほど目立たないが、データ上は浮上の芽がある」候補を抽出する
+    # （詳細は hole_index.py のdocstring参照）。
+    hole_candidates = compute_hole_candidates(rows, MODEL["weights"])
 
     return {
         "rows": rows,
@@ -768,6 +768,7 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         "full_third_place_data": full_third_place_data,
         "trifecta": trifecta,
         "development_simulation": development_simulation,
+        "hole_candidates": hole_candidates,
         "kimarite_ratio": kimarite_ratio,
         "pace_index": pace_index,
         "line_map": line_map,
