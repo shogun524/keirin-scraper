@@ -100,12 +100,21 @@
   .subtab-panel{ }
   .value-alert-badge{ background:#fdecc8; border:1px solid var(--gold); color:#8a5a12; border-radius:3px;
                        padding:2px 8px; font-size:11px; font-weight:700; }
-  .dev-scenarios{ display:flex; flex-direction:column; gap:8px; }
+  .dev-scenarios{ display:flex; flex-direction:column; gap:12px; }
+  .dev-scenario-block{ background:var(--paper2); border-radius:4px; padding:8px 10px; }
   .dev-scenario-row{ display:flex; align-items:center; gap:8px; }
   .dev-scenario-label{ flex:0 0 auto; width:150px; font-size:12px; color:var(--ink); }
-  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper); border-radius:5px; overflow:hidden; }
   .dev-scenario-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,#b8763f,#d9a862); border-radius:5px; }
   .dev-scenario-pct{ flex:0 0 auto; width:48px; text-align:right; font-size:13px; font-weight:700; color:#b8763f; }
+  .dev-picks{ margin-top:6px; font-size:11.5px; color:var(--ink-soft); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .dev-pick{ display:inline-flex; align-items:center; gap:3px; font-weight:700; color:var(--ink); }
+  .hole-cards{ display:flex; flex-direction:column; gap:8px; }
+  .hole-card{ background:#fdf6ea; border:1px solid var(--gold); border-radius:4px; padding:8px 10px; }
+  .hole-card-head{ font-size:13px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:6px; }
+  .hole-score{ margin-left:auto; font-size:11px; font-weight:700; color:#b8763f; background:#fff; border-radius:3px; padding:1px 6px; }
+  .hole-reasons{ margin:4px 0 0; padding-left:18px; font-size:11.5px; color:var(--ink-soft); }
+  .hole-reasons li{ margin:2px 0; }
   @media (max-width:420px){
     .dev-scenario-label{ width:96px; font-size:10.5px; }
     table.main{ font-size:10.5px; }
@@ -279,20 +288,70 @@
     
     <div id="race1_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
-      が1着にならない確率: <b>76.2%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>33.9%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:56.9%;"></span></span><span class="dev-scenario-pct">56.9%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:35.5%;"></span></span><span class="dev-scenario-pct">35.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.1%;"></span></span><span class="dev-scenario-pct">7.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.5%;"></span></span><span class="dev-scenario-pct">0.5%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 阿部 宏之
+            <span class="hole-score">穴目指数 47.7</span></div>
+          <ul class="hole-reasons"><li>記者印の評価（7番手評価）よりモデル総合評価が2ランク高い</li><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の5.57倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら7位）・予測1着率9.7%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 山信田 学
+            <span class="hole-score">穴目指数 19.1</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.91倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら6位）・予測1着率5.8%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 安東 宏高
+            <span class="hole-score">穴目指数 18.8</span></div>
+          <ul class="hole-reasons"><li>記者印の評価（4番手評価）よりモデル総合評価が2ランク高い</li><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.68倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合2位（印評価のみなら4位）・予測1着率22.3%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:56.8%;"></span></span>
+            <span class="dev-scenario-pct">56.8%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 24%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 23%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 18%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:35.6%;"></span></span>
+            <span class="dev-scenario-pct">35.6%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 25%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 22%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 20%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.0%;"></span></span>
+            <span class="dev-scenario-pct">7.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 25%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 22%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 16%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.6%;"></span></span>
+            <span class="dev-scenario-pct">0.6%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 32%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 21%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 16%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -451,20 +510,70 @@
     
     <div id="race2_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率: <b>77.4%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>40.4%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:59.8%;"></span></span><span class="dev-scenario-pct">59.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:24.0%;"></span></span><span class="dev-scenario-pct">24.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.7%;"></span></span><span class="dev-scenario-pct">14.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:1.5%;"></span></span><span class="dev-scenario-pct">1.5%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 大川 栄二
+            <span class="hole-score">穴目指数 41.7</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の5.07倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら6位）・予測1着率11.7%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 阿久津 浩之
+            <span class="hole-score">穴目指数 13.4</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.34倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率3.4%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 江連 和洋
+            <span class="hole-score">穴目指数 12.5</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.25倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合4位（印評価のみなら4位）・予測1着率17.3%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:59.3%;"></span></span>
+            <span class="dev-scenario-pct">59.3%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 21%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 20%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 19%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:24.5%;"></span></span>
+            <span class="dev-scenario-pct">24.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 25%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 18%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 17%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.7%;"></span></span>
+            <span class="dev-scenario-pct">14.7%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 21%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 21%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 18%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:1.5%;"></span></span>
+            <span class="dev-scenario-pct">1.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 30%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 27%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 16%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -623,20 +732,70 @@
     
     <div id="race3_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
-      が1着にならない確率: <b>62.4%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>25.7%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:55.7%;"></span></span><span class="dev-scenario-pct">55.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:34.5%;"></span></span><span class="dev-scenario-pct">34.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.9%;"></span></span><span class="dev-scenario-pct">8.9%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.9%;"></span></span><span class="dev-scenario-pct">0.9%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 立花 成泰
+            <span class="hole-score">穴目指数 20.9</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.99倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合4位（印評価のみなら5位）・予測1着率8.8%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 成清 謙二郎
+            <span class="hole-score">穴目指数 15.0</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.50倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率3.5%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 上田 隼
+            <span class="hole-score">穴目指数 7.2</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.72倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合3位（印評価のみなら3位）・予測1着率17.4%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:56.9%;"></span></span>
+            <span class="dev-scenario-pct">56.9%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 32%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 22%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 19%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:34.5%;"></span></span>
+            <span class="dev-scenario-pct">34.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 42%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 20%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 14%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.0%;"></span></span>
+            <span class="dev-scenario-pct">8.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 38%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 20%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 14%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.7%;"></span></span>
+            <span class="dev-scenario-pct">0.7%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 25%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 20%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 20%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -795,20 +954,70 @@
     
     <div id="race4_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率: <b>64.5%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>30.5%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:58.0%;"></span></span><span class="dev-scenario-pct">58.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:34.2%;"></span></span><span class="dev-scenario-pct">34.2%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:6.8%;"></span></span><span class="dev-scenario-pct">6.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:1.0%;"></span></span><span class="dev-scenario-pct">1.0%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 木村 勉
+            <span class="hole-score">穴目指数 18.3</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.73倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら6位）・予測1着率8.9%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 鈴木 愼二
+            <span class="hole-score">穴目指数 16.0</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.60倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率5.0%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 齋藤 宗徳
+            <span class="hole-score">穴目指数 9.5</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.85倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合4位（印評価のみなら5位）・予測1着率9.6%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:58.5%;"></span></span>
+            <span class="dev-scenario-pct">58.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 38%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 18%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 14%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:33.7%;"></span></span>
+            <span class="dev-scenario-pct">33.7%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 33%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 18%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 17%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:6.8%;"></span></span>
+            <span class="dev-scenario-pct">6.8%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 37%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 22%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.9%;"></span></span>
+            <span class="dev-scenario-pct">0.9%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 25%</span><span class="dev-pick"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 25%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 18%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -967,20 +1176,70 @@
     
     <div id="race5_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率: <b>57.1%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>30.6%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:56.9%;"></span></span><span class="dev-scenario-pct">56.9%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:42.7%;"></span></span><span class="dev-scenario-pct">42.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.4%;"></span></span><span class="dev-scenario-pct">0.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.0%;"></span></span><span class="dev-scenario-pct">0.0%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 山中 秀将
+            <span class="hole-score">穴目指数 12.3</span></div>
+          <ul class="hole-reasons"><li>記者印の評価（5番手評価）よりモデル総合評価が2ランク高い</li><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.03倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合3位（印評価のみなら5位）・予測1着率12.8%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 鷲田 佳史
+            <span class="hole-score">穴目指数 8.6</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.86倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら6位）・予測1着率6.0%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 小沼 良
+            <span class="hole-score">穴目指数 7.6</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.66倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合6位（印評価のみなら7位）・予測1着率6.6%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:54.9%;"></span></span>
+            <span class="dev-scenario-pct">54.9%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 42%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 15%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 12%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:44.5%;"></span></span>
+            <span class="dev-scenario-pct">44.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 41%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span><span class="dev-pick"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 11%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.5%;"></span></span>
+            <span class="dev-scenario-pct">0.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 40%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 27%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 13%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.1%;"></span></span>
+            <span class="dev-scenario-pct">0.1%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 50%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 50%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -1139,20 +1398,62 @@
     
     <div id="race6_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率: <b>63.4%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>31.2%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:50.2%;"></span></span><span class="dev-scenario-pct">50.2%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:49.1%;"></span></span><span class="dev-scenario-pct">49.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.6%;"></span></span><span class="dev-scenario-pct">0.6%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 星野 しほ
+            <span class="hole-score">穴目指数 38.6</span></div>
+          <ul class="hole-reasons"><li>記者印の評価（7番手評価）よりモデル総合評価が4ランク高い</li><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の4.46倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合3位（印評価のみなら7位）・予測1着率12.2%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 川原 未紀
+            <span class="hole-score">穴目指数 9.4</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.84倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合4位（印評価のみなら5位）・予測1着率11.6%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 中野 咲
+            <span class="hole-score">穴目指数 2.2</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.22倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合6位（印評価のみなら4位）・予測1着率6.6%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:51.0%;"></span></span>
+            <span class="dev-scenario-pct">51.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 39%</span><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 21%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 11%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:48.2%;"></span></span>
+            <span class="dev-scenario-pct">48.2%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 31%</span><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 21%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.8%;"></span></span>
+            <span class="dev-scenario-pct">0.8%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 29%</span><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 25%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 17%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -1311,20 +1612,54 @@
     
     <div id="race7_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
-      が1着にならない確率: <b>57.7%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>26.2%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:53.7%;"></span></span><span class="dev-scenario-pct">53.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:46.3%;"></span></span><span class="dev-scenario-pct">46.3%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> アニー 紗世子
+            <span class="hole-score">穴目指数 26.4</span></div>
+          <ul class="hole-reasons"><li>記者印の評価（6番手評価）よりモデル総合評価が3ランク高い</li><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.34倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合3位（印評価のみなら6位）・予測1着率10.7%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 池原 杏
+            <span class="hole-score">穴目指数 7.5</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.75倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら5位）・予測1着率8.6%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 中原 恭恵
+            <span class="hole-score">穴目指数 1.6</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.16倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率2.0%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:53.3%;"></span></span>
+            <span class="dev-scenario-pct">53.3%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 41%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 24%</span><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 10%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:46.7%;"></span></span>
+            <span class="dev-scenario-pct">46.7%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 42%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 18%</span><span class="dev-pick"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 10%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -1483,20 +1818,70 @@
     
     <div id="race8_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
-      が1着にならない確率: <b>63.7%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>30.2%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:65.4%;"></span></span><span class="dev-scenario-pct">65.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:30.8%;"></span></span><span class="dev-scenario-pct">30.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:3.7%;"></span></span><span class="dev-scenario-pct">3.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.1%;"></span></span><span class="dev-scenario-pct">0.1%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 三ツ石 康洋
+            <span class="hole-score">穴目指数 24.4</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.44倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率4.4%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 内田 玄希
+            <span class="hole-score">穴目指数 12.5</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.25倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合6位（印評価のみなら6位）・予測1着率4.9%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 今井 聡
+            <span class="hole-score">穴目指数 11.5</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.15倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら5位）・予測1着率9.4%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:66.0%;"></span></span>
+            <span class="dev-scenario-pct">66.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 34%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 25%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 11%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:30.6%;"></span></span>
+            <span class="dev-scenario-pct">30.6%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 42%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 19%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 11%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:3.3%;"></span></span>
+            <span class="dev-scenario-pct">3.3%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 40%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 27%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 11%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.2%;"></span></span>
+            <span class="dev-scenario-pct">0.2%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 40%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 20%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 20%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -1655,20 +2040,70 @@
     
     <div id="race9_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
-      が1着にならない確率: <b>63.7%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>38.3%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:68.7%;"></span></span><span class="dev-scenario-pct">68.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.0%;"></span></span><span class="dev-scenario-pct">14.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:9.6%;"></span></span><span class="dev-scenario-pct">9.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.7%;"></span></span><span class="dev-scenario-pct">7.7%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 坂本 亮馬
+            <span class="hole-score">穴目指数 30.5</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.95倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら6位）・予測1着率11.7%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 梅崎 隆介
+            <span class="hole-score">穴目指数 26.8</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.68倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率4.6%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 湊 聖二
+            <span class="hole-score">穴目指数 23.1</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.21倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合3位（印評価のみなら4位）・予測1着率12.6%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:70.0%;"></span></span>
+            <span class="dev-scenario-pct">70.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 37%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 13%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:13.9%;"></span></span>
+            <span class="dev-scenario-pct">13.9%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 36%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 13%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 12%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.6%;"></span></span>
+            <span class="dev-scenario-pct">8.6%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 33%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 19%</span><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 13%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.5%;"></span></span>
+            <span class="dev-scenario-pct">7.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 31%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 17%</span><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 13%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -1827,20 +2262,70 @@
     
     <div id="race10_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
-      が1着にならない確率: <b>71.6%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>34.4%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:74.0%;"></span></span><span class="dev-scenario-pct">74.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:20.2%;"></span></span><span class="dev-scenario-pct">20.2%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:5.6%;"></span></span><span class="dev-scenario-pct">5.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.2%;"></span></span><span class="dev-scenario-pct">0.2%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 高木 翔
+            <span class="hole-score">穴目指数 18.4</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.84倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合6位（印評価のみなら6位）・予測1着率5.8%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 飯嶋 則之
+            <span class="hole-score">穴目指数 18.1</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.81倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率3.8%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 佐伯 翔
+            <span class="hole-score">穴目指数 10.8</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.98倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合4位（印評価のみなら5位）・予測1着率12.4%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:72.9%;"></span></span>
+            <span class="dev-scenario-pct">72.9%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 30%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 20%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 17%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:20.8%;"></span></span>
+            <span class="dev-scenario-pct">20.8%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 25%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 24%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 14%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:6.0%;"></span></span>
+            <span class="dev-scenario-pct">6.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 28%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 24%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 17%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.3%;"></span></span>
+            <span class="dev-scenario-pct">0.3%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 25%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 25%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 12%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -1999,20 +2484,70 @@
     
     <div id="race11_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率: <b>73.0%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>33.3%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:58.3%;"></span></span><span class="dev-scenario-pct">58.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:25.5%;"></span></span><span class="dev-scenario-pct">25.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.1%;"></span></span><span class="dev-scenario-pct">14.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:2.1%;"></span></span><span class="dev-scenario-pct">2.1%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 笹倉 慎也
+            <span class="hole-score">穴目指数 25.4</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.54倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合6位（印評価のみなら6位）・予測1着率8.5%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 福田 知也
+            <span class="hole-score">穴目指数 20.1</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.01倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら5位）・予測1着率8.6%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 谷田 泰平
+            <span class="hole-score">穴目指数 18.9</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の2.89倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率5.7%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:57.6%;"></span></span>
+            <span class="dev-scenario-pct">57.6%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 30%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 21%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 17%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:26.0%;"></span></span>
+            <span class="dev-scenario-pct">26.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 23%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 22%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 21%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.9%;"></span></span>
+            <span class="dev-scenario-pct">14.9%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 29%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 23%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 15%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:1.5%;"></span></span>
+            <span class="dev-scenario-pct">1.5%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 29%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 20%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 20%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
@@ -2171,20 +2706,70 @@
     
     <div id="race12_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
-      が1着にならない確率: <b>63.2%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>30.1%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:83.1%;"></span></span><span class="dev-scenario-pct">83.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.3%;"></span></span><span class="dev-scenario-pct">14.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:2.0%;"></span></span><span class="dev-scenario-pct">2.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.6%;"></span></span><span class="dev-scenario-pct">0.6%</span></div></div>
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 東口 善朋
+            <span class="hole-score">穴目指数 37.4</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の4.64倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合5位（印評価のみなら6位）・予測1着率7.7%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 志田 龍星
+            <span class="hole-score">穴目指数 21.2</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の3.12倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合7位（印評価のみなら7位）・予測1着率4.7%</p>
+        </div>
+        <div class="hole-card">
+          <div class="hole-card-head"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 岩津 裕介
+            <span class="hole-score">穴目指数 7.9</span></div>
+          <ul class="hole-reasons"><li>ライン・バンク相性・対戦相性・調子などの補正で基礎の1.69倍に浮上</li></ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合2位（印評価のみなら3位）・予測1着率19.4%</p>
+        </div></div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>
+      
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を3,000通り試行）</div>
+    <div class="dev-scenarios">
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">捲り決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:82.4%;"></span></span>
+            <span class="dev-scenario-pct">82.4%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 36%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 20%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 12%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:15.0%;"></span></span>
+            <span class="dev-scenario-pct">15.0%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 42%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 21%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">先行逃げ切り濃厚</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:1.8%;"></span></span>
+            <span class="dev-scenario-pct">1.8%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 29%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 20%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 16%</span></div>
+        </div>
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">差し・展開待ち決着</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.8%;"></span></span>
+            <span class="dev-scenario-pct">0.8%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: <span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 22%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 22%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 22%</span></div>
+        </div></div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>
     </div>
       </div>
     </div>
