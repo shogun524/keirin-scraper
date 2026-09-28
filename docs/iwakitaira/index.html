@@ -134,7 +134,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 11,847票 <span class="delta-up">↑↑ 初回計測比 +118370%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 219,489票 <span class="delta-up">↑↑ 初回計測比 +2194790%</span></p>
         
         <div class="subtab-bar"><button class="subtab-btn active" id="race1_subbtn_main" onclick="showSubTab('race1','main',this)">予想</button><button class="subtab-btn" id="race1_subbtn_tf" onclick="showSubTab('race1','tf',this)">3連単</button><button class="subtab-btn" id="race1_subbtn_dev" onclick="showSubTab('race1','dev',this)">展開</button></div>
     <div id="race1_sub_main" class="subtab-panel">
@@ -279,15 +279,20 @@
     
     <div id="race1_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>70.6%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:53.4%;"></span></span><span class="dev-scenario-pct">53.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:38.5%;"></span></span><span class="dev-scenario-pct">38.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.1%;"></span></span><span class="dev-scenario-pct">8.1%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>70.9%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>38.4%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:54.1%;"></span></span><span class="dev-scenario-pct">54.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:37.7%;"></span></span><span class="dev-scenario-pct">37.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.2%;"></span></span><span class="dev-scenario-pct">8.2%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -301,7 +306,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 6,884票 <span class="delta-up">↑↑ 初回計測比 +85950%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 339,593票 <span class="delta-up">↑↑ 初回計測比 +4244812%</span></p>
         
         <div class="subtab-bar"><button class="subtab-btn active" id="race2_subbtn_main" onclick="showSubTab('race2','main',this)">予想</button><button class="subtab-btn" id="race2_subbtn_tf" onclick="showSubTab('race2','tf',this)">3連単</button><button class="subtab-btn" id="race2_subbtn_dev" onclick="showSubTab('race2','dev',this)">展開</button></div>
     <div id="race2_sub_main" class="subtab-panel">
@@ -446,15 +451,20 @@
     
     <div id="race2_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>59.2%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:69.4%;"></span></span><span class="dev-scenario-pct">69.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:18.1%;"></span></span><span class="dev-scenario-pct">18.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.6%;"></span></span><span class="dev-scenario-pct">7.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:4.9%;"></span></span><span class="dev-scenario-pct">4.9%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>59.2%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>27.0%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:69.4%;"></span></span><span class="dev-scenario-pct">69.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:18.0%;"></span></span><span class="dev-scenario-pct">18.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.9%;"></span></span><span class="dev-scenario-pct">7.9%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:4.7%;"></span></span><span class="dev-scenario-pct">4.7%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -613,15 +623,20 @@
     
     <div id="race3_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>60.6%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:53.6%;"></span></span><span class="dev-scenario-pct">53.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:46.3%;"></span></span><span class="dev-scenario-pct">46.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.1%;"></span></span><span class="dev-scenario-pct">0.1%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>59.6%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>23.4%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:54.5%;"></span></span><span class="dev-scenario-pct">54.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:45.3%;"></span></span><span class="dev-scenario-pct">45.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.1%;"></span></span><span class="dev-scenario-pct">0.1%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -780,15 +795,20 @@
     
     <div id="race4_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>59.4%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:97.0%;"></span></span><span class="dev-scenario-pct">97.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:2.7%;"></span></span><span class="dev-scenario-pct">2.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.3%;"></span></span><span class="dev-scenario-pct">0.3%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>54.8%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>23.2%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:96.6%;"></span></span><span class="dev-scenario-pct">96.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:3.0%;"></span></span><span class="dev-scenario-pct">3.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.4%;"></span></span><span class="dev-scenario-pct">0.4%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -947,15 +967,20 @@
     
     <div id="race5_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>60.8%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:57.2%;"></span></span><span class="dev-scenario-pct">57.2%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:20.8%;"></span></span><span class="dev-scenario-pct">20.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:14.7%;"></span></span><span class="dev-scenario-pct">14.7%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.2%;"></span></span><span class="dev-scenario-pct">7.2%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>60.7%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>23.6%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:57.1%;"></span></span><span class="dev-scenario-pct">57.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:21.0%;"></span></span><span class="dev-scenario-pct">21.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:15.1%;"></span></span><span class="dev-scenario-pct">15.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:6.7%;"></span></span><span class="dev-scenario-pct">6.7%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -1114,15 +1139,20 @@
     
     <div id="race6_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>
-      が1着にならない確率（波乱度）: <b>64.7%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:58.4%;"></span></span><span class="dev-scenario-pct">58.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:28.6%;"></span></span><span class="dev-scenario-pct">28.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.3%;"></span></span><span class="dev-scenario-pct">8.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:4.7%;"></span></span><span class="dev-scenario-pct">4.7%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>63.8%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>25.0%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:58.2%;"></span></span><span class="dev-scenario-pct">58.2%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:28.6%;"></span></span><span class="dev-scenario-pct">28.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:7.9%;"></span></span><span class="dev-scenario-pct">7.9%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:5.2%;"></span></span><span class="dev-scenario-pct">5.2%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -1136,7 +1166,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,833票 <span class="delta-up">↑↑ 初回計測比 +91550%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 23,058票 <span class="delta-up">↑↑ 初回計測比 +1152800%</span></p>
         
         <div class="subtab-bar"><button class="subtab-btn active" id="race7_subbtn_main" onclick="showSubTab('race7','main',this)">予想</button><button class="subtab-btn" id="race7_subbtn_tf" onclick="showSubTab('race7','tf',this)">3連単</button><button class="subtab-btn" id="race7_subbtn_dev" onclick="showSubTab('race7','dev',this)">展開</button></div>
     <div id="race7_sub_main" class="subtab-panel">
@@ -1281,15 +1311,20 @@
     
     <div id="race7_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>71.8%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:70.3%;"></span></span><span class="dev-scenario-pct">70.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:26.3%;"></span></span><span class="dev-scenario-pct">26.3%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:3.0%;"></span></span><span class="dev-scenario-pct">3.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.4%;"></span></span><span class="dev-scenario-pct">0.4%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>72.0%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>31.8%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:70.1%;"></span></span><span class="dev-scenario-pct">70.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:26.0%;"></span></span><span class="dev-scenario-pct">26.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:3.5%;"></span></span><span class="dev-scenario-pct">3.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.4%;"></span></span><span class="dev-scenario-pct">0.4%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -1303,7 +1338,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,466票 <span class="delta-up">↑↑ 初回計測比 +73200%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 14,605票 <span class="delta-up">↑↑ 初回計測比 +730150%</span></p>
         
         <div class="subtab-bar"><button class="subtab-btn active" id="race8_subbtn_main" onclick="showSubTab('race8','main',this)">予想</button><button class="subtab-btn" id="race8_subbtn_tf" onclick="showSubTab('race8','tf',this)">3連単</button><button class="subtab-btn" id="race8_subbtn_dev" onclick="showSubTab('race8','dev',this)">展開</button></div>
     <div id="race8_sub_main" class="subtab-panel">
@@ -1448,15 +1483,20 @@
     
     <div id="race8_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
-      が1着にならない確率（波乱度）: <b>65.8%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:75.0%;"></span></span><span class="dev-scenario-pct">75.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:13.0%;"></span></span><span class="dev-scenario-pct">13.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.5%;"></span></span><span class="dev-scenario-pct">8.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:3.4%;"></span></span><span class="dev-scenario-pct">3.4%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>65.4%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>26.7%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:73.4%;"></span></span><span class="dev-scenario-pct">73.4%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:13.8%;"></span></span><span class="dev-scenario-pct">13.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:8.8%;"></span></span><span class="dev-scenario-pct">8.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:4.0%;"></span></span><span class="dev-scenario-pct">4.0%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
@@ -1470,7 +1510,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,120票 <span class="delta-up">↑↑ 初回計測比 +70567%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 17,427票 <span class="delta-up">↑↑ 初回計測比 +580800%</span></p>
         
         <div class="subtab-bar"><button class="subtab-btn active" id="race9_subbtn_main" onclick="showSubTab('race9','main',this)">予想</button><button class="subtab-btn" id="race9_subbtn_tf" onclick="showSubTab('race9','tf',this)">3連単</button><button class="subtab-btn" id="race9_subbtn_dev" onclick="showSubTab('race9','dev',this)">展開</button></div>
     <div id="race9_sub_main" class="subtab-panel">
@@ -1615,15 +1655,20 @@
     
     <div id="race9_sub_dev" class="subtab-panel" style="display:none;">
       
-    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを3,000通り試行した参考情報）</div>
-    <p class="dim" style="margin:0 0 10px;">本命
+    <div class="mw-label">波乱度</div>
+    <p class="dim" style="margin:0 0 4px;">本命
       <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
-      が1着にならない確率（波乱度）: <b>77.7%</b></p>
-    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:46.8%;"></span></span><span class="dev-scenario-pct">46.8%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:46.6%;"></span></span><span class="dev-scenario-pct">46.6%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:6.1%;"></span></span><span class="dev-scenario-pct">6.1%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.4%;"></span></span><span class="dev-scenario-pct">0.4%</span></div></div>
-    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
-    各選手の決まり手予測分布から毎回サンプリングし直して3,000回のレースを試算し、
-    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
-    （的中や上位進出を保証するものではありません）。</p>
+      が1着にならない確率: <b>76.6%</b></p>
+    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>37.1%</b></p>
+    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
+    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
+    推定ではないため、上の予測1着率と矛盾しません。</p>
+    <div class="mw-label">展開パターン（決まり手の実現を3,000通り試行した参考情報）</div>
+    <div class="dev-scenarios"><div class="dev-scenario-row"><span class="dev-scenario-label">捲り決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:47.2%;"></span></span><span class="dev-scenario-pct">47.2%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行争いで共倒れ含みの乱戦</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:46.0%;"></span></span><span class="dev-scenario-pct">46.0%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">先行逃げ切り濃厚</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:6.5%;"></span></span><span class="dev-scenario-pct">6.5%</span></div><div class="dev-scenario-row"><span class="dev-scenario-label">差し・展開待ち決着</span><span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:0.4%;"></span></span><span class="dev-scenario-pct">0.4%</span></div></div>
+    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
+    3,000回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
+    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
+    影響しません）。展開の読み筋の参考としてご覧ください。</p>
     </div>
       </div>
     </div>
