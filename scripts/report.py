@@ -281,15 +281,12 @@ def render_matrix_widget(tab_id, payload):
       <div class="mw-label" id="{tab_id}_label3"></div>
       <div class="mw-bars" id="{tab_id}_bars3"></div>
     </div>
-    <p class="dim" style="margin:8px 0 0;">号車をタップすると1着・2着の組み合わせを切り替えられ、3着候補もその組み合わせに応じて連動します。</p>
     <script>window.MATRIX_DATA=window.MATRIX_DATA||{{}}; window.MATRIX_DATA["{tab_id}"]={payload_json};</script>"""
 
 
 def build_trifecta_payload(trifecta, rows):
     """
-    3連単の全組み合わせを1着候補（車番）ごとにグループ化し、タップ式ウィジェット用に
-    JSON化する。以前は確率降順の一本のリストで全件（7車立て210通り／9車立て504通り）を
-    並べていたが、件数が多く見づらいという指摘を受け、1着候補をタップして絞り込む方式にした。
+    3連単を1着候補（車番）ごとにグループ化し、タップ式ウィジェット用にJSON化する。
     戻り値: {"default": 車番, "cars": [{"car":,"bg":,"fg":,"total":その車が1着の合計確率}, ...],
              "groups": {"車番文字列": [{"second":,"second_name":,"third":,"third_name":,"prob":}, ...]}}
     """
@@ -316,22 +313,17 @@ def build_trifecta_payload(trifecta, rows):
         cars_meta.append({"car": car, "bg": bg, "fg": fg, "total": round(car_totals[car], 1)})
 
     default_car = cars_meta[0]["car"] if cars_meta else None
-    total_possible = trifecta.get("total_combos_possible", len(trifecta["combos"]))
-    return {"default": default_car, "cars": cars_meta, "groups": groups, "total_possible": total_possible}
+    return {"default": default_car, "cars": cars_meta, "groups": groups}
 
 
 def render_trifecta_groups(tab_id, payload):
-    """1着候補（車番）をタップすると、その車が1着になる場合の3連単をすべて確率順に表示する。"""
+    """1着候補（車番）をタップすると、その車が1着になる買い目上位を表示する。"""
     if not payload:
         return ""
     payload_json = _json.dumps(payload, ensure_ascii=False)
     return f"""
-    <div class="mw-label">1着候補をタップして3連単を絞り込む（カッコ内はその車が1着になる3連単の合計確率）</div>
     <div class="mw-chips" id="{tab_id}_tf_chips"></div>
     <div class="tf-list" id="{tab_id}_tf_list"></div>
-    <p class="dim" style="margin:8px 0 0;">1着率×2着条件付き確率×3着条件付き確率（決まり手率・ライン補正を織り込み済み）から
-    算出した真の同時確率が高い順に並べています（単純に指数が大きい順に組んだものではありません）。
-    全{payload.get('total_possible', 0)}通りのうち、選んだ1着候補が絡む分だけを表示しています。</p>
     <script>window.TRIFECTA_DATA=window.TRIFECTA_DATA||{{}}; window.TRIFECTA_DATA["{tab_id}"]={payload_json};</script>"""
 
 
@@ -396,66 +388,56 @@ def _car_badge(car):
 
 
 def render_development_block(payload):
-    """
-    展開シミュレーション（モンテカルロ）の結果を表示するブロック。
-    「予測1着率が高い選手が当たらない確率」＝100−予測1着率という自明な引き算は
-    情報量が無いため表示しない。代わりに、決まり手の実現パターン（先行逃げ切り／
-    先行争いの乱戦／捲り決着／差し決着）ごとに「そのパターンが起きた場合、条件付きで
-    誰が1着になりやすいか」という、予測1着率だけでは分からない情報を提示する。
-    """
+    """展開パターン別の1着候補。上位2パターンのみ、簡潔に表示する。"""
     if not payload:
         return ""
     scenario_blocks = []
-    for s in payload["scenarios"]:
+    for s in payload["scenarios"][:2]:
         picks_html = "".join(
             f'<span class="dev-pick">{_car_badge(c["car"])} {c["win_pct"]:.0f}%</span>'
-            for c in s["conditional_win_rates"]
+            for c in s["conditional_win_rates"][:3]
         )
         scenario_blocks.append(f"""
         <div class="dev-scenario-block">
           <div class="dev-scenario-row">
             <span class="dev-scenario-label">{s["label"]}</span>
-            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:{s["share"]:.1f}%;"></span></span>
-            <span class="dev-scenario-pct">{s["share"]:.1f}%</span>
+            <span class="dev-scenario-pct">{s["share"]:.0f}%</span>
           </div>
-          <div class="dev-picks">この展開になった場合の1着候補: {picks_html}</div>
+          <div class="dev-picks">{picks_html}</div>
         </div>""")
     return f"""
-    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を{payload['trials']:,}通り試行）</div>
-    <div class="dev-scenarios">{"".join(scenario_blocks)}</div>
-    <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
-    {payload['trials']:,}回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
-    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
-    使ってください。</p>"""
+    <div class="mw-label">展開別の1着候補</div>
+    <div class="dev-scenarios">{"".join(scenario_blocks)}</div>"""
+
+
+def render_development_animation(tab_id, payload):
+    """展開シミュレーションを実際に動くアニメーションとして再生するウィジェット。"""
+    if not payload or not payload.get("animation"):
+        return ""
+    anim = payload["animation"]
+    lanes_html = ""
+    for c in anim["cars"]:
+        bg, fg = car_color(c["car"])
+        lanes_html += (f'<div class="dev-lane"><span class="dev-lane-car" '
+                        f'id="{tab_id}_dev_car_{c["car"]}" style="background:{bg};color:{fg};">{c["car"]}</span></div>')
+    payload_json = _json.dumps(anim, ensure_ascii=False)
+    return f"""
+    <div class="mw-label">展開シミュレーション</div>
+    <button type="button" class="dev-play-btn" onclick="playDevAnimation('{tab_id}')">▶ 再生</button>
+    <div class="dev-track" id="{tab_id}_dev_track">
+      <div class="dev-finish-line"></div>
+      {lanes_html}
+    </div>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{{}}; window.DEV_ANIM_DATA["{tab_id}"]={payload_json};</script>"""
 
 
 def render_hole_candidates_block(candidates):
-    """
-    穴目指数（Sleeper Index）の結果を表示するブロック。
-    記者印（大方の下馬評）だけで見た順位よりモデル総合評価が高い選手、および
-    ライン・バンク相性・対戦相性・調子補正で基礎能力以上に浮上している選手を
-    「データ上の狙い目候補」として提示する。
-    """
+    """穴目候補。目立たせすぎないよう最有力1名だけを一行で示す。"""
     if not candidates:
         return ""
-    rows_html = ""
-    for c in candidates:
-        reasons_html = "".join(f'<li>{r}</li>' for r in c["reasons"])
-        rows_html += f"""
-        <div class="hole-card">
-          <div class="hole-card-head">{_car_badge(c["car"])} {c["name"]}
-            <span class="hole-score">穴目指数 {c["hole_score"]:.1f}</span></div>
-          <ul class="hole-reasons">{reasons_html}</ul>
-          <p class="dim" style="margin:2px 0 0;">モデル総合{c["model_rank"]}位（印評価のみなら{c["mark_rank"]}位）・予測1着率{c["adjusted"]:.1f}%</p>
-        </div>"""
+    c = candidates[0]
     return f"""
-    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
-    <div class="hole-cards">{rows_html}</div>
-    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
-    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
-    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
-    妙味がある可能性がありますが、的中を保証するものではありません。</p>"""
+    <div class="hole-line">{_car_badge(c["car"])} {c["name"]} <span class="hole-tag">穴目候補</span></div>"""
 
 
 def render_line_info_block(result, race_title=""):
@@ -548,16 +530,13 @@ def render_race_card(race_data, tab_id):
     trifecta_payload = build_trifecta_payload(result.get("trifecta"), result["rows"])
     trifecta_html = render_trifecta_groups(tab_id, trifecta_payload)
     dev_payload = build_development_payload(result.get("development_simulation"))
+    dev_anim_html = render_development_animation(tab_id, dev_payload)
     dev_html = render_development_block(dev_payload)
     hole_html = render_hole_candidates_block(result.get("hole_candidates"))
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
     odds_alert_html = render_odds_alert_badge(info)
-    odds_alert_note_html = ""
-    if info.get("odds_value_alert"):
-        odds_alert_note_html = ('<p class="dim" style="margin:2px 0 0;">投票の伸びが同時間帯の他レースより鈍く、'
-                                 '注目度がまだ低い可能性があります（参考情報。的中を保証するものではありません）。</p>')
     pick_color = car_color(top["car"])[0]
     has_trifecta = bool(trifecta_payload)
     has_dev = bool(dev_payload) or bool(hole_html)
@@ -583,6 +562,7 @@ def render_race_card(race_data, tab_id):
         dev_block_html = f"""
     <div id="{tab_id}_sub_dev" class="subtab-panel" style="display:none;">
       {hole_html}
+      {dev_anim_html}
       {dev_html}
     </div>"""
     return f"""
@@ -597,18 +577,15 @@ def render_race_card(race_data, tab_id):
         {banner_html}
         {line_info_html}
         {odds_trend_html}
-        {odds_alert_note_html}
         {subtab_bar_html}
     <div id="{tab_id}_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>{rows_html}</tbody>
         </table>
-        <p class="dim" style="margin:6px 0 0;">予測1着率は「基礎」（ライン・決まり手・バンク補正前のモデル単体の値）から、各種補正でどれだけ上昇／低下したか（pt）を示しています。予測決まり手のカッコ内は確信度、信頼度は直近の走行数と連対率から算出した安定感の指標です。</p>
 
         <div class="chart-block">
           {bar_chart}
-          <p class="dim" style="margin:8px 0 0; text-align:center;">号車別の予測1着率です。</p>
         </div>
 
         <div class="chart-block">{kimarite_table_html}</div>
@@ -691,23 +668,24 @@ RACE_PANEL_STYLE = """
   .subtab-panel{ }
   .value-alert-badge{ background:#fdecc8; border:1px solid var(--gold); color:#8a5a12; border-radius:3px;
                        padding:2px 8px; font-size:11px; font-weight:700; }
-  .dev-scenarios{ display:flex; flex-direction:column; gap:12px; }
-  .dev-scenario-block{ background:var(--paper2); border-radius:4px; padding:8px 10px; }
-  .dev-scenario-row{ display:flex; align-items:center; gap:8px; }
-  .dev-scenario-label{ flex:0 0 auto; width:150px; font-size:12px; color:var(--ink); }
-  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper); border-radius:5px; overflow:hidden; }
-  .dev-scenario-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,#b8763f,#d9a862); border-radius:5px; }
-  .dev-scenario-pct{ flex:0 0 auto; width:48px; text-align:right; font-size:13px; font-weight:700; color:#b8763f; }
-  .dev-picks{ margin-top:6px; font-size:11.5px; color:var(--ink-soft); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .dev-scenarios{ display:flex; flex-direction:column; gap:8px; }
+  .dev-scenario-block{ background:var(--paper2); border-radius:4px; padding:7px 10px; }
+  .dev-scenario-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .dev-scenario-label{ font-size:12px; color:var(--ink); font-weight:600; }
+  .dev-scenario-pct{ font-size:13px; font-weight:700; color:#b8763f; }
+  .dev-picks{ margin-top:5px; font-size:11.5px; color:var(--ink-soft); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
   .dev-pick{ display:inline-flex; align-items:center; gap:3px; font-weight:700; color:var(--ink); }
-  .hole-cards{ display:flex; flex-direction:column; gap:8px; }
-  .hole-card{ background:#fdf6ea; border:1px solid var(--gold); border-radius:4px; padding:8px 10px; }
-  .hole-card-head{ font-size:13px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:6px; }
-  .hole-score{ margin-left:auto; font-size:11px; font-weight:700; color:#b8763f; background:#fff; border-radius:3px; padding:1px 6px; }
-  .hole-reasons{ margin:4px 0 0; padding-left:18px; font-size:11.5px; color:var(--ink-soft); }
-  .hole-reasons li{ margin:2px 0; }
+  .hole-line{ font-size:13px; font-weight:600; color:var(--ink); display:flex; align-items:center; gap:6px; margin-bottom:10px; }
+  .hole-tag{ font-size:10px; font-weight:700; color:#8a5a12; background:#fdecc8; border-radius:3px; padding:1px 6px; }
+  .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
+                 font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
+  .dev-track{ position:relative; background:var(--paper2); border-radius:4px; padding:8px 0; margin-bottom:14px; }
+  .dev-lane{ position:relative; height:28px; }
+  .dev-finish-line{ position:absolute; top:0; bottom:0; left:90%; width:2px; background:var(--gold); }
+  .dev-lane-car{ position:absolute; top:3px; left:0; width:22px; height:22px; border-radius:50%;
+                 display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;
+                 border:1px solid rgba(0,0,0,.18); transition:left 0.9s linear; }
   @media (max-width:420px){
-    .dev-scenario-label{ width:96px; font-size:10.5px; }
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
   }
@@ -852,6 +830,38 @@ function selectTrifectaCar(tabId, car){
   renderTrifectaGroups(tabId);
 }
 
+// 展開シミュレーションのアニメーション再生
+function initDevTrack(tabId){
+  const anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+  if(!anim) return;
+  anim.cars.forEach(function(c){
+    const el = document.getElementById(tabId+'_dev_car_'+c.car);
+    if(el) el.style.left = (c.positions[0] * 0.9) + '%';
+  });
+}
+function playDevAnimation(tabId){
+  const anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+  if(!anim) return;
+  let step = 0;
+  const totalSteps = anim.checkpoints;
+  const stepMs = 900;
+  function tick(){
+    anim.cars.forEach(function(c){
+      const el = document.getElementById(tabId+'_dev_car_'+c.car);
+      if(el) el.style.left = (c.positions[step] * 0.9) + '%';
+    });
+    step++;
+    if(step < totalSteps) setTimeout(tick, stepMs);
+  }
+  // 再生前にスタート地点へ一旦戻す
+  anim.cars.forEach(function(c){
+    const el = document.getElementById(tabId+'_dev_car_'+c.car);
+    if(el){ el.style.transition = 'none'; el.style.left = '0%'; void el.offsetWidth; el.style.transition = ''; }
+  });
+  step = 0;
+  setTimeout(tick, 50);
+}
+
 window.addEventListener('DOMContentLoaded', function(){
   const tabs = Array.from(document.querySelectorAll('.tab-btn'));
   if(window.MATRIX_DATA){
@@ -859,6 +869,9 @@ window.addEventListener('DOMContentLoaded', function(){
   }
   if(window.TRIFECTA_DATA){
     Object.keys(window.TRIFECTA_DATA).forEach(renderTrifectaGroups);
+  }
+  if(window.DEV_ANIM_DATA){
+    Object.keys(window.DEV_ANIM_DATA).forEach(initDevTrack);
   }
   if(tabs.length === 0) return;
   const nowJstMinutes = getNowJstMinutes();
