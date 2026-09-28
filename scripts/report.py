@@ -356,6 +356,69 @@ def render_odds_trend_block(info):
             f'<span class="{cls}">{arrow} 初回計測比 {growth:+.0f}%</span></p>')
 
 
+def render_form_badge(form_trend):
+    """直近の調子（フォーム）バッジ。安定（flat）またはデータ不足なら何も表示しない。"""
+    if not form_trend or form_trend.get("trend") == "flat":
+        return ""
+    arrow = "↑" if form_trend["trend"] == "up" else "↓"
+    cls = "delta-up" if form_trend["trend"] == "up" else "delta-down"
+    return f'<span class="{cls}" style="font-size:10px;">調子{arrow}</span>'
+
+
+def render_rivalry_badge(rivalry_summary):
+    """対戦相性（選手間の相性）バッジ。五分五分に近い場合や、データ不足なら何も表示しない。"""
+    if not rivalry_summary:
+        return ""
+    rate = rivalry_summary["avg_win_rate"]
+    if rate >= 0.6:
+        return f'<span class="delta-up" style="font-size:10px;">対戦相性◎({rate*100:.0f}%)</span>'
+    if rate <= 0.4:
+        return f'<span class="delta-down" style="font-size:10px;">対戦相性△({rate*100:.0f}%)</span>'
+    return ""
+
+
+def render_odds_alert_badge(info):
+    """オッズ妙味アラート（投票の伸びが同時間帯の他レースより鈍いレース候補）バッジ。"""
+    if not info.get("odds_value_alert"):
+        return ""
+    return '<span class="value-alert-badge">🔍 妙味候補</span>'
+
+
+def build_development_payload(development_simulation):
+    if not development_simulation:
+        return None
+    return development_simulation
+
+
+def render_development_block(payload):
+    """
+    展開シミュレーション（モンテカルロ）の結果を表示するブロック。
+    既存の「予測1着率」（真の同時確率ベース）とは別軸の参考情報であることを
+    明記し、上書きしているわけではないことが伝わるようにする。
+    """
+    if not payload:
+        return ""
+    scenario_rows = "".join(
+        f'<div class="dev-scenario-row">'
+        f'<span class="dev-scenario-label">{s["label"]}</span>'
+        f'<span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:{s["share"]:.1f}%;"></span></span>'
+        f'<span class="dev-scenario-pct">{s["share"]:.1f}%</span>'
+        f'</div>'
+        for s in payload["scenarios"]
+    )
+    top_bg, top_fg = car_color(payload["top_pick"])
+    return f"""
+    <div class="mw-label">展開シミュレーション（決まり手の実現パターンを{payload['trials']:,}通り試行した参考情報）</div>
+    <p class="dim" style="margin:0 0 10px;">本命
+      <span class="car" style="background:{top_bg};color:{top_fg};">{payload['top_pick']}</span>
+      が1着にならない確率（波乱度）: <b>{payload['upset_probability']:.1f}%</b></p>
+    <div class="dev-scenarios">{scenario_rows}</div>
+    <p class="dim" style="margin:8px 0 0;">上の「予測1着率」（真の同時確率に基づく計算値）とは別に、
+    各選手の決まり手予測分布から毎回サンプリングし直して{payload['trials']:,}回のレースを試算し、
+    どんな展開パターンになりやすいかを集計したものです。展開の読み筋の参考としてご覧ください
+    （的中や上位進出を保証するものではありません）。</p>"""
+
+
 def render_line_info_block(result, race_title=""):
     # ガールズ競輪（全員単騎、女子選手7名）はライン概念が無いため表示しない
     if "ガールズ" in (race_title or ""):
@@ -404,6 +467,10 @@ def render_race_card(race_data, tab_id):
         cr_html = ""
         if cr:
             cr_html = f'<br><span class="dim">当地{cr["races"]}走{cr["wins"]}勝{cr["top3"]}連対</span>'
+        form_badge_html = render_form_badge(r.get("form_trend"))
+        rivalry_badge_html = render_rivalry_badge(r.get("rivalry_summary"))
+        extra_badges = " ".join(x for x in [form_badge_html, rivalry_badge_html] if x)
+        extra_badges_html = f'<br>{extra_badges}' if extra_badges else ""
 
         base_pct = r["base"] * 100
         adjusted_pct = r["adjusted"]
@@ -419,7 +486,7 @@ def render_race_card(race_data, tab_id):
         rows_html += f"""
         <tr style="{highlight}">
           <td><span class="car" style="background:{bg};color:{fg}">{r['car']}</span></td>
-          <td>{r['name']}{cr_html}</td>
+          <td>{r['name']}{cr_html}{extra_badges_html}</td>
           <td>{r['rank']}</td>
           <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')}<br><span class="dim">({r['kimarite_prediction']['ratio']*100:.0f}%)</span></td>
           <td>{line_label}</td>
@@ -441,23 +508,41 @@ def render_race_card(race_data, tab_id):
     matrix_widget_html = render_matrix_widget(tab_id, matrix_payload)
     trifecta_payload = build_trifecta_payload(result.get("trifecta"), result["rows"])
     trifecta_html = render_trifecta_groups(tab_id, trifecta_payload)
+    dev_payload = build_development_payload(result.get("development_simulation"))
+    dev_html = render_development_block(dev_payload)
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
+    odds_alert_html = render_odds_alert_badge(info)
+    odds_alert_note_html = ""
+    if info.get("odds_value_alert"):
+        odds_alert_note_html = ('<p class="dim" style="margin:2px 0 0;">投票の伸びが同時間帯の他レースより鈍く、'
+                                 '注目度がまだ低い可能性があります（参考情報。的中を保証するものではありません）。</p>')
     pick_color = car_color(top["car"])[0]
     has_trifecta = bool(trifecta_payload)
+    has_dev = bool(dev_payload)
     subtab_bar_html = ""
-    if has_trifecta:
-        subtab_bar_html = f"""
-        <div class="subtab-bar">
-          <button class="subtab-btn active" id="{tab_id}_subbtn_main" onclick="showSubTab('{tab_id}','main',this)">予想</button>
-          <button class="subtab-btn" id="{tab_id}_subbtn_tf" onclick="showSubTab('{tab_id}','tf',this)">3連単</button>
-        </div>"""
+    if has_trifecta or has_dev:
+        buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
+                   'onclick="showSubTab(\'' + tab_id + '\',\'main\',this)">予想</button>']
+        if has_trifecta:
+            buttons.append('<button class="subtab-btn" id="' + tab_id + '_subbtn_tf" '
+                            'onclick="showSubTab(\'' + tab_id + '\',\'tf\',this)">3連単</button>')
+        if has_dev:
+            buttons.append('<button class="subtab-btn" id="' + tab_id + '_subbtn_dev" '
+                            'onclick="showSubTab(\'' + tab_id + '\',\'dev\',this)">展開</button>')
+        subtab_bar_html = '<div class="subtab-bar">' + "".join(buttons) + '</div>'
     trifecta_block_html = ""
     if has_trifecta:
         trifecta_block_html = f"""
     <div id="{tab_id}_sub_tf" class="subtab-panel" style="display:none;">
       {trifecta_html}
+    </div>"""
+    dev_block_html = ""
+    if has_dev:
+        dev_block_html = f"""
+    <div id="{tab_id}_sub_dev" class="subtab-panel" style="display:none;">
+      {dev_html}
     </div>"""
     return f"""
     <div id="{tab_id}" class="race-panel" style="display:none;">
@@ -466,10 +551,12 @@ def render_race_card(race_data, tab_id):
           <span class="raceno">{info['race_no']}R</span>
           <span class="title">{title}</span>
           {deadline_html}
+          {odds_alert_html}
         </div>
         {banner_html}
         {line_info_html}
         {odds_trend_html}
+        {odds_alert_note_html}
         {subtab_bar_html}
     <div id="{tab_id}_sub_main" class="subtab-panel">
         <table class="main">
@@ -487,6 +574,7 @@ def render_race_card(race_data, tab_id):
         <div class="chart-block">{matrix_widget_html}</div>
     </div>
     {trifecta_block_html}
+    {dev_block_html}
       </div>
     </div>"""
 
@@ -560,7 +648,16 @@ RACE_PANEL_STYLE = """
                font-size:13px; font-weight:600; color:var(--ink-soft); cursor:pointer; }
   .subtab-btn.active{ color:var(--board); border-bottom-color:var(--gold); }
   .subtab-panel{ }
+  .value-alert-badge{ background:#fdecc8; border:1px solid var(--gold); color:#8a5a12; border-radius:3px;
+                       padding:2px 8px; font-size:11px; font-weight:700; }
+  .dev-scenarios{ display:flex; flex-direction:column; gap:8px; }
+  .dev-scenario-row{ display:flex; align-items:center; gap:8px; }
+  .dev-scenario-label{ flex:0 0 auto; width:150px; font-size:12px; color:var(--ink); }
+  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .dev-scenario-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,#b8763f,#d9a862); border-radius:5px; }
+  .dev-scenario-pct{ flex:0 0 auto; width:48px; text-align:right; font-size:13px; font-weight:700; color:#b8763f; }
   @media (max-width:420px){
+    .dev-scenario-label{ width:96px; font-size:10.5px; }
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
   }
@@ -576,10 +673,10 @@ function showTab(id, btn){
 
 // レースパネル内の「予想」「3連単」サブタブ切り替え
 function showSubTab(tabId, which, btn){
-  var mainPanel = document.getElementById(tabId + '_sub_main');
-  var tfPanel = document.getElementById(tabId + '_sub_tf');
-  if(mainPanel) mainPanel.style.display = (which === 'main') ? '' : 'none';
-  if(tfPanel) tfPanel.style.display = (which === 'tf') ? '' : 'none';
+  ['main', 'tf', 'dev'].forEach(function(key){
+    var panel = document.getElementById(tabId + '_sub_' + key);
+    if(panel) panel.style.display = (which === key) ? '' : 'none';
+  });
   var bar = btn.parentElement;
   if(bar){
     bar.querySelectorAll('.subtab-btn').forEach(function(b){ b.classList.remove('active'); });
