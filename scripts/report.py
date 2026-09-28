@@ -390,39 +390,72 @@ def build_development_payload(development_simulation):
     return development_simulation
 
 
+def _car_badge(car):
+    bg, fg = car_color(car)
+    return f'<span class="car" style="background:{bg};color:{fg};">{car}</span>'
+
+
 def render_development_block(payload):
     """
     展開シミュレーション（モンテカルロ）の結果を表示するブロック。
-    既存の「予測1着率」（真の同時確率ベース）とは別軸の参考情報であることを
-    明記し、上書きしているわけではないことが伝わるようにする。
+    「予測1着率が高い選手が当たらない確率」＝100−予測1着率という自明な引き算は
+    情報量が無いため表示しない。代わりに、決まり手の実現パターン（先行逃げ切り／
+    先行争いの乱戦／捲り決着／差し決着）ごとに「そのパターンが起きた場合、条件付きで
+    誰が1着になりやすいか」という、予測1着率だけでは分からない情報を提示する。
     """
     if not payload:
         return ""
-    scenario_rows = "".join(
-        f'<div class="dev-scenario-row">'
-        f'<span class="dev-scenario-label">{s["label"]}</span>'
-        f'<span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:{s["share"]:.1f}%;"></span></span>'
-        f'<span class="dev-scenario-pct">{s["share"]:.1f}%</span>'
-        f'</div>'
-        for s in payload["scenarios"]
-    )
-    top_bg, top_fg = car_color(payload["top_pick"])
-    deep_upset = payload.get("deep_upset_probability", 0.0)
+    scenario_blocks = []
+    for s in payload["scenarios"]:
+        picks_html = "".join(
+            f'<span class="dev-pick">{_car_badge(c["car"])} {c["win_pct"]:.0f}%</span>'
+            for c in s["conditional_win_rates"]
+        )
+        scenario_blocks.append(f"""
+        <div class="dev-scenario-block">
+          <div class="dev-scenario-row">
+            <span class="dev-scenario-label">{s["label"]}</span>
+            <span class="dev-scenario-bar-track"><span class="dev-scenario-bar-fill" style="width:{s["share"]:.1f}%;"></span></span>
+            <span class="dev-scenario-pct">{s["share"]:.1f}%</span>
+          </div>
+          <div class="dev-picks">この展開になった場合の1着候補: {picks_html}</div>
+        </div>""")
     return f"""
-    <div class="mw-label">波乱度</div>
-    <p class="dim" style="margin:0 0 4px;">本命
-      <span class="car" style="background:{top_bg};color:{top_fg};">{payload['top_pick']}</span>
-      が1着にならない確率: <b>{payload['upset_probability']:.1f}%</b></p>
-    <p class="dim" style="margin:0 0 10px;">大波乱指数（4着評価以下の選手が1着になる確率）: <b>{deep_upset:.1f}%</b></p>
-    <p class="dim" style="margin:0 0 14px;">上記2つは「予測1着率」（真の同時確率に基づく計算値）をそのまま
-    積み上げただけの厳密な数値です（100%−本命1着率、4位以下の1着率の合計）。シミュレーションによる
-    推定ではないため、上の予測1着率と矛盾しません。</p>
-    <div class="mw-label">展開パターン（決まり手の実現を{payload['trials']:,}通り試行した参考情報）</div>
-    <div class="dev-scenarios">{scenario_rows}</div>
+    <div class="mw-label">展開パターン別の1着候補（決まり手の実現を{payload['trials']:,}通り試行）</div>
+    <div class="dev-scenarios">{"".join(scenario_blocks)}</div>
     <p class="dim" style="margin:8px 0 0;">各選手の決まり手予測分布から毎回サンプリングし直して
     {payload['trials']:,}回のレースを試算し、先行決着・捲り決着・差し決着などどの展開パターンに
-    なりやすいかを集計したものです（決まり手の実現確率だけで分類しており、上記の波乱度の数値には
-    影響しません）。展開の読み筋の参考としてご覧ください。</p>"""
+    なりやすいか、そして各パターン内で誰が1着になりやすいかを集計したものです。予測1着率
+    （レース全体を通した確率）とは別に、「もしこういう展開になったら」という条件付きの狙い目探しに
+    使ってください。</p>"""
+
+
+def render_hole_candidates_block(candidates):
+    """
+    穴目指数（Sleeper Index）の結果を表示するブロック。
+    記者印（大方の下馬評）だけで見た順位よりモデル総合評価が高い選手、および
+    ライン・バンク相性・対戦相性・調子補正で基礎能力以上に浮上している選手を
+    「データ上の狙い目候補」として提示する。
+    """
+    if not candidates:
+        return ""
+    rows_html = ""
+    for c in candidates:
+        reasons_html = "".join(f'<li>{r}</li>' for r in c["reasons"])
+        rows_html += f"""
+        <div class="hole-card">
+          <div class="hole-card-head">{_car_badge(c["car"])} {c["name"]}
+            <span class="hole-score">穴目指数 {c["hole_score"]:.1f}</span></div>
+          <ul class="hole-reasons">{reasons_html}</ul>
+          <p class="dim" style="margin:2px 0 0;">モデル総合{c["model_rank"]}位（印評価のみなら{c["mark_rank"]}位）・予測1着率{c["adjusted"]:.1f}%</p>
+        </div>"""
+    return f"""
+    <div class="mw-label">穴目指数（データ上の狙い目候補）</div>
+    <div class="hole-cards">{rows_html}</div>
+    <p class="dim" style="margin:8px 0 0;">記者印（大方の下馬評として学習済みモデルにも使われている情報）だけで
+    見た順位より、ライン構成・当地成績・対戦相性・直近の調子まで含めたモデル総合評価の方が高い選手や、
+    それらの補正で基礎能力以上に浮上している選手を機械的に抽出したものです。下馬評で目立たない分、
+    妙味がある可能性がありますが、的中を保証するものではありません。</p>"""
 
 
 def render_line_info_block(result, race_title=""):
@@ -516,6 +549,7 @@ def render_race_card(race_data, tab_id):
     trifecta_html = render_trifecta_groups(tab_id, trifecta_payload)
     dev_payload = build_development_payload(result.get("development_simulation"))
     dev_html = render_development_block(dev_payload)
+    hole_html = render_hole_candidates_block(result.get("hole_candidates"))
 
     deadline = info.get("deadline")
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
@@ -526,7 +560,7 @@ def render_race_card(race_data, tab_id):
                                  '注目度がまだ低い可能性があります（参考情報。的中を保証するものではありません）。</p>')
     pick_color = car_color(top["car"])[0]
     has_trifecta = bool(trifecta_payload)
-    has_dev = bool(dev_payload)
+    has_dev = bool(dev_payload) or bool(hole_html)
     subtab_bar_html = ""
     if has_trifecta or has_dev:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
@@ -548,6 +582,7 @@ def render_race_card(race_data, tab_id):
     if has_dev:
         dev_block_html = f"""
     <div id="{tab_id}_sub_dev" class="subtab-panel" style="display:none;">
+      {hole_html}
       {dev_html}
     </div>"""
     return f"""
@@ -656,12 +691,21 @@ RACE_PANEL_STYLE = """
   .subtab-panel{ }
   .value-alert-badge{ background:#fdecc8; border:1px solid var(--gold); color:#8a5a12; border-radius:3px;
                        padding:2px 8px; font-size:11px; font-weight:700; }
-  .dev-scenarios{ display:flex; flex-direction:column; gap:8px; }
+  .dev-scenarios{ display:flex; flex-direction:column; gap:12px; }
+  .dev-scenario-block{ background:var(--paper2); border-radius:4px; padding:8px 10px; }
   .dev-scenario-row{ display:flex; align-items:center; gap:8px; }
   .dev-scenario-label{ flex:0 0 auto; width:150px; font-size:12px; color:var(--ink); }
-  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .dev-scenario-bar-track{ flex:1; height:10px; background:var(--paper); border-radius:5px; overflow:hidden; }
   .dev-scenario-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,#b8763f,#d9a862); border-radius:5px; }
   .dev-scenario-pct{ flex:0 0 auto; width:48px; text-align:right; font-size:13px; font-weight:700; color:#b8763f; }
+  .dev-picks{ margin-top:6px; font-size:11.5px; color:var(--ink-soft); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .dev-pick{ display:inline-flex; align-items:center; gap:3px; font-weight:700; color:var(--ink); }
+  .hole-cards{ display:flex; flex-direction:column; gap:8px; }
+  .hole-card{ background:#fdf6ea; border:1px solid var(--gold); border-radius:4px; padding:8px 10px; }
+  .hole-card-head{ font-size:13px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:6px; }
+  .hole-score{ margin-left:auto; font-size:11px; font-weight:700; color:#b8763f; background:#fff; border-radius:3px; padding:1px 6px; }
+  .hole-reasons{ margin:4px 0 0; padding-left:18px; font-size:11.5px; color:var(--ink-soft); }
+  .hole-reasons li{ margin:2px 0; }
   @media (max-width:420px){
     .dev-scenario-label{ width:96px; font-size:10.5px; }
     table.main{ font-size:10.5px; }
