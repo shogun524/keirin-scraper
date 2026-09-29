@@ -443,6 +443,9 @@ def render_development_animation(tab_id, payload):
     payload_json = _json.dumps(anim, ensure_ascii=False)
     return f"""
     <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
+    <div class="dev-anim-note">※ このアニメーションは「最も起こりやすい展開パターン」の中の1つの具体例です。
+    表の「予測1着率」は全パターンを確率で加重平均した数字なので、このアニメーションの着順と
+    一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('{tab_id}')">▶ 再生</button>
     <div class="dev-track-wrap">
       <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
@@ -703,6 +706,7 @@ RACE_PANEL_STYLE = """
   .dev-pick{ display:inline-flex; align-items:center; gap:3px; font-weight:700; color:var(--ink); }
   .hole-line{ font-size:13px; font-weight:600; color:var(--ink); display:flex; align-items:center; gap:6px; margin-bottom:10px; }
   .hole-tag{ font-size:10px; font-weight:700; color:#8a5a12; background:#fdecc8; border-radius:3px; padding:1px 6px; }
+  .dev-anim-note{ font-size:10.5px; color:var(--ink-soft); line-height:1.5; margin:-4px 0 9px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
   .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
