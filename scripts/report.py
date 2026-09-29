@@ -411,22 +411,31 @@ def render_development_block(payload):
 
 
 def render_development_animation(tab_id, payload):
-    """展開シミュレーションを実際に動くアニメーションとして再生するウィジェット。"""
+    """
+    展開シミュレーションを、実際のバンク形状（ホームストレッチ・バックストレッチ・
+    2つのコーナー）を模したSVGトラック上で動くアニメーションとして再生するウィジェット。
+    向正面（バックストレッチ）入口から残り1周半をアニメーション化し、各車の進路（レーン）
+    の動きで捲り（外から一気に）・差し（直線だけ外に出す）といった決まり手の違いも表現する。
+    """
     if not payload or not payload.get("animation"):
         return ""
     anim = payload["animation"]
-    lanes_html = ""
+    cars_html = ""
     for c in anim["cars"]:
         bg, fg = car_color(c["car"])
-        lanes_html += (f'<div class="dev-lane"><span class="dev-lane-car" '
-                        f'id="{tab_id}_dev_car_{c["car"]}" style="background:{bg};color:{fg};">{c["car"]}</span></div>')
+        cars_html += (f'<circle id="{tab_id}_dev_car_{c["car"]}" class="dev-car-dot" r="11" '
+                      f'fill="{bg}" stroke="rgba(0,0,0,.25)" stroke-width="1"/>'
+                      f'<text id="{tab_id}_dev_car_{c["car"]}_t" class="dev-car-label" fill="{fg}">{c["car"]}</text>')
     payload_json = _json.dumps(anim, ensure_ascii=False)
     return f"""
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('{tab_id}')">▶ 再生</button>
-    <div class="dev-track" id="{tab_id}_dev_track">
-      <div class="dev-finish-line"></div>
-      {lanes_html}
+    <div class="dev-track-wrap">
+      <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        {cars_html}
+      </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{{}}; window.DEV_ANIM_DATA["{tab_id}"]={payload_json};</script>"""
 
@@ -679,12 +688,12 @@ RACE_PANEL_STYLE = """
   .hole-tag{ font-size:10px; font-weight:700; color:#8a5a12; background:#fdecc8; border-radius:3px; padding:1px 6px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
-  .dev-track{ position:relative; background:var(--paper2); border-radius:4px; padding:8px 0; margin-bottom:14px; }
-  .dev-lane{ position:relative; height:28px; }
-  .dev-finish-line{ position:absolute; top:0; bottom:0; left:90%; width:2px; background:var(--gold); }
-  .dev-lane-car{ position:absolute; top:3px; left:0; width:22px; height:22px; border-radius:50%;
-                 display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;
-                 border:1px solid rgba(0,0,0,.18); transition:left 0.9s linear; }
+  .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
+  .dev-track-svg{ width:100%; height:auto; display:block; }
+  .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
+  .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-car-dot{ transition:none; }
+  .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -830,36 +839,76 @@ function selectTrifectaCar(tabId, car){
   renderTrifectaGroups(tabId);
 }
 
-// 展開シミュレーションのアニメーション再生
-function initDevTrack(tabId){
-  const anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
-  if(!anim) return;
+// 展開シミュレーションのアニメーション再生（実際のバンク形状の上を動かす）
+// トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
+// （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
+function devTrackXY(fraction, lane){
+  var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
+  var r = R + lane * laneW;
+  if(fraction < 0.2){
+    var t1 = fraction / 0.2;
+    return { x: cx + halfLen - t1 * (2 * halfLen), y: cy - r };
+  } else if(fraction < 0.5){
+    var t2 = (fraction - 0.2) / 0.3;
+    var a2 = (-90 - 180 * t2) * Math.PI / 180;
+    return { x: (cx - halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
+  } else if(fraction < 0.8){
+    var t3 = (fraction - 0.5) / 0.3;
+    return { x: (cx - halfLen) + t3 * (2 * halfLen), y: cy + r };
+  } else {
+    var t4 = (fraction - 0.8) / 0.2;
+    var a4 = (90 - 180 * t4) * Math.PI / 180;
+    return { x: (cx + halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
+  }
+}
+function devFractionFromPosition(track, positionPct){
+  var f = track.start_fraction + track.total_laps * (positionPct / 100);
+  return f - Math.floor(f);
+}
+function setDevCarXY(tabId, car, x, y){
+  var dot = document.getElementById(tabId + '_dev_car_' + car);
+  var label = document.getElementById(tabId + '_dev_car_' + car + '_t');
+  if(dot){ dot.setAttribute('cx', x); dot.setAttribute('cy', y); }
+  if(label){ label.setAttribute('x', x); label.setAttribute('y', y + 4); }
+}
+function placeDevCarsAtCheckpoint(tabId, anim, step){
   anim.cars.forEach(function(c){
-    const el = document.getElementById(tabId+'_dev_car_'+c.car);
-    if(el) el.style.left = (c.positions[0] * 0.9) + '%';
+    var frac = devFractionFromPosition(anim.track, c.positions[step]);
+    var xy = devTrackXY(frac, c.lanes[step]);
+    setDevCarXY(tabId, c.car, xy.x, xy.y);
   });
 }
-function playDevAnimation(tabId){
-  const anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+function initDevTrack(tabId){
+  var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
   if(!anim) return;
-  let step = 0;
-  const totalSteps = anim.checkpoints;
-  const stepMs = 900;
-  function tick(){
-    anim.cars.forEach(function(c){
-      const el = document.getElementById(tabId+'_dev_car_'+c.car);
-      if(el) el.style.left = (c.positions[step] * 0.9) + '%';
-    });
-    step++;
-    if(step < totalSteps) setTimeout(tick, stepMs);
+  placeDevCarsAtCheckpoint(tabId, anim, 0);
+}
+function playDevAnimation(tabId){
+  var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+  if(!anim) return;
+  var stepMs = 900;
+  var step = 0;
+  placeDevCarsAtCheckpoint(tabId, anim, 0);
+  function animateSegment(){
+    if(step >= anim.checkpoints - 1) return;
+    var from = step, to = step + 1;
+    var start = null;
+    function frame(now){
+      if(start === null) start = now;
+      var t = Math.min((now - start) / stepMs, 1);
+      anim.cars.forEach(function(c){
+        var pos = c.positions[from] + (c.positions[to] - c.positions[from]) * t;
+        var lane = c.lanes[from] + (c.lanes[to] - c.lanes[from]) * t;
+        var frac = devFractionFromPosition(anim.track, pos);
+        var xy = devTrackXY(frac, lane);
+        setDevCarXY(tabId, c.car, xy.x, xy.y);
+      });
+      if(t < 1){ requestAnimationFrame(frame); }
+      else { step++; animateSegment(); }
+    }
+    requestAnimationFrame(frame);
   }
-  // 再生前にスタート地点へ一旦戻す
-  anim.cars.forEach(function(c){
-    const el = document.getElementById(tabId+'_dev_car_'+c.car);
-    if(el){ el.style.transition = 'none'; el.style.left = '0%'; void el.offsetWidth; el.style.transition = ''; }
-  });
-  step = 0;
-  setTimeout(tick, 50);
+  animateSegment();
 }
 
 window.addEventListener('DOMContentLoaded', function(){
