@@ -7,7 +7,7 @@
 
 import math
 
-from venue_data import kimarite_venue_average
+from venue_data import kimarite_venue_average, straight_category
 from race_simulation import simulate_race_development
 from rivalry_records import get_rivalry_summary, rivalry_multiplier
 from form_records import get_form_trend, form_multiplier
@@ -749,7 +749,8 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     # 展開シミュレーション：決まり手の実現パターン（先行決着/捲り決着/差し決着など）
     # ごとに、そのパターンが起きた場合に条件付きで誰が1着になりやすいかを
     # モンテカルロ試行で算出する（詳細は race_simulation.py のdocstring参照）。
-    development_simulation = simulate_race_development(rows, trials=s["simulation_trials"])
+    development_simulation = simulate_race_development(
+        rows, trials=s["simulation_trials"], straight_category=straight_category(venue_slug))
 
     # 穴目指数：記者印（mark、既にモデルの特徴量として使われている＝大方の下馬評を
     # 反映）だけで並べた順位と、モデル総合評価（adjusted）の順位のズレ、および
