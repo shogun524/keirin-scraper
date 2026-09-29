@@ -416,6 +416,12 @@ def render_development_animation(tab_id, payload):
     2つのコーナー）を模したSVGトラック上で動くアニメーションとして再生するウィジェット。
     向正面（バックストレッチ）入口から残り1周半をアニメーション化し、各車の進路（レーン）
     の動きで捲り（外から一気に）・差し（直線だけ外に出す）といった決まり手の違いも表現する。
+
+    画面の手前（下側）にゴール（ホームストレッチ）、奥（上側）に向正面（バックストレッチ）
+    を配置する（見た目の遠近感に合わせる）。ゴールはホームストレッチが次のコーナーに
+    入る直前の位置に置く（実際のバンクでも、ゴールは直線の途中ではなく、コーナー手前に
+    ある）。どちらの直線かひと目で分かるよう、線のそばに「ゴール」「向正面」のラベルを
+    添える。
     """
     if not payload or not payload.get("animation"):
         return ""
@@ -433,7 +439,9 @@ def render_development_animation(tab_id, payload):
     <div class="dev-track-wrap">
       <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
         {cars_html}
       </svg>
     </div>
@@ -692,6 +700,8 @@ RACE_PANEL_STYLE = """
   .dev-track-svg{ width:100%; height:auto; display:block; }
   .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
   .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-track-caption{ font-size:10px; font-weight:700; text-anchor:middle; fill:var(--ink-soft); }
+  .dev-track-caption-goal{ fill:#8a5a12; }
   .dev-car-dot{ transition:none; }
   .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
   @media (max-width:420px){
@@ -842,24 +852,34 @@ function selectTrifectaCar(tabId, car){
 // 展開シミュレーションのアニメーション再生（実際のバンク形状の上を動かす）
 // トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
 // （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
+// 画面の奥（上側 y小）を向正面（バックストレッチ）、手前（下側 y大）をゴール
+// （ホームストレッチ）とする。フィニッシュ（fraction=0）はホームストレッチが
+// コーナーへ入る直前（x=cx+halfLen側）に位置する。
 function devTrackXY(fraction, lane){
   var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
   var r = R + lane * laneW;
   if(fraction < 0.2){
+    // ホームストレッチ（ゴール、手前＝下側）: フィニッシュ(x=cx+halfLen)→コーナー1入口(x=cx-halfLen)
     var t1 = fraction / 0.2;
-    return { x: cx + halfLen - t1 * (2 * halfLen), y: cy - r };
+    return { x: cx + halfLen - t1 * (2 * halfLen), y: cy + r };
   } else if(fraction < 0.5){
+    // コーナー1（左側、外側＝左に膨らむ）
     var t2 = (fraction - 0.2) / 0.3;
-    var a2 = (-90 - 180 * t2) * Math.PI / 180;
+    var a2 = (90 + 180 * t2) * Math.PI / 180;
     return { x: (cx - halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
   } else if(fraction < 0.8){
+    // 向正面（バックストレッチ、奥＝上側）
     var t3 = (fraction - 0.5) / 0.3;
-    return { x: (cx - halfLen) + t3 * (2 * halfLen), y: cy + r };
+    return { x: (cx - halfLen) + t3 * (2 * halfLen), y: cy - r };
   } else {
+    // コーナー2（右側、外側＝右に膨らむ）
     var t4 = (fraction - 0.8) / 0.2;
-    var a4 = (90 - 180 * t4) * Math.PI / 180;
+    var a4 = (-90 + 180 * t4) * Math.PI / 180;
     return { x: (cx + halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
   }
+}
+function devEaseInOutCubic(t){
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 function devFractionFromPosition(track, positionPct){
   var f = track.start_fraction + track.total_laps * (positionPct / 100);
@@ -896,9 +916,10 @@ function playDevAnimation(tabId){
     function frame(now){
       if(start === null) start = now;
       var t = Math.min((now - start) / stepMs, 1);
+      var te = devEaseInOutCubic(t);
       anim.cars.forEach(function(c){
-        var pos = c.positions[from] + (c.positions[to] - c.positions[from]) * t;
-        var lane = c.lanes[from] + (c.lanes[to] - c.lanes[from]) * t;
+        var pos = c.positions[from] + (c.positions[to] - c.positions[from]) * te;
+        var lane = c.lanes[from] + (c.lanes[to] - c.lanes[from]) * te;
         var frac = devFractionFromPosition(anim.track, pos);
         var xy = devTrackXY(frac, lane);
         setDevCarXY(tabId, c.car, xy.x, xy.y);
