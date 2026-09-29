@@ -274,3 +274,20 @@ def straight_tendency(literal_straight):
     if literal_straight >= 58:
         return "差し有利"
     return "標準"
+
+
+def straight_category(slug):
+    """
+    そのレース場のみなし直線の長さから "short"/"standard"/"long" を返す
+    （展開シミュレーションのアニメーションで、仕掛けのタイミングをコース特性に
+    合わせて変えるために使う）。データが無ければ "standard"。
+    """
+    d = VENUE_BANK_DATA.get(slug)
+    literal_straight = d.get("literal_straight") if d else None
+    if literal_straight is None:
+        return "standard"
+    if literal_straight <= 45:
+        return "short"
+    if literal_straight >= 58:
+        return "long"
+    return "standard"
