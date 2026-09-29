@@ -119,6 +119,7 @@
   .dev-track-caption-goal{ fill:#8a5a12; }
   .dev-car-dot{ transition:none; }
   .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
+  .dev-line-connector{ fill:none; stroke:var(--ink-soft); stroke-width:3; stroke-linecap:round; opacity:.4; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -146,7 +147,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 9,963票 <span class="delta-up">↑↑ 初回計測比 +996200%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 13,070票 <span class="delta-up">↑↑ 初回計測比 +1306900%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race1_subbtn_main" onclick="showSubTab('race1','main',this)">予想</button><button class="subtab-btn" id="race1_subbtn_tf" onclick="showSubTab('race1','tf',this)">3連単</button><button class="subtab-btn" id="race1_subbtn_dev" onclick="showSubTab('race1','dev',this)">展開</button></div>
     <div id="race1_sub_main" class="subtab-panel">
         <table class="main">
@@ -277,8 +278,9 @@
       <svg id="race1_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        
         <circle id="race1_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race1_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race1_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race1_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race1_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race1_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
       </svg>
     </div>
@@ -458,8 +460,9 @@
       <svg id="race2_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race2_devline_0" class="dev-line-connector" points=""/><polyline id="race2_devline_1" class="dev-line-connector" points=""/>
         <circle id="race2_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race2_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race2_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race2_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race2_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race2_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race2_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
       </svg>
     </div>
@@ -639,8 +642,9 @@
       <svg id="race3_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race3_devline_0" class="dev-line-connector" points=""/><polyline id="race3_devline_3" class="dev-line-connector" points=""/>
         <circle id="race3_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race3_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race3_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race3_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race3_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race3_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race3_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
       </svg>
     </div>
@@ -820,8 +824,9 @@
       <svg id="race4_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race4_devline_0" class="dev-line-connector" points=""/><polyline id="race4_devline_1" class="dev-line-connector" points=""/>
         <circle id="race4_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race4_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race4_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race4_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race4_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race4_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race4_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
       </svg>
     </div>
@@ -1001,8 +1006,9 @@
       <svg id="race5_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race5_devline_0" class="dev-line-connector" points=""/><polyline id="race5_devline_1" class="dev-line-connector" points=""/>
         <circle id="race5_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race5_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race5_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race5_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race5_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race5_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race5_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
       </svg>
     </div>
@@ -1182,8 +1188,9 @@
       <svg id="race6_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race6_devline_0" class="dev-line-connector" points=""/><polyline id="race6_devline_1" class="dev-line-connector" points=""/><polyline id="race6_devline_2" class="dev-line-connector" points=""/>
         <circle id="race6_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race6_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race6_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race6_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race6_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race6_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race6_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
       </svg>
     </div>
@@ -1363,8 +1370,9 @@
       <svg id="race7_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race7_devline_0" class="dev-line-connector" points=""/><polyline id="race7_devline_1" class="dev-line-connector" points=""/><polyline id="race7_devline_2" class="dev-line-connector" points=""/>
         <circle id="race7_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race7_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race7_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race7_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race7_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race7_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race7_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
       </svg>
     </div>
@@ -1544,8 +1552,9 @@
       <svg id="race8_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        
         <circle id="race8_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race8_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race8_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race8_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race8_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race8_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race8_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
       </svg>
     </div>
@@ -1725,8 +1734,9 @@
       <svg id="race9_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        <polyline id="race9_devline_0" class="dev-line-connector" points=""/><polyline id="race9_devline_1" class="dev-line-connector" points=""/><polyline id="race9_devline_2" class="dev-line-connector" points=""/>
         <circle id="race9_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race9_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race9_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race9_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race9_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race9_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race9_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
       </svg>
     </div>
@@ -1896,33 +1906,31 @@ function selectTrifectaCar(tabId, car){
 // トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
 // （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
 // 画面の奥（上側 y小）を向正面（バックストレッチ）、手前（下側 y大）をゴール
-// （ホームストレッチ）とする。フィニッシュ（fraction=0）はホームストレッチが
-// コーナーへ入る直前（x=cx+halfLen側）に位置する。
+// （ホームストレッチ）とする。実際の競輪と同じ反時計回り（左回り）で周回するよう、
+// フィニッシュ（fraction=0）をホームストレッチの左端（コーナー入口の手前）に置き、
+// そこから右回りではなく左回りに進む向きでトラック座標を定義している。
 function devTrackXY(fraction, lane){
   var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
   var r = R + lane * laneW;
   if(fraction < 0.2){
-    // ホームストレッチ（ゴール、手前＝下側）: フィニッシュ(x=cx+halfLen)→コーナー1入口(x=cx-halfLen)
+    // ホームストレッチ（ゴール、手前＝下側）: フィニッシュ(x=cx-halfLen)→コーナー入口(x=cx+halfLen)
     var t1 = fraction / 0.2;
-    return { x: cx + halfLen - t1 * (2 * halfLen), y: cy + r };
+    return { x: (cx - halfLen) + t1 * (2 * halfLen), y: cy + r };
   } else if(fraction < 0.5){
-    // コーナー1（左側、外側＝左に膨らむ）
+    // 右側コーナー（外側＝右に膨らむ）
     var t2 = (fraction - 0.2) / 0.3;
-    var a2 = (90 + 180 * t2) * Math.PI / 180;
-    return { x: (cx - halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
+    var a2 = (90 - 180 * t2) * Math.PI / 180;
+    return { x: (cx + halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
   } else if(fraction < 0.8){
     // 向正面（バックストレッチ、奥＝上側）
     var t3 = (fraction - 0.5) / 0.3;
-    return { x: (cx - halfLen) + t3 * (2 * halfLen), y: cy - r };
+    return { x: (cx + halfLen) - t3 * (2 * halfLen), y: cy - r };
   } else {
-    // コーナー2（右側、外側＝右に膨らむ）
+    // 左側コーナー（外側＝左に膨らむ）
     var t4 = (fraction - 0.8) / 0.2;
-    var a4 = (-90 + 180 * t4) * Math.PI / 180;
-    return { x: (cx + halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
+    var a4 = (-90 - 180 * t4) * Math.PI / 180;
+    return { x: (cx - halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
   }
-}
-function devEaseInOutCubic(t){
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 function devFractionFromPosition(track, positionPct){
   var f = track.start_fraction + track.total_laps * (positionPct / 100);
@@ -1934,45 +1942,74 @@ function setDevCarXY(tabId, car, x, y){
   if(dot){ dot.setAttribute('cx', x); dot.setAttribute('cy', y); }
   if(label){ label.setAttribute('x', x); label.setAttribute('y', y + 4); }
 }
-function placeDevCarsAtCheckpoint(tabId, anim, step){
+function updateDevLineConnectors(tabId, anim, xyByCar){
+  var groups = {};
   anim.cars.forEach(function(c){
-    var frac = devFractionFromPosition(anim.track, c.positions[step]);
-    var xy = devTrackXY(frac, c.lanes[step]);
+    if(c.line_index === null || c.line_index === undefined) return;
+    (groups[c.line_index] = groups[c.line_index] || []).push(c);
+  });
+  Object.keys(groups).forEach(function(idx){
+    var members = groups[idx];
+    if(members.length < 2) return;
+    members.sort(function(a, b){ return a.line_position - b.line_position; });
+    var el = document.getElementById(tabId + '_devline_' + idx);
+    if(!el) return;
+    var pts = members.map(function(c){
+      var xy = xyByCar[c.car];
+      return xy ? (xy.x + ',' + xy.y) : '';
+    }).join(' ');
+    el.setAttribute('points', pts);
+  });
+}
+// Catmull-Romスプラインで5点のチェックポイントを滑らかに通す（各区間の境目で
+// 速度が0にならず、ずっと同じ調子で動き続けるようにするため）。端点は同じ値を
+// 複製して扱う（クランプ）。
+function devCatmullRom(values, u){
+  var n = values.length;
+  var i = Math.floor(u);
+  if(i < 0) i = 0;
+  if(i > n - 2) i = n - 2;
+  var t = u - i;
+  var p0 = values[Math.max(i - 1, 0)];
+  var p1 = values[i];
+  var p2 = values[Math.min(i + 1, n - 1)];
+  var p3 = values[Math.min(i + 2, n - 1)];
+  var t2 = t * t, t3 = t2 * t;
+  return 0.5 * ((2 * p1) + (-p0 + p2) * t +
+    (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
+    (-p0 + 3 * p1 - 3 * p2 + p3) * t3);
+}
+function placeDevCarsAtU(tabId, anim, u){
+  var xyByCar = {};
+  anim.cars.forEach(function(c){
+    var pos = devCatmullRom(c.positions, u);
+    var lane = devCatmullRom(c.lanes, u);
+    var frac = devFractionFromPosition(anim.track, pos);
+    var xy = devTrackXY(frac, lane);
+    xyByCar[c.car] = xy;
     setDevCarXY(tabId, c.car, xy.x, xy.y);
   });
+  updateDevLineConnectors(tabId, anim, xyByCar);
 }
 function initDevTrack(tabId){
   var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
   if(!anim) return;
-  placeDevCarsAtCheckpoint(tabId, anim, 0);
+  placeDevCarsAtU(tabId, anim, 0);
 }
 function playDevAnimation(tabId){
   var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
   if(!anim) return;
-  var stepMs = 900;
-  var step = 0;
-  placeDevCarsAtCheckpoint(tabId, anim, 0);
-  function animateSegment(){
-    if(step >= anim.checkpoints - 1) return;
-    var from = step, to = step + 1;
-    var start = null;
-    function frame(now){
-      if(start === null) start = now;
-      var t = Math.min((now - start) / stepMs, 1);
-      var te = devEaseInOutCubic(t);
-      anim.cars.forEach(function(c){
-        var pos = c.positions[from] + (c.positions[to] - c.positions[from]) * te;
-        var lane = c.lanes[from] + (c.lanes[to] - c.lanes[from]) * te;
-        var frac = devFractionFromPosition(anim.track, pos);
-        var xy = devTrackXY(frac, lane);
-        setDevCarXY(tabId, c.car, xy.x, xy.y);
-      });
-      if(t < 1){ requestAnimationFrame(frame); }
-      else { step++; animateSegment(); }
-    }
-    requestAnimationFrame(frame);
+  var totalMs = 9000; // ゆっくり・途切れず動く見た目にするため、やや長めの一定速度で通しで再生する
+  var maxU = anim.checkpoints - 1;
+  placeDevCarsAtU(tabId, anim, 0);
+  var start = null;
+  function frame(now){
+    if(start === null) start = now;
+    var t = Math.min((now - start) / totalMs, 1);
+    placeDevCarsAtU(tabId, anim, t * maxU);
+    if(t < 1){ requestAnimationFrame(frame); }
   }
-  animateSegment();
+  requestAnimationFrame(frame);
 }
 
 window.addEventListener('DOMContentLoaded', function(){
