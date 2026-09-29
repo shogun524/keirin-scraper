@@ -89,10 +89,10 @@ ANIMATION_CHECKPOINTS = 5
 # これにより「捲り＝外から一気に」「差し＝直線でだけ動く」という脚質の違いを
 # トラック上の横位置の動きとして再現する。
 LANE_CURVES_BY_KIMARITE = {
-    "逃": [0.12, 0.12, 0.13, 0.14, 0.15],
-    "マ": [0.16, 0.18, 0.20, 0.17, 0.14],
-    "捲": [0.15, 0.32, 0.62, 0.52, 0.30],
-    "差": [0.15, 0.18, 0.24, 0.42, 0.28],
+    "逃": [0.10, 0.10, 0.11, 0.12, 0.13],
+    "マ": [0.18, 0.20, 0.23, 0.19, 0.15],
+    "捲": [0.16, 0.38, 0.72, 0.58, 0.32],
+    "差": [0.16, 0.20, 0.28, 0.52, 0.30],
 }
 
 # 実際のバンク形状（ホームストレッチ＋バックストレッチ＋2つのコーナー）を、1周を
@@ -111,6 +111,17 @@ TRACK_SEGMENTS = {
 ANIMATION_START_FRACTION = 0.5  # 向正面あたり（アニメーションの開始地点）
 ANIMATION_TOTAL_LAPS = 1.5      # 向正面から数えてゴールまでの周回数（残り1周半）
 
+# 【重要】"positions" は 0〜100 の抽象的な「進み具合」ではなく、実際の周回距離
+# （単位：周）そのものを表す。全車は同じ 1.5周 を同じ時間で走るので、まず
+# 「集団全体が今どこまで進んでいるか」という共通の基準線（baseline）を先に決め、
+# 各車の差（着差）はその基準線からの「ごくわずかな遅れ」として上乗せする。
+# こうしないと、着順に応じて 0〜100 の異なるスケールを 1.5周分の弧長にそのまま
+# 換算してしまい、ある車だけ実際には1周以上も先にワープしたように見える
+# （チェックポイント0の時点で選手ごとにトラック上のバラバラな場所に飛んでしまう）
+# という致命的なバグになる。
+ANIMATION_MAX_GROUP_GAP_LAPS = 0.05   # ライン代表順位で最も差がつく場合の最大遅れ（周）
+ANIMATION_MAX_LINE_GAP_LAPS = 0.015   # ライン内の番手・三番手が先頭からさらに遅れる最大分（周）
+
 
 def _finalize_positions(positions, target):
     """
@@ -119,16 +130,32 @@ def _finalize_positions(positions, target):
     ・値が前方に対して単調非減少（車が後退して見えることがない）
     という2条件を必ず満たすように後処理する。
     """
-    capped = [min(p, target * 0.995) for p in positions[:-1]] + [target]
+    capped = [min(p, target - 0.0005) for p in positions[:-1]] + [target]
     for i in range(1, len(capped)):
         capped[i] = max(capped[i], capped[i - 1])
-    return [round(p, 1) for p in capped]
+    return [round(p, 5) for p in capped]
 
 
 def build_animation(rows, sample_run, straight_category="standard"):
     """
     1回分の試行（sample_run: {"realized":{car:決まり手}, "order":[car,...]（着順）}）から、
     レース展開を再生するためのチェックポイントごとの位置・進路データを作る。
+
+    【重要：positions の単位について】
+    以前のバージョンでは positions を「0〜100の抽象的な進み具合（着順ベースの
+    目標値×決まり手カーブ）」として計算し、それをトラック上の弧長（1.5周分）に
+    そのまま比例変換していた。しかしこれは、着順によって異なる0〜100のスケールを
+    1.5周という「全車共通の周回距離」に無理やり当てはめてしまうことになり、
+    チェックポイント0（アニメーション開始直後）の時点で選手によってはトラック上
+    1周以上先の全く違う場所にいるかのような、物理的にありえない結果を生んでいた
+    （実際に描画して発覚した致命的なバグ）。
+    そこで本バージョンでは positions を最初から「実際の周回距離（単位：周）」
+    として計算し直す：まず全車共通の基準線 baseline（0〜1.5周、チェックポイントの
+    時間経過に比例）を作り、着順による差は、そこからの「ごくわずかな遅れ」
+    （ANIMATION_MAX_GROUP_GAP_LAPS・ANIMATION_MAX_LINE_GAP_LAPS で上限を設定）
+    として上乗せする。これにより、全車が常に同じ集団としてトラック上のほぼ
+    同じ場所を一緒に進み、着順による違いはゴール前のごく僅かな差としてのみ
+    現れるようになる。
 
     【実際の競輪の集団の動きに合わせた設計】
     実際のレースでは、決着がつく最後の直線までは基本的に集団がほぼ一塊のまま進み、
@@ -137,21 +164,20 @@ def build_animation(rows, sample_run, straight_category="standard"):
     追いつけない）。この2点を、以下のロジックで再現する。
 
     1. 「個々の選手の着順」ではなく「ライン単位の代表着順（そのラインで最も着順の
-       良い選手の着順。単騎は1台だけのラインとして扱う）」で、ライン間の広がり幅を
-       決める。幅は最大でも18ポイント程度に抑え、レース全体を通して集団が大きく
-       割れすぎないようにする（実際の競輪でも、先頭集団と後方が直線半ばまでに
-       大きく離れることは無い）。
-    2. ラインの先頭（position=1）はそのライン目標値×決まり手カーブで進む。
-       番手・三番手（position>=2）は「先頭の位置 − 車間」として表現し、車間は
-       自分の決まり手が先頭に見劣りする分だけ生まれるが、一度広がった車間は
-       決して縮まらない（monotonic）。進路（lane）も同様に、先頭のレーン＋
-       単調に広がる一方の横ずれとして表現する。
+       良い選手の着順。単騎は1台だけのラインとして扱う）」で、ライン間の遅れ幅を
+       決める。最下位グループでも ANIMATION_MAX_GROUP_GAP_LAPS（既定0.05周）までしか
+       遅れない＝実際の競輪でも先頭集団と後方が大きく千切れないことを表現する。
+    2. ラインの先頭（position=1）は基準線からグループの遅れ分だけ引いた位置を進む。
+       番手・三番手（position>=2）は「先頭の位置 − 追加の車間」として表現し、車間は
+       自分の決まり手カーブの比率（0→1に単調増加）で単調に広がるだけ＝一度広がった
+       車間は決して縮まらない。進路（lane）も同様に、先頭のレーン＋単調に広がる
+       一方の横ずれとして表現する。
     3. 単騎（ラインを組んでいない選手）は自分の決まり手カーブのみで進む。
 
     戻り値: {
       "checkpoints": int,
       "track": {"segments":{...}, "start_fraction":0.5, "total_laps":1.5},
-      "cars":[{"car","name","positions":[0-100の5点＝進行度],
+      "cars":[{"car","name","positions":[実際の周回距離（周）の5点＝進行度],
                "lanes":[0-1の5点＝進路（0=最内/1=最外）],
                "line_index","line_position"}],
       "final_order":[car,...],
@@ -161,9 +187,14 @@ def build_animation(rows, sample_run, straight_category="standard"):
         return None
     order = sample_run["order"]
     realized = sample_run["realized"]
+    n_checkpoints = ANIMATION_CHECKPOINTS
     rank_of = {car: i for i, car in enumerate(order)}
     row_by_car = {r["car"]: r for r in rows}
     curves = POSITION_CURVES_BY_STRAIGHT.get(straight_category, POSITION_CURVES_BY_STRAIGHT["standard"])
+
+    # 集団全体が共通で進む基準線（周単位）。全車がこの同じペースで一緒に進み、
+    # 着順による差は、この基準線からの「ごくわずかな遅れ」として later 上乗せする。
+    baseline = [ANIMATION_TOTAL_LAPS * i / (n_checkpoints - 1) for i in range(n_checkpoints)]
 
     # ライン単位でグルーピング（単騎は1台だけのグループとして扱う）
     group_key_of_car = {}
@@ -178,22 +209,34 @@ def build_animation(rows, sample_run, straight_category="standard"):
     group_rank = {key: min(rank_of[c] for c in members) for key, members in group_members.items()}
     ranked_groups = sorted(group_rank.keys(), key=lambda k: group_rank[k])
     n_groups = len(ranked_groups)
-    # グループ間の広がりは最大18ポイントまで（実際のレースで集団が大きく割れすぎない
-    # ようにするため。個々の着順ではなく、この「ライン代表順位」で決める）
-    group_target = {
-        key: max(100 - i * (18 / max(n_groups - 1, 1)), 82)
+    # グループの最終的な遅れ（周）。最上位グループは遅れ0、最下位グループでも
+    # ANIMATION_MAX_GROUP_GAP_LAPS（既定0.05周＝バンク1周を大きく下回るごく僅かな差）
+    # までしか遅れない＝実際の競輪で先頭集団と後方が大きく千切れないことを表現する。
+    group_final_deficit = {
+        key: ANIMATION_MAX_GROUP_GAP_LAPS * (i / max(n_groups - 1, 1))
         for i, key in enumerate(ranked_groups)
     }
 
-    # 自分自身の決まり手カーブだけで進んだ場合の進行度・進路（車間計算の土台として先に全員分計算）
+    def _ramp_for(kimarite):
+        # 決まり手カーブ（0〜1に単調増加）を「0（まだ遅れていない）→1（最終的な遅れが
+        # 出切った）」の比率カーブに変換する。決まり手ごとに遅れが表面化するタイミング
+        # （逃げは終盤まで粘る、差しは終盤だけ一気に、等）を反映しつつ、単調増加が
+        # 保証されるので「一度遅れたら縮まらない」という条件も自動的に満たす。
+        curve = curves.get(kimarite, curves["マ"])
+        span = curve[-1] - curve[0]
+        if span <= 1e-9:
+            return [0.0] * n_checkpoints
+        return [(c - curve[0]) / span for c in curve]
+
+    # 各車自身の決まり手カーブから、実際の進行度（基準線 − 遅れ）を計算する
     own_positions = {}
     own_lanes = {}
     for car in order:
         kimarite = realized.get(car)
-        pos_curve = curves.get(kimarite, curves["マ"])
+        ramp = _ramp_for(kimarite)
+        deficit_final = group_final_deficit[group_key_of_car[car]]
+        own_positions[car] = [baseline[i] - deficit_final * ramp[i] for i in range(n_checkpoints)]
         lane_curve = LANE_CURVES_BY_KIMARITE.get(kimarite, LANE_CURVES_BY_KIMARITE["マ"])
-        target = group_target[group_key_of_car[car]]
-        own_positions[car] = [round(target * c, 1) for c in pos_curve]
         own_lanes[car] = list(lane_curve)
 
     # ラインの先頭車番を line_index ごとに特定する
@@ -208,32 +251,29 @@ def build_animation(rows, sample_run, straight_category="standard"):
         info = row_by_car.get(car, {}).get("line_info")
         leader_car = leader_of_line.get(info["line_index"]) if info else None
         if leader_car is not None and leader_car != car:
-            # 番手・三番手＝「先頭の位置 − 車間」。車間は自分の決まり手カーブが
-            # 先頭よりどれだけ見劣りするかの4割だけを反映し、かつ一度広がったら
-            # 縮まらない（monotonic）ようにする＝「一度千切れたら追いつけない」。
+            # 番手・三番手＝「先頭の位置 − 追加の車間」。車間は自分自身の決まり手
+            # カーブの比率（ramp）で単調に広がるだけで、先頭の位置そのものからは
+            # 常にごく僅か（最大でも ANIMATION_MAX_LINE_GAP_LAPS×position分）しか
+            # 離れない＝ライン内の選手同士が大きく離れることはない、を保証する。
+            kimarite = realized.get(car)
+            ramp = _ramp_for(kimarite)
+            extra_final = ANIMATION_MAX_LINE_GAP_LAPS * (info["position"] - 1)
             leader_pos = own_positions[leader_car]
-            own_pos = own_positions[car]
-            positions = []
-            gap = 0.0
-            for i in range(len(leader_pos)):
-                shortfall = max(leader_pos[i] - own_pos[i], 0.0) * 0.4
-                gap = max(gap, shortfall)
-                positions.append(leader_pos[i] - gap)
+            positions = [leader_pos[i] - extra_final * ramp[i] for i in range(n_checkpoints)]
             # 進路（lane）も同様に、先頭のレーン＋単調に広がる一方の横ずれで表現する
             leader_lane = own_lanes[leader_car]
             own_lane_curve = own_lanes[car]
             lanes = []
-            lane_gap = 0.02 * (info["position"] - 1)  # 番手ほど基礎的にわずかに外側
+            lane_gap = 0.05 * (info["position"] - 1)  # 番手ほど基礎的にわずかに外側（見た目で判別できる幅）
             base_lane_gap = lane_gap
-            for i in range(len(leader_lane)):
+            for i in range(n_checkpoints):
                 outward = max(own_lane_curve[i] - leader_lane[i], 0.0) * 0.5
                 lane_gap = max(lane_gap, base_lane_gap + outward)
                 lanes.append(leader_lane[i] + lane_gap)
         else:
             positions = own_positions[car]
             lanes = own_lanes[car]
-        target_for_car = positions[-1] if leader_car is not None else group_target[group_key_of_car[car]]
-        positions = _finalize_positions(positions, target_for_car)
+        positions = _finalize_positions(positions, positions[-1])
         lanes = [round(min(max(v, 0.05), 0.95), 3) for v in lanes]
         cars_payload.append({
             "car": car, "name": row_by_car.get(car, {}).get("name", ""),
