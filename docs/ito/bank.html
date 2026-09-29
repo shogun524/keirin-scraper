@@ -112,12 +112,12 @@
   .hole-tag{ font-size:10px; font-weight:700; color:#8a5a12; background:#fdecc8; border-radius:3px; padding:1px 6px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
-  .dev-track{ position:relative; background:var(--paper2); border-radius:4px; padding:8px 0; margin-bottom:14px; }
-  .dev-lane{ position:relative; height:28px; }
-  .dev-finish-line{ position:absolute; top:0; bottom:0; left:90%; width:2px; background:var(--gold); }
-  .dev-lane-car{ position:absolute; top:3px; left:0; width:22px; height:22px; border-radius:50%;
-                 display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;
-                 border:1px solid rgba(0,0,0,.18); transition:left 0.9s linear; }
+  .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
+  .dev-track-svg{ width:100%; height:auto; display:block; }
+  .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
+  .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-car-dot{ transition:none; }
+  .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }

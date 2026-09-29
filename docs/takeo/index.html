@@ -111,12 +111,12 @@
   .hole-tag{ font-size:10px; font-weight:700; color:#8a5a12; background:#fdecc8; border-radius:3px; padding:1px 6px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
-  .dev-track{ position:relative; background:var(--paper2); border-radius:4px; padding:8px 0; margin-bottom:14px; }
-  .dev-lane{ position:relative; height:28px; }
-  .dev-finish-line{ position:absolute; top:0; bottom:0; left:90%; width:2px; background:var(--gold); }
-  .dev-lane-car{ position:absolute; top:3px; left:0; width:22px; height:22px; border-radius:50%;
-                 display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;
-                 border:1px solid rgba(0,0,0,.18); transition:left 0.9s linear; }
+  .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
+  .dev-track-svg{ width:100%; height:auto; display:block; }
+  .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
+  .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-car-dot{ transition:none; }
+  .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -283,13 +283,16 @@
       
     <div class="hole-line"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 利川 寛太 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race1')">▶ 再生</button>
-    <div class="dev-track" id="race1_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race1_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race1_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race1_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race1_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race1_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race1_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race1_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race1_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race1_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race1"]={"checkpoints": 5, "cars": [{"car": 4, "name": "高谷 雅彦", "positions": [8.5, 21.2, 44.2, 68.0, 85.0], "line_index": 0, "line_position": 1}, {"car": 1, "name": "栗田 雄矢", "positions": [8.2, 20.6, 42.9, 80.8, 95.0], "line_index": 0, "line_position": 2}, {"car": 3, "name": "三好 陽一", "positions": [8.0, 20.0, 41.8, 44.0, 80.0], "line_index": 0, "line_position": 3}, {"car": 6, "name": "中野 真吾", "positions": [21.0, 36.4, 47.6, 57.4, 70.0], "line_index": 1, "line_position": 1}, {"car": 5, "name": "川野 正芳", "positions": [20.4, 35.3, 46.2, 49.5, 90.0], "line_index": 1, "line_position": 2}, {"car": 2, "name": "関根 彰人", "positions": [19.8, 34.4, 45.0, 80.0, 100.0], "line_index": 1, "line_position": 3}, {"car": 7, "name": "利川 寛太", "positions": [22.5, 39.0, 51.0, 61.5, 75.0], "line_index": 2, "line_position": 1}], "final_order": [2, 1, 5, 4, 3, 7, 6]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race1"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 4, "name": "高谷 雅彦", "positions": [8.5, 21.2, 44.2, 68.0, 85.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 0, "line_position": 1}, {"car": 1, "name": "栗田 雄矢", "positions": [8.2, 20.6, 42.9, 80.8, 95.0], "lanes": [0.17, 0.34, 0.64, 0.17, 0.14], "line_index": 0, "line_position": 2}, {"car": 3, "name": "三好 陽一", "positions": [8.0, 20.0, 41.8, 44.0, 80.0], "lanes": [0.19, 0.36, 0.66, 0.42, 0.28], "line_index": 0, "line_position": 3}, {"car": 6, "name": "中野 真吾", "positions": [21.0, 36.4, 47.6, 57.4, 70.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 1, "line_position": 1}, {"car": 5, "name": "川野 正芳", "positions": [20.4, 35.3, 46.2, 49.5, 90.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 1, "line_position": 2}, {"car": 2, "name": "関根 彰人", "positions": [19.8, 34.4, 45.0, 80.0, 100.0], "lanes": [0.16, 0.16, 0.17, 0.52, 0.3], "line_index": 1, "line_position": 3}, {"car": 7, "name": "利川 寛太", "positions": [22.5, 39.0, 51.0, 61.5, 75.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 2, "line_position": 1}], "final_order": [2, 1, 5, 4, 3, 7, 6]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -459,13 +462,16 @@
       
     <div class="hole-line"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 井手 健 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race2')">▶ 再生</button>
-    <div class="dev-track" id="race2_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race2_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race2_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race2_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race2_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race2_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race2_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race2_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race2_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race2_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race2"]={"checkpoints": 5, "cars": [{"car": 1, "name": "池部 壮太", "positions": [5.7, 13.3, 26.6, 52.3, 95.0], "line_index": 0, "line_position": 1}, {"car": 4, "name": "古川 貴之", "positions": [5.5, 12.9, 25.8, 82.0, 100.0], "line_index": 0, "line_position": 2}, {"car": 5, "name": "井手 健", "positions": [5.4, 12.6, 25.1, 76.5, 90.0], "line_index": 0, "line_position": 3}, {"car": 2, "name": "平山 優太", "positions": [8.0, 20.0, 41.6, 64.0, 80.0], "line_index": 1, "line_position": 1}, {"car": 6, "name": "渡邊 恭典", "positions": [7.8, 19.4, 40.4, 41.2, 75.0], "line_index": 1, "line_position": 2}, {"car": 3, "name": "中村 泰輔", "positions": [12.6, 28.0, 43.4, 59.5, 70.0], "line_index": 2, "line_position": 1}, {"car": 7, "name": "西谷 岳文", "positions": [12.2, 27.2, 42.1, 46.8, 85.0], "line_index": 2, "line_position": 2}], "final_order": [4, 1, 5, 7, 2, 6, 3]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race2"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "池部 壮太", "positions": [5.7, 13.3, 26.6, 52.3, 95.0], "lanes": [0.15, 0.18, 0.24, 0.42, 0.28], "line_index": 0, "line_position": 1}, {"car": 4, "name": "古川 貴之", "positions": [5.5, 12.9, 25.8, 82.0, 100.0], "lanes": [0.17, 0.2, 0.26, 0.14, 0.15], "line_index": 0, "line_position": 2}, {"car": 5, "name": "井手 健", "positions": [5.4, 12.6, 25.1, 76.5, 90.0], "lanes": [0.19, 0.22, 0.28, 0.17, 0.14], "line_index": 0, "line_position": 3}, {"car": 2, "name": "平山 優太", "positions": [8.0, 20.0, 41.6, 64.0, 80.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 1, "line_position": 1}, {"car": 6, "name": "渡邊 恭典", "positions": [7.8, 19.4, 40.4, 41.2, 75.0], "lanes": [0.17, 0.34, 0.64, 0.42, 0.28], "line_index": 1, "line_position": 2}, {"car": 3, "name": "中村 泰輔", "positions": [12.6, 28.0, 43.4, 59.5, 70.0], "lanes": [0.16, 0.18, 0.2, 0.17, 0.14], "line_index": 2, "line_position": 1}, {"car": 7, "name": "西谷 岳文", "positions": [12.2, 27.2, 42.1, 46.8, 85.0], "lanes": [0.18, 0.2, 0.22, 0.42, 0.28], "line_index": 2, "line_position": 2}], "final_order": [4, 1, 5, 7, 2, 6, 3]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -635,13 +641,16 @@
       
     <div class="hole-line"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 近藤 寛央 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race3')">▶ 再生</button>
-    <div class="dev-track" id="race3_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race3_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race3_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race3_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race3_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race3_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race3_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race3_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race3_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race3_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race3"]={"checkpoints": 5, "cars": [{"car": 1, "name": "矢部 駿人", "positions": [6.0, 14.0, 28.0, 55.0, 100.0], "line_index": 0, "line_position": 1}, {"car": 5, "name": "岡田 啓渡", "positions": [5.8, 13.6, 27.2, 46.8, 85.0], "line_index": 0, "line_position": 2}, {"car": 6, "name": "近藤 寛央", "positions": [4.2, 9.8, 19.6, 38.5, 70.0], "line_index": 1, "line_position": 1}, {"car": 2, "name": "出口 謙一郎", "positions": [28.5, 49.4, 64.6, 77.9, 95.0], "line_index": 2, "line_position": 1}, {"car": 7, "name": "伊藤 温希", "positions": [27.6, 47.9, 62.7, 63.8, 75.0], "line_index": 2, "line_position": 2}, {"car": 4, "name": "高橋 幸司", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "line_index": 3, "line_position": 1}, {"car": 3, "name": "工藤 文彦", "positions": [26.2, 45.4, 59.4, 59.4, 80.0], "line_index": 3, "line_position": 2}], "final_order": [1, 2, 4, 5, 3, 7, 6]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race3"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "矢部 駿人", "positions": [6.0, 14.0, 28.0, 55.0, 100.0], "lanes": [0.15, 0.18, 0.24, 0.42, 0.28], "line_index": 0, "line_position": 1}, {"car": 5, "name": "岡田 啓渡", "positions": [5.8, 13.6, 27.2, 46.8, 85.0], "lanes": [0.17, 0.2, 0.26, 0.42, 0.28], "line_index": 0, "line_position": 2}, {"car": 6, "name": "近藤 寛央", "positions": [4.2, 9.8, 19.6, 38.5, 70.0], "lanes": [0.15, 0.18, 0.24, 0.42, 0.28], "line_index": 1, "line_position": 1}, {"car": 2, "name": "出口 謙一郎", "positions": [28.5, 49.4, 64.6, 77.9, 95.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 2, "line_position": 1}, {"car": 7, "name": "伊藤 温希", "positions": [27.6, 47.9, 62.7, 63.8, 75.0], "lanes": [0.14, 0.14, 0.15, 0.17, 0.14], "line_index": 2, "line_position": 2}, {"car": 4, "name": "高橋 幸司", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 3, "line_position": 1}, {"car": 3, "name": "工藤 文彦", "positions": [26.2, 45.4, 59.4, 59.4, 80.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 3, "line_position": 2}], "final_order": [1, 2, 4, 5, 3, 7, 6]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -811,13 +820,16 @@
       
     <div class="hole-line"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 成田 直喜 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race4')">▶ 再生</button>
-    <div class="dev-track" id="race4_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race4_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race4_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race4_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race4_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race4_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race4_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race4_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race4_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race4_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race4"]={"checkpoints": 5, "cars": [{"car": 4, "name": "中田 拓也", "positions": [25.5, 44.2, 57.8, 69.7, 85.0], "line_index": 0, "line_position": 1}, {"car": 1, "name": "小笹 隼人", "positions": [24.7, 42.9, 56.1, 80.8, 95.0], "line_index": 0, "line_position": 2}, {"car": 7, "name": "片山 弘城", "positions": [24.1, 41.8, 54.6, 54.6, 80.0], "line_index": 0, "line_position": 3}, {"car": 6, "name": "大竹 哲也", "positions": [4.2, 9.8, 19.6, 38.5, 70.0], "line_index": 1, "line_position": 1}, {"car": 2, "name": "片桐 善也", "positions": [9.0, 22.5, 46.8, 72.0, 90.0], "line_index": 2, "line_position": 1}, {"car": 5, "name": "野中 祐志", "positions": [8.7, 21.8, 45.4, 80.0, 100.0], "line_index": 2, "line_position": 2}, {"car": 3, "name": "成田 直喜", "positions": [8.5, 21.3, 44.2, 63.8, 75.0], "line_index": 2, "line_position": 3}], "final_order": [5, 1, 2, 4, 7, 3, 6]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race4"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 4, "name": "中田 拓也", "positions": [25.5, 44.2, 57.8, 69.7, 85.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 0, "line_position": 1}, {"car": 1, "name": "小笹 隼人", "positions": [24.7, 42.9, 56.1, 80.8, 95.0], "lanes": [0.14, 0.14, 0.15, 0.17, 0.14], "line_index": 0, "line_position": 2}, {"car": 7, "name": "片山 弘城", "positions": [24.1, 41.8, 54.6, 54.6, 80.0], "lanes": [0.16, 0.16, 0.17, 0.42, 0.28], "line_index": 0, "line_position": 3}, {"car": 6, "name": "大竹 哲也", "positions": [4.2, 9.8, 19.6, 38.5, 70.0], "lanes": [0.15, 0.18, 0.24, 0.42, 0.28], "line_index": 1, "line_position": 1}, {"car": 2, "name": "片桐 善也", "positions": [9.0, 22.5, 46.8, 72.0, 90.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 2, "line_position": 1}, {"car": 5, "name": "野中 祐志", "positions": [8.7, 21.8, 45.4, 80.0, 100.0], "lanes": [0.17, 0.34, 0.64, 0.52, 0.3], "line_index": 2, "line_position": 2}, {"car": 3, "name": "成田 直喜", "positions": [8.5, 21.3, 44.2, 63.8, 75.0], "lanes": [0.19, 0.36, 0.66, 0.17, 0.14], "line_index": 2, "line_position": 3}], "final_order": [5, 1, 2, 4, 7, 3, 6]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -973,13 +985,16 @@
       
     <div class="hole-line"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 佐々木 翔一 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race5')">▶ 再生</button>
-    <div class="dev-track" id="race5_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race5_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race5_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race5_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race5_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race5_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race5_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race5_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race5_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race5_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race5_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race5_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race5_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race5_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race5"]={"checkpoints": 5, "cars": [{"car": 4, "name": "小川 賢人", "positions": [7.0, 17.5, 36.4, 56.0, 70.0], "line_index": 0, "line_position": 1}, {"car": 1, "name": "松岡 孔明", "positions": [6.8, 17.0, 35.3, 41.8, 76.0], "line_index": 0, "line_position": 2}, {"car": 5, "name": "佐々木 翔一", "positions": [6.6, 16.5, 34.4, 51.7, 94.0], "line_index": 0, "line_position": 3}, {"car": 6, "name": "浮島 知稀", "positions": [24.6, 42.6, 55.8, 67.2, 82.0], "line_index": 1, "line_position": 1}, {"car": 3, "name": "久木原 洋", "positions": [23.9, 41.3, 54.1, 74.8, 88.0], "line_index": 1, "line_position": 2}, {"car": 2, "name": "真崎 新太郎", "positions": [23.2, 40.3, 52.7, 80.0, 100.0], "line_index": 1, "line_position": 3}], "final_order": [2, 5, 3, 6, 1, 4]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race5"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 4, "name": "小川 賢人", "positions": [7.0, 17.5, 36.4, 56.0, 70.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 0, "line_position": 1}, {"car": 1, "name": "松岡 孔明", "positions": [6.8, 17.0, 35.3, 41.8, 76.0], "lanes": [0.17, 0.34, 0.64, 0.42, 0.28], "line_index": 0, "line_position": 2}, {"car": 5, "name": "佐々木 翔一", "positions": [6.6, 16.5, 34.4, 51.7, 94.0], "lanes": [0.19, 0.36, 0.66, 0.42, 0.28], "line_index": 0, "line_position": 3}, {"car": 6, "name": "浮島 知稀", "positions": [24.6, 42.6, 55.8, 67.2, 82.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 1, "line_position": 1}, {"car": 3, "name": "久木原 洋", "positions": [23.9, 41.3, 54.1, 74.8, 88.0], "lanes": [0.14, 0.14, 0.15, 0.17, 0.14], "line_index": 1, "line_position": 2}, {"car": 2, "name": "真崎 新太郎", "positions": [23.2, 40.3, 52.7, 80.0, 100.0], "lanes": [0.16, 0.16, 0.17, 0.52, 0.3], "line_index": 1, "line_position": 3}], "final_order": [2, 5, 3, 6, 1, 4]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -1149,13 +1164,16 @@
       
     <div class="hole-line"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 加倉 正義 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race6')">▶ 再生</button>
-    <div class="dev-track" id="race6_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race6_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race6_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race6_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race6_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race6_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race6_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race6_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race6_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race6_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race6"]={"checkpoints": 5, "cars": [{"car": 7, "name": "富 武大", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "line_index": 0, "line_position": 1}, {"car": 2, "name": "原 誠宏", "positions": [26.2, 45.4, 59.4, 59.4, 85.0], "line_index": 0, "line_position": 2}, {"car": 6, "name": "加倉 正義", "positions": [25.5, 44.2, 57.8, 68.0, 80.0], "line_index": 0, "line_position": 3}, {"car": 4, "name": "荻原 尚人", "positions": [10.0, 25.0, 52.0, 80.0, 100.0], "line_index": 1, "line_position": 1}, {"car": 1, "name": "齋藤 登志信", "positions": [9.7, 24.2, 50.4, 59.5, 70.0], "line_index": 1, "line_position": 2}, {"car": 3, "name": "矢野 昌彦", "positions": [13.5, 30.0, 46.5, 63.8, 75.0], "line_index": 2, "line_position": 1}, {"car": 5, "name": "小林 潤二", "positions": [13.1, 29.1, 45.1, 52.3, 95.0], "line_index": 2, "line_position": 2}], "final_order": [4, 5, 7, 2, 6, 3, 1]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race6"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 7, "name": "富 武大", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 0, "line_position": 1}, {"car": 2, "name": "原 誠宏", "positions": [26.2, 45.4, 59.4, 59.4, 85.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 0, "line_position": 2}, {"car": 6, "name": "加倉 正義", "positions": [25.5, 44.2, 57.8, 68.0, 80.0], "lanes": [0.16, 0.16, 0.17, 0.17, 0.14], "line_index": 0, "line_position": 3}, {"car": 4, "name": "荻原 尚人", "positions": [10.0, 25.0, 52.0, 80.0, 100.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 1, "line_position": 1}, {"car": 1, "name": "齋藤 登志信", "positions": [9.7, 24.2, 50.4, 59.5, 70.0], "lanes": [0.17, 0.34, 0.64, 0.17, 0.14], "line_index": 1, "line_position": 2}, {"car": 3, "name": "矢野 昌彦", "positions": [13.5, 30.0, 46.5, 63.8, 75.0], "lanes": [0.16, 0.18, 0.2, 0.17, 0.14], "line_index": 2, "line_position": 1}, {"car": 5, "name": "小林 潤二", "positions": [13.1, 29.1, 45.1, 52.3, 95.0], "lanes": [0.18, 0.2, 0.22, 0.42, 0.28], "line_index": 2, "line_position": 2}], "final_order": [4, 5, 7, 2, 6, 3, 1]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -1325,13 +1343,16 @@
       
     <div class="hole-line"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 小谷 実 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race7')">▶ 再生</button>
-    <div class="dev-track" id="race7_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race7_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race7_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race7_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race7_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race7_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race7_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race7_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race7_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race7_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race7"]={"checkpoints": 5, "cars": [{"car": 7, "name": "佐藤 博紀", "positions": [8.5, 21.2, 44.2, 68.0, 85.0], "line_index": 0, "line_position": 1}, {"car": 5, "name": "佐藤 愼太郎", "positions": [8.2, 20.6, 42.9, 76.5, 90.0], "line_index": 0, "line_position": 2}, {"car": 1, "name": "丸山 啓一", "positions": [8.0, 20.0, 41.8, 44.0, 80.0], "line_index": 0, "line_position": 3}, {"car": 4, "name": "佐川 翔吾", "positions": [30.0, 52.0, 68.0, 82.0, 100.0], "line_index": 1, "line_position": 1}, {"car": 2, "name": "小谷 実", "positions": [29.1, 50.4, 66.0, 66.0, 95.0], "line_index": 1, "line_position": 2}, {"car": 3, "name": "岡 光良", "positions": [13.5, 30.0, 46.5, 63.8, 75.0], "line_index": 2, "line_position": 1}, {"car": 6, "name": "蓮井 祐輝", "positions": [7.0, 17.5, 36.4, 56.0, 70.0], "line_index": 3, "line_position": 1}], "final_order": [4, 2, 5, 7, 1, 3, 6]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race7"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 7, "name": "佐藤 博紀", "positions": [8.5, 21.2, 44.2, 68.0, 85.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 0, "line_position": 1}, {"car": 5, "name": "佐藤 愼太郎", "positions": [8.2, 20.6, 42.9, 76.5, 90.0], "lanes": [0.17, 0.34, 0.64, 0.17, 0.14], "line_index": 0, "line_position": 2}, {"car": 1, "name": "丸山 啓一", "positions": [8.0, 20.0, 41.8, 44.0, 80.0], "lanes": [0.19, 0.36, 0.66, 0.42, 0.28], "line_index": 0, "line_position": 3}, {"car": 4, "name": "佐川 翔吾", "positions": [30.0, 52.0, 68.0, 82.0, 100.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 1, "line_position": 1}, {"car": 2, "name": "小谷 実", "positions": [29.1, 50.4, 66.0, 66.0, 95.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 1, "line_position": 2}, {"car": 3, "name": "岡 光良", "positions": [13.5, 30.0, 46.5, 63.8, 75.0], "lanes": [0.16, 0.18, 0.2, 0.17, 0.14], "line_index": 2, "line_position": 1}, {"car": 6, "name": "蓮井 祐輝", "positions": [7.0, 17.5, 36.4, 56.0, 70.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 3, "line_position": 1}], "final_order": [4, 2, 5, 7, 1, 3, 6]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -1501,13 +1522,16 @@
       
     <div class="hole-line"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 稲垣 裕之 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race8')">▶ 再生</button>
-    <div class="dev-track" id="race8_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race8_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race8_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race8_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race8_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race8_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race8_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race8_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race8_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race8_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race8"]={"checkpoints": 5, "cars": [{"car": 1, "name": "徳田 匠", "positions": [24.0, 41.6, 54.4, 65.6, 80.0], "line_index": 0, "line_position": 1}, {"car": 6, "name": "稲垣 裕之", "positions": [23.3, 40.4, 52.8, 52.8, 70.0], "line_index": 0, "line_position": 2}, {"car": 2, "name": "菅原 大也", "positions": [9.5, 23.8, 49.4, 76.0, 95.0], "line_index": 1, "line_position": 1}, {"car": 7, "name": "杉本 正隆", "positions": [9.2, 23.1, 47.9, 55.0, 100.0], "line_index": 1, "line_position": 2}, {"car": 4, "name": "宿口 潤平", "positions": [9.0, 22.5, 46.7, 46.7, 75.0], "line_index": 1, "line_position": 3}, {"car": 3, "name": "長尾 拳太", "positions": [5.4, 12.6, 25.2, 49.5, 90.0], "line_index": 2, "line_position": 1}, {"car": 5, "name": "小堺 浩二", "positions": [5.2, 12.2, 24.4, 72.2, 85.0], "line_index": 2, "line_position": 2}], "final_order": [7, 2, 3, 5, 1, 4, 6]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race8"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "徳田 匠", "positions": [24.0, 41.6, 54.4, 65.6, 80.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 0, "line_position": 1}, {"car": 6, "name": "稲垣 裕之", "positions": [23.3, 40.4, 52.8, 52.8, 70.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 0, "line_position": 2}, {"car": 2, "name": "菅原 大也", "positions": [9.5, 23.8, 49.4, 76.0, 95.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 1, "line_position": 1}, {"car": 7, "name": "杉本 正隆", "positions": [9.2, 23.1, 47.9, 55.0, 100.0], "lanes": [0.17, 0.34, 0.64, 0.42, 0.28], "line_index": 1, "line_position": 2}, {"car": 4, "name": "宿口 潤平", "positions": [9.0, 22.5, 46.7, 46.7, 75.0], "lanes": [0.19, 0.36, 0.66, 0.42, 0.28], "line_index": 1, "line_position": 3}, {"car": 3, "name": "長尾 拳太", "positions": [5.4, 12.6, 25.2, 49.5, 90.0], "lanes": [0.15, 0.18, 0.24, 0.42, 0.28], "line_index": 2, "line_position": 1}, {"car": 5, "name": "小堺 浩二", "positions": [5.2, 12.2, 24.4, 72.2, 85.0], "lanes": [0.17, 0.2, 0.26, 0.17, 0.14], "line_index": 2, "line_position": 2}], "final_order": [7, 2, 3, 5, 1, 4, 6]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -1677,13 +1701,16 @@
       
     <div class="hole-line"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 山崎 泰己 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race9')">▶ 再生</button>
-    <div class="dev-track" id="race9_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race9_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race9_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race9_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race9_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race9_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race9_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race9_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race9_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race9_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race9"]={"checkpoints": 5, "cars": [{"car": 1, "name": "平尾 一晃", "positions": [17.1, 38.0, 58.9, 80.8, 95.0], "line_index": 0, "line_position": 1}, {"car": 5, "name": "山口 貴弘", "positions": [16.6, 36.9, 57.1, 57.1, 85.0], "line_index": 0, "line_position": 2}, {"car": 2, "name": "原田 翔真", "positions": [7.5, 18.8, 39.0, 60.0, 75.0], "line_index": 1, "line_position": 1}, {"car": 4, "name": "中井 俊亮", "positions": [7.3, 18.2, 37.8, 80.0, 100.0], "line_index": 1, "line_position": 2}, {"car": 6, "name": "白戸 淳太郎", "positions": [7.0, 17.5, 36.4, 56.0, 70.0], "line_index": 2, "line_position": 1}, {"car": 7, "name": "山本 奨", "positions": [8.0, 20.0, 41.6, 64.0, 80.0], "line_index": 3, "line_position": 1}, {"car": 3, "name": "山崎 泰己", "positions": [7.8, 19.4, 40.4, 49.5, 90.0], "line_index": 3, "line_position": 2}], "final_order": [4, 1, 3, 5, 7, 2, 6]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race9"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "平尾 一晃", "positions": [17.1, 38.0, 58.9, 80.8, 95.0], "lanes": [0.16, 0.18, 0.2, 0.17, 0.14], "line_index": 0, "line_position": 1}, {"car": 5, "name": "山口 貴弘", "positions": [16.6, 36.9, 57.1, 57.1, 85.0], "lanes": [0.18, 0.2, 0.22, 0.42, 0.28], "line_index": 0, "line_position": 2}, {"car": 2, "name": "原田 翔真", "positions": [7.5, 18.8, 39.0, 60.0, 75.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 1, "line_position": 1}, {"car": 4, "name": "中井 俊亮", "positions": [7.3, 18.2, 37.8, 80.0, 100.0], "lanes": [0.17, 0.34, 0.64, 0.52, 0.3], "line_index": 1, "line_position": 2}, {"car": 6, "name": "白戸 淳太郎", "positions": [7.0, 17.5, 36.4, 56.0, 70.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 2, "line_position": 1}, {"car": 7, "name": "山本 奨", "positions": [8.0, 20.0, 41.6, 64.0, 80.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 3, "line_position": 1}, {"car": 3, "name": "山崎 泰己", "positions": [7.8, 19.4, 40.4, 49.5, 90.0], "lanes": [0.17, 0.34, 0.64, 0.42, 0.28], "line_index": 3, "line_position": 2}], "final_order": [4, 1, 3, 5, 7, 2, 6]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -1853,13 +1880,16 @@
       
     <div class="hole-line"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 山根 将太 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race10')">▶ 再生</button>
-    <div class="dev-track" id="race10_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race10_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race10_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race10_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race10_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race10_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race10_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race10_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race10_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race10_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race10"]={"checkpoints": 5, "cars": [{"car": 5, "name": "平野 想真", "positions": [24.0, 41.6, 54.4, 65.6, 80.0], "line_index": 0, "line_position": 1}, {"car": 1, "name": "岡本 総", "positions": [23.3, 40.4, 52.8, 80.8, 95.0], "line_index": 0, "line_position": 2}, {"car": 6, "name": "山根 将太", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "line_index": 1, "line_position": 1}, {"car": 2, "name": "角 令央奈", "positions": [26.2, 45.4, 59.4, 80.0, 100.0], "line_index": 1, "line_position": 2}, {"car": 7, "name": "染谷 幸喜", "positions": [7.5, 18.8, 39.0, 60.0, 75.0], "line_index": 2, "line_position": 1}, {"car": 4, "name": "竹内 智彦", "positions": [7.3, 18.2, 37.8, 46.8, 85.0], "line_index": 2, "line_position": 2}, {"car": 3, "name": "藤根 俊貴", "positions": [7.1, 17.8, 36.9, 56.0, 70.0], "line_index": 2, "line_position": 3}], "final_order": [2, 1, 6, 4, 5, 7, 3]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race10"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 5, "name": "平野 想真", "positions": [24.0, 41.6, 54.4, 65.6, 80.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 0, "line_position": 1}, {"car": 1, "name": "岡本 総", "positions": [23.3, 40.4, 52.8, 80.8, 95.0], "lanes": [0.14, 0.14, 0.15, 0.17, 0.14], "line_index": 0, "line_position": 2}, {"car": 6, "name": "山根 将太", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 1, "line_position": 1}, {"car": 2, "name": "角 令央奈", "positions": [26.2, 45.4, 59.4, 80.0, 100.0], "lanes": [0.14, 0.14, 0.15, 0.52, 0.3], "line_index": 1, "line_position": 2}, {"car": 7, "name": "染谷 幸喜", "positions": [7.5, 18.8, 39.0, 60.0, 75.0], "lanes": [0.15, 0.32, 0.62, 0.52, 0.3], "line_index": 2, "line_position": 1}, {"car": 4, "name": "竹内 智彦", "positions": [7.3, 18.2, 37.8, 46.8, 85.0], "lanes": [0.17, 0.34, 0.64, 0.42, 0.28], "line_index": 2, "line_position": 2}, {"car": 3, "name": "藤根 俊貴", "positions": [7.1, 17.8, 36.9, 56.0, 70.0], "lanes": [0.19, 0.36, 0.66, 0.52, 0.3], "line_index": 2, "line_position": 3}], "final_order": [2, 1, 6, 4, 5, 7, 3]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -2029,13 +2059,16 @@
       
     <div class="hole-line"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 水澤 秀哉 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race11')">▶ 再生</button>
-    <div class="dev-track" id="race11_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div><div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race11_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race11_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race11_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race11_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race11_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race11_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race11_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race11_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race11_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race11"]={"checkpoints": 5, "cars": [{"car": 5, "name": "小玉 拓真", "positions": [5.7, 13.3, 26.6, 52.3, 95.0], "line_index": 0, "line_position": 1}, {"car": 1, "name": "中村 良二", "positions": [5.5, 12.9, 25.8, 44.0, 80.0], "line_index": 0, "line_position": 2}, {"car": 2, "name": "松田 安綱", "positions": [30.0, 52.0, 68.0, 82.0, 100.0], "line_index": 1, "line_position": 1}, {"car": 7, "name": "山口 智弘", "positions": [29.1, 50.4, 66.0, 66.0, 85.0], "line_index": 1, "line_position": 2}, {"car": 6, "name": "水澤 秀哉", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "line_index": 2, "line_position": 1}, {"car": 3, "name": "小林 則之", "positions": [26.2, 45.4, 59.4, 60.0, 75.0], "line_index": 2, "line_position": 2}, {"car": 4, "name": "佐藤 雅彦", "positions": [25.5, 44.2, 57.8, 57.8, 70.0], "line_index": 2, "line_position": 3}], "final_order": [2, 5, 6, 7, 1, 3, 4]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race11"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 5, "name": "小玉 拓真", "positions": [5.7, 13.3, 26.6, 52.3, 95.0], "lanes": [0.15, 0.18, 0.24, 0.42, 0.28], "line_index": 0, "line_position": 1}, {"car": 1, "name": "中村 良二", "positions": [5.5, 12.9, 25.8, 44.0, 80.0], "lanes": [0.17, 0.2, 0.26, 0.42, 0.28], "line_index": 0, "line_position": 2}, {"car": 2, "name": "松田 安綱", "positions": [30.0, 52.0, 68.0, 82.0, 100.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 1, "line_position": 1}, {"car": 7, "name": "山口 智弘", "positions": [29.1, 50.4, 66.0, 66.0, 85.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 1, "line_position": 2}, {"car": 6, "name": "水澤 秀哉", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 2, "line_position": 1}, {"car": 3, "name": "小林 則之", "positions": [26.2, 45.4, 59.4, 60.0, 75.0], "lanes": [0.14, 0.14, 0.15, 0.52, 0.3], "line_index": 2, "line_position": 2}, {"car": 4, "name": "佐藤 雅彦", "positions": [25.5, 44.2, 57.8, 57.8, 70.0], "lanes": [0.16, 0.16, 0.17, 0.52, 0.3], "line_index": 2, "line_position": 3}], "final_order": [2, 5, 6, 7, 1, 3, 4]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -2205,13 +2238,16 @@
       
     <div class="hole-line"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 須永 優太 <span class="hole-tag">穴目候補</span></div>
       
-    <div class="mw-label">展開シミュレーション</div>
+    <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race12')">▶ 再生</button>
-    <div class="dev-track" id="race12_dev_track">
-      <div class="dev-finish-line"></div>
-      <div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_7" style="background:#e07a1f;color:#ffffff;">7</span></div><div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_1" style="background:#ffffff;color:#1b2430;">1</span></div><div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_5" style="background:#e8c221;color:#1b2430;">5</span></div><div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_3" style="background:#d8322a;color:#ffffff;">3</span></div><div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_4" style="background:#1f5fc4;color:#ffffff;">4</span></div><div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_2" style="background:#1b1b1b;color:#ffffff;">2</span></div><div class="dev-lane"><span class="dev-lane-car" id="race12_dev_car_6" style="background:#2f8f4e;color:#ffffff;">6</span></div>
+    <div class="dev-track-wrap">
+      <svg id="race12_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
+        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
+        <line class="dev-finish-line-svg" x1="255" y1="20" x2="255" y2="80"/>
+        <circle id="race12_dev_car_7" class="dev-car-dot" r="11" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race12_dev_car_1" class="dev-car-dot" r="11" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race12_dev_car_5" class="dev-car-dot" r="11" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race12_dev_car_3" class="dev-car-dot" r="11" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race12_dev_car_4" class="dev-car-dot" r="11" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race12_dev_car_2" class="dev-car-dot" r="11" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race12_dev_car_6" class="dev-car-dot" r="11" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+      </svg>
     </div>
-    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race12"]={"checkpoints": 5, "cars": [{"car": 7, "name": "後藤 大輝", "positions": [25.5, 44.2, 57.8, 69.7, 85.0], "line_index": 0, "line_position": 1}, {"car": 1, "name": "山田 庸平", "positions": [24.7, 42.9, 56.1, 80.8, 95.0], "line_index": 0, "line_position": 2}, {"car": 5, "name": "園田 匠", "positions": [24.1, 41.8, 54.6, 54.6, 80.0], "line_index": 0, "line_position": 3}, {"car": 3, "name": "三谷 竜生", "positions": [21.0, 36.4, 47.6, 57.4, 70.0], "line_index": 1, "line_position": 1}, {"car": 4, "name": "松崎 広太", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "line_index": 2, "line_position": 1}, {"car": 2, "name": "和田 健太郎", "positions": [26.2, 45.4, 59.4, 59.4, 100.0], "line_index": 2, "line_position": 2}, {"car": 6, "name": "須永 優太", "positions": [25.5, 44.2, 57.8, 63.8, 75.0], "line_index": 2, "line_position": 3}], "final_order": [2, 1, 4, 7, 5, 6, 3]};</script>
+    <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race12"]={"checkpoints": 5, "track": {"segments": {"home_straight": [0.0, 0.2], "turn1": [0.2, 0.5], "back_straight": [0.5, 0.8], "turn2": [0.8, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 7, "name": "後藤 大輝", "positions": [25.5, 44.2, 57.8, 69.7, 85.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 0, "line_position": 1}, {"car": 1, "name": "山田 庸平", "positions": [24.7, 42.9, 56.1, 80.8, 95.0], "lanes": [0.14, 0.14, 0.15, 0.17, 0.14], "line_index": 0, "line_position": 2}, {"car": 5, "name": "園田 匠", "positions": [24.1, 41.8, 54.6, 54.6, 80.0], "lanes": [0.16, 0.16, 0.17, 0.42, 0.28], "line_index": 0, "line_position": 3}, {"car": 3, "name": "三谷 竜生", "positions": [21.0, 36.4, 47.6, 57.4, 70.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 1, "line_position": 1}, {"car": 4, "name": "松崎 広太", "positions": [27.0, 46.8, 61.2, 73.8, 90.0], "lanes": [0.12, 0.12, 0.13, 0.14, 0.15], "line_index": 2, "line_position": 1}, {"car": 2, "name": "和田 健太郎", "positions": [26.2, 45.4, 59.4, 59.4, 100.0], "lanes": [0.14, 0.14, 0.15, 0.42, 0.28], "line_index": 2, "line_position": 2}, {"car": 6, "name": "須永 優太", "positions": [25.5, 44.2, 57.8, 63.8, 75.0], "lanes": [0.16, 0.16, 0.17, 0.17, 0.14], "line_index": 2, "line_position": 3}], "final_order": [2, 1, 4, 7, 5, 6, 3]};</script>
       
     <div class="mw-label">展開別の1着候補</div>
     <div class="dev-scenarios">
@@ -2373,36 +2409,76 @@ function selectTrifectaCar(tabId, car){
   renderTrifectaGroups(tabId);
 }
 
-// 展開シミュレーションのアニメーション再生
-function initDevTrack(tabId){
-  const anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
-  if(!anim) return;
+// 展開シミュレーションのアニメーション再生（実際のバンク形状の上を動かす）
+// トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
+// （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
+function devTrackXY(fraction, lane){
+  var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
+  var r = R + lane * laneW;
+  if(fraction < 0.2){
+    var t1 = fraction / 0.2;
+    return { x: cx + halfLen - t1 * (2 * halfLen), y: cy - r };
+  } else if(fraction < 0.5){
+    var t2 = (fraction - 0.2) / 0.3;
+    var a2 = (-90 - 180 * t2) * Math.PI / 180;
+    return { x: (cx - halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
+  } else if(fraction < 0.8){
+    var t3 = (fraction - 0.5) / 0.3;
+    return { x: (cx - halfLen) + t3 * (2 * halfLen), y: cy + r };
+  } else {
+    var t4 = (fraction - 0.8) / 0.2;
+    var a4 = (90 - 180 * t4) * Math.PI / 180;
+    return { x: (cx + halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
+  }
+}
+function devFractionFromPosition(track, positionPct){
+  var f = track.start_fraction + track.total_laps * (positionPct / 100);
+  return f - Math.floor(f);
+}
+function setDevCarXY(tabId, car, x, y){
+  var dot = document.getElementById(tabId + '_dev_car_' + car);
+  var label = document.getElementById(tabId + '_dev_car_' + car + '_t');
+  if(dot){ dot.setAttribute('cx', x); dot.setAttribute('cy', y); }
+  if(label){ label.setAttribute('x', x); label.setAttribute('y', y + 4); }
+}
+function placeDevCarsAtCheckpoint(tabId, anim, step){
   anim.cars.forEach(function(c){
-    const el = document.getElementById(tabId+'_dev_car_'+c.car);
-    if(el) el.style.left = (c.positions[0] * 0.9) + '%';
+    var frac = devFractionFromPosition(anim.track, c.positions[step]);
+    var xy = devTrackXY(frac, c.lanes[step]);
+    setDevCarXY(tabId, c.car, xy.x, xy.y);
   });
 }
-function playDevAnimation(tabId){
-  const anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+function initDevTrack(tabId){
+  var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
   if(!anim) return;
-  let step = 0;
-  const totalSteps = anim.checkpoints;
-  const stepMs = 900;
-  function tick(){
-    anim.cars.forEach(function(c){
-      const el = document.getElementById(tabId+'_dev_car_'+c.car);
-      if(el) el.style.left = (c.positions[step] * 0.9) + '%';
-    });
-    step++;
-    if(step < totalSteps) setTimeout(tick, stepMs);
+  placeDevCarsAtCheckpoint(tabId, anim, 0);
+}
+function playDevAnimation(tabId){
+  var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+  if(!anim) return;
+  var stepMs = 900;
+  var step = 0;
+  placeDevCarsAtCheckpoint(tabId, anim, 0);
+  function animateSegment(){
+    if(step >= anim.checkpoints - 1) return;
+    var from = step, to = step + 1;
+    var start = null;
+    function frame(now){
+      if(start === null) start = now;
+      var t = Math.min((now - start) / stepMs, 1);
+      anim.cars.forEach(function(c){
+        var pos = c.positions[from] + (c.positions[to] - c.positions[from]) * t;
+        var lane = c.lanes[from] + (c.lanes[to] - c.lanes[from]) * t;
+        var frac = devFractionFromPosition(anim.track, pos);
+        var xy = devTrackXY(frac, lane);
+        setDevCarXY(tabId, c.car, xy.x, xy.y);
+      });
+      if(t < 1){ requestAnimationFrame(frame); }
+      else { step++; animateSegment(); }
+    }
+    requestAnimationFrame(frame);
   }
-  // 再生前にスタート地点へ一旦戻す
-  anim.cars.forEach(function(c){
-    const el = document.getElementById(tabId+'_dev_car_'+c.car);
-    if(el){ el.style.transition = 'none'; el.style.left = '0%'; void el.offsetWidth; el.style.transition = ''; }
-  });
-  step = 0;
-  setTimeout(tick, 50);
+  animateSegment();
 }
 
 window.addEventListener('DOMContentLoaded', function(){
