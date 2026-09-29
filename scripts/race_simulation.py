@@ -120,24 +120,30 @@ ANIMATION_TOTAL_LAPS = 1.5      # 向正面から数えてゴールまでの周�
 # （チェックポイント0の時点で選手ごとにトラック上のバラバラな場所に飛んでしまう）
 # という致命的なバグになる。
 #
-# 【改訂：個別着順ベース＋ライン内は「表示上の車間」を分離】
-# 以前は「ライン代表着順（ラインの最上位選手の着順）」だけで遅れ幅を決め、番手・
-# 三番手は常に「先頭の位置−追加の車間」として先頭より後ろにしか描けなかった。
-# これだと、番手選手が実際に差し切って1着になるケース（差し・捲り）でも、
-# アニメーション上は先頭の後ろに描かれてしまい、着順と矛盾する上に「集団が
-# 一塊すぎて誰が動いているか分からない」問題も起きていた。
-# そこで、進み具合そのもの（own_positions）は各車「個別の」最終着順で決め、
-# ライン内の並び順（1-2-3のような車間）は、それとは別に「表示上の一定の間隔
-# （ANIMATION_LINE_QUEUE_GAP）」として常時上乗せするだけにする。これにより
-#   ・実際の着順が正しくそのままアニメーションの前後関係に反映される
-#     （番手が差し切れば、番手が先頭を追い抜く動きとして描かれる）
-#   ・かつ、着順差が小さい序盤〜中盤は「ライン順に連なって進む」見た目になる
-# の両立ができる。ゴール（最終チェックポイント）だけは車間を0に戻し、必ず
-# 実際の着順どおりの前後関係でフィニッシュするようにする。
-ANIMATION_MAX_FIELD_GAP_LAPS = 0.18    # 最下位が1着から遅れる最大幅（周）。集団の塊具合と
-                                        # 視認性のバランスを取った、実際の着差よりやや誇張した値。
-ANIMATION_LINE_QUEUE_GAP = 0.015       # ライン内の車間（周相当、着順に関係なく常時一定）。
-                                        # 「1-2-3」のような並び順を序盤から視覚的に示すための間隔。
+# 【改訂履歴・重要な失敗と修正】
+# 一度「個々の選手の実際の着順」だけでフィールド全体（0〜ANIMATION_MAX_FIELD_GAP_LAPS）
+# に差を広げる実装にしたことがあるが、これは「番手が差し切って1着になっても矛盾なく
+# 描ける」という利点はあったものの、同じライン（例：1-2-7）の選手同士でも個々の
+# 着順が離れていればフィールド全体のスケールでバラバラに散ってしまい、「ライン同士・
+# ライン内が大きく離れることはない」という、最初に明確に要求された条件を壊して
+# しまっていた（実際に「本来のラインが1-2-7なのに1-2,3-4,5-6,-7のように離れて見える」
+# という指摘で発覚）。
+# そこで、ライン間の間隔と、ライン内の順序を分けて考える：
+#   ・ライン間（グループ間）の間隔＝ANIMATION_MAX_GROUP_GAP_LAPS。グループの代表着順
+#     （グループ内最上位選手の着順）で決める、小さい値。これにより違うライン同士は
+#     大きく離れず、常に近い集団として進む。
+#   ・ライン内の順序＝ANIMATION_MAX_LINE_GAP_LAPS。同じグループ内での「相対的な」
+#     着順（グループ内で何番目に良い着順か）で決める、さらに小さい値。これにより
+#     番手・三番手が実際にライン内トップを差し切っても、そのライン全体が動く範囲内
+#     でだけ順位が入れ替わる＝ライン全体が他のラインから大きく離れることはない。
+# さらに、ライン内の「並び予想どおりの順番（1-2-3のような車間）」を見せるための
+# 表示上の一定間隔 ANIMATION_LINE_QUEUE_GAP を番手・三番手に追加で乗せる（ゴール
+# だけはこれを0に戻し、実際の着順どおりの前後関係でフィニッシュする）。
+ANIMATION_MAX_GROUP_GAP_LAPS = 0.09   # 異なるライン（グループ）間の最大遅れ（周）。視認性のため
+                                       # 元の0.05よりは広げたが、フィールド全体には広げていない。
+ANIMATION_MAX_LINE_GAP_LAPS = 0.02    # 同じライン内で、グループ内相対着順1つ分あたりの遅れ（周）。
+ANIMATION_LINE_QUEUE_GAP = 0.015      # ライン内の車間（周相当、着順に関係なく常時一定）。
+                                       # 「1-2-3」のような並び順を序盤から視覚的に示すための間隔。
 
 
 def _finalize_positions(positions, target):
@@ -181,19 +187,23 @@ def build_animation(rows, sample_run, straight_category="standard"):
     ただし「番手・三番手が実際に差し切って1着になる」ような決まり手（差し・捲り）
     はきちんと追い抜きの動きとして見えなければならない。この3点を以下で両立する。
 
-    1. 進み具合（own_positions）は「個々の選手の実際の着順」で決める。1着は遅れ0、
-       最下位でも ANIMATION_MAX_FIELD_GAP_LAPS（既定0.18周）までしか遅れない＝
-       集団が大きく千切れないことを表現しつつ、着順が正しくそのまま前後関係になる
-       （番手が差し切れば、番手が先頭より前に出る動きとして描かれる）。
+    1. まず「ライン（グループ）単位の代表着順」で、ライン同士の間隔を決める
+       （ANIMATION_MAX_GROUP_GAP_LAPS、既定0.09周＝小さい値）。これにより違う
+       ライン同士は常に近い集団として進み、大きく千切れることはない。
+    2. 同じライン内での順序は、そのライン内での「相対的な」着順（グループ内で
+       何番目に良い着順だったか。0=グループ内トップ）で追加の遅れを決める
+       （ANIMATION_MAX_LINE_GAP_LAPS、既定0.02周×相対順位）。これにより番手・
+       三番手が実際にライン内トップを差し切っても、ライン全体が動く小さな範囲の
+       中でだけ順位が入れ替わる＝ライン全体が他のラインから大きく離れることはない。
        遅れが表面化するタイミングは自分の決まり手カーブ（0→1に単調増加のramp）に
        従うので、一度ついた遅れが縮まることもない。
-    2. ライン内の並び順（「1-2-3」のような車間）は、着順による本当の差とは別に
-       ANIMATION_LINE_QUEUE_GAP（常時一定の表示上の間隔）として番手・三番手に
-       追加で上乗せする。これにより着順差が小さい序盤〜中盤は「ライン順に連なって
-       進む」見た目になる。ただし最終チェックポイント（ゴール）だけはこの間隔を
-       0に戻し、必ず実際の着順どおりの前後関係でフィニッシュするようにする
-       （着順とアニメーションの矛盾を防ぐ）。
-    3. 進路（lane）は、決まり手ごとの横位置カーブ（LANE_CURVES_BY_KIMARITE）を
+    3. ライン内の「並び予想どおりの見た目の順番」（1-2-3のような車間）は、上記の
+       実際の着順による差とは別に、ANIMATION_LINE_QUEUE_GAP（常時一定の表示上の
+       間隔）として番手・三番手に追加で上乗せする。これにより着順差が小さい
+       序盤〜中盤は「ライン順に連なって進む」見た目になる。ただし最終チェック
+       ポイント（ゴール）だけはこの間隔を0に戻し、必ず実際の着順どおりの前後
+       関係でフィニッシュするようにする（着順とアニメーションの矛盾を防ぐ）。
+    4. 進路（lane）は、決まり手ごとの横位置カーブ（LANE_CURVES_BY_KIMARITE）を
        そのまま使う。捲り＝向正面〜コーナーで大きく外に膨らむ、差し＝直線でだけ
        外に出る、という動きが個々の車にそのまま表れるので、着順が良い捲り・差しは
        「外に膨らんで前に出る」動きとしてはっきり視認できる。ライン内の番手・
@@ -220,7 +230,6 @@ def build_animation(rows, sample_run, straight_category="standard"):
     # 集団全体が共通で進む基準線（周単位）。全車がこの同じペースで一緒に進み、
     # 着順による差は、この基準線からの「ごくわずかな遅れ」として later 上乗せする。
     baseline = [ANIMATION_TOTAL_LAPS * i / (n_checkpoints - 1) for i in range(n_checkpoints)]
-    n_cars = len(order)
 
     def _ramp_for(kimarite):
         # 決まり手カーブ（0〜1に単調増加）を「0（まだ遅れていない）→1（最終的な遅れが
@@ -233,15 +242,43 @@ def build_animation(rows, sample_run, straight_category="standard"):
             return [0.0] * n_checkpoints
         return [(c - curve[0]) / span for c in curve]
 
-    # 各車「個別の」実際の着順から、進行度（基準線 − 遅れ）を計算する。ライン代表
-    # 着順ではなく個別着順を使うことで、番手が差し切って1着になるケースでも矛盾なく
-    # 「番手が先頭を追い抜く」動きとして描かれる。
+    # ライン（グループ）単位でグルーピング（単騎は1台だけのグループとして扱う）
+    group_key_of_car = {}
+    group_members = {}
+    for car in order:
+        info = row_by_car.get(car, {}).get("line_info")
+        key = info["line_index"] if (info and info.get("line_size", 1) > 1) else ("solo", car)
+        group_key_of_car[car] = key
+        group_members.setdefault(key, []).append(car)
+
+    # 各グループの代表順位＝グループ内最上位（最も着順が良い）選手の順位。これで
+    # 「ライン同士の間隔」を決める＝違うライン同士が大きく離れることはない。
+    group_rank = {key: min(rank_of[c] for c in members) for key, members in group_members.items()}
+    ranked_groups = sorted(group_rank.keys(), key=lambda k: group_rank[k])
+    n_groups = len(ranked_groups)
+    group_final_deficit = {
+        key: ANIMATION_MAX_GROUP_GAP_LAPS * (i / max(n_groups - 1, 1))
+        for i, key in enumerate(ranked_groups)
+    }
+
+    # グループ内での「相対的な」着順（0=グループ内トップ）。これで「ライン内の順序」
+    # を決める＝番手が実際にライン内トップを差し切っても、グループ全体が動く小さな
+    # 範囲の中でだけ順位が入れ替わり、ライン全体が他ラインから離れることはない。
+    intra_group_rank = {}
+    for key, members in group_members.items():
+        for i, car in enumerate(sorted(members, key=lambda c: rank_of[c])):
+            intra_group_rank[car] = i
+
+    # 各車の進行度（基準線 − 遅れ）。遅れ ＝ ライン間の遅れ（グループ代表着順）＋
+    # ライン内の遅れ（グループ内相対着順）。同じ decay タイミング（自分の決まり手
+    # ramp）で表面化させるので、二つの項を先に足してから ramp を掛ければよい。
     own_positions = {}
     own_lanes = {}
     for car in order:
         kimarite = realized.get(car)
         ramp = _ramp_for(kimarite)
-        deficit_final = ANIMATION_MAX_FIELD_GAP_LAPS * (rank_of[car] / max(n_cars - 1, 1))
+        deficit_final = (group_final_deficit[group_key_of_car[car]]
+                         + ANIMATION_MAX_LINE_GAP_LAPS * intra_group_rank[car])
         own_positions[car] = [baseline[i] - deficit_final * ramp[i] for i in range(n_checkpoints)]
         lane_curve = LANE_CURVES_BY_KIMARITE.get(kimarite, LANE_CURVES_BY_KIMARITE["マ"])
         own_lanes[car] = list(lane_curve)
