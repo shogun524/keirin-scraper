@@ -418,14 +418,22 @@ def render_development_animation(tab_id, payload):
     の動きで捲り（外から一気に）・差し（直線だけ外に出す）といった決まり手の違いも表現する。
 
     画面の手前（下側）にゴール（ホームストレッチ）、奥（上側）に向正面（バックストレッチ）
-    を配置する（見た目の遠近感に合わせる）。ゴールはホームストレッチが次のコーナーに
-    入る直前の位置に置く（実際のバンクでも、ゴールは直線の途中ではなく、コーナー手前に
-    ある）。どちらの直線かひと目で分かるよう、線のそばに「ゴール」「向正面」のラベルを
-    添える。
+    を配置する。実際の競輪と同じ反時計回り（左回り）で周回する。同じラインの選手は
+    線で結び、ライン単位のまとまりが見た目でも分かるようにする。
     """
     if not payload or not payload.get("animation"):
         return ""
     anim = payload["animation"]
+    line_groups = {}
+    for c in anim["cars"]:
+        if c.get("line_index") is not None:
+            line_groups.setdefault(c["line_index"], []).append(c)
+    lines_html = ""
+    for idx, members in line_groups.items():
+        if len(members) < 2:
+            continue
+        members = sorted(members, key=lambda x: x["line_position"])
+        lines_html += f'<polyline id="{tab_id}_devline_{idx}" class="dev-line-connector" points=""/>'
     cars_html = ""
     for c in anim["cars"]:
         bg, fg = car_color(c["car"])
@@ -440,8 +448,9 @@ def render_development_animation(tab_id, payload):
       <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
+        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+        {lines_html}
         {cars_html}
       </svg>
     </div>
@@ -704,6 +713,7 @@ RACE_PANEL_STYLE = """
   .dev-track-caption-goal{ fill:#8a5a12; }
   .dev-car-dot{ transition:none; }
   .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
+  .dev-line-connector{ fill:none; stroke:var(--ink-soft); stroke-width:3; stroke-linecap:round; opacity:.4; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -853,33 +863,31 @@ function selectTrifectaCar(tabId, car){
 // トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
 // （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
 // 画面の奥（上側 y小）を向正面（バックストレッチ）、手前（下側 y大）をゴール
-// （ホームストレッチ）とする。フィニッシュ（fraction=0）はホームストレッチが
-// コーナーへ入る直前（x=cx+halfLen側）に位置する。
+// （ホームストレッチ）とする。実際の競輪と同じ反時計回り（左回り）で周回するよう、
+// フィニッシュ（fraction=0）をホームストレッチの左端（コーナー入口の手前）に置き、
+// そこから右回りではなく左回りに進む向きでトラック座標を定義している。
 function devTrackXY(fraction, lane){
   var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
   var r = R + lane * laneW;
   if(fraction < 0.2){
-    // ホームストレッチ（ゴール、手前＝下側）: フィニッシュ(x=cx+halfLen)→コーナー1入口(x=cx-halfLen)
+    // ホームストレッチ（ゴール、手前＝下側）: フィニッシュ(x=cx-halfLen)→コーナー入口(x=cx+halfLen)
     var t1 = fraction / 0.2;
-    return { x: cx + halfLen - t1 * (2 * halfLen), y: cy + r };
+    return { x: (cx - halfLen) + t1 * (2 * halfLen), y: cy + r };
   } else if(fraction < 0.5){
-    // コーナー1（左側、外側＝左に膨らむ）
+    // 右側コーナー（外側＝右に膨らむ）
     var t2 = (fraction - 0.2) / 0.3;
-    var a2 = (90 + 180 * t2) * Math.PI / 180;
-    return { x: (cx - halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
+    var a2 = (90 - 180 * t2) * Math.PI / 180;
+    return { x: (cx + halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
   } else if(fraction < 0.8){
     // 向正面（バックストレッチ、奥＝上側）
     var t3 = (fraction - 0.5) / 0.3;
-    return { x: (cx - halfLen) + t3 * (2 * halfLen), y: cy - r };
+    return { x: (cx + halfLen) - t3 * (2 * halfLen), y: cy - r };
   } else {
-    // コーナー2（右側、外側＝右に膨らむ）
+    // 左側コーナー（外側＝左に膨らむ）
     var t4 = (fraction - 0.8) / 0.2;
-    var a4 = (-90 + 180 * t4) * Math.PI / 180;
-    return { x: (cx + halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
+    var a4 = (-90 - 180 * t4) * Math.PI / 180;
+    return { x: (cx - halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
   }
-}
-function devEaseInOutCubic(t){
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 function devFractionFromPosition(track, positionPct){
   var f = track.start_fraction + track.total_laps * (positionPct / 100);
@@ -891,45 +899,74 @@ function setDevCarXY(tabId, car, x, y){
   if(dot){ dot.setAttribute('cx', x); dot.setAttribute('cy', y); }
   if(label){ label.setAttribute('x', x); label.setAttribute('y', y + 4); }
 }
-function placeDevCarsAtCheckpoint(tabId, anim, step){
+function updateDevLineConnectors(tabId, anim, xyByCar){
+  var groups = {};
   anim.cars.forEach(function(c){
-    var frac = devFractionFromPosition(anim.track, c.positions[step]);
-    var xy = devTrackXY(frac, c.lanes[step]);
+    if(c.line_index === null || c.line_index === undefined) return;
+    (groups[c.line_index] = groups[c.line_index] || []).push(c);
+  });
+  Object.keys(groups).forEach(function(idx){
+    var members = groups[idx];
+    if(members.length < 2) return;
+    members.sort(function(a, b){ return a.line_position - b.line_position; });
+    var el = document.getElementById(tabId + '_devline_' + idx);
+    if(!el) return;
+    var pts = members.map(function(c){
+      var xy = xyByCar[c.car];
+      return xy ? (xy.x + ',' + xy.y) : '';
+    }).join(' ');
+    el.setAttribute('points', pts);
+  });
+}
+// Catmull-Romスプラインで5点のチェックポイントを滑らかに通す（各区間の境目で
+// 速度が0にならず、ずっと同じ調子で動き続けるようにするため）。端点は同じ値を
+// 複製して扱う（クランプ）。
+function devCatmullRom(values, u){
+  var n = values.length;
+  var i = Math.floor(u);
+  if(i < 0) i = 0;
+  if(i > n - 2) i = n - 2;
+  var t = u - i;
+  var p0 = values[Math.max(i - 1, 0)];
+  var p1 = values[i];
+  var p2 = values[Math.min(i + 1, n - 1)];
+  var p3 = values[Math.min(i + 2, n - 1)];
+  var t2 = t * t, t3 = t2 * t;
+  return 0.5 * ((2 * p1) + (-p0 + p2) * t +
+    (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
+    (-p0 + 3 * p1 - 3 * p2 + p3) * t3);
+}
+function placeDevCarsAtU(tabId, anim, u){
+  var xyByCar = {};
+  anim.cars.forEach(function(c){
+    var pos = devCatmullRom(c.positions, u);
+    var lane = devCatmullRom(c.lanes, u);
+    var frac = devFractionFromPosition(anim.track, pos);
+    var xy = devTrackXY(frac, lane);
+    xyByCar[c.car] = xy;
     setDevCarXY(tabId, c.car, xy.x, xy.y);
   });
+  updateDevLineConnectors(tabId, anim, xyByCar);
 }
 function initDevTrack(tabId){
   var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
   if(!anim) return;
-  placeDevCarsAtCheckpoint(tabId, anim, 0);
+  placeDevCarsAtU(tabId, anim, 0);
 }
 function playDevAnimation(tabId){
   var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
   if(!anim) return;
-  var stepMs = 900;
-  var step = 0;
-  placeDevCarsAtCheckpoint(tabId, anim, 0);
-  function animateSegment(){
-    if(step >= anim.checkpoints - 1) return;
-    var from = step, to = step + 1;
-    var start = null;
-    function frame(now){
-      if(start === null) start = now;
-      var t = Math.min((now - start) / stepMs, 1);
-      var te = devEaseInOutCubic(t);
-      anim.cars.forEach(function(c){
-        var pos = c.positions[from] + (c.positions[to] - c.positions[from]) * te;
-        var lane = c.lanes[from] + (c.lanes[to] - c.lanes[from]) * te;
-        var frac = devFractionFromPosition(anim.track, pos);
-        var xy = devTrackXY(frac, lane);
-        setDevCarXY(tabId, c.car, xy.x, xy.y);
-      });
-      if(t < 1){ requestAnimationFrame(frame); }
-      else { step++; animateSegment(); }
-    }
-    requestAnimationFrame(frame);
+  var totalMs = 9000; // ゆっくり・途切れず動く見た目にするため、やや長めの一定速度で通しで再生する
+  var maxU = anim.checkpoints - 1;
+  placeDevCarsAtU(tabId, anim, 0);
+  var start = null;
+  function frame(now){
+    if(start === null) start = now;
+    var t = Math.min((now - start) / totalMs, 1);
+    placeDevCarsAtU(tabId, anim, t * maxU);
+    if(t < 1){ requestAnimationFrame(frame); }
   }
-  animateSegment();
+  requestAnimationFrame(frame);
 }
 
 window.addEventListener('DOMContentLoaded', function(){
