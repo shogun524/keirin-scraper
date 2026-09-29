@@ -437,7 +437,7 @@ def render_development_animation(tab_id, payload):
     cars_html = ""
     for c in anim["cars"]:
         bg, fg = car_color(c["car"])
-        cars_html += (f'<circle id="{tab_id}_dev_car_{c["car"]}" class="dev-car-dot" r="11" '
+        cars_html += (f'<circle id="{tab_id}_dev_car_{c["car"]}" class="dev-car-dot" r="8" '
                       f'fill="{bg}" stroke="rgba(0,0,0,.25)" stroke-width="1"/>'
                       f'<text id="{tab_id}_dev_car_{c["car"]}_t" class="dev-car-label" fill="{fg}">{c["car"]}</text>')
     payload_json = _json.dumps(anim, ensure_ascii=False)
@@ -712,7 +712,7 @@ RACE_PANEL_STYLE = """
   .dev-track-caption{ font-size:10px; font-weight:700; text-anchor:middle; fill:var(--ink-soft); }
   .dev-track-caption-goal{ fill:#8a5a12; }
   .dev-car-dot{ transition:none; }
-  .dev-car-label{ font-size:10px; font-weight:700; text-anchor:middle; pointer-events:none; }
+  .dev-car-label{ font-size:8px; font-weight:700; text-anchor:middle; pointer-events:none; }
   .dev-line-connector{ fill:none; stroke:var(--ink-soft); stroke-width:3; stroke-linecap:round; opacity:.4; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
@@ -867,7 +867,7 @@ function selectTrifectaCar(tabId, car){
 // 手前右側のコーナーに入る直前（x=cx+halfLen側）に位置する。実際の競輪と同じ
 // 反時計回り（左回り）：ゴール→右コーナー→向正面→左コーナー→ゴール、の順で周回する。
 function devTrackXY(fraction, lane){
-  var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
+  var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 42;
   var r = R + lane * laneW;
   if(fraction < 0.25){
     // 右側コーナー（ゴール側→向正面側、外側＝右に膨らむ）
@@ -889,8 +889,11 @@ function devTrackXY(fraction, lane){
     return { x: (cx - halfLen) + t4 * (2 * halfLen), y: cy + r };
   }
 }
-function devFractionFromPosition(track, positionPct){
-  var f = track.start_fraction + track.total_laps * (positionPct / 100);
+function devFractionFromPosition(track, positionLaps){
+  // positionLaps は既に「実際の周回距離（周）」そのもの（race_simulation.py の
+  // build_animation 参照）。start_fraction はアニメーション開始地点（向正面あたり）
+  // のトラック位置で、そこに周回距離をそのまま足すだけでよい（0-100换算は不要）。
+  var f = track.start_fraction + positionLaps;
   return f - Math.floor(f);
 }
 function setDevCarXY(tabId, car, x, y){
