@@ -448,7 +448,7 @@ def render_development_animation(tab_id, payload):
       <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
         <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
         <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="120" y1="180" x2="120" y2="228"/>
+        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
         <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
         {lines_html}
         {cars_html}
@@ -863,30 +863,30 @@ function selectTrifectaCar(tabId, car){
 // トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
 // （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
 // 画面の奥（上側 y小）を向正面（バックストレッチ）、手前（下側 y大）をゴール
-// （ホームストレッチ）とする。実際の競輪と同じ反時計回り（左回り）で周回するよう、
-// フィニッシュ（fraction=0）をホームストレッチの左端（コーナー入口の手前）に置き、
-// そこから右回りではなく左回りに進む向きでトラック座標を定義している。
+// （ホームストレッチ）とする。フィニッシュ（fraction=0=1.0）は、ホームストレッチが
+// 手前右側のコーナーに入る直前（x=cx+halfLen側）に位置する。実際の競輪と同じ
+// 反時計回り（左回り）：ゴール→右コーナー→向正面→左コーナー→ゴール、の順で周回する。
 function devTrackXY(fraction, lane){
   var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 30;
   var r = R + lane * laneW;
-  if(fraction < 0.2){
-    // ホームストレッチ（ゴール、手前＝下側）: フィニッシュ(x=cx-halfLen)→コーナー入口(x=cx+halfLen)
-    var t1 = fraction / 0.2;
-    return { x: (cx - halfLen) + t1 * (2 * halfLen), y: cy + r };
+  if(fraction < 0.25){
+    // 右側コーナー（ゴール側→向正面側、外側＝右に膨らむ）
+    var t1 = fraction / 0.25;
+    var a1 = (90 - 180 * t1) * Math.PI / 180;
+    return { x: (cx + halfLen) + r * Math.cos(a1), y: cy + r * Math.sin(a1) };
   } else if(fraction < 0.5){
-    // 右側コーナー（外側＝右に膨らむ）
-    var t2 = (fraction - 0.2) / 0.3;
-    var a2 = (90 - 180 * t2) * Math.PI / 180;
-    return { x: (cx + halfLen) + r * Math.cos(a2), y: cy + r * Math.sin(a2) };
-  } else if(fraction < 0.8){
-    // 向正面（バックストレッチ、奥＝上側）
-    var t3 = (fraction - 0.5) / 0.3;
-    return { x: (cx + halfLen) - t3 * (2 * halfLen), y: cy - r };
+    // 向正面（バックストレッチ、奥＝上側）: 右端→左端
+    var t2 = (fraction - 0.25) / 0.25;
+    return { x: (cx + halfLen) - t2 * (2 * halfLen), y: cy - r };
+  } else if(fraction < 0.75){
+    // 左側コーナー（向正面側→ゴール側、外側＝左に膨らむ）
+    var t3 = (fraction - 0.5) / 0.25;
+    var a3 = (-90 - 180 * t3) * Math.PI / 180;
+    return { x: (cx - halfLen) + r * Math.cos(a3), y: cy + r * Math.sin(a3) };
   } else {
-    // 左側コーナー（外側＝左に膨らむ）
-    var t4 = (fraction - 0.8) / 0.2;
-    var a4 = (-90 - 180 * t4) * Math.PI / 180;
-    return { x: (cx - halfLen) + r * Math.cos(a4), y: cy + r * Math.sin(a4) };
+    // ホームストレッチ（ゴール、手前＝下側）: 左端→フィニッシュ(x=cx+halfLen)
+    var t4 = (fraction - 0.75) / 0.25;
+    return { x: (cx - halfLen) + t4 * (2 * halfLen), y: cy + r };
   }
 }
 function devFractionFromPosition(track, positionPct){
