@@ -80,6 +80,37 @@ POSITION_CURVES_BY_STRAIGHT = {
 }
 ANIMATION_CHECKPOINTS = 5
 
+# 決まり手ごとの「進路（コース取り）」。0=最内（誘導員の後ろ、ポジション固定）、
+# 1=最外（大きく外を回る）で表す横方向の位置。
+#   逃  : 最内を維持したまま逃げ切りを図る
+#   マ  : 先頭の直後（内）に張り付いたまま追走し、ゴール寸前だけわずかに動く
+#   捲  : 向正面〜コーナーで大きく外に膨らんで一気に交わし、直線でやや内に戻す
+#   差  : 直線に入るまでは内で脚を溜め、最後の2区間だけ外へ出して差す
+# これにより「捲り＝外から一気に」「差し＝直線でだけ動く」という脚質の違いを
+# トラック上の横位置の動きとして再現する。
+LANE_CURVES_BY_KIMARITE = {
+    "逃": [0.12, 0.12, 0.13, 0.14, 0.15],
+    "マ": [0.16, 0.18, 0.20, 0.17, 0.14],
+    "捲": [0.15, 0.32, 0.62, 0.52, 0.30],
+    "差": [0.15, 0.18, 0.24, 0.42, 0.28],
+}
+
+# 実際のバンク形状（ホームストレッチ＋バックストレッチ＋2つのコーナー）を、1周を
+# 0.0〜1.0のトラック位置（fraction）で表した区間表。フィニッシュライン＝0.0（＝1.0）、
+# 向正面（バックストレッチ）入口＝0.5（フィニッシュのちょうど半周先＝対岸）とする
+# ことで、「向正面から残り1周半」を fraction 0.5 → 2.0（=0.5+1.5周）の単純な直線的な
+# 加算で表現できる。フロントエンド（report.py の JS）はこの区間表を使って実際に
+# ホームストレッチ／コーナー／バックストレッチの形にトラックを描画し、各車の
+# position（0〜100の進行度）と lane（0〜1の横位置）から (x, y) 座標を計算する。
+TRACK_SEGMENTS = {
+    "home_straight": [0.0, 0.2],   # フィニッシュライン(0.0)を含むホームストレッチ
+    "turn1": [0.2, 0.5],           # 1コーナー〜2コーナー
+    "back_straight": [0.5, 0.8],   # 向正面（バックストレッチ）
+    "turn2": [0.8, 1.0],           # 3コーナー〜4コーナー
+}
+ANIMATION_START_FRACTION = 0.5  # 向正面入口（アニメーションの開始地点）
+ANIMATION_TOTAL_LAPS = 1.5      # 向正面から数えてゴールまでの周回数（残り1周半）
+
 
 def _finalize_positions(positions, target):
     """
@@ -94,18 +125,44 @@ def _finalize_positions(positions, target):
     return [round(p, 1) for p in capped]
 
 
+def _line_following_series(car, own_series, leader_series, info, lag_per_position, divergent_from=3):
+    """
+    ラインの番手・三番手（position>=2）は、序盤（チェックポイント0〜divergent_from-1）は
+    先頭の直後にぴったりついて進み、終盤（divergent_from以降）だけ自分自身の値に
+    分岐する、という「番手取り」の動きを position/lane 共通のロジックとして作る。
+    """
+    if not (info and info.get("line_size", 1) > 1 and info.get("position", 1) >= 2):
+        return list(own_series)
+    lag = lag_per_position(info["position"])
+    out = [leader_series[i] * lag for i in range(divergent_from)]
+    out += [own_series[i] for i in range(divergent_from, len(own_series))]
+    return out
+
+
 def build_animation(rows, sample_run, straight_category="standard"):
     """
     1回分の試行（sample_run: {"realized":{car:決まり手}, "order":[car,...]（着順）}）から、
-    レース展開を再生するためのチェックポイントごとの位置データを作る。
+    レース展開を再生するためのチェックポイントごとの位置・進路データを作る。
 
     実際のライン構成（rows[i]["line_info"]）とコース特性（straight_category）を反映する：
-      ・ラインの先頭（position=1）は自身の決まり手カーブで進む。
+      ・ラインの先頭（position=1）は自身の決まり手カーブ（進行度・進路とも）で進む。
       ・同ラインの番手・三番手（position>=2）は、序盤〜中盤は先頭の直後にぴったり
-        ついて進み（差が開かない＝実際の「番手取り」の動き）、終盤2区間だけ自分の
-        決まり手（差してさらに伸びる／マークのままゴールする等）で分岐する。
+        ついて進み（進行度・進路の両方が差が開かない＝実際の「番手取り」の動き）、
+        終盤2区間だけ自分の決まり手（差してさらに伸びる／マークのままゴールする等）
+        で進行度・進路とも分岐する。
       ・単騎（ラインを組んでいない選手）は最初から自分の決まり手カーブのみで進む。
-    戻り値: {"checkpoints": int, "cars":[{"car","name","positions":[0-100の5点]}], "final_order":[car,...]}
+      ・向正面入口（チェックポイント0）は、全車まだ位置取り（ライン予想順）どおりに
+        最内寄りで固まっている状態から始まる＝「バックをどのラインが取るか」は
+        既にライン予想の並び順で決着している、という前提で表現している。
+
+    戻り値: {
+      "checkpoints": int,
+      "track": {"segments":{...}, "start_fraction":0.5, "total_laps":1.5},
+      "cars":[{"car","name","positions":[0-100の5点＝進行度],
+               "lanes":[0-1の5点＝進路（0=最内/1=最外）],
+               "line_index","line_position"}],
+      "final_order":[car,...],
+    }
     """
     if not rows or not sample_run:
         return None
@@ -122,11 +179,15 @@ def build_animation(rows, sample_run, straight_category="standard"):
         rank = rank_of[car]
         target_by_car[car] = max(100 - rank * (30 / max(n - 1, 1)), 55)
 
-    # 自分自身の決まり手カーブだけで進んだ場合の位置（ライン追従の土台として先に全員分計算）
+    # 自分自身の決まり手カーブだけで進んだ場合の進行度・進路（ライン追従の土台として先に全員分計算）
     own_positions = {}
+    own_lanes = {}
     for car in order:
-        curve = curves.get(realized.get(car), curves["マ"])
-        own_positions[car] = [round(target_by_car[car] * c, 1) for c in curve]
+        kimarite = realized.get(car)
+        pos_curve = curves.get(kimarite, curves["マ"])
+        lane_curve = LANE_CURVES_BY_KIMARITE.get(kimarite, LANE_CURVES_BY_KIMARITE["マ"])
+        own_positions[car] = [round(target_by_car[car] * c, 1) for c in pos_curve]
+        own_lanes[car] = list(lane_curve)
 
     # ラインの先頭車番を line_index ごとに特定する
     leader_of_line = {}
@@ -135,26 +196,28 @@ def build_animation(rows, sample_run, straight_category="standard"):
         if info and info.get("line_size", 1) > 1 and info.get("position") == 1:
             leader_of_line[info["line_index"]] = car
 
+    def lag_for_position(position):
+        return 0.97 - 0.025 * (position - 2)  # 番手ほどわずかに車間を空けて追走
+
     cars_payload = []
     for car in order:
         info = row_by_car.get(car, {}).get("line_info")
-        positions = own_positions[car]
-        if info and info.get("line_size", 1) > 1 and info.get("position", 1) >= 2:
-            leader_car = leader_of_line.get(info["line_index"])
-            if leader_car is not None and leader_car != car:
-                lag = 0.97 - 0.025 * (info["position"] - 2)  # 番手ほどわずかに車間を空けて追走
-                leader_pos = own_positions[leader_car]
-                positions = [
-                    leader_pos[0] * lag,
-                    leader_pos[1] * lag,
-                    leader_pos[2] * lag,
-                    own_positions[car][3],
-                    own_positions[car][4],
-                ]
+        leader_car = leader_of_line.get(info["line_index"]) if info else None
+        if leader_car is not None and leader_car != car:
+            positions = _line_following_series(car, own_positions[car], own_positions[leader_car], info, lag_for_position)
+            # 進路（lane）は番手ほどわずかに先頭より外側に張り付く（車間分の横ずれ）
+            lane_offset = 0.02 * (info["position"] - 1)
+            lanes = _line_following_series(
+                car, own_lanes[car], [v + lane_offset for v in own_lanes[leader_car]], info, lambda p: 1.0)
+        else:
+            positions = own_positions[car]
+            lanes = own_lanes[car]
         positions = _finalize_positions(positions, target_by_car[car])
+        lanes = [round(min(max(v, 0.05), 0.95), 3) for v in lanes]
         cars_payload.append({
             "car": car, "name": row_by_car.get(car, {}).get("name", ""),
             "positions": positions,
+            "lanes": lanes,
             "line_index": info["line_index"] if info else None,
             "line_position": info["position"] if info else 1,
         })
@@ -168,6 +231,11 @@ def build_animation(rows, sample_run, straight_category="standard"):
 
     return {
         "checkpoints": ANIMATION_CHECKPOINTS,
+        "track": {
+            "segments": TRACK_SEGMENTS,
+            "start_fraction": ANIMATION_START_FRACTION,
+            "total_laps": ANIMATION_TOTAL_LAPS,
+        },
         "cars": cars_payload,
         "final_order": order,
     }
