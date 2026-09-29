@@ -119,8 +119,25 @@ ANIMATION_TOTAL_LAPS = 1.5      # 向正面から数えてゴールまでの周�
 # 換算してしまい、ある車だけ実際には1周以上も先にワープしたように見える
 # （チェックポイント0の時点で選手ごとにトラック上のバラバラな場所に飛んでしまう）
 # という致命的なバグになる。
-ANIMATION_MAX_GROUP_GAP_LAPS = 0.05   # ライン代表順位で最も差がつく場合の最大遅れ（周）
-ANIMATION_MAX_LINE_GAP_LAPS = 0.015   # ライン内の番手・三番手が先頭からさらに遅れる最大分（周）
+#
+# 【改訂：個別着順ベース＋ライン内は「表示上の車間」を分離】
+# 以前は「ライン代表着順（ラインの最上位選手の着順）」だけで遅れ幅を決め、番手・
+# 三番手は常に「先頭の位置−追加の車間」として先頭より後ろにしか描けなかった。
+# これだと、番手選手が実際に差し切って1着になるケース（差し・捲り）でも、
+# アニメーション上は先頭の後ろに描かれてしまい、着順と矛盾する上に「集団が
+# 一塊すぎて誰が動いているか分からない」問題も起きていた。
+# そこで、進み具合そのもの（own_positions）は各車「個別の」最終着順で決め、
+# ライン内の並び順（1-2-3のような車間）は、それとは別に「表示上の一定の間隔
+# （ANIMATION_LINE_QUEUE_GAP）」として常時上乗せするだけにする。これにより
+#   ・実際の着順が正しくそのままアニメーションの前後関係に反映される
+#     （番手が差し切れば、番手が先頭を追い抜く動きとして描かれる）
+#   ・かつ、着順差が小さい序盤〜中盤は「ライン順に連なって進む」見た目になる
+# の両立ができる。ゴール（最終チェックポイント）だけは車間を0に戻し、必ず
+# 実際の着順どおりの前後関係でフィニッシュするようにする。
+ANIMATION_MAX_FIELD_GAP_LAPS = 0.18    # 最下位が1着から遅れる最大幅（周）。集団の塊具合と
+                                        # 視認性のバランスを取った、実際の着差よりやや誇張した値。
+ANIMATION_LINE_QUEUE_GAP = 0.015       # ライン内の車間（周相当、着順に関係なく常時一定）。
+                                        # 「1-2-3」のような並び順を序盤から視覚的に示すための間隔。
 
 
 def _finalize_positions(positions, target):
@@ -160,19 +177,27 @@ def build_animation(rows, sample_run, straight_category="standard"):
     【実際の競輪の集団の動きに合わせた設計】
     実際のレースでは、決着がつく最後の直線までは基本的に集団がほぼ一塊のまま進み、
     ライン同士・ライン内の選手同士が大きく離れることはない。そして、一度どこかで
-    差がついたら（番手を切られたら）、その差が再び縮まることは無い（一度千切れたら
-    追いつけない）。この2点を、以下のロジックで再現する。
+    差がついたら、その差が再び縮まることは無い（＝一度千切れたら追いつけない）。
+    ただし「番手・三番手が実際に差し切って1着になる」ような決まり手（差し・捲り）
+    はきちんと追い抜きの動きとして見えなければならない。この3点を以下で両立する。
 
-    1. 「個々の選手の着順」ではなく「ライン単位の代表着順（そのラインで最も着順の
-       良い選手の着順。単騎は1台だけのラインとして扱う）」で、ライン間の遅れ幅を
-       決める。最下位グループでも ANIMATION_MAX_GROUP_GAP_LAPS（既定0.05周）までしか
-       遅れない＝実際の競輪でも先頭集団と後方が大きく千切れないことを表現する。
-    2. ラインの先頭（position=1）は基準線からグループの遅れ分だけ引いた位置を進む。
-       番手・三番手（position>=2）は「先頭の位置 − 追加の車間」として表現し、車間は
-       自分の決まり手カーブの比率（0→1に単調増加）で単調に広がるだけ＝一度広がった
-       車間は決して縮まらない。進路（lane）も同様に、先頭のレーン＋単調に広がる
-       一方の横ずれとして表現する。
-    3. 単騎（ラインを組んでいない選手）は自分の決まり手カーブのみで進む。
+    1. 進み具合（own_positions）は「個々の選手の実際の着順」で決める。1着は遅れ0、
+       最下位でも ANIMATION_MAX_FIELD_GAP_LAPS（既定0.18周）までしか遅れない＝
+       集団が大きく千切れないことを表現しつつ、着順が正しくそのまま前後関係になる
+       （番手が差し切れば、番手が先頭より前に出る動きとして描かれる）。
+       遅れが表面化するタイミングは自分の決まり手カーブ（0→1に単調増加のramp）に
+       従うので、一度ついた遅れが縮まることもない。
+    2. ライン内の並び順（「1-2-3」のような車間）は、着順による本当の差とは別に
+       ANIMATION_LINE_QUEUE_GAP（常時一定の表示上の間隔）として番手・三番手に
+       追加で上乗せする。これにより着順差が小さい序盤〜中盤は「ライン順に連なって
+       進む」見た目になる。ただし最終チェックポイント（ゴール）だけはこの間隔を
+       0に戻し、必ず実際の着順どおりの前後関係でフィニッシュするようにする
+       （着順とアニメーションの矛盾を防ぐ）。
+    3. 進路（lane）は、決まり手ごとの横位置カーブ（LANE_CURVES_BY_KIMARITE）を
+       そのまま使う。捲り＝向正面〜コーナーで大きく外に膨らむ、差し＝直線でだけ
+       外に出る、という動きが個々の車にそのまま表れるので、着順が良い捲り・差しは
+       「外に膨らんで前に出る」動きとしてはっきり視認できる。ライン内の番手・
+       三番手は、見た目の一体感のため先頭のレーンを基準に横ずれを乗せる。
 
     戻り値: {
       "checkpoints": int,
@@ -195,27 +220,7 @@ def build_animation(rows, sample_run, straight_category="standard"):
     # 集団全体が共通で進む基準線（周単位）。全車がこの同じペースで一緒に進み、
     # 着順による差は、この基準線からの「ごくわずかな遅れ」として later 上乗せする。
     baseline = [ANIMATION_TOTAL_LAPS * i / (n_checkpoints - 1) for i in range(n_checkpoints)]
-
-    # ライン単位でグルーピング（単騎は1台だけのグループとして扱う）
-    group_key_of_car = {}
-    group_members = {}
-    for car in order:
-        info = row_by_car.get(car, {}).get("line_info")
-        key = info["line_index"] if (info and info.get("line_size", 1) > 1) else ("solo", car)
-        group_key_of_car[car] = key
-        group_members.setdefault(key, []).append(car)
-
-    # 各グループの代表順位＝グループ内最上位（最も着順が良い）選手の順位
-    group_rank = {key: min(rank_of[c] for c in members) for key, members in group_members.items()}
-    ranked_groups = sorted(group_rank.keys(), key=lambda k: group_rank[k])
-    n_groups = len(ranked_groups)
-    # グループの最終的な遅れ（周）。最上位グループは遅れ0、最下位グループでも
-    # ANIMATION_MAX_GROUP_GAP_LAPS（既定0.05周＝バンク1周を大きく下回るごく僅かな差）
-    # までしか遅れない＝実際の競輪で先頭集団と後方が大きく千切れないことを表現する。
-    group_final_deficit = {
-        key: ANIMATION_MAX_GROUP_GAP_LAPS * (i / max(n_groups - 1, 1))
-        for i, key in enumerate(ranked_groups)
-    }
+    n_cars = len(order)
 
     def _ramp_for(kimarite):
         # 決まり手カーブ（0〜1に単調増加）を「0（まだ遅れていない）→1（最終的な遅れが
@@ -228,13 +233,15 @@ def build_animation(rows, sample_run, straight_category="standard"):
             return [0.0] * n_checkpoints
         return [(c - curve[0]) / span for c in curve]
 
-    # 各車自身の決まり手カーブから、実際の進行度（基準線 − 遅れ）を計算する
+    # 各車「個別の」実際の着順から、進行度（基準線 − 遅れ）を計算する。ライン代表
+    # 着順ではなく個別着順を使うことで、番手が差し切って1着になるケースでも矛盾なく
+    # 「番手が先頭を追い抜く」動きとして描かれる。
     own_positions = {}
     own_lanes = {}
     for car in order:
         kimarite = realized.get(car)
         ramp = _ramp_for(kimarite)
-        deficit_final = group_final_deficit[group_key_of_car[car]]
+        deficit_final = ANIMATION_MAX_FIELD_GAP_LAPS * (rank_of[car] / max(n_cars - 1, 1))
         own_positions[car] = [baseline[i] - deficit_final * ramp[i] for i in range(n_checkpoints)]
         lane_curve = LANE_CURVES_BY_KIMARITE.get(kimarite, LANE_CURVES_BY_KIMARITE["マ"])
         own_lanes[car] = list(lane_curve)
@@ -249,22 +256,28 @@ def build_animation(rows, sample_run, straight_category="standard"):
     cars_payload = []
     for car in order:
         info = row_by_car.get(car, {}).get("line_info")
+        line_position = info["position"] if info else 1
         leader_car = leader_of_line.get(info["line_index"]) if info else None
-        if leader_car is not None and leader_car != car:
-            # 番手・三番手＝「先頭の位置 − 追加の車間」。車間は自分自身の決まり手
-            # カーブの比率（ramp）で単調に広がるだけで、先頭の位置そのものからは
-            # 常にごく僅か（最大でも ANIMATION_MAX_LINE_GAP_LAPS×position分）しか
-            # 離れない＝ライン内の選手同士が大きく離れることはない、を保証する。
-            kimarite = realized.get(car)
-            ramp = _ramp_for(kimarite)
-            extra_final = ANIMATION_MAX_LINE_GAP_LAPS * (info["position"] - 1)
-            leader_pos = own_positions[leader_car]
-            positions = [leader_pos[i] - extra_final * ramp[i] for i in range(n_checkpoints)]
-            # 進路（lane）も同様に、先頭のレーン＋単調に広がる一方の横ずれで表現する
+        is_follower = leader_car is not None and leader_car != car
+
+        # 進み具合＝自分の実際の着順で決まる own_positions が主。ライン内の並び順を
+        # 見せるための「表示上の車間」は、それとは別に一定量（着順に関係なく常時
+        # ANIMATION_LINE_QUEUE_GAP×(番手-1)）だけ追加で引く。ただし最終チェック
+        # ポイント（ゴール）だけは車間を0に戻し、必ず own_positions（＝実際の着順）
+        # どおりの前後関係でフィニッシュするようにする。これにより、番手が実際に
+        # 差し切って1着になった場合はゴール前でその追い抜きが見える一方、
+        # 着順の前後関係そのものが車間表示によって崩れることはない。
+        if is_follower:
+            queue_gap = ANIMATION_LINE_QUEUE_GAP * (line_position - 1)
+            positions = list(own_positions[car])
+            for i in range(n_checkpoints - 1):
+                positions[i] -= queue_gap
+            # 進路（lane）は先頭のレーンを基準に、決まり手カーブの分だけ外側へ
+            # 張り出す＝捲り・差しは大きく外に出る動きがそのまま見た目に表れる。
             leader_lane = own_lanes[leader_car]
             own_lane_curve = own_lanes[car]
             lanes = []
-            lane_gap = 0.05 * (info["position"] - 1)  # 番手ほど基礎的にわずかに外側（見た目で判別できる幅）
+            lane_gap = 0.05 * (line_position - 1)  # 番手ほど基礎的にわずかに外側（見た目で判別できる幅）
             base_lane_gap = lane_gap
             for i in range(n_checkpoints):
                 outward = max(own_lane_curve[i] - leader_lane[i], 0.0) * 0.5
@@ -280,7 +293,7 @@ def build_animation(rows, sample_run, straight_category="standard"):
             "positions": positions,
             "lanes": lanes,
             "line_index": info["line_index"] if info else None,
-            "line_position": info["position"] if info else 1,
+            "line_position": line_position,
         })
 
     # 表示順はライン構成が分かるよう「ライン順→ライン内の位置順」に並べる
@@ -334,7 +347,16 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4, top_p
 
     scenario_counts = {k: 0 for k in SCENARIO_LABELS}
     scenario_win_counts = {k: {c: 0 for c in cars} for k in SCENARIO_LABELS}
-    scenario_sample_run = {}  # アニメーション再生用：パターンごとに直近の1試行を保存
+    # アニメーション再生用：パターンごとに「1着になった選手の予測1着率(adjusted)が
+    # 最も高い」1試行を保存する（＝そのパターンの中でも、他で表示している予測1着率
+    # と矛盾しにくい試行を選ぶ）。単に「直近の1試行」を使うと、たまたま予測1着率の
+    # 低い選手が1着になった回だけが残ってしまい、「予測1着率と展開アニメーションの
+    # 着順が全く違う」という不整合が無用に大きくなるため。
+    # ただし、それでもアニメーションは数ある試行のうちの「1つの具体例」であり、
+    # 予測1着率はシナリオを跨いだ全試行の加重平均であるため、両者が完全に一致する
+    # 保証はない（この差は仕様であり、report.py 側の説明文で明示する）。
+    scenario_sample_run = {}
+    scenario_sample_score = {}
 
     for _ in range(trials):
         realized = {}
@@ -367,7 +389,10 @@ def simulate_race_development(rows, trials=3000, seed=42, top_scenarios=4, top_p
 
         order = sorted(cars, key=lambda c: math.log(scores[c]) + _gumbel_noise(rng), reverse=True)
         scenario_win_counts[scenario_key][order[0]] += 1
-        scenario_sample_run[scenario_key] = {"realized": dict(realized), "order": order}
+        winner_score = base_by_car[order[0]]
+        if winner_score > scenario_sample_score.get(scenario_key, -1.0):
+            scenario_sample_score[scenario_key] = winner_score
+            scenario_sample_run[scenario_key] = {"realized": dict(realized), "order": order}
 
     # アニメーション再生用の代表試行：最も多く出たパターンから1つ選ぶ
     majority_key = max(scenario_counts, key=lambda k: scenario_counts[k])
