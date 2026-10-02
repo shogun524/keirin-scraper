@@ -988,6 +988,14 @@ window.addEventListener('DOMContentLoaded', function(){
     Object.keys(window.DEV_ANIM_DATA).forEach(initDevTrack);
   }
   if(tabs.length === 0) return;
+  // まとめページ（本命1着率45%超レース一覧など）からの「?r=5」のような直接リンクが
+  // あれば、そのレース番号のタブを優先して開く。無ければ従来どおり締切が一番近い
+  // レースを自動で開く。
+  const rParam = new URLSearchParams(window.location.search).get('r');
+  if(rParam){
+    const direct = tabs.find(function(t){ return t.getAttribute('data-race-no') === rParam; });
+    if(direct){ direct.click(); return; }
+  }
   const nowJstMinutes = getNowJstMinutes();
   let best = tabs[0], bestMins = Infinity;
   tabs.forEach(function(t){
@@ -1032,7 +1040,8 @@ def render_venue_page(venue, races, date, now=None):
         deadline = r["race_info"].get("deadline") or ""
         tab_id = f"race{no}"
         label = f"{no}R" + (f"<br><span class='tab-deadline'>{deadline}</span>" if deadline else "")
-        tabs += f'<button class="tab-btn" data-deadline="{deadline}" onclick="showTab(\'{tab_id}\', this)">{label}</button>'
+        tabs += (f'<button class="tab-btn" data-deadline="{deadline}" data-race-no="{no}" '
+                 f'onclick="showTab(\'{tab_id}\', this)">{label}</button>')
         panels += render_race_card(r, tab_id)
 
     return f"""<!DOCTYPE html>
@@ -1203,7 +1212,7 @@ def render_index(all_race_data, date=None, now=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">今日、どこで、どの目を買うか。</p>
-  <nav class="top-nav"><a href="venues.html">全競輪場データ &rarr;</a></nav>
+  <nav class="top-nav"><a href="high_prob.html">本命1着率45%超レース &rarr;</a> ・ <a href="venues.html">全競輪場データ &rarr;</a></nav>
   {gate_stripe_html()}
 </header>
 <main>
@@ -1312,6 +1321,141 @@ def render_venues_page(date=None):
   </div>
 </main>
 <footer>データ出典：keirin-brother.com「競輪場のバンクの特徴」（元データ: KEIRIN.JP）、決まり手出現率は競輪CLUBデータ分析。物理的な施設特性のため、更新頻度は低いです。</footer>
+</body>
+</html>"""
+
+
+def render_high_prob_page(all_race_data, date=None):
+    """
+    本命の予測1着率が一定以上（model.py の DEFAULT_SETTINGS["th_high"]、既定45%）の
+    レースだけを、全競輪場横断でまとめた一覧ページ。各レースの is_high_prob は
+    predict_race() が既に th_high で判定済みの値をそのまま使う（閾値の定義を
+    ここで重複して持たない。基準を変えたい場合は model.py 側の設定を変えれば
+    自動的にこのページにも反映される）。
+    """
+    import json
+    date = date or datetime.date.today()
+    weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
+    date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
+
+    picks = []
+    for rd in all_race_data:
+        result = rd.get("prediction")
+        if not result or not result.get("is_high_prob"):
+            continue
+        info = rd["race_info"]
+        top = result["top"]
+        picks.append({
+            "venue": info["venue"],
+            "venue_name": VENUE_NAMES.get(info["venue"], info["venue"]),
+            "race_no": info["race_no"],
+            "title": info.get("title", ""),
+            "deadline": info.get("deadline"),
+            "top": top,
+            "line_label": (
+                "先頭" if top.get("line_info") and top["line_info"]["position"] == 1
+                else f'{top["line_info"]["position"]}番手' if top.get("line_info") else "単騎"
+            ),
+        })
+
+    # 締切が近い順（締切不明・既に終了したものは後方）に並べる
+    from zoneinfo import ZoneInfo as _ZoneInfo
+    now_jst = datetime.datetime.now(_ZoneInfo("Asia/Tokyo"))
+    picks.sort(key=lambda p: _minutes_until_deadline(p["deadline"], now_jst))
+
+    cards_html = ""
+    for p in picks:
+        top = p["top"]
+        bg, fg = car_color(top["car"])
+        deadline_html = f'<span class="hp-deadline">{p["deadline"]}</span>' if p["deadline"] else ""
+        cards_html += f"""
+        <a class="hp-card" href="{p['venue']}/index.html?r={p['race_no']}" data-deadline="{p['deadline'] or ''}">
+          <div class="hp-card-head">
+            <span class="hp-venue">{p['venue_name']} {p['race_no']}R</span>
+            {deadline_html}
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:{bg};color:{fg};">{top['car']}</span>
+            <span class="hp-name">{top['name']}</span>
+            <span class="hp-line dim">{p['line_label']}</span>
+            <span class="hp-pct">{top['adjusted']:.1f}%</span>
+          </div>
+        </a>"""
+
+    races_json = json.dumps(
+        [{"venue": p["venue"], "race_no": p["race_no"], "deadline": p["deadline"]} for p in picks],
+        ensure_ascii=False,
+    )
+
+    script = """
+    function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+      if(!deadlineStr) return 1e9;
+      const parts = deadlineStr.split(':');
+      if(parts.length !== 2) return 1e9;
+      const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+      const diff = deadlineMinutes - nowJstMinutes;
+      if(diff < -5) return 1e9 + (-diff);
+      return diff < 0 ? 0 : diff;
+    }
+    function getNowJstMinutes(){
+      const parts = new Intl.DateTimeFormat('ja-JP', {
+        timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+      const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+      return h*60 + m;
+    }
+    window.addEventListener('DOMContentLoaded', function(){
+      const nowJstMinutes = getNowJstMinutes();
+      document.querySelectorAll('.hp-card').forEach(function(card){
+        const mins = minutesUntilDeadline(card.getAttribute('data-deadline'), nowJstMinutes);
+        if(mins <= 5){ card.classList.add('soon'); }
+        if(mins >= 1e9){ card.classList.add('ended'); }
+      });
+    });
+    """
+
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本命1着率45%超レース一覧 | 競輪AI予想</title>
+<style>
+{COMMON_STYLE}
+  main{{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }}
+  .hp-lead{{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }}
+  .hp-list{{ display:flex; flex-direction:column; gap:8px; }}
+  .hp-card{{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
+             padding:10px 12px; text-decoration:none; color:inherit; }}
+  .hp-card.soon{{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }}
+  .hp-card.ended{{ opacity:.45; }}
+  .hp-card-head{{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }}
+  .hp-venue{{ font-weight:700; font-size:13px; color:var(--ink); }}
+  .hp-deadline{{ font-size:12px; font-weight:700; color:#8a5a12; }}
+  .hp-card-body{{ display:flex; align-items:center; gap:8px; }}
+  .hp-name{{ font-size:13px; color:var(--ink); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }}
+  .hp-line{{ font-size:11px; }}
+  .hp-pct{{ font-size:15px; font-weight:800; color:var(--brick); }}
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">本命1着率45%超レース</a></h1>
+    <span class="date">{date_str}</span>
+  </div>
+  <p class="tagline">予測1着率が45%を超えた、今日の本命が堅いレースだけを集めました。</p>
+  {gate_stripe_html()}
+</header>
+<main>
+  <p class="hp-lead">対象：{len(picks)}レース（予測1着率45%超。全競輪場・本日開催分）</p>
+  <div class="hp-list">
+    {cards_html if picks else "<p style='text-align:center;color:var(--ink-soft);'>本日は該当するレースがありませんでした。</p>"}
+  </div>
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>{script}</script>
 </body>
 </html>"""
 
