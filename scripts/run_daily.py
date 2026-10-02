@@ -30,7 +30,8 @@ except AttributeError:
 
 from scraper import fetch_all_todays_races
 from model import predict_race
-from report import render_index, render_venue_page, render_venues_page, render_venue_bank_page, VENUE_NAMES
+from report import (render_index, render_venue_page, render_venues_page, render_venue_bank_page,
+                     render_high_prob_page, VENUE_NAMES)
 from course_records import update_course_records, get_course_record
 from rivalry_records import update_rivalry_records
 from form_records import update_form_records
@@ -229,6 +230,12 @@ def main():
     with open(os.path.join(DOCS_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_html)
     print("[INFO] docs/index.html を書き出しました。")
+
+    # 本命1着率45%超（model.py th_high）のレースだけをまとめた横断ページ
+    high_prob_html = render_high_prob_page(all_race_data, today)
+    with open(os.path.join(DOCS_DIR, "high_prob.html"), "w", encoding="utf-8") as f:
+        f.write(high_prob_html)
+    print("[INFO] docs/high_prob.html を書き出しました。")
 
     # 全競輪場データページ（バンク情報。物理的な施設特性なので日々変わらない）
     venues_html = render_venues_page(today)
