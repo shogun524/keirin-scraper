@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本命1着率45%超レース一覧 | 競輪AI予想</title>
+<style>
+
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
+
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .hp-list{ display:flex; flex-direction:column; gap:8px; }
+  .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
+             padding:10px 12px; text-decoration:none; color:inherit; }
+  .hp-card.soon{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }
+  .hp-card.ended{ opacity:.45; }
+  .hp-card-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .hp-venue{ font-weight:700; font-size:13px; color:var(--ink); }
+  .hp-deadline{ font-size:12px; font-weight:700; color:#8a5a12; }
+  .hp-card-body{ display:flex; align-items:center; gap:8px; }
+  .hp-name{ font-size:13px; color:var(--ink); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hp-line{ font-size:11px; }
+  .hp-pct{ font-size:15px; font-weight:800; color:var(--brick); }
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">本命1着率45%超レース</a></h1>
+    <span class="date">2026年10月02日(金)</span>
+  </div>
+  <p class="tagline">予測1着率が45%を超えた、今日の本命が堅いレースだけを集めました。</p>
+  <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
+</header>
+<main>
+  <p class="hp-lead">対象：8レース（予測1着率45%超。全競輪場・本日開催分）</p>
+  <div class="hp-list">
+    
+        <a class="hp-card" href="kawasaki/index.html?r=8" data-deadline="18:38">
+          <div class="hp-card-head">
+            <span class="hp-venue">川崎 8R</span>
+            <span class="hp-deadline">18:38</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">片岡 迪之</span>
+            <span class="hp-line dim">2番手</span>
+            <span class="hp-pct">47.3%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="kawasaki/index.html?r=9" data-deadline="19:04">
+          <div class="hp-card-head">
+            <span class="hp-venue">川崎 9R</span>
+            <span class="hp-deadline">19:04</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">高久保 雄介</span>
+            <span class="hp-line dim">2番手</span>
+            <span class="hp-pct">52.4%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=7" data-deadline="23:07">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 7R</span>
+            <span class="hp-deadline">23:07</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">長川 達哉</span>
+            <span class="hp-line dim">先頭</span>
+            <span class="hp-pct">46.9%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="kurume/index.html?r=3" data-deadline="16:49">
+          <div class="hp-card-head">
+            <span class="hp-venue">久留米 3R</span>
+            <span class="hp-deadline">16:49</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">久保田 智之</span>
+            <span class="hp-line dim">先頭</span>
+            <span class="hp-pct">46.0%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="omiya/index.html?r=6" data-deadline="12:59">
+          <div class="hp-card-head">
+            <span class="hp-venue">大宮 6R</span>
+            <span class="hp-deadline">12:59</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">中村 圭志</span>
+            <span class="hp-line dim">先頭</span>
+            <span class="hp-pct">55.6%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="sasebo/index.html?r=6" data-deadline="10:09">
+          <div class="hp-card-head">
+            <span class="hp-venue">佐世保 6R</span>
+            <span class="hp-deadline">10:09</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">北岡 マリア</span>
+            <span class="hp-line dim">先頭</span>
+            <span class="hp-pct">47.1%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="sasebo/index.html?r=2" data-deadline="08:45">
+          <div class="hp-card-head">
+            <span class="hp-venue">佐世保 2R</span>
+            <span class="hp-deadline">08:45</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">吉本 哲郎</span>
+            <span class="hp-line dim">先頭</span>
+            <span class="hp-pct">50.6%</span>
+          </div>
+        </a>
+        <a class="hp-card" href="sasebo/index.html?r=1" data-deadline="08:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">佐世保 1R</span>
+            <span class="hp-deadline">08:25</span>
+          </div>
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">宮地 寧々</span>
+            <span class="hp-line dim">先頭</span>
+            <span class="hp-pct">45.3%</span>
+          </div>
+        </a>
+  </div>
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>
+    function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+      if(!deadlineStr) return 1e9;
+      const parts = deadlineStr.split(':');
+      if(parts.length !== 2) return 1e9;
+      const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+      const diff = deadlineMinutes - nowJstMinutes;
+      if(diff < -5) return 1e9 + (-diff);
+      return diff < 0 ? 0 : diff;
+    }
+    function getNowJstMinutes(){
+      const parts = new Intl.DateTimeFormat('ja-JP', {
+        timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+      const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+      return h*60 + m;
+    }
+    window.addEventListener('DOMContentLoaded', function(){
+      const nowJstMinutes = getNowJstMinutes();
+      document.querySelectorAll('.hp-card').forEach(function(card){
+        const mins = minutesUntilDeadline(card.getAttribute('data-deadline'), nowJstMinutes);
+        if(mins <= 5){ card.classList.add('soon'); }
+        if(mins >= 1e9){ card.classList.add('ended'); }
+      });
+    });
+    </script>
+</body>
+</html>

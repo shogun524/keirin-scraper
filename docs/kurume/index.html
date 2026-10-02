@@ -136,7 +136,7 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main>
-  <div class="tab-bar"><button class="tab-btn" data-deadline="16:05" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>16:05</span></button><button class="tab-btn" data-deadline="16:27" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>16:27</span></button><button class="tab-btn" data-deadline="16:49" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>16:49</span></button><button class="tab-btn" data-deadline="17:13" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>17:13</span></button><button class="tab-btn" data-deadline="17:37" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>17:37</span></button><button class="tab-btn" data-deadline="18:01" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>18:01</span></button><button class="tab-btn" data-deadline="18:25" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>18:25</span></button><button class="tab-btn" data-deadline="18:51" onclick="showTab('race8', this)">8R<br><span class='tab-deadline'>18:51</span></button><button class="tab-btn" data-deadline="19:17" onclick="showTab('race9', this)">9R<br><span class='tab-deadline'>19:17</span></button><button class="tab-btn" data-deadline="19:43" onclick="showTab('race10', this)">10R<br><span class='tab-deadline'>19:43</span></button><button class="tab-btn" data-deadline="20:11" onclick="showTab('race11', this)">11R<br><span class='tab-deadline'>20:11</span></button></div>
+  <div class="tab-bar"><button class="tab-btn" data-deadline="16:05" data-race-no="1" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>16:05</span></button><button class="tab-btn" data-deadline="16:27" data-race-no="2" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>16:27</span></button><button class="tab-btn" data-deadline="16:49" data-race-no="3" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>16:49</span></button><button class="tab-btn" data-deadline="17:13" data-race-no="4" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>17:13</span></button><button class="tab-btn" data-deadline="17:37" data-race-no="5" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>17:37</span></button><button class="tab-btn" data-deadline="18:01" data-race-no="6" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>18:01</span></button><button class="tab-btn" data-deadline="18:25" data-race-no="7" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>18:25</span></button><button class="tab-btn" data-deadline="18:51" data-race-no="8" onclick="showTab('race8', this)">8R<br><span class='tab-deadline'>18:51</span></button><button class="tab-btn" data-deadline="19:17" data-race-no="9" onclick="showTab('race9', this)">9R<br><span class='tab-deadline'>19:17</span></button><button class="tab-btn" data-deadline="19:43" data-race-no="10" onclick="showTab('race10', this)">10R<br><span class='tab-deadline'>19:43</span></button><button class="tab-btn" data-deadline="20:11" data-race-no="11" onclick="showTab('race11', this)">11R<br><span class='tab-deadline'>20:11</span></button></div>
   
     <div id="race1" class="race-panel" style="display:none;">
       <div class="race-card" style="--pick-color:#1b1b1b;">
@@ -148,7 +148,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 5,114票 <span class="delta-up">↑↑ 初回計測比 +25470%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 203,243票 <span class="delta-up">↑↑ 初回計測比 +1016115%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race1_subbtn_main" onclick="showSubTab('race1','main',this)">予想</button><button class="subtab-btn" id="race1_subbtn_tf" onclick="showSubTab('race1','tf',this)">3連単</button><button class="subtab-btn" id="race1_subbtn_dev" onclick="showSubTab('race1','dev',this)">展開</button></div>
     <div id="race1_sub_main" class="subtab-panel">
         <table class="main">
@@ -333,7 +333,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,381票 <span class="delta-up">↑↑ 初回計測比 +12432%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 219,411票 <span class="delta-up">↑↑ 初回計測比 +1154695%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race2_subbtn_main" onclick="showSubTab('race2','main',this)">予想</button><button class="subtab-btn" id="race2_subbtn_tf" onclick="showSubTab('race2','tf',this)">3連単</button><button class="subtab-btn" id="race2_subbtn_dev" onclick="showSubTab('race2','dev',this)">展開</button></div>
     <div id="race2_sub_main" class="subtab-panel">
         <table class="main">
@@ -514,11 +514,11 @@
           <span class="raceno">3R</span>
           <span class="title">S B</span>
           <span class="deadline">締切 16:49</span>
-          <span class="value-alert-badge">🔍 妙味候補</span>
+          
         </div>
         <div class="banner-high">7号車 久保田 智之 が本命（予測1着率 46.0%）</div>
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,861票 <span class="delta-up">↑↑ 初回計測比 +12339%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 288,126票 <span class="delta-up">↑↑ 初回計測比 +1252622%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race3_subbtn_main" onclick="showSubTab('race3','main',this)">予想</button><button class="subtab-btn" id="race3_subbtn_tf" onclick="showSubTab('race3','tf',this)">3連単</button><button class="subtab-btn" id="race3_subbtn_dev" onclick="showSubTab('race3','dev',this)">展開</button></div>
     <div id="race3_sub_main" class="subtab-panel">
         <table class="main">
@@ -703,7 +703,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,399票 <span class="delta-up">↑↑ 初回計測比 +9127%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 331,465票 <span class="delta-up">↑↑ 初回計測比 +1274765%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race4_subbtn_main" onclick="showSubTab('race4','main',this)">予想</button><button class="subtab-btn" id="race4_subbtn_tf" onclick="showSubTab('race4','tf',this)">3連単</button><button class="subtab-btn" id="race4_subbtn_dev" onclick="showSubTab('race4','dev',this)">展開</button></div>
     <div id="race4_sub_main" class="subtab-panel">
         <table class="main">
@@ -888,7 +888,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 15,844票 <span class="delta-up">↑↑ 初回計測比 +19956%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 318,616票 <span class="delta-up">↑↑ 初回計測比 +403211%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race5_subbtn_main" onclick="showSubTab('race5','main',this)">予想</button><button class="subtab-btn" id="race5_subbtn_tf" onclick="showSubTab('race5','tf',this)">3連単</button><button class="subtab-btn" id="race5_subbtn_dev" onclick="showSubTab('race5','dev',this)">展開</button></div>
     <div id="race5_sub_main" class="subtab-panel">
         <table class="main">
@@ -1073,7 +1073,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 25,560票 <span class="delta-up">↑↑ 初回計測比 +9693%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 133,391票 <span class="delta-up">↑↑ 初回計測比 +51008%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race6_subbtn_main" onclick="showSubTab('race6','main',this)">予想</button><button class="subtab-btn" id="race6_subbtn_tf" onclick="showSubTab('race6','tf',this)">3連単</button><button class="subtab-btn" id="race6_subbtn_dev" onclick="showSubTab('race6','dev',this)">展開</button></div>
     <div id="race6_sub_main" class="subtab-panel">
         <table class="main">
@@ -1258,7 +1258,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,258票 <span class="delta-up">↑↑ 初回計測比 +7686%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 12,836票 <span class="delta-up">↑↑ 初回計測比 +44162%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race7_subbtn_main" onclick="showSubTab('race7','main',this)">予想</button><button class="subtab-btn" id="race7_subbtn_tf" onclick="showSubTab('race7','tf',this)">3連単</button><button class="subtab-btn" id="race7_subbtn_dev" onclick="showSubTab('race7','dev',this)">展開</button></div>
     <div id="race7_sub_main" class="subtab-panel">
         <table class="main">
@@ -1443,7 +1443,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,706票 <span class="delta-up">↑↑ 初回計測比 +9378%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 10,968票 <span class="delta-up">↑↑ 初回計測比 +60833%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race8_subbtn_main" onclick="showSubTab('race8','main',this)">予想</button><button class="subtab-btn" id="race8_subbtn_tf" onclick="showSubTab('race8','tf',this)">3連単</button><button class="subtab-btn" id="race8_subbtn_dev" onclick="showSubTab('race8','dev',this)">展開</button></div>
     <div id="race8_sub_main" class="subtab-panel">
         <table class="main">
@@ -1628,7 +1628,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,628票 <span class="delta-up">↑↑ 初回計測比 +9633%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 11,089票 <span class="delta-up">↑↑ 初回計測比 +40970%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race9_subbtn_main" onclick="showSubTab('race9','main',this)">予想</button><button class="subtab-btn" id="race9_subbtn_tf" onclick="showSubTab('race9','tf',this)">3連単</button><button class="subtab-btn" id="race9_subbtn_dev" onclick="showSubTab('race9','dev',this)">展開</button></div>
     <div id="race9_sub_main" class="subtab-panel">
         <table class="main">
@@ -1813,7 +1813,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,322票 <span class="delta-up">↑↑ 初回計測比 +8831%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 8,551票 <span class="delta-up">↑↑ 初回計測比 +32788%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race10_subbtn_main" onclick="showSubTab('race10','main',this)">予想</button><button class="subtab-btn" id="race10_subbtn_tf" onclick="showSubTab('race10','tf',this)">3連単</button><button class="subtab-btn" id="race10_subbtn_dev" onclick="showSubTab('race10','dev',this)">展開</button></div>
     <div id="race10_sub_main" class="subtab-panel">
         <table class="main">
@@ -1998,7 +1998,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 3,596票 <span class="delta-up">↑↑ 初回計測比 +5188%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 12,326票 <span class="delta-up">↑↑ 初回計測比 +18026%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race11_subbtn_main" onclick="showSubTab('race11','main',this)">予想</button><button class="subtab-btn" id="race11_subbtn_tf" onclick="showSubTab('race11','tf',this)">3連単</button><button class="subtab-btn" id="race11_subbtn_dev" onclick="showSubTab('race11','dev',this)">展開</button></div>
     <div id="race11_sub_main" class="subtab-panel">
         <table class="main">
@@ -2439,6 +2439,14 @@ window.addEventListener('DOMContentLoaded', function(){
     Object.keys(window.DEV_ANIM_DATA).forEach(initDevTrack);
   }
   if(tabs.length === 0) return;
+  // まとめページ（本命1着率45%超レース一覧など）からの「?r=5」のような直接リンクが
+  // あれば、そのレース番号のタブを優先して開く。無ければ従来どおり締切が一番近い
+  // レースを自動で開く。
+  const rParam = new URLSearchParams(window.location.search).get('r');
+  if(rParam){
+    const direct = tabs.find(function(t){ return t.getAttribute('data-race-no') === rParam; });
+    if(direct){ direct.click(); return; }
+  }
   const nowJstMinutes = getNowJstMinutes();
   let best = tabs[0], bestMins = Infinity;
   tabs.forEach(function(t){
