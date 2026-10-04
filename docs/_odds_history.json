@@ -1,1 +1,842 @@
-{}
+{
+  "matsuyama_1_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 41,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_2_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 32,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_3_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 69,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsuyama_4_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 72,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsuyama_5_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 74,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_6_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 36,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_7_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 42,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsuyama_8_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 8,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 48,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_9_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 9,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 43,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsuyama_10_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 10,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 95,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_11_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 11,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 140,
+        "as_of": "2026/10/05 08:18"
+      }
+    ]
+  },
+  "matsuyama_12_2026-10-05": {
+    "venue": "matsuyama",
+    "race_no": 12,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 136,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_1_2026-10-05": {
+    "venue": "nara",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 580,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_2_2026-10-05": {
+    "venue": "nara",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 485,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_3_2026-10-05": {
+    "venue": "nara",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 316,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_4_2026-10-05": {
+    "venue": "nara",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 172,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_5_2026-10-05": {
+    "venue": "nara",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 1083,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_6_2026-10-05": {
+    "venue": "nara",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 238,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_7_2026-10-05": {
+    "venue": "nara",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 170,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_8_2026-10-05": {
+    "venue": "nara",
+    "race_no": 8,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 183,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_9_2026-10-05": {
+    "venue": "nara",
+    "race_no": 9,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 173,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_10_2026-10-05": {
+    "venue": "nara",
+    "race_no": 10,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 314,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_11_2026-10-05": {
+    "venue": "nara",
+    "race_no": 11,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 252,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "nara_12_2026-10-05": {
+    "venue": "nara",
+    "race_no": 12,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 821,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_1_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 90384,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_2_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 25391,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_3_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 15137,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_4_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 9699,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_5_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 25235,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_6_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 19989,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "matsudo_7_2026-10-05": {
+    "venue": "matsudo",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 28628,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_1_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 145,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_2_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 86,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_3_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 86,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_4_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 86,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_5_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 89,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_6_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 181,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hiratsuka_7_2026-10-05": {
+    "venue": "hiratsuka",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 90,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_1_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_2_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_3_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_4_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_5_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_6_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "komatsushima_7_2026-10-05": {
+    "venue": "komatsushima",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 22,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_1_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_2_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_3_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_4_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_5_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 13,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_6_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "takeo_7_2026-10-05": {
+    "venue": "takeo",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 17,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hofu_1_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 209392,
+        "as_of": "2026/10/05 08:23"
+      }
+    ]
+  },
+  "hofu_2_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 26496,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hofu_3_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 17770,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hofu_4_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 9932,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hofu_5_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 9516,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hofu_6_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 10793,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "hofu_7_2026-10-05": {
+    "venue": "hofu",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 8691,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "iwakitaira_1_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 1,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 51,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_2_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 2,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 45,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_3_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 3,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 73,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_4_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 4,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 101,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "iwakitaira_5_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 5,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 152,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_6_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 6,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 224,
+        "as_of": "2026/10/05 08:21"
+      }
+    ]
+  },
+  "iwakitaira_7_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 7,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 36,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_8_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 8,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 36,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_9_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 9,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 38,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_10_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 10,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 46,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  },
+  "iwakitaira_11_2026-10-05": {
+    "venue": "iwakitaira",
+    "race_no": 11,
+    "date": "2026-10-05",
+    "snapshots": [
+      {
+        "ts": "2026-10-05 08:20",
+        "ticket_total": 61,
+        "as_of": "2026/10/05 08:24"
+      }
+    ]
+  }
+}
