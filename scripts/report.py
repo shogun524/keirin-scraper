@@ -67,7 +67,7 @@ COMMON_STYLE = """
   header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
-  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
   header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
   .gate-stripe{ display:flex; height:5px; margin-top:16px; }
   .gate-stripe span{ flex:1; }
@@ -410,6 +410,38 @@ def render_development_block(payload):
     <div class="dev-scenarios">{"".join(scenario_blocks)}</div>"""
 
 
+_DEV_CX, _DEV_CY, _DEV_HALF_LEN, _DEV_R = 200, 150, 80, 70
+
+
+def _dev_track_xy(fraction, r):
+    """report.py 側の静的SVG用に、JSのdevTrackXYと全く同じ幾何学を複製したもの
+    （コーナーラベルなど、アニメーションしない固定要素の座標を置くため）。"""
+    import math
+    cx, cy, half_len = _DEV_CX, _DEV_CY, _DEV_HALF_LEN
+    if fraction < 0.25:
+        t1 = fraction / 0.25
+        a1 = math.radians(90 - 180 * t1)
+        return (cx + half_len) + r * math.cos(a1), cy + r * math.sin(a1)
+    elif fraction < 0.5:
+        t2 = (fraction - 0.25) / 0.25
+        return (cx + half_len) - t2 * (2 * half_len), cy - r
+    elif fraction < 0.75:
+        t3 = (fraction - 0.5) / 0.25
+        a3 = math.radians(-90 - 180 * t3)
+        return (cx - half_len) + r * math.cos(a3), cy + r * math.sin(a3)
+    else:
+        t4 = (fraction - 0.75) / 0.25
+        return (cx - half_len) + t4 * (2 * half_len), cy + r
+
+
+def _dev_stadium_path(r):
+    cx, cy, half_len = _DEV_CX, _DEV_CY, _DEV_HALF_LEN
+    return (f"M {cx+half_len},{cy-r} L {cx-half_len},{cy-r} "
+            f"A {r},{r} 0 0 0 {cx-half_len},{cy+r} "
+            f"L {cx+half_len},{cy+r} "
+            f"A {r},{r} 0 0 0 {cx+half_len},{cy-r} Z")
+
+
 def render_development_animation(tab_id, payload):
     """
     展開シミュレーションを、実際のバンク形状（ホームストレッチ・バックストレッチ・
@@ -420,6 +452,12 @@ def render_development_animation(tab_id, payload):
     画面の手前（下側）にゴール（ホームストレッチ）、奥（上側）に向正面（バックストレッチ）
     を配置する。実際の競輪と同じ反時計回り（左回り）で周回する。同じラインの選手は
     線で結び、ライン単位のまとまりが見た目でも分かるようにする。
+
+    見た目は、緑の芝生の走路・ねずみ色の路面・内外のレーンガイドライン・コーナー番号
+    （1〜4コーナー）・進行方向の矢印を描いた、実際のバンクに近いトラック背景の上で、
+    車体（簡易的な自転車アイコン）が進行方向を向いて走るようにしている（ユーザー提示の
+    参考イメージ「KEIRIN TACTICS 競輪展開ボード」の見た目に寄せたもの。ただし今回は
+    見た目の改善のみで、あちらのような手動配置エディタ機能は追加していない）。
     """
     if not payload or not payload.get("animation"):
         return ""
@@ -434,12 +472,37 @@ def render_development_animation(tab_id, payload):
             continue
         members = sorted(members, key=lambda x: x["line_position"])
         lines_html += f'<polyline id="{tab_id}_devline_{idx}" class="dev-line-connector" points=""/>'
+
     cars_html = ""
     for c in anim["cars"]:
         bg, fg = car_color(c["car"])
-        cars_html += (f'<circle id="{tab_id}_dev_car_{c["car"]}" class="dev-car-dot" r="8" '
-                      f'fill="{bg}" stroke="rgba(0,0,0,.25)" stroke-width="1"/>'
-                      f'<text id="{tab_id}_dev_car_{c["car"]}_t" class="dev-car-label" fill="{fg}">{c["car"]}</text>')
+        cars_html += f"""
+        <g id="{tab_id}_dev_car_{c["car"]}" class="dev-car-icon">
+          <g id="{tab_id}_dev_car_{c["car"]}_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="{bg}"/>
+          </g>
+          <text id="{tab_id}_dev_car_{c["car"]}_t" class="dev-car-label" fill="{fg}">{c["car"]}</text>
+        </g>"""
+
+    road_outer_r = _DEV_R + 54
+    road_inner_r = _DEV_R - 12
+    guide_inner_r = _DEV_R - 4
+    guide_outer_r = _DEV_R + 42 + 4
+    road_path = _dev_stadium_path(road_outer_r) + " " + _dev_stadium_path(road_inner_r)
+    field_path = _dev_stadium_path(road_inner_r)
+
+    corner_labels = []
+    for label, frac in (("２コーナー", 0.19), ("１コーナー", 0.06),
+                         ("３コーナー", 0.56), ("４コーナー", 0.69)):
+        lx, ly = _dev_track_xy(frac, road_outer_r + 12)
+        corner_labels.append(f'<text class="dev-track-corner-label" x="{lx:.1f}" y="{ly:.1f}">{label}</text>')
+
+    field_label_y_back = _DEV_CY - (road_inner_r - 16)
+    field_label_y_home = _DEV_CY + (road_inner_r - 16)
+
     payload_json = _json.dumps(anim, ensure_ascii=False)
     return f"""
     <div class="mw-label">展開シミュレーション（向正面から残り1周半）</div>
@@ -448,11 +511,25 @@ def render_development_animation(tab_id, payload):
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('{tab_id}')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="{tab_id}_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="{road_path}"/>
+        <path class="dev-track-field" d="{field_path}"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="{_dev_stadium_path(guide_inner_r)}"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="{_dev_stadium_path(guide_outer_r)}"/>
+        {''.join(corner_labels)}
+        <text class="dev-track-field-label" x="{_DEV_CX}" y="{field_label_y_back:.1f}">バック</text>
+        <text class="dev-track-field-label" x="{_DEV_CX}" y="{field_label_y_home:.1f}">ホーム</text>
+        <text class="dev-track-arrow" x="{_DEV_CX - 30}" y="{_DEV_CY - (road_inner_r - 16):.1f}">&#8249;</text>
+        <text class="dev-track-arrow" x="{_DEV_CX + 30}" y="{_DEV_CY + (road_inner_r - 16):.1f}">&#8250;</text>
+        <text class="dev-track-caption" x="{_DEV_CX}" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="{_DEV_CX + _DEV_HALF_LEN}" y1="{_DEV_CY + guide_inner_r:.1f}" x2="{_DEV_CX + _DEV_HALF_LEN}" y2="{_DEV_CY + guide_outer_r:.1f}"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="{_DEV_CX}" y="294">ゴール（ホームストレッチ）</text>
         {lines_html}
         {cars_html}
       </svg>
@@ -709,15 +786,25 @@ RACE_PANEL_STYLE = """
   .dev-anim-note{ font-size:10.5px; color:var(--ink-soft); line-height:1.5; margin:-4px 0 9px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
-  .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
+  .dev-track-wrap{ background:#cfd6c6; border-radius:8px; padding:6px; margin-bottom:14px; }
   .dev-track-svg{ width:100%; height:auto; display:block; }
-  .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
-  .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-track-road{ fill:#9a9d97; stroke:#7d8077; stroke-width:1; }
+  .dev-track-field{ fill:url(#devGrassStripes); }
+  .dev-lane-guide{ fill:none; stroke-width:1.1; opacity:.55; }
+  .dev-lane-guide-inner{ stroke:#c0392b; }
+  .dev-lane-guide-outer{ stroke:#2d5fa8; }
+  .dev-finish-line-svg{ stroke:#fff; stroke-width:3; }
   .dev-track-caption{ font-size:10px; font-weight:700; text-anchor:middle; fill:var(--ink-soft); }
   .dev-track-caption-goal{ fill:#8a5a12; }
-  .dev-car-dot{ transition:none; }
-  .dev-car-label{ font-size:8px; font-weight:700; text-anchor:middle; pointer-events:none; }
-  .dev-line-connector{ fill:none; stroke:var(--ink-soft); stroke-width:3; stroke-linecap:round; opacity:.4; }
+  .dev-track-corner-label{ font-size:7px; font-weight:700; text-anchor:middle; fill:#5c6b60; opacity:.75; }
+  .dev-track-field-label{ font-size:8px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.55); letter-spacing:1px; }
+  .dev-track-arrow{ font-size:11px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.6); }
+  .dev-car-icon{ transition:none; }
+  .dev-bike-wheel{ fill:#2a2a2a; }
+  .dev-bike-frame{ stroke:#2a2a2a; stroke-width:1.4; stroke-linecap:round; }
+  .dev-bike-rider{ stroke:rgba(0,0,0,.3); stroke-width:.6; }
+  .dev-car-label{ font-size:7.5px; font-weight:800; text-anchor:middle; pointer-events:none; dominant-baseline:central; }
+  .dev-line-connector{ fill:none; stroke:#fff; stroke-width:2.5; stroke-linecap:round; opacity:.5; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -871,7 +958,7 @@ function selectTrifectaCar(tabId, car){
 // 手前右側のコーナーに入る直前（x=cx+halfLen側）に位置する。実際の競輪と同じ
 // 反時計回り（左回り）：ゴール→右コーナー→向正面→左コーナー→ゴール、の順で周回する。
 function devTrackXY(fraction, lane){
-  var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 42;
+  var cx = 200, cy = 150, halfLen = 80, R = 70, laneW = 42;
   var r = R + lane * laneW;
   if(fraction < 0.25){
     // 右側コーナー（ゴール側→向正面側、外側＝右に膨らむ）
@@ -900,11 +987,23 @@ function devFractionFromPosition(track, positionLaps){
   var f = track.start_fraction + positionLaps;
   return f - Math.floor(f);
 }
-function setDevCarXY(tabId, car, x, y){
-  var dot = document.getElementById(tabId + '_dev_car_' + car);
-  var label = document.getElementById(tabId + '_dev_car_' + car + '_t');
-  if(dot){ dot.setAttribute('cx', x); dot.setAttribute('cy', y); }
-  if(label){ label.setAttribute('x', x); label.setAttribute('y', y + 4); }
+// 進行方向の接線角度（度）を、fractionをごく僅かに前後にずらした2点から求める。
+// 反時計回りに周回しているので、常に「少し先」の点との差分を使う。
+function devTrackAngle(fraction, lane){
+  var eps = 0.004;
+  var f0 = fraction, f1 = fraction + eps;
+  if(f1 >= 1) f1 -= 1;
+  var p0 = devTrackXY(f0, lane);
+  var p1 = devTrackXY(f1, lane);
+  return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+}
+// 車体アイコン（<g class="dev-car-icon">、内側に回転用の<g>_bike、きょうだい要素に
+// 直立したまま表示する車番<text>）の位置と向きをまとめて更新する。
+function setDevCarPose(tabId, car, x, y, angleDeg){
+  var outer = document.getElementById(tabId + '_dev_car_' + car);
+  var bike = document.getElementById(tabId + '_dev_car_' + car + '_bike');
+  if(outer){ outer.setAttribute('transform', 'translate(' + x + ',' + y + ')'); }
+  if(bike){ bike.setAttribute('transform', 'rotate(' + angleDeg.toFixed(1) + ')'); }
 }
 function updateDevLineConnectors(tabId, anim, xyByCar){
   var groups = {};
@@ -950,8 +1049,9 @@ function placeDevCarsAtU(tabId, anim, u){
     var lane = devCatmullRom(c.lanes, u);
     var frac = devFractionFromPosition(anim.track, pos);
     var xy = devTrackXY(frac, lane);
+    var angle = devTrackAngle(frac, lane);
     xyByCar[c.car] = xy;
-    setDevCarXY(tabId, c.car, xy.x, xy.y);
+    setDevCarPose(tabId, c.car, xy.x, xy.y, angle);
   });
   updateDevLineConnectors(tabId, anim, xyByCar);
 }
@@ -1212,7 +1312,7 @@ def render_index(all_race_data, date=None, now=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">今日、どこで、どの目を買うか。</p>
-  <nav class="top-nav"><a href="high_prob.html">本命1着率45%超レース &rarr;</a> ・ <a href="venues.html">全競輪場データ &rarr;</a></nav>
+  <nav class="top-nav"><a href="overview.html">全レース早見表</a><a href="high_prob.html">本命が堅い</a><a href="close_race.html">1着率が拮抗</a><a href="hole.html">穴目候補</a><a href="value.html">投票が鈍い(妙味)</a><a href="venues.html">全競輪場データ</a></nav>
   {gate_stripe_html()}
 </header>
 <main>
@@ -1325,69 +1425,32 @@ def render_venues_page(date=None):
 </html>"""
 
 
-def render_high_prob_page(all_race_data, date=None):
-    """
-    本命の予測1着率が一定以上（model.py の DEFAULT_SETTINGS["th_high"]、既定45%）の
-    レースだけを、全競輪場横断でまとめた一覧ページ。各レースの is_high_prob は
-    predict_race() が既に th_high で判定済みの値をそのまま使う（閾値の定義を
-    ここで重複して持たない。基準を変えたい場合は model.py 側の設定を変えれば
-    自動的にこのページにも反映される）。
-    """
-    import json
+def _fmt_date_jp(date=None):
     date = date or datetime.date.today()
     weekday_map = {0: "月", 1: "火", 2: "水", 3: "木", 4: "金", 5: "土", 6: "日"}
-    date_str = f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
+    return f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
 
-    picks = []
-    for rd in all_race_data:
-        result = rd.get("prediction")
-        if not result or not result.get("is_high_prob"):
-            continue
-        info = rd["race_info"]
-        top = result["top"]
-        picks.append({
-            "venue": info["venue"],
-            "venue_name": VENUE_NAMES.get(info["venue"], info["venue"]),
-            "race_no": info["race_no"],
-            "title": info.get("title", ""),
-            "deadline": info.get("deadline"),
-            "top": top,
-            "line_label": (
-                "先頭" if top.get("line_info") and top["line_info"]["position"] == 1
-                else f'{top["line_info"]["position"]}番手' if top.get("line_info") else "単騎"
-            ),
-        })
 
-    # 締切が近い順（締切不明・既に終了したものは後方）に並べる
-    from zoneinfo import ZoneInfo as _ZoneInfo
-    now_jst = datetime.datetime.now(_ZoneInfo("Asia/Tokyo"))
-    picks.sort(key=lambda p: _minutes_until_deadline(p["deadline"], now_jst))
+# 集計ページ（本命が堅い／拮抗／穴目／妙味／全レース早見表）の一覧。
+# ナビゲーションの並び順・文言はここ1か所で管理する。
+AGG_PAGES = [
+    ("overview.html", "全レース早見表"),
+    ("high_prob.html", "本命が堅い"),
+    ("close_race.html", "1着率が拮抗"),
+    ("hole.html", "穴目候補"),
+    ("value.html", "投票が鈍い(妙味)"),
+]
 
-    cards_html = ""
-    for p in picks:
-        top = p["top"]
-        bg, fg = car_color(top["car"])
-        deadline_html = f'<span class="hp-deadline">{p["deadline"]}</span>' if p["deadline"] else ""
-        cards_html += f"""
-        <a class="hp-card" href="{p['venue']}/index.html?r={p['race_no']}" data-deadline="{p['deadline'] or ''}">
-          <div class="hp-card-head">
-            <span class="hp-venue">{p['venue_name']} {p['race_no']}R</span>
-            {deadline_html}
-          </div>
-          <div class="hp-card-body">
-            <span class="car" style="background:{bg};color:{fg};">{top['car']}</span>
-            <span class="hp-name">{top['name']}</span>
-            <span class="hp-line dim">{p['line_label']}</span>
-            <span class="hp-pct">{top['adjusted']:.1f}%</span>
-          </div>
-        </a>"""
 
-    races_json = json.dumps(
-        [{"venue": p["venue"], "race_no": p["race_no"], "deadline": p["deadline"]} for p in picks],
-        ensure_ascii=False,
-    )
+def _agg_nav_html(current=None):
+    chips = []
+    for href, label in AGG_PAGES:
+        cls = "agg-chip current" if href == current else "agg-chip"
+        chips.append(f'<a class="{cls}" href="{href}">{label}</a>')
+    return '<nav class="agg-nav">' + "".join(chips) + "</nav>"
 
-    script = """
+
+_AGG_SCRIPT = """
     function minutesUntilDeadline(deadlineStr, nowJstMinutes){
       if(!deadlineStr) return 1e9;
       const parts = deadlineStr.split(':');
@@ -1407,55 +1470,402 @@ def render_high_prob_page(all_race_data, date=None):
     }
     window.addEventListener('DOMContentLoaded', function(){
       const nowJstMinutes = getNowJstMinutes();
-      document.querySelectorAll('.hp-card').forEach(function(card){
-        const mins = minutesUntilDeadline(card.getAttribute('data-deadline'), nowJstMinutes);
-        if(mins <= 5){ card.classList.add('soon'); }
-        if(mins >= 1e9){ card.classList.add('ended'); }
+      document.querySelectorAll('[data-deadline]').forEach(function(el){
+        const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);
+        if(mins <= 5){ el.classList.add('soon'); }
+        if(mins >= 1e9){ el.classList.add('ended'); }
       });
     });
+"""
+
+_AGG_STYLE = """
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
+  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
+  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
+  .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .hp-list{ display:flex; flex-direction:column; gap:8px; }
+  .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
+             padding:10px 12px; text-decoration:none; color:inherit; }
+  .hp-card.soon{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }
+  .hp-card.ended{ opacity:.45; }
+  .hp-card-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .hp-venue{ font-weight:700; font-size:13px; color:var(--ink); }
+  .hp-deadline{ font-size:12px; font-weight:700; color:#8a5a12; }
+  .hp-card-body{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .hp-name{ font-size:13px; color:var(--ink); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hp-line{ font-size:11px; }
+  .hp-pct{ font-size:15px; font-weight:800; color:var(--brick); }
+  .hp-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:5px; }
+  .hp-contender{ display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; color:var(--brick); margin-right:8px; }
+  .dim{ color:var(--ink-soft); }
+"""
+
+
+def _render_race_list_page(*, title, heading, tagline, lead, entries, empty_msg, current, date_str):
     """
+    全競輪場横断の「条件に合うレースだけ」一覧ページの共通レンダラ。
+    entries: [{"venue","venue_name","race_no","deadline","body_html"}]。
+    締切が近い順（締切不明・既に終了したものは後方）に並べて表示する。
+    各カードは各場ページの該当レースタブ（?r=N）に直接リンクする。
+    """
+    from zoneinfo import ZoneInfo as _ZoneInfo
+    now_jst = datetime.datetime.now(_ZoneInfo("Asia/Tokyo"))
+    entries = sorted(entries, key=lambda e: _minutes_until_deadline(e["deadline"], now_jst))
+
+    cards_html = ""
+    for e in entries:
+        deadline_html = f'<span class="hp-deadline">{e["deadline"]}</span>' if e["deadline"] else ""
+        cards_html += f"""
+        <a class="hp-card" href="{e['venue']}/index.html?r={e['race_no']}" data-deadline="{e['deadline'] or ''}">
+          <div class="hp-card-head">
+            <span class="hp-venue">{e['venue_name']} {e['race_no']}R</span>
+            {deadline_html}
+          </div>
+          {e['body_html']}
+        </a>"""
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>本命1着率45%超レース一覧 | 競輪AI予想</title>
+<title>{title} | 競輪AI予想</title>
 <style>
-{COMMON_STYLE}
-  main{{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }}
-  .hp-lead{{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }}
-  .hp-list{{ display:flex; flex-direction:column; gap:8px; }}
-  .hp-card{{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
-             padding:10px 12px; text-decoration:none; color:inherit; }}
-  .hp-card.soon{{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }}
-  .hp-card.ended{{ opacity:.45; }}
-  .hp-card-head{{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }}
-  .hp-venue{{ font-weight:700; font-size:13px; color:var(--ink); }}
-  .hp-deadline{{ font-size:12px; font-weight:700; color:#8a5a12; }}
-  .hp-card-body{{ display:flex; align-items:center; gap:8px; }}
-  .hp-name{{ font-size:13px; color:var(--ink); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }}
-  .hp-line{{ font-size:11px; }}
-  .hp-pct{{ font-size:15px; font-weight:800; color:var(--brick); }}
+{COMMON_STYLE}{_AGG_STYLE}
 </style>
 </head>
 <body>
 <header>
   <div class="top-row">
-    <h1>&larr; <a href="index.html">本命1着率45%超レース</a></h1>
+    <h1>&larr; <a href="index.html">{heading}</a></h1>
     <span class="date">{date_str}</span>
   </div>
-  <p class="tagline">予測1着率が45%を超えた、今日の本命が堅いレースだけを集めました。</p>
+  <p class="tagline">{tagline}</p>
   {gate_stripe_html()}
 </header>
 <main>
-  <p class="hp-lead">対象：{len(picks)}レース（予測1着率45%超。全競輪場・本日開催分）</p>
+  {_agg_nav_html(current)}
+  <p class="hp-lead">{lead.format(n=len(entries))}</p>
   <div class="hp-list">
-    {cards_html if picks else "<p style='text-align:center;color:var(--ink-soft);'>本日は該当するレースがありませんでした。</p>"}
+    {cards_html if entries else f"<p style='text-align:center;color:var(--ink-soft);'>{empty_msg}</p>"}
   </div>
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
-<script>{script}</script>
+<script>{_AGG_SCRIPT}</script>
+</body>
+</html>"""
+
+
+def _line_label_of(row):
+    info = row.get("line_info")
+    if not info:
+        return "単騎"
+    return "先頭" if info["position"] == 1 else f'{info["position"]}番手'
+
+
+def _race_entry(rd, body_html):
+    info = rd["race_info"]
+    return {
+        "venue": info["venue"],
+        "venue_name": VENUE_NAMES.get(info["venue"], info["venue"]),
+        "race_no": info["race_no"],
+        "deadline": info.get("deadline"),
+        "body_html": body_html,
+    }
+
+
+def render_high_prob_page(all_race_data, date=None):
+    """
+    本命の予測1着率が一定以上（model.py の DEFAULT_SETTINGS["th_high"]、既定45%）の
+    レースだけを、全競輪場横断でまとめた一覧ページ。各レースの is_high_prob は
+    predict_race() が既に th_high で判定済みの値をそのまま使う（閾値の定義を
+    ここで重複して持たない。基準を変えたい場合は model.py 側の設定を変えれば
+    自動的にこのページにも反映される）。
+    """
+    entries = []
+    for rd in all_race_data:
+        result = rd.get("prediction")
+        if not result or not result.get("is_high_prob"):
+            continue
+        top = result["top"]
+        bg, fg = car_color(top["car"])
+        body = f"""
+          <div class="hp-card-body">
+            <span class="car" style="background:{bg};color:{fg};">{top['car']}</span>
+            <span class="hp-name">{top['name']}</span>
+            <span class="hp-line dim">{_line_label_of(top)}</span>
+            <span class="hp-pct">{top['adjusted']:.1f}%</span>
+          </div>"""
+        entries.append(_race_entry(rd, body))
+    return _render_race_list_page(
+        title="本命1着率45%超レース一覧", heading="本命1着率45%超レース",
+        tagline="予測1着率が45%を超えた、今日の本命が堅いレースだけを集めました。",
+        lead="対象：{n}レース（予測1着率45%超。全競輪場・本日開催分）",
+        entries=entries, empty_msg="本日は該当するレースがありませんでした。",
+        current="high_prob.html", date_str=_fmt_date_jp(date))
+
+
+def render_close_race_page(all_race_data, date=None):
+    """
+    予測1着率の1位と2位の差が小さい（拮抗している）レースだけを横断表示する。
+    判定は predict_race() の is_close_race（settings["th_close_race"]、既定3pt以内）を
+    そのまま使い、ここでは閾値を持たない。カードには「1位との差が閾値以内の全車」を
+    予測1着率つきで並べ、どの選手同士が競っているかが一目で分かるようにする。
+    """
+    entries = []
+    for rd in all_race_data:
+        result = rd.get("prediction")
+        if not result or not result.get("is_close_race"):
+            continue
+        top = result["top"]
+        gap_limit = result["settings"]["th_close_race"]
+        contenders = [r for r in result["rows"] if top["adjusted"] - r["adjusted"] <= gap_limit]
+        contenders_html = ""
+        for r in contenders:
+            bg, fg = car_color(r["car"])
+            contenders_html += (f'<span class="hp-contender"><span class="car" style="background:{bg};color:{fg};">'
+                                f'{r["car"]}</span>{r["adjusted"]:.1f}%</span>')
+        names = " / ".join(f'{r["car"]}番 {r["name"]}（{_line_label_of(r)}）' for r in contenders)
+        body = f"""
+          <div class="hp-card-body">{contenders_html}</div>
+          <div class="hp-sub">1位と2位の差 {result['top_gap']:.1f}pt　{names}</div>"""
+        entries.append(_race_entry(rd, body))
+    return _render_race_list_page(
+        title="1着率が拮抗しているレース", heading="1着率が拮抗しているレース",
+        tagline="予測1着率の1位と2位がほぼ並んでいる、本命不在の混戦レースです。",
+        lead="対象：{n}レース（予測1着率の1位と2位の差が3pt以内。全競輪場・本日開催分）",
+        entries=entries, empty_msg="本日は該当するレースがありませんでした。",
+        current="close_race.html", date_str=_fmt_date_jp(date))
+
+
+def render_hole_page(all_race_data, date=None):
+    """
+    穴目候補（hole_index.py）が出ているレースを横断表示する。各レースの最有力候補1名と、
+    その根拠（記者印とのズレ／補正による浮上）を示す。
+    """
+    entries = []
+    for rd in all_race_data:
+        result = rd.get("prediction")
+        if not result or not result.get("hole_candidates"):
+            continue
+        c = result["hole_candidates"][0]
+        bg, fg = car_color(c["car"])
+        reasons = "　".join(c["reasons"])
+        body = f"""
+          <div class="hp-card-body">
+            <span class="car" style="background:{bg};color:{fg};">{c['car']}</span>
+            <span class="hp-name">{c['name']}</span>
+            <span class="hp-line dim">モデル{c['model_rank']}位</span>
+            <span class="hp-pct">{c['adjusted']:.1f}%</span>
+          </div>
+          <div class="hp-sub">{reasons}</div>"""
+        entry = _race_entry(rd, body)
+        entry["_score"] = c["hole_score"]
+        entries.append(entry)
+    return _render_race_list_page(
+        title="穴目候補のあるレース", heading="穴目候補のあるレース",
+        tagline="記者印では目立たないが、データ上は評価が高い選手がいるレースです。",
+        lead="対象：{n}レース（記者印の順位よりモデル評価が高い、または展開・相性補正で浮上する選手が1名以上）",
+        entries=entries, empty_msg="本日は該当するレースがありませんでした。",
+        current="hole.html", date_str=_fmt_date_jp(date))
+
+
+def render_value_page(all_race_data, date=None):
+    """
+    オッズ妙味アラート（odds_alerts.py：本命の確信度が高いのに、投票の伸びが同時間帯の他レース
+    より鈍いレース）に該当するレースを横断表示する。車券ごとのオッズは取得できていないため、
+    あくまで「投票状況」ベースの簡易な指標であることをリード文で明記する。
+    """
+    entries = []
+    for rd in all_race_data:
+        info = rd["race_info"]
+        result = rd.get("prediction")
+        if not result or not info.get("odds_value_alert"):
+            continue
+        top = result["top"]
+        bg, fg = car_color(top["car"])
+        trend = info.get("odds_trend")
+        if trend and trend.get("snapshot_count", 0) >= 2:
+            vote_html = f'投票状況: {trend["latest"]:,}票（初回計測比 {trend["growth_pct"]:+.0f}%）'
+        else:
+            vote_html = "投票状況: 計測中（まだ伸びを判定できる回数に達していません）"
+        body = f"""
+          <div class="hp-card-body">
+            <span class="car" style="background:{bg};color:{fg};">{top['car']}</span>
+            <span class="hp-name">{top['name']}</span>
+            <span class="hp-line dim">{_line_label_of(top)}</span>
+            <span class="hp-pct">{top['adjusted']:.1f}%</span>
+          </div>
+          <div class="hp-sub">{vote_html}</div>"""
+        entries.append(_race_entry(rd, body))
+    return _render_race_list_page(
+        title="投票が鈍い本命レース（妙味候補）", heading="投票が鈍い本命レース",
+        tagline="モデルが本命を強く推すのに、まだ投票が集まっていないレースです。",
+        lead=("対象：{n}レース（予測1着率45%以上かつ、発売票数の伸びが同時間帯の他レースより鈍い）。"
+              "車券ごとのオッズは取得できていないため、レース全体の投票状況から見た簡易な目安です。"),
+        entries=entries, empty_msg="本日は該当するレースがありません（投票の計測回数が足りない場合も含みます）。",
+        current="value.html", date_str=_fmt_date_jp(date))
+
+
+_OVERVIEW_SCRIPT = """
+    window.addEventListener('DOMContentLoaded', function(){
+      const table = document.getElementById('ovTable');
+      if(!table) return;
+      const tbody = table.tBodies[0];
+      const ths = table.tHead.rows[0].cells;
+      let sortCol = 1, sortDir = 1;   // 初期は締切順（昇順）
+      function cellVal(tr, i){
+        const v = tr.cells[i].getAttribute('data-sort');
+        return v === null ? tr.cells[i].textContent : v;
+      }
+      function applySort(){
+        const rows = Array.from(tbody.rows);
+        rows.sort(function(a, b){
+          const x = cellVal(a, sortCol), y = cellVal(b, sortCol);
+          // 「10:05」のような文字列を parseFloat で10と誤読しないよう、完全な数値表記のときだけ数値比較する
+          const isNum = function(v){ return /^-?\\d+(\\.\\d+)?$/.test(String(v).trim()); };
+          const cmp = (isNum(x) && isNum(y)) ? (parseFloat(x) - parseFloat(y)) : String(x).localeCompare(String(y), 'ja');
+          return cmp * sortDir;
+        });
+        rows.forEach(function(r){ tbody.appendChild(r); });
+        Array.from(ths).forEach(function(th, i){
+          th.classList.toggle('sorted-asc', i === sortCol && sortDir === 1);
+          th.classList.toggle('sorted-desc', i === sortCol && sortDir === -1);
+        });
+      }
+      Array.from(ths).forEach(function(th, i){
+        if(!th.hasAttribute('data-sortable')) return;
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', function(){
+          if(sortCol === i){ sortDir = -sortDir; } else { sortCol = i; sortDir = th.getAttribute('data-default-dir') === 'desc' ? -1 : 1; }
+          applySort();
+        });
+      });
+      const filterBtns = document.querySelectorAll('.ov-filter');
+      filterBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          btn.classList.toggle('on');
+          const active = Array.from(document.querySelectorAll('.ov-filter.on')).map(function(b){ return b.getAttribute('data-flag'); });
+          Array.from(tbody.rows).forEach(function(tr){
+            const flags = (tr.getAttribute('data-flags') || '').split(' ');
+            const show = active.every(function(f){ return flags.indexOf(f) >= 0; });
+            tr.style.display = show ? '' : 'none';
+          });
+        });
+      });
+      applySort();
+    });
+"""
+
+
+def render_overview_page(all_race_data, date=None):
+    """
+    本日の全レースを1つの表に並べた早見表。本命・予測1着率・1位2位の差・予測決まり手・
+    各種フラグ（本命堅い／拮抗／穴目／妙味）を列にして、列見出しクリックで並べ替え、
+    フラグボタンで絞り込みができる。「どのレースを見るか」を決めるための入口ページ。
+    """
+    rows_html = ""
+    count = 0
+    for rd in all_race_data:
+        result = rd.get("prediction")
+        if not result:
+            continue
+        count += 1
+        info = rd["race_info"]
+        top = result["top"]
+        second = result["rows"][1] if len(result["rows"]) > 1 else None
+        bg, fg = car_color(top["car"])
+        flags = []
+        badges = []
+        if result.get("is_high_prob"):
+            flags.append("high"); badges.append('<span class="ov-badge ov-high">堅</span>')
+        if result.get("is_close_race"):
+            flags.append("close"); badges.append('<span class="ov-badge ov-close">拮抗</span>')
+        if result.get("hole_candidates"):
+            flags.append("hole"); badges.append('<span class="ov-badge ov-hole">穴</span>')
+        if info.get("odds_value_alert"):
+            flags.append("value"); badges.append('<span class="ov-badge ov-value">妙味</span>')
+        deadline = info.get("deadline") or ""
+        gap = result.get("top_gap")
+        second_pct = f"{second['adjusted']:.1f}%" if second else "—"
+        gap_html = f"{gap:.1f}" if gap is not None else "—"
+        venue_name = VENUE_NAMES.get(info["venue"], info["venue"])
+        rows_html += f"""
+        <tr data-flags="{' '.join(flags)}" data-deadline="{deadline}">
+          <td data-sort="{venue_name}{info['race_no']:02d}"><a href="{info['venue']}/index.html?r={info['race_no']}">{venue_name} {info['race_no']}R</a></td>
+          <td data-sort="{deadline or '99:99'}">{deadline or '—'}</td>
+          <td data-sort="{top['car']}"><span class="car" style="background:{bg};color:{fg};">{top['car']}</span> {top['name']}</td>
+          <td data-sort="{top['adjusted']:.2f}"><b>{top['adjusted']:.1f}%</b></td>
+          <td data-sort="{second['adjusted'] if second else 0:.2f}">{second_pct}</td>
+          <td data-sort="{gap if gap is not None else 999:.2f}">{gap_html}</td>
+          <td data-sort="{KIMARITE_LABELS.get(top['dominant_type'], '-')}">{KIMARITE_LABELS.get(top['dominant_type'], '-')}</td>
+          <td data-sort="{len(flags)}">{''.join(badges) or '<span class="dim">—</span>'}</td>
+        </tr>"""
+
+    style = """
+  main.wide{ max-width:980px; }
+  .ov-filters{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; align-items:center; }
+  .ov-filters .lbl{ font-size:12px; color:var(--ink-soft); }
+  .ov-filter{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); cursor:pointer; font-family:inherit; }
+  .ov-filter.on{ background:var(--gold); border-color:var(--gold); color:#fff; font-weight:700; }
+  .ov-scroll{ overflow-x:auto; }
+  table.ov{ width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+  table.ov th, table.ov td{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }
+  table.ov th{ background:var(--paper2); position:sticky; top:0; }
+  table.ov th[data-sortable]:after{ content:" \\2195"; color:#b9b3a3; font-size:10px; }
+  table.ov th.sorted-asc:after{ content:" \\25B2"; color:var(--brick); }
+  table.ov th.sorted-desc:after{ content:" \\25BC"; color:var(--brick); }
+  table.ov td:first-child, table.ov td:nth-child(3){ text-align:left; }
+  table.ov td a{ color:var(--navy); text-decoration:underline; }
+  table.ov tr.soon{ background:#fff4de; }
+  table.ov tr.ended{ opacity:.45; }
+  .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
+  .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
+  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+"""
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全レース早見表 | 競輪AI予想</title>
+<style>
+{COMMON_STYLE}{_AGG_STYLE}{style}
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">全レース早見表</a></h1>
+    <span class="date">{_fmt_date_jp(date)}</span>
+  </div>
+  <p class="tagline">今日の全レースを1枚で。見出しをタップで並べ替え、ボタンで絞り込み。</p>
+  {gate_stripe_html()}
+</header>
+<main class="wide">
+  {_agg_nav_html("overview.html")}
+  <p class="hp-lead">対象：{count}レース（全競輪場・本日開催分）。「差」は予測1着率の1位と2位の差（pt）。</p>
+  <div class="ov-filters"><span class="lbl">絞り込み:</span>
+    <button type="button" class="ov-filter" data-flag="high">堅</button>
+    <button type="button" class="ov-filter" data-flag="close">拮抗</button>
+    <button type="button" class="ov-filter" data-flag="hole">穴</button>
+    <button type="button" class="ov-filter" data-flag="value">妙味</button>
+  </div>
+  <div class="ov-scroll">
+    <table class="ov" id="ovTable">
+      <thead><tr>
+        <th data-sortable>レース</th><th data-sortable>締切</th><th data-sortable>本命</th>
+        <th data-sortable data-default-dir="desc">本命1着率</th><th data-sortable data-default-dir="desc">2位</th>
+        <th data-sortable>差</th><th data-sortable>予測決まり手</th><th data-sortable data-default-dir="desc">注目</th>
+      </tr></thead>
+      <tbody>{rows_html}</tbody>
+    </table>
+  </div>
+  {"" if count else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>{_AGG_SCRIPT}{_OVERVIEW_SCRIPT}</script>
 </body>
 </html>"""
 
