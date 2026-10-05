@@ -624,63 +624,66 @@ RESULT_MARK_SET = {"×", "▲", "△", "○", "◎", "注", "★"}
 def parse_race_result(html, venue, race_no):
     """
     racedetail ページに ?pageType=result を付けた「結果」ページから、着順・車番・
-    選手名・決まり手を抽出する（当地成績の自前集計のため）。
-    ヘッダー行は「予想｜着順｜車番｜選手名｜着差｜上り｜決まり手｜S／B」の並びで
-    あることを確認済み（各セルはBeautifulSoupのget_text("\\n")で1行ずつに
-    分かれる）。決まり手（逃・捲・差・マのいずれか1文字）は他の項目と衝突しない
-    閉じた語彙なので、これを行の区切りとして使い、その手前にある最初の2つの
-    数字（着順・車番）と最初の非数字・非マーク文字列（選手名）を拾う方式にした。
-    ※ この方式はヘッダーの実HTML構造の確認結果を基に組んだが、まだ実際の
-    「結果」ページ全体の生ログでは検証できていない。うまく拾えないケースが
-    あれば、他のパーサー同様、実際のログを見ながら調整する。
-    解析に失敗した場合は例外を投げずNoneを返し、[DEBUG]ログで手がかりを残す。
+    選手名・決まり手を抽出する（予想成績・当地成績・対戦履歴・直近の調子の自前集計用）。
+
+    表の見出しは「予想｜着順｜車番｜選手名｜着差｜上り｜決まり手｜S／B｜勝敗因」で、
+    各行は 予想印(空のことがある)・着順・車番・選手名・着差・上り・決まり手・S／B・勝敗因
+    の順に並ぶ。ただし、決まり手・S／B・勝敗因は【1着の選手など一部の行にしか値が入らず、
+    空欄のセルはテキストとして出てこない】ため、「決まり手の語」を行の区切りにする方式
+    （旧実装）では1着の行しか拾えず、2着以下を取りこぼしていた。
+    そこで今は、1行の先頭にある「（予想印）＋着順(1〜9)＋車番(1〜9)＋選手名」という並びを
+    目印にして行を区切り、次の行頭までのトークンの中から決まり手（逃・捲・差・マ のいずれか）
+    を探す方式にしている。決まり手が無い行は kimarite=None。
+    着順が数字でない行（失格・落車・欠場など）は着順表の対象外として読み飛ばす。
+
+    「まだ確定していません」等の未確定表示、または着順の行が1つも拾えなかった場合は
+    例外を投げず None を返す（拾えなかった場合は [DEBUG] で抜粋を残す）。
     戻り値: [{"finish":1,"car":3,"name":"田中 誇士","kimarite":"逃"}, ...] または None
     """
     lines = _clean_text(html)
     full_text = " ".join(lines)
 
-    if "まだ確定していません" in full_text or ("結果" in full_text and "ありません" in full_text):
+    if "まだ確定していません" in full_text or "結果はまだ" in full_text:
         return None  # レースがまだ終わっていない（正常系。ログ不要）
 
-    try:
-        header_idx = lines.index("決まり手")
-    except ValueError:
-        print(f"[DEBUG] {venue} {race_no}R(結果): 「決まり手」列見出しが見つからず、結果を解析できませんでした。")
+    # 見出しの「着順」は、すぐ近くに「車番」が続くもの（＝着順表の見出し）を選ぶ
+    header_idx = next(
+        (i for i, t in enumerate(lines) if t == "着順" and "車番" in lines[i + 1:i + 3]), None)
+    if header_idx is None:
+        print(f"[DEBUG] {venue} {race_no}R(結果): 着順表の列見出し（着順・車番）が見つからず、結果を解析できませんでした。")
         return None
 
-    data_start = header_idx + 1
-    if data_start < len(lines) and lines[data_start] in ("S／B", "S/B"):
-        data_start += 1  # ヘッダー行自体の最後のセル（S／B列見出し）を読み飛ばす
+    data = lines[header_idx + 1:]
+    name_re = re.compile(r"[\u3040-\u30ff\u4e00-\u9fff]")
+    non_name = RESULT_MARK_SET | RESULT_KIMARITE_SET | {"車番", "選手名", "着差", "上り", "決まり手", "S／B", "S/B", "勝敗因", "予想", "着順"}
 
     def _is_digit_1to9(t):
-        return t.isdigit() and 1 <= int(t) <= 9
+        return len(t) == 1 and t in "123456789"
+
+    def _is_name(t):
+        return bool(name_re.search(t)) and t not in non_name and not t.isdigit()
+
+    # 各行の先頭位置（着順・車番・選手名 の並びの「着順」の位置）を探す
+    starts = []
+    for i in range(len(data) - 2):
+        if _is_digit_1to9(data[i]) and _is_digit_1to9(data[i + 1]) and _is_name(data[i + 2]):
+            starts.append(i)
 
     results = []
-    buf = []
-    data = lines[data_start:]
-    i = 0
-    while i < len(data):
-        token = data[i]
-        if token in RESULT_KIMARITE_SET:
-            digits = [t for t in buf if _is_digit_1to9(t)]
-            names = [t for t in buf if not t.isdigit() and t not in RESULT_MARK_SET]
-            if len(digits) >= 2 and names:
-                results.append({
-                    "finish": int(digits[0]), "car": int(digits[1]),
-                    "name": names[0], "kimarite": token,
-                })
-            buf = []
-            if len(results) >= 9:
-                break
-            # 決まり手の直後には、次の行の予想マーク/着順よりも先に、その行の
-            # S／B列の値（空でなければ1トークン）が挟まっていることがある。
-            # 次のトークンがマークでも1〜9の数字でもなければ、そのS／B値とみなして
-            # 読み飛ばす。
-            if i + 1 < len(data) and data[i + 1] not in RESULT_MARK_SET and not _is_digit_1to9(data[i + 1]):
-                i += 1
-        else:
-            buf.append(token)
-        i += 1
+    seen_cars = set()
+    for n, i in enumerate(starts):
+        end = starts[n + 1] if n + 1 < len(starts) else len(data)
+        # 次の行の先頭にある予想印（着順の直前）は、この行の範囲から外す
+        if n + 1 < len(starts) and end - 1 > i and data[end - 1] in RESULT_MARK_SET:
+            end -= 1
+        car = int(data[i + 1])
+        if car in seen_cars:
+            continue  # 同じ車番が重複して拾われた場合（ページ下部の別表など）は最初の1つだけ使う
+        seen_cars.add(car)
+        kimarite = next((t for t in data[i + 3:end] if t in RESULT_KIMARITE_SET), None)
+        results.append({"finish": int(data[i]), "car": car, "name": data[i + 2], "kimarite": kimarite})
+        if len(results) >= 9:
+            break
 
     if not results:
         snippet = " | ".join(lines[header_idx:header_idx + 60])
