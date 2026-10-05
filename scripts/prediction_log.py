@@ -27,6 +27,10 @@ KEEP_DAYS = 90            # ログを保持する日数（これより古い日�
 MAX_ATTEMPTS = 6          # 結果取得に失敗してよい回数の上限
 MAX_FETCH_PER_RUN = 40    # 1回の実行で結果ページを取りに行く最大レース数（実行時間の上限対策）
 TRIFECTA_KEEP = 5         # ログに残す3連単の上位組合せ数
+# 結果ページの読み取り方式の版。版が変わったとき、結果が取れていないレースの失敗回数を
+# 0に戻して取り直す（旧方式の不具合で積み上がった失敗回数のせいで、直った後も諦められたままに
+# ならないようにするため）。読み取り方式を直したら数字を1つ上げる。
+PARSER_VERSION = 2
 
 # キャリブレーション表の区分（本命の予測1着率の下限, 上限, 表示ラベル）
 CALIBRATION_BUCKETS = [
@@ -92,6 +96,7 @@ def record_predictions(log, all_race_data, date_str):
             "trifecta": [[c["first"], c["second"], c["third"]] for c in combos],
             "result": None,
             "attempts": 0,
+            "parser_v": PARSER_VERSION,
         }
         added += 1
     return added
@@ -111,6 +116,11 @@ def update_results(log, today, now_hm):
     today_str = today.isoformat()
     fetched = 0
     newly = 0
+    failed = 0
+    for v in log.values():
+        if v.get("result") is None and v.get("parser_v") != PARSER_VERSION:
+            v["attempts"] = 0
+            v["parser_v"] = PARSER_VERSION
     pending = [
         v for v in log.values()
         if v.get("result") is None and v.get("attempts", 0) < MAX_ATTEMPTS and v.get("url")
@@ -133,6 +143,7 @@ def update_results(log, today, now_hm):
             continue
         if not res:
             v["attempts"] = v.get("attempts", 0) + 1  # まだ確定していない／解析できない
+            failed += 1
             continue
         res = sorted(res, key=lambda r: r["finish"])
         v["result"] = {
@@ -140,6 +151,8 @@ def update_results(log, today, now_hm):
             "winner_kimarite": res[0].get("kimarite"),
         }
         newly += 1
+    if fetched:
+        print(f"[INFO] 予想成績: 結果ページ{fetched}件を取得し、{newly}件で着順を記録、{failed}件は未確定または解析失敗でした。")
     return newly
 
 
