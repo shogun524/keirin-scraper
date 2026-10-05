@@ -1312,7 +1312,7 @@ def render_index(all_race_data, date=None, now=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">今日、どこで、どの目を買うか。</p>
-  <nav class="top-nav"><a href="overview.html">全レース早見表</a><a href="high_prob.html">本命が堅い</a><a href="close_race.html">1着率が拮抗</a><a href="hole.html">穴目候補</a><a href="value.html">投票が鈍い(妙味)</a><a href="venues.html">全競輪場データ</a></nav>
+  <nav class="top-nav"><a href="overview.html">全レース早見表</a><a href="high_prob.html">本命が堅い</a><a href="close_race.html">1着率が拮抗</a><a href="hole.html">穴目候補</a><a href="value.html">投票が鈍い(妙味)</a><a href="players.html">選手一覧</a><a href="venues_today.html">開催場別</a><a href="results.html">予想成績</a><a href="venues.html">全競輪場データ</a></nav>
   {gate_stripe_html()}
 </header>
 <main>
@@ -1439,6 +1439,9 @@ AGG_PAGES = [
     ("close_race.html", "1着率が拮抗"),
     ("hole.html", "穴目候補"),
     ("value.html", "投票が鈍い(妙味)"),
+    ("players.html", "選手一覧"),
+    ("venues_today.html", "開催場別"),
+    ("results.html", "予想成績"),
 ]
 
 
@@ -1710,11 +1713,11 @@ def render_value_page(all_race_data, date=None):
 
 _OVERVIEW_SCRIPT = """
     window.addEventListener('DOMContentLoaded', function(){
-      const table = document.getElementById('ovTable');
+      const table = document.getElementById('__TID__');
       if(!table) return;
       const tbody = table.tBodies[0];
       const ths = table.tHead.rows[0].cells;
-      let sortCol = 1, sortDir = 1;   // 初期は締切順（昇順）
+      let sortCol = __COL__, sortDir = __DIR__;
       function cellVal(tr, i){
         const v = tr.cells[i].getAttribute('data-sort');
         return v === null ? tr.cells[i].textContent : v;
@@ -1742,17 +1745,19 @@ _OVERVIEW_SCRIPT = """
           applySort();
         });
       });
-      const filterBtns = document.querySelectorAll('.ov-filter');
-      filterBtns.forEach(function(btn){
-        btn.addEventListener('click', function(){
-          btn.classList.toggle('on');
-          const active = Array.from(document.querySelectorAll('.ov-filter.on')).map(function(b){ return b.getAttribute('data-flag'); });
-          Array.from(tbody.rows).forEach(function(tr){
-            const flags = (tr.getAttribute('data-flags') || '').split(' ');
-            const show = active.every(function(f){ return flags.indexOf(f) >= 0; });
-            tr.style.display = show ? '' : 'none';
-          });
+      function refilter(){
+        const active = Array.from(document.querySelectorAll('.ov-filter.on')).map(function(b){ return b.getAttribute('data-flag'); });
+        const q = (window.__ovSearch || '').toLowerCase();
+        Array.from(tbody.rows).forEach(function(tr){
+          const flags = (tr.getAttribute('data-flags') || '').split(' ');
+          const okFlag = active.every(function(f){ return flags.indexOf(f) >= 0; });
+          const okName = !q || (tr.getAttribute('data-name') || '').toLowerCase().indexOf(q) >= 0;
+          tr.style.display = (okFlag && okName) ? '' : 'none';
         });
+      }
+      window.__ovRefilter = refilter;
+      document.querySelectorAll('.ov-filter').forEach(function(btn){
+        btn.addEventListener('click', function(){ btn.classList.toggle('on'); refilter(); });
       });
       applySort();
     });
@@ -1865,9 +1870,327 @@ def render_overview_page(all_race_data, date=None):
   {"" if count else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
-<script>{_AGG_SCRIPT}{_OVERVIEW_SCRIPT}</script>
+<script>{_AGG_SCRIPT}{_sortable_table_script("ovTable", 1, 1)}</script>
 </body>
 </html>"""
+
+
+COURSE_STRONG_MIN_RACES = 5     # 「当地巧者」と呼ぶのに必要な当地での最低出走数
+COURSE_STRONG_TOP3_RATE = 0.6   # 同、当地での3着内率の下限
+
+
+def _sortable_table_script(table_id, init_col, init_dir):
+    """列見出しクリックで並べ替え、.ov-filter ボタンで data-flags 絞り込みができる共通スクリプト。"""
+    return (_OVERVIEW_SCRIPT
+            .replace("__TID__", table_id)
+            .replace("__COL__", str(init_col))
+            .replace("__DIR__", str(init_dir)))
+
+
+_TABLE_STYLE = """
+  main.wide{ max-width:980px; }
+  .ov-filters{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; align-items:center; }
+  .ov-filters .lbl{ font-size:12px; color:var(--ink-soft); }
+  .ov-filter{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); cursor:pointer; font-family:inherit; }
+  .ov-filter.on{ background:var(--gold); border-color:var(--gold); color:#fff; font-weight:700; }
+  .ov-search{ font-size:13px; padding:5px 10px; border:1px solid var(--border); border-radius:6px; font-family:inherit; width:150px; }
+  .ov-scroll{ overflow-x:auto; }
+  table.ov{ width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+  table.ov th, table.ov td{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }
+  table.ov th{ background:var(--paper2); position:sticky; top:0; }
+  table.ov th[data-sortable]:after{ content:" \\2195"; color:#b9b3a3; font-size:10px; }
+  table.ov th.sorted-asc:after{ content:" \\25B2"; color:var(--brick); }
+  table.ov th.sorted-desc:after{ content:" \\25BC"; color:var(--brick); }
+  table.ov td.l{ text-align:left; }
+  table.ov td a{ color:var(--navy); text-decoration:underline; }
+  table.ov tr.soon{ background:#fff4de; }
+  table.ov tr.ended{ opacity:.45; }
+  .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
+  .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
+  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-up{ background:var(--pine); } .ov-down{ background:var(--brick); } .ov-home{ background:#8a5a12; }
+"""
+
+
+def _page_shell(*, title, heading, tagline, date_str, body, current, script="", extra_style="", wide=True):
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} | 競輪AI予想</title>
+<style>
+{COMMON_STYLE}{_AGG_STYLE}{_TABLE_STYLE}{extra_style}
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">{heading}</a></h1>
+    <span class="date">{date_str}</span>
+  </div>
+  <p class="tagline">{tagline}</p>
+  {gate_stripe_html()}
+</header>
+<main{' class="wide"' if wide else ''}>
+  {_agg_nav_html(current)}
+  {body}
+</main>
+<footer>このページはGitHub Actionsにより自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>{_AGG_SCRIPT}{script}</script>
+</body>
+</html>"""
+
+
+def render_players_page(all_race_data, date=None):
+    """
+    本日の出走選手を1人1行で並べた選手一覧。レース横断で「今日調子の上がっている選手」
+    「当地(そのバンク)で強い選手」「名前での検索」ができる、選手目線の入口ページ。
+    """
+    rows_html = ""
+    count = 0
+    for rd in all_race_data:
+        result = rd.get("prediction")
+        if not result:
+            continue
+        info = rd["race_info"]
+        venue_name = VENUE_NAMES.get(info["venue"], info["venue"])
+        deadline = info.get("deadline") or ""
+        for rank_in_race, r in enumerate(result["rows"], start=1):
+            count += 1
+            bg, fg = car_color(r["car"])
+            flags, badges = [], []
+            ft = r.get("form_trend")
+            if ft and ft.get("trend") == "up":
+                flags.append("up"); badges.append('<span class="ov-badge ov-up">調子↑</span>')
+            elif ft and ft.get("trend") == "down":
+                flags.append("down"); badges.append('<span class="ov-badge ov-down">調子↓</span>')
+            cr = r.get("course_record")
+            cr_txt = "—"
+            cr_sort = -1
+            if cr:
+                cr_txt = f'{cr["races"]}走{cr["wins"]}勝{cr["top3"]}連対'
+                cr_sort = cr["top3"] / cr["races"] if cr["races"] else -1
+                if cr["races"] >= COURSE_STRONG_MIN_RACES and cr_sort >= COURSE_STRONG_TOP3_RATE:
+                    flags.append("home"); badges.append('<span class="ov-badge ov-home">当地巧者</span>')
+            rows_html += f"""
+        <tr data-flags="{' '.join(flags)}" data-name="{r['name']}" data-deadline="{deadline}">
+          <td class="l" data-sort="{r['name']}"><span class="car" style="background:{bg};color:{fg};">{r['car']}</span> {r['name']}</td>
+          <td class="l" data-sort="{venue_name}{info['race_no']:02d}"><a href="{info['venue']}/index.html?r={info['race_no']}">{venue_name} {info['race_no']}R</a></td>
+          <td data-sort="{deadline or '99:99'}">{deadline or '—'}</td>
+          <td data-sort="{r['adjusted']:.2f}"><b>{r['adjusted']:.1f}%</b></td>
+          <td data-sort="{rank_in_race}">{rank_in_race}位</td>
+          <td>{r['rank']}</td>
+          <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')}</td>
+          <td data-sort="{cr_sort:.3f}">{cr_txt}</td>
+          <td data-sort="{len(flags)}">{''.join(badges) or '<span class="dim">—</span>'}</td>
+        </tr>"""
+
+    body = f"""
+  <p class="hp-lead">対象：{count}人（全競輪場・本日開催分）。見出しタップで並べ替え。当地巧者＝当地で{COURSE_STRONG_MIN_RACES}走以上かつ3着内率{int(COURSE_STRONG_TOP3_RATE*100)}%以上。</p>
+  <div class="ov-filters"><span class="lbl">絞り込み:</span>
+    <button type="button" class="ov-filter" data-flag="up">調子↑</button>
+    <button type="button" class="ov-filter" data-flag="down">調子↓</button>
+    <button type="button" class="ov-filter" data-flag="home">当地巧者</button>
+    <input type="search" id="ovSearch" class="ov-search" placeholder="選手名で検索">
+  </div>
+  <div class="ov-scroll">
+    <table class="ov" id="plTable">
+      <thead><tr>
+        <th data-sortable>選手</th><th data-sortable>レース</th><th data-sortable>締切</th>
+        <th data-sortable data-default-dir="desc">予測1着率</th><th data-sortable>レース内順位</th>
+        <th>級班</th><th>予測決まり手</th><th data-sortable data-default-dir="desc">当地成績</th>
+        <th data-sortable data-default-dir="desc">注目</th>
+      </tr></thead>
+      <tbody>{rows_html}</tbody>
+    </table>
+  </div>
+  {"" if count else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}"""
+    search_js = """
+    window.addEventListener('DOMContentLoaded', function(){
+      const box = document.getElementById('ovSearch');
+      if(!box) return;
+      box.addEventListener('input', function(){
+        window.__ovSearch = box.value.trim();
+        if(window.__ovRefilter) window.__ovRefilter();
+      });
+    });
+"""
+    return _page_shell(
+        title="本日の出走選手一覧", heading="本日の出走選手", date_str=_fmt_date_jp(date),
+        tagline="今日走る全選手を1枚で。調子・当地成績・予測1着率でさがせます。",
+        body=body, current="players.html",
+        script=_sortable_table_script("plTable", 3, -1) + search_js)
+
+
+def render_venues_today_page(all_race_data, date=None):
+    """
+    本日の開催場ごとのサマリ。レース数、本命の予測1着率の平均、堅い／拮抗／穴のレース数、
+    予測決まり手の構成（全レース平均）、バンク周長を1行にまとめ、「今日どの場が堅いか／荒れそうか」
+    を比べられるようにする。
+    """
+    by_venue = {}
+    for rd in all_race_data:
+        if rd.get("prediction"):
+            by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)
+
+    rows_html = ""
+    for venue, rds in by_venue.items():
+        n = len(rds)
+        avg_top = sum(r["prediction"]["top"]["adjusted"] for r in rds) / n
+        n_high = sum(1 for r in rds if r["prediction"].get("is_high_prob"))
+        n_close = sum(1 for r in rds if r["prediction"].get("is_close_race"))
+        n_hole = sum(1 for r in rds if r["prediction"].get("hole_candidates"))
+        gaps = [r["prediction"]["top_gap"] for r in rds if r["prediction"].get("top_gap") is not None]
+        avg_gap = sum(gaps) / len(gaps) if gaps else 0.0
+        kim = {t: sum(r["prediction"]["kimarite_ratio"].get(t, 0) for r in rds) / n for t in KIMARITE}
+        d = VENUE_BANK_DATA.get(venue, {})
+        bclass = bank_class(d.get("circumference")) or "—"
+        name = VENUE_NAMES.get(venue, venue)
+        kim_cells = "".join(f'<td data-sort="{kim[t]:.1f}">{kim[t]:.0f}%</td>' for t in KIMARITE)
+        rows_html += f"""
+        <tr>
+          <td class="l" data-sort="{name}"><a href="{venue}/index.html">{name}</a></td>
+          <td data-sort="{n}">{n}</td>
+          <td data-sort="{avg_top:.2f}"><b>{avg_top:.1f}%</b></td>
+          <td data-sort="{avg_gap:.2f}">{avg_gap:.1f}</td>
+          <td data-sort="{n_high}">{n_high}</td>
+          <td data-sort="{n_close}">{n_close}</td>
+          <td data-sort="{n_hole}">{n_hole}</td>
+          {kim_cells}
+          <td data-sort="{bclass}">{bclass}</td>
+        </tr>"""
+
+    kim_heads = "".join(f'<th data-sortable data-default-dir="desc">{KIMARITE_LABELS[t]}</th>' for t in KIMARITE)
+    body = f"""
+  <p class="hp-lead">対象：{len(by_venue)}場（本日開催分）。「本命平均」は各レースの本命の予測1着率の平均、「差」は1位と2位の差の平均です。
+  数字が大きいほど本命が堅く、小さいほど混戦気味の開催場です。決まり手は各レースの予測構成の平均です。</p>
+  <div class="ov-scroll">
+    <table class="ov" id="vtTable">
+      <thead><tr>
+        <th data-sortable>競輪場</th><th data-sortable data-default-dir="desc">レース数</th>
+        <th data-sortable data-default-dir="desc">本命平均</th><th data-sortable data-default-dir="desc">差(平均)</th>
+        <th data-sortable data-default-dir="desc">堅</th><th data-sortable data-default-dir="desc">拮抗</th><th data-sortable data-default-dir="desc">穴</th>
+        {kim_heads}<th data-sortable>バンク</th>
+      </tr></thead>
+      <tbody>{rows_html}</tbody>
+    </table>
+  </div>
+  {"" if by_venue else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}"""
+    return _page_shell(
+        title="開催場別サマリ", heading="開催場別サマリ", date_str=_fmt_date_jp(date),
+        tagline="今日どの開催場が堅いか、荒れそうかを横並びで比較。",
+        body=body, current="venues_today.html", script=_sortable_table_script("vtTable", 2, -1))
+
+
+def render_results_page(log, date=None):
+    """
+    予想成績ページ。prediction_log に溜めた「予想」と「確定結果」から、
+    本命が実際に何%勝ったか／予測1着率は実際と合っているか（キャリブレーション）／
+    堅い・拮抗の区分ごとの成績／日別の成績／直近の答え合わせ を表示する。
+    サンプルが少ないうちは数字がブレるため、件数を必ず併記する。
+    """
+    from prediction_log import compute_prediction_stats
+    stats = compute_prediction_stats(log or {})
+    ov = stats["overall"]
+
+    def pct(v):
+        return f"{v:.1f}%"
+
+    def tile(label, value, sub=""):
+        return (f'<div class="rs-tile"><div class="rs-label">{label}</div><div class="rs-value">{value}</div>'
+                f'<div class="rs-sub">{sub}</div></div>')
+
+    if ov["n"]:
+        tiles = "".join([
+            tile("本命の1着率", pct(ov["top1"]), f"予測の平均 {pct(ov['pred_top'])}"),
+            tile("本命の連対率(2着以内)", pct(ov["top2"])),
+            tile("本命の3着内率", pct(ov["top3"])),
+            tile("予想上位3車ボックス", pct(ov["box3"]), "3連複の的中率"),
+            tile("3連単 予想1位の組合せ", pct(ov["tri1"]), f"上位5点なら {pct(ov['tri5'])}"),
+        ])
+        low_note = ("<p class='hp-lead'>※ 件数が少ないうちは数字が大きくブレます（目安：100レース以上で傾向が見えてきます）。</p>"
+                    if ov["n"] < 100 else "")
+        summary = f'<p class="hp-lead">集計対象：結果が確定した{ov["n"]}レース（結果待ち{stats["pending_count"]}件）。</p>{low_note}<div class="rs-tiles">{tiles}</div>'
+    else:
+        summary = (f'<p class="hp-lead">まだ結果が確定したレースがありません（記録中：{stats["tracked_count"]}レース、'
+                   f'結果待ち{stats["pending_count"]}件）。予想は毎時の自動実行のたびに記録され、締切後に結果と照合されます。</p>')
+
+    def seg_row(label, s):
+        if not s["n"]:
+            return f'<tr><td class="l">{label}</td><td>0</td><td colspan="5" class="dim">—</td></tr>'
+        return (f'<tr><td class="l">{label}</td><td>{s["n"]}</td><td>{pct(s["pred_top"])}</td>'
+                f'<td><b>{pct(s["top1"])}</b></td><td>{pct(s["top3"])}</td><td>{pct(s["box3"])}</td><td>{pct(s["tri5"])}</td></tr>')
+
+    seg = stats["segments"]
+    seg_html = f"""
+  <h2 class="section">区分ごとの成績</h2>
+  <div class="ov-scroll"><table class="ov"><thead><tr>
+    <th>区分</th><th>件数</th><th>本命予測の平均</th><th>本命1着率</th><th>本命3着内</th><th>3連複BOX</th><th>3連単上位5点</th>
+  </tr></thead><tbody>
+    {seg_row("本命が堅い", seg["high"])}{seg_row("1着率が拮抗", seg["close"])}{seg_row("その他", seg["other"])}
+  </tbody></table></div>"""
+
+    cal_rows = ""
+    for c in stats["calibration"]:
+        if not c["n"]:
+            cal_rows += f'<tr><td class="l">{c["label"]}</td><td>0</td><td colspan="3" class="dim">—</td></tr>'
+            continue
+        diff = c["top1"] - c["pred_top"]
+        cls = "delta-up" if diff >= 0 else "delta-down"
+        cal_rows += (f'<tr><td class="l">{c["label"]}</td><td>{c["n"]}</td><td>{pct(c["pred_top"])}</td>'
+                     f'<td><b>{pct(c["top1"])}</b></td><td><span class="{cls}">{diff:+.1f}pt</span></td></tr>')
+    cal_html = f"""
+  <h2 class="section">予測1着率は当たっているか（本命の予測1着率の帯ごと）</h2>
+  <p class="hp-lead">「予測の平均」と「実際の1着率」が近いほど、数字を信用できます。件数が少ない帯は参考程度に。</p>
+  <div class="ov-scroll"><table class="ov"><thead><tr>
+    <th>本命の予測1着率</th><th>件数</th><th>予測の平均</th><th>実際の1着率</th><th>差</th>
+  </tr></thead><tbody>{cal_rows}</tbody></table></div>"""
+
+    day_rows = "".join(
+        f'<tr><td class="l">{d["date"]}</td><td>{d["n"]}</td><td><b>{pct(d["top1"])}</b></td><td>{pct(d["top3"])}</td><td>{pct(d["box3"])}</td></tr>'
+        for d in stats["by_day"][:14])
+    day_html = f"""
+  <h2 class="section">日別の成績（直近14日）</h2>
+  <div class="ov-scroll"><table class="ov"><thead><tr>
+    <th>日付</th><th>件数</th><th>本命1着率</th><th>本命3着内</th><th>3連複BOX</th>
+  </tr></thead><tbody>{day_rows or '<tr><td colspan="5" class="dim">—</td></tr>'}</tbody></table></div>""" if stats["by_day"] else ""
+
+    recent_rows = ""
+    for e in stats["recent"][:30]:
+        fin = e["result"]["finish_order"]
+        top = e["order"][0]
+        mark = "◎" if fin[0] == top else ("○" if top in fin[:3] else "×")
+        mcls = "delta-up" if mark != "×" else "delta-down"
+        venue_name = VENUE_NAMES.get(e["venue"], e["venue"])
+        tri = e["trifecta"][0] if e["trifecta"] else None
+        tri_txt = "-".join(map(str, tri)) if tri else "—"
+        tri_hit = " 的中" if tri and tri == fin[:3] else ""
+        recent_rows += (f'<tr><td class="l">{e["date"][5:]} {venue_name} {e["race_no"]}R</td>'
+                        f'<td>{top}</td><td><span class="{mcls}"><b>{mark}</b></span></td>'
+                        f'<td>{"-".join(map(str, fin[:3]))}</td><td>{tri_txt}{tri_hit}</td></tr>')
+    recent_html = f"""
+  <h2 class="section">直近の答え合わせ（新しい順・最大30件）</h2>
+  <p class="hp-lead">◎＝本命が1着、○＝本命が3着以内、×＝圏外。</p>
+  <div class="ov-scroll"><table class="ov"><thead><tr>
+    <th>レース</th><th>本命</th><th>結果</th><th>確定(1-2-3着)</th><th>予想の3連単1位</th>
+  </tr></thead><tbody>{recent_rows}</tbody></table></div>""" if recent_rows else ""
+
+    style = """
+  main.wide{ max-width:820px; }
+  h2.section{ font-size:14px; color:var(--ink-soft); margin:22px 0 8px; }
+  .rs-tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; margin:0 0 6px; }
+  .rs-tile{ background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+  .rs-label{ font-size:11.5px; color:var(--ink-soft); }
+  .rs-value{ font-size:22px; font-weight:800; color:var(--brick); margin-top:2px; font-variant-numeric:tabular-nums; }
+  .rs-sub{ font-size:11px; color:var(--ink-soft); margin-top:2px; min-height:14px; }
+  .delta-up{ color:var(--pine); } .delta-down{ color:var(--brick); }
+"""
+    return _page_shell(
+        title="予想成績", heading="予想成績", date_str=_fmt_date_jp(date),
+        tagline="AIの予想は実際どれくらい当たったか。毎時自動で記録して答え合わせしています。",
+        body=summary + seg_html + cal_html + day_html + recent_html,
+        current="results.html", extra_style=style)
 
 
 def render_venue_bank_page(slug, date=None):
