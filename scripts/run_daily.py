@@ -31,7 +31,7 @@ except AttributeError:
 from scraper import fetch_all_todays_races
 from model import predict_race
 from report import (render_index, render_venue_page, render_venues_page, render_venue_bank_page,
-                     render_high_prob_page, render_close_race_page, render_hole_page,
+                     render_high_prob_page, render_close_race_page,
                      render_value_page, render_overview_page, render_players_page,
                      render_venues_today_page, render_results_page, VENUE_NAMES)
 from course_records import update_course_records, get_course_record
@@ -241,13 +241,12 @@ def main():
         print(f"[WARN] 予想成績ログの更新に失敗しました: {e}")
         prediction_log = {}
 
-    # 全競輪場横断の集計ページ（本命が堅い／拮抗／穴目／妙味／全レース早見表）。
+    # 全競輪場横断の集計ページ（本命が堅い／拮抗／妙味／全レース早見表）。
     # 1ページの失敗が他のページや日次処理全体を止めないよう、ページごとに独立して書き出す。
     for filename, render_fn in (
         ("overview.html", render_overview_page),
         ("high_prob.html", render_high_prob_page),
         ("close_race.html", render_close_race_page),
-        ("hole.html", render_hole_page),
         ("value.html", render_value_page),
         ("players.html", render_players_page),
         ("venues_today.html", render_venues_today_page),
