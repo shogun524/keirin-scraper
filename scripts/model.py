@@ -644,6 +644,9 @@ def _parse_line_hyphen_notation(text):
 # ============================================================
 DEFAULT_SETTINGS = {
     "th_high": 45, "th_list": 10, "close_threshold": 8,
+    # 「1着率が拮抗しているレース」の判定幅（pt）。予測1着率の1位と2位の差がこの値以内なら拮抗。
+    # close_threshold（本命と並ぶ「信頼度比較グループ」を作るための幅）とは用途が別なので分けている。
+    "th_close_race": 3,
     "development_weight": 55,
     "line_strength": 30, "line_support": 8, "solo_penalty": 6,
     "line_follow_bonus": 45, "adv_bonus": 10, "adv_penalty": 15,
@@ -777,6 +780,9 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         "close_group": close_group,
         "most_reliable": most_reliable,
         "is_high_prob": top["adjusted"] >= s["th_high"],
+        # 拮抗レース判定：予測1着率の1位と2位の差（pt）。2車未満なら None。
+        "top_gap": (rows[0]["adjusted"] - rows[1]["adjusted"]) if len(rows) >= 2 else None,
+        "is_close_race": len(rows) >= 2 and (rows[0]["adjusted"] - rows[1]["adjusted"]) <= s["th_close_race"],
         "venue_slug": venue_slug,
         "settings": s,
     }
