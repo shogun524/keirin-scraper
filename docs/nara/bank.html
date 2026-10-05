@@ -24,7 +24,7 @@
   header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
-  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
   header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
   .gate-stripe{ display:flex; height:5px; margin-top:16px; }
   .gate-stripe span{ flex:1; }
@@ -113,15 +113,25 @@
   .dev-anim-note{ font-size:10.5px; color:var(--ink-soft); line-height:1.5; margin:-4px 0 9px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
-  .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
+  .dev-track-wrap{ background:#cfd6c6; border-radius:8px; padding:6px; margin-bottom:14px; }
   .dev-track-svg{ width:100%; height:auto; display:block; }
-  .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
-  .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-track-road{ fill:#9a9d97; stroke:#7d8077; stroke-width:1; }
+  .dev-track-field{ fill:url(#devGrassStripes); }
+  .dev-lane-guide{ fill:none; stroke-width:1.1; opacity:.55; }
+  .dev-lane-guide-inner{ stroke:#c0392b; }
+  .dev-lane-guide-outer{ stroke:#2d5fa8; }
+  .dev-finish-line-svg{ stroke:#fff; stroke-width:3; }
   .dev-track-caption{ font-size:10px; font-weight:700; text-anchor:middle; fill:var(--ink-soft); }
   .dev-track-caption-goal{ fill:#8a5a12; }
-  .dev-car-dot{ transition:none; }
-  .dev-car-label{ font-size:8px; font-weight:700; text-anchor:middle; pointer-events:none; }
-  .dev-line-connector{ fill:none; stroke:var(--ink-soft); stroke-width:3; stroke-linecap:round; opacity:.4; }
+  .dev-track-corner-label{ font-size:7px; font-weight:700; text-anchor:middle; fill:#5c6b60; opacity:.75; }
+  .dev-track-field-label{ font-size:8px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.55); letter-spacing:1px; }
+  .dev-track-arrow{ font-size:11px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.6); }
+  .dev-car-icon{ transition:none; }
+  .dev-bike-wheel{ fill:#2a2a2a; }
+  .dev-bike-frame{ stroke:#2a2a2a; stroke-width:1.4; stroke-linecap:round; }
+  .dev-bike-rider{ stroke:rgba(0,0,0,.3); stroke-width:.6; }
+  .dev-car-label{ font-size:7.5px; font-weight:800; text-anchor:middle; pointer-events:none; dominant-baseline:central; }
+  .dev-line-connector{ fill:none; stroke:#fff; stroke-width:2.5; stroke-linecap:round; opacity:.5; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }

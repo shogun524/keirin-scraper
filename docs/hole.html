@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>穴目候補のあるレース | 競輪AI予想</title>
+<style>
+
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
+
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
+  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
+  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
+  .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .hp-list{ display:flex; flex-direction:column; gap:8px; }
+  .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
+             padding:10px 12px; text-decoration:none; color:inherit; }
+  .hp-card.soon{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }
+  .hp-card.ended{ opacity:.45; }
+  .hp-card-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .hp-venue{ font-weight:700; font-size:13px; color:var(--ink); }
+  .hp-deadline{ font-size:12px; font-weight:700; color:#8a5a12; }
+  .hp-card-body{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .hp-name{ font-size:13px; color:var(--ink); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hp-line{ font-size:11px; }
+  .hp-pct{ font-size:15px; font-weight:800; color:var(--brick); }
+  .hp-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:5px; }
+  .hp-contender{ display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; color:var(--brick); margin-right:8px; }
+  .dim{ color:var(--ink-soft); }
+
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">穴目候補のあるレース</a></h1>
+    <span class="date">2026年10月05日(月)</span>
+  </div>
+  <p class="tagline">記者印では目立たないが、データ上は評価が高い選手がいるレースです。</p>
+  <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
+</header>
+<main>
+  <nav class="agg-nav"><a class="agg-chip" href="overview.html">全レース早見表</a><a class="agg-chip" href="high_prob.html">本命が堅い</a><a class="agg-chip" href="close_race.html">1着率が拮抗</a><a class="agg-chip current" href="hole.html">穴目候補</a><a class="agg-chip" href="value.html">投票が鈍い(妙味)</a><a class="agg-chip" href="players.html">選手一覧</a><a class="agg-chip" href="venues_today.html">開催場別</a><a class="agg-chip" href="results.html">予想成績</a></nav>
+  <p class="hp-lead">対象：70レース（記者印の順位よりモデル評価が高い、または展開・相性補正で浮上する選手が1名以上）</p>
+  <div class="hp-list">
+    
+        <a class="hp-card" href="nara/index.html?r=4" data-deadline="12:06">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 4R</span>
+            <span class="hp-deadline">12:06</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">利川 寛太</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">8.1%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の2.74倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=5" data-deadline="12:35">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 5R</span>
+            <span class="hp-deadline">12:35</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">池田 勇人</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">9.1%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.48倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=6" data-deadline="13:04">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 6R</span>
+            <span class="hp-deadline">13:04</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">小林 潤二</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">8.4%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.42倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=7" data-deadline="13:33">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 7R</span>
+            <span class="hp-deadline">13:33</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">八日市屋 浩之</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">6.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.51倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=8" data-deadline="14:02">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 8R</span>
+            <span class="hp-deadline">14:02</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">齋藤 登志信</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">4.4%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.96倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=9" data-deadline="14:32">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 9R</span>
+            <span class="hp-deadline">14:32</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">小谷 実</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">3.9%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.79倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=10" data-deadline="15:02">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 10R</span>
+            <span class="hp-deadline">15:02</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">宝満 大作</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">8.0%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の6.82倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=11" data-deadline="15:33">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 11R</span>
+            <span class="hp-deadline">15:33</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">内山 貴裕</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">7.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.84倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=1" data-deadline="15:40">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 1R</span>
+            <span class="hp-deadline">15:40</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">足達 重満</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">8.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.23倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=1" data-deadline="15:51">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 1R</span>
+            <span class="hp-deadline">15:51</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">水野 悟志</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">10.9%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.94倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=2" data-deadline="16:02">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 2R</span>
+            <span class="hp-deadline">16:02</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">塚本 勝士</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">5.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.84倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=12" data-deadline="16:09">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 12R</span>
+            <span class="hp-deadline">16:09</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>
+            <span class="hp-name">川口 公太朗</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">6.4%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.76倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=2" data-deadline="16:16">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 2R</span>
+            <span class="hp-deadline">16:16</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>
+            <span class="hp-name">坂本 佳憲</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">7.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.39倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=3" data-deadline="16:28">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 3R</span>
+            <span class="hp-deadline">16:28</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">野中 祐志</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">12.3%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（6番手評価）よりモデル総合評価が2ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の3.35倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=3" data-deadline="16:41">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 3R</span>
+            <span class="hp-deadline">16:41</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">相良 勝美</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">6.8%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.27倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=4" data-deadline="16:54">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 4R</span>
+            <span class="hp-deadline">16:54</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">岡本 英之</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">8.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.08倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=4" data-deadline="17:07">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 4R</span>
+            <span class="hp-deadline">17:07</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">亀井 宏佳</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">5.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.59倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=5" data-deadline="17:20">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 5R</span>
+            <span class="hp-deadline">17:20</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">武田 良太</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">4.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.05倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=5" data-deadline="17:33">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 5R</span>
+            <span class="hp-deadline">17:33</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">佐伯 智恵</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">10.8%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の4.16倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=6" data-deadline="17:46">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 6R</span>
+            <span class="hp-deadline">17:46</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">花田 将司</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">8.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の1.98倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=6" data-deadline="17:59">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 6R</span>
+            <span class="hp-deadline">17:59</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">戸邉 香奈実</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">8.5%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が2ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の4.19倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=7" data-deadline="18:12">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 7R</span>
+            <span class="hp-deadline">18:12</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">内田 玄希</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">3.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.12倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=7" data-deadline="18:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 7R</span>
+            <span class="hp-deadline">18:25</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">長谷川 裕一</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">8.0%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が2ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の2.38倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=8" data-deadline="18:38">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 8R</span>
+            <span class="hp-deadline">18:38</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">佐々木 翔一</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">6.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.61倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=8" data-deadline="18:51">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 8R</span>
+            <span class="hp-deadline">18:51</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">須藤 誠</span>
+            <span class="hp-line dim">モデル3位</span>
+            <span class="hp-pct">9.0%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（6番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の5.04倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=9" data-deadline="19:04">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 9R</span>
+            <span class="hp-deadline">19:04</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">山崎 泰己</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">13.0%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.76倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=9" data-deadline="19:17">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 9R</span>
+            <span class="hp-deadline">19:17</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">篠塚 光一</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">6.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.09倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=10" data-deadline="19:30">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 10R</span>
+            <span class="hp-deadline">19:30</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">佐々木 亮太</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">5.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.33倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=10" data-deadline="19:43">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 10R</span>
+            <span class="hp-deadline">19:43</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">寺林 正秋</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">14.1%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.36倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=11" data-deadline="19:57">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 11R</span>
+            <span class="hp-deadline">19:57</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">佐藤 健太</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">5.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.43倍に浮上</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=11" data-deadline="20:11">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 11R</span>
+            <span class="hp-deadline">20:11</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">松坂 英司</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">7.3%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.86倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=12" data-deadline="20:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 12R</span>
+            <span class="hp-deadline">20:25</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">嶋田 誠也</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">10.4%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.81倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=1" data-deadline="20:36">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 1R</span>
+            <span class="hp-deadline">20:36</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">高田 真幸</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">11.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の5.33倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=1" data-deadline="20:44">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 1R</span>
+            <span class="hp-deadline">20:44</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">宮西 令奈</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">7.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.01倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=1" data-deadline="20:52">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 1R</span>
+            <span class="hp-deadline">20:52</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">吉岡 伸太郎</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">10.2%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が2ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の2.79倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=2" data-deadline="21:00">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 2R</span>
+            <span class="hp-deadline">21:00</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">隅 直幸</span>
+            <span class="hp-line dim">モデル3位</span>
+            <span class="hp-pct">17.0%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の6.07倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=2" data-deadline="21:08">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 2R</span>
+            <span class="hp-deadline">21:08</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">原 司</span>
+            <span class="hp-line dim">モデル2位</span>
+            <span class="hp-pct">13.2%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（5番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の3.80倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=2" data-deadline="21:16">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 2R</span>
+            <span class="hp-deadline">21:16</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">黒田 篤</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">6.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.52倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=3" data-deadline="21:24">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 3R</span>
+            <span class="hp-deadline">21:24</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">渡邉 満</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">10.8%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の6.34倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=3" data-deadline="21:32">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 3R</span>
+            <span class="hp-deadline">21:32</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">高橋 由記</span>
+            <span class="hp-line dim">モデル3位</span>
+            <span class="hp-pct">21.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.74倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=3" data-deadline="21:40">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 3R</span>
+            <span class="hp-deadline">21:40</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">山口 茂</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">4.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.62倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=4" data-deadline="21:48">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 4R</span>
+            <span class="hp-deadline">21:48</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">坂本 昌宏</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">13.1%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の6.99倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=4" data-deadline="21:56">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 4R</span>
+            <span class="hp-deadline">21:56</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">岡田 雅也</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">4.4%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.01倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=4" data-deadline="22:04">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 4R</span>
+            <span class="hp-deadline">22:04</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">神開 将暢</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">12.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.98倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=5" data-deadline="22:13">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 5R</span>
+            <span class="hp-deadline">22:13</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">小笠原 昭太</span>
+            <span class="hp-line dim">モデル3位</span>
+            <span class="hp-pct">11.2%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（6番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の6.13倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=5" data-deadline="22:22">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 5R</span>
+            <span class="hp-deadline">22:22</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">倉岡 慎太郎</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">4.8%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.98倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=5" data-deadline="22:31">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 5R</span>
+            <span class="hp-deadline">22:31</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">竹内 優也</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">5.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.63倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=6" data-deadline="22:40">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 6R</span>
+            <span class="hp-deadline">22:40</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">栗田 貴徳</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">14.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の5.89倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=6" data-deadline="22:49">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 6R</span>
+            <span class="hp-deadline">22:49</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">安東 莉奈</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">7.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.30倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=6" data-deadline="22:58">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 6R</span>
+            <span class="hp-deadline">22:58</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">遠藤 勝行</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">6.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.64倍に浮上</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=7" data-deadline="23:07">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 7R</span>
+            <span class="hp-deadline">23:07</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>
+            <span class="hp-name">藤原 憲征</span>
+            <span class="hp-line dim">モデル3位</span>
+            <span class="hp-pct">15.8%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.97倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hiratsuka/index.html?r=7" data-deadline="23:16">
+          <div class="hp-card-head">
+            <span class="hp-venue">平塚 7R</span>
+            <span class="hp-deadline">23:16</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">森下 龍之介</span>
+            <span class="hp-line dim">モデル1位</span>
+            <span class="hp-pct">28.7%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（4番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の1.85倍に浮上</div>
+        </a>
+        <a class="hp-card" href="komatsushima/index.html?r=7" data-deadline="23:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">小松島 7R</span>
+            <span class="hp-deadline">23:25</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">平石 浩之</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">5.9%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.31倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=3" data-deadline="11:37">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 3R</span>
+            <span class="hp-deadline">11:37</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">武田 哲二</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">5.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.53倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=2" data-deadline="11:08">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 2R</span>
+            <span class="hp-deadline">11:08</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">奥出 健士郎</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">8.7%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の5.21倍に浮上</div>
+        </a>
+        <a class="hp-card" href="nara/index.html?r=1" data-deadline="10:40">
+          <div class="hp-card-head">
+            <span class="hp-venue">奈良 1R</span>
+            <span class="hp-deadline">10:40</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">日浅 保幸</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">3.1%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.51倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=7" data-deadline="10:35">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 7R</span>
+            <span class="hp-deadline">10:35</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>
+            <span class="hp-name">北津留 千羽</span>
+            <span class="hp-line dim">モデル3位</span>
+            <span class="hp-pct">17.0%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（6番手評価）よりモデル総合評価が3ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の3.22倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=7" data-deadline="10:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 7R</span>
+            <span class="hp-deadline">10:25</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">辰己 豊</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">4.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.77倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=6" data-deadline="10:15">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 6R</span>
+            <span class="hp-deadline">10:15</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">佐藤 友香</span>
+            <span class="hp-line dim">モデル7位</span>
+            <span class="hp-pct">3.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の1.87倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=6" data-deadline="10:05">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 6R</span>
+            <span class="hp-deadline">10:05</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e07a1f;color:#ffffff;">7</span>
+            <span class="hp-name">坂本 晃輝</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">6.8%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.13倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=5" data-deadline="09:55">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 5R</span>
+            <span class="hp-deadline">09:55</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">國井 裕樹</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">3.6%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.31倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=5" data-deadline="09:45">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 5R</span>
+            <span class="hp-deadline">09:45</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#ffffff;color:#1b2430;">1</span>
+            <span class="hp-name">疋田 敏</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">10.2%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の4.26倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=4" data-deadline="09:35">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 4R</span>
+            <span class="hp-deadline">09:35</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">中川 昌久</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">7.3%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.51倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=4" data-deadline="09:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 4R</span>
+            <span class="hp-deadline">09:25</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">三浦 靖</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">5.8%</span>
+          </div>
+          <div class="hp-sub">記者印の評価（7番手評価）よりモデル総合評価が2ランク高い　ライン・バンク相性・対戦相性・調子などの補正で基礎の2.73倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=3" data-deadline="09:15">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 3R</span>
+            <span class="hp-deadline">09:15</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#2f8f4e;color:#ffffff;">6</span>
+            <span class="hp-name">川口 秀人</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">4.3%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の3.99倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=3" data-deadline="09:05">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 3R</span>
+            <span class="hp-deadline">09:05</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#d8322a;color:#ffffff;">3</span>
+            <span class="hp-name">柴田 祐也</span>
+            <span class="hp-line dim">モデル6位</span>
+            <span class="hp-pct">9.8%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.47倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=2" data-deadline="08:55">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 2R</span>
+            <span class="hp-deadline">08:55</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">大竹 慎吾</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">9.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.38倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=2" data-deadline="08:45">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 2R</span>
+            <span class="hp-deadline">08:45</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>
+            <span class="hp-name">片山 直人</span>
+            <span class="hp-line dim">モデル5位</span>
+            <span class="hp-pct">6.5%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.54倍に浮上</div>
+        </a>
+        <a class="hp-card" href="matsudo/index.html?r=1" data-deadline="08:35">
+          <div class="hp-card-head">
+            <span class="hp-venue">松戸 1R</span>
+            <span class="hp-deadline">08:35</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">浦野 慈生</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">13.3%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.14倍に浮上</div>
+        </a>
+        <a class="hp-card" href="hofu/index.html?r=1" data-deadline="08:25">
+          <div class="hp-card-head">
+            <span class="hp-venue">防府 1R</span>
+            <span class="hp-deadline">08:25</span>
+          </div>
+          
+          <div class="hp-card-body">
+            <span class="car" style="background:#e8c221;color:#1b2430;">5</span>
+            <span class="hp-name">中野 真吾</span>
+            <span class="hp-line dim">モデル4位</span>
+            <span class="hp-pct">12.7%</span>
+          </div>
+          <div class="hp-sub">ライン・バンク相性・対戦相性・調子などの補正で基礎の2.81倍に浮上</div>
+        </a>
+  </div>
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>
+    function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+      if(!deadlineStr) return 1e9;
+      const parts = deadlineStr.split(':');
+      if(parts.length !== 2) return 1e9;
+      const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+      const diff = deadlineMinutes - nowJstMinutes;
+      if(diff < -5) return 1e9 + (-diff);
+      return diff < 0 ? 0 : diff;
+    }
+    function getNowJstMinutes(){
+      const parts = new Intl.DateTimeFormat('ja-JP', {
+        timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+      const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+      return h*60 + m;
+    }
+    window.addEventListener('DOMContentLoaded', function(){
+      const nowJstMinutes = getNowJstMinutes();
+      document.querySelectorAll('[data-deadline]').forEach(function(el){
+        const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);
+        if(mins <= 5){ el.classList.add('soon'); }
+        if(mins >= 1e9){ el.classList.add('ended'); }
+      });
+    });
+</script>
+</body>
+</html>

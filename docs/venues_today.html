@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>開催場別サマリ | 競輪AI予想</title>
+<style>
+
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
+
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
+  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
+  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
+  .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .hp-list{ display:flex; flex-direction:column; gap:8px; }
+  .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
+             padding:10px 12px; text-decoration:none; color:inherit; }
+  .hp-card.soon{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }
+  .hp-card.ended{ opacity:.45; }
+  .hp-card-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .hp-venue{ font-weight:700; font-size:13px; color:var(--ink); }
+  .hp-deadline{ font-size:12px; font-weight:700; color:#8a5a12; }
+  .hp-card-body{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .hp-name{ font-size:13px; color:var(--ink); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hp-line{ font-size:11px; }
+  .hp-pct{ font-size:15px; font-weight:800; color:var(--brick); }
+  .hp-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:5px; }
+  .hp-contender{ display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; color:var(--brick); margin-right:8px; }
+  .dim{ color:var(--ink-soft); }
+
+  main.wide{ max-width:980px; }
+  .ov-filters{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; align-items:center; }
+  .ov-filters .lbl{ font-size:12px; color:var(--ink-soft); }
+  .ov-filter{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); cursor:pointer; font-family:inherit; }
+  .ov-filter.on{ background:var(--gold); border-color:var(--gold); color:#fff; font-weight:700; }
+  .ov-search{ font-size:13px; padding:5px 10px; border:1px solid var(--border); border-radius:6px; font-family:inherit; width:150px; }
+  .ov-scroll{ overflow-x:auto; }
+  table.ov{ width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+  table.ov th, table.ov td{ border:1px solid var(--border); padding:6px 8px; text-align:center; white-space:nowrap; }
+  table.ov th{ background:var(--paper2); position:sticky; top:0; }
+  table.ov th[data-sortable]:after{ content:" \2195"; color:#b9b3a3; font-size:10px; }
+  table.ov th.sorted-asc:after{ content:" \25B2"; color:var(--brick); }
+  table.ov th.sorted-desc:after{ content:" \25BC"; color:var(--brick); }
+  table.ov td.l{ text-align:left; }
+  table.ov td a{ color:var(--navy); text-decoration:underline; }
+  table.ov tr.soon{ background:#fff4de; }
+  table.ov tr.ended{ opacity:.45; }
+  .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
+  .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
+  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-up{ background:var(--pine); } .ov-down{ background:var(--brick); } .ov-home{ background:#8a5a12; }
+
+</style>
+</head>
+<body>
+<header>
+  <div class="top-row">
+    <h1>&larr; <a href="index.html">開催場別サマリ</a></h1>
+    <span class="date">2026年10月05日(月)</span>
+  </div>
+  <p class="tagline">今日どの開催場が堅いか、荒れそうかを横並びで比較。</p>
+  <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
+</header>
+<main class="wide">
+  <nav class="agg-nav"><a class="agg-chip" href="overview.html">全レース早見表</a><a class="agg-chip" href="high_prob.html">本命が堅い</a><a class="agg-chip" href="close_race.html">1着率が拮抗</a><a class="agg-chip" href="hole.html">穴目候補</a><a class="agg-chip" href="value.html">投票が鈍い(妙味)</a><a class="agg-chip" href="players.html">選手一覧</a><a class="agg-chip current" href="venues_today.html">開催場別</a><a class="agg-chip" href="results.html">予想成績</a></nav>
+  
+  <p class="hp-lead">対象：8場（本日開催分）。「本命平均」は各レースの本命の予測1着率の平均、「差」は1位と2位の差の平均です。
+  数字が大きいほど本命が堅く、小さいほど混戦気味の開催場です。決まり手は各レースの予測構成の平均です。</p>
+  <div class="ov-scroll">
+    <table class="ov" id="vtTable">
+      <thead><tr>
+        <th data-sortable>競輪場</th><th data-sortable data-default-dir="desc">レース数</th>
+        <th data-sortable data-default-dir="desc">本命平均</th><th data-sortable data-default-dir="desc">差(平均)</th>
+        <th data-sortable data-default-dir="desc">堅</th><th data-sortable data-default-dir="desc">拮抗</th><th data-sortable data-default-dir="desc">穴</th>
+        <th data-sortable data-default-dir="desc">逃げ</th><th data-sortable data-default-dir="desc">捲り</th><th data-sortable data-default-dir="desc">差し</th><th data-sortable data-default-dir="desc">マーク</th><th data-sortable>バンク</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="l" data-sort="松山"><a href="matsuyama/index.html">松山</a></td>
+          <td data-sort="12">12</td>
+          <td data-sort="31.30"><b>31.3%</b></td>
+          <td data-sort="10.60">10.6</td>
+          <td data-sort="0">0</td>
+          <td data-sort="2">2</td>
+          <td data-sort="12">12</td>
+          <td data-sort="20.4">20%</td><td data-sort="20.0">20%</td><td data-sort="39.2">39%</td><td data-sort="20.4">20%</td>
+          <td data-sort="400">400</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="奈良"><a href="nara/index.html">奈良</a></td>
+          <td data-sort="12">12</td>
+          <td data-sort="36.36"><b>36.4%</b></td>
+          <td data-sort="16.98">17.0</td>
+          <td data-sort="3">3</td>
+          <td data-sort="2">2</td>
+          <td data-sort="12">12</td>
+          <td data-sort="16.1">16%</td><td data-sort="21.1">21%</td><td data-sort="39.0">39%</td><td data-sort="23.8">24%</td>
+          <td data-sort="333">333</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="松戸"><a href="matsudo/index.html">松戸</a></td>
+          <td data-sort="7">7</td>
+          <td data-sort="36.48"><b>36.5%</b></td>
+          <td data-sort="14.32">14.3</td>
+          <td data-sort="2">2</td>
+          <td data-sort="2">2</td>
+          <td data-sort="7">7</td>
+          <td data-sort="22.7">23%</td><td data-sort="24.2">24%</td><td data-sort="30.6">31%</td><td data-sort="22.5">22%</td>
+          <td data-sort="333">333</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="平塚"><a href="hiratsuka/index.html">平塚</a></td>
+          <td data-sort="7">7</td>
+          <td data-sort="34.96"><b>35.0%</b></td>
+          <td data-sort="14.85">14.9</td>
+          <td data-sort="1">1</td>
+          <td data-sort="1">1</td>
+          <td data-sort="7">7</td>
+          <td data-sort="17.8">18%</td><td data-sort="15.6">16%</td><td data-sort="34.0">34%</td><td data-sort="32.5">33%</td>
+          <td data-sort="400">400</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="小松島"><a href="komatsushima/index.html">小松島</a></td>
+          <td data-sort="7">7</td>
+          <td data-sort="39.61"><b>39.6%</b></td>
+          <td data-sort="21.33">21.3</td>
+          <td data-sort="0">0</td>
+          <td data-sort="0">0</td>
+          <td data-sort="7">7</td>
+          <td data-sort="20.8">21%</td><td data-sort="21.1">21%</td><td data-sort="36.3">36%</td><td data-sort="21.7">22%</td>
+          <td data-sort="400">400</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="武雄"><a href="takeo/index.html">武雄</a></td>
+          <td data-sort="7">7</td>
+          <td data-sort="27.88"><b>27.9%</b></td>
+          <td data-sort="6.46">6.5</td>
+          <td data-sort="0">0</td>
+          <td data-sort="2">2</td>
+          <td data-sort="7">7</td>
+          <td data-sort="12.9">13%</td><td data-sort="16.9">17%</td><td data-sort="37.1">37%</td><td data-sort="33.1">33%</td>
+          <td data-sort="400">400</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="防府"><a href="hofu/index.html">防府</a></td>
+          <td data-sort="7">7</td>
+          <td data-sort="34.52"><b>34.5%</b></td>
+          <td data-sort="12.79">12.8</td>
+          <td data-sort="0">0</td>
+          <td data-sort="0">0</td>
+          <td data-sort="7">7</td>
+          <td data-sort="20.7">21%</td><td data-sort="18.9">19%</td><td data-sort="35.1">35%</td><td data-sort="25.3">25%</td>
+          <td data-sort="333">333</td>
+        </tr>
+        <tr>
+          <td class="l" data-sort="いわき平"><a href="iwakitaira/index.html">いわき平</a></td>
+          <td data-sort="11">11</td>
+          <td data-sort="33.62"><b>33.6%</b></td>
+          <td data-sort="11.55">11.5</td>
+          <td data-sort="1">1</td>
+          <td data-sort="3">3</td>
+          <td data-sort="11">11</td>
+          <td data-sort="17.6">18%</td><td data-sort="17.4">17%</td><td data-sort="37.0">37%</td><td data-sort="28.1">28%</td>
+          <td data-sort="400">400</td>
+        </tr></tbody>
+    </table>
+  </div>
+  
+</main>
+<footer>このページはGitHub Actionsにより自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>
+    function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+      if(!deadlineStr) return 1e9;
+      const parts = deadlineStr.split(':');
+      if(parts.length !== 2) return 1e9;
+      const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+      const diff = deadlineMinutes - nowJstMinutes;
+      if(diff < -5) return 1e9 + (-diff);
+      return diff < 0 ? 0 : diff;
+    }
+    function getNowJstMinutes(){
+      const parts = new Intl.DateTimeFormat('ja-JP', {
+        timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+      const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+      return h*60 + m;
+    }
+    window.addEventListener('DOMContentLoaded', function(){
+      const nowJstMinutes = getNowJstMinutes();
+      document.querySelectorAll('[data-deadline]').forEach(function(el){
+        const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);
+        if(mins <= 5){ el.classList.add('soon'); }
+        if(mins >= 1e9){ el.classList.add('ended'); }
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', function(){
+      const table = document.getElementById('vtTable');
+      if(!table) return;
+      const tbody = table.tBodies[0];
+      const ths = table.tHead.rows[0].cells;
+      let sortCol = 2, sortDir = -1;
+      function cellVal(tr, i){
+        const v = tr.cells[i].getAttribute('data-sort');
+        return v === null ? tr.cells[i].textContent : v;
+      }
+      function applySort(){
+        const rows = Array.from(tbody.rows);
+        rows.sort(function(a, b){
+          const x = cellVal(a, sortCol), y = cellVal(b, sortCol);
+          // 「10:05」のような文字列を parseFloat で10と誤読しないよう、完全な数値表記のときだけ数値比較する
+          const isNum = function(v){ return /^-?\d+(\.\d+)?$/.test(String(v).trim()); };
+          const cmp = (isNum(x) && isNum(y)) ? (parseFloat(x) - parseFloat(y)) : String(x).localeCompare(String(y), 'ja');
+          return cmp * sortDir;
+        });
+        rows.forEach(function(r){ tbody.appendChild(r); });
+        Array.from(ths).forEach(function(th, i){
+          th.classList.toggle('sorted-asc', i === sortCol && sortDir === 1);
+          th.classList.toggle('sorted-desc', i === sortCol && sortDir === -1);
+        });
+      }
+      Array.from(ths).forEach(function(th, i){
+        if(!th.hasAttribute('data-sortable')) return;
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', function(){
+          if(sortCol === i){ sortDir = -sortDir; } else { sortCol = i; sortDir = th.getAttribute('data-default-dir') === 'desc' ? -1 : 1; }
+          applySort();
+        });
+      });
+      function refilter(){
+        const active = Array.from(document.querySelectorAll('.ov-filter.on')).map(function(b){ return b.getAttribute('data-flag'); });
+        const q = (window.__ovSearch || '').toLowerCase();
+        Array.from(tbody.rows).forEach(function(tr){
+          const flags = (tr.getAttribute('data-flags') || '').split(' ');
+          const okFlag = active.every(function(f){ return flags.indexOf(f) >= 0; });
+          const okName = !q || (tr.getAttribute('data-name') || '').toLowerCase().indexOf(q) >= 0;
+          tr.style.display = (okFlag && okName) ? '' : 'none';
+        });
+      }
+      window.__ovRefilter = refilter;
+      document.querySelectorAll('.ov-filter').forEach(function(btn){
+        btn.addEventListener('click', function(){ btn.classList.toggle('on'); refilter(); });
+      });
+      applySort();
+    });
+</script>
+</body>
+</html>

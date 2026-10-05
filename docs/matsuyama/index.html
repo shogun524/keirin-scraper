@@ -23,7 +23,7 @@
   header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
-  header nav.top-nav{ margin-top:6px; }
+  header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
   header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
   .gate-stripe{ display:flex; height:5px; margin-top:16px; }
   .gate-stripe span{ flex:1; }
@@ -112,15 +112,25 @@
   .dev-anim-note{ font-size:10.5px; color:var(--ink-soft); line-height:1.5; margin:-4px 0 9px; }
   .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
                  font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
-  .dev-track-wrap{ background:var(--paper2); border-radius:4px; padding:6px; margin-bottom:14px; }
+  .dev-track-wrap{ background:#cfd6c6; border-radius:8px; padding:6px; margin-bottom:14px; }
   .dev-track-svg{ width:100%; height:auto; display:block; }
-  .dev-track-outline{ fill:none; stroke:var(--ink-soft); stroke-width:2; opacity:.35; }
-  .dev-finish-line-svg{ stroke:var(--gold); stroke-width:2.5; }
+  .dev-track-road{ fill:#9a9d97; stroke:#7d8077; stroke-width:1; }
+  .dev-track-field{ fill:url(#devGrassStripes); }
+  .dev-lane-guide{ fill:none; stroke-width:1.1; opacity:.55; }
+  .dev-lane-guide-inner{ stroke:#c0392b; }
+  .dev-lane-guide-outer{ stroke:#2d5fa8; }
+  .dev-finish-line-svg{ stroke:#fff; stroke-width:3; }
   .dev-track-caption{ font-size:10px; font-weight:700; text-anchor:middle; fill:var(--ink-soft); }
   .dev-track-caption-goal{ fill:#8a5a12; }
-  .dev-car-dot{ transition:none; }
-  .dev-car-label{ font-size:8px; font-weight:700; text-anchor:middle; pointer-events:none; }
-  .dev-line-connector{ fill:none; stroke:var(--ink-soft); stroke-width:3; stroke-linecap:round; opacity:.4; }
+  .dev-track-corner-label{ font-size:7px; font-weight:700; text-anchor:middle; fill:#5c6b60; opacity:.75; }
+  .dev-track-field-label{ font-size:8px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.55); letter-spacing:1px; }
+  .dev-track-arrow{ font-size:11px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.6); }
+  .dev-car-icon{ transition:none; }
+  .dev-bike-wheel{ fill:#2a2a2a; }
+  .dev-bike-frame{ stroke:#2a2a2a; stroke-width:1.4; stroke-linecap:round; }
+  .dev-bike-rider{ stroke:rgba(0,0,0,.3); stroke-width:.6; }
+  .dev-car-label{ font-size:7.5px; font-weight:800; text-anchor:middle; pointer-events:none; dominant-baseline:central; }
+  .dev-line-connector{ fill:none; stroke:#fff; stroke-width:2.5; stroke-linecap:round; opacity:.5; }
   @media (max-width:420px){
     table.main{ font-size:10.5px; }
     table.main th, table.main td{ padding:4px 3px; }
@@ -148,7 +158,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,520票 <span class="delta-up">↑↑ 初回計測比 +3607%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 8,354票 <span class="delta-up">↑↑ 初回計測比 +20276%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race1_subbtn_main" onclick="showSubTab('race1','main',this)">予想</button><button class="subtab-btn" id="race1_subbtn_tf" onclick="showSubTab('race1','tf',this)">3連単</button><button class="subtab-btn" id="race1_subbtn_dev" onclick="showSubTab('race1','dev',this)">展開</button></div>
     <div id="race1_sub_main" class="subtab-panel">
         <table class="main">
@@ -293,13 +303,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race1')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race1_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race1_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race1_devline_0" class="dev-line-connector" points=""/><polyline id="race1_devline_1" class="dev-line-connector" points=""/>
-        <circle id="race1_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race1_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race1_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race1_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race1_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race1_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race1_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race1_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        
+        <g id="race1_dev_car_2" class="dev-car-icon">
+          <g id="race1_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race1_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race1_dev_car_4" class="dev-car-icon">
+          <g id="race1_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race1_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race1_dev_car_5" class="dev-car-icon">
+          <g id="race1_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race1_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race1_dev_car_1" class="dev-car-icon">
+          <g id="race1_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race1_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race1_dev_car_7" class="dev-car-icon">
+          <g id="race1_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race1_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race1_dev_car_3" class="dev-car-icon">
+          <g id="race1_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race1_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race1_dev_car_6" class="dev-car-icon">
+          <g id="race1_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race1_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race1"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 2, "name": "戸塚 涼介", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 0, "line_position": 1}, {"car": 4, "name": "法月 成祐", "positions": [-0.015, 0.3583, 0.73032, 1.09957, 1.48], "lanes": [0.18, 0.2, 0.245, 0.37, 0.38], "line_index": 0, "line_position": 2}, {"car": 5, "name": "三住 博昭", "positions": [-0.03, 0.33427, 0.69854, 1.06232, 1.46], "lanes": [0.24, 0.25, 0.27, 0.28, 0.29], "line_index": 0, "line_position": 3}, {"car": 1, "name": "土生 智徳", "positions": [0.0, 0.35457, 0.71471, 1.07671, 1.435], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 1, "line_position": 1}, {"car": 7, "name": "乾 庄平", "positions": [-0.015, 0.35617, 0.72447, 1.08654, 1.455], "lanes": [0.18, 0.2, 0.245, 0.37, 0.38], "line_index": 1, "line_position": 2}, {"car": 3, "name": "足達 重満", "positions": [-0.03, 0.3222, 0.67439, 1.02555, 1.415], "lanes": [0.24, 0.25, 0.27, 0.28, 0.29], "line_index": 1, "line_position": 3}, {"car": 6, "name": "宮崎 康司", "positions": [0.0, 0.36, 0.708, 1.055, 1.41], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 2, "line_position": 1}], "final_order": [2, 7, 4, 6, 1, 5, 3]};</script>
@@ -333,7 +420,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,017票 <span class="delta-up">↑↑ 初回計測比 +3078%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 3,026票 <span class="delta-up">↑↑ 初回計測比 +9356%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race2_subbtn_main" onclick="showSubTab('race2','main',this)">予想</button><button class="subtab-btn" id="race2_subbtn_tf" onclick="showSubTab('race2','tf',this)">3連単</button><button class="subtab-btn" id="race2_subbtn_dev" onclick="showSubTab('race2','dev',this)">展開</button></div>
     <div id="race2_sub_main" class="subtab-panel">
         <table class="main">
@@ -478,13 +565,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race2')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race2_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race2_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race2_devline_0" class="dev-line-connector" points=""/><polyline id="race2_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race2_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race2_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race2_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race2_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race2_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race2_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race2_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race2_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        
+        <g id="race2_dev_car_7" class="dev-car-icon">
+          <g id="race2_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race2_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race2_dev_car_2" class="dev-car-icon">
+          <g id="race2_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race2_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race2_dev_car_1" class="dev-car-icon">
+          <g id="race2_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race2_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race2_dev_car_3" class="dev-car-icon">
+          <g id="race2_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race2_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race2_dev_car_5" class="dev-car-icon">
+          <g id="race2_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race2_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race2_dev_car_4" class="dev-car-icon">
+          <g id="race2_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race2_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race2_dev_car_6" class="dev-car-icon">
+          <g id="race2_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race2_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race2"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 7, "name": "野上 竜太", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 0, "line_position": 1}, {"car": 2, "name": "山本 貴章", "positions": [-0.015, 0.35463, 0.72427, 1.09366, 1.48], "lanes": [0.19, 0.2, 0.22, 0.23, 0.24], "line_index": 0, "line_position": 2}, {"car": 1, "name": "佐藤 正吾", "positions": [0.0, 0.35689, 0.71378, 1.06985, 1.4325], "lanes": [0.18, 0.2, 0.23, 0.19, 0.15], "line_index": 1, "line_position": 1}, {"car": 3, "name": "山崎 晃", "positions": [0.0, 0.35457, 0.71471, 1.07671, 1.435], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 2, "line_position": 1}, {"car": 5, "name": "安東 宏高", "positions": [-0.015, 0.35617, 0.72447, 1.08654, 1.455], "lanes": [0.18, 0.2, 0.245, 0.37, 0.38], "line_index": 2, "line_position": 2}, {"car": 4, "name": "小峰 烈", "positions": [0.0, 0.37125, 0.7395, 1.1075, 1.4775], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 3, "line_position": 1}, {"car": 6, "name": "塚本 勝士", "positions": [0.0, 0.34671, 0.70114, 1.05814, 1.41], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 4, "line_position": 1}], "final_order": [7, 4, 5, 3, 2, 1, 6]};</script>
@@ -518,7 +682,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,393票 <span class="delta-up">↑↑ 初回計測比 +1919%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 4,225票 <span class="delta-up">↑↑ 初回計測比 +6023%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race3_subbtn_main" onclick="showSubTab('race3','main',this)">予想</button><button class="subtab-btn" id="race3_subbtn_tf" onclick="showSubTab('race3','tf',this)">3連単</button><button class="subtab-btn" id="race3_subbtn_dev" onclick="showSubTab('race3','dev',this)">展開</button></div>
     <div id="race3_sub_main" class="subtab-panel">
         <table class="main">
@@ -663,13 +827,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race3')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race3_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race3_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race3_devline_0" class="dev-line-connector" points=""/><polyline id="race3_devline_1" class="dev-line-connector" points=""/><polyline id="race3_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race3_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race3_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race3_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race3_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race3_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race3_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race3_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race3_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        
+        <g id="race3_dev_car_2" class="dev-car-icon">
+          <g id="race3_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race3_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race3_dev_car_5" class="dev-car-icon">
+          <g id="race3_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race3_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race3_dev_car_1" class="dev-car-icon">
+          <g id="race3_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race3_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race3_dev_car_4" class="dev-car-icon">
+          <g id="race3_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race3_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race3_dev_car_7" class="dev-car-icon">
+          <g id="race3_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race3_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race3_dev_car_3" class="dev-car-icon">
+          <g id="race3_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race3_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race3_dev_car_6" class="dev-car-icon">
+          <g id="race3_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race3_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race3"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 2, "name": "内山 慧大", "positions": [0.0, 0.37167, 0.74067, 1.10944, 1.48], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 0, "line_position": 1}, {"car": 5, "name": "水谷 将司", "positions": [-0.015, 0.36, 0.735, 1.11, 1.5], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 0, "line_position": 2}, {"car": 1, "name": "小原 唯志", "positions": [0.0, 0.34986, 0.70657, 1.06557, 1.42], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 1, "line_position": 1}, {"car": 4, "name": "野中 祐志", "positions": [-0.015, 0.3439, 0.7028, 1.06098, 1.44], "lanes": [0.19, 0.2, 0.22, 0.23, 0.24], "line_index": 1, "line_position": 2}, {"car": 7, "name": "吉田 航", "positions": [0.0, 0.35929, 0.72286, 1.08786, 1.45], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 2, "line_position": 1}, {"car": 3, "name": "滝本 泰行", "positions": [-0.015, 0.35195, 0.7189, 1.08549, 1.47], "lanes": [0.19, 0.2, 0.22, 0.23, 0.24], "line_index": 2, "line_position": 2}, {"car": 6, "name": "田中 勝仁", "positions": [0.0, 0.34671, 0.70114, 1.05814, 1.41], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 3, "line_position": 1}], "final_order": [5, 2, 3, 7, 4, 6, 1]};</script>
@@ -703,7 +944,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,307票 <span class="delta-up">↑↑ 初回計測比 +1715%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 3,551票 <span class="delta-up">↑↑ 初回計測比 +4832%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race4_subbtn_main" onclick="showSubTab('race4','main',this)">予想</button><button class="subtab-btn" id="race4_subbtn_tf" onclick="showSubTab('race4','tf',this)">3連単</button><button class="subtab-btn" id="race4_subbtn_dev" onclick="showSubTab('race4','dev',this)">展開</button></div>
     <div id="race4_sub_main" class="subtab-panel">
         <table class="main">
@@ -848,13 +1089,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race4')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race4_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race4_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race4_devline_0" class="dev-line-connector" points=""/><polyline id="race4_devline_1" class="dev-line-connector" points=""/><polyline id="race4_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race4_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race4_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race4_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race4_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race4_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race4_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race4_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race4_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        
+        <g id="race4_dev_car_1" class="dev-car-icon">
+          <g id="race4_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race4_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race4_dev_car_6" class="dev-car-icon">
+          <g id="race4_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race4_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race4_dev_car_2" class="dev-car-icon">
+          <g id="race4_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race4_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race4_dev_car_4" class="dev-car-icon">
+          <g id="race4_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race4_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race4_dev_car_7" class="dev-car-icon">
+          <g id="race4_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race4_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race4_dev_car_3" class="dev-car-icon">
+          <g id="race4_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race4_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race4_dev_car_5" class="dev-car-icon">
+          <g id="race4_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race4_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race4"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "田中 和磨", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 0, "line_position": 1}, {"car": 6, "name": "三好 陽一", "positions": [-0.015, 0.3583, 0.73032, 1.09957, 1.48], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 0, "line_position": 2}, {"car": 2, "name": "吉竹 尚城", "positions": [0.0, 0.36417, 0.71967, 1.07444, 1.435], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 1, "line_position": 1}, {"car": 4, "name": "岡本 英之", "positions": [-0.015, 0.35277, 0.71511, 1.06569, 1.415], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 1, "line_position": 2}, {"car": 7, "name": "須賀 和彦", "positions": [-0.03, 0.33293, 0.69585, 1.05823, 1.455], "lanes": [0.27, 0.49, 0.83, 0.69, 0.43], "line_index": 1, "line_position": 3}, {"car": 3, "name": "石田 拓真", "positions": [0.0, 0.36734, 0.72894, 1.07809, 1.41], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 2, "line_position": 1}, {"car": 5, "name": "小林 信晴", "positions": [-0.015, 0.35064, 0.70926, 1.05266, 1.39], "lanes": [0.21, 0.25, 0.33, 0.57, 0.35], "line_index": 2, "line_position": 2}], "final_order": [1, 7, 3, 5, 6, 2, 4]};</script>
@@ -888,7 +1206,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,318票 <span class="delta-up">↑↑ 初回計測比 +1681%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 3,187票 <span class="delta-up">↑↑ 初回計測比 +4207%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race5_subbtn_main" onclick="showSubTab('race5','main',this)">予想</button><button class="subtab-btn" id="race5_subbtn_tf" onclick="showSubTab('race5','tf',this)">3連単</button><button class="subtab-btn" id="race5_subbtn_dev" onclick="showSubTab('race5','dev',this)">展開</button></div>
     <div id="race5_sub_main" class="subtab-panel">
         <table class="main">
@@ -1033,13 +1351,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race5')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race5_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race5_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race5_devline_0" class="dev-line-connector" points=""/><polyline id="race5_devline_1" class="dev-line-connector" points=""/><polyline id="race5_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race5_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race5_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race5_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race5_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race5_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race5_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race5_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race5_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        
+        <g id="race5_dev_car_1" class="dev-car-icon">
+          <g id="race5_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race5_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race5_dev_car_6" class="dev-car-icon">
+          <g id="race5_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race5_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race5_dev_car_2" class="dev-car-icon">
+          <g id="race5_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race5_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race5_dev_car_4" class="dev-car-icon">
+          <g id="race5_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race5_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race5_dev_car_7" class="dev-car-icon">
+          <g id="race5_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race5_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race5_dev_car_3" class="dev-car-icon">
+          <g id="race5_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race5_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race5_dev_car_5" class="dev-car-icon">
+          <g id="race5_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race5_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race5"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "木村 浩宣", "positions": [0.0, 0.35667, 0.69867, 1.03944, 1.39], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 0, "line_position": 1}, {"car": 6, "name": "武田 良太", "positions": [-0.015, 0.35234, 0.71394, 1.06309, 1.41], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 0, "line_position": 2}, {"car": 2, "name": "曽我 圭佑", "positions": [0.0, 0.36086, 0.72557, 1.09157, 1.455], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 1, "line_position": 1}, {"car": 4, "name": "池田 浩士", "positions": [-0.015, 0.34256, 0.70012, 1.05689, 1.435], "lanes": [0.19, 0.2, 0.22, 0.23, 0.24], "line_index": 1, "line_position": 2}, {"car": 7, "name": "齊藤 英伊須", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 2, "line_position": 1}, {"car": 3, "name": "高橋 秀吉", "positions": [-0.015, 0.35463, 0.72427, 1.09366, 1.48], "lanes": [0.22, 0.44, 0.78, 0.64, 0.38], "line_index": 2, "line_position": 2}, {"car": 5, "name": "黒滝 大翔", "positions": [-0.03, 0.33427, 0.69854, 1.06232, 1.46], "lanes": [0.27, 0.49, 0.83, 0.69, 0.43], "line_index": 2, "line_position": 3}], "final_order": [7, 3, 2, 6, 1, 5, 4]};</script>
@@ -1073,7 +1468,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,235票 <span class="delta-up">↑↑ 初回計測比 +3331%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 2,900票 <span class="delta-up">↑↑ 初回計測比 +7956%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race6_subbtn_main" onclick="showSubTab('race6','main',this)">予想</button><button class="subtab-btn" id="race6_subbtn_tf" onclick="showSubTab('race6','tf',this)">3連単</button><button class="subtab-btn" id="race6_subbtn_dev" onclick="showSubTab('race6','dev',this)">展開</button></div>
     <div id="race6_sub_main" class="subtab-panel">
         <table class="main">
@@ -1218,13 +1613,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race6')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race6_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race6_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race6_devline_0" class="dev-line-connector" points=""/><polyline id="race6_devline_1" class="dev-line-connector" points=""/><polyline id="race6_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race6_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race6_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race6_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race6_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race6_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race6_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race6_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race6_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        
+        <g id="race6_dev_car_4" class="dev-car-icon">
+          <g id="race6_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race6_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race6_dev_car_1" class="dev-car-icon">
+          <g id="race6_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race6_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race6_dev_car_2" class="dev-car-icon">
+          <g id="race6_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race6_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race6_dev_car_7" class="dev-car-icon">
+          <g id="race6_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race6_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race6_dev_car_5" class="dev-car-icon">
+          <g id="race6_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race6_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race6_dev_car_6" class="dev-car-icon">
+          <g id="race6_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race6_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race6_dev_car_3" class="dev-car-icon">
+          <g id="race6_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race6_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race6"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 4, "name": "上杉 嘉槻", "positions": [0.0, 0.36564, 0.72426, 1.06766, 1.39], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 0, "line_position": 1}, {"car": 1, "name": "竹澤 浩司", "positions": [-0.015, 0.33171, 0.68614, 1.04314, 1.41], "lanes": [0.21, 0.25, 0.33, 0.57, 0.35], "line_index": 0, "line_position": 2}, {"car": 2, "name": "磯川 勝裕", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 1, "line_position": 1}, {"car": 7, "name": "大矢 将大", "positions": [-0.015, 0.35463, 0.72427, 1.09366, 1.48], "lanes": [0.19, 0.2, 0.22, 0.23, 0.24], "line_index": 1, "line_position": 2}, {"car": 5, "name": "城 幸弘", "positions": [-0.03, 0.33427, 0.69854, 1.06232, 1.46], "lanes": [0.24, 0.25, 0.27, 0.28, 0.29], "line_index": 1, "line_position": 3}, {"car": 6, "name": "栗本 尚宗", "positions": [0.0, 0.35756, 0.71512, 1.07189, 1.435], "lanes": [0.18, 0.2, 0.23, 0.19, 0.15], "line_index": 2, "line_position": 1}, {"car": 3, "name": "花田 将司", "positions": [-0.015, 0.35617, 0.72447, 1.08654, 1.455], "lanes": [0.23, 0.25, 0.305, 0.405, 0.365], "line_index": 2, "line_position": 2}], "final_order": [2, 3, 7, 1, 4, 5, 6]};</script>
@@ -1258,7 +1730,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,182票 <span class="delta-up">↑↑ 初回計測比 +2714%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 3,517票 <span class="delta-up">↑↑ 初回計測比 +8274%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race7_subbtn_main" onclick="showSubTab('race7','main',this)">予想</button><button class="subtab-btn" id="race7_subbtn_tf" onclick="showSubTab('race7','tf',this)">3連単</button><button class="subtab-btn" id="race7_subbtn_dev" onclick="showSubTab('race7','dev',this)">展開</button></div>
     <div id="race7_sub_main" class="subtab-panel">
         <table class="main">
@@ -1403,13 +1875,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race7')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race7_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race7_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race7_devline_0" class="dev-line-connector" points=""/><polyline id="race7_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race7_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race7_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race7_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race7_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race7_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race7_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race7_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race7_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        
+        <g id="race7_dev_car_4" class="dev-car-icon">
+          <g id="race7_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race7_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race7_dev_car_1" class="dev-car-icon">
+          <g id="race7_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race7_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race7_dev_car_2" class="dev-car-icon">
+          <g id="race7_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race7_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race7_dev_car_3" class="dev-car-icon">
+          <g id="race7_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race7_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race7_dev_car_7" class="dev-car-icon">
+          <g id="race7_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race7_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race7_dev_car_5" class="dev-car-icon">
+          <g id="race7_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race7_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race7_dev_car_6" class="dev-car-icon">
+          <g id="race7_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race7_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race7"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 4, "name": "保田 浩輔", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 0, "line_position": 1}, {"car": 1, "name": "森本 桂太郎", "positions": [-0.015, 0.35667, 0.72567, 1.09444, 1.48], "lanes": [0.18, 0.29, 0.465, 0.475, 0.485], "line_index": 0, "line_position": 2}, {"car": 2, "name": "荻原 尚人", "positions": [0.0, 0.37245, 0.74298, 1.10936, 1.47], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 1, "line_position": 1}, {"car": 3, "name": "早坂 秀悟", "positions": [0.0, 0.365, 0.722, 1.07833, 1.44], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 2, "line_position": 1}, {"car": 7, "name": "岡 光良", "positions": [-0.015, 0.33317, 0.68134, 1.02829, 1.4], "lanes": [0.22, 0.44, 0.78, 0.64, 0.38], "line_index": 2, "line_position": 2}, {"car": 5, "name": "内田 玄希", "positions": [-0.03, 0.33819, 0.70128, 1.0533, 1.42], "lanes": [0.26, 0.48, 0.82, 0.68, 0.42], "line_index": 2, "line_position": 3}, {"car": 6, "name": "福元 啓太", "positions": [0.0, 0.36, 0.708, 1.055, 1.41], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 3, "line_position": 1}], "final_order": [4, 2, 3, 1, 5, 6, 7]};</script>
@@ -1443,7 +1992,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,084票 <span class="delta-up">↑↑ 初回計測比 +2158%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 3,068票 <span class="delta-up">↑↑ 初回計測比 +6292%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race8_subbtn_main" onclick="showSubTab('race8','main',this)">予想</button><button class="subtab-btn" id="race8_subbtn_tf" onclick="showSubTab('race8','tf',this)">3連単</button><button class="subtab-btn" id="race8_subbtn_dev" onclick="showSubTab('race8','dev',this)">展開</button></div>
     <div id="race8_sub_main" class="subtab-panel">
         <table class="main">
@@ -1588,13 +2137,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race8')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race8_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race8_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race8_devline_0" class="dev-line-connector" points=""/><polyline id="race8_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race8_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race8_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race8_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race8_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race8_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race8_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race8_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race8_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        
+        <g id="race8_dev_car_1" class="dev-car-icon">
+          <g id="race8_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race8_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race8_dev_car_7" class="dev-car-icon">
+          <g id="race8_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race8_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race8_dev_car_3" class="dev-car-icon">
+          <g id="race8_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race8_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race8_dev_car_2" class="dev-car-icon">
+          <g id="race8_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race8_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race8_dev_car_6" class="dev-car-icon">
+          <g id="race8_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race8_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race8_dev_car_5" class="dev-car-icon">
+          <g id="race8_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race8_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race8_dev_car_4" class="dev-car-icon">
+          <g id="race8_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race8_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race8"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "磯島 成介", "positions": [0.0, 0.36243, 0.72829, 1.09529, 1.46], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 0, "line_position": 1}, {"car": 7, "name": "掛水 泰範", "positions": [-0.015, 0.36, 0.735, 1.11, 1.5], "lanes": [0.18, 0.2, 0.245, 0.37, 0.38], "line_index": 0, "line_position": 2}, {"car": 3, "name": "藤岡 隆治", "positions": [-0.03, 0.3433, 0.71532, 1.08457, 1.48], "lanes": [0.23, 0.25, 0.295, 0.42, 0.43], "line_index": 0, "line_position": 3}, {"car": 2, "name": "中川 勝貴", "positions": [0.0, 0.3589, 0.7178, 1.07598, 1.44], "lanes": [0.18, 0.2, 0.23, 0.19, 0.15], "line_index": 1, "line_position": 1}, {"car": 6, "name": "佐藤 大地", "positions": [0.0, 0.36667, 0.72667, 1.08611, 1.45], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 2, "line_position": 1}, {"car": 5, "name": "水谷 良和", "positions": [-0.015, 0.355, 0.721, 1.08667, 1.47], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 2, "line_position": 2}, {"car": 4, "name": "佐々木 翔一", "positions": [0.0, 0.36734, 0.72894, 1.07809, 1.41], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 3, "line_position": 1}], "final_order": [7, 5, 2, 3, 6, 1, 4]};</script>
@@ -1628,7 +2254,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,701票 <span class="delta-up">↑↑ 初回計測比 +3856%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 3,732票 <span class="delta-up">↑↑ 初回計測比 +8579%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race9_subbtn_main" onclick="showSubTab('race9','main',this)">予想</button><button class="subtab-btn" id="race9_subbtn_tf" onclick="showSubTab('race9','tf',this)">3連単</button><button class="subtab-btn" id="race9_subbtn_dev" onclick="showSubTab('race9','dev',this)">展開</button></div>
     <div id="race9_sub_main" class="subtab-panel">
         <table class="main">
@@ -1773,13 +2399,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race9')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race9_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race9_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race9_devline_0" class="dev-line-connector" points=""/><polyline id="race9_devline_1" class="dev-line-connector" points=""/>
-        <circle id="race9_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race9_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race9_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race9_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race9_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race9_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race9_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race9_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        
+        <g id="race9_dev_car_1" class="dev-car-icon">
+          <g id="race9_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race9_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race9_dev_car_4" class="dev-car-icon">
+          <g id="race9_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race9_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race9_dev_car_2" class="dev-car-icon">
+          <g id="race9_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race9_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race9_dev_car_5" class="dev-car-icon">
+          <g id="race9_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race9_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race9_dev_car_6" class="dev-car-icon">
+          <g id="race9_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race9_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race9_dev_car_3" class="dev-car-icon">
+          <g id="race9_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race9_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race9_dev_car_7" class="dev-car-icon">
+          <g id="race9_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race9_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race9"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "森山 智徳", "positions": [0.0, 0.3716, 0.74064, 1.10415, 1.46], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 0, "line_position": 1}, {"car": 4, "name": "宮崎 大空", "positions": [-0.015, 0.36, 0.735, 1.11, 1.5], "lanes": [0.21, 0.25, 0.33, 0.57, 0.35], "line_index": 0, "line_position": 2}, {"car": 2, "name": "坂本 修一", "positions": [-0.03, 0.3433, 0.71532, 1.08457, 1.48], "lanes": [0.26, 0.3, 0.38, 0.62, 0.4], "line_index": 0, "line_position": 3}, {"car": 5, "name": "三澤 優樹", "positions": [0.0, 0.36417, 0.71967, 1.07444, 1.435], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 1, "line_position": 1}, {"car": 6, "name": "金成 和幸", "positions": [-0.015, 0.35617, 0.72447, 1.08654, 1.455], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 1, "line_position": 2}, {"car": 3, "name": "丸山 啓一", "positions": [-0.03, 0.33777, 0.70011, 1.05069, 1.415], "lanes": [0.26, 0.48, 0.82, 0.68, 0.42], "line_index": 1, "line_position": 3}, {"car": 7, "name": "山崎 泰己", "positions": [0.0, 0.36734, 0.72894, 1.07809, 1.41], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 2, "line_position": 1}], "final_order": [4, 2, 6, 5, 7, 3, 1]};</script>
@@ -1813,7 +2516,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,769票 <span class="delta-up">↑↑ 初回計測比 +2815%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 8,477票 <span class="delta-up">↑↑ 初回計測比 +8823%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race10_subbtn_main" onclick="showSubTab('race10','main',this)">予想</button><button class="subtab-btn" id="race10_subbtn_tf" onclick="showSubTab('race10','tf',this)">3連単</button><button class="subtab-btn" id="race10_subbtn_dev" onclick="showSubTab('race10','dev',this)">展開</button></div>
     <div id="race10_sub_main" class="subtab-panel">
         <table class="main">
@@ -1958,13 +2661,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race10')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race10_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race10_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race10_devline_0" class="dev-line-connector" points=""/><polyline id="race10_devline_1" class="dev-line-connector" points=""/>
-        <circle id="race10_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race10_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text><circle id="race10_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race10_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race10_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race10_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race10_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race10_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        
+        <g id="race10_dev_car_1" class="dev-car-icon">
+          <g id="race10_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race10_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race10_dev_car_7" class="dev-car-icon">
+          <g id="race10_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race10_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
+        <g id="race10_dev_car_2" class="dev-car-icon">
+          <g id="race10_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race10_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race10_dev_car_4" class="dev-car-icon">
+          <g id="race10_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race10_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race10_dev_car_3" class="dev-car-icon">
+          <g id="race10_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race10_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race10_dev_car_5" class="dev-car-icon">
+          <g id="race10_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race10_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race10_dev_car_6" class="dev-car-icon">
+          <g id="race10_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race10_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race10"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "川上 隆義", "positions": [0.0, 0.36159, 0.72317, 1.08415, 1.45], "lanes": [0.18, 0.2, 0.23, 0.19, 0.15], "line_index": 0, "line_position": 1}, {"car": 7, "name": "山岸 佳太", "positions": [-0.015, 0.35195, 0.7189, 1.08549, 1.47], "lanes": [0.23, 0.25, 0.28, 0.24, 0.2], "line_index": 0, "line_position": 2}, {"car": 2, "name": "青柳 靖起", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 1, "line_position": 1}, {"car": 4, "name": "坂本 健太郎", "positions": [-0.015, 0.3583, 0.73032, 1.09957, 1.48], "lanes": [0.18, 0.2, 0.245, 0.37, 0.38], "line_index": 1, "line_position": 2}, {"car": 3, "name": "吉松 直人", "positions": [-0.03, 0.33427, 0.69854, 1.06232, 1.46], "lanes": [0.24, 0.25, 0.27, 0.28, 0.29], "line_index": 1, "line_position": 3}, {"car": 5, "name": "牧田 悠生", "positions": [0.0, 0.36734, 0.72894, 1.07809, 1.41], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 2, "line_position": 1}, {"car": 6, "name": "佐々木 亮太", "positions": [0.0, 0.35614, 0.71743, 1.08043, 1.44], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 3, "line_position": 1}], "final_order": [2, 4, 3, 7, 1, 6, 5]};</script>
@@ -1998,7 +2778,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 2,954票 <span class="delta-up">↑↑ 初回計測比 +2010%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 8,600票 <span class="delta-up">↑↑ 初回計測比 +6043%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race11_subbtn_main" onclick="showSubTab('race11','main',this)">予想</button><button class="subtab-btn" id="race11_subbtn_tf" onclick="showSubTab('race11','tf',this)">3連単</button><button class="subtab-btn" id="race11_subbtn_dev" onclick="showSubTab('race11','dev',this)">展開</button></div>
     <div id="race11_sub_main" class="subtab-panel">
         <table class="main">
@@ -2143,13 +2923,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race11')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race11_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race11_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race11_devline_0" class="dev-line-connector" points=""/><polyline id="race11_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race11_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race11_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race11_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race11_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race11_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race11_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race11_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race11_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        
+        <g id="race11_dev_car_3" class="dev-car-icon">
+          <g id="race11_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race11_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race11_dev_car_5" class="dev-car-icon">
+          <g id="race11_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race11_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race11_dev_car_1" class="dev-car-icon">
+          <g id="race11_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race11_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race11_dev_car_4" class="dev-car-icon">
+          <g id="race11_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race11_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race11_dev_car_2" class="dev-car-icon">
+          <g id="race11_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race11_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race11_dev_car_6" class="dev-car-icon">
+          <g id="race11_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race11_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race11_dev_car_7" class="dev-car-icon">
+          <g id="race11_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race11_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race11"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 3, "name": "福永 大智", "positions": [0.0, 0.37125, 0.7395, 1.1075, 1.4775], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 0, "line_position": 1}, {"car": 5, "name": "大石 崇晴", "positions": [-0.015, 0.35638, 0.72505, 1.08785, 1.4575], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 0, "line_position": 2}, {"car": 1, "name": "井上 昌己", "positions": [0.0, 0.36926, 0.7342, 1.08981, 1.4325], "lanes": [0.16, 0.2, 0.28, 0.52, 0.3], "line_index": 1, "line_position": 1}, {"car": 4, "name": "酒井 雄多", "positions": [0.0, 0.375, 0.75, 1.125, 1.5], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 2, "line_position": 1}, {"car": 2, "name": "中村 浩士", "positions": [-0.015, 0.3583, 0.73032, 1.09957, 1.48], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 2, "line_position": 2}, {"car": 6, "name": "佐藤 健太", "positions": [0.0, 0.35085, 0.70171, 1.05146, 1.41], "lanes": [0.18, 0.2, 0.23, 0.19, 0.15], "line_index": 3, "line_position": 1}, {"car": 7, "name": "本郷 雄三", "positions": [0.0, 0.3675, 0.729, 1.09, 1.455], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 4, "line_position": 1}], "final_order": [4, 2, 3, 5, 7, 1, 6]};</script>
@@ -2183,7 +3040,7 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 3,638票 <span class="delta-up">↑↑ 初回計測比 +2575%</span></p>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 11,575票 <span class="delta-up">↑↑ 初回計測比 +8411%</span></p>
         <div class="subtab-bar"><button class="subtab-btn active" id="race12_subbtn_main" onclick="showSubTab('race12','main',this)">予想</button><button class="subtab-btn" id="race12_subbtn_tf" onclick="showSubTab('race12','tf',this)">3連単</button><button class="subtab-btn" id="race12_subbtn_dev" onclick="showSubTab('race12','dev',this)">展開</button></div>
     <div id="race12_sub_main" class="subtab-panel">
         <table class="main">
@@ -2328,13 +3185,90 @@
     一致しないことがあります。</div>
     <button type="button" class="dev-play-btn" onclick="playDevAnimation('race12')">▶ 再生</button>
     <div class="dev-track-wrap">
-      <svg id="race12_dev_svg" class="dev-track-svg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid meet">
-        <path class="dev-track-outline" d="M 120,50 L 280,50 A 70,70 0 0 1 280,190 L 120,190 A 70,70 0 0 1 120,50 Z"/>
-        <text class="dev-track-caption" x="200" y="18">向正面（バックストレッチ）</text>
-        <line class="dev-finish-line-svg" x1="280" y1="180" x2="280" y2="228"/>
-        <text class="dev-track-caption dev-track-caption-goal" x="200" y="233">ゴール（ホームストレッチ）</text>
+      <svg id="race12_dev_svg" class="dev-track-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="devGrassStripes" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+            <rect width="14" height="14" fill="#4f8a52"/>
+            <rect width="7" height="14" fill="#5a9a5d"/>
+          </pattern>
+        </defs>
+        <path class="dev-track-road" fill-rule="evenodd" d="M 280,26 L 120,26 A 124,124 0 0 0 120,274 L 280,274 A 124,124 0 0 0 280,26 Z M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-track-field" d="M 280,92 L 120,92 A 58,58 0 0 0 120,208 L 280,208 A 58,58 0 0 0 280,92 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-inner" d="M 280,84 L 120,84 A 66,66 0 0 0 120,216 L 280,216 A 66,66 0 0 0 280,84 Z"/>
+        <path class="dev-lane-guide dev-lane-guide-outer" d="M 280,34 L 120,34 A 116,116 0 0 0 120,266 L 280,266 A 116,116 0 0 0 280,34 Z"/>
+        <text class="dev-track-corner-label" x="373.1" y="50.9">２コーナー</text><text class="dev-track-corner-label" x="373.1" y="249.1">１コーナー</text><text class="dev-track-corner-label" x="26.9" y="50.9">３コーナー</text><text class="dev-track-corner-label" x="26.9" y="249.1">４コーナー</text>
+        <text class="dev-track-field-label" x="200" y="108.0">バック</text>
+        <text class="dev-track-field-label" x="200" y="192.0">ホーム</text>
+        <text class="dev-track-arrow" x="170" y="108.0">&#8249;</text>
+        <text class="dev-track-arrow" x="230" y="192.0">&#8250;</text>
+        <text class="dev-track-caption" x="200" y="12">向正面（バックストレッチ）</text>
+        <line class="dev-finish-line-svg" x1="280" y1="216.0" x2="280" y2="266.0"/>
+        <text class="dev-track-caption dev-track-caption-goal" x="200" y="294">ゴール（ホームストレッチ）</text>
         <polyline id="race12_devline_0" class="dev-line-connector" points=""/><polyline id="race12_devline_1" class="dev-line-connector" points=""/><polyline id="race12_devline_2" class="dev-line-connector" points=""/>
-        <circle id="race12_dev_car_1" class="dev-car-dot" r="8" fill="#ffffff" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text><circle id="race12_dev_car_4" class="dev-car-dot" r="8" fill="#1f5fc4" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text><circle id="race12_dev_car_6" class="dev-car-dot" r="8" fill="#2f8f4e" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text><circle id="race12_dev_car_5" class="dev-car-dot" r="8" fill="#e8c221" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text><circle id="race12_dev_car_2" class="dev-car-dot" r="8" fill="#1b1b1b" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text><circle id="race12_dev_car_3" class="dev-car-dot" r="8" fill="#d8322a" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text><circle id="race12_dev_car_7" class="dev-car-dot" r="8" fill="#e07a1f" stroke="rgba(0,0,0,.25)" stroke-width="1"/><text id="race12_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        
+        <g id="race12_dev_car_1" class="dev-car-icon">
+          <g id="race12_dev_car_1_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#ffffff"/>
+          </g>
+          <text id="race12_dev_car_1_t" class="dev-car-label" fill="#1b2430">1</text>
+        </g>
+        <g id="race12_dev_car_4" class="dev-car-icon">
+          <g id="race12_dev_car_4_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1f5fc4"/>
+          </g>
+          <text id="race12_dev_car_4_t" class="dev-car-label" fill="#ffffff">4</text>
+        </g>
+        <g id="race12_dev_car_6" class="dev-car-icon">
+          <g id="race12_dev_car_6_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#2f8f4e"/>
+          </g>
+          <text id="race12_dev_car_6_t" class="dev-car-label" fill="#ffffff">6</text>
+        </g>
+        <g id="race12_dev_car_5" class="dev-car-icon">
+          <g id="race12_dev_car_5_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e8c221"/>
+          </g>
+          <text id="race12_dev_car_5_t" class="dev-car-label" fill="#1b2430">5</text>
+        </g>
+        <g id="race12_dev_car_2" class="dev-car-icon">
+          <g id="race12_dev_car_2_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#1b1b1b"/>
+          </g>
+          <text id="race12_dev_car_2_t" class="dev-car-label" fill="#ffffff">2</text>
+        </g>
+        <g id="race12_dev_car_3" class="dev-car-icon">
+          <g id="race12_dev_car_3_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#d8322a"/>
+          </g>
+          <text id="race12_dev_car_3_t" class="dev-car-label" fill="#ffffff">3</text>
+        </g>
+        <g id="race12_dev_car_7" class="dev-car-icon">
+          <g id="race12_dev_car_7_bike">
+            <ellipse class="dev-bike-wheel" cx="-6.5" cy="0" rx="2.3" ry="2.3"/>
+            <ellipse class="dev-bike-wheel" cx="6.5" cy="0" rx="2.3" ry="2.3"/>
+            <line class="dev-bike-frame" x1="-6.5" y1="0" x2="6.5" y2="0"/>
+            <ellipse class="dev-bike-rider" cx="0" cy="0" rx="5.6" ry="3.3" fill="#e07a1f"/>
+          </g>
+          <text id="race12_dev_car_7_t" class="dev-car-label" fill="#ffffff">7</text>
+        </g>
       </svg>
     </div>
     <script>window.DEV_ANIM_DATA=window.DEV_ANIM_DATA||{}; window.DEV_ANIM_DATA["race12"]={"checkpoints": 5, "track": {"segments": {"turn_to_back": [0.0, 0.25], "back_straight": [0.25, 0.5], "turn_to_home": [0.5, 0.75], "home_straight": [0.75, 1.0]}, "start_fraction": 0.5, "total_laps": 1.5}, "cars": [{"car": 1, "name": "久田 裕也", "positions": [0.0, 0.36427, 0.72854, 1.09232, 1.46], "lanes": [0.18, 0.2, 0.23, 0.19, 0.15], "line_index": 0, "line_position": 1}, {"car": 4, "name": "渡部 哲男", "positions": [-0.015, 0.36, 0.735, 1.11, 1.5], "lanes": [0.23, 0.25, 0.305, 0.405, 0.365], "line_index": 0, "line_position": 2}, {"car": 6, "name": "野村 典嗣", "positions": [-0.03, 0.33963, 0.70927, 1.07866, 1.48], "lanes": [0.28, 0.3, 0.33, 0.29, 0.25], "line_index": 0, "line_position": 3}, {"car": 5, "name": "野中 龍之介", "positions": [0.0, 0.36086, 0.72557, 1.09157, 1.455], "lanes": [0.1, 0.1, 0.11, 0.12, 0.13], "line_index": 1, "line_position": 1}, {"car": 2, "name": "山賀 雅仁", "positions": [-0.015, 0.34256, 0.70012, 1.05689, 1.435], "lanes": [0.19, 0.2, 0.22, 0.23, 0.24], "line_index": 1, "line_position": 2}, {"car": 3, "name": "小柳 智徳", "positions": [0.0, 0.36, 0.708, 1.055, 1.41], "lanes": [0.16, 0.38, 0.72, 0.58, 0.32], "line_index": 2, "line_position": 1}, {"car": 7, "name": "嶋田 誠也", "positions": [-0.015, 0.35064, 0.70926, 1.05266, 1.39], "lanes": [0.21, 0.43, 0.77, 0.63, 0.37], "line_index": 2, "line_position": 2}], "final_order": [4, 6, 5, 1, 3, 2, 7]};</script>
@@ -2507,7 +3441,7 @@ function selectTrifectaCar(tabId, car){
 // 手前右側のコーナーに入る直前（x=cx+halfLen側）に位置する。実際の競輪と同じ
 // 反時計回り（左回り）：ゴール→右コーナー→向正面→左コーナー→ゴール、の順で周回する。
 function devTrackXY(fraction, lane){
-  var cx = 200, cy = 120, halfLen = 80, R = 70, laneW = 42;
+  var cx = 200, cy = 150, halfLen = 80, R = 70, laneW = 42;
   var r = R + lane * laneW;
   if(fraction < 0.25){
     // 右側コーナー（ゴール側→向正面側、外側＝右に膨らむ）
@@ -2536,11 +3470,23 @@ function devFractionFromPosition(track, positionLaps){
   var f = track.start_fraction + positionLaps;
   return f - Math.floor(f);
 }
-function setDevCarXY(tabId, car, x, y){
-  var dot = document.getElementById(tabId + '_dev_car_' + car);
-  var label = document.getElementById(tabId + '_dev_car_' + car + '_t');
-  if(dot){ dot.setAttribute('cx', x); dot.setAttribute('cy', y); }
-  if(label){ label.setAttribute('x', x); label.setAttribute('y', y + 4); }
+// 進行方向の接線角度（度）を、fractionをごく僅かに前後にずらした2点から求める。
+// 反時計回りに周回しているので、常に「少し先」の点との差分を使う。
+function devTrackAngle(fraction, lane){
+  var eps = 0.004;
+  var f0 = fraction, f1 = fraction + eps;
+  if(f1 >= 1) f1 -= 1;
+  var p0 = devTrackXY(f0, lane);
+  var p1 = devTrackXY(f1, lane);
+  return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+}
+// 車体アイコン（<g class="dev-car-icon">、内側に回転用の<g>_bike、きょうだい要素に
+// 直立したまま表示する車番<text>）の位置と向きをまとめて更新する。
+function setDevCarPose(tabId, car, x, y, angleDeg){
+  var outer = document.getElementById(tabId + '_dev_car_' + car);
+  var bike = document.getElementById(tabId + '_dev_car_' + car + '_bike');
+  if(outer){ outer.setAttribute('transform', 'translate(' + x + ',' + y + ')'); }
+  if(bike){ bike.setAttribute('transform', 'rotate(' + angleDeg.toFixed(1) + ')'); }
 }
 function updateDevLineConnectors(tabId, anim, xyByCar){
   var groups = {};
@@ -2586,8 +3532,9 @@ function placeDevCarsAtU(tabId, anim, u){
     var lane = devCatmullRom(c.lanes, u);
     var frac = devFractionFromPosition(anim.track, pos);
     var xy = devTrackXY(frac, lane);
+    var angle = devTrackAngle(frac, lane);
     xyByCar[c.car] = xy;
-    setDevCarXY(tabId, c.car, xy.x, xy.y);
+    setDevCarPose(tabId, c.car, xy.x, xy.y, angle);
   });
   updateDevLineConnectors(tabId, anim, xyByCar);
 }
