@@ -58,13 +58,13 @@ COMMON_STYLE = """
   }
   *{box-sizing:border-box;}
   html{ -webkit-text-size-adjust:100%; }
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
   header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
   header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; letter-spacing:.02em; }
   header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
-  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
   header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
@@ -714,7 +714,7 @@ RACE_PANEL_STYLE = """
   .race-card{ background:var(--paper); border:1px solid var(--line); border-top:3px solid var(--pick-color,var(--board));
               border-radius:2px; padding:16px; }
   .race-head{ display:flex; gap:10px; align-items:baseline; margin-bottom:10px; flex-wrap:wrap; }
-  .race-head .raceno{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:17px; color:var(--board); }
+  .race-head .raceno{ font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; font-size:17px; color:var(--board); }
   .race-head .title{ color:var(--ink-soft); font-size:12.5px; }
   .race-head .deadline{ margin-left:auto; background:var(--paper2); border-radius:3px; padding:2px 9px; font-size:12px; color:var(--ink); font-weight:600; }
   .banner-high{ background:linear-gradient(120deg,#fbf1de,#f5e5c2); border:1px solid var(--gold); border-radius:3px;
@@ -1170,6 +1170,20 @@ def render_venue_page(venue, races, date, now=None):
 </html>"""
 
 
+def _race_flags(rd):
+    """レースの特記事項（本命が堅い／拮抗／妙味候補）のキー一覧を返す。"""
+    flags = []
+    result = rd.get("prediction")
+    if result:
+        if result.get("is_high_prob"):
+            flags.append("high")
+        if result.get("is_close_race"):
+            flags.append("close")
+    if rd["race_info"].get("odds_value_alert"):
+        flags.append("value")
+    return flags
+
+
 def render_index(all_race_data, date=None, now=None):
     import json
     date = date or datetime.date.today()
@@ -1184,7 +1198,8 @@ def render_index(all_race_data, date=None, now=None):
     # 全レースの (venue, race_no, deadline) をJSに渡し、開いた瞬間に一番近いものを選ばせる
     all_races_json = json.dumps([
         {"venue": rd["race_info"]["venue"], "name": VENUE_NAMES.get(rd["race_info"]["venue"], rd["race_info"]["venue"]),
-         "race_no": rd["race_info"]["race_no"], "deadline": rd["race_info"].get("deadline")}
+         "race_no": rd["race_info"]["race_no"], "deadline": rd["race_info"].get("deadline"),
+         "flags": _race_flags(rd)}
         for rd in all_race_data if rd["race_info"].get("deadline")
     ], ensure_ascii=False)
 
@@ -1245,9 +1260,16 @@ def render_index(all_race_data, date=None, now=None):
           upcoming.forEach(function(x, idx){
             const r = x.r;
             const soon = x.mins <= 5 ? ' soon' : '';
-            html += '<a class="upcoming-row' + soon + '" href="' + r.venue + '/index.html">' +
+            // 特記事項バッジ（本命が堅い／拮抗／妙味候補）
+            const FLAG_LABELS = {high:'本命堅い', close:'拮抗', value:'妙味'};
+            const badges = (r.flags || []).map(function(f){
+              return '<span class="up-badge up-badge-' + f + '">' + FLAG_LABELS[f] + '</span>';
+            }).join('');
+            // レース番号つきで遷移する（?r=N）。付けないと、その場の「締切が一番近いレース」が開いてしまう
+            html += '<a class="upcoming-row' + soon + '" href="' + r.venue + '/index.html?r=' + r.race_no + '">' +
               '<span class="up-rank">' + (idx+1) + '</span>' +
-              '<span class="up-name">' + r.name + '競輪 ' + r.race_no + 'R</span>' +
+              '<span class="up-main"><span class="up-name">' + r.name + '競輪 ' + r.race_no + 'R</span>' +
+              (badges ? '<span class="up-badges">' + badges + '</span>' : '') + '</span>' +
               '<span class="up-time">' + r.deadline + '（あと約' + x.mins + '分）</span></a>';
           });
           html += '</div>';
@@ -1285,7 +1307,8 @@ def render_index(all_race_data, date=None, now=None):
 <style>
 {COMMON_STYLE}
   main{{ max-width:900px; margin:0 auto; padding:16px 10px 60px; }}
-  h2.section{{ font-size:14px; color:var(--ink-soft); margin:0 0 10px; }}
+  h2.section{{ font-size:14px; color:var(--ink-soft); margin:18px 0 10px; }}
+  {_TABNAV_STYLE}
   .venue-row{{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:8px; }}
   .venue-card{{ border-radius:8px; padding:14px 10px; min-height:64px; display:flex; flex-direction:column; justify-content:center; gap:4px; }}
   .venue-card.active{{ background:#fff; border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,.06); }}
@@ -1300,7 +1323,12 @@ def render_index(all_race_data, date=None, now=None):
   .upcoming-row.soon{{ background:linear-gradient(135deg,#fff4de,#fbe9c9); border-color:var(--gold); }}
   .up-rank{{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%;
              background:var(--navy); color:#fff; font-size:11px; font-weight:700; flex:0 0 auto; }}
-  .up-name{{ font-weight:700; color:var(--ink); flex:1; }}
+  .up-main{{ flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; }}
+  .up-name{{ font-weight:700; color:var(--ink); }}
+  .up-badges{{ display:flex; flex-wrap:wrap; gap:4px; }}
+  .up-badge{{ font-size:10.5px; font-weight:700; color:#fff; border-radius:4px; padding:1px 6px; }}
+  .up-badge-high{{ background:var(--brick); }} .up-badge-close{{ background:var(--slate); }}
+  .up-badge-value{{ background:#8a5a12; }}
   .up-time{{ font-size:12px; color:#8a5a12; font-weight:700; white-space:nowrap; }}
   @media (max-width:520px){{ .venue-row{{ grid-template-columns:repeat(2,1fr); }} }}
 </style>
@@ -1312,10 +1340,10 @@ def render_index(all_race_data, date=None, now=None):
     <span class="date">{date_str}</span>
   </div>
   <p class="tagline">今日、どこで、どの目を買うか。</p>
-  <nav class="top-nav"><a href="overview.html">全レース早見表</a><a href="high_prob.html">本命が堅い</a><a href="close_race.html">1着率が拮抗</a><a href="hole.html">穴目候補</a><a href="value.html">投票が鈍い(妙味)</a><a href="players.html">選手一覧</a><a href="venues_today.html">開催場別</a><a href="results.html">予想成績</a><a href="venues.html">全競輪場データ</a></nav>
   {gate_stripe_html()}
 </header>
 <main>
+  {_tab_grid_html()}
   <div id="upcomingListBox"></div>
   <h2 class="section">本日の開催場</h2>
   {rows_html if by_venue else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}
@@ -1431,26 +1459,55 @@ def _fmt_date_jp(date=None):
     return f"{date.strftime('%Y年%m月%d日')}({weekday_map[date.weekday()]})"
 
 
-# 集計ページ（本命が堅い／拮抗／穴目／妙味／全レース早見表）の一覧。
+# 集計ページ（本命が堅い／拮抗／妙味／全レース早見表）の一覧。
 # ナビゲーションの並び順・文言はここ1か所で管理する。
-AGG_PAGES = [
-    ("overview.html", "全レース早見表"),
-    ("high_prob.html", "本命が堅い"),
-    ("close_race.html", "1着率が拮抗"),
-    ("hole.html", "穴目候補"),
-    ("value.html", "投票が鈍い(妙味)"),
-    ("players.html", "選手一覧"),
-    ("venues_today.html", "開催場別"),
-    ("results.html", "予想成績"),
+AGG_GROUPS = [
+    ("レースをさがす", [
+        ("overview.html", "全レース早見表"),
+        ("high_prob.html", "本命が堅い"),
+        ("close_race.html", "1着率が拮抗"),
+        ("value.html", "投票が鈍い(妙味)"),
+    ]),
+    ("選手・開催場・成績", [
+        ("players.html", "選手一覧"),
+        ("venues_today.html", "開催場別"),
+        ("results.html", "予想成績"),
+        ("venues.html", "全競輪場データ"),
+    ]),
 ]
+AGG_PAGES = [item for _, items in AGG_GROUPS for item in items]
 
 
 def _agg_nav_html(current=None):
-    chips = []
-    for href, label in AGG_PAGES:
-        cls = "agg-chip current" if href == current else "agg-chip"
-        chips.append(f'<a class="{cls}" href="{href}">{label}</a>')
-    return '<nav class="agg-nav">' + "".join(chips) + "</nav>"
+    """集計ページ上部の「タブ」ストリップ（横スクロール、現在のページは自動で見える位置へ）。"""
+    tabs = "".join(
+        f'<a class="tab-link{" current" if href == current else ""}" href="{href}">{label}</a>'
+        for href, label in AGG_PAGES)
+    return f'<nav class="tab-strip" aria-label="ページ切替">{tabs}</nav>'
+
+
+def _tab_grid_html():
+    """トップページ用：グループ見出しつきの大きなタブボタン（全ページが一目で見える）。"""
+    out = []
+    for title, items in AGG_GROUPS:
+        links = "".join(f'<a class="tab-link" href="{href}">{label}</a>' for href, label in items)
+        out.append(f'<div class="tab-group-title">{title}</div><nav class="tab-grid">{links}</nav>')
+    return "".join(out)
+
+
+_TABNAV_STYLE = """
+  .tab-link{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:46px; padding:8px 12px;
+             font-size:14px; font-weight:700; color:var(--ink); background:#fff; border:1px solid var(--border);
+             border-bottom:4px solid var(--border); border-radius:10px 10px 4px 4px; white-space:nowrap;
+             -webkit-tap-highlight-color:transparent; }
+  .tab-link:active{ transform:translateY(1px); background:var(--paper2); }
+  .tab-link.current{ background:var(--navy); color:#fff; border-color:var(--navy); border-bottom-color:var(--gold); }
+  .tab-strip{ display:flex; gap:6px; overflow-x:auto; margin:0 0 14px; padding:2px 2px 6px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tab-strip::-webkit-scrollbar{ display:none; }
+  .tab-strip .tab-link{ flex:0 0 auto; }
+  .tab-group-title{ font-size:12px; color:var(--ink-soft); font-weight:700; margin:12px 0 6px; }
+  .tab-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:8px; margin-bottom:4px; }
+"""
 
 
 _AGG_SCRIPT = """
@@ -1472,6 +1529,8 @@ _AGG_SCRIPT = """
       return h*60 + m;
     }
     window.addEventListener('DOMContentLoaded', function(){
+      const cur = document.querySelector('.tab-strip .tab-link.current');
+      if(cur && cur.scrollIntoView){ cur.scrollIntoView({inline:'center', block:'nearest'}); }
       const nowJstMinutes = getNowJstMinutes();
       document.querySelectorAll('[data-deadline]').forEach(function(el){
         const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);
@@ -1481,11 +1540,8 @@ _AGG_SCRIPT = """
     });
 """
 
-_AGG_STYLE = """
+_AGG_STYLE = _TABNAV_STYLE + """
   main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
-  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
-  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
-  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
   .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
   .hp-list{ display:flex; flex-direction:column; gap:8px; }
   .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
@@ -1642,38 +1698,6 @@ def render_close_race_page(all_race_data, date=None):
         current="close_race.html", date_str=_fmt_date_jp(date))
 
 
-def render_hole_page(all_race_data, date=None):
-    """
-    穴目候補（hole_index.py）が出ているレースを横断表示する。各レースの最有力候補1名と、
-    その根拠（記者印とのズレ／補正による浮上）を示す。
-    """
-    entries = []
-    for rd in all_race_data:
-        result = rd.get("prediction")
-        if not result or not result.get("hole_candidates"):
-            continue
-        c = result["hole_candidates"][0]
-        bg, fg = car_color(c["car"])
-        reasons = "　".join(c["reasons"])
-        body = f"""
-          <div class="hp-card-body">
-            <span class="car" style="background:{bg};color:{fg};">{c['car']}</span>
-            <span class="hp-name">{c['name']}</span>
-            <span class="hp-line dim">モデル{c['model_rank']}位</span>
-            <span class="hp-pct">{c['adjusted']:.1f}%</span>
-          </div>
-          <div class="hp-sub">{reasons}</div>"""
-        entry = _race_entry(rd, body)
-        entry["_score"] = c["hole_score"]
-        entries.append(entry)
-    return _render_race_list_page(
-        title="穴目候補のあるレース", heading="穴目候補のあるレース",
-        tagline="記者印では目立たないが、データ上は評価が高い選手がいるレースです。",
-        lead="対象：{n}レース（記者印の順位よりモデル評価が高い、または展開・相性補正で浮上する選手が1名以上）",
-        entries=entries, empty_msg="本日は該当するレースがありませんでした。",
-        current="hole.html", date_str=_fmt_date_jp(date))
-
-
 def render_value_page(all_race_data, date=None):
     """
     オッズ妙味アラート（odds_alerts.py：本命の確信度が高いのに、投票の伸びが同時間帯の他レース
@@ -1767,7 +1791,7 @@ _OVERVIEW_SCRIPT = """
 def render_overview_page(all_race_data, date=None):
     """
     本日の全レースを1つの表に並べた早見表。本命・予測1着率・1位2位の差・予測決まり手・
-    各種フラグ（本命堅い／拮抗／穴目／妙味）を列にして、列見出しクリックで並べ替え、
+    各種フラグ（本命堅い／拮抗／妙味）を列にして、列見出しクリックで並べ替え、
     フラグボタンで絞り込みができる。「どのレースを見るか」を決めるための入口ページ。
     """
     rows_html = ""
@@ -1787,8 +1811,6 @@ def render_overview_page(all_race_data, date=None):
             flags.append("high"); badges.append('<span class="ov-badge ov-high">堅</span>')
         if result.get("is_close_race"):
             flags.append("close"); badges.append('<span class="ov-badge ov-close">拮抗</span>')
-        if result.get("hole_candidates"):
-            flags.append("hole"); badges.append('<span class="ov-badge ov-hole">穴</span>')
         if info.get("odds_value_alert"):
             flags.append("value"); badges.append('<span class="ov-badge ov-value">妙味</span>')
         deadline = info.get("deadline") or ""
@@ -1827,7 +1849,7 @@ def render_overview_page(all_race_data, date=None):
   table.ov tr.ended{ opacity:.45; }
   .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
   .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
-  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-value{ background:#8a5a12; }
 """
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -1854,7 +1876,6 @@ def render_overview_page(all_race_data, date=None):
   <div class="ov-filters"><span class="lbl">絞り込み:</span>
     <button type="button" class="ov-filter" data-flag="high">堅</button>
     <button type="button" class="ov-filter" data-flag="close">拮抗</button>
-    <button type="button" class="ov-filter" data-flag="hole">穴</button>
     <button type="button" class="ov-filter" data-flag="value">妙味</button>
   </div>
   <div class="ov-scroll">
@@ -1907,7 +1928,7 @@ _TABLE_STYLE = """
   table.ov tr.ended{ opacity:.45; }
   .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
   .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
-  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-value{ background:#8a5a12; }
   .ov-up{ background:var(--pine); } .ov-down{ background:var(--brick); } .ov-home{ background:#8a5a12; }
 """
 
@@ -2025,7 +2046,7 @@ def render_players_page(all_race_data, date=None):
 
 def render_venues_today_page(all_race_data, date=None):
     """
-    本日の開催場ごとのサマリ。レース数、本命の予測1着率の平均、堅い／拮抗／穴のレース数、
+    本日の開催場ごとのサマリ。レース数、本命の予測1着率の平均、堅い／拮抗のレース数、
     予測決まり手の構成（全レース平均）、バンク周長を1行にまとめ、「今日どの場が堅いか／荒れそうか」
     を比べられるようにする。
     """
@@ -2040,7 +2061,6 @@ def render_venues_today_page(all_race_data, date=None):
         avg_top = sum(r["prediction"]["top"]["adjusted"] for r in rds) / n
         n_high = sum(1 for r in rds if r["prediction"].get("is_high_prob"))
         n_close = sum(1 for r in rds if r["prediction"].get("is_close_race"))
-        n_hole = sum(1 for r in rds if r["prediction"].get("hole_candidates"))
         gaps = [r["prediction"]["top_gap"] for r in rds if r["prediction"].get("top_gap") is not None]
         avg_gap = sum(gaps) / len(gaps) if gaps else 0.0
         kim = {t: sum(r["prediction"]["kimarite_ratio"].get(t, 0) for r in rds) / n for t in KIMARITE}
@@ -2056,7 +2076,6 @@ def render_venues_today_page(all_race_data, date=None):
           <td data-sort="{avg_gap:.2f}">{avg_gap:.1f}</td>
           <td data-sort="{n_high}">{n_high}</td>
           <td data-sort="{n_close}">{n_close}</td>
-          <td data-sort="{n_hole}">{n_hole}</td>
           {kim_cells}
           <td data-sort="{bclass}">{bclass}</td>
         </tr>"""
@@ -2070,7 +2089,7 @@ def render_venues_today_page(all_race_data, date=None):
       <thead><tr>
         <th data-sortable>競輪場</th><th data-sortable data-default-dir="desc">レース数</th>
         <th data-sortable data-default-dir="desc">本命平均</th><th data-sortable data-default-dir="desc">差(平均)</th>
-        <th data-sortable data-default-dir="desc">堅</th><th data-sortable data-default-dir="desc">拮抗</th><th data-sortable data-default-dir="desc">穴</th>
+        <th data-sortable data-default-dir="desc">堅</th><th data-sortable data-default-dir="desc">拮抗</th>
         {kim_heads}<th data-sortable>バンク</th>
       </tr></thead>
       <tbody>{rows_html}</tbody>
