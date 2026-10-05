@@ -32,9 +32,11 @@ from scraper import fetch_all_todays_races
 from model import predict_race
 from report import (render_index, render_venue_page, render_venues_page, render_venue_bank_page,
                      render_high_prob_page, render_close_race_page, render_hole_page,
-                     render_value_page, render_overview_page, VENUE_NAMES)
+                     render_value_page, render_overview_page, render_players_page,
+                     render_venues_today_page, render_results_page, VENUE_NAMES)
 from course_records import update_course_records, get_course_record
 from rivalry_records import update_rivalry_records
+from prediction_log import refresh_log
 from form_records import update_form_records
 from odds_alerts import compute_odds_value_alerts
 from retrain_check import check_retrain_trigger
@@ -190,7 +192,7 @@ def main():
         except Exception as e:
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
             result = None
-        all_race_data.append({"race_info": race["race_info"], "prediction": result})
+        all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
 
     try:
         odds_trends = update_odds_history(all_race_data, today, now_str)
@@ -232,6 +234,13 @@ def main():
         f.write(index_html)
     print("[INFO] docs/index.html を書き出しました。")
 
+    # 予想成績：今日の予想を記録し、締切を過ぎたレースの結果と照合する（失敗しても他の処理は続ける）
+    try:
+        prediction_log, _, _ = refresh_log(DOCS_DIR, all_race_data, today, now_hm)
+    except Exception as e:
+        print(f"[WARN] 予想成績ログの更新に失敗しました: {e}")
+        prediction_log = {}
+
     # 全競輪場横断の集計ページ（本命が堅い／拮抗／穴目／妙味／全レース早見表）。
     # 1ページの失敗が他のページや日次処理全体を止めないよう、ページごとに独立して書き出す。
     for filename, render_fn in (
@@ -240,6 +249,9 @@ def main():
         ("close_race.html", render_close_race_page),
         ("hole.html", render_hole_page),
         ("value.html", render_value_page),
+        ("players.html", render_players_page),
+        ("venues_today.html", render_venues_today_page),
+        ("results.html", lambda data, d: render_results_page(prediction_log, d)),
     ):
         try:
             page_html = render_fn(all_race_data, today)
