@@ -15,13 +15,13 @@
   }
   *{box-sizing:border-box;}
   html{ -webkit-text-size-adjust:100%; }
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
   header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
   header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; letter-spacing:.02em; }
   header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
-  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
   header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
@@ -31,10 +31,19 @@
   a{ color:inherit; text-decoration:none; }
   footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 
+  .tab-link{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:46px; padding:8px 12px;
+             font-size:14px; font-weight:700; color:var(--ink); background:#fff; border:1px solid var(--border);
+             border-bottom:4px solid var(--border); border-radius:10px 10px 4px 4px; white-space:nowrap;
+             -webkit-tap-highlight-color:transparent; }
+  .tab-link:active{ transform:translateY(1px); background:var(--paper2); }
+  .tab-link.current{ background:var(--navy); color:#fff; border-color:var(--navy); border-bottom-color:var(--gold); }
+  .tab-strip{ display:flex; gap:6px; overflow-x:auto; margin:0 0 14px; padding:2px 2px 6px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tab-strip::-webkit-scrollbar{ display:none; }
+  .tab-strip .tab-link{ flex:0 0 auto; }
+  .tab-group-title{ font-size:12px; color:var(--ink-soft); font-weight:700; margin:12px 0 6px; }
+  .tab-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:8px; margin-bottom:4px; }
+
   main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
-  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
-  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
-  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
   .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
   .hp-list{ display:flex; flex-direction:column; gap:8px; }
   .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
@@ -70,7 +79,7 @@
   table.ov tr.ended{ opacity:.45; }
   .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
   .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
-  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-value{ background:#8a5a12; }
 
 </style>
 </head>
@@ -84,12 +93,11 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main class="wide">
-  <nav class="agg-nav"><a class="agg-chip current" href="overview.html">全レース早見表</a><a class="agg-chip" href="high_prob.html">本命が堅い</a><a class="agg-chip" href="close_race.html">1着率が拮抗</a><a class="agg-chip" href="hole.html">穴目候補</a><a class="agg-chip" href="value.html">投票が鈍い(妙味)</a><a class="agg-chip" href="players.html">選手一覧</a><a class="agg-chip" href="venues_today.html">開催場別</a><a class="agg-chip" href="results.html">予想成績</a></nav>
+  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link current" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">1着率が拮抗</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a></nav>
   <p class="hp-lead">対象：70レース（全競輪場・本日開催分）。「差」は予測1着率の1位と2位の差（pt）。</p>
   <div class="ov-filters"><span class="lbl">絞り込み:</span>
     <button type="button" class="ov-filter" data-flag="high">堅</button>
     <button type="button" class="ov-filter" data-flag="close">拮抗</button>
-    <button type="button" class="ov-filter" data-flag="hole">穴</button>
     <button type="button" class="ov-filter" data-flag="value">妙味</button>
   </div>
   <div class="ov-scroll">
@@ -100,7 +108,7 @@
         <th data-sortable>差</th><th data-sortable>予測決まり手</th><th data-sortable data-default-dir="desc">注目</th>
       </tr></thead>
       <tbody>
-        <tr data-flags="close hole" data-deadline="15:40">
+        <tr data-flags="close" data-deadline="15:40">
           <td data-sort="松山01"><a href="matsuyama/index.html?r=1">松山 1R</a></td>
           <td data-sort="15:40">15:40</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 戸塚 涼介</td>
@@ -108,9 +116,9 @@
           <td data-sort="21.28">21.3%</td>
           <td data-sort="1.59">1.6</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="16:02">
+        <tr data-flags="" data-deadline="16:02">
           <td data-sort="松山02"><a href="matsuyama/index.html?r=2">松山 2R</a></td>
           <td data-sort="16:02">16:02</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 野上 竜太</td>
@@ -118,9 +126,9 @@
           <td data-sort="21.18">21.2%</td>
           <td data-sort="5.20">5.2</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="16:28">
+        <tr data-flags="" data-deadline="16:28">
           <td data-sort="松山03"><a href="matsuyama/index.html?r=3">松山 3R</a></td>
           <td data-sort="16:28">16:28</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 水谷 将司</td>
@@ -128,9 +136,9 @@
           <td data-sort="20.30">20.3%</td>
           <td data-sort="4.52">4.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="16:54">
+        <tr data-flags="" data-deadline="16:54">
           <td data-sort="松山04"><a href="matsuyama/index.html?r=4">松山 4R</a></td>
           <td data-sort="16:54">16:54</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 田中 和磨</td>
@@ -138,9 +146,9 @@
           <td data-sort="24.40">24.4%</td>
           <td data-sort="12.16">12.2</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="17:20">
+        <tr data-flags="" data-deadline="17:20">
           <td data-sort="松山05"><a href="matsuyama/index.html?r=5">松山 5R</a></td>
           <td data-sort="17:20">17:20</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 齊藤 英伊須</td>
@@ -148,9 +156,9 @@
           <td data-sort="20.24">20.2%</td>
           <td data-sort="13.26">13.3</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="17:46">
+        <tr data-flags="" data-deadline="17:46">
           <td data-sort="松山06"><a href="matsuyama/index.html?r=6">松山 6R</a></td>
           <td data-sort="17:46">17:46</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 磯川 勝裕</td>
@@ -158,9 +166,9 @@
           <td data-sort="22.31">22.3%</td>
           <td data-sort="14.42">14.4</td>
           <td data-sort="マーク">マーク</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="18:12">
+        <tr data-flags="close" data-deadline="18:12">
           <td data-sort="松山07"><a href="matsuyama/index.html?r=7">松山 7R</a></td>
           <td data-sort="18:12">18:12</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 保田 浩輔</td>
@@ -168,9 +176,9 @@
           <td data-sort="24.01">24.0%</td>
           <td data-sort="2.64">2.6</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="18:38">
+        <tr data-flags="" data-deadline="18:38">
           <td data-sort="松山08"><a href="matsuyama/index.html?r=8">松山 8R</a></td>
           <td data-sort="18:38">18:38</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 掛水 泰範</td>
@@ -178,9 +186,9 @@
           <td data-sort="12.58">12.6%</td>
           <td data-sort="32.25">32.3</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="19:04">
+        <tr data-flags="" data-deadline="19:04">
           <td data-sort="松山09"><a href="matsuyama/index.html?r=9">松山 9R</a></td>
           <td data-sort="19:04">19:04</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 宮崎 大空</td>
@@ -188,9 +196,9 @@
           <td data-sort="21.34">21.3%</td>
           <td data-sort="3.78">3.8</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="19:30">
+        <tr data-flags="" data-deadline="19:30">
           <td data-sort="松山10"><a href="matsuyama/index.html?r=10">松山 10R</a></td>
           <td data-sort="19:30">19:30</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 青柳 靖起</td>
@@ -198,9 +206,9 @@
           <td data-sort="16.31">16.3%</td>
           <td data-sort="22.88">22.9</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="19:57">
+        <tr data-flags="" data-deadline="19:57">
           <td data-sort="松山11"><a href="matsuyama/index.html?r=11">松山 11R</a></td>
           <td data-sort="19:57">19:57</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 酒井 雄多</td>
@@ -208,9 +216,9 @@
           <td data-sort="20.82">20.8%</td>
           <td data-sort="8.42">8.4</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="20:25">
+        <tr data-flags="" data-deadline="20:25">
           <td data-sort="松山12"><a href="matsuyama/index.html?r=12">松山 12R</a></td>
           <td data-sort="20:25">20:25</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 渡部 哲男</td>
@@ -218,9 +226,9 @@
           <td data-sort="23.38">23.4%</td>
           <td data-sort="6.47">6.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="10:40">
+        <tr data-flags="" data-deadline="10:40">
           <td data-sort="奈良01"><a href="nara/index.html?r=1">奈良 1R</a></td>
           <td data-sort="10:40">10:40</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 日野 博幸</td>
@@ -228,9 +236,9 @@
           <td data-sort="21.10">21.1%</td>
           <td data-sort="14.19">14.2</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="11:08">
+        <tr data-flags="close" data-deadline="11:08">
           <td data-sort="奈良02"><a href="nara/index.html?r=2">奈良 2R</a></td>
           <td data-sort="11:08">11:08</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 前田 義和</td>
@@ -238,9 +246,9 @@
           <td data-sort="28.63">28.6%</td>
           <td data-sort="0.66">0.7</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="11:37">
+        <tr data-flags="" data-deadline="11:37">
           <td data-sort="奈良03"><a href="nara/index.html?r=3">奈良 3R</a></td>
           <td data-sort="11:37">11:37</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 加藤 駿</td>
@@ -248,9 +256,9 @@
           <td data-sort="16.31">16.3%</td>
           <td data-sort="21.06">21.1</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="high hole" data-deadline="12:06">
+        <tr data-flags="high value" data-deadline="12:06">
           <td data-sort="奈良04"><a href="nara/index.html?r=4">奈良 4R</a></td>
           <td data-sort="12:06">12:06</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 今井 希</td>
@@ -258,9 +266,9 @@
           <td data-sort="14.51">14.5%</td>
           <td data-sort="33.81">33.8</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="12:35">
+        <tr data-flags="" data-deadline="12:35">
           <td data-sort="奈良05"><a href="nara/index.html?r=5">奈良 5R</a></td>
           <td data-sort="12:35">12:35</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 三浦 雄大</td>
@@ -268,9 +276,9 @@
           <td data-sort="19.29">19.3%</td>
           <td data-sort="3.78">3.8</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="13:04">
+        <tr data-flags="" data-deadline="13:04">
           <td data-sort="奈良06"><a href="nara/index.html?r=6">奈良 6R</a></td>
           <td data-sort="13:04">13:04</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 佐々木 則幸</td>
@@ -278,9 +286,9 @@
           <td data-sort="24.05">24.0%</td>
           <td data-sort="4.05">4.0</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="13:33">
+        <tr data-flags="" data-deadline="13:33">
           <td data-sort="奈良07"><a href="nara/index.html?r=7">奈良 7R</a></td>
           <td data-sort="13:33">13:33</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 土屋 壮登</td>
@@ -288,9 +296,9 @@
           <td data-sort="16.90">16.9%</td>
           <td data-sort="21.49">21.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="high hole" data-deadline="14:02">
+        <tr data-flags="high value" data-deadline="14:02">
           <td data-sort="奈良08"><a href="nara/index.html?r=8">奈良 8R</a></td>
           <td data-sort="14:02">14:02</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 坂田 康季</td>
@@ -298,9 +306,9 @@
           <td data-sort="17.33">17.3%</td>
           <td data-sort="28.51">28.5</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="high hole" data-deadline="14:32">
+        <tr data-flags="high value" data-deadline="14:32">
           <td data-sort="奈良09"><a href="nara/index.html?r=9">奈良 9R</a></td>
           <td data-sort="14:32">14:32</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 松本 秀之慎</td>
@@ -308,9 +316,9 @@
           <td data-sort="13.18">13.2%</td>
           <td data-sort="34.00">34.0</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="15:02">
+        <tr data-flags="close" data-deadline="15:02">
           <td data-sort="奈良10"><a href="nara/index.html?r=10">奈良 10R</a></td>
           <td data-sort="15:02">15:02</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 山本 直</td>
@@ -318,9 +326,9 @@
           <td data-sort="24.02">24.0%</td>
           <td data-sort="2.09">2.1</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="15:33">
+        <tr data-flags="" data-deadline="15:33">
           <td data-sort="奈良11"><a href="nara/index.html?r=11">奈良 11R</a></td>
           <td data-sort="15:33">15:33</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 平野 想真</td>
@@ -328,9 +336,9 @@
           <td data-sort="19.38">19.4%</td>
           <td data-sort="17.57">17.6</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="16:09">
+        <tr data-flags="" data-deadline="16:09">
           <td data-sort="奈良12"><a href="nara/index.html?r=12">奈良 12R</a></td>
           <td data-sort="16:09">16:09</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 和田 健太郎</td>
@@ -338,9 +346,9 @@
           <td data-sort="17.89">17.9%</td>
           <td data-sort="22.57">22.6</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="08:35">
+        <tr data-flags="close" data-deadline="08:35">
           <td data-sort="松戸01"><a href="matsudo/index.html?r=1">松戸 1R</a></td>
           <td data-sort="08:35">08:35</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 平川 雅晃</td>
@@ -348,9 +356,9 @@
           <td data-sort="29.56">29.6%</td>
           <td data-sort="0.55">0.6</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="high hole value" data-deadline="08:55">
+        <tr data-flags="high value" data-deadline="08:55">
           <td data-sort="松戸02"><a href="matsudo/index.html?r=2">松戸 2R</a></td>
           <td data-sort="08:55">08:55</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 鈴木 康平</td>
@@ -358,9 +366,9 @@
           <td data-sort="17.34">17.3%</td>
           <td data-sort="28.98">29.0</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="3"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="09:15">
+        <tr data-flags="" data-deadline="09:15">
           <td data-sort="松戸03"><a href="matsudo/index.html?r=3">松戸 3R</a></td>
           <td data-sort="09:15">09:15</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 小川 佑希也</td>
@@ -368,9 +376,9 @@
           <td data-sort="23.17">23.2%</td>
           <td data-sort="10.88">10.9</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="09:35">
+        <tr data-flags="" data-deadline="09:35">
           <td data-sort="松戸04"><a href="matsudo/index.html?r=4">松戸 4R</a></td>
           <td data-sort="09:35">09:35</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 駒壽 直人</td>
@@ -378,9 +386,9 @@
           <td data-sort="17.93">17.9%</td>
           <td data-sort="21.46">21.5</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="high hole value" data-deadline="09:55">
+        <tr data-flags="high value" data-deadline="09:55">
           <td data-sort="松戸05"><a href="matsudo/index.html?r=5">松戸 5R</a></td>
           <td data-sort="09:55">09:55</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 吉岡 竜太</td>
@@ -388,9 +396,9 @@
           <td data-sort="19.01">19.0%</td>
           <td data-sort="26.74">26.7</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="3"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="10:15">
+        <tr data-flags="close" data-deadline="10:15">
           <td data-sort="松戸06"><a href="matsudo/index.html?r=6">松戸 6R</a></td>
           <td data-sort="10:15">10:15</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 青木 美保</td>
@@ -398,9 +406,9 @@
           <td data-sort="26.78">26.8%</td>
           <td data-sort="0.28">0.3</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="10:35">
+        <tr data-flags="" data-deadline="10:35">
           <td data-sort="松戸07"><a href="matsudo/index.html?r=7">松戸 7R</a></td>
           <td data-sort="10:35">10:35</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 尾崎</td>
@@ -408,9 +416,9 @@
           <td data-sort="21.33">21.3%</td>
           <td data-sort="11.36">11.4</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="20:44">
+        <tr data-flags="" data-deadline="20:44">
           <td data-sort="平塚01"><a href="hiratsuka/index.html?r=1">平塚 1R</a></td>
           <td data-sort="20:44">20:44</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 片岡 美奈</td>
@@ -418,9 +426,9 @@
           <td data-sort="21.71">21.7%</td>
           <td data-sort="15.27">15.3</td>
           <td data-sort="マーク">マーク</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:08">
+        <tr data-flags="" data-deadline="21:08">
           <td data-sort="平塚02"><a href="hiratsuka/index.html?r=2">平塚 2R</a></td>
           <td data-sort="21:08">21:08</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 邊見 斎</td>
@@ -428,19 +436,19 @@
           <td data-sort="13.19">13.2%</td>
           <td data-sort="30.90">30.9</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:32">
+        <tr data-flags="" data-deadline="21:32">
           <td data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 柴田</td>
-          <td data-sort="25.77"><b>25.8%</b></td>
-          <td data-sort="22.47">22.5%</td>
-          <td data-sort="3.30">3.3</td>
+          <td data-sort="26.51"><b>26.5%</b></td>
+          <td data-sort="21.99">22.0%</td>
+          <td data-sort="4.52">4.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="high hole value" data-deadline="21:56">
+        <tr data-flags="high value" data-deadline="21:56">
           <td data-sort="平塚04"><a href="hiratsuka/index.html?r=4">平塚 4R</a></td>
           <td data-sort="21:56">21:56</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 齊藤 宏樹</td>
@@ -448,9 +456,9 @@
           <td data-sort="17.50">17.5%</td>
           <td data-sort="31.38">31.4</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="3"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="22:22">
+        <tr data-flags="" data-deadline="22:22">
           <td data-sort="平塚05"><a href="hiratsuka/index.html?r=5">平塚 5R</a></td>
           <td data-sort="22:22">22:22</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 西原 裕太郎</td>
@@ -458,9 +466,9 @@
           <td data-sort="18.39">18.4%</td>
           <td data-sort="17.17">17.2</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="22:49">
+        <tr data-flags="close" data-deadline="22:49">
           <td data-sort="平塚06"><a href="hiratsuka/index.html?r=6">平塚 6R</a></td>
           <td data-sort="22:49">22:49</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 久米 詩</td>
@@ -468,19 +476,19 @@
           <td data-sort="22.92">22.9%</td>
           <td data-sort="1.81">1.8</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="23:16">
+        <tr data-flags="" data-deadline="23:16">
           <td data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 森下 龍之介</td>
-          <td data-sort="28.75"><b>28.7%</b></td>
-          <td data-sort="24.59">24.6%</td>
-          <td data-sort="4.16">4.2</td>
+          <td data-sort="28.54"><b>28.5%</b></td>
+          <td data-sort="24.86">24.9%</td>
+          <td data-sort="3.68">3.7</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="20:52">
+        <tr data-flags="" data-deadline="20:52">
           <td data-sort="小松島01"><a href="komatsushima/index.html?r=1">小松島 1R</a></td>
           <td data-sort="20:52">20:52</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 貝原 涼太</td>
@@ -488,9 +496,9 @@
           <td data-sort="15.73">15.7%</td>
           <td data-sort="24.89">24.9</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:16">
+        <tr data-flags="" data-deadline="21:16">
           <td data-sort="小松島02"><a href="komatsushima/index.html?r=2">小松島 2R</a></td>
           <td data-sort="21:16">21:16</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 内山 拓</td>
@@ -498,9 +506,9 @@
           <td data-sort="19.53">19.5%</td>
           <td data-sort="22.19">22.2</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:40">
+        <tr data-flags="" data-deadline="21:40">
           <td data-sort="小松島03"><a href="komatsushima/index.html?r=3">小松島 3R</a></td>
           <td data-sort="21:40">21:40</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 原井 剣也</td>
@@ -508,9 +516,9 @@
           <td data-sort="23.65">23.7%</td>
           <td data-sort="12.28">12.3</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="22:04">
+        <tr data-flags="" data-deadline="22:04">
           <td data-sort="小松島04"><a href="komatsushima/index.html?r=4">小松島 4R</a></td>
           <td data-sort="22:04">22:04</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 中山 拓人</td>
@@ -518,9 +526,9 @@
           <td data-sort="17.18">17.2%</td>
           <td data-sort="19.05">19.0</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="22:31">
+        <tr data-flags="" data-deadline="22:31">
           <td data-sort="小松島05"><a href="komatsushima/index.html?r=5">小松島 5R</a></td>
           <td data-sort="22:31">22:31</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 吉川 嘉斗</td>
@@ -528,19 +536,19 @@
           <td data-sort="15.53">15.5%</td>
           <td data-sort="27.35">27.4</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="22:58">
+        <tr data-flags="" data-deadline="22:58">
           <td data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 三ッ井</td>
-          <td data-sort="42.67"><b>42.7%</b></td>
-          <td data-sort="14.31">14.3%</td>
-          <td data-sort="28.36">28.4</td>
+          <td data-sort="40.35"><b>40.3%</b></td>
+          <td data-sort="17.31">17.3%</td>
+          <td data-sort="23.04">23.0</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="23:25">
+        <tr data-flags="" data-deadline="23:25">
           <td data-sort="小松島07"><a href="komatsushima/index.html?r=7">小松島 7R</a></td>
           <td data-sort="23:25">23:25</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 藤井 將</td>
@@ -548,9 +556,9 @@
           <td data-sort="22.01">22.0%</td>
           <td data-sort="15.18">15.2</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="20:36">
+        <tr data-flags="close" data-deadline="20:36">
           <td data-sort="武雄01"><a href="takeo/index.html?r=1">武雄 1R</a></td>
           <td data-sort="20:36">20:36</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 太田 将成</td>
@@ -558,9 +566,9 @@
           <td data-sort="23.40">23.4%</td>
           <td data-sort="2.16">2.2</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:00">
+        <tr data-flags="" data-deadline="21:00">
           <td data-sort="武雄02"><a href="takeo/index.html?r=2">武雄 2R</a></td>
           <td data-sort="21:00">21:00</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 望月 紀男</td>
@@ -568,9 +576,9 @@
           <td data-sort="23.15">23.2%</td>
           <td data-sort="4.63">4.6</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:24">
+        <tr data-flags="" data-deadline="21:24">
           <td data-sort="武雄03"><a href="takeo/index.html?r=3">武雄 3R</a></td>
           <td data-sort="21:24">21:24</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 内村 泰三</td>
@@ -578,9 +586,9 @@
           <td data-sort="24.75">24.7%</td>
           <td data-sort="3.89">3.9</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="21:48">
+        <tr data-flags="" data-deadline="21:48">
           <td data-sort="武雄04"><a href="takeo/index.html?r=4">武雄 4R</a></td>
           <td data-sort="21:48">21:48</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 比佐 宝太</td>
@@ -588,9 +596,9 @@
           <td data-sort="19.76">19.8%</td>
           <td data-sort="8.29">8.3</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="22:13">
+        <tr data-flags="" data-deadline="22:13">
           <td data-sort="武雄05"><a href="takeo/index.html?r=5">武雄 5R</a></td>
           <td data-sort="22:13">22:13</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 平根 優大</td>
@@ -598,9 +606,9 @@
           <td data-sort="15.98">16.0%</td>
           <td data-sort="25.67">25.7</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="22:40">
+        <tr data-flags="close" data-deadline="22:40">
           <td data-sort="武雄06"><a href="takeo/index.html?r=6">武雄 6R</a></td>
           <td data-sort="22:40">22:40</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 山下 祐輔</td>
@@ -608,9 +616,9 @@
           <td data-sort="23.68">23.7%</td>
           <td data-sort="0.94">0.9</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="23:07">
+        <tr data-flags="" data-deadline="23:07">
           <td data-sort="武雄07"><a href="takeo/index.html?r=7">武雄 7R</a></td>
           <td data-sort="23:07">23:07</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 成松 春樹</td>
@@ -618,9 +626,9 @@
           <td data-sort="22.25">22.3%</td>
           <td data-sort="20.53">20.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="08:25">
+        <tr data-flags="" data-deadline="08:25">
           <td data-sort="防府01"><a href="hofu/index.html?r=1">防府 1R</a></td>
           <td data-sort="08:25">08:25</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 高橋 幸司</td>
@@ -628,9 +636,9 @@
           <td data-sort="22.80">22.8%</td>
           <td data-sort="4.51">4.5</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="08:45">
+        <tr data-flags="" data-deadline="08:45">
           <td data-sort="防府02"><a href="hofu/index.html?r=2">防府 2R</a></td>
           <td data-sort="08:45">08:45</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 中釜 健次</td>
@@ -638,9 +646,9 @@
           <td data-sort="24.07">24.1%</td>
           <td data-sort="6.33">6.3</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="09:05">
+        <tr data-flags="" data-deadline="09:05">
           <td data-sort="防府03"><a href="hofu/index.html?r=3">防府 3R</a></td>
           <td data-sort="09:05">09:05</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 岩城 佑典</td>
@@ -648,9 +656,9 @@
           <td data-sort="24.78">24.8%</td>
           <td data-sort="4.64">4.6</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="09:25">
+        <tr data-flags="" data-deadline="09:25">
           <td data-sort="防府04"><a href="hofu/index.html?r=4">防府 4R</a></td>
           <td data-sort="09:25">09:25</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 川又 裕樹</td>
@@ -658,9 +666,9 @@
           <td data-sort="20.13">20.1%</td>
           <td data-sort="22.03">22.0</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="09:45">
+        <tr data-flags="" data-deadline="09:45">
           <td data-sort="防府05"><a href="hofu/index.html?r=5">防府 5R</a></td>
           <td data-sort="09:45">09:45</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 那須 久幸</td>
@@ -668,9 +676,9 @@
           <td data-sort="18.30">18.3%</td>
           <td data-sort="21.49">21.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="10:05">
+        <tr data-flags="" data-deadline="10:05">
           <td data-sort="防府06"><a href="hofu/index.html?r=6">防府 6R</a></td>
           <td data-sort="10:05">10:05</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 守谷 陽介</td>
@@ -678,9 +686,9 @@
           <td data-sort="25.87">25.9%</td>
           <td data-sort="7.29">7.3</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="10:25">
+        <tr data-flags="" data-deadline="10:25">
           <td data-sort="防府07"><a href="hofu/index.html?r=7">防府 7R</a></td>
           <td data-sort="10:25">10:25</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 真鍋 顕汰</td>
@@ -688,9 +696,9 @@
           <td data-sort="16.14">16.1%</td>
           <td data-sort="23.25">23.2</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="15:51">
+        <tr data-flags="" data-deadline="15:51">
           <td data-sort="いわき平01"><a href="iwakitaira/index.html?r=1">いわき平 1R</a></td>
           <td data-sort="15:51">15:51</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 中川 博文</td>
@@ -698,9 +706,9 @@
           <td data-sort="18.31">18.3%</td>
           <td data-sort="14.00">14.0</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="16:16">
+        <tr data-flags="close" data-deadline="16:16">
           <td data-sort="いわき平02"><a href="iwakitaira/index.html?r=2">いわき平 2R</a></td>
           <td data-sort="16:16">16:16</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 横田 政直</td>
@@ -708,9 +716,9 @@
           <td data-sort="27.28">27.3%</td>
           <td data-sort="1.24">1.2</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="16:41">
+        <tr data-flags="" data-deadline="16:41">
           <td data-sort="いわき平03"><a href="iwakitaira/index.html?r=3">いわき平 3R</a></td>
           <td data-sort="16:41">16:41</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 庄子 琢心</td>
@@ -718,9 +726,9 @@
           <td data-sort="17.12">17.1%</td>
           <td data-sort="20.95">21.0</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="17:07">
+        <tr data-flags="" data-deadline="17:07">
           <td data-sort="いわき平04"><a href="iwakitaira/index.html?r=4">いわき平 4R</a></td>
           <td data-sort="17:07">17:07</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 渡邉 拓</td>
@@ -728,9 +736,9 @@
           <td data-sort="25.70">25.7%</td>
           <td data-sort="5.45">5.4</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="17:33">
+        <tr data-flags="" data-deadline="17:33">
           <td data-sort="いわき平05"><a href="iwakitaira/index.html?r=5">いわき平 5R</a></td>
           <td data-sort="17:33">17:33</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 石井 寛子</td>
@@ -738,9 +746,9 @@
           <td data-sort="19.69">19.7%</td>
           <td data-sort="10.32">10.3</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="17:59">
+        <tr data-flags="" data-deadline="17:59">
           <td data-sort="いわき平06"><a href="iwakitaira/index.html?r=6">いわき平 6R</a></td>
           <td data-sort="17:59">17:59</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 山原 さくら</td>
@@ -748,9 +756,9 @@
           <td data-sort="21.01">21.0%</td>
           <td data-sort="13.44">13.4</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="18:25">
+        <tr data-flags="" data-deadline="18:25">
           <td data-sort="いわき平07"><a href="iwakitaira/index.html?r=7">いわき平 7R</a></td>
           <td data-sort="18:25">18:25</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 寺沼 将彦</td>
@@ -758,9 +766,9 @@
           <td data-sort="25.50">25.5%</td>
           <td data-sort="6.28">6.3</td>
           <td data-sort="マーク">マーク</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="high hole value" data-deadline="18:51">
+        <tr data-flags="high" data-deadline="18:51">
           <td data-sort="いわき平08"><a href="iwakitaira/index.html?r=8">いわき平 8R</a></td>
           <td data-sort="18:51">18:51</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 松田 優一</td>
@@ -768,9 +776,9 @@
           <td data-sort="13.04">13.0%</td>
           <td data-sort="44.87">44.9</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="3"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-hole">穴</span><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="1"><span class="ov-badge ov-high">堅</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="19:17">
+        <tr data-flags="close" data-deadline="19:17">
           <td data-sort="いわき平09"><a href="iwakitaira/index.html?r=9">いわき平 9R</a></td>
           <td data-sort="19:17">19:17</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 山口 智弘</td>
@@ -778,9 +786,9 @@
           <td data-sort="29.69">29.7%</td>
           <td data-sort="2.72">2.7</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="close hole" data-deadline="19:43">
+        <tr data-flags="close" data-deadline="19:43">
           <td data-sort="いわき平10"><a href="iwakitaira/index.html?r=10">いわき平 10R</a></td>
           <td data-sort="19:43">19:43</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 猪狩 祐樹</td>
@@ -788,9 +796,9 @@
           <td data-sort="26.04">26.0%</td>
           <td data-sort="1.80">1.8</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="2"><span class="ov-badge ov-close">拮抗</span><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="hole" data-deadline="20:11">
+        <tr data-flags="" data-deadline="20:11">
           <td data-sort="いわき平11"><a href="iwakitaira/index.html?r=11">いわき平 11R</a></td>
           <td data-sort="20:11">20:11</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 松田 安綱</td>
@@ -798,7 +806,7 @@
           <td data-sort="19.38">19.4%</td>
           <td data-sort="5.97">6.0</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-hole">穴</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr></tbody>
     </table>
   </div>
@@ -824,6 +832,8 @@
       return h*60 + m;
     }
     window.addEventListener('DOMContentLoaded', function(){
+      const cur = document.querySelector('.tab-strip .tab-link.current');
+      if(cur && cur.scrollIntoView){ cur.scrollIntoView({inline:'center', block:'nearest'}); }
       const nowJstMinutes = getNowJstMinutes();
       document.querySelectorAll('[data-deadline]').forEach(function(el){
         const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);

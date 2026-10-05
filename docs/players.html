@@ -15,13 +15,13 @@
   }
   *{box-sizing:border-box;}
   html{ -webkit-text-size-adjust:100%; }
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
   header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
   header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; letter-spacing:.02em; }
   header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
-  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
   header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
@@ -31,10 +31,19 @@
   a{ color:inherit; text-decoration:none; }
   footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 
+  .tab-link{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:46px; padding:8px 12px;
+             font-size:14px; font-weight:700; color:var(--ink); background:#fff; border:1px solid var(--border);
+             border-bottom:4px solid var(--border); border-radius:10px 10px 4px 4px; white-space:nowrap;
+             -webkit-tap-highlight-color:transparent; }
+  .tab-link:active{ transform:translateY(1px); background:var(--paper2); }
+  .tab-link.current{ background:var(--navy); color:#fff; border-color:var(--navy); border-bottom-color:var(--gold); }
+  .tab-strip{ display:flex; gap:6px; overflow-x:auto; margin:0 0 14px; padding:2px 2px 6px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tab-strip::-webkit-scrollbar{ display:none; }
+  .tab-strip .tab-link{ flex:0 0 auto; }
+  .tab-group-title{ font-size:12px; color:var(--ink-soft); font-weight:700; margin:12px 0 6px; }
+  .tab-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:8px; margin-bottom:4px; }
+
   main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
-  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
-  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
-  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
   .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
   .hp-list{ display:flex; flex-direction:column; gap:8px; }
   .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
@@ -71,7 +80,7 @@
   table.ov tr.ended{ opacity:.45; }
   .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
   .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
-  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-value{ background:#8a5a12; }
   .ov-up{ background:var(--pine); } .ov-down{ background:var(--brick); } .ov-home{ background:#8a5a12; }
 
 </style>
@@ -86,7 +95,7 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main class="wide">
-  <nav class="agg-nav"><a class="agg-chip" href="overview.html">全レース早見表</a><a class="agg-chip" href="high_prob.html">本命が堅い</a><a class="agg-chip" href="close_race.html">1着率が拮抗</a><a class="agg-chip" href="hole.html">穴目候補</a><a class="agg-chip" href="value.html">投票が鈍い(妙味)</a><a class="agg-chip current" href="players.html">選手一覧</a><a class="agg-chip" href="venues_today.html">開催場別</a><a class="agg-chip" href="results.html">予想成績</a></nav>
+  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">1着率が拮抗</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link current" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a></nav>
   
   <p class="hp-lead">対象：486人（全競輪場・本日開催分）。見出しタップで並べ替え。当地巧者＝当地で5走以上かつ3着内率60%以上。</p>
   <div class="ov-filters"><span class="lbl">絞り込み:</span>
@@ -2605,8 +2614,19 @@
           <td class="l" data-sort="柴田"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 柴田</td>
           <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
-          <td data-sort="25.77"><b>25.8%</b></td>
+          <td data-sort="26.51"><b>26.5%</b></td>
           <td data-sort="1">1位</td>
+          <td>A3</td>
+          <td>差し</td>
+          <td data-sort="-1.000">—</td>
+          <td data-sort="0"><span class="dim">—</span></td>
+        </tr>
+        <tr data-flags="" data-name="高橋 由記" data-deadline="21:32">
+          <td class="l" data-sort="高橋 由記"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 高橋 由記</td>
+          <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
+          <td data-sort="21:32">21:32</td>
+          <td data-sort="21.99"><b>22.0%</b></td>
+          <td data-sort="2">2位</td>
           <td>A3</td>
           <td>差し</td>
           <td data-sort="-1.000">—</td>
@@ -2616,21 +2636,10 @@
           <td class="l" data-sort="米倉 剛志"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 米倉 剛志</td>
           <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
-          <td data-sort="22.47"><b>22.5%</b></td>
-          <td data-sort="2">2位</td>
-          <td>A3</td>
-          <td>逃げ</td>
-          <td data-sort="-1.000">—</td>
-          <td data-sort="0"><span class="dim">—</span></td>
-        </tr>
-        <tr data-flags="" data-name="高橋 由記" data-deadline="21:32">
-          <td class="l" data-sort="高橋 由記"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 高橋 由記</td>
-          <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
-          <td data-sort="21:32">21:32</td>
-          <td data-sort="21.46"><b>21.5%</b></td>
+          <td data-sort="21.98"><b>22.0%</b></td>
           <td data-sort="3">3位</td>
           <td>A3</td>
-          <td>差し</td>
+          <td>逃げ</td>
           <td data-sort="-1.000">—</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
@@ -2638,7 +2647,7 @@
           <td class="l" data-sort="村松 俊弥"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 村松 俊弥</td>
           <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
-          <td data-sort="14.57"><b>14.6%</b></td>
+          <td data-sort="13.56"><b>13.6%</b></td>
           <td data-sort="4">4位</td>
           <td>A3</td>
           <td>マーク</td>
@@ -2649,7 +2658,7 @@
           <td class="l" data-sort="吉橋 秀城"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 吉橋 秀城</td>
           <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
-          <td data-sort="7.67"><b>7.7%</b></td>
+          <td data-sort="7.84"><b>7.8%</b></td>
           <td data-sort="5">5位</td>
           <td>A3</td>
           <td>マーク</td>
@@ -2660,7 +2669,7 @@
           <td class="l" data-sort="高瀬 卓"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 高瀬 卓</td>
           <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
-          <td data-sort="4.98"><b>5.0%</b></td>
+          <td data-sort="5.03"><b>5.0%</b></td>
           <td data-sort="6">6位</td>
           <td>A3</td>
           <td>マーク</td>
@@ -2671,7 +2680,7 @@
           <td class="l" data-sort="近藤 直幹"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 近藤 直幹</td>
           <td class="l" data-sort="平塚03"><a href="hiratsuka/index.html?r=3">平塚 3R</a></td>
           <td data-sort="21:32">21:32</td>
-          <td data-sort="3.07"><b>3.1%</b></td>
+          <td data-sort="3.08"><b>3.1%</b></td>
           <td data-sort="7">7位</td>
           <td>A3</td>
           <td>差し</td>
@@ -2913,7 +2922,7 @@
           <td class="l" data-sort="森下 龍之介"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 森下 龍之介</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="28.75"><b>28.7%</b></td>
+          <td data-sort="28.54"><b>28.5%</b></td>
           <td data-sort="1">1位</td>
           <td>A3</td>
           <td>逃げ</td>
@@ -2924,7 +2933,7 @@
           <td class="l" data-sort="邊見 祐太"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 邊見 祐太</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="24.59"><b>24.6%</b></td>
+          <td data-sort="24.86"><b>24.9%</b></td>
           <td data-sort="2">2位</td>
           <td>A3</td>
           <td>差し</td>
@@ -2935,7 +2944,7 @@
           <td class="l" data-sort="田上 晃也"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 田上 晃也</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="24.10"><b>24.1%</b></td>
+          <td data-sort="24.07"><b>24.1%</b></td>
           <td data-sort="3">3位</td>
           <td>A3</td>
           <td>逃げ</td>
@@ -2946,7 +2955,7 @@
           <td class="l" data-sort="下山 聖斗"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 下山 聖斗</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="14.16"><b>14.2%</b></td>
+          <td data-sort="14.10"><b>14.1%</b></td>
           <td data-sort="4">4位</td>
           <td>A3</td>
           <td>捲り</td>
@@ -2957,7 +2966,7 @@
           <td class="l" data-sort="坂本 英一"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 坂本 英一</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="3.20"><b>3.2%</b></td>
+          <td data-sort="3.17"><b>3.2%</b></td>
           <td data-sort="5">5位</td>
           <td>A3</td>
           <td>マーク</td>
@@ -2968,7 +2977,7 @@
           <td class="l" data-sort="山口 直樹"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 山口 直樹</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="2.67"><b>2.7%</b></td>
+          <td data-sort="2.66"><b>2.7%</b></td>
           <td data-sort="6">6位</td>
           <td>A3</td>
           <td>捲り</td>
@@ -2979,7 +2988,7 @@
           <td class="l" data-sort="細田 純平"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 細田 純平</td>
           <td class="l" data-sort="平塚07"><a href="hiratsuka/index.html?r=7">平塚 7R</a></td>
           <td data-sort="23:16">23:16</td>
-          <td data-sort="2.53"><b>2.5%</b></td>
+          <td data-sort="2.59"><b>2.6%</b></td>
           <td data-sort="7">7位</td>
           <td>A3</td>
           <td>マーク</td>
@@ -3375,7 +3384,7 @@
           <td class="l" data-sort="三ッ井"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 三ッ井</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="42.67"><b>42.7%</b></td>
+          <td data-sort="40.35"><b>40.3%</b></td>
           <td data-sort="1">1位</td>
           <td>A2</td>
           <td>差し</td>
@@ -3386,7 +3395,7 @@
           <td class="l" data-sort="中村 雅仁"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 中村 雅仁</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="14.31"><b>14.3%</b></td>
+          <td data-sort="17.31"><b>17.3%</b></td>
           <td data-sort="2">2位</td>
           <td>A1</td>
           <td>差し</td>
@@ -3397,7 +3406,7 @@
           <td class="l" data-sort="荻原 寿嗣"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 荻原 寿嗣</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="14.30"><b>14.3%</b></td>
+          <td data-sort="14.07"><b>14.1%</b></td>
           <td data-sort="3">3位</td>
           <td>A1</td>
           <td>逃げ</td>
@@ -3408,7 +3417,7 @@
           <td class="l" data-sort="松坂 侑亮"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 松坂 侑亮</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="9.39"><b>9.4%</b></td>
+          <td data-sort="9.24"><b>9.2%</b></td>
           <td data-sort="4">4位</td>
           <td>A1</td>
           <td>逃げ</td>
@@ -3419,7 +3428,7 @@
           <td class="l" data-sort="伊藤 奎"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 伊藤 奎</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="8.64"><b>8.6%</b></td>
+          <td data-sort="8.51"><b>8.5%</b></td>
           <td data-sort="5">5位</td>
           <td>A1</td>
           <td>差し</td>
@@ -3430,7 +3439,7 @@
           <td class="l" data-sort="遠藤 勝行"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 遠藤 勝行</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="6.17"><b>6.2%</b></td>
+          <td data-sort="6.09"><b>6.1%</b></td>
           <td data-sort="6">6位</td>
           <td>A2</td>
           <td>差し</td>
@@ -3441,7 +3450,7 @@
           <td class="l" data-sort="田川 翔琉"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 田川 翔琉</td>
           <td class="l" data-sort="小松島06"><a href="komatsushima/index.html?r=6">小松島 6R</a></td>
           <td data-sort="22:58">22:58</td>
-          <td data-sort="4.51"><b>4.5%</b></td>
+          <td data-sort="4.44"><b>4.4%</b></td>
           <td data-sort="7">7位</td>
           <td>A1</td>
           <td>逃げ</td>
@@ -5474,6 +5483,8 @@
       return h*60 + m;
     }
     window.addEventListener('DOMContentLoaded', function(){
+      const cur = document.querySelector('.tab-strip .tab-link.current');
+      if(cur && cur.scrollIntoView){ cur.scrollIntoView({inline:'center', block:'nearest'}); }
       const nowJstMinutes = getNowJstMinutes();
       document.querySelectorAll('[data-deadline]').forEach(function(el){
         const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);

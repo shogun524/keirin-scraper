@@ -15,13 +15,13 @@
   }
   *{box-sizing:border-box;}
   html{ -webkit-text-size-adjust:100%; }
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
   header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
   header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; letter-spacing:.02em; }
   header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
-  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
   header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
@@ -31,10 +31,19 @@
   a{ color:inherit; text-decoration:none; }
   footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 
+  .tab-link{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:46px; padding:8px 12px;
+             font-size:14px; font-weight:700; color:var(--ink); background:#fff; border:1px solid var(--border);
+             border-bottom:4px solid var(--border); border-radius:10px 10px 4px 4px; white-space:nowrap;
+             -webkit-tap-highlight-color:transparent; }
+  .tab-link:active{ transform:translateY(1px); background:var(--paper2); }
+  .tab-link.current{ background:var(--navy); color:#fff; border-color:var(--navy); border-bottom-color:var(--gold); }
+  .tab-strip{ display:flex; gap:6px; overflow-x:auto; margin:0 0 14px; padding:2px 2px 6px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tab-strip::-webkit-scrollbar{ display:none; }
+  .tab-strip .tab-link{ flex:0 0 auto; }
+  .tab-group-title{ font-size:12px; color:var(--ink-soft); font-weight:700; margin:12px 0 6px; }
+  .tab-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:8px; margin-bottom:4px; }
+
   main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
-  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
-  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
-  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
   .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
   .hp-list{ display:flex; flex-direction:column; gap:8px; }
   .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
@@ -71,7 +80,7 @@
   table.ov tr.ended{ opacity:.45; }
   .ov-badge{ display:inline-block; font-size:10.5px; font-weight:700; border-radius:4px; padding:1px 6px; margin:0 2px; color:#fff; }
   .ov-high{ background:var(--brick); } .ov-close{ background:var(--slate); }
-  .ov-hole{ background:var(--pine); } .ov-value{ background:#8a5a12; }
+  .ov-value{ background:#8a5a12; }
   .ov-up{ background:var(--pine); } .ov-down{ background:var(--brick); } .ov-home{ background:#8a5a12; }
 
 </style>
@@ -86,7 +95,7 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main class="wide">
-  <nav class="agg-nav"><a class="agg-chip" href="overview.html">全レース早見表</a><a class="agg-chip" href="high_prob.html">本命が堅い</a><a class="agg-chip" href="close_race.html">1着率が拮抗</a><a class="agg-chip" href="hole.html">穴目候補</a><a class="agg-chip" href="value.html">投票が鈍い(妙味)</a><a class="agg-chip" href="players.html">選手一覧</a><a class="agg-chip current" href="venues_today.html">開催場別</a><a class="agg-chip" href="results.html">予想成績</a></nav>
+  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">1着率が拮抗</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link current" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a></nav>
   
   <p class="hp-lead">対象：8場（本日開催分）。「本命平均」は各レースの本命の予測1着率の平均、「差」は1位と2位の差の平均です。
   数字が大きいほど本命が堅く、小さいほど混戦気味の開催場です。決まり手は各レースの予測構成の平均です。</p>
@@ -95,7 +104,7 @@
       <thead><tr>
         <th data-sortable>競輪場</th><th data-sortable data-default-dir="desc">レース数</th>
         <th data-sortable data-default-dir="desc">本命平均</th><th data-sortable data-default-dir="desc">差(平均)</th>
-        <th data-sortable data-default-dir="desc">堅</th><th data-sortable data-default-dir="desc">拮抗</th><th data-sortable data-default-dir="desc">穴</th>
+        <th data-sortable data-default-dir="desc">堅</th><th data-sortable data-default-dir="desc">拮抗</th>
         <th data-sortable data-default-dir="desc">逃げ</th><th data-sortable data-default-dir="desc">捲り</th><th data-sortable data-default-dir="desc">差し</th><th data-sortable data-default-dir="desc">マーク</th><th data-sortable>バンク</th>
       </tr></thead>
       <tbody>
@@ -106,7 +115,6 @@
           <td data-sort="10.63">10.6</td>
           <td data-sort="0">0</td>
           <td data-sort="2">2</td>
-          <td data-sort="12">12</td>
           <td data-sort="20.4">20%</td><td data-sort="20.0">20%</td><td data-sort="39.2">39%</td><td data-sort="20.4">20%</td>
           <td data-sort="400">400</td>
         </tr>
@@ -117,7 +125,6 @@
           <td data-sort="16.98">17.0</td>
           <td data-sort="3">3</td>
           <td data-sort="2">2</td>
-          <td data-sort="12">12</td>
           <td data-sort="16.1">16%</td><td data-sort="21.1">21%</td><td data-sort="39.0">39%</td><td data-sort="23.8">24%</td>
           <td data-sort="333">333</td>
         </tr>
@@ -128,29 +135,26 @@
           <td data-sort="14.32">14.3</td>
           <td data-sort="2">2</td>
           <td data-sort="2">2</td>
-          <td data-sort="7">7</td>
           <td data-sort="22.7">23%</td><td data-sort="24.2">24%</td><td data-sort="30.6">31%</td><td data-sort="22.5">22%</td>
           <td data-sort="333">333</td>
         </tr>
         <tr>
           <td class="l" data-sort="平塚"><a href="hiratsuka/index.html">平塚</a></td>
           <td data-sort="7">7</td>
-          <td data-sort="34.96"><b>35.0%</b></td>
-          <td data-sort="14.85">14.9</td>
+          <td data-sort="35.04"><b>35.0%</b></td>
+          <td data-sort="14.96">15.0</td>
           <td data-sort="1">1</td>
           <td data-sort="1">1</td>
-          <td data-sort="7">7</td>
           <td data-sort="17.8">18%</td><td data-sort="15.6">16%</td><td data-sort="34.0">34%</td><td data-sort="32.5">33%</td>
           <td data-sort="400">400</td>
         </tr>
         <tr>
           <td class="l" data-sort="小松島"><a href="komatsushima/index.html">小松島</a></td>
           <td data-sort="7">7</td>
-          <td data-sort="39.61"><b>39.6%</b></td>
-          <td data-sort="21.33">21.3</td>
+          <td data-sort="39.28"><b>39.3%</b></td>
+          <td data-sort="20.57">20.6</td>
           <td data-sort="0">0</td>
           <td data-sort="0">0</td>
-          <td data-sort="7">7</td>
           <td data-sort="20.8">21%</td><td data-sort="21.1">21%</td><td data-sort="36.3">36%</td><td data-sort="21.7">22%</td>
           <td data-sort="400">400</td>
         </tr>
@@ -161,7 +165,6 @@
           <td data-sort="9.44">9.4</td>
           <td data-sort="0">0</td>
           <td data-sort="2">2</td>
-          <td data-sort="7">7</td>
           <td data-sort="17.8">18%</td><td data-sort="18.8">19%</td><td data-sort="38.1">38%</td><td data-sort="25.2">25%</td>
           <td data-sort="400">400</td>
         </tr>
@@ -172,7 +175,6 @@
           <td data-sort="12.79">12.8</td>
           <td data-sort="0">0</td>
           <td data-sort="0">0</td>
-          <td data-sort="7">7</td>
           <td data-sort="20.7">21%</td><td data-sort="18.9">19%</td><td data-sort="35.1">35%</td><td data-sort="25.3">25%</td>
           <td data-sort="333">333</td>
         </tr>
@@ -183,7 +185,6 @@
           <td data-sort="11.55">11.5</td>
           <td data-sort="1">1</td>
           <td data-sort="3">3</td>
-          <td data-sort="11">11</td>
           <td data-sort="17.6">18%</td><td data-sort="17.4">17%</td><td data-sort="37.0">37%</td><td data-sort="28.1">28%</td>
           <td data-sort="400">400</td>
         </tr></tbody>
@@ -211,6 +212,8 @@
       return h*60 + m;
     }
     window.addEventListener('DOMContentLoaded', function(){
+      const cur = document.querySelector('.tab-strip .tab-link.current');
+      if(cur && cur.scrollIntoView){ cur.scrollIntoView({inline:'center', block:'nearest'}); }
       const nowJstMinutes = getNowJstMinutes();
       document.querySelectorAll('[data-deadline]').forEach(function(el){
         const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);

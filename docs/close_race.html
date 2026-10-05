@@ -15,13 +15,13 @@
   }
   *{box-sizing:border-box;}
   html{ -webkit-text-size-adjust:100%; }
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Yu Gothic",sans-serif; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
   header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
   header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
-  header h1{ margin:0; font-size:20px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; letter-spacing:.02em; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; letter-spacing:.02em; }
   header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
-  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
   header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
   header p.tagline{ color:#a9bcae; }
   header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
@@ -31,10 +31,19 @@
   a{ color:inherit; text-decoration:none; }
   footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
 
+  .tab-link{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:46px; padding:8px 12px;
+             font-size:14px; font-weight:700; color:var(--ink); background:#fff; border:1px solid var(--border);
+             border-bottom:4px solid var(--border); border-radius:10px 10px 4px 4px; white-space:nowrap;
+             -webkit-tap-highlight-color:transparent; }
+  .tab-link:active{ transform:translateY(1px); background:var(--paper2); }
+  .tab-link.current{ background:var(--navy); color:#fff; border-color:var(--navy); border-bottom-color:var(--gold); }
+  .tab-strip{ display:flex; gap:6px; overflow-x:auto; margin:0 0 14px; padding:2px 2px 6px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tab-strip::-webkit-scrollbar{ display:none; }
+  .tab-strip .tab-link{ flex:0 0 auto; }
+  .tab-group-title{ font-size:12px; color:var(--ink-soft); font-weight:700; margin:12px 0 6px; }
+  .tab-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:8px; margin-bottom:4px; }
+
   main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
-  .agg-nav{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
-  .agg-chip{ font-size:12px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; background:#fff; color:var(--ink-soft); }
-  .agg-chip.current{ background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700; }
   .hp-lead{ font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; }
   .hp-list{ display:flex; flex-direction:column; gap:8px; }
   .hp-card{ display:block; background:#fff; border:1px solid var(--border); border-radius:8px;
@@ -64,55 +73,10 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main>
-  <nav class="agg-nav"><a class="agg-chip" href="overview.html">全レース早見表</a><a class="agg-chip" href="high_prob.html">本命が堅い</a><a class="agg-chip current" href="close_race.html">1着率が拮抗</a><a class="agg-chip" href="hole.html">穴目候補</a><a class="agg-chip" href="value.html">投票が鈍い(妙味)</a><a class="agg-chip" href="players.html">選手一覧</a><a class="agg-chip" href="venues_today.html">開催場別</a><a class="agg-chip" href="results.html">予想成績</a></nav>
+  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link current" href="close_race.html">1着率が拮抗</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a></nav>
   <p class="hp-lead">対象：12レース（予測1着率の1位と2位の差が3pt以内。全競輪場・本日開催分）</p>
   <div class="hp-list">
     
-        <a class="hp-card" href="iwakitaira/index.html?r=2" data-deadline="16:16">
-          <div class="hp-card-head">
-            <span class="hp-venue">いわき平 2R</span>
-            <span class="hp-deadline">16:16</span>
-          </div>
-          
-          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>28.5%</span><span class="hp-contender"><span class="car" style="background:#e8c221;color:#1b2430;">5</span>27.3%</span></div>
-          <div class="hp-sub">1位と2位の差 1.2pt　1番 横田 政直（先頭） / 5番 鈴木 宏章（2番手）</div>
-        </a>
-        <a class="hp-card" href="matsuyama/index.html?r=7" data-deadline="18:12">
-          <div class="hp-card-head">
-            <span class="hp-venue">松山 7R</span>
-            <span class="hp-deadline">18:12</span>
-          </div>
-          
-          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>26.6%</span><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>24.0%</span><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>23.9%</span></div>
-          <div class="hp-sub">1位と2位の差 2.6pt　4番 保田 浩輔（先頭） / 1番 森本 桂太郎（2番手） / 3番 早坂 秀悟（先頭）</div>
-        </a>
-        <a class="hp-card" href="iwakitaira/index.html?r=9" data-deadline="19:17">
-          <div class="hp-card-head">
-            <span class="hp-venue">いわき平 9R</span>
-            <span class="hp-deadline">19:17</span>
-          </div>
-          
-          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>32.4%</span><span class="hp-contender"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span>29.7%</span></div>
-          <div class="hp-sub">1位と2位の差 2.7pt　3番 山口 智弘（2番手） / 7番 岡部 陸斗（先頭）</div>
-        </a>
-        <a class="hp-card" href="iwakitaira/index.html?r=10" data-deadline="19:43">
-          <div class="hp-card-head">
-            <span class="hp-venue">いわき平 10R</span>
-            <span class="hp-deadline">19:43</span>
-          </div>
-          
-          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>27.8%</span><span class="hp-contender"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>26.0%</span></div>
-          <div class="hp-sub">1位と2位の差 1.8pt　1番 猪狩 祐樹（先頭） / 2番 荒木 貴大（先頭）</div>
-        </a>
-        <a class="hp-card" href="takeo/index.html?r=1" data-deadline="20:36">
-          <div class="hp-card-head">
-            <span class="hp-venue">武雄 1R</span>
-            <span class="hp-deadline">20:36</span>
-          </div>
-          
-          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>25.6%</span><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>23.4%</span></div>
-          <div class="hp-sub">1位と2位の差 2.2pt　1番 太田 将成（先頭） / 3番 下野 義城（2番手）</div>
-        </a>
         <a class="hp-card" href="takeo/index.html?r=6" data-deadline="22:40">
           <div class="hp-card-head">
             <span class="hp-venue">武雄 6R</span>
@@ -130,6 +94,51 @@
           
           <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>24.7%</span><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>22.9%</span><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>22.6%</span></div>
           <div class="hp-sub">1位と2位の差 1.8pt　2番 久米 詩（先頭） / 3番 元砂 七夕美（先頭） / 1番 岡本 二菜（先頭）</div>
+        </a>
+        <a class="hp-card" href="takeo/index.html?r=1" data-deadline="20:36">
+          <div class="hp-card-head">
+            <span class="hp-venue">武雄 1R</span>
+            <span class="hp-deadline">20:36</span>
+          </div>
+          
+          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>25.6%</span><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>23.4%</span></div>
+          <div class="hp-sub">1位と2位の差 2.2pt　1番 太田 将成（先頭） / 3番 下野 義城（2番手）</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=10" data-deadline="19:43">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 10R</span>
+            <span class="hp-deadline">19:43</span>
+          </div>
+          
+          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>27.8%</span><span class="hp-contender"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span>26.0%</span></div>
+          <div class="hp-sub">1位と2位の差 1.8pt　1番 猪狩 祐樹（先頭） / 2番 荒木 貴大（先頭）</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=9" data-deadline="19:17">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 9R</span>
+            <span class="hp-deadline">19:17</span>
+          </div>
+          
+          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>32.4%</span><span class="hp-contender"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span>29.7%</span></div>
+          <div class="hp-sub">1位と2位の差 2.7pt　3番 山口 智弘（2番手） / 7番 岡部 陸斗（先頭）</div>
+        </a>
+        <a class="hp-card" href="matsuyama/index.html?r=7" data-deadline="18:12">
+          <div class="hp-card-head">
+            <span class="hp-venue">松山 7R</span>
+            <span class="hp-deadline">18:12</span>
+          </div>
+          
+          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span>26.6%</span><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>24.0%</span><span class="hp-contender"><span class="car" style="background:#d8322a;color:#ffffff;">3</span>23.9%</span></div>
+          <div class="hp-sub">1位と2位の差 2.6pt　4番 保田 浩輔（先頭） / 1番 森本 桂太郎（2番手） / 3番 早坂 秀悟（先頭）</div>
+        </a>
+        <a class="hp-card" href="iwakitaira/index.html?r=2" data-deadline="16:16">
+          <div class="hp-card-head">
+            <span class="hp-venue">いわき平 2R</span>
+            <span class="hp-deadline">16:16</span>
+          </div>
+          
+          <div class="hp-card-body"><span class="hp-contender"><span class="car" style="background:#ffffff;color:#1b2430;">1</span>28.5%</span><span class="hp-contender"><span class="car" style="background:#e8c221;color:#1b2430;">5</span>27.3%</span></div>
+          <div class="hp-sub">1位と2位の差 1.2pt　1番 横田 政直（先頭） / 5番 鈴木 宏章（2番手）</div>
         </a>
         <a class="hp-card" href="matsuyama/index.html?r=1" data-deadline="15:40">
           <div class="hp-card-head">
@@ -198,6 +207,8 @@
       return h*60 + m;
     }
     window.addEventListener('DOMContentLoaded', function(){
+      const cur = document.querySelector('.tab-strip .tab-link.current');
+      if(cur && cur.scrollIntoView){ cur.scrollIntoView({inline:'center', block:'nearest'}); }
       const nowJstMinutes = getNowJstMinutes();
       document.querySelectorAll('[data-deadline]').forEach(function(el){
         const mins = minutesUntilDeadline(el.getAttribute('data-deadline'), nowJstMinutes);
