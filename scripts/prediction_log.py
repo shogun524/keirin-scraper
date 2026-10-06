@@ -20,9 +20,11 @@ import os
 import json
 import datetime
 
+import scraper
 from scraper import extract_race_id_from_url, fetch_race_result
 
 LOG_FILENAME = "_prediction_log.json"
+DEBUG_FILENAME = "_result_debug.json"   # 結果取得に失敗した理由の診断（原因調査用）
 KEEP_DAYS = 90            # ログを保持する日数（これより古い日付のレースは削除）
 MAX_ATTEMPTS = 6          # 結果取得に失敗してよい回数の上限
 MAX_FETCH_PER_RUN = 40    # 1回の実行で結果ページを取りに行く最大レース数（実行時間の上限対策）
@@ -108,7 +110,7 @@ def _prune(log, today):
         del log[k]
 
 
-def update_results(log, today, now_hm):
+def update_results(log, today, now_hm, debug=None):
     """
     結果が未取得で、すでに締切を過ぎている（過去日付なら無条件で対象）レースの結果を取得する。
     戻り値: 新たに結果を記録できた件数。
@@ -140,8 +142,13 @@ def update_results(log, today, now_hm):
         except Exception as e:
             v["attempts"] = v.get("attempts", 0) + 1
             print(f"[WARN] {v['venue']} {v['race_no']}R: 予想成績用の結果取得に失敗しました: {e}")
+            if debug is not None and len(debug["failures"]) < 5:
+                debug["failures"].append({"race": f"{v['date']} {v['venue']} {v['race_no']}R", "error": repr(e)[:300]})
             continue
         if not res:
+            if debug is not None and len(debug["failures"]) < 5:
+                debug["failures"].append({"race": f"{v['date']} {v['venue']} {v['race_no']}R",
+                                          "diag": dict(scraper.LAST_RESULT_DIAG)})
             v["attempts"] = v.get("attempts", 0) + 1  # まだ確定していない／解析できない
             failed += 1
             continue
@@ -160,9 +167,20 @@ def refresh_log(docs_dir, all_race_data, today, now_hm):
     """予想の記録→結果の照合→保存までを一括で行う。戻り値: (log, 新規記録数, 新規結果数)。"""
     log = load_log(docs_dir)
     added = record_predictions(log, all_race_data, today.isoformat())
-    newly = update_results(log, today, now_hm)
+    debug = {"updated": f"{today.isoformat()} {now_hm}", "failures": []}
+    newly = update_results(log, today, now_hm, debug)
     _prune(log, today)
     save_log(docs_dir, log)
+    debug["tracked"] = len(log)
+    debug["with_result"] = sum(1 for v in log.values() if v.get("result"))
+    debug["without_url"] = sum(1 for v in log.values() if not v.get("url"))
+    debug["pending_eligible"] = sum(
+        1 for v in log.values() if v.get("result") is None and v.get("url")
+        and (v["date"] < today.isoformat() or (v.get("deadline") and v["deadline"] < now_hm)))
+    try:
+        _save_json(os.path.join(docs_dir, DEBUG_FILENAME), debug)
+    except OSError:
+        pass
     if added or newly:
         print(f"[INFO] 予想成績ログ: 新規予想{added}件、新規結果{newly}件（累計{len(log)}件）。")
     return log, added, newly
