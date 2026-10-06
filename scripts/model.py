@@ -643,7 +643,7 @@ def _parse_line_hyphen_notation(text):
 # レース全体の予測を計算するメイン関数
 # ============================================================
 DEFAULT_SETTINGS = {
-    "th_high": 45, "th_list": 10, "close_threshold": 8,
+    "th_high": 55, "th_list": 10, "close_threshold": 8,
     # 「拮抗しているレース」の判定：予測3着内率が th_close_place（%）以上の選手が1人もいなければ拮抗
     # （抜けた本命がいない混戦）。close_threshold（本命と並ぶ「信頼度比較グループ」を作るための
     # 1着率の幅）とは用途が別なので分けている。
@@ -652,6 +652,10 @@ DEFAULT_SETTINGS = {
     "line_strength": 30, "line_support": 8, "solo_penalty": 6,
     "line_follow_bonus": 45, "adv_bonus": 10, "adv_penalty": 15,
     "sharpness": 1.3, "confidence_shrink": 20,
+    # 1着率の絞り込み（2着・3着側の sharpness とは別に調整できる）。予想成績の答え合わせ
+    # （2日間106レース）で、本命の実際の1着率（45.3%）が予測の平均（34.5%）を大きく上回り、
+    # 予測が控えめすぎたため、1.3→1.75に上げた。件数が貯まったら見直す。
+    "sharpness_first": 1.75,
     "trifecta_max_combos": 999,  # 実質無制限（7車立て210通り／9車立て504通りまで、全組み合わせを一覧表示するため）
     "bank_affinity_strength": 15,
     "rivalry_strength": 12,
@@ -709,7 +713,7 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         for i in range(len(racers))
     ]
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
-        base_scores, combined_adj, dev_scores, s["development_weight"], s["sharpness"])
+        base_scores, combined_adj, dev_scores, s["development_weight"], s["sharpness_first"])
 
     rows = []
     for i, r in enumerate(racers):
