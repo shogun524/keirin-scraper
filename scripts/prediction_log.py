@@ -96,6 +96,9 @@ def record_predictions(log, all_race_data, date_str):
             "is_high": bool(pred.get("is_high_prob")),
             "is_close": bool(pred.get("is_close_race")),
             "trifecta": [[c["first"], c["second"], c["third"]] for c in combos],
+            # 各選手の予測（車番, 1着率%, 3着内率%）と、そのとき使った1着率の絞り込み（毎日の自動補正用）
+            "probs": [[r["car"], round(r["adjusted"], 2), round(r.get("place_rate", 0), 1)] for r in rows],
+            "sf": (pred.get("settings") or {}).get("sharpness_first"),
             "result": None,
             "attempts": 0,
             "parser_v": PARSER_VERSION,
