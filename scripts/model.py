@@ -677,6 +677,10 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         return None
 
     line_map = parse_line_prediction_text(line_prediction_text)
+    # 2着・3着の確率を決める絞り込み（sharpness）は、車数が多いほど強める。
+    # 同じ強さのままだと、9車立ては候補が増えた分だけ確率が薄まり（7車立てより上位の買い目が
+    # 大幅に低くなる）、実際より平べったい予想になるため。7車立て以下は従来どおり。
+    sharp23 = s["sharpness"] * max(1.0, (len(racers) - 1) / 6)
     base_scores_raw = compute_base_scores(racers)
     confidence = compute_confidence(racers)
     base_scores = apply_confidence_shrinkage(base_scores_raw, confidence, s["confidence_shrink"])
@@ -722,25 +726,25 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     top = rows[0]
     second_candidates = compute_second_place_candidates(
         racers, top["idx"], combined_scores, dominant, line_map,
-        s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
+        s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
 
     third_candidates = []
     if second_candidates and len(racers) > 2:
         second_idx = second_candidates[0]["idx"]
         third_candidates = compute_third_place_candidates(
             racers, top["idx"], second_idx, combined_scores, dominant, line_map,
-            s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
+            s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
 
     close_group = [r for r in rows if top["adjusted"] - r["adjusted"] <= s["close_threshold"]]
     most_reliable = max(close_group, key=lambda r: r["confidence"]["score"]) if len(close_group) >= 2 else None
 
     second_place_matrix = compute_second_place_matrix(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
     third_place_matrix = compute_third_place_matrix(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"],
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23,
         second_place_matrix=second_place_matrix)
     full_third_place_data = compute_full_third_place_data(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], s["sharpness"])
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
 
     # 「予測3着内率」を、同じモデルのP(1着)+P(2着)+P(3着)の積み上げから算出する
     # （1着率との整合性が構造的に保証される。詳細は関数のdocstring参照）
