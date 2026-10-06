@@ -647,8 +647,12 @@ def parse_race_result(html, venue, race_no):
         return None  # レースがまだ終わっていない（正常系。ログ不要）
 
     # 見出しの「着順」は、すぐ近くに「車番」が続くもの（＝着順表の見出し）を選ぶ
+    # 見出しは「車番」が1セルとは限らない（「車」「番」に分かれる等）ため、着順の直後（数トークン内）に
+    # 「車番」「車」「選手名」「着差」のいずれかが続くものを着順表の見出しとみなす。
+    _hdr_words = {"車番", "車", "番", "選手名", "着差"}
     header_idx = next(
-        (i for i, t in enumerate(lines) if t == "着順" and "車番" in lines[i + 1:i + 3]), None)
+        (i for i, t in enumerate(lines)
+         if t == "着順" and any(x in _hdr_words for x in lines[i + 1:i + 6])), None)
     if header_idx is None:
         print(f"[DEBUG] {venue} {race_no}R(結果): 着順表の列見出し（着順・車番）が見つからず、結果を解析できませんでした。")
         return None
@@ -716,7 +720,11 @@ def fetch_race_result(venue, race_id):
         "has_chakujun": "着順" in html, "has_sharban": "車番" in html,
         "has_unconfirmed": ("まだ確定していません" in html) or ("結果はまだ" in html),
         "text_head": " | ".join(lines[:80])[:1500],
-        "html_head": re.sub(r"\s+", " ", html[:600]),
+        "html_head": re.sub(r"\s+", " ", html[:200]),
+        "has_senshu": "選手名" in html, "has_sagaku": "着差" in html,
+        "contexts": [re.sub(r"\s+", " ", html[max(0, m.start() - 150):m.start() + 700])
+                     for m in list(re.finditer("着順", html))[:3]],
+        "text_after_chakujun": [" | ".join(lines[i:i + 25]) for i, t in enumerate(lines) if t == "着順"][:3],
     })
     return res
 
