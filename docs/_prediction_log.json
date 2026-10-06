@@ -945,7 +945,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_nara_5": {
@@ -2006,7 +2006,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_hiratsuka_4": {
@@ -2714,7 +2714,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_takeo_2": {
@@ -2762,7 +2762,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_takeo_3": {
@@ -2810,7 +2810,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_takeo_4": {
@@ -2858,7 +2858,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_takeo_5": {
@@ -2906,7 +2906,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_takeo_6": {
@@ -2954,7 +2954,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_takeo_7": {
@@ -3002,7 +3002,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_hofu_1": {
@@ -3171,7 +3171,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_hofu_4": {
@@ -3280,7 +3280,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_hofu_6": {
@@ -3569,7 +3569,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-05_iwakitaira_4": {
@@ -4756,7 +4756,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-06_nara_1": {
@@ -5465,7 +5465,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-06_omiya_1": {
@@ -5574,7 +5574,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-06_omiya_3": {
@@ -7296,7 +7296,18 @@
     1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    3,
+    5,
+    4,
+    7,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7345,7 +7356,18 @@
     3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7394,7 +7416,18 @@
     1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    1,
+    5,
+    7,
+    2,
+    6,
+    4
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7443,7 +7476,18 @@
     2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    3,
+    1,
+    6,
+    4,
+    7,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7492,7 +7536,18 @@
     1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    1,
+    2,
+    5,
+    6,
+    4,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7541,7 +7596,18 @@
     3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    3,
+    6,
+    4,
+    5,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7590,7 +7656,18 @@
     2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    3,
+    7,
+    5,
+    4,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7639,7 +7716,18 @@
     1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    6,
+    2,
+    1,
+    7,
+    4,
+    3,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7688,7 +7776,18 @@
     7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    4,
+    2,
+    7,
+    5,
+    6,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7737,7 +7836,18 @@
     2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    6,
+    3,
+    4,
+    5,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
   "parser_v": 4
  },
@@ -7787,7 +7897,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-06_ogaki_3": {
@@ -7836,7 +7946,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-06_ogaki_4": {
@@ -7884,7 +7994,18 @@
     3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    4,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7933,7 +8054,18 @@
     4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    3,
+    2,
+    1,
+    7,
+    6,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -7982,7 +8114,18 @@
     2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    6,
+    5,
+    1,
+    4,
+    2,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -8031,7 +8174,18 @@
     6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    1,
+    2,
+    4,
+    5,
+    7,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -8080,7 +8234,18 @@
     4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    3,
+    2,
+    6,
+    7,
+    4,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -8127,6 +8292,3525 @@
     1,
     2,
     3
+   ]
+  ],
+  "result": {
+   "finish_order": [
+    5,
+    7,
+    2,
+    1,
+    4,
+    6,
+    3
+   ],
+   "winner_kimarite": null
+  },
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_1": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 1,
+  "deadline": "10:48",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030001/",
+  "order": [
+   3,
+   5,
+   2,
+   1,
+   7,
+   6,
+   4
+  ],
+  "top_adj": 53.4,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    7,
+    5
+   ],
+   [
+    3,
+    7,
+    2
+   ],
+   [
+    3,
+    5,
+    1
+   ],
+   [
+    3,
+    2,
+    7
+   ],
+   [
+    3,
+    5,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_2": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 2,
+  "deadline": "11:14",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030002/",
+  "order": [
+   7,
+   1,
+   4,
+   2,
+   5,
+   3,
+   6
+  ],
+  "top_adj": 31.23,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    7,
+    1,
+    4
+   ],
+   [
+    7,
+    1,
+    2
+   ],
+   [
+    1,
+    7,
+    4
+   ],
+   [
+    1,
+    7,
+    2
+   ],
+   [
+    4,
+    1,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_3": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 3,
+  "deadline": "11:41",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030003/",
+  "order": [
+   1,
+   2,
+   7,
+   3,
+   4,
+   5,
+   6
+  ],
+  "top_adj": 43.54,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    2,
+    7
+   ],
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    1,
+    7,
+    2
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    2,
+    1,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_4": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 4,
+  "deadline": "12:10",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030004/",
+  "order": [
+   7,
+   1,
+   4,
+   3,
+   2,
+   6,
+   5
+  ],
+  "top_adj": 43.2,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    1,
+    4
+   ],
+   [
+    7,
+    4,
+    1
+   ],
+   [
+    1,
+    7,
+    4
+   ],
+   [
+    7,
+    1,
+    3
+   ],
+   [
+    7,
+    1,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_5": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 5,
+  "deadline": "12:40",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030005/",
+  "order": [
+   3,
+   1,
+   7,
+   2,
+   5,
+   4,
+   6
+  ],
+  "top_adj": 42.61,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    1,
+    7
+   ],
+   [
+    3,
+    7,
+    1
+   ],
+   [
+    1,
+    3,
+    7
+   ],
+   [
+    1,
+    7,
+    3
+   ],
+   [
+    3,
+    1,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_6": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 6,
+  "deadline": "13:10",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030006/",
+  "order": [
+   4,
+   3,
+   2,
+   1,
+   7,
+   6,
+   5
+  ],
+  "top_adj": 50.09,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    3,
+    1
+   ],
+   [
+    4,
+    1,
+    3
+   ],
+   [
+    4,
+    3,
+    2
+   ],
+   [
+    4,
+    2,
+    3
+   ],
+   [
+    4,
+    7,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_7": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 7,
+  "deadline": "13:40",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030007/",
+  "order": [
+   2,
+   4,
+   5,
+   7,
+   1,
+   3,
+   6
+  ],
+  "top_adj": 36.92,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    5,
+    4
+   ],
+   [
+    2,
+    4,
+    5
+   ],
+   [
+    4,
+    5,
+    2
+   ],
+   [
+    5,
+    2,
+    4
+   ],
+   [
+    4,
+    2,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_8": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 8,
+  "deadline": "14:10",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030008/",
+  "order": [
+   7,
+   1,
+   6,
+   5,
+   2,
+   4,
+   3
+  ],
+  "top_adj": 38.56,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    1,
+    5
+   ],
+   [
+    1,
+    7,
+    5
+   ],
+   [
+    7,
+    1,
+    2
+   ],
+   [
+    7,
+    1,
+    6
+   ],
+   [
+    1,
+    7,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_9": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 9,
+  "deadline": "14:40",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030009/",
+  "order": [
+   7,
+   5,
+   2,
+   3,
+   1,
+   4,
+   6
+  ],
+  "top_adj": 47.55,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    5,
+    3
+   ],
+   [
+    5,
+    7,
+    3
+   ],
+   [
+    7,
+    5,
+    2
+   ],
+   [
+    7,
+    3,
+    5
+   ],
+   [
+    7,
+    5,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_10": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 10,
+  "deadline": "15:10",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030010/",
+  "order": [
+   1,
+   4,
+   3,
+   6,
+   7,
+   5,
+   2
+  ],
+  "top_adj": 31.68,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    4,
+    6
+   ],
+   [
+    1,
+    6,
+    4
+   ],
+   [
+    4,
+    1,
+    6
+   ],
+   [
+    6,
+    1,
+    4
+   ],
+   [
+    1,
+    4,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_11": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 11,
+  "deadline": "15:42",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030011/",
+  "order": [
+   4,
+   3,
+   1,
+   2,
+   7,
+   6,
+   5
+  ],
+  "top_adj": 50.91,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    3,
+    1
+   ],
+   [
+    4,
+    3,
+    2
+   ],
+   [
+    4,
+    3,
+    5
+   ],
+   [
+    4,
+    3,
+    7
+   ],
+   [
+    4,
+    2,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_nara_12": {
+  "date": "2026-10-07",
+  "venue": "nara",
+  "race_no": 12,
+  "deadline": "16:15",
+  "url": "https://keirin.kdreams.jp/nara/racedetail/5320261005030012/",
+  "order": [
+   4,
+   5,
+   1,
+   3,
+   7,
+   2,
+   6
+  ],
+  "top_adj": 50.64,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    1,
+    5
+   ],
+   [
+    4,
+    5,
+    1
+   ],
+   [
+    4,
+    5,
+    2
+   ],
+   [
+    4,
+    1,
+    7
+   ],
+   [
+    4,
+    5,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_1": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 1,
+  "deadline": "10:40",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020001/",
+  "order": [
+   3,
+   2,
+   7,
+   1,
+   5,
+   4,
+   6
+  ],
+  "top_adj": 26.95,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    3,
+    7,
+    2
+   ],
+   [
+    2,
+    7,
+    3
+   ],
+   [
+    3,
+    7,
+    1
+   ],
+   [
+    7,
+    3,
+    2
+   ],
+   [
+    3,
+    1,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_2": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 2,
+  "deadline": "11:05",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020002/",
+  "order": [
+   5,
+   1,
+   2,
+   4,
+   7,
+   3,
+   6
+  ],
+  "top_adj": 47.14,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    5,
+    2,
+    1
+   ],
+   [
+    5,
+    1,
+    2
+   ],
+   [
+    5,
+    2,
+    4
+   ],
+   [
+    2,
+    5,
+    1
+   ],
+   [
+    1,
+    5,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_3": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 3,
+  "deadline": "11:32",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020003/",
+  "order": [
+   4,
+   2,
+   1,
+   5,
+   3,
+   7,
+   6
+  ],
+  "top_adj": 54.92,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    2,
+    1
+   ],
+   [
+    4,
+    1,
+    2
+   ],
+   [
+    4,
+    2,
+    5
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    4,
+    5,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_4": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 4,
+  "deadline": "12:00",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020004/",
+  "order": [
+   2,
+   7,
+   5,
+   4,
+   3,
+   6,
+   1
+  ],
+  "top_adj": 51.5,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    7,
+    5
+   ],
+   [
+    2,
+    7,
+    4
+   ],
+   [
+    2,
+    7,
+    3
+   ],
+   [
+    2,
+    7,
+    1
+   ],
+   [
+    2,
+    3,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_5": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 5,
+  "deadline": "12:30",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020005/",
+  "order": [
+   3,
+   1,
+   4,
+   2,
+   6,
+   5,
+   7
+  ],
+  "top_adj": 32.24,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    3,
+    1,
+    4
+   ],
+   [
+    1,
+    3,
+    4
+   ],
+   [
+    4,
+    1,
+    3
+   ],
+   [
+    1,
+    4,
+    3
+   ],
+   [
+    3,
+    4,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_6": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 6,
+  "deadline": "13:00",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020006/",
+  "order": [
+   3,
+   2,
+   7,
+   5,
+   6,
+   4,
+   1
+  ],
+  "top_adj": 54.24,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    7,
+    6
+   ],
+   [
+    3,
+    7,
+    2
+   ],
+   [
+    3,
+    6,
+    7
+   ],
+   [
+    3,
+    5,
+    6
+   ],
+   [
+    3,
+    6,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_7": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 7,
+  "deadline": "13:30",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020007/",
+  "order": [
+   5,
+   6,
+   4,
+   7,
+   3,
+   1,
+   2
+  ],
+  "top_adj": 52.7,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    5,
+    6,
+    7
+   ],
+   [
+    5,
+    6,
+    4
+   ],
+   [
+    5,
+    7,
+    6
+   ],
+   [
+    5,
+    4,
+    6
+   ],
+   [
+    5,
+    6,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_8": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 8,
+  "deadline": "14:00",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020008/",
+  "order": [
+   5,
+   2,
+   3,
+   4,
+   1,
+   6,
+   7
+  ],
+  "top_adj": 59.88,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    5,
+    2,
+    3
+   ],
+   [
+    5,
+    3,
+    2
+   ],
+   [
+    5,
+    2,
+    4
+   ],
+   [
+    5,
+    2,
+    1
+   ],
+   [
+    5,
+    3,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_9": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 9,
+  "deadline": "14:30",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020009/",
+  "order": [
+   2,
+   5,
+   1,
+   3,
+   7,
+   4,
+   6
+  ],
+  "top_adj": 42.31,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    5,
+    1
+   ],
+   [
+    2,
+    5,
+    3
+   ],
+   [
+    5,
+    2,
+    1
+   ],
+   [
+    2,
+    1,
+    5
+   ],
+   [
+    5,
+    2,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_10": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 10,
+  "deadline": "15:00",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020010/",
+  "order": [
+   7,
+   1,
+   2,
+   3,
+   4,
+   6,
+   5
+  ],
+  "top_adj": 39.56,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    1,
+    2
+   ],
+   [
+    1,
+    7,
+    2
+   ],
+   [
+    7,
+    1,
+    4
+   ],
+   [
+    7,
+    2,
+    1
+   ],
+   [
+    7,
+    1,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_11": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 11,
+  "deadline": "15:31",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020011/",
+  "order": [
+   1,
+   7,
+   4,
+   5,
+   2,
+   3,
+   6
+  ],
+  "top_adj": 59.81,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    5,
+    7
+   ],
+   [
+    1,
+    5,
+    4
+   ],
+   [
+    1,
+    5,
+    3
+   ],
+   [
+    1,
+    4,
+    5
+   ],
+   [
+    1,
+    7,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_omiya_12": {
+  "date": "2026-10-07",
+  "venue": "omiya",
+  "race_no": 12,
+  "deadline": "16:06",
+  "url": "https://keirin.kdreams.jp/omiya/racedetail/2520261006020012/",
+  "order": [
+   5,
+   7,
+   1,
+   3,
+   6,
+   2,
+   4
+  ],
+  "top_adj": 39.5,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    5,
+    1,
+    7
+   ],
+   [
+    5,
+    7,
+    1
+   ],
+   [
+    7,
+    5,
+    1
+   ],
+   [
+    5,
+    7,
+    3
+   ],
+   [
+    5,
+    3,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_1": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 1,
+  "deadline": "15:59",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010001/",
+  "order": [
+   2,
+   5,
+   3,
+   7,
+   1,
+   6,
+   4
+  ],
+  "top_adj": 42.11,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    5,
+    3
+   ],
+   [
+    2,
+    5,
+    7
+   ],
+   [
+    5,
+    2,
+    3
+   ],
+   [
+    2,
+    3,
+    5
+   ],
+   [
+    5,
+    3,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_2": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 2,
+  "deadline": "16:22",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010002/",
+  "order": [
+   3,
+   5,
+   4,
+   2,
+   7,
+   1,
+   6
+  ],
+  "top_adj": 32.99,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    3,
+    5,
+    4
+   ],
+   [
+    5,
+    3,
+    4
+   ],
+   [
+    3,
+    4,
+    5
+   ],
+   [
+    3,
+    5,
+    2
+   ],
+   [
+    4,
+    3,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_3": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 3,
+  "deadline": "16:45",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010003/",
+  "order": [
+   4,
+   2,
+   3,
+   1,
+   5,
+   7,
+   6
+  ],
+  "top_adj": 41.06,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    2,
+    7
+   ],
+   [
+    4,
+    2,
+    3
+   ],
+   [
+    4,
+    2,
+    1
+   ],
+   [
+    4,
+    2,
+    5
+   ],
+   [
+    2,
+    4,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_4": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 4,
+  "deadline": "17:08",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010004/",
+  "order": [
+   7,
+   2,
+   5,
+   1,
+   4,
+   3,
+   6
+  ],
+  "top_adj": 49.94,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    2,
+    4
+   ],
+   [
+    7,
+    2,
+    1
+   ],
+   [
+    7,
+    2,
+    3
+   ],
+   [
+    7,
+    2,
+    5
+   ],
+   [
+    7,
+    4,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_5": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 5,
+  "deadline": "17:31",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010005/",
+  "order": [
+   2,
+   1,
+   7,
+   3,
+   4,
+   5,
+   6
+  ],
+  "top_adj": 32.16,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    2,
+    7,
+    1
+   ],
+   [
+    2,
+    1,
+    7
+   ],
+   [
+    1,
+    2,
+    7
+   ],
+   [
+    2,
+    1,
+    4
+   ],
+   [
+    1,
+    4,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_6": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 6,
+  "deadline": "17:55",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010006/",
+  "order": [
+   3,
+   2,
+   5,
+   7,
+   1,
+   4,
+   6
+  ],
+  "top_adj": 55.98,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    5,
+    2
+   ],
+   [
+    3,
+    5,
+    1
+   ],
+   [
+    3,
+    2,
+    5
+   ],
+   [
+    3,
+    1,
+    5
+   ],
+   [
+    3,
+    5,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_7": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 7,
+  "deadline": "18:19",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010007/",
+  "order": [
+   2,
+   4,
+   1,
+   7,
+   3,
+   5,
+   6
+  ],
+  "top_adj": 40.15,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    2,
+    4,
+    7
+   ],
+   [
+    4,
+    2,
+    1
+   ],
+   [
+    4,
+    2,
+    7
+   ],
+   [
+    2,
+    1,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_8": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 8,
+  "deadline": "18:43",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010008/",
+  "order": [
+   1,
+   7,
+   4,
+   2,
+   5,
+   6,
+   3
+  ],
+  "top_adj": 48.86,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    7,
+    5
+   ],
+   [
+    1,
+    5,
+    7
+   ],
+   [
+    1,
+    7,
+    4
+   ],
+   [
+    1,
+    7,
+    2
+   ],
+   [
+    7,
+    1,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_9": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 9,
+  "deadline": "19:08",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010009/",
+  "order": [
+   7,
+   1,
+   3,
+   4,
+   5,
+   2,
+   6
+  ],
+  "top_adj": 30.26,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    7,
+    1,
+    3
+   ],
+   [
+    1,
+    7,
+    3
+   ],
+   [
+    7,
+    3,
+    1
+   ],
+   [
+    7,
+    1,
+    4
+   ],
+   [
+    1,
+    7,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_10": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 10,
+  "deadline": "19:33",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010010/",
+  "order": [
+   4,
+   1,
+   5,
+   2,
+   7,
+   3,
+   6
+  ],
+  "top_adj": 43.2,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    1,
+    7
+   ],
+   [
+    4,
+    7,
+    1
+   ],
+   [
+    4,
+    1,
+    5
+   ],
+   [
+    4,
+    1,
+    3
+   ],
+   [
+    4,
+    1,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_11": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 11,
+  "deadline": "19:59",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010011/",
+  "order": [
+   3,
+   5,
+   7,
+   1,
+   2,
+   4,
+   6
+  ],
+  "top_adj": 48.45,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    5,
+    7
+   ],
+   [
+    3,
+    5,
+    1
+   ],
+   [
+    3,
+    7,
+    5
+   ],
+   [
+    3,
+    1,
+    5
+   ],
+   [
+    3,
+    5,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_yokkaichi_12": {
+  "date": "2026-10-07",
+  "venue": "yokkaichi",
+  "race_no": 12,
+  "deadline": "20:25",
+  "url": "https://keirin.kdreams.jp/yokkaichi/racedetail/4820261007010012/",
+  "order": [
+   3,
+   5,
+   4,
+   2,
+   6,
+   1,
+   7
+  ],
+  "top_adj": 32.0,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    5,
+    3,
+    4
+   ],
+   [
+    3,
+    5,
+    4
+   ],
+   [
+    3,
+    4,
+    5
+   ],
+   [
+    5,
+    2,
+    3
+   ],
+   [
+    5,
+    3,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_1": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 1,
+  "deadline": "20:45",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020001/",
+  "order": [
+   2,
+   1,
+   4,
+   6,
+   5,
+   3
+  ],
+  "top_adj": 22.43,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    2,
+    4
+   ],
+   [
+    1,
+    2,
+    6
+   ],
+   [
+    1,
+    6,
+    2
+   ],
+   [
+    2,
+    1,
+    4
+   ],
+   [
+    2,
+    1,
+    6
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_2": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 2,
+  "deadline": "21:05",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020002/",
+  "order": [
+   4,
+   1,
+   5,
+   2,
+   3,
+   6
+  ],
+  "top_adj": 28.19,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    4,
+    5,
+    1
+   ],
+   [
+    1,
+    4,
+    5
+   ],
+   [
+    4,
+    1,
+    5
+   ],
+   [
+    5,
+    4,
+    1
+   ],
+   [
+    1,
+    5,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_3": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 3,
+  "deadline": "21:25",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020003/",
+  "order": [
+   1,
+   3,
+   2,
+   4,
+   6,
+   5
+  ],
+  "top_adj": 30.86,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    1,
+    3,
+    4
+   ],
+   [
+    1,
+    4,
+    3
+   ],
+   [
+    3,
+    2,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_4": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 4,
+  "deadline": "21:45",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020004/",
+  "order": [
+   2,
+   1,
+   3,
+   5,
+   4,
+   6
+  ],
+  "top_adj": 26.66,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    2,
+    3,
+    1
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    2,
+    1,
+    3
+   ],
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    3,
+    2,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_5": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 5,
+  "deadline": "22:05",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020005/",
+  "order": [
+   1,
+   2,
+   4,
+   6,
+   5,
+   3
+  ],
+  "top_adj": 48.24,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    2,
+    4
+   ],
+   [
+    1,
+    4,
+    2
+   ],
+   [
+    1,
+    2,
+    6
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    1,
+    6,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_6": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 6,
+  "deadline": "22:25",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020006/",
+  "order": [
+   2,
+   4,
+   3,
+   5,
+   1,
+   6
+  ],
+  "top_adj": 30.92,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    2,
+    3,
+    4
+   ],
+   [
+    2,
+    4,
+    3
+   ],
+   [
+    2,
+    4,
+    5
+   ],
+   [
+    3,
+    2,
+    4
+   ],
+   [
+    2,
+    3,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_7": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 7,
+  "deadline": "22:45",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020007/",
+  "order": [
+   4,
+   1,
+   2,
+   5,
+   6,
+   3
+  ],
+  "top_adj": 23.88,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    2,
+    4
+   ],
+   [
+    1,
+    4,
+    2
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    2,
+    1,
+    4
+   ],
+   [
+    4,
+    2,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_8": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 8,
+  "deadline": "23:05",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020008/",
+  "order": [
+   5,
+   4,
+   2,
+   1,
+   3,
+   6
+  ],
+  "top_adj": 36.72,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    5,
+    4,
+    3
+   ],
+   [
+    5,
+    4,
+    2
+   ],
+   [
+    5,
+    4,
+    1
+   ],
+   [
+    5,
+    2,
+    4
+   ],
+   [
+    4,
+    5,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_maebashi_9": {
+  "date": "2026-10-07",
+  "venue": "maebashi",
+  "race_no": 9,
+  "deadline": "23:25",
+  "url": "https://keirin.kdreams.jp/maebashi/racedetail/2220261006020009/",
+  "order": [
+   1,
+   2,
+   5,
+   4,
+   3,
+   6
+  ],
+  "top_adj": 30.14,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    1,
+    2,
+    4
+   ],
+   [
+    2,
+    1,
+    3
+   ],
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    1,
+    2,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_1": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 1,
+  "deadline": "20:35",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020001/",
+  "order": [
+   1,
+   5,
+   2,
+   4,
+   3
+  ],
+  "top_adj": 52.79,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    5,
+    2
+   ],
+   [
+    1,
+    5,
+    4
+   ],
+   [
+    1,
+    2,
+    5
+   ],
+   [
+    5,
+    1,
+    2
+   ],
+   [
+    1,
+    4,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_2": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 2,
+  "deadline": "20:55",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020002/",
+  "order": [
+   1,
+   2,
+   3,
+   5,
+   4
+  ],
+  "top_adj": 33.93,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    2,
+    3,
+    1
+   ],
+   [
+    2,
+    1,
+    3
+   ],
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    3,
+    2,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_3": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 3,
+  "deadline": "21:15",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020003/",
+  "order": [
+   1,
+   4,
+   3,
+   2,
+   6,
+   5
+  ],
+  "top_adj": 34.39,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    4,
+    3
+   ],
+   [
+    1,
+    3,
+    4
+   ],
+   [
+    1,
+    4,
+    2
+   ],
+   [
+    4,
+    1,
+    3
+   ],
+   [
+    1,
+    2,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_4": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 4,
+  "deadline": "21:35",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020004/",
+  "order": [
+   1,
+   3,
+   2,
+   5,
+   4,
+   6
+  ],
+  "top_adj": 35.97,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    1,
+    3,
+    4
+   ],
+   [
+    1,
+    5,
+    3
+   ],
+   [
+    1,
+    3,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_5": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 5,
+  "deadline": "21:55",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020005/",
+  "order": [
+   2,
+   4,
+   6,
+   3,
+   5,
+   1
+  ],
+  "top_adj": 34.41,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    2,
+    3,
+    4
+   ],
+   [
+    2,
+    4,
+    6
+   ],
+   [
+    2,
+    4,
+    3
+   ],
+   [
+    2,
+    3,
+    6
+   ],
+   [
+    2,
+    6,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_6": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 6,
+  "deadline": "22:15",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020006/",
+  "order": [
+   3,
+   1,
+   2,
+   6,
+   5,
+   4
+  ],
+  "top_adj": 22.9,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    3,
+    2,
+    1
+   ],
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    2,
+    3,
+    1
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    3,
+    1,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_7": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 7,
+  "deadline": "22:35",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020007/",
+  "order": [
+   1,
+   3,
+   5,
+   2,
+   4,
+   6
+  ],
+  "top_adj": 51.78,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    1,
+    3,
+    4
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    1,
+    4,
+    3
+   ],
+   [
+    1,
+    5,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_8": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 8,
+  "deadline": "22:55",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020008/",
+  "order": [
+   1,
+   3,
+   2,
+   4,
+   5,
+   6
+  ],
+  "top_adj": 23.83,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    3,
+    2
+   ],
+   [
+    1,
+    2,
+    3
+   ],
+   [
+    3,
+    2,
+    1
+   ],
+   [
+    2,
+    3,
+    1
+   ],
+   [
+    1,
+    3,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_ogaki_9": {
+  "date": "2026-10-07",
+  "venue": "ogaki",
+  "race_no": 9,
+  "deadline": "23:15",
+  "url": "https://keirin.kdreams.jp/ogaki/racedetail/4420261006020009/",
+  "order": [
+   2,
+   1,
+   4,
+   3,
+   5,
+   6
+  ],
+  "top_adj": 39.11,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    3,
+    4
+   ],
+   [
+    2,
+    1,
+    4
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    2,
+    3,
+    1
+   ],
+   [
+    2,
+    1,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_1": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 1,
+  "deadline": "08:25",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010001/",
+  "order": [
+   1,
+   5,
+   4,
+   2,
+   6,
+   3,
+   7
+  ],
+  "top_adj": 32.93,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    4,
+    5
+   ],
+   [
+    1,
+    5,
+    4
+   ],
+   [
+    4,
+    1,
+    5
+   ],
+   [
+    5,
+    1,
+    4
+   ],
+   [
+    5,
+    4,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_2": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 2,
+  "deadline": "08:45",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010002/",
+  "order": [
+   7,
+   5,
+   1,
+   3,
+   2,
+   4,
+   6
+  ],
+  "top_adj": 46.33,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    1,
+    5
+   ],
+   [
+    7,
+    5,
+    1
+   ],
+   [
+    5,
+    7,
+    1
+   ],
+   [
+    7,
+    1,
+    3
+   ],
+   [
+    7,
+    5,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_3": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 3,
+  "deadline": "09:06",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010003/",
+  "order": [
+   3,
+   5,
+   4,
+   1,
+   6,
+   7,
+   2
+  ],
+  "top_adj": 36.49,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    3,
+    4,
+    5
+   ],
+   [
+    3,
+    4,
+    1
+   ],
+   [
+    3,
+    5,
+    4
+   ],
+   [
+    3,
+    1,
+    5
+   ],
+   [
+    4,
+    3,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_4": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 4,
+  "deadline": "09:27",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010004/",
+  "order": [
+   2,
+   7,
+   6,
+   5,
+   1,
+   3,
+   4
+  ],
+  "top_adj": 52.69,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    7,
+    3
+   ],
+   [
+    2,
+    7,
+    4
+   ],
+   [
+    2,
+    7,
+    6
+   ],
+   [
+    2,
+    6,
+    7
+   ],
+   [
+    2,
+    7,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_5": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 5,
+  "deadline": "09:48",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010005/",
+  "order": [
+   4,
+   3,
+   2,
+   1,
+   5,
+   7,
+   6
+  ],
+  "top_adj": 37.42,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    3,
+    2
+   ],
+   [
+    3,
+    4,
+    2
+   ],
+   [
+    4,
+    3,
+    1
+   ],
+   [
+    3,
+    4,
+    1
+   ],
+   [
+    4,
+    3,
+    6
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_6": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 6,
+  "deadline": "10:09",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010006/",
+  "order": [
+   2,
+   5,
+   4,
+   3,
+   7,
+   1,
+   6
+  ],
+  "top_adj": 55.95,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    4,
+    5
+   ],
+   [
+    2,
+    5,
+    4
+   ],
+   [
+    2,
+    4,
+    3
+   ],
+   [
+    2,
+    3,
+    4
+   ],
+   [
+    2,
+    5,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_kochi_7": {
+  "date": "2026-10-07",
+  "venue": "kochi",
+  "race_no": 7,
+  "deadline": "10:30",
+  "url": "https://keirin.kdreams.jp/kochi/racedetail/7420261007010007/",
+  "order": [
+   1,
+   5,
+   7,
+   2,
+   3,
+   4,
+   6
+  ],
+  "top_adj": 56.35,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    7,
+    5
+   ],
+   [
+    1,
+    5,
+    7
+   ],
+   [
+    1,
+    5,
+    3
+   ],
+   [
+    1,
+    3,
+    5
+   ],
+   [
+    5,
+    1,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_1": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 1,
+  "deadline": "10:56",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010001/",
+  "order": [
+   7,
+   2,
+   4,
+   3,
+   1,
+   5,
+   6
+  ],
+  "top_adj": 32.79,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    7,
+    3,
+    2
+   ],
+   [
+    7,
+    2,
+    3
+   ],
+   [
+    3,
+    7,
+    2
+   ],
+   [
+    7,
+    2,
+    1
+   ],
+   [
+    2,
+    3,
+    7
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_2": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 2,
+  "deadline": "11:23",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010002/",
+  "order": [
+   4,
+   3,
+   2,
+   5,
+   7,
+   1,
+   6
+  ],
+  "top_adj": 33.81,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    4,
+    2
+   ],
+   [
+    4,
+    3,
+    2
+   ],
+   [
+    4,
+    2,
+    3
+   ],
+   [
+    2,
+    4,
+    3
+   ],
+   [
+    3,
+    4,
+    5
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_3": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 3,
+  "deadline": "11:50",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010003/",
+  "order": [
+   3,
+   4,
+   5,
+   2,
+   1,
+   6,
+   7
+  ],
+  "top_adj": 46.67,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    4,
+    5
+   ],
+   [
+    3,
+    4,
+    6
+   ],
+   [
+    4,
+    3,
+    5
+   ],
+   [
+    3,
+    5,
+    4
+   ],
+   [
+    3,
+    4,
+    2
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_4": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 4,
+  "deadline": "12:20",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010004/",
+  "order": [
+   4,
+   5,
+   7,
+   2,
+   6,
+   3,
+   1
+  ],
+  "top_adj": 30.77,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    4,
+    5,
+    2
+   ],
+   [
+    4,
+    5,
+    7
+   ],
+   [
+    5,
+    4,
+    2
+   ],
+   [
+    5,
+    4,
+    7
+   ],
+   [
+    7,
+    5,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_5": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 5,
+  "deadline": "12:50",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010005/",
+  "order": [
+   1,
+   4,
+   2,
+   7,
+   5,
+   6,
+   3
+  ],
+  "top_adj": 63.07,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    1,
+    4,
+    7
+   ],
+   [
+    1,
+    4,
+    2
+   ],
+   [
+    1,
+    2,
+    4
+   ],
+   [
+    1,
+    7,
+    4
+   ],
+   [
+    1,
+    4,
+    6
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_6": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 6,
+  "deadline": "13:20",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010006/",
+  "order": [
+   3,
+   7,
+   2,
+   1,
+   5,
+   6,
+   4
+  ],
+  "top_adj": 39.12,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    3,
+    7,
+    2
+   ],
+   [
+    3,
+    2,
+    7
+   ],
+   [
+    3,
+    5,
+    7
+   ],
+   [
+    3,
+    1,
+    7
+   ],
+   [
+    3,
+    7,
+    1
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_7": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 7,
+  "deadline": "13:50",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010007/",
+  "order": [
+   1,
+   3,
+   5,
+   7,
+   6,
+   4,
+   2
+  ],
+  "top_adj": 28.88,
+  "is_high": false,
+  "is_close": true,
+  "trifecta": [
+   [
+    1,
+    5,
+    3
+   ],
+   [
+    1,
+    3,
+    5
+   ],
+   [
+    1,
+    5,
+    7
+   ],
+   [
+    3,
+    1,
+    5
+   ],
+   [
+    5,
+    1,
+    3
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_8": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 8,
+  "deadline": "14:20",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010008/",
+  "order": [
+   7,
+   5,
+   1,
+   4,
+   2,
+   3,
+   6
+  ],
+  "top_adj": 42.51,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    7,
+    1,
+    5
+   ],
+   [
+    7,
+    5,
+    1
+   ],
+   [
+    5,
+    7,
+    1
+   ],
+   [
+    5,
+    1,
+    7
+   ],
+   [
+    7,
+    1,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_9": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 9,
+  "deadline": "14:50",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010009/",
+  "order": [
+   4,
+   2,
+   1,
+   5,
+   3,
+   7,
+   6
+  ],
+  "top_adj": 32.54,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    4,
+    1,
+    2
+   ],
+   [
+    1,
+    4,
+    2
+   ],
+   [
+    4,
+    2,
+    1
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    2,
+    5,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_10": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 10,
+  "deadline": "15:20",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010010/",
+  "order": [
+   2,
+   3,
+   4,
+   5,
+   1,
+   6,
+   7
+  ],
+  "top_adj": 42.61,
+  "is_high": false,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    4,
+    3
+   ],
+   [
+    2,
+    3,
+    4
+   ],
+   [
+    2,
+    4,
+    1
+   ],
+   [
+    2,
+    4,
+    5
+   ],
+   [
+    2,
+    5,
+    4
+   ]
+  ],
+  "result": null,
+  "attempts": 0,
+  "parser_v": 4
+ },
+ "2026-10-07_shizuoka_11": {
+  "date": "2026-10-07",
+  "venue": "shizuoka",
+  "race_no": 11,
+  "deadline": "15:51",
+  "url": "https://keirin.kdreams.jp/shizuoka/racedetail/3820261007010011/",
+  "order": [
+   2,
+   5,
+   3,
+   4,
+   1,
+   7,
+   6
+  ],
+  "top_adj": 55.13,
+  "is_high": true,
+  "is_close": false,
+  "trifecta": [
+   [
+    2,
+    5,
+    3
+   ],
+   [
+    2,
+    3,
+    5
+   ],
+   [
+    2,
+    5,
+    4
+   ],
+   [
+    2,
+    5,
+    1
+   ],
+   [
+    2,
+    4,
+    5
    ]
   ],
   "result": null,
