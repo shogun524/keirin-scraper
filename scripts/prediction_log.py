@@ -32,7 +32,7 @@ TRIFECTA_KEEP = 5         # ログに残す3連単の上位組合せ数
 # 結果ページの読み取り方式の版。版が変わったとき、結果が取れていないレースの失敗回数を
 # 0に戻して取り直す（旧方式の不具合で積み上がった失敗回数のせいで、直った後も諦められたままに
 # ならないようにするため）。読み取り方式を直したら数字を1つ上げる。
-PARSER_VERSION = 2
+PARSER_VERSION = 3
 
 # キャリブレーション表の区分（本命の予測1着率の下限, 上限, 表示ラベル）
 CALIBRATION_BUCKETS = [
@@ -153,6 +153,14 @@ def update_results(log, today, now_hm, debug=None):
             failed += 1
             continue
         res = sorted(res, key=lambda r: r["finish"])
+        # 取り違え防止：結果の車番が、予想を記録したときの出走車番に含まれていなければ採用しない
+        if v.get("order") and not {r["car"] for r in res} <= set(v["order"]):
+            v["attempts"] = v.get("attempts", 0) + 1
+            failed += 1
+            if debug is not None and len(debug["failures"]) < 5:
+                debug["failures"].append({"race": f"{v['date']} {v['venue']} {v['race_no']}R",
+                                          "error": "結果の車番が出走車番と一致しない", "cars": [r["car"] for r in res]})
+            continue
         v["result"] = {
             "finish_order": [r["car"] for r in res],
             "winner_kimarite": res[0].get("kimarite"),
