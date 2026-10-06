@@ -37,6 +37,7 @@ from report import (render_index, render_venue_page, render_venues_page, render_
 from course_records import update_course_records, get_course_record
 from rivalry_records import update_rivalry_records
 from prediction_log import refresh_log
+from calibration import get_overrides, update_params, load_params
 from form_records import update_form_records
 from odds_alerts import compute_odds_value_alerts
 from retrain_check import check_retrain_trigger
@@ -181,6 +182,14 @@ def main():
     except Exception as e:
         print(f"[WARN] 再学習トリガーの判定に失敗しました: {e}")
 
+    try:
+        model_overrides = get_overrides(DOCS_DIR)  # 毎日の自動補正（calibration.py）で見直した設定
+    except Exception as e:
+        print(f"[WARN] モデル補正値の読み込みに失敗しました: {e}")
+        model_overrides = {}
+    if model_overrides:
+        print(f"[INFO] 自動補正の設定を適用: {model_overrides}")
+
     all_race_data = []
     for race in races:
         try:
@@ -188,6 +197,7 @@ def main():
                 race["racers"], race["line_prediction_text"],
                 venue_slug=race["race_info"]["venue"],
                 rivalry_records=rivalry_records, form_records=form_records,
+                settings=model_overrides or None,
             )
         except Exception as e:
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
@@ -241,6 +251,13 @@ def main():
         print(f"[WARN] 予想成績ログの更新に失敗しました: {e}")
         prediction_log = {}
 
+    # モデルの毎日の自動補正：答え合わせ済みのレースから、1着率の絞り込みを見直す（1日1回）
+    try:
+        model_params = update_params(DOCS_DIR, prediction_log, today) if prediction_log else load_params(DOCS_DIR)
+    except Exception as e:
+        print(f"[WARN] モデルの自動補正に失敗しました: {e}")
+        model_params = {}
+
     # 全競輪場横断の集計ページ（本命が堅い／拮抗／妙味／全レース早見表）。
     # 1ページの失敗が他のページや日次処理全体を止めないよう、ページごとに独立して書き出す。
     for filename, render_fn in (
@@ -250,7 +267,7 @@ def main():
         ("value.html", render_value_page),
         ("players.html", render_players_page),
         ("venues_today.html", render_venues_today_page),
-        ("results.html", lambda data, d: render_results_page(prediction_log, d)),
+        ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params)),
         ("print.html", render_print_page),
     ):
         try:
