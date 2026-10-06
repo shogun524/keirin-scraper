@@ -705,28 +705,103 @@ def extract_race_id_from_url(url):
 
 
 LAST_RESULT_DIAG = {}  # 直近の結果取得の診断情報（予想成績ログの原因調査用）
+_DAY_RESULT_CACHE = {}  # {(venue, 開催ID14桁): {race_no: 結果}}（同じ開催日の結果ページを何度も取りに行かないため）
+
+
+def _rows_from_tokens(data):
+    """トークン列から「着順(1-9)・車番(1-9)・選手名」の並びの行を拾い、
+    [(位置, 着順, 車番, 名前, 決まり手)] を返す。"""
+    name_re = re.compile(r"[\u3040-\u30ff\u4e00-\u9fff]")
+    non_name = RESULT_MARK_SET | RESULT_KIMARITE_SET | {"車番", "選手名", "着差", "上り", "決まり手", "S／B", "S/B", "勝敗因", "予想", "着順", "着"}
+
+    def d(t):
+        return len(t) == 1 and t in "123456789"
+
+    def nm(t):
+        return bool(name_re.search(t)) and t not in non_name and not t.isdigit()
+
+    starts = [i for i in range(len(data) - 2) if d(data[i]) and d(data[i + 1]) and nm(data[i + 2])]
+    rows = []
+    for n, i in enumerate(starts):
+        end = starts[n + 1] if n + 1 < len(starts) else min(len(data), i + 12)
+        end = min(end, i + 12)
+        kim = next((t for t in data[i + 3:end] if t in RESULT_KIMARITE_SET), None)
+        rows.append((i, int(data[i]), int(data[i + 1]), data[i + 2], kim))
+    return rows
+
+
+def parse_day_results(html):
+    """
+    開催日ごとの「結果・払戻金一覧」ページ（/{競輪場}/raceresult/{開催ID14桁}/）から、
+    全レースの着順を取り出す。戻り値: {race_no: [{"finish","car","name","kimarite"}, ...]}
+    1着に戻る（着順が前の行以下になる）ところで次のレースとみなし、直前に「nR」という
+    見出しがあればその番号を、無ければ出現順（1R, 2R, ...）を使う。
+    """
+    lines = _clean_text(html)
+    rows = _rows_from_tokens(lines)
+    groups, cur = [], []
+    for r in rows:
+        if cur and r[1] <= cur[-1][1]:
+            groups.append(cur)
+            cur = []
+        cur.append(r)
+    if cur:
+        groups.append(cur)
+    out = {}
+    for gi, g in enumerate(groups):
+        if len(g) < 3 or g[0][1] != 1:
+            continue
+        label = None
+        for t in reversed(lines[max(0, g[0][0] - 30):g[0][0]]):
+            m = re.fullmatch(r"(\d{1,2})R", t)
+            if m:
+                label = int(m.group(1))
+                break
+        race_no = label if label is not None else gi + 1
+        seen, res = set(), []
+        for _, f, c, nme, k in g:
+            if c in seen:
+                continue
+            seen.add(c)
+            res.append({"finish": f, "car": c, "name": nme, "kimarite": k})
+        out.setdefault(race_no, res)
+    return out
 
 
 def fetch_race_result(venue, race_id):
-    """race_id: racedetail URLに含まれる16桁のID（kaisai_date_id14桁+race_no2桁）"""
-    url = f"{BASE}/{venue}/racedetail/{race_id}/?pageType=result"
-    html = _get(url)
+    """
+    race_id: racedetail URLに含まれる16桁のID（開催ID14桁+レース番号2桁）。
+    1) レース詳細の結果表示（pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT）を読み、
+    2) 読めなければ、開催日の結果一覧ページ（raceresult/{開催ID14桁}/）から該当レースを拾う。
+    """
     race_no = int(race_id[-2:])
-    res = parse_race_result(html, venue, race_no)
-    lines = _clean_text(html)
+    kaisai_id = race_id[:-2]
+    diag = {"venue": venue, "race_id": race_id}
     LAST_RESULT_DIAG.clear()
-    LAST_RESULT_DIAG.update({
-        "url": url, "html_len": len(html), "parsed": bool(res),
-        "has_chakujun": "着順" in html, "has_sharban": "車番" in html,
-        "has_unconfirmed": ("まだ確定していません" in html) or ("結果はまだ" in html),
-        "text_head": " | ".join(lines[:80])[:1500],
-        "html_head": re.sub(r"\s+", " ", html[:200]),
-        "has_senshu": "選手名" in html, "has_sagaku": "着差" in html,
-        "contexts": [re.sub(r"\s+", " ", html[max(0, m.start() - 150):m.start() + 700])
-                     for m in list(re.finditer("着順", html))[:3]],
-        "text_after_chakujun": [" | ".join(lines[i:i + 25]) for i, t in enumerate(lines) if t == "着順"][:3],
-    })
-    return res
+
+    url = f"{BASE}/{venue}/racedetail/{race_id}/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
+    html = _get(url)
+    res = parse_race_result(html, venue, race_no)
+    diag.update({"url": url, "html_len": len(html), "primary_parsed": bool(res),
+                 "has_unconfirmed": ("まだ確定していません" in html) or ("結果はまだ" in html)})
+    if res:
+        LAST_RESULT_DIAG.update(diag)
+        return res
+
+    key = (venue, kaisai_id)
+    if key not in _DAY_RESULT_CACHE:
+        day_url = f"{BASE}/{venue}/raceresult/{kaisai_id}/"
+        day_html = _get(day_url)
+        _DAY_RESULT_CACHE[key] = parse_day_results(day_html)
+        lines = _clean_text(day_html)
+        diag.update({"day_url": day_url, "day_html_len": len(day_html),
+                     "day_races": sorted(_DAY_RESULT_CACHE[key]),
+                     "day_text_head": " | ".join(lines[:120])[:1500] if not _DAY_RESULT_CACHE[key] else ""})
+    day = _DAY_RESULT_CACHE[key]
+    res = day.get(race_no)
+    diag["day_parsed"] = bool(res)
+    LAST_RESULT_DIAG.update(diag)
+    return res or None
 
 
 def fetch_all_todays_races(date=None):
