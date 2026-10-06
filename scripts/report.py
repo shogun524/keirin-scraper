@@ -2119,7 +2119,7 @@ def render_venues_today_page(all_race_data, date=None):
         body=body, current="venues_today.html", script=_sortable_table_script("vtTable", 2, -1))
 
 
-def render_results_page(log, date=None):
+def render_results_page(log, date=None, model_params=None):
     """
     予想成績ページ。prediction_log に溜めた「予想」と「確定結果」から、
     本命が実際に何%勝ったか／予測1着率は実際と合っているか（キャリブレーション）／
@@ -2129,6 +2129,18 @@ def render_results_page(log, date=None):
     from prediction_log import compute_prediction_stats
     stats = compute_prediction_stats(log or {})
     ov = stats["overall"]
+
+    # モデルの毎日の自動補正の状況（calibration.py）
+    mp = model_params or {}
+    n_cal = mp.get("n", 0)
+    min_cal = mp.get("min_races", 120)
+    if mp.get("active"):
+        cal_line = (f'<b>適用中</b>：1着率の絞り込み {mp.get("default", 0):.2f} → <b>{mp["sharpness_first"]:.2f}</b>'
+                    f'（補正に使った{n_cal}レース／1レースあたり対数尤度 {mp.get("ll_per_race_default", 0):.3f} → {mp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
+    else:
+        cal_line = f'<b>学習中</b>：補正に使えるレースが{n_cal}件（{min_cal}件以上で適用開始。それまでは基準値のまま）'
+    model_html = (f'<div class="hp-lead" style="margin-top:8px;">モデルの自動補正（毎日1回）：{cal_line}'
+                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みの強さだけを見直します。</span></div>')
 
     def pct(v):
         return f"{v:.1f}%"
@@ -2147,10 +2159,10 @@ def render_results_page(log, date=None):
         ])
         low_note = ("<p class='hp-lead'>※ 件数が少ないうちは数字が大きくブレます（目安：100レース以上で傾向が見えてきます）。</p>"
                     if ov["n"] < 100 else "")
-        summary = f'<p class="hp-lead">集計対象：結果が確定した{ov["n"]}レース（結果待ち{stats["pending_count"]}件）。</p>{low_note}<div class="rs-tiles">{tiles}</div>'
+        summary = f'<p class="hp-lead">集計対象：結果が確定した{ov["n"]}レース（結果待ち{stats["pending_count"]}件）。</p>{low_note}<div class="rs-tiles">{tiles}</div>{model_html}'
     else:
         summary = (f'<p class="hp-lead">まだ結果が確定したレースがありません（記録中：{stats["tracked_count"]}レース、'
-                   f'結果待ち{stats["pending_count"]}件）。予想は毎時の自動実行のたびに記録され、締切後に結果と照合されます。</p>')
+                   f'結果待ち{stats["pending_count"]}件）。予想は毎時の自動実行のたびに記録され、締切後に結果と照合されます。</p>{model_html}')
 
     def seg_row(label, s):
         if not s["n"]:
