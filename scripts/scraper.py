@@ -379,6 +379,7 @@ def parse_racer_tokens(full_text):
                 waku, car = n1, n1
 
             name_parts = []
+            pref_frag = ""
             ap = None
             safety = 0
             while pos < n and safety < 6:
@@ -387,12 +388,16 @@ def parse_racer_tokens(full_text):
                 apm = _extract_age_period_rank(t)
                 if apm:
                     ap = apm
+                    mpref = re.match(r"^([^\d/]+)", t)
+                    if mpref:
+                        pref_frag += mpref.group(1)
                     pos += 1
                     break
                 if _is_kanji(t) and not _is_rank(t) and not _is_tactic(t):
                     next_tok = tokens[pos + 1] if pos + 1 < n else None
                     next_ap = _extract_age_period_rank(next_tok) if next_tok else None
                     if len(t) == 1 and next_ap:
+                        pref_frag += t
                         pos += 1  # 府県名の1文字断片
                     else:
                         name_parts.append(t)
@@ -438,6 +443,12 @@ def parse_racer_tokens(full_text):
             f2 = int(nums[7]) if len(nums) > 7 else 0
             f3 = int(nums[8]) if len(nums) > 8 else 0
             fo = int(nums[9]) if len(nums) > 9 else 0
+            # 新聞用の追加項目（無い場合はNone）：S・B回数、勝率・2連対率・3連対率
+            s_cnt = int(nums[0]) if len(nums) > 0 else None
+            b_cnt = int(nums[1]) if len(nums) > 1 else None
+            win_rate = nums[10] if len(nums) > 10 else None
+            rentai2 = nums[11] if len(nums) > 11 else None
+            rentai3 = nums[12] if len(nums) > 12 else None
 
             if not (1 <= car <= 9):
                 continue
@@ -448,11 +459,63 @@ def parse_racer_tokens(full_text):
                 "age": ap["age"], "period": ap["period"],
                 "kimarite": {"逃": nige, "捲": makuri, "差": sashi, "マ": mark_k},
                 "finishes": {"f1": f1, "f2": f2, "f3": f3, "fo": fo},
+                "pref": pref_frag.strip(), "s_count": s_cnt, "b_count": b_cnt,
+                "win_rate": win_rate, "rentai2": rentai2, "rentai3": rentai3,
             })
         except (ValueError, IndexError):
             pos = start_pos + 1
 
     return racers
+
+
+def parse_recent_results(html):
+    """
+    出走表の「今場所成績／前場所成績／前々場所成績」欄（各選手の日別の 日付・種目・着順・上り）を
+    読み取る。実ページの構造（診断ログで確認）：
+      <tr class="n1"> <td class="bracket">枠</td> <td class="num"><span>車番</span></td>
+        <td class="rider">名前<br><span class="home">府県/年齢/期</span></td> <td>競走得点</td>
+        <td><p class="stadium">開催場</p><ul><li><span>10/4</span><span>Ａ級予選</span><span>6着</span><span>10.5</span>…</li>…</ul></td> ×3
+    戻り値: {車番: {"now": [..], "prev": [..], "prev2": [..], "prev_venue": str, "prev2_venue": str}}
+    各要素は {"date","kind","finish","agari"}。構造が違って読めない場合は空dictを返す（例外は投げない）。
+    """
+    out = {}
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+        for tr in soup.find_all("tr"):
+            num_td = tr.find("td", class_="num")
+            rider_td = tr.find("td", class_="rider")
+            if not num_td or not rider_td:
+                continue
+            m = re.search(r"[1-9]", num_td.get_text())
+            if not m:
+                continue
+            car = int(m.group(0))
+            blocks = []
+            for td in rider_td.find_next_siblings("td"):
+                if td.find("ul") is None:
+                    continue
+                items = []
+                for li in td.find_all("li"):
+                    spans = [sp.get_text(strip=True) for sp in li.find_all("span", recursive=False) if not sp.find("a")]
+                    spans = [x for x in spans if x]
+                    if len(spans) < 3:
+                        continue
+                    items.append({"date": spans[0], "kind": spans[1], "finish": spans[2],
+                                  "agari": spans[3] if len(spans) > 3 else ""})
+                st = td.find("p", class_="stadium")
+                blocks.append((st.get_text(strip=True) if st else "", items))
+            if not blocks:
+                continue
+            rec = {"now": blocks[0][1], "prev": [], "prev2": [], "prev_venue": "", "prev2_venue": ""}
+            if len(blocks) > 1:
+                rec["prev_venue"], rec["prev"] = blocks[1]
+            if len(blocks) > 2:
+                rec["prev2_venue"], rec["prev2"] = blocks[2]
+            out.setdefault(car, rec)
+    except Exception as e:  # 失敗しても出走表の取得自体は止めない
+        print(f"[WARN] 今場所・前場所成績の読み取りに失敗しました: {e}")
+        return {}
+    return out
 
 
 def parse_race_detail(html, venue, race_no):
@@ -536,6 +599,10 @@ def parse_race_detail(html, venue, race_no):
         seen.add(r["car"])
         unique_racers.append(r)
     unique_racers.sort(key=lambda r: r["car"])
+    recent = parse_recent_results(html) if unique_racers else {}
+    for r in unique_racers:
+        if r["car"] in recent:
+            r["recent"] = recent[r["car"]]
 
     # 車番が飛んでいないかチェック（例：1〜7号車のはずが6号車しか無い、など）。
     # 選手データの解析自体は成功している（racers=0 にはならない）ため、これまで
