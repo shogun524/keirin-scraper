@@ -700,12 +700,25 @@ def extract_race_id_from_url(url):
     return m.group(1) if m else None
 
 
+LAST_RESULT_DIAG = {}  # 直近の結果取得の診断情報（予想成績ログの原因調査用）
+
+
 def fetch_race_result(venue, race_id):
     """race_id: racedetail URLに含まれる16桁のID（kaisai_date_id14桁+race_no2桁）"""
     url = f"{BASE}/{venue}/racedetail/{race_id}/?pageType=result"
     html = _get(url)
     race_no = int(race_id[-2:])
-    return parse_race_result(html, venue, race_no)
+    res = parse_race_result(html, venue, race_no)
+    lines = _clean_text(html)
+    LAST_RESULT_DIAG.clear()
+    LAST_RESULT_DIAG.update({
+        "url": url, "html_len": len(html), "parsed": bool(res),
+        "has_chakujun": "着順" in html, "has_sharban": "車番" in html,
+        "has_unconfirmed": ("まだ確定していません" in html) or ("結果はまだ" in html),
+        "text_head": " | ".join(lines[:80])[:1500],
+        "html_head": re.sub(r"\s+", " ", html[:600]),
+    })
+    return res
 
 
 def fetch_all_todays_races(date=None):
