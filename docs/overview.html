@@ -59,6 +59,7 @@
   .hp-pct{ font-size:15px; font-weight:800; color:var(--brick); }
   .hp-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:5px; }
   .hp-contender{ display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; color:var(--brick); margin-right:8px; }
+  .hp-sub-inline{ font-size:11px; font-weight:400; color:var(--ink-soft); margin-left:2px; }
   .dim{ color:var(--ink-soft); }
 
   main.wide{ max-width:980px; }
@@ -93,7 +94,7 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main class="wide">
-  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link current" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">1着率が拮抗</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a></nav>
+  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link current" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">拮抗レース</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a></nav>
   <p class="hp-lead">対象：72レース（全競輪場・本日開催分）。「差」は予測1着率の1位と2位の差（pt）。</p>
   <div class="ov-filters"><span class="lbl">絞り込み:</span>
     <button type="button" class="ov-filter" data-flag="high">堅</button>
@@ -118,7 +119,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="16:02">
+        <tr data-flags="close" data-deadline="16:02">
           <td data-sort="松山02"><a href="matsuyama/index.html?r=2">松山 2R</a></td>
           <td data-sort="16:02">16:02</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 吉竹 尚城</td>
@@ -126,7 +127,7 @@
           <td data-sort="17.61">17.6%</td>
           <td data-sort="7.31">7.3</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="16:28">
           <td data-sort="松山03"><a href="matsuyama/index.html?r=3">松山 3R</a></td>
@@ -158,7 +159,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="17:46">
+        <tr data-flags="close" data-deadline="17:46">
           <td data-sort="松山06"><a href="matsuyama/index.html?r=6">松山 6R</a></td>
           <td data-sort="17:46">17:46</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 荻原 尚人</td>
@@ -166,9 +167,9 @@
           <td data-sort="22.99">23.0%</td>
           <td data-sort="5.55">5.6</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="18:12">
+        <tr data-flags="close" data-deadline="18:12">
           <td data-sort="松山07"><a href="matsuyama/index.html?r=7">松山 7R</a></td>
           <td data-sort="18:12">18:12</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 佐々木 翔一</td>
@@ -176,9 +177,9 @@
           <td data-sort="20.14">20.1%</td>
           <td data-sort="3.74">3.7</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="18:38">
+        <tr data-flags="close" data-deadline="18:38">
           <td data-sort="松山08"><a href="matsuyama/index.html?r=8">松山 8R</a></td>
           <td data-sort="18:38">18:38</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 井上 昌己</td>
@@ -186,7 +187,7 @@
           <td data-sort="20.98">21.0%</td>
           <td data-sort="7.58">7.6</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="19:04">
           <td data-sort="松山09"><a href="matsuyama/index.html?r=9">松山 9R</a></td>
@@ -258,7 +259,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="12:14">
+        <tr data-flags="close" data-deadline="12:14">
           <td data-sort="奈良04"><a href="nara/index.html?r=4">奈良 4R</a></td>
           <td data-sort="12:14">12:14</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 三浦 雄大</td>
@@ -266,9 +267,9 @@
           <td data-sort="19.09">19.1%</td>
           <td data-sort="13.86">13.9</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="12:42">
+        <tr data-flags="close" data-deadline="12:42">
           <td data-sort="奈良05"><a href="nara/index.html?r=5">奈良 5R</a></td>
           <td data-sort="12:42">12:42</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 志佐</td>
@@ -276,9 +277,9 @@
           <td data-sort="23.25">23.2%</td>
           <td data-sort="4.45">4.5</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="13:10">
+        <tr data-flags="close" data-deadline="13:10">
           <td data-sort="奈良06"><a href="nara/index.html?r=6">奈良 6R</a></td>
           <td data-sort="13:10">13:10</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 望月 永悟</td>
@@ -286,7 +287,7 @@
           <td data-sort="19.24">19.2%</td>
           <td data-sort="11.34">11.3</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="high" data-deadline="13:38">
           <td data-sort="奈良07"><a href="nara/index.html?r=7">奈良 7R</a></td>
@@ -368,7 +369,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="11:32">
+        <tr data-flags="close" data-deadline="11:32">
           <td data-sort="大宮03"><a href="omiya/index.html?r=3">大宮 3R</a></td>
           <td data-sort="11:32">11:32</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 落合 達彦</td>
@@ -376,9 +377,9 @@
           <td data-sort="22.24">22.2%</td>
           <td data-sort="3.74">3.7</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="high" data-deadline="12:00">
+        <tr data-flags="high value" data-deadline="12:00">
           <td data-sort="大宮04"><a href="omiya/index.html?r=4">大宮 4R</a></td>
           <td data-sort="12:00">12:00</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 真木 寛斗</td>
@@ -386,9 +387,9 @@
           <td data-sort="15.10">15.1%</td>
           <td data-sort="38.44">38.4</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-high">堅</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="" data-deadline="12:28">
+        <tr data-flags="close" data-deadline="12:28">
           <td data-sort="大宮05"><a href="omiya/index.html?r=5">大宮 5R</a></td>
           <td data-sort="12:28">12:28</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 久樹 克門</td>
@@ -396,7 +397,7 @@
           <td data-sort="21.74">21.7%</td>
           <td data-sort="6.44">6.4</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="high value" data-deadline="12:56">
           <td data-sort="大宮06"><a href="omiya/index.html?r=6">大宮 6R</a></td>
@@ -408,7 +409,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="" data-deadline="13:24">
+        <tr data-flags="close" data-deadline="13:24">
           <td data-sort="大宮07"><a href="omiya/index.html?r=7">大宮 7R</a></td>
           <td data-sort="13:24">13:24</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 太田 りゆ</td>
@@ -416,7 +417,7 @@
           <td data-sort="17.79">17.8%</td>
           <td data-sort="13.44">13.4</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="13:52">
           <td data-sort="大宮08"><a href="omiya/index.html?r=8">大宮 8R</a></td>
@@ -428,7 +429,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="14:20">
+        <tr data-flags="close" data-deadline="14:20">
           <td data-sort="大宮09"><a href="omiya/index.html?r=9">大宮 9R</a></td>
           <td data-sort="14:20">14:20</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 栗山 和樹</td>
@@ -436,7 +437,7 @@
           <td data-sort="17.78">17.8%</td>
           <td data-sort="11.66">11.7</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="close" data-deadline="14:48">
           <td data-sort="大宮10"><a href="omiya/index.html?r=10">大宮 10R</a></td>
@@ -448,7 +449,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="15:17">
+        <tr data-flags="close" data-deadline="15:17">
           <td data-sort="大宮11"><a href="omiya/index.html?r=11">大宮 11R</a></td>
           <td data-sort="15:17">15:17</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 森田 一郎</td>
@@ -456,7 +457,7 @@
           <td data-sort="20.97">21.0%</td>
           <td data-sort="9.93">9.9</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="15:47">
           <td data-sort="大宮12"><a href="omiya/index.html?r=12">大宮 12R</a></td>
@@ -478,7 +479,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="08:45">
+        <tr data-flags="close" data-deadline="08:45">
           <td data-sort="防府02"><a href="hofu/index.html?r=2">防府 2R</a></td>
           <td data-sort="08:45">08:45</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 坂上 忠克</td>
@@ -486,9 +487,9 @@
           <td data-sort="23.60">23.6%</td>
           <td data-sort="5.78">5.8</td>
           <td data-sort="マーク">マーク</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="09:06">
+        <tr data-flags="close" data-deadline="09:06">
           <td data-sort="防府03"><a href="hofu/index.html?r=3">防府 3R</a></td>
           <td data-sort="09:06">09:06</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 中澤 央治</td>
@@ -496,7 +497,7 @@
           <td data-sort="21.16">21.2%</td>
           <td data-sort="3.82">3.8</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="close" data-deadline="09:27">
           <td data-sort="防府04"><a href="hofu/index.html?r=4">防府 4R</a></td>
@@ -538,7 +539,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="15:54">
+        <tr data-flags="close" data-deadline="15:54">
           <td data-sort="いわき平01"><a href="iwakitaira/index.html?r=1">いわき平 1R</a></td>
           <td data-sort="15:54">15:54</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 小塚 潤</td>
@@ -546,7 +547,7 @@
           <td data-sort="18.89">18.9%</td>
           <td data-sort="5.63">5.6</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="16:17">
           <td data-sort="いわき平02"><a href="iwakitaira/index.html?r=2">いわき平 2R</a></td>
@@ -638,7 +639,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="20:11">
+        <tr data-flags="close" data-deadline="20:11">
           <td data-sort="いわき平11"><a href="iwakitaira/index.html?r=11">いわき平 11R</a></td>
           <td data-sort="20:11">20:11</td>
           <td data-sort="4"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 岡部 陸斗</td>
@@ -646,7 +647,7 @@
           <td data-sort="21.89">21.9%</td>
           <td data-sort="6.35">6.3</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="20:45">
           <td data-sort="前橋01"><a href="maebashi/index.html?r=1">前橋 1R</a></td>
@@ -658,7 +659,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="21:05">
+        <tr data-flags="close" data-deadline="21:05">
           <td data-sort="前橋02"><a href="maebashi/index.html?r=2">前橋 2R</a></td>
           <td data-sort="21:05">21:05</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 吉川 美穂</td>
@@ -666,7 +667,7 @@
           <td data-sort="14.78">14.8%</td>
           <td data-sort="14.64">14.6</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="close" data-deadline="21:25">
           <td data-sort="前橋03"><a href="maebashi/index.html?r=3">前橋 3R</a></td>
@@ -688,7 +689,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="" data-deadline="22:05">
+        <tr data-flags="close" data-deadline="22:05">
           <td data-sort="前橋05"><a href="maebashi/index.html?r=5">前橋 5R</a></td>
           <td data-sort="22:05">22:05</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 佐藤 雅彦</td>
@@ -696,7 +697,7 @@
           <td data-sort="24.54">24.5%</td>
           <td data-sort="3.81">3.8</td>
           <td data-sort="マーク">マーク</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="22:25">
           <td data-sort="前橋06"><a href="maebashi/index.html?r=6">前橋 6R</a></td>
@@ -708,7 +709,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="22:45">
+        <tr data-flags="close" data-deadline="22:45">
           <td data-sort="前橋07"><a href="maebashi/index.html?r=7">前橋 7R</a></td>
           <td data-sort="22:45">22:45</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 伊藤 亮</td>
@@ -716,7 +717,7 @@
           <td data-sort="21.99">22.0%</td>
           <td data-sort="6.71">6.7</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="high value" data-deadline="23:05">
           <td data-sort="前橋08"><a href="maebashi/index.html?r=8">前橋 8R</a></td>
@@ -738,7 +739,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="20:35">
+        <tr data-flags="close" data-deadline="20:35">
           <td data-sort="大垣01"><a href="ogaki/index.html?r=1">大垣 1R</a></td>
           <td data-sort="20:35">20:35</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 本馬 鎌</td>
@@ -746,9 +747,9 @@
           <td data-sort="18.33">18.3%</td>
           <td data-sort="9.49">9.5</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="20:55">
+        <tr data-flags="close" data-deadline="20:55">
           <td data-sort="大垣02"><a href="ogaki/index.html?r=2">大垣 2R</a></td>
           <td data-sort="20:55">20:55</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 橋本 大祐</td>
@@ -756,7 +757,7 @@
           <td data-sort="19.60">19.6%</td>
           <td data-sort="13.19">13.2</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="21:15">
           <td data-sort="大垣03"><a href="ogaki/index.html?r=3">大垣 3R</a></td>
@@ -768,7 +769,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="21:35">
+        <tr data-flags="close" data-deadline="21:35">
           <td data-sort="大垣04"><a href="ogaki/index.html?r=4">大垣 4R</a></td>
           <td data-sort="21:35">21:35</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 篠原 輝利</td>
@@ -776,7 +777,7 @@
           <td data-sort="16.94">16.9%</td>
           <td data-sort="15.61">15.6</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
         <tr data-flags="" data-deadline="21:55">
           <td data-sort="大垣05"><a href="ogaki/index.html?r=5">大垣 5R</a></td>
@@ -818,7 +819,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="23:15">
+        <tr data-flags="close" data-deadline="23:15">
           <td data-sort="大垣09"><a href="ogaki/index.html?r=9">大垣 9R</a></td>
           <td data-sort="23:15">23:15</td>
           <td data-sort="2"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 疋田 力也</td>
@@ -826,7 +827,7 @@
           <td data-sort="25.38">25.4%</td>
           <td data-sort="6.68">6.7</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr></tbody>
     </table>
   </div>
