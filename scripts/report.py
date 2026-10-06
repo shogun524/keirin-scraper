@@ -1203,6 +1203,9 @@ def render_index(all_race_data, date=None, now=None):
         for rd in all_race_data if rd["race_info"].get("deadline")
     ], ensure_ascii=False)
 
+    from zoneinfo import ZoneInfo as _ZI
+    updated_str = (now or datetime.datetime.now(_ZI("Asia/Tokyo"))).strftime("%m/%d %H:%M")
+
     def venue_card(slug):
         name = VENUE_NAMES.get(slug, slug)
         races = by_venue.get(slug)
@@ -1348,7 +1351,7 @@ def render_index(all_race_data, date=None, now=None):
   <h2 class="section">本日の開催場</h2>
   {rows_html if by_venue else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}
 </main>
-<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<footer>最終更新 {updated_str}（1時間おきに自動更新）<br>このページはGitHub Actionsにより自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
 <script>{index_script}</script>
 </body>
 </html>"""
@@ -1465,7 +1468,7 @@ AGG_GROUPS = [
     ("レースをさがす", [
         ("overview.html", "全レース早見表"),
         ("high_prob.html", "本命が堅い"),
-        ("close_race.html", "1着率が拮抗"),
+        ("close_race.html", "拮抗レース"),
         ("value.html", "投票が鈍い(妙味)"),
     ]),
     ("選手・開催場・成績", [
@@ -1557,6 +1560,7 @@ _AGG_STYLE = _TABNAV_STYLE + """
   .hp-pct{ font-size:15px; font-weight:800; color:var(--brick); }
   .hp-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:5px; }
   .hp-contender{ display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; color:var(--brick); margin-right:8px; }
+  .hp-sub-inline{ font-size:11px; font-weight:400; color:var(--ink-soft); margin-left:2px; }
   .dim{ color:var(--ink-soft); }
 """
 
@@ -1667,35 +1671,47 @@ def render_high_prob_page(all_race_data, date=None):
 
 def render_close_race_page(all_race_data, date=None):
     """
-    予測1着率の1位と2位の差が小さい（拮抗している）レースだけを横断表示する。
-    判定は predict_race() の is_close_race（settings["th_close_race"]、既定3pt以内）を
-    そのまま使い、ここでは閾値を持たない。カードには「1位との差が閾値以内の全車」を
-    予測1着率つきで並べ、どの選手同士が競っているかが一目で分かるようにする。
+    拮抗しているレース（予測3着内率が60%以上の選手が1人もいない＝抜けた選手がいない混戦）を
+    横断表示する。判定は predict_race() の is_close_race（settings["th_close_place"]、既定60%）を
+    そのまま使い、ここでは閾値を持たない。カードには予測1着率の上位3車を、1着率と3着内率つきで
+    並べ、誰と誰が競っているかが一目で分かるようにする。
     """
     entries = []
     for rd in all_race_data:
         result = rd.get("prediction")
         if not result or not result.get("is_close_race"):
             continue
-        top = result["top"]
-        gap_limit = result["settings"]["th_close_race"]
-        contenders = [r for r in result["rows"] if top["adjusted"] - r["adjusted"] <= gap_limit]
-        contenders_html = ""
-        for r in contenders:
+        limit = result["settings"]["th_close_place"]
+        picks_html = ""
+        for r in result["rows"][:3]:
             bg, fg = car_color(r["car"])
-            contenders_html += (f'<span class="hp-contender"><span class="car" style="background:{bg};color:{fg};">'
-                                f'{r["car"]}</span>{r["adjusted"]:.1f}%</span>')
-        names = " / ".join(f'{r["car"]}番 {r["name"]}（{_line_label_of(r)}）' for r in contenders)
+            picks_html += (f'<span class="hp-contender"><span class="car" style="background:{bg};color:{fg};">'
+                           f'{r["car"]}</span>{r["adjusted"]:.1f}%'
+                           f'<span class="hp-sub-inline">3着内{r.get("place_rate", 0):.0f}%</span></span>')
         body = f"""
-          <div class="hp-card-body">{contenders_html}</div>
-          <div class="hp-sub">1位と2位の差 {result['top_gap']:.1f}pt　{names}</div>"""
+          <div class="hp-card-body">{picks_html}</div>
+          <div class="hp-sub">3着内率の最高 {result['max_place_rate']:.1f}%（{limit}%以上の選手がいない）　1位と2位の差 {result['top_gap']:.1f}pt</div>"""
         entries.append(_race_entry(rd, body))
     return _render_race_list_page(
-        title="1着率が拮抗しているレース", heading="1着率が拮抗しているレース",
-        tagline="予測1着率の1位と2位がほぼ並んでいる、本命不在の混戦レースです。",
-        lead="対象：{n}レース（予測1着率の1位と2位の差が3pt以内。全競輪場・本日開催分）",
+        title="拮抗しているレース", heading="拮抗しているレース",
+        tagline="3着内率60%以上の選手がいない、抜けた本命のいない混戦レースです。",
+        lead="対象：{n}レース（予測3着内率が60%以上の選手がいない。全競輪場・本日開催分）。各選手の数字は「予測1着率 / 3着内率」です。",
         entries=entries, empty_msg="本日は該当するレースがありませんでした。",
         current="close_race.html", date_str=_fmt_date_jp(date))
+
+
+def render_hole_page(all_race_data=None, date=None):
+    """
+    【廃止済みページ】穴目候補の一覧ページは廃止した。古い run_daily.py（このページを
+    書き出す版）と組み合わさっても import エラーで日次処理全体が止まらないよう、
+    廃止の案内だけを返す関数を残している。
+    """
+    return f"""<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>このページは終了しました | 競輪AI予想</title><style>{COMMON_STYLE}</style></head>
+<body><header><div class="top-row"><h1>&larr; <a href="index.html">競輪AI予想</a></h1></div></header>
+<main style="max-width:600px;margin:0 auto;padding:30px 14px;text-align:center;color:var(--ink-soft);">
+このページは終了しました。<br><a href="index.html" style="text-decoration:underline;">トップページへ</a></main></body></html>"""
 
 
 def render_value_page(all_race_data, date=None):
@@ -2147,7 +2163,7 @@ def render_results_page(log, date=None):
   <div class="ov-scroll"><table class="ov"><thead><tr>
     <th>区分</th><th>件数</th><th>本命予測の平均</th><th>本命1着率</th><th>本命3着内</th><th>3連複BOX</th><th>3連単上位5点</th>
   </tr></thead><tbody>
-    {seg_row("本命が堅い", seg["high"])}{seg_row("1着率が拮抗", seg["close"])}{seg_row("その他", seg["other"])}
+    {seg_row("本命が堅い", seg["high"])}{seg_row("拮抗", seg["close"])}{seg_row("その他", seg["other"])}
   </tbody></table></div>"""
 
     cal_rows = ""
