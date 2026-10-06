@@ -732,39 +732,61 @@ def _rows_from_tokens(data):
 
 def parse_day_results(html):
     """
-    開催日ごとの「結果・払戻金一覧」ページ（/{競輪場}/raceresult/{開催ID14桁}/）から、
+    開催日ごとの「払戻金・結果一覧」ページ（/{競輪場}/raceresult/{開催ID14桁}/）から、
     全レースの着順を取り出す。戻り値: {race_no: [{"finish","car","name","kimarite"}, ...]}
-    1着に戻る（着順が前の行以下になる）ところで次のレースとみなし、直前に「nR」という
-    見出しがあればその番号を、無ければ出現順（1R, 2R, ...）を使う。
+
+    実ページのテキスト構造（実測）は、レースごとに
+      「1R | Ａ級一般 | 出走表詳細 | 確定オッズ | 結果・払戻金詳細 | ダイジェスト映像 | 投票 |
+        1着 | 2着 | 3着 | 4 | 5 | 6 | 7 |   ← 着順の見出し（出走人数ぶん）
+        2 | 工藤 文彦 | 7 | 高橋 幸司 | 4 | 井上 将志 | 1 | 中武 | ... |   ← 着順どおりの 車番・選手名
+        2 | 枠 | 連 | 複 | ...（払戻金）」
+    の順。決まり手はこのページには無いので kimarite は None。
     """
     lines = _clean_text(html)
-    rows = _rows_from_tokens(lines)
-    groups, cur = [], []
-    for r in rows:
-        if cur and r[1] <= cur[-1][1]:
-            groups.append(cur)
-            cur = []
-        cur.append(r)
-    if cur:
-        groups.append(cur)
+    name_re = re.compile(r"[\u3040-\u30ff\u4e00-\u9fff]")
+
+    markers = []  # (行位置, レース番号)
+    for i, t in enumerate(lines):
+        m = re.fullmatch(r"(\d{1,2})R", t)
+        if m and any(x == "出走表詳細" for x in lines[i + 1:i + 5]):
+            markers.append((i, int(m.group(1))))
+
     out = {}
-    for gi, g in enumerate(groups):
-        if len(g) < 3 or g[0][1] != 1:
+    for n, (pos, race_no) in enumerate(markers):
+        end = markers[n + 1][0] if n + 1 < len(markers) else len(lines)
+        seg = lines[pos:end]
+        try:
+            k0 = seg.index("1着")
+        except ValueError:
             continue
-        label = None
-        for t in reversed(lines[max(0, g[0][0] - 30):g[0][0]]):
-            m = re.fullmatch(r"(\d{1,2})R", t)
-            if m:
-                label = int(m.group(1))
+        if seg[k0:k0 + 3] != ["1着", "2着", "3着"]:
+            continue
+        base = k0 + 3  # 「3着」の次の位置
+        for size in range(3, 10):
+            i = base
+            ok = True
+            for lab in range(4, size + 1):  # 見出し「4」「5」…
+                if i < len(seg) and seg[i] == str(lab):
+                    i += 1
+                else:
+                    ok = False
+                    break
+            if not ok:
                 break
-        race_no = label if label is not None else gi + 1
-        seen, res = set(), []
-        for _, f, c, nme, k in g:
-            if c in seen:
-                continue
-            seen.add(c)
-            res.append({"finish": f, "car": c, "name": nme, "kimarite": k})
-        out.setdefault(race_no, res)
+            pairs, seen = [], set()
+            for _ in range(size):
+                if i + 1 < len(seg) and len(seg[i]) == 1 and seg[i] in "123456789" \
+                        and name_re.search(seg[i + 1]) and int(seg[i]) not in seen:
+                    seen.add(int(seg[i]))
+                    pairs.append((int(seg[i]), seg[i + 1]))
+                    i += 2
+                else:
+                    pairs = None
+                    break
+            if pairs:
+                out[race_no] = [{"finish": f + 1, "car": c, "name": nm, "kimarite": None}
+                                for f, (c, nm) in enumerate(pairs)]
+                break
     return out
 
 
@@ -779,14 +801,7 @@ def fetch_race_result(venue, race_id):
     diag = {"venue": venue, "race_id": race_id}
     LAST_RESULT_DIAG.clear()
 
-    url = f"{BASE}/{venue}/racedetail/{race_id}/?pageType=KS_RACE_CARD_PAGE_TYPE_SHOW_RESULT"
-    html = _get(url)
-    res = parse_race_result(html, venue, race_no)
-    diag.update({"url": url, "html_len": len(html), "primary_parsed": bool(res),
-                 "has_unconfirmed": ("まだ確定していません" in html) or ("結果はまだ" in html)})
-    if res:
-        LAST_RESULT_DIAG.update(diag)
-        return res
+    diag["primary"] = "skipped"
 
     key = (venue, kaisai_id)
     if key not in _DAY_RESULT_CACHE:
