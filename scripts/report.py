@@ -646,8 +646,9 @@ def render_race_card(race_data, tab_id):
     pick_color = car_color(top["car"])[0]
     has_trifecta = bool(trifecta_payload)
     has_dev = bool(dev_payload) or bool(hole_html)
+    formula_html = render_formula_block(race_data, tab_id)
     subtab_bar_html = ""
-    if has_trifecta or has_dev:
+    if has_trifecta or has_dev or formula_html:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
                    'onclick="showSubTab(\'' + tab_id + '\',\'main\',this)">予想</button>']
         if has_trifecta:
@@ -656,7 +657,16 @@ def render_race_card(race_data, tab_id):
         if has_dev:
             buttons.append('<button class="subtab-btn" id="' + tab_id + '_subbtn_dev" '
                             'onclick="showSubTab(\'' + tab_id + '\',\'dev\',this)">展開</button>')
+        if formula_html:
+            buttons.append('<button class="subtab-btn" id="' + tab_id + '_subbtn_kf" '
+                            'onclick="showSubTab(\'' + tab_id + '\',\'kf\',this)">方程式</button>')
         subtab_bar_html = '<div class="subtab-bar">' + "".join(buttons) + '</div>'
+    kf_block_html = ""
+    if formula_html:
+        kf_block_html = f'''
+    <div id="{tab_id}_sub_kf" class="subtab-panel" style="display:none;">
+      {formula_html}
+    </div>'''
     trifecta_block_html = ""
     if has_trifecta:
         trifecta_block_html = f"""
@@ -699,6 +709,7 @@ def render_race_card(race_data, tab_id):
     </div>
     {trifecta_block_html}
     {dev_block_html}
+    {kf_block_html}
       </div>
     </div>"""
 
@@ -821,7 +832,7 @@ function showTab(id, btn){
 
 // レースパネル内の「予想」「3連単」サブタブ切り替え
 function showSubTab(tabId, which, btn){
-  ['main', 'tf', 'dev'].forEach(function(key){
+  ['main', 'tf', 'dev', 'kf'].forEach(function(key){
     var panel = document.getElementById(tabId + '_sub_' + key);
     if(panel) panel.style.display = (which === key) ? '' : 'none';
   });
@@ -1470,6 +1481,7 @@ AGG_GROUPS = [
         ("high_prob.html", "本命が堅い"),
         ("close_race.html", "拮抗レース"),
         ("value.html", "投票が鈍い(妙味)"),
+        ("formula.html", "勝利の方程式"),
     ]),
     ("選手・開催場・成績", [
         ("players.html", "選手一覧"),
@@ -2181,6 +2193,20 @@ def render_results_page(log, date=None, model_params=None):
         return (f'<tr><td class="l">{label}</td><td>{s["n"]}</td><td>{pct(s["pred_top"])}</td>'
                 f'<td><b>{pct(s["top1"])}</b></td><td>{pct(s["top3"])}</td><td>{pct(s["box3"])}</td><td>{pct(s["tri5"])}</td></tr>')
 
+    fa = stats.get("formula") or {"n": 0}
+    if fa["n"]:
+        n = fa["n"]
+        fm = lambda k: f'{fa[k] / n * 100:.1f}%'
+        formula_html = (f'<h2 class="section">勝利の方程式の答え合わせ</h2>'
+            f'<p class="hp-lead">方程式を記録した{n}レースでの比較（AIの本命と同じ車の割合：{fa["same"] / n * 100:.0f}%）。'
+            f'Mは自動推定の初期値で計算しています。</p>'
+            f'<div class="ov-scroll"><table class="ov"><thead><tr><th>1位に選んだ車</th><th>件数</th><th>1着率</th><th>3着内</th></tr></thead><tbody>'
+            f'<tr><td class="l">AIの本命</td><td>{n}</td><td><b>{fm("a1")}</b></td><td>{fm("a3")}</td></tr>'
+            f'<tr><td class="l">方程式の1位</td><td>{n}</td><td><b>{fm("f1")}</b></td><td>{fm("f3")}</td></tr>'
+            f'</tbody></table></div>')
+    else:
+        formula_html = ('<h2 class="section">勝利の方程式の答え合わせ</h2>'
+            '<p class="hp-lead">方程式の記録は今後の予想から始まります。結果が溜まるとAIの本命との比較がここに出ます。</p>')
     seg = stats["segments"]
     seg_html = f"""
   <h2 class="section">区分ごとの成績</h2>
@@ -2248,7 +2274,7 @@ def render_results_page(log, date=None, model_params=None):
     return _page_shell(
         title="予想成績", heading="予想成績", date_str=_fmt_date_jp(date),
         tagline="AIの予想は実際どれくらい当たったか。毎時自動で記録して答え合わせしています。",
-        body=summary + seg_html + cal_html + day_html + recent_html,
+        body=summary + formula_html + seg_html + cal_html + day_html + recent_html,
         current="results.html", extra_style=style)
 
 
@@ -2767,6 +2793,10 @@ def _print_card_html(rd):
     dev_html = f'<div class="pv-sub pv-opt">展開の見通し：{dev_rows}</div>' if dev_rows else ""
 
     view = f'<div class="pv-view"><b class="t">AIの見立て</b>{_view_text(result, rows, flags)}{form_html}</div>'
+    _kf = _formula_for(rd)
+    if _kf:
+        view += ('<div class="pv-sub">勝利の方程式（能力値+L+M）：' + "　".join(
+            f'{i + 1}位 {x["car"]}番 {x["total"]:.0f}' for i, x in enumerate(_kf[:4])) + '</div>')
 
     cars = sorted(r["car"] for r in rows)
     mats = "".join(_head_matrix_html(result, r, cars) for r in rows)  # rowsは1着率の高い順
@@ -2838,3 +2868,146 @@ def render_print_page(all_race_data, date=None):
         tagline="本日の予想をA4で印刷・PDF保存できる形にまとめました。",
         date_str=_fmt_date_jp(date), body=body, current="print.html",
         script=_PRINT_SCRIPT, extra_style=_PRINT_STYLE)
+
+
+# ---------------------------------------------------------------------------
+# 勝利の方程式（能力値 + L指数 + M指数 = 期待値）。計算は formula.py。
+# ---------------------------------------------------------------------------
+from formula import compute_formula as _compute_formula
+
+_KF_STYLE = """
+  .kf-note{ font-size:12px; color:var(--dim,#666); line-height:1.7; margin:6px 0 8px; }
+  table.kf{ width:100%; border-collapse:collapse; font-size:12.5px; text-align:center; }
+  table.kf th, table.kf td{ border-bottom:1px solid var(--line,#ddd); padding:5px 3px; }
+  table.kf th{ font-weight:700; background:var(--paper,#faf8f3); white-space:nowrap; }
+  table.kf td.kf-name{ text-align:left; white-space:nowrap; }
+  table.kf td.kf-total{ font-weight:800; font-size:14px; }
+  table.kf tr.kf-top{ background:#fff4de; }
+  table.kf input.kf-m{ width:42px; font:inherit; text-align:center; padding:2px; border:1px solid #bbb; border-radius:3px; }
+  .kf-why{ font-size:10.5px; color:#8a6d3b; display:block; }
+  .kf-sum{ font-size:13px; margin:6px 0; line-height:1.7; }
+  .kf-btn{ font:inherit; font-size:12px; padding:3px 9px; border:1px solid #999; background:#fff; border-radius:3px; cursor:pointer; }
+"""
+
+_KF_SCRIPT = """<script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>"""
+
+
+def _formula_for(race_data):
+    result = race_data.get("prediction")
+    if not result:
+        return None
+    info = race_data["race_info"]
+    f = _compute_formula(result["rows"], info.get("venue"), info.get("title", ""))
+    ai_order = [r["car"] for r in result["rows"]]
+    for x in f:
+        x["ai_rank"] = ai_order.index(x["car"]) + 1
+    return f
+
+
+def render_formula_block(race_data, uid):
+    """1レース分の方程式表（Mは手で書き換え可）。uid はページ内で一意なキー。"""
+    f = _formula_for(race_data)
+    if not f:
+        return ""
+    info = race_data["race_info"]
+    key = f'{info.get("venue")}_{info.get("race_no")}'
+    trs = ""
+    for x in f:
+        bg, fg = car_color(x["car"])
+        b = "-" if x["b"] is None else f'{x["b"]}'
+        why = f'<span class="kf-why">{" ".join(x["m_why"])}</span>' if x["m_why"] else ""
+        age = f'{x["age"]}歳' if x["age"] else "-"
+        pen = f'−{x["age_pen"]}' if x["age_pen"] else "0"
+        trs += (f'<tr class="{"kf-top" if x["rank"] == 1 else ""}" data-ab="{x["ability"]:.2f}" data-l="{x["L"]}">'
+                f'<td><span class="car" style="background:{bg};color:{fg}">{x["car"]}</span></td>'
+                f'<td class="kf-name">{x["name"]}<span class="kf-why">{age}</span></td>'
+                f'<td>{x["score"]:.1f}</td><td>{b}</td><td>{x["kim3"]}</td><td>{pen}</td>'
+                f'<td><b>{x["ability"]:.1f}</b></td>'
+                f'<td>{x["line_size"]}人<br><b>{x["L"]}</b></td>'
+                f'<td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" '
+                f'data-car="{x["car"]}" data-def="{x["m"]}" value="{x["m"]}">{why}</td>'
+                f'<td class="kf-total">{x["total"]:.1f}</td><td class="kf-rank">{x["rank"]}</td>'
+                f'<td>{x["ai_rank"]}</td></tr>')
+    top = f[0]
+    ai_top = min(f, key=lambda x: x["ai_rank"])
+    agree = "AIの本命と一致" if top["car"] == ai_top["car"] else f'AIの本命は{ai_top["car"]}番（方程式では{ai_top["rank"]}位）'
+    missing = any(x["b"] is None for x in f)
+    warn = "（B回数が取れていない選手は0として計算）" if missing else ""
+    return f"""
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>{top['car']}番 {top['name']}</b>（{top['total']:.1f}）／ {agree}</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="{key}">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody>{trs}</tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。{warn}
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      {_KF_SCRIPT}
+    </div>"""
+
+
+def render_formula_page(all_race_data, date=None):
+    by_venue = {}
+    for rd in all_race_data:
+        if rd.get("prediction"):
+            by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)
+    body = ('<p class="kf-note">動画で紹介されていた「勝利の方程式」（能力値＋L指数＋M指数＝期待値）を全レースに当てはめた一覧です。'
+            'AIの確率予測とは別系統のルールベースの指数で、当たるかどうかは「予想成績」ページで答え合わせしています。'
+            '「期待値」は配当を掛けた期待値ではなく、動画の呼び方に合わせた点数です。</p>')
+    for v in sorted(by_venue, key=lambda v: VENUE_NAMES.get(v, v)):
+        body += f'<h2 style="font-size:16px;margin:22px 0 6px;">{VENUE_NAMES.get(v, v)}</h2>'
+        for rd in sorted(by_venue[v], key=lambda rd: rd["race_info"]["race_no"]):
+            info = rd["race_info"]
+            body += (f'<details style="margin:6px 0;border:1px solid var(--line,#ddd);border-radius:4px;padding:6px 8px;">'
+                     f'<summary style="cursor:pointer;font-weight:700;">{info["race_no"]}R　<span style="font-weight:400">{info.get("title") or ""}</span>'
+                     f'　<span class="dim">{_formula_summary(rd)}</span></summary>{render_formula_block(rd, "")}</details>')
+    if not by_venue:
+        body += '<p class="dim">本日は予想できたレースがありません。</p>'
+    return _page_shell(
+        title="勝利の方程式", heading="勝利の方程式",
+        tagline="能力値＋L指数＋M指数＝期待値。全レースの点数一覧。",
+        date_str=_fmt_date_jp(date), body=body, current="formula.html", extra_style=_KF_STYLE, wide=False)
+
+
+def _formula_summary(rd):
+    f = _formula_for(rd)
+    if not f:
+        return ""
+    return f'方程式1位 {f[0]["car"]}番（{f[0]["total"]:.0f}）'
+
+
+def formula_top(race_data):
+    """ログ用：方程式の上位（車番, 期待値）。"""
+    f = _formula_for(race_data)
+    return [[x["car"], round(x["total"], 1)] for x in f] if f else None
