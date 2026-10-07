@@ -99,6 +99,8 @@ def record_predictions(log, all_race_data, date_str):
             # 各選手の予測（車番, 1着率%, 3着内率%）と、そのとき使った1着率の絞り込み（毎日の自動補正用）
             "probs": [[r["car"], round(r["adjusted"], 2), round(r.get("place_rate", 0), 1)] for r in rows],
             "sf": (pred.get("settings") or {}).get("sharpness_first"),
+            # 2着・3着の確率を後から再計算するための入力（毎日の自動補正用。calibration.py）
+            "cond": pred.get("cond_inputs"),
             "result": None,
             "attempts": 0,
             "parser_v": PARSER_VERSION,
