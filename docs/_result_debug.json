@@ -1,70 +1,18 @@
 {
- "updated": "2026-10-07 10:24",
+ "updated": "2026-10-07 12:31",
  "failures": [
   {
-   "race": "2026-10-05 hofu 3R",
+   "race": "2026-10-06 matsuyama 12R",
    "diag": {
-    "venue": "hofu",
-    "race_id": "6320261004020003",
+    "venue": "matsuyama",
+    "race_id": "7520261004030012",
     "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610040200/",
-    "day_html_len": 105311,
-    "day_races": [
-     1,
-     2,
-     4,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-05 hofu 5R",
-   "diag": {
-    "venue": "hofu",
-    "race_id": "6320261004020005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-05 nara 4R",
-   "diag": {
-    "venue": "nara",
-    "race_id": "5320261005010004",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/nara/raceresult/53202610050100/",
-    "day_html_len": 136994,
+    "day_url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202610040300/",
+    "day_html_len": 136885,
     "day_races": [
      1,
      2,
      3,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-05 iwakitaira 3R",
-   "diag": {
-    "venue": "iwakitaira",
-    "race_id": "1320261004020003",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/iwakitaira/raceresult/13202610040200/",
-    "day_html_len": 130752,
-    "day_races": [
-     1,
-     2,
      4,
      5,
      6,
@@ -79,21 +27,56 @@
    }
   },
   {
-   "race": "2026-10-05 takeo 1R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    1,
-    2,
-    5,
-    7,
-    4,
-    3,
-    6
-   ]
+   "race": "2026-10-06 ogaki 2R",
+   "diag": {
+    "venue": "ogaki",
+    "race_id": "4420261006010002",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/ogaki/raceresult/44202610060100/",
+    "day_html_len": 118230,
+    "day_races": [
+     1,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "day_text_head": "",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-06 ogaki 3R",
+   "diag": {
+    "venue": "ogaki",
+    "race_id": "4420261006010003",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-07 shizuoka 4R",
+   "diag": {
+    "venue": "shizuoka",
+    "race_id": "3820261007010004",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-07 omiya 5R",
+   "diag": {
+    "venue": "omiya",
+    "race_id": "2520261006020005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 214,
- "with_result": 130,
+ "with_result": 143,
  "without_url": 0,
- "pending_eligible": 18
+ "pending_eligible": 19
 }
