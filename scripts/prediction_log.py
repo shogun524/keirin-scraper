@@ -281,20 +281,30 @@ def compute_prediction_stats(log):
     recent = sorted(
         (e for e, _ in evaluated), key=lambda e: (e["date"], e.get("deadline") or ""), reverse=True)
 
-    # 勝利の方程式の1位 vs AIの本命（方程式を記録したレースだけで比べる）
-    fa = {"n": 0, "f1": 0, "f3": 0, "a1": 0, "a3": 0, "same": 0}
+    # 勝利の方程式 vs AIの本命（方程式を記録したレースだけで比べる）
+    def _fa_new():
+        return {"n": 0, "f1": 0, "f2": 0, "f3": 0, "fbox": 0, "a1": 0, "a2": 0, "a3": 0, "abox": 0}
+    fa = _fa_new()
+    fa_seg = {"same": _fa_new(), "diff": _fa_new(), "gap_big": _fa_new(), "gap_small": _fa_new()}
     for e, _ in evaluated:
         ev = e.get("ev")
-        if not ev:
+        if not ev or len(ev) < 3:
             continue
         fin = e["result"]["finish_order"]
         fc, ac = ev[0][0], e["order"][0]
-        fa["n"] += 1
-        fa["f1"] += fin[0] == fc
-        fa["f3"] += fc in fin[:3]
-        fa["a1"] += fin[0] == ac
-        fa["a3"] += ac in fin[:3]
-        fa["same"] += fc == ac
+        gap = ev[0][1] - ev[1][1]
+        hit = {
+            "f1": fin[0] == fc, "f2": fc in fin[:2], "f3": fc in fin[:3],
+            "fbox": {x[0] for x in ev[:3]} == set(fin[:3]),
+            "a1": fin[0] == ac, "a2": ac in fin[:2], "a3": ac in fin[:3],
+            "abox": set(e["order"][:3]) == set(fin[:3]),
+        }
+        segs = [fa, fa_seg["same" if fc == ac else "diff"], fa_seg["gap_big" if gap >= 10 else "gap_small"]]
+        for t in segs:
+            t["n"] += 1
+            for k, v in hit.items():
+                t[k] += bool(v)
+    fa["seg"] = fa_seg
     pending = sum(1 for e in log.values() if e.get("result") is None and e.get("attempts", 0) < MAX_ATTEMPTS)
     return {
         "overall": _summarize(evals), "segments": segments, "calibration": calibration,
