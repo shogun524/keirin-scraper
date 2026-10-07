@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-07 21:22",
+ "updated": "2026-10-08 00:24",
  "failures": [
   {
    "race": "2026-10-07 shizuoka 9R",
@@ -7,6 +7,21 @@
     "venue": "shizuoka",
     "race_id": "3820261007010009",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/shizuoka/raceresult/38202610070100/",
+    "day_html_len": 130849,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     10,
+     11
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -38,16 +53,33 @@
   },
   {
    "race": "2026-10-07 ogaki 3R",
-   "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261006020003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    1,
+    5,
+    4,
+    3,
+    6,
+    7
+   ]
+  },
+  {
+   "race": "2026-10-07 maebashi 3R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    5,
+    4,
+    7,
+    6,
+    1,
+    3
+   ]
   }
  ],
- "tracked": 214,
+ "tracked": 286,
  "with_result": 180,
  "without_url": 0,
- "pending_eligible": 21
+ "pending_eligible": 34
 }
