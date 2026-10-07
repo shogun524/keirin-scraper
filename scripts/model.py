@@ -684,7 +684,10 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     # 2着・3着の確率を決める絞り込み（sharpness）は、車数が多いほど強める。
     # 同じ強さのままだと、9車立ては候補が増えた分だけ確率が薄まり（7車立てより上位の買い目が
     # 大幅に低くなる）、実際より平べったい予想になるため。7車立て以下は従来どおり。
-    sharp23 = s["sharpness"] * max(1.0, (len(racers) - 1) / 6)
+    # 毎日の自動補正（calibration.py）が見つけた、車立て別（7車以下／8車以上）の2着・3着側の設定があれば使う
+    go = ((s.get("group_overrides") or {}).get("9" if len(racers) >= 8 else "7")) or {}
+    sharp23 = s["sharpness"] * go.get("sharp23_mult", max(1.0, (len(racers) - 1) / 6))
+    lfb23 = go.get("line_follow_bonus", s["line_follow_bonus"])
     base_scores_raw = compute_base_scores(racers)
     confidence = compute_confidence(racers)
     base_scores = apply_confidence_shrinkage(base_scores_raw, confidence, s["confidence_shrink"])
@@ -730,25 +733,25 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     top = rows[0]
     second_candidates = compute_second_place_candidates(
         racers, top["idx"], combined_scores, dominant, line_map,
-        s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
+        s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
 
     third_candidates = []
     if second_candidates and len(racers) > 2:
         second_idx = second_candidates[0]["idx"]
         third_candidates = compute_third_place_candidates(
             racers, top["idx"], second_idx, combined_scores, dominant, line_map,
-            s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
+            s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
 
     close_group = [r for r in rows if top["adjusted"] - r["adjusted"] <= s["close_threshold"]]
     most_reliable = max(close_group, key=lambda r: r["confidence"]["score"]) if len(close_group) >= 2 else None
 
     second_place_matrix = compute_second_place_matrix(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
     third_place_matrix = compute_third_place_matrix(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23,
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23,
         second_place_matrix=second_place_matrix)
     full_third_place_data = compute_full_third_place_data(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], s["line_follow_bonus"], sharp23)
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
 
     # 「予測3着内率」を、同じモデルのP(1着)+P(2着)+P(3着)の積み上げから算出する
     # （1着率との整合性が構造的に保証される。詳細は関数のdocstring参照）
@@ -796,4 +799,14 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         "is_close_race": max(r["place_rate"] for r in rows) < s["th_close_place"],
         "venue_slug": venue_slug,
         "settings": s,
+        # 2着・3着の毎日の自動補正（calibration.py）で再計算に使う入力（予想成績ログに記録する）
+        "cond_inputs": {
+            "scores": [round(float(x), 6) for x in combined_scores],
+            "dom": [d["type"] for d in dominant],
+            "line": [([line_map[r["car"]]["line_index"], line_map[r["car"]]["position"], line_map[r["car"]]["line_size"]]
+                      if r["car"] in line_map else None) for r in racers],
+            "cars": [r["car"] for r in racers],
+            "adv_bonus": s["adv_bonus"], "adv_penalty": s["adv_penalty"],
+            "line_follow_bonus": lfb23, "sharp23": sharp23,
+        },
     }
