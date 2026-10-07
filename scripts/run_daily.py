@@ -33,7 +33,7 @@ from model import predict_race
 from report import (render_index, render_venue_page, render_venues_page, render_venue_bank_page,
                      render_high_prob_page, render_close_race_page,
                      render_value_page, render_overview_page, render_players_page,
-                     render_venues_today_page, render_results_page, render_print_page, VENUE_NAMES)
+                     render_venues_today_page, render_results_page, render_print_page, render_formula_page, VENUE_NAMES)
 from course_records import update_course_records, get_course_record
 from rivalry_records import update_rivalry_records
 from prediction_log import refresh_log
@@ -269,6 +269,7 @@ def main():
         ("venues_today.html", render_venues_today_page),
         ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params)),
         ("print.html", render_print_page),
+        ("formula.html", render_formula_page),
     ):
         try:
             page_html = render_fn(all_race_data, today)
