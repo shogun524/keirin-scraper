@@ -261,12 +261,8 @@ def main():
     # 全競輪場横断の集計ページ（本命が堅い／拮抗／妙味／全レース早見表）。
     # 1ページの失敗が他のページや日次処理全体を止めないよう、ページごとに独立して書き出す。
     for filename, render_fn in (
-        ("overview.html", render_overview_page),
         ("high_prob.html", render_high_prob_page),
         ("close_race.html", render_close_race_page),
-        ("value.html", render_value_page),
-        ("players.html", render_players_page),
-        ("venues_today.html", render_venues_today_page),
         ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params)),
         ("print.html", render_print_page),
         ("formula.html", render_formula_page),
