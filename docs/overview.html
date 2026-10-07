@@ -94,7 +94,7 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main class="wide">
-  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link current" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">拮抗レース</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a><a class="tab-link" href="print.html">印刷用</a></nav>
+  <nav class="tab-strip" aria-label="ページ切替"><a class="tab-link current" href="overview.html">全レース早見表</a><a class="tab-link" href="high_prob.html">本命が堅い</a><a class="tab-link" href="close_race.html">拮抗レース</a><a class="tab-link" href="value.html">投票が鈍い(妙味)</a><a class="tab-link" href="formula.html">勝利の方程式</a><a class="tab-link" href="players.html">選手一覧</a><a class="tab-link" href="venues_today.html">開催場別</a><a class="tab-link" href="results.html">予想成績</a><a class="tab-link" href="venues.html">全競輪場データ</a><a class="tab-link" href="print.html">印刷用</a></nav>
   <p class="hp-lead">対象：72レース（全競輪場・本日開催分）。「差」は予測1着率の1位と2位の差（pt）。</p>
   <div class="ov-filters"><span class="lbl">絞り込み:</span>
     <button type="button" class="ov-filter" data-flag="high">堅</button>
@@ -189,7 +189,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="14:40">
+        <tr data-flags="value" data-deadline="14:40">
           <td data-sort="奈良09"><a href="nara/index.html?r=9">奈良 9R</a></td>
           <td data-sort="14:40">14:40</td>
           <td data-sort="7"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 上野 優太</td>
@@ -197,7 +197,7 @@
           <td data-sort="25.37">25.4%</td>
           <td data-sort="22.18">22.2</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
         </tr>
         <tr data-flags="close" data-deadline="15:10">
           <td data-sort="奈良10"><a href="nara/index.html?r=10">奈良 10R</a></td>
@@ -239,7 +239,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="" data-deadline="11:05">
+        <tr data-flags="value" data-deadline="11:05">
           <td data-sort="大宮02"><a href="omiya/index.html?r=2">大宮 2R</a></td>
           <td data-sort="11:05">11:05</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 小島 雅章</td>
@@ -247,7 +247,7 @@
           <td data-sort="18.93">18.9%</td>
           <td data-sort="28.20">28.2</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
         </tr>
         <tr data-flags="value" data-deadline="11:32">
           <td data-sort="大宮03"><a href="omiya/index.html?r=3">大宮 3R</a></td>
@@ -299,7 +299,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="high" data-deadline="14:00">
+        <tr data-flags="high value" data-deadline="14:00">
           <td data-sort="大宮08"><a href="omiya/index.html?r=8">大宮 8R</a></td>
           <td data-sort="14:00">14:00</td>
           <td data-sort="5"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 平尾 一晃</td>
@@ -307,7 +307,7 @@
           <td data-sort="10.77">10.8%</td>
           <td data-sort="49.11">49.1</td>
           <td data-sort="捲り">捲り</td>
-          <td data-sort="1"><span class="ov-badge ov-high">堅</span></td>
+          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
         </tr>
         <tr data-flags="" data-deadline="14:30">
           <td data-sort="大宮09"><a href="omiya/index.html?r=9">大宮 9R</a></td>
@@ -399,7 +399,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="1"><span class="ov-badge ov-close">拮抗</span></td>
         </tr>
-        <tr data-flags="high value" data-deadline="17:55">
+        <tr data-flags="high" data-deadline="17:55">
           <td data-sort="四日市06"><a href="yokkaichi/index.html?r=6">四日市 6R</a></td>
           <td data-sort="17:55">17:55</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 原 誠宏</td>
@@ -407,7 +407,7 @@
           <td data-sort="16.15">16.2%</td>
           <td data-sort="39.82">39.8</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="1"><span class="ov-badge ov-high">堅</span></td>
         </tr>
         <tr data-flags="" data-deadline="18:19">
           <td data-sort="四日市07"><a href="yokkaichi/index.html?r=7">四日市 7R</a></td>
@@ -419,7 +419,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="value" data-deadline="18:43">
+        <tr data-flags="" data-deadline="18:43">
           <td data-sort="四日市08"><a href="yokkaichi/index.html?r=8">四日市 8R</a></td>
           <td data-sort="18:43">18:43</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 藤井 栄二</td>
@@ -427,7 +427,7 @@
           <td data-sort="16.99">17.0%</td>
           <td data-sort="31.87">31.9</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
         <tr data-flags="close" data-deadline="19:08">
           <td data-sort="四日市09"><a href="yokkaichi/index.html?r=9">四日市 9R</a></td>
@@ -449,7 +449,7 @@
           <td data-sort="差し">差し</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="value" data-deadline="19:59">
+        <tr data-flags="" data-deadline="19:59">
           <td data-sort="四日市11"><a href="yokkaichi/index.html?r=11">四日市 11R</a></td>
           <td data-sort="19:59">19:59</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 猿樂 楓樹</td>
@@ -457,7 +457,7 @@
           <td data-sort="15.71">15.7%</td>
           <td data-sort="32.74">32.7</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="0"><span class="dim">—</span></td>
         </tr>
         <tr data-flags="" data-deadline="20:25">
           <td data-sort="四日市12"><a href="yokkaichi/index.html?r=12">四日市 12R</a></td>
@@ -559,7 +559,7 @@
           <td data-sort="捲り">捲り</td>
           <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
         </tr>
-        <tr data-flags="high value" data-deadline="20:35">
+        <tr data-flags="high" data-deadline="20:35">
           <td data-sort="大垣01"><a href="ogaki/index.html?r=1">大垣 1R</a></td>
           <td data-sort="20:35">20:35</td>
           <td data-sort="1"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 藤縄 洋介</td>
@@ -567,7 +567,7 @@
           <td data-sort="14.86">14.9%</td>
           <td data-sort="48.43">48.4</td>
           <td data-sort="差し">差し</td>
-          <td data-sort="2"><span class="ov-badge ov-high">堅</span><span class="ov-badge ov-value">妙味</span></td>
+          <td data-sort="1"><span class="ov-badge ov-high">堅</span></td>
         </tr>
         <tr data-flags="" data-deadline="20:55">
           <td data-sort="大垣02"><a href="ogaki/index.html?r=2">大垣 2R</a></td>
@@ -739,7 +739,7 @@
           <td data-sort="逃げ">逃げ</td>
           <td data-sort="0"><span class="dim">—</span></td>
         </tr>
-        <tr data-flags="" data-deadline="11:50">
+        <tr data-flags="value" data-deadline="11:50">
           <td data-sort="静岡03"><a href="shizuoka/index.html?r=3">静岡 3R</a></td>
           <td data-sort="11:50">11:50</td>
           <td data-sort="3"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 片岡 遼真</td>
@@ -747,7 +747,7 @@
           <td data-sort="21.63">21.6%</td>
           <td data-sort="24.96">25.0</td>
           <td data-sort="逃げ">逃げ</td>
-          <td data-sort="0"><span class="dim">—</span></td>
+          <td data-sort="1"><span class="ov-badge ov-value">妙味</span></td>
         </tr>
         <tr data-flags="close" data-deadline="12:20">
           <td data-sort="静岡04"><a href="shizuoka/index.html?r=4">静岡 4R</a></td>

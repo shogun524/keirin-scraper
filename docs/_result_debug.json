@@ -1,36 +1,6 @@
 {
- "updated": "2026-10-07 17:29",
+ "updated": "2026-10-07 21:08",
  "failures": [
-  {
-   "race": "2026-10-06 ogaki 2R",
-   "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261006010002",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/ogaki/raceresult/44202610060100/",
-    "day_html_len": 117259,
-    "day_races": [
-     1,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-06 ogaki 3R",
-   "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261006010003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-07 shizuoka 9R",
    "diag": {
@@ -39,10 +9,41 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-07 maebashi 1R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    1,
+    5,
+    3,
+    4,
+    6,
+    7
+   ]
+  },
+  {
+   "race": "2026-10-07 ogaki 2R",
+   "diag": {
+    "venue": "ogaki",
+    "race_id": "4420261006020002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-07 maebashi 2R",
+   "diag": {
+    "venue": "maebashi",
+    "race_id": "2220261006020002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 214,
- "with_result": 170,
+ "with_result": 179,
  "without_url": 0,
- "pending_eligible": 18
+ "pending_eligible": 21
 }

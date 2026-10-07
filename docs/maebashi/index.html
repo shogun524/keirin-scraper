@@ -158,8 +158,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 14,250票 <span class="delta-up">↑↑ 初回計測比 +109515%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race1_subbtn_main" onclick="showSubTab('race1','main',this)">予想</button><button class="subtab-btn" id="race1_subbtn_tf" onclick="showSubTab('race1','tf',this)">3連単</button><button class="subtab-btn" id="race1_subbtn_dev" onclick="showSubTab('race1','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 387,116票 <span class="delta-up">↑↑ 初回計測比 +2977715%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race1_subbtn_main" onclick="showSubTab('race1','main',this)">予想</button><button class="subtab-btn" id="race1_subbtn_tf" onclick="showSubTab('race1','tf',this)">3連単</button><button class="subtab-btn" id="race1_subbtn_dev" onclick="showSubTab('race1','dev',this)">展開</button><button class="subtab-btn" id="race1_subbtn_kf" onclick="showSubTab('race1','kf',this)">方程式</button></div>
     <div id="race1_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -408,6 +408,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 32%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 23%</span><span class="dev-pick"><span class="car" style="background:#2f8f4e;color:#ffffff;">6</span> 15%</span></div>
         </div></div>
     </div>
+    
+    <div id="race1_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>2番 半田 水晶</b>（95.9）／ AIの本命と一致</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_1">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="88.87" data-l="3"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">半田 水晶<span class="kf-why">28歳</span></td><td>55.9</td><td>19</td><td>14</td><td>0</td><td><b>88.9</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="4" value="4"><span class="kf-why">得点2位+3 車番良+1</span></td><td class="kf-total">95.9</td><td class="kf-rank">1</td><td>1</td></tr><tr class="" data-ab="72.36" data-l="3"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">那須 萌美<span class="kf-why">36歳</span></td><td>56.4</td><td>1</td><td>16</td><td>−1</td><td><b>72.4</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="7" value="7"><span class="kf-why">得点1位+5 車番良+2</span></td><td class="kf-total">82.4</td><td class="kf-rank">2</td><td>2</td></tr><tr class="" data-ab="60.18" data-l="3"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">戸田 瑞姫<span class="kf-why">23歳</span></td><td>53.2</td><td>2</td><td>5</td><td>0</td><td><b>60.2</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="1" value="1"><span class="kf-why">得点3位+1</span></td><td class="kf-total">64.2</td><td class="kf-rank">3</td><td>5</td></tr><tr class="" data-ab="59.19" data-l="3"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">石井 貴子<span class="kf-why">38歳</span></td><td>51.2</td><td>8</td><td>3</td><td>−3</td><td><b>59.2</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="0" value="0"></td><td class="kf-total">62.2</td><td class="kf-rank">4</td><td>4</td></tr><tr class="" data-ab="55.62" data-l="3"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">中野 咲<span class="kf-why">29歳</span></td><td>51.6</td><td>2</td><td>2</td><td>0</td><td><b>55.6</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="0" value="0"></td><td class="kf-total">58.6</td><td class="kf-rank">5</td><td>6</td></tr><tr class="" data-ab="48.61" data-l="3"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">佐藤 乃愛<span class="kf-why">22歳</span></td><td>47.6</td><td>0</td><td>1</td><td>0</td><td><b>48.6</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="0" value="0"></td><td class="kf-total">51.6</td><td class="kf-rank">6</td><td>3</td></tr><tr class="" data-ab="46.33" data-l="3"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">刈込 奈那<span class="kf-why">25歳</span></td><td>45.3</td><td>1</td><td>0</td><td>0</td><td><b>46.3</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="0" value="0"></td><td class="kf-total">49.3</td><td class="kf-rank">7</td><td>7</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race2" class="race-panel" style="display:none;">
@@ -420,8 +465,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 11,419票 <span class="delta-up">↑↑ 初回計測比 +87738%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race2_subbtn_main" onclick="showSubTab('race2','main',this)">予想</button><button class="subtab-btn" id="race2_subbtn_tf" onclick="showSubTab('race2','tf',this)">3連単</button><button class="subtab-btn" id="race2_subbtn_dev" onclick="showSubTab('race2','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 279,528票 <span class="delta-up">↑↑ 初回計測比 +2150115%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race2_subbtn_main" onclick="showSubTab('race2','main',this)">予想</button><button class="subtab-btn" id="race2_subbtn_tf" onclick="showSubTab('race2','tf',this)">3連単</button><button class="subtab-btn" id="race2_subbtn_dev" onclick="showSubTab('race2','dev',this)">展開</button><button class="subtab-btn" id="race2_subbtn_kf" onclick="showSubTab('race2','kf',this)">方程式</button></div>
     <div id="race2_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -670,6 +715,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 28%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 28%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 16%</span></div>
         </div></div>
     </div>
+    
+    <div id="race2_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>1番 吉川 美穂</b>（93.0）／ AIの本命と一致</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_2">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="82.96" data-l="3"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">吉川 美穂<span class="kf-why">33歳</span></td><td>57.0</td><td>6</td><td>20</td><td>0</td><td><b>83.0</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="7" value="7"><span class="kf-why">得点1位+5 車番良+2</span></td><td class="kf-total">93.0</td><td class="kf-rank">1</td><td>1</td></tr><tr class="" data-ab="83.15" data-l="3"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">渡口 まりあ<span class="kf-why">31歳</span></td><td>53.1</td><td>20</td><td>10</td><td>0</td><td><b>83.2</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="1" value="1"><span class="kf-why">得点3位+1</span></td><td class="kf-total">87.2</td><td class="kf-rank">2</td><td>4</td></tr><tr class="" data-ab="72.83" data-l="6"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">西島 叶子<span class="kf-why">31歳</span></td><td>54.8</td><td>5</td><td>13</td><td>0</td><td><b>72.8</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="6" value="6"><span class="kf-why">得点2位+3 車番良+1 最強ライン+2</span></td><td class="kf-total">84.8</td><td class="kf-rank">3</td><td>3</td></tr><tr class="" data-ab="63.66" data-l="9"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">伊藤 優里<span class="kf-why">22歳</span></td><td>50.7</td><td>9</td><td>4</td><td>0</td><td><b>63.7</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="0" value="0"></td><td class="kf-total">72.7</td><td class="kf-rank">4</td><td>2</td></tr><tr class="" data-ab="52.05" data-l="6"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">野寺 楓<span class="kf-why">28歳</span></td><td>51.0</td><td>0</td><td>1</td><td>0</td><td><b>52.0</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="5" value="5"><span class="kf-why">番手+3 最強ライン+2</span></td><td class="kf-total">63.0</td><td class="kf-rank">5</td><td>5</td></tr><tr class="" data-ab="49.76" data-l="9"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">佐々木 恵理<span class="kf-why">36歳</span></td><td>47.8</td><td>0</td><td>3</td><td>−1</td><td><b>49.8</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="3" value="3"><span class="kf-why">番手+3</span></td><td class="kf-total">61.8</td><td class="kf-rank">6</td><td>7</td></tr><tr class="" data-ab="47.60" data-l="9"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">南 彩乃<span class="kf-why">28歳</span></td><td>47.6</td><td>0</td><td>0</td><td>0</td><td><b>47.6</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="4" value="4"><span class="kf-why">3番手+1 地元戦+3</span></td><td class="kf-total">60.6</td><td class="kf-rank">7</td><td>6</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race3" class="race-panel" style="display:none;">
@@ -682,8 +772,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,695票 <span class="delta-up">↑↑ 初回計測比 +16850%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race3_subbtn_main" onclick="showSubTab('race3','main',this)">予想</button><button class="subtab-btn" id="race3_subbtn_tf" onclick="showSubTab('race3','tf',this)">3連単</button><button class="subtab-btn" id="race3_subbtn_dev" onclick="showSubTab('race3','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 48,355票 <span class="delta-up">↑↑ 初回計測比 +483450%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race3_subbtn_main" onclick="showSubTab('race3','main',this)">予想</button><button class="subtab-btn" id="race3_subbtn_tf" onclick="showSubTab('race3','tf',this)">3連単</button><button class="subtab-btn" id="race3_subbtn_dev" onclick="showSubTab('race3','dev',this)">展開</button><button class="subtab-btn" id="race3_subbtn_kf" onclick="showSubTab('race3','kf',this)">方程式</button></div>
     <div id="race3_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -932,6 +1022,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#1f5fc4;color:#ffffff;">4</span> 40%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 22%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span></div>
         </div></div>
     </div>
+    
+    <div id="race3_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>2番 大森 光明</b>（104.5）／ AIの本命は4番（方程式では4位）</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_3">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="92.55" data-l="6"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">大森 光明<span class="kf-why">27歳</span></td><td>83.5</td><td>4</td><td>5</td><td>0</td><td><b>92.5</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="6" value="6"><span class="kf-why">得点2位+3 車番良+1 最強ライン+2</span></td><td class="kf-total">104.5</td><td class="kf-rank">1</td><td>2</td></tr><tr class="" data-ab="78.56" data-l="9"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">河野<span class="kf-why">42歳</span></td><td>83.6</td><td>0</td><td>2</td><td>−7</td><td><b>78.6</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="8" value="8"><span class="kf-why">得点1位+5 車番良+2 3番手+1</span></td><td class="kf-total">95.6</td><td class="kf-rank">2</td><td>4</td></tr><tr class="" data-ab="80.54" data-l="6"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">山口 貴弘<span class="kf-why">48歳</span></td><td>83.5</td><td>2</td><td>8</td><td>−13</td><td><b>80.5</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="4" value="4"><span class="kf-why">得点3位+1 追込がライン先頭+3</span></td><td class="kf-total">90.5</td><td class="kf-rank">3</td><td>3</td></tr><tr class="" data-ab="72.00" data-l="6"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">石川 恭規<span class="kf-why">48歳</span></td><td>81.0</td><td>1</td><td>3</td><td>−13</td><td><b>72.0</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="5" value="5"><span class="kf-why">番手+3 最強ライン+2</span></td><td class="kf-total">83.0</td><td class="kf-rank">4</td><td>1</td></tr><tr class="" data-ab="63.92" data-l="9"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">中曽 直彦<span class="kf-why">54歳</span></td><td>80.9</td><td>0</td><td>2</td><td>−19</td><td><b>63.9</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="3" value="3"><span class="kf-why">番手+3</span></td><td class="kf-total">75.9</td><td class="kf-rank">5</td><td>5</td></tr><tr class="" data-ab="66.39" data-l="9"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">福森 慎太郎<span class="kf-why">49歳</span></td><td>78.4</td><td>0</td><td>2</td><td>−14</td><td><b>66.4</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="0" value="0"></td><td class="kf-total">75.4</td><td class="kf-rank">6</td><td>7</td></tr><tr class="" data-ab="61.26" data-l="6"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">岩橋 則明<span class="kf-why">54歳</span></td><td>80.3</td><td>0</td><td>0</td><td>−19</td><td><b>61.3</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="3" value="3"><span class="kf-why">番手+3</span></td><td class="kf-total">70.3</td><td class="kf-rank">7</td><td>6</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race4" class="race-panel" style="display:none;">
@@ -944,8 +1079,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,368票 <span class="delta-up">↑↑ 初回計測比 +3320%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race4_subbtn_main" onclick="showSubTab('race4','main',this)">予想</button><button class="subtab-btn" id="race4_subbtn_tf" onclick="showSubTab('race4','tf',this)">3連単</button><button class="subtab-btn" id="race4_subbtn_dev" onclick="showSubTab('race4','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 14,506票 <span class="delta-up">↑↑ 初回計測比 +36165%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race4_subbtn_main" onclick="showSubTab('race4','main',this)">予想</button><button class="subtab-btn" id="race4_subbtn_tf" onclick="showSubTab('race4','tf',this)">3連単</button><button class="subtab-btn" id="race4_subbtn_dev" onclick="showSubTab('race4','dev',this)">展開</button><button class="subtab-btn" id="race4_subbtn_kf" onclick="showSubTab('race4','kf',this)">方程式</button></div>
     <div id="race4_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -1194,6 +1329,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 37%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 19%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 13%</span></div>
         </div></div>
     </div>
+    
+    <div id="race4_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>5番 鳥海 創</b>（112.0）／ AIの本命は1番（方程式では3位）</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_4">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="98.00" data-l="12"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">鳥海 創<span class="kf-why">25歳</span></td><td>81.0</td><td>10</td><td>7</td><td>0</td><td><b>98.0</b></td><td>4人<br><b>12</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="2" value="2"><span class="kf-why">最強ライン+2</span></td><td class="kf-total">112.0</td><td class="kf-rank">1</td><td>2</td></tr><tr class="" data-ab="98.64" data-l="9"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">伊早坂 駿一<span class="kf-why">32歳</span></td><td>82.6</td><td>8</td><td>8</td><td>0</td><td><b>98.6</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="0" value="0"></td><td class="kf-total">107.6</td><td class="kf-rank">2</td><td>3</td></tr><tr class="" data-ab="76.59" data-l="12"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">荒木 伸哉<span class="kf-why">47歳</span></td><td>86.6</td><td>0</td><td>2</td><td>−12</td><td><b>76.6</b></td><td>4人<br><b>12</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="10" value="10"><span class="kf-why">得点1位+5 車番良+2 番手+3 番手で脚力上位+2 最強ライン+2</span></td><td class="kf-total">98.6</td><td class="kf-rank">3</td><td>1</td></tr><tr class="" data-ab="76.70" data-l="12"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">飯尾 主税<span class="kf-why">47歳</span></td><td>84.7</td><td>0</td><td>4</td><td>−12</td><td><b>76.7</b></td><td>4人<br><b>12</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="9" value="9"><span class="kf-why">得点2位+3 車番良+1 3番手+1 最強ライン+2 強ラインの3番手+2</span></td><td class="kf-total">97.7</td><td class="kf-rank">4</td><td>5</td></tr><tr class="" data-ab="75.41" data-l="9"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">橋本 紀彰<span class="kf-why">46歳</span></td><td>83.4</td><td>0</td><td>3</td><td>−11</td><td><b>75.4</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="4" value="4"><span class="kf-why">得点3位+1 番手+3</span></td><td class="kf-total">88.4</td><td class="kf-rank">5</td><td>4</td></tr><tr class="" data-ab="61.50" data-l="9"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">伊藤 一貴<span class="kf-why">54歳</span></td><td>79.5</td><td>0</td><td>1</td><td>−19</td><td><b>61.5</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="1" value="1"><span class="kf-why">3番手+1</span></td><td class="kf-total">71.5</td><td class="kf-rank">6</td><td>6</td></tr><tr class="" data-ab="51.28" data-l="12"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">黒瀬 浩一<span class="kf-why">60歳</span></td><td>76.3</td><td>0</td><td>0</td><td>−25</td><td><b>51.3</b></td><td>4人<br><b>12</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="2" value="2"><span class="kf-why">最強ライン+2</span></td><td class="kf-total">65.3</td><td class="kf-rank">7</td><td>7</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race5" class="race-panel" style="display:none;">
@@ -1206,8 +1386,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,328票 <span class="delta-up">↑↑ 初回計測比 +13180%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race5_subbtn_main" onclick="showSubTab('race5','main',this)">予想</button><button class="subtab-btn" id="race5_subbtn_tf" onclick="showSubTab('race5','tf',this)">3連単</button><button class="subtab-btn" id="race5_subbtn_dev" onclick="showSubTab('race5','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 13,918票 <span class="delta-up">↑↑ 初回計測比 +139080%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race5_subbtn_main" onclick="showSubTab('race5','main',this)">予想</button><button class="subtab-btn" id="race5_subbtn_tf" onclick="showSubTab('race5','tf',this)">3連単</button><button class="subtab-btn" id="race5_subbtn_dev" onclick="showSubTab('race5','dev',this)">展開</button><button class="subtab-btn" id="race5_subbtn_kf" onclick="showSubTab('race5','kf',this)">方程式</button></div>
     <div id="race5_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -1456,6 +1636,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 56%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 16%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 9%</span></div>
         </div></div>
     </div>
+    
+    <div id="race5_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>3番 鈴木 小次廊</b>（107.1）／ AIの本命は1番（方程式では2位）</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_5">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="97.09" data-l="9"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">鈴木 小次廊<span class="kf-why">23歳</span></td><td>84.1</td><td>8</td><td>5</td><td>0</td><td><b>97.1</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="1" value="1"><span class="kf-why">得点3位+1</span></td><td class="kf-total">107.1</td><td class="kf-rank">1</td><td>2</td></tr><tr class="" data-ab="87.00" data-l="6"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">外崎 一成<span class="kf-why">39歳</span></td><td>86.0</td><td>0</td><td>5</td><td>−4</td><td><b>87.0</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="10" value="10"><span class="kf-why">得点1位+5 車番良+2 番手+3 番手で脚力上位+2</span></td><td class="kf-total">103.0</td><td class="kf-rank">2</td><td>1</td></tr><tr class="" data-ab="90.19" data-l="6"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">平山 優太<span class="kf-why">26歳</span></td><td>80.2</td><td>5</td><td>5</td><td>0</td><td><b>90.2</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="0" value="0"></td><td class="kf-total">96.2</td><td class="kf-rank">3</td><td>5</td></tr><tr class="" data-ab="70.00" data-l="6"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">江連 和洋<span class="kf-why">54歳</span></td><td>86.0</td><td>0</td><td>3</td><td>−19</td><td><b>70.0</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="9" value="9"><span class="kf-why">得点2位+3 車番良+1 追込がライン先頭+3 最強ライン+2</span></td><td class="kf-total">85.0</td><td class="kf-rank">4</td><td>3</td></tr><tr class="" data-ab="70.77" data-l="6"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">齋藤 昌弘<span class="kf-why">45歳</span></td><td>80.8</td><td>0</td><td>0</td><td>−10</td><td><b>70.8</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="8" value="8"><span class="kf-why">番手+3 最強ライン+2 地元戦+3</span></td><td class="kf-total">84.8</td><td class="kf-rank">5</td><td>6</td></tr><tr class="" data-ab="74.41" data-l="9"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">成清 謙二郎<span class="kf-why">42歳</span></td><td>80.4</td><td>0</td><td>1</td><td>−7</td><td><b>74.4</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="1" value="1"><span class="kf-why">3番手+1</span></td><td class="kf-total">84.4</td><td class="kf-rank">6</td><td>7</td></tr><tr class="" data-ab="66.46" data-l="9"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">赤井 学<span class="kf-why">52歳</span></td><td>82.5</td><td>0</td><td>1</td><td>−17</td><td><b>66.5</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="3" value="3"><span class="kf-why">番手+3</span></td><td class="kf-total">78.5</td><td class="kf-rank">7</td><td>4</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race6" class="race-panel" style="display:none;">
@@ -1468,8 +1693,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,083票 <span class="delta-up">↑↑ 初回計測比 +2608%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race6_subbtn_main" onclick="showSubTab('race6','main',this)">予想</button><button class="subtab-btn" id="race6_subbtn_tf" onclick="showSubTab('race6','tf',this)">3連単</button><button class="subtab-btn" id="race6_subbtn_dev" onclick="showSubTab('race6','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 9,135票 <span class="delta-up">↑↑ 初回計測比 +22738%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race6_subbtn_main" onclick="showSubTab('race6','main',this)">予想</button><button class="subtab-btn" id="race6_subbtn_tf" onclick="showSubTab('race6','tf',this)">3連単</button><button class="subtab-btn" id="race6_subbtn_dev" onclick="showSubTab('race6','dev',this)">展開</button><button class="subtab-btn" id="race6_subbtn_kf" onclick="showSubTab('race6','kf',this)">方程式</button></div>
     <div id="race6_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -1718,6 +1943,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 42%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 18%</span><span class="dev-pick"><span class="car" style="background:#e07a1f;color:#ffffff;">7</span> 12%</span></div>
         </div></div>
     </div>
+    
+    <div id="race6_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>1番 小田 恭介</b>（114.6）／ AIの本命は2番（方程式では3位）</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_6">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="96.60" data-l="9"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">小田 恭介<span class="kf-why">26歳</span></td><td>85.6</td><td>6</td><td>5</td><td>0</td><td><b>96.6</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="9" value="9"><span class="kf-why">得点1位+5 車番良+2 最強ライン+2</span></td><td class="kf-total">114.6</td><td class="kf-rank">1</td><td>2</td></tr><tr class="" data-ab="94.44" data-l="6"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">田中 誇士<span class="kf-why">33歳</span></td><td>84.4</td><td>4</td><td>6</td><td>0</td><td><b>94.4</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="1" value="1"><span class="kf-why">得点3位+1</span></td><td class="kf-total">101.4</td><td class="kf-rank">2</td><td>4</td></tr><tr class="" data-ab="79.00" data-l="9"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">田原 大広<span class="kf-why">47歳</span></td><td>85.0</td><td>1</td><td>5</td><td>−12</td><td><b>79.0</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="9" value="9"><span class="kf-why">得点2位+3 車番良+1 番手+3 最強ライン+2</span></td><td class="kf-total">97.0</td><td class="kf-rank">3</td><td>1</td></tr><tr class="" data-ab="84.08" data-l="6"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">鈴木 謙二<span class="kf-why">41歳</span></td><td>84.1</td><td>1</td><td>5</td><td>−6</td><td><b>84.1</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="3" value="3"><span class="kf-why">追込がライン先頭+3</span></td><td class="kf-total">93.1</td><td class="kf-rank">4</td><td>3</td></tr><tr class="" data-ab="77.85" data-l="9"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">大崎 智久<span class="kf-why">44歳</span></td><td>81.8</td><td>0</td><td>5</td><td>−9</td><td><b>77.8</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="5" value="5"><span class="kf-why">3番手+1 最強ライン+2 強ラインの3番手+2</span></td><td class="kf-total">91.8</td><td class="kf-rank">5</td><td>6</td></tr><tr class="" data-ab="67.38" data-l="6"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">新井 剛央<span class="kf-why">48歳</span></td><td>80.4</td><td>0</td><td>0</td><td>−13</td><td><b>67.4</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="3" value="3"><span class="kf-why">番手+3</span></td><td class="kf-total">76.4</td><td class="kf-rank">6</td><td>7</td></tr><tr class="" data-ab="66.61" data-l="6"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">深澤 伸介<span class="kf-why">50歳</span></td><td>79.6</td><td>0</td><td>2</td><td>−15</td><td><b>66.6</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="3" value="3"><span class="kf-why">番手+3</span></td><td class="kf-total">75.6</td><td class="kf-rank">7</td><td>5</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race7" class="race-panel" style="display:none;">
@@ -1730,8 +2000,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,479票 <span class="delta-up">↑↑ 初回計測比 +12225%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race7_subbtn_main" onclick="showSubTab('race7','main',this)">予想</button><button class="subtab-btn" id="race7_subbtn_tf" onclick="showSubTab('race7','tf',this)">3連単</button><button class="subtab-btn" id="race7_subbtn_dev" onclick="showSubTab('race7','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 14,628票 <span class="delta-up">↑↑ 初回計測比 +121800%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race7_subbtn_main" onclick="showSubTab('race7','main',this)">予想</button><button class="subtab-btn" id="race7_subbtn_tf" onclick="showSubTab('race7','tf',this)">3連単</button><button class="subtab-btn" id="race7_subbtn_dev" onclick="showSubTab('race7','dev',this)">展開</button><button class="subtab-btn" id="race7_subbtn_kf" onclick="showSubTab('race7','kf',this)">方程式</button></div>
     <div id="race7_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -1980,6 +2250,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 34%</span><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 25%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 14%</span></div>
         </div></div>
     </div>
+    
+    <div id="race7_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>4番 西村 剛</b>（123.9）／ AIの本命は3番（方程式では2位）</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_7">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="116.90" data-l="6"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">西村 剛<span class="kf-why">27歳</span></td><td>89.9</td><td>15</td><td>12</td><td>0</td><td><b>116.9</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="1" value="1"><span class="kf-why">準決勝+1</span></td><td class="kf-total">123.9</td><td class="kf-rank">1</td><td>4</td></tr><tr class="" data-ab="108.80" data-l="6"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">岡部 伶音<span class="kf-why">28歳</span></td><td>92.8</td><td>9</td><td>7</td><td>0</td><td><b>108.8</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="4" value="4"><span class="kf-why">得点3位+1 最強ライン+2 準決勝+1</span></td><td class="kf-total">118.8</td><td class="kf-rank">2</td><td>1</td></tr><tr class="" data-ab="105.50" data-l="6"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">新井 僚太郎<span class="kf-why">34歳</span></td><td>85.5</td><td>8</td><td>12</td><td>0</td><td><b>105.5</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="4" value="4"><span class="kf-why">番手+3 準決勝+1</span></td><td class="kf-total">115.5</td><td class="kf-rank">3</td><td>5</td></tr><tr class="" data-ab="90.57" data-l="9"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">高橋 雅之<span class="kf-why">44歳</span></td><td>93.6</td><td>0</td><td>6</td><td>−9</td><td><b>90.6</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="10" value="10"><span class="kf-why">得点2位+3 車番良+1 番手+3 番手で脚力上位+2 準決勝+1</span></td><td class="kf-total">109.6</td><td class="kf-rank">4</td><td>3</td></tr><tr class="" data-ab="88.66" data-l="6"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">伊藤 大志<span class="kf-why">47歳</span></td><td>94.7</td><td>0</td><td>6</td><td>−12</td><td><b>88.7</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="10" value="10"><span class="kf-why">得点1位+5 車番良+2 番手+3 番手で脚力上位+2 最強ライン+2 準決勝+1</span></td><td class="kf-total">104.7</td><td class="kf-rank">5</td><td>2</td></tr><tr class="" data-ab="88.14" data-l="9"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">田頭 寛之<span class="kf-why">38歳</span></td><td>85.1</td><td>2</td><td>4</td><td>−3</td><td><b>88.1</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="4" value="4"><span class="kf-why">追込がライン先頭+3 準決勝+1</span></td><td class="kf-total">101.1</td><td class="kf-rank">6</td><td>6</td></tr><tr class="" data-ab="88.82" data-l="9"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">田口 裕一<span class="kf-why">36歳</span></td><td>87.8</td><td>0</td><td>2</td><td>−1</td><td><b>88.8</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="2" value="2"><span class="kf-why">3番手+1 準決勝+1</span></td><td class="kf-total">99.8</td><td class="kf-rank">7</td><td>7</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race8" class="race-panel" style="display:none;">
@@ -1992,8 +2307,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 1,652票 <span class="delta-up">↑↑ 初回計測比 +13667%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race8_subbtn_main" onclick="showSubTab('race8','main',this)">予想</button><button class="subtab-btn" id="race8_subbtn_tf" onclick="showSubTab('race8','tf',this)">3連単</button><button class="subtab-btn" id="race8_subbtn_dev" onclick="showSubTab('race8','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 14,362票 <span class="delta-up">↑↑ 初回計測比 +119583%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race8_subbtn_main" onclick="showSubTab('race8','main',this)">予想</button><button class="subtab-btn" id="race8_subbtn_tf" onclick="showSubTab('race8','tf',this)">3連単</button><button class="subtab-btn" id="race8_subbtn_dev" onclick="showSubTab('race8','dev',this)">展開</button><button class="subtab-btn" id="race8_subbtn_kf" onclick="showSubTab('race8','kf',this)">方程式</button></div>
     <div id="race8_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -2242,6 +2557,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 45%</span><span class="dev-pick"><span class="car" style="background:#d8322a;color:#ffffff;">3</span> 18%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 13%</span></div>
         </div></div>
     </div>
+    
+    <div id="race8_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>5番 木村 優駿</b>（135.1）／ AIの本命と一致</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_8">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="123.07" data-l="9"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">木村 優駿<span class="kf-why">20歳</span></td><td>88.1</td><td>21</td><td>14</td><td>0</td><td><b>123.1</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="3" value="3"><span class="kf-why">最強ライン+2 準決勝+1</span></td><td class="kf-total">135.1</td><td class="kf-rank">1</td><td>1</td></tr><tr class="" data-ab="111.95" data-l="9"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">吉田 晏生<span class="kf-why">27歳</span></td><td>91.0</td><td>9</td><td>12</td><td>0</td><td><b>112.0</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="7" value="7"><span class="kf-why">得点3位+1 番手+3 最強ライン+2 準決勝+1</span></td><td class="kf-total">128.0</td><td class="kf-rank">2</td><td>2</td></tr><tr class="" data-ab="106.45" data-l="3"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">上川 直紀<span class="kf-why">30歳</span></td><td>91.5</td><td>6</td><td>9</td><td>0</td><td><b>106.5</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="5" value="5"><span class="kf-why">得点2位+3 車番良+1 準決勝+1</span></td><td class="kf-total">114.5</td><td class="kf-rank">3</td><td>4</td></tr><tr class="" data-ab="88.66" data-l="3"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">加賀山 淳<span class="kf-why">42歳</span></td><td>91.7</td><td>2</td><td>2</td><td>−7</td><td><b>88.7</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="8" value="8"><span class="kf-why">得点1位+5 車番良+2 準決勝+1</span></td><td class="kf-total">99.7</td><td class="kf-rank">4</td><td>5</td></tr><tr class="" data-ab="88.36" data-l="3"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">菅田 和宏<span class="kf-why">44歳</span></td><td>83.4</td><td>7</td><td>7</td><td>−9</td><td><b>88.4</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="1" value="1"><span class="kf-why">準決勝+1</span></td><td class="kf-total">92.4</td><td class="kf-rank">5</td><td>6</td></tr><tr class="" data-ab="73.56" data-l="9"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">山田 幸司<span class="kf-why">54歳</span></td><td>87.6</td><td>0</td><td>5</td><td>−19</td><td><b>73.6</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="6" value="6"><span class="kf-why">3番手+1 最強ライン+2 強ラインの3番手+2 準決勝+1</span></td><td class="kf-total">88.6</td><td class="kf-rank">6</td><td>7</td></tr><tr class="" data-ab="76.16" data-l="3"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">小林 圭介<span class="kf-why">50歳</span></td><td>90.2</td><td>0</td><td>1</td><td>−15</td><td><b>76.2</b></td><td>1人<br><b>3</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="1" value="1"><span class="kf-why">準決勝+1</span></td><td class="kf-total">80.2</td><td class="kf-rank">7</td><td>3</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
     <div id="race9" class="race-panel" style="display:none;">
@@ -2254,8 +2614,8 @@
         </div>
         
         <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
-        <p class="dim" style="margin:2px 0 0;">投票状況: 3,274票 <span class="delta-up">↑↑ 初回計測比 +25085%</span></p>
-        <div class="subtab-bar"><button class="subtab-btn active" id="race9_subbtn_main" onclick="showSubTab('race9','main',this)">予想</button><button class="subtab-btn" id="race9_subbtn_tf" onclick="showSubTab('race9','tf',this)">3連単</button><button class="subtab-btn" id="race9_subbtn_dev" onclick="showSubTab('race9','dev',this)">展開</button></div>
+        <p class="dim" style="margin:2px 0 0;">投票状況: 20,479票 <span class="delta-up">↑↑ 初回計測比 +157431%</span></p>
+        <div class="subtab-bar"><button class="subtab-btn active" id="race9_subbtn_main" onclick="showSubTab('race9','main',this)">予想</button><button class="subtab-btn" id="race9_subbtn_tf" onclick="showSubTab('race9','tf',this)">3連単</button><button class="subtab-btn" id="race9_subbtn_dev" onclick="showSubTab('race9','dev',this)">展開</button><button class="subtab-btn" id="race9_subbtn_kf" onclick="showSubTab('race9','kf',this)">方程式</button></div>
     <div id="race9_sub_main" class="subtab-panel">
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
@@ -2504,6 +2864,51 @@
           <div class="dev-picks"><span class="dev-pick"><span class="car" style="background:#ffffff;color:#1b2430;">1</span> 42%</span><span class="dev-pick"><span class="car" style="background:#1b1b1b;color:#ffffff;">2</span> 27%</span><span class="dev-pick"><span class="car" style="background:#e8c221;color:#1b2430;">5</span> 8%</span></div>
         </div></div>
     </div>
+    
+    <div id="race9_sub_kf" class="subtab-panel" style="display:none;">
+      
+    <div class="kf-wrap">
+      <div class="kf-sum">方程式の1位：<b>1番 蕗澤 鴻太郎</b>（135.9）／ AIの本命と一致</div>
+      <div style="overflow-x:auto;">
+      <table class="kf" data-key="maebashi_9">
+        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
+        <tbody><tr class="kf-top" data-ab="116.94" data-l="9"><td><span class="car" style="background:#ffffff;color:#1b2430">1</span></td><td class="kf-name">蕗澤 鴻太郎<span class="kf-why">31歳</span></td><td>94.9</td><td>9</td><td>13</td><td>0</td><td><b>116.9</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="1" data-def="10" value="10"><span class="kf-why">得点1位+5 車番良+2 地元戦+3 準決勝+1</span></td><td class="kf-total">135.9</td><td class="kf-rank">1</td><td>1</td></tr><tr class="" data-ab="107.40" data-l="6"><td><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td><td class="kf-name">添田 龍児<span class="kf-why">26歳</span></td><td>85.4</td><td>15</td><td>7</td><td>0</td><td><b>107.4</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="7" data-def="1" value="1"><span class="kf-why">準決勝+1</span></td><td class="kf-total">114.4</td><td class="kf-rank">2</td><td>4</td></tr><tr class="" data-ab="99.23" data-l="6"><td><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td><td class="kf-name">金澤 竜二<span class="kf-why">41歳</span></td><td>93.2</td><td>3</td><td>9</td><td>−6</td><td><b>99.2</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="2" data-def="7" value="7"><span class="kf-why">得点2位+3 車番良+1 最強ライン+2 準決勝+1</span></td><td class="kf-total">112.2</td><td class="kf-rank">3</td><td>2</td></tr><tr class="" data-ab="88.28" data-l="9"><td><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td><td class="kf-name">伊藤 亮<span class="kf-why">43歳</span></td><td>89.3</td><td>0</td><td>7</td><td>−8</td><td><b>88.3</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="4" data-def="2" value="2"><span class="kf-why">3番手+1 準決勝+1</span></td><td class="kf-total">99.3</td><td class="kf-rank">4</td><td>7</td></tr><tr class="" data-ab="88.83" data-l="6"><td><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td><td class="kf-name">田中 孝彦<span class="kf-why">40歳</span></td><td>87.8</td><td>0</td><td>6</td><td>−5</td><td><b>88.8</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="6" data-def="4" value="4"><span class="kf-why">番手+3 準決勝+1</span></td><td class="kf-total">98.8</td><td class="kf-rank">5</td><td>6</td></tr><tr class="" data-ab="84.52" data-l="6"><td><span class="car" style="background:#d8322a;color:#ffffff">3</span></td><td class="kf-name">佐藤 雅彦<span class="kf-why">44歳</span></td><td>89.5</td><td>0</td><td>4</td><td>−9</td><td><b>84.5</b></td><td>2人<br><b>6</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="3" data-def="7" value="7"><span class="kf-why">得点3位+1 番手+3 最強ライン+2 準決勝+1</span></td><td class="kf-total">97.5</td><td class="kf-rank">6</td><td>5</td></tr><tr class="" data-ab="69.83" data-l="9"><td><span class="car" style="background:#e8c221;color:#1b2430">5</span></td><td class="kf-name">金子 真也<span class="kf-why">54歳</span></td><td>88.8</td><td>0</td><td>0</td><td>−19</td><td><b>69.8</b></td><td>3人<br><b>9</b></td><td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" data-car="5" data-def="7" value="7"><span class="kf-why">番手+3 地元戦+3 準決勝+1</span></td><td class="kf-total">85.8</td><td class="kf-rank">7</td><td>3</td></tr></tbody>
+      </table></div>
+      <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。
+      <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
+      <script>
+if(!window.__kfInit){ window.__kfInit=true;
+  window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
+  window.kfRecalc=function(t){
+    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    rows.forEach(function(tr){
+      var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
+      var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
+      tr.querySelector('.kf-total').textContent=tot.toFixed(1); vals.push([tot,tr]);
+    });
+    vals.sort(function(a,b){return b[0]-a[0];});
+    vals.forEach(function(v,i){ v[1].querySelector('.kf-rank').textContent=(i+1); v[1].classList.toggle('kf-top',i===0); });
+  };
+  window.kfBind=function(t){
+    var key=t.getAttribute('data-key'), day=window.kfDay();
+    t.querySelectorAll('.kf-m').forEach(function(inp){
+      var k='kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car');
+      try{ var s=localStorage.getItem(k); if(s!==null) inp.value=s; }catch(e){}
+      inp.addEventListener('input',function(){ try{ localStorage.setItem(k,inp.value); }catch(e){} kfRecalc(t); });
+    });
+    var rb=t.parentElement.querySelector('.kf-reset');
+    if(rb) rb.addEventListener('click',function(){
+      t.querySelectorAll('.kf-m').forEach(function(inp){ inp.value=inp.getAttribute('data-def');
+        try{ localStorage.removeItem('kfM_'+day+'_'+key+'_'+inp.getAttribute('data-car')); }catch(e){} });
+      kfRecalc(t);
+    });
+    kfRecalc(t);
+  };
+}
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+</script>
+    </div>
+    </div>
       </div>
     </div>
 </main>
@@ -2518,7 +2923,7 @@ function showTab(id, btn){
 
 // レースパネル内の「予想」「3連単」サブタブ切り替え
 function showSubTab(tabId, which, btn){
-  ['main', 'tf', 'dev'].forEach(function(key){
+  ['main', 'tf', 'dev', 'kf'].forEach(function(key){
     var panel = document.getElementById(tabId + '_sub_' + key);
     if(panel) panel.style.display = (which === key) ? '' : 'none';
   });
