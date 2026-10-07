@@ -2139,8 +2139,19 @@ def render_results_page(log, date=None, model_params=None):
                     f'（補正に使った{n_cal}レース／1レースあたり対数尤度 {mp.get("ll_per_race_default", 0):.3f} → {mp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
     else:
         cal_line = f'<b>学習中</b>：補正に使えるレースが{n_cal}件（{min_cal}件以上で適用開始。それまでは基準値のまま）'
-    model_html = (f'<div class="hp-lead" style="margin-top:8px;">モデルの自動補正（毎日1回）：{cal_line}'
-                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みの強さだけを見直します。</span></div>')
+    grp_lines = ""
+    for g, label in (("7", "7車立て(A級など)"), ("9", "9車立て(S級・重賞など)")):
+        gp = (mp.get("groups") or {}).get(g)
+        if not gp:
+            continue
+        if gp.get("active"):
+            grp_lines += (f'<br>2着・3着の確率（{label}）：<b>適用中</b>　絞り込み {gp.get("default_sharp23", 0):.2f} → <b>{gp["sharp23_mult"] * 1.3:.2f}</b>、'
+                          f'ライン追走 {gp.get("default_line_follow_bonus", 45):.0f} → <b>{gp["line_follow_bonus"]:.0f}</b>'
+                          f'（{gp["n"]}レース／1レースあたり対数尤度 {gp.get("ll_per_race_default", 0):.3f} → {gp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
+        else:
+            grp_lines += f'<br>2着・3着の確率（{label}）：<b>学習中</b>　補正に使えるレース {gp.get("n", 0)}件（{gp.get("min_races", 100)}件以上で適用開始）'
+    model_html = (f'<div class="hp-lead" style="margin-top:8px;">モデルの自動補正（毎日1回）：{cal_line}{grp_lines}'
+                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みと、2着・3着の確率（絞り込み・ライン追走の強さ）を見直します。</span></div>')
 
     def pct(v):
         return f"{v:.1f}%"
