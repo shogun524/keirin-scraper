@@ -10514,7 +10514,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-07_maebashi_2": {
@@ -10562,7 +10562,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-07_maebashi_3": {
@@ -11000,7 +11000,16 @@
     1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    4,
+    3,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
   "parser_v": 4
  },
@@ -11049,7 +11058,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-07_ogaki_4": {
@@ -12286,7 +12295,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 4
  },
  "2026-10-07_shizuoka_10": {

@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-07 21:08",
+ "updated": "2026-10-07 21:22",
  "failures": [
   {
    "race": "2026-10-07 shizuoka 9R",
@@ -24,26 +24,30 @@
    ]
   },
   {
-   "race": "2026-10-07 ogaki 2R",
-   "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261006020002",
-    "primary": "skipped",
-    "day_parsed": false
-   }
+   "race": "2026-10-07 maebashi 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    4,
+    3,
+    2,
+    6,
+    7,
+    5
+   ]
   },
   {
-   "race": "2026-10-07 maebashi 2R",
+   "race": "2026-10-07 ogaki 3R",
    "diag": {
-    "venue": "maebashi",
-    "race_id": "2220261006020002",
+    "venue": "ogaki",
+    "race_id": "4420261006020003",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 214,
- "with_result": 179,
+ "with_result": 180,
  "without_url": 0,
  "pending_eligible": 21
 }
