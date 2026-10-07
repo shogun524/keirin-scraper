@@ -2877,23 +2877,31 @@ from formula import compute_formula as _compute_formula
 
 _KF_STYLE = """
   .kf-note{ font-size:12px; color:var(--dim,#666); line-height:1.7; margin:6px 0 8px; }
-  table.kf{ width:100%; border-collapse:collapse; font-size:12.5px; text-align:center; }
-  table.kf th, table.kf td{ border-bottom:1px solid var(--line,#ddd); padding:5px 3px; }
-  table.kf th{ font-weight:700; background:var(--paper,#faf8f3); white-space:nowrap; }
-  table.kf td.kf-name{ text-align:left; white-space:nowrap; }
-  table.kf td.kf-total{ font-weight:800; font-size:14px; }
-  table.kf tr.kf-top{ background:#fff4de; }
-  table.kf input.kf-m{ width:42px; font:inherit; text-align:center; padding:2px; border:1px solid #bbb; border-radius:3px; }
-  .kf-why{ font-size:10.5px; color:#8a6d3b; display:block; }
-  .kf-sum{ font-size:13px; margin:6px 0; line-height:1.7; }
-  .kf-btn{ font:inherit; font-size:12px; padding:3px 9px; border:1px solid #999; background:#fff; border-radius:3px; cursor:pointer; }
+  .kf-sum{ font-size:13px; margin:6px 0 8px; line-height:1.7; }
+  .kf{ display:flex; flex-direction:column; gap:8px; }
+  .kf-row{ border:1px solid var(--line,#ddd); border-radius:6px; padding:8px 10px; background:#fff; }
+  .kf-row.kf-top{ background:#fff4de; border-color:#e0b872; }
+  .kf-h{ display:flex; align-items:center; gap:8px; }
+  .kf-h .kf-nm{ flex:1; min-width:0; font-weight:700; font-size:14px; }
+  .kf-h .kf-nm small{ font-weight:400; color:#777; margin-left:5px; font-size:11px; }
+  .kf-big{ text-align:right; line-height:1.1; }
+  .kf-total{ font-size:22px; font-weight:800; font-variant-numeric:tabular-nums; }
+  .kf-big small{ display:block; font-size:10.5px; color:#777; }
+  .kf-eq{ display:flex; align-items:center; flex-wrap:wrap; gap:4px 6px; margin-top:6px; font-size:13px; }
+  .kf-eq .kf-t{ background:#f1ede3; border-radius:4px; padding:2px 7px; font-variant-numeric:tabular-nums; }
+  .kf-eq .kf-t b{ font-size:14px; }
+  .kf-eq .kf-op{ color:#999; }
+  .kf-det{ margin-top:5px; font-size:11.5px; color:#666; line-height:1.6; }
+  .kf-why{ margin-top:3px; font-size:11.5px; color:#8a6d3b; line-height:1.6; }
+  input.kf-m{ width:46px; font:inherit; font-size:15px; text-align:center; padding:2px; border:1px solid #bbb; border-radius:4px; }
+  .kf-btn{ font:inherit; font-size:12px; padding:4px 10px; border:1px solid #999; background:#fff; border-radius:4px; cursor:pointer; }
 """
 
 _KF_SCRIPT = """<script>
 if(!window.__kfInit){ window.__kfInit=true;
   window.kfDay=function(){ try{ return new Date().toLocaleDateString('sv-SE'); }catch(e){ return ''; } };
   window.kfRecalc=function(t){
-    var rows=[].slice.call(t.querySelectorAll('tbody tr')), vals=[];
+    var rows=[].slice.call(t.querySelectorAll('.kf-row')), vals=[];
     rows.forEach(function(tr){
       var inp=tr.querySelector('.kf-m'), m=parseFloat(inp.value); if(isNaN(m)) m=0; m=Math.max(0,Math.min(10,m));
       var tot=parseFloat(tr.getAttribute('data-ab'))+parseFloat(tr.getAttribute('data-l'))+m;
@@ -2918,7 +2926,7 @@ if(!window.__kfInit){ window.__kfInit=true;
     kfRecalc(t);
   };
 }
-(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('table.kf'); if(t) kfBind(t); })();
+(function(){ var s=document.currentScript; var t=s.parentElement.querySelector('.kf'); if(t) kfBind(t); })();
 </script>"""
 
 
@@ -2945,19 +2953,20 @@ def render_formula_block(race_data, uid):
     for x in f:
         bg, fg = car_color(x["car"])
         b = "-" if x["b"] is None else f'{x["b"]}'
-        why = f'<span class="kf-why">{" ".join(x["m_why"])}</span>' if x["m_why"] else ""
-        age = f'{x["age"]}歳' if x["age"] else "-"
+        why = f'<div class="kf-why">Mの内訳：{" ／ ".join(x["m_why"])}</div>' if x["m_why"] else '<div class="kf-why">Mの内訳：加点なし</div>'
+        age = f'{x["age"]}歳' if x["age"] else ""
         pen = f'−{x["age_pen"]}' if x["age_pen"] else "0"
-        trs += (f'<tr class="{"kf-top" if x["rank"] == 1 else ""}" data-ab="{x["ability"]:.2f}" data-l="{x["L"]}">'
-                f'<td><span class="car" style="background:{bg};color:{fg}">{x["car"]}</span></td>'
-                f'<td class="kf-name">{x["name"]}<span class="kf-why">{age}</span></td>'
-                f'<td>{x["score"]:.1f}</td><td>{b}</td><td>{x["kim3"]}</td><td>{pen}</td>'
-                f'<td><b>{x["ability"]:.1f}</b></td>'
-                f'<td>{x["line_size"]}人<br><b>{x["L"]}</b></td>'
-                f'<td><input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" '
-                f'data-car="{x["car"]}" data-def="{x["m"]}" value="{x["m"]}">{why}</td>'
-                f'<td class="kf-total">{x["total"]:.1f}</td><td class="kf-rank">{x["rank"]}</td>'
-                f'<td>{x["ai_rank"]}</td></tr>')
+        trs += (f'<div class="kf-row{" kf-top" if x["rank"] == 1 else ""}" data-ab="{x["ability"]:.2f}" data-l="{x["L"]}">'
+                f'<div class="kf-h"><span class="car" style="background:{bg};color:{fg}">{x["car"]}</span>'
+                f'<div class="kf-nm">{x["name"]}<small>{age}</small></div>'
+                f'<div class="kf-big"><span class="kf-total">{x["total"]:.1f}</span>'
+                f'<small>方程式 <b class="kf-rank">{x["rank"]}</b>位 / AI {x["ai_rank"]}位</small></div></div>'
+                f'<div class="kf-eq"><span class="kf-t">能力値 <b>{x["ability"]:.1f}</b></span><span class="kf-op">＋</span>'
+                f'<span class="kf-t">L指数 <b>{x["L"]}</b></span><span class="kf-op">＋</span>'
+                f'<span class="kf-t">M指数 <input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" '
+                f'data-car="{x["car"]}" data-def="{x["m"]}" value="{x["m"]}"></span></div>'
+                f'<div class="kf-det">能力値＝得点 {x["score"]:.1f} ＋ B {b} ＋ 逃捲差 {x["kim3"]} − 年齢減 {x["age_pen"] if x["age_pen"] else 0}'
+                f'　／　L＝{x["line_size"]}人×3</div>{why}</div>')
     top = f[0]
     ai_top = min(f, key=lambda x: x["ai_rank"])
     agree = "AIの本命と一致" if top["car"] == ai_top["car"] else f'AIの本命は{ai_top["car"]}番（方程式では{ai_top["rank"]}位）'
@@ -2966,11 +2975,7 @@ def render_formula_block(race_data, uid):
     return f"""
     <div class="kf-wrap">
       <div class="kf-sum">方程式の1位：<b>{top['car']}番 {top['name']}</b>（{top['total']:.1f}）／ {agree}</div>
-      <div style="overflow-x:auto;">
-      <table class="kf" data-key="{key}">
-        <thead><tr><th>番</th><th>選手</th><th>競走得点</th><th>B</th><th>逃捲差</th><th>年齢減</th><th>能力値</th><th>L指数</th><th>M指数</th><th>期待値</th><th>順位</th><th>AI順位</th></tr></thead>
-        <tbody>{trs}</tbody>
-      </table></div>
+      <div class="kf" data-key="{key}">{trs}</div>
       <div class="kf-note">能力値＝競走得点＋B回数＋逃・捲・差の回数−(年齢−35)／L指数＝ライン人数×3／M指数(0〜10)＝やる気。初期値は0から、得点順位・車番・ライン位置・相性・地元戦・決勝などで加点（根拠はM欄の下に表示）。数字を直すと即再計算（このブラウザに保存）。{warn}
       <button type="button" class="kf-btn kf-reset">M指数を初期値に戻す</button></div>
       {_KF_SCRIPT}
