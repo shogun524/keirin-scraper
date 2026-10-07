@@ -1477,15 +1477,11 @@ def _fmt_date_jp(date=None):
 # ナビゲーションの並び順・文言はここ1か所で管理する。
 AGG_GROUPS = [
     ("レースをさがす", [
-        ("overview.html", "全レース早見表"),
         ("high_prob.html", "本命が堅い"),
         ("close_race.html", "拮抗レース"),
-        ("value.html", "投票が鈍い(妙味)"),
         ("formula.html", "勝利の方程式"),
     ]),
     ("選手・開催場・成績", [
-        ("players.html", "選手一覧"),
-        ("venues_today.html", "開催場別"),
         ("results.html", "予想成績"),
         ("venues.html", "全競輪場データ"),
         ("print.html", "印刷用"),
@@ -2195,17 +2191,27 @@ def render_results_page(log, date=None, model_params=None):
 
     fa = stats.get("formula") or {"n": 0}
     if fa["n"]:
-        n = fa["n"]
-        fm = lambda k: f'{fa[k] / n * 100:.1f}%'
-        formula_html = (f'<h2 class="section">勝利の方程式の答え合わせ</h2>'
-            f'<p class="hp-lead">方程式を記録した{n}レースでの比較（AIの本命と同じ車の割合：{fa["same"] / n * 100:.0f}%）。'
-            f'Mは自動推定の初期値で計算しています。</p>'
-            f'<div class="ov-scroll"><table class="ov"><thead><tr><th>1位に選んだ車</th><th>件数</th><th>1着率</th><th>3着内</th></tr></thead><tbody>'
-            f'<tr><td class="l">AIの本命</td><td>{n}</td><td><b>{fm("a1")}</b></td><td>{fm("a3")}</td></tr>'
-            f'<tr><td class="l">方程式の1位</td><td>{n}</td><td><b>{fm("f1")}</b></td><td>{fm("f3")}</td></tr>'
-            f'</tbody></table></div>')
+        def frow(label, t):
+            if not t["n"]:
+                return f'<tr><td class="l">{label}</td><td>0</td><td colspan="8" class="dim">—</td></tr>'
+            r = lambda k: f'{t[k] / t["n"] * 100:.1f}%'
+            return (f'<tr><td class="l">{label}</td><td>{t["n"]}</td>'
+                    f'<td><b>{r("f1")}</b></td><td>{r("f2")}</td><td>{r("f3")}</td><td>{r("fbox")}</td>'
+                    f'<td><b>{r("a1")}</b></td><td>{r("a2")}</td><td>{r("a3")}</td><td>{r("abox")}</td></tr>')
+        sg = fa["seg"]
+        formula_html = (f'<h2 class="section">勝利の方程式の成績（AIの本命と比較）</h2>'
+            f'<p class="hp-lead">方程式を記録した{fa["n"]}レースでの比較です（方程式の1位とAIの本命が同じ車だったレース：{sg["same"]["n"]}件）。'
+            f'M指数は自動推定の初期値で計算しています。BOXは上位3車の組が3着内の3車と一致した割合です。</p>'
+            f'<div class="ov-scroll"><table class="ov"><thead><tr><th rowspan="2">区分</th><th rowspan="2">件数</th>'
+            f'<th colspan="4">方程式の上位</th><th colspan="4">AIの上位</th></tr>'
+            f'<tr><th>1位が1着</th><th>1位が2着内</th><th>1位が3着内</th><th>上位3車BOX</th>'
+            f'<th>本命が1着</th><th>本命が2着内</th><th>本命が3着内</th><th>上位3車BOX</th></tr></thead><tbody>'
+            + frow("全体", fa)
+            + frow("1位が一致", sg["same"]) + frow("1位が不一致", sg["diff"])
+            + frow("1位と2位の差10点以上", sg["gap_big"]) + frow("1位と2位の差10点未満", sg["gap_small"])
+            + '</tbody></table></div>')
     else:
-        formula_html = ('<h2 class="section">勝利の方程式の答え合わせ</h2>'
+        formula_html = ('<h2 class="section">勝利の方程式の成績</h2>'
             '<p class="hp-lead">方程式の記録は今後の予想から始まります。結果が溜まるとAIの本命との比較がここに出ます。</p>')
     seg = stats["segments"]
     seg_html = f"""
