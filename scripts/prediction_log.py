@@ -68,6 +68,14 @@ def _key(date_str, venue, race_no):
     return f"{date_str}_{venue}_{race_no}"
 
 
+def _formula_top(rd):
+    try:
+        from report import formula_top
+        return formula_top(rd)
+    except Exception:
+        return None
+
+
 def record_predictions(log, all_race_data, date_str):
     """
     all_race_data: run_daily.py の all_race_data（"race_info"/"prediction"/"url"）。
@@ -101,6 +109,8 @@ def record_predictions(log, all_race_data, date_str):
             "sf": (pred.get("settings") or {}).get("sharpness_first"),
             # 2着・3着の確率を後から再計算するための入力（毎日の自動補正用。calibration.py）
             "cond": pred.get("cond_inputs"),
+            # 勝利の方程式（能力値+L+M）の順位つき点数。成績ページで答え合わせする
+            "ev": _formula_top(rd),
             "result": None,
             "attempts": 0,
             "parser_v": PARSER_VERSION,
@@ -271,9 +281,23 @@ def compute_prediction_stats(log):
     recent = sorted(
         (e for e, _ in evaluated), key=lambda e: (e["date"], e.get("deadline") or ""), reverse=True)
 
+    # 勝利の方程式の1位 vs AIの本命（方程式を記録したレースだけで比べる）
+    fa = {"n": 0, "f1": 0, "f3": 0, "a1": 0, "a3": 0, "same": 0}
+    for e, _ in evaluated:
+        ev = e.get("ev")
+        if not ev:
+            continue
+        fin = e["result"]["finish_order"]
+        fc, ac = ev[0][0], e["order"][0]
+        fa["n"] += 1
+        fa["f1"] += fin[0] == fc
+        fa["f3"] += fc in fin[:3]
+        fa["a1"] += fin[0] == ac
+        fa["a3"] += ac in fin[:3]
+        fa["same"] += fc == ac
     pending = sum(1 for e in log.values() if e.get("result") is None and e.get("attempts", 0) < MAX_ATTEMPTS)
     return {
         "overall": _summarize(evals), "segments": segments, "calibration": calibration,
         "by_day": by_day_list, "recent": recent, "pending_count": pending,
-        "tracked_count": len(log),
+        "tracked_count": len(log), "formula": fa,
     }
