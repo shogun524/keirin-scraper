@@ -117,6 +117,13 @@ def estimate_m(rider, venue_slug, race_title, ctx=None):
     return max(0, min(10, m)), why
 
 
+def is_girls(rows, race_title=""):
+    """ガールズ競輪（全員単騎でラインが無い）。方程式は使えないので計算の対象外にする。"""
+    if "ガールズ" in (race_title or ""):
+        return True
+    return bool(rows) and all(r.get("rank") == "L1" for r in rows)
+
+
 def compute_formula(rows, venue_slug=None, race_title=""):
     """
     rows: predict_race() の rows（各選手の dict。score/b_count/kimarite/age/line_info/pref を使う）
