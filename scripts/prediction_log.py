@@ -247,6 +247,104 @@ def _summarize(evals):
     }
 
 
+def _quantile_bands(vals, k):
+    """値のリストを件数がほぼ等しいk個の帯に分ける。戻り値: [(下限, 上限)...]（下限以上・次の下限未満）。"""
+    v = sorted(vals)
+    if len(v) < k * 5:
+        return []
+    cuts = [v[int(len(v) * i / k)] for i in range(k)] + [float("inf")]
+    return [(cuts[i], cuts[i + 1]) for i in range(k) if cuts[i] < cuts[i + 1]]
+
+
+def _band_label(lo, hi, fmt="{:.0f}"):
+    return (f"{fmt.format(lo)}以上" if hi == float("inf") else f"{fmt.format(lo)}〜{fmt.format(hi)}未満")
+
+
+def formula_analysis(evaluated):
+    """
+    勝利の方程式の場合分け分析。evaluated: [(entry, ev)]（結果つき）。
+      by_rank:  方程式で◯位だった選手の 1着/2着内/3着内の割合（AIの◯位と並べる）
+      by_top:   方程式1位の期待値の帯ごと（1位が1着・3着内。AIの本命と比較）
+      by_gap:   1位と2位の差の帯ごと
+      by_value: 全選手の期待値の帯ごと（その選手が1着・3着内）
+      by_tag:   堅い/拮抗/その他 × 方程式1位の成績
+      by_cars:  車立て（7車/8車以上）ごと
+    """
+    rows = []
+    for e, _ in evaluated:
+        f = e.get("ev")
+        if not f or len(f) < 3:
+            continue
+        rows.append((e, f, e["result"]["finish_order"]))
+    out = {"n": len(rows)}
+    if not rows:
+        return out
+
+    def hits(car, fin):
+        return (fin[0] == car, car in fin[:2], car in fin[:3])
+
+    def acc():
+        return {"n": 0, "w": 0, "p2": 0, "p3": 0, "aw": 0, "ap2": 0, "ap3": 0}
+
+    def add(t, f_car, a_car, fin):
+        t["n"] += 1
+        h = hits(f_car, fin); ah = hits(a_car, fin)
+        t["w"] += h[0]; t["p2"] += h[1]; t["p3"] += h[2]
+        t["aw"] += ah[0]; t["ap2"] += ah[1]; t["ap3"] += ah[2]
+
+    # 順位別
+    by_rank = {}
+    maxr = max(len(f) for _, f, _ in rows)
+    for k in range(min(maxr, 9)):
+        t = acc()
+        for e, f, fin in rows:
+            if k < len(f) and k < len(e["order"]):
+                add(t, f[k][0], e["order"][k], fin)
+        by_rank[k + 1] = t
+    out["by_rank"] = by_rank
+
+    def banded(valfn, k, fmt):
+        vals = [valfn(e, f) for e, f, _ in rows]
+        bands = _quantile_bands(vals, k)
+        res = []
+        for lo, hi in bands:
+            t = acc()
+            for (e, f, fin), v in zip(rows, vals):
+                if lo <= v < hi:
+                    add(t, f[0][0], e["order"][0], fin)
+            res.append((_band_label(lo, hi, fmt), t))
+        return res
+
+    out["by_top"] = banded(lambda e, f: f[0][1], 4, "{:.0f}")
+    out["by_gap"] = banded(lambda e, f: f[0][1] - f[1][1], 4, "{:.1f}")
+
+    # 全選手の期待値帯（その選手自身の成績）
+    allv = [(x[1], x[0], fin) for e, f, fin in rows for x in f]
+    bands = _quantile_bands([v for v, _, _ in allv], 5)
+    byv = []
+    for lo, hi in bands:
+        n = w = p3 = 0
+        for v, car, fin in allv:
+            if lo <= v < hi:
+                n += 1; w += fin[0] == car; p3 += car in fin[:3]
+        byv.append((_band_label(lo, hi, "{:.0f}"), {"n": n, "w": w, "p3": p3}))
+    out["by_value"] = byv
+
+    def seg(pred):
+        t = acc()
+        for e, f, fin in rows:
+            if pred(e):
+                add(t, f[0][0], e["order"][0], fin)
+        return t
+
+    out["by_tag"] = [("本命が堅い", seg(lambda e: e.get("is_high"))),
+                     ("拮抗", seg(lambda e: e.get("is_close"))),
+                     ("どちらでもない", seg(lambda e: not e.get("is_high") and not e.get("is_close")))]
+    out["by_cars"] = [("7車立て以下", seg(lambda e: len(e["order"]) <= 7)),
+                      ("8車立て以上", seg(lambda e: len(e["order"]) >= 8))]
+    return out
+
+
 def compute_prediction_stats(log):
     """
     戻り値:
@@ -305,6 +403,7 @@ def compute_prediction_stats(log):
             for k, v in hit.items():
                 t[k] += bool(v)
     fa["seg"] = fa_seg
+    fa["analysis"] = formula_analysis(evaluated)
     pending = sum(1 for e in log.values() if e.get("result") is None and e.get("attempts", 0) < MAX_ATTEMPTS)
     return {
         "overall": _summarize(evals), "segments": segments, "calibration": calibration,
