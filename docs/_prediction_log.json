@@ -10610,7 +10610,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_maebashi_4": {
@@ -10658,7 +10658,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_maebashi_5": {
@@ -10706,7 +10706,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_maebashi_6": {
@@ -10754,7 +10754,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_maebashi_7": {
@@ -10802,7 +10802,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_maebashi_8": {
@@ -10850,7 +10850,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_maebashi_9": {
@@ -10898,7 +10898,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_ogaki_1": {
@@ -11106,7 +11106,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_ogaki_5": {
@@ -11154,7 +11154,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_ogaki_6": {
@@ -11202,7 +11202,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_ogaki_7": {
@@ -11250,7 +11250,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_ogaki_8": {
@@ -11298,7 +11298,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_ogaki_9": {
@@ -11346,7 +11346,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-07_kochi_1": {
@@ -13394,7 +13394,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-08_omiya_6": {
@@ -14571,7 +14571,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-08_omiya_12": {
@@ -14757,7 +14757,18 @@
     102.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    2,
+    4,
+    1,
+    7,
+    6,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
   "parser_v": 4
  },
@@ -15142,7 +15153,18 @@
     74.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    4,
+    6,
+    5,
+    2,
+    7,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -15329,7 +15351,18 @@
     92.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    5,
+    4,
+    6,
+    7,
+    2,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -15516,7 +15549,18 @@
     88.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    6,
+    5,
+    7,
+    3,
+    1,
+    4
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -15704,7 +15748,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-08_yokkaichi_6": {
@@ -17378,7 +17422,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-08_hiratsuka_3": {
@@ -17564,7 +17608,18 @@
     73.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    7,
+    3,
+    4,
+    5,
+    2,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -17751,7 +17806,18 @@
     80.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    7,
+    5,
+    1,
+    3,
+    6,
+    2
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -17938,7 +18004,18 @@
     84.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    7,
+    4,
+    2,
+    5,
+    6,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -18126,7 +18203,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-08_hiratsuka_7": {

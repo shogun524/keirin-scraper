@@ -1,19 +1,6 @@
 {
- "updated": "2026-10-08 16:16",
+ "updated": "2026-10-08 17:45",
  "failures": [
-  {
-   "race": "2026-10-07 ogaki 3R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    2,
-    1,
-    5,
-    4,
-    3,
-    6,
-    7
-   ]
-  },
   {
    "race": "2026-10-07 maebashi 3R",
    "error": "結果の車番が出走車番と一致しない",
@@ -65,10 +52,23 @@
     3,
     5
    ]
+  },
+  {
+   "race": "2026-10-07 maebashi 5R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    3,
+    2,
+    5,
+    1,
+    6,
+    7,
+    4
+   ]
   }
  ],
  "tracked": 286,
- "with_result": 209,
+ "with_result": 216,
  "without_url": 0,
- "pending_eligible": 38
+ "pending_eligible": 39
 }
