@@ -2209,7 +2209,7 @@ def render_results_page(log, date=None, model_params=None):
             + frow("全体", fa)
             + frow("1位が一致", sg["same"]) + frow("1位が不一致", sg["diff"])
             + frow("1位と2位の差10点以上", sg["gap_big"]) + frow("1位と2位の差10点未満", sg["gap_small"])
-            + '</tbody></table></div>')
+            + '</tbody></table></div>' + _formula_analysis_html(fa.get("analysis") or {}))
     else:
         formula_html = ('<h2 class="section">勝利の方程式の成績</h2>'
             '<p class="hp-lead">方程式の記録は今後の予想から始まります。結果が溜まるとAIの本命との比較がここに出ます。</p>')
@@ -2879,7 +2879,7 @@ def render_print_page(all_race_data, date=None):
 # ---------------------------------------------------------------------------
 # 勝利の方程式（能力値 + L指数 + M指数 = 期待値）。計算は formula.py。
 # ---------------------------------------------------------------------------
-from formula import compute_formula as _compute_formula
+from formula import compute_formula as _compute_formula, is_girls as _is_girls
 
 _KF_STYLE = """
   .kf-note{ font-size:12px; color:var(--dim,#666); line-height:1.7; margin:6px 0 8px; }
@@ -2941,6 +2941,8 @@ def _formula_for(race_data):
     if not result:
         return None
     info = race_data["race_info"]
+    if _is_girls(result["rows"], info.get("title", "")):
+        return None
     f = _compute_formula(result["rows"], info.get("venue"), info.get("title", ""))
     ai_order = [r["car"] for r in result["rows"]]
     for x in f:
@@ -2995,11 +2997,13 @@ def render_formula_page(all_race_data, date=None):
             by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)
     body = ('<p class="kf-note">動画で紹介されていた「勝利の方程式」（能力値＋L指数＋M指数＝期待値）を全レースに当てはめた一覧です。'
             'AIの確率予測とは別系統のルールベースの指数で、当たるかどうかは「予想成績」ページで答え合わせしています。'
-            '「期待値」は配当を掛けた期待値ではなく、動画の呼び方に合わせた点数です。</p>')
+            '「期待値」は配当を掛けた期待値ではなく、動画の呼び方に合わせた点数です。ガールズ戦はラインが無いため対象外です。</p>')
     for v in sorted(by_venue, key=lambda v: VENUE_NAMES.get(v, v)):
         body += f'<h2 style="font-size:16px;margin:22px 0 6px;">{VENUE_NAMES.get(v, v)}</h2>'
         for rd in sorted(by_venue[v], key=lambda rd: rd["race_info"]["race_no"]):
             info = rd["race_info"]
+            if not _formula_for(rd):
+                continue  # ガールズ戦はラインが無いので対象外
             body += (f'<details style="margin:6px 0;border:1px solid var(--line,#ddd);border-radius:4px;padding:6px 8px;">'
                      f'<summary style="cursor:pointer;font-weight:700;">{info["race_no"]}R　<span style="font-weight:400">{info.get("title") or ""}</span>'
                      f'　<span class="dim">{_formula_summary(rd)}</span></summary>{render_formula_block(rd, "")}</details>')
@@ -3022,3 +3026,47 @@ def formula_top(race_data):
     """ログ用：方程式の上位（車番, 期待値）。"""
     f = _formula_for(race_data)
     return [[x["car"], round(x["total"], 1)] for x in f] if f else None
+
+
+def _formula_analysis_html(an):
+    """予想成績ページ：勝利の方程式の場合分け分析（順位別・期待値の帯別・差・タグ別・車立て別）。"""
+    if not an or not an.get("n"):
+        return ""
+    pc = lambda a, b: f'{a / b * 100:.1f}%' if b else "—"
+
+    def tbl(title, note, first, rows_html, head_cols):
+        return (f'<h3 style="font-size:14px;margin:16px 0 4px;">{title}</h3><p class="kf-note">{note}</p>'
+                f'<div class="ov-scroll"><table class="ov"><thead><tr><th>{first}</th><th>件数</th>{head_cols}</tr></thead>'
+                f'<tbody>{rows_html}</tbody></table></div>')
+
+    cmp_head = ('<th>方程式 1着</th><th>2着内</th><th>3着内</th><th>AI 1着</th><th>2着内</th><th>3着内</th>')
+
+    def cmp_row(label, t):
+        n = t["n"]
+        if not n:
+            return f'<tr><td class="l">{label}</td><td>0</td><td colspan="6" class="dim">—</td></tr>'
+        return (f'<tr><td class="l">{label}</td><td>{n}</td><td><b>{pc(t["w"], n)}</b></td><td>{pc(t["p2"], n)}</td><td>{pc(t["p3"], n)}</td>'
+                f'<td><b>{pc(t["aw"], n)}</b></td><td>{pc(t["ap2"], n)}</td><td>{pc(t["ap3"], n)}</td></tr>')
+
+    html = f'<h3 style="font-size:15px;margin:22px 0 2px;">方程式の場合分け分析（{an["n"]}レース）</h3>'
+    html += tbl("順位別：方程式で◯位だった選手の成績",
+                "方程式の◯位／AIの◯位が、実際に1着・2着内・3着内に入った割合。順位が下がるほど下がっていれば、方程式の並びが機能しています。",
+                "順位", "".join(cmp_row(f"{k}位", t) for k, t in an["by_rank"].items()), cmp_head)
+    if an.get("by_top"):
+        html += tbl("1位の期待値の高さ別（件数がほぼ等しい4区分）",
+                    "方程式1位の点数が高いレースほど、1位が来やすいか。右はそのレースのAI本命の成績です。",
+                    "1位の期待値", "".join(cmp_row(l, t) for l, t in an["by_top"]), cmp_head)
+    if an.get("by_gap"):
+        html += tbl("1位と2位の点差別（4区分）", "点差が開くほど1位が堅くなるか。",
+                    "1位−2位", "".join(cmp_row(l, t) for l, t in an["by_gap"]), cmp_head)
+    if an.get("by_value"):
+        rows_v = "".join(
+            f'<tr><td class="l">{l}</td><td>{t["n"]}</td><td><b>{pc(t["w"], t["n"])}</b></td><td>{pc(t["p3"], t["n"])}</td></tr>'
+            for l, t in an["by_value"])
+        html += tbl("選手の期待値別（全選手を5区分）", "順位に関係なく、期待値の絶対値が高い選手がどれだけ来るか。",
+                    "期待値", rows_v, '<th>1着</th><th>3着内</th>')
+    html += tbl("タグ別（堅い／拮抗）", "方程式の1位が、AIの「堅い」「拮抗」判定のレースでどう働くか。",
+                "区分", "".join(cmp_row(l, t) for l, t in an["by_tag"]), cmp_head)
+    html += tbl("車立て別", "7車以下と8車以上（9車の重賞など）の比較。",
+                "区分", "".join(cmp_row(l, t) for l, t in an["by_cars"]), cmp_head)
+    return html
