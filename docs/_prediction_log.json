@@ -16321,7 +16321,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_yokkaichi_9": {
@@ -18673,7 +18673,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_hiratsuka_9": {
@@ -19058,7 +19058,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_hiratsuka_11": {
@@ -19621,7 +19621,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_maebashi_2": {
@@ -20326,7 +20326,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_maebashi_6": {
@@ -20495,7 +20495,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_maebashi_7": {
@@ -20664,7 +20664,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_maebashi_8": {
@@ -20833,7 +20833,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_maebashi_9": {
@@ -21002,7 +21002,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_1": {
@@ -21510,7 +21510,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_4": {
@@ -21679,7 +21679,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_5": {
@@ -21848,7 +21848,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_6": {
@@ -22017,7 +22017,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_7": {
@@ -22186,7 +22186,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_8": {
@@ -22355,7 +22355,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_ogaki_9": {
@@ -22524,7 +22524,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-08_kochi_1": {
@@ -26759,7 +26759,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-09_yahiko_4": {
@@ -26982,7 +26982,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-09_yahiko_5": {
@@ -27205,7 +27205,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-09_yahiko_6": {
@@ -29637,7 +29637,18 @@
     81.1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    6,
+    5,
+    7,
+    2,
+    4,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
   "parser_v": 4
  },
@@ -29807,7 +29818,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-09_yokkaichi_6": {
@@ -31878,7 +31889,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 4
  },
  "2026-10-09_hiratsuka_5": {
@@ -32064,7 +32075,18 @@
     74.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    3,
+    5,
+    6,
+    4,
+    2,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
