@@ -1,47 +1,14 @@
 {
- "updated": "2026-10-09 11:00",
+ "updated": "2026-10-09 17:30",
  "failures": [
   {
-   "race": "2026-10-08 omiya 5R",
-   "diag": {
-    "venue": "omiya",
-    "race_id": "2520261006030005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/omiya/raceresult/25202610060300/",
-    "day_html_len": 137434,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7,
-     8,
-     9,
-     10,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-08 omiya 11R",
-   "diag": {
-    "venue": "omiya",
-    "race_id": "2520261006030011",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-08 hiratsuka 2R",
+   "race": "2026-10-08 hiratsuka 8R",
    "diag": {
     "venue": "hiratsuka",
-    "race_id": "3520261008010002",
+    "race_id": "3520261008010008",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/hiratsuka/raceresult/35202610080100/",
-    "day_html_len": 137271,
+    "day_html_len": 136212,
     "day_races": [
      1,
      3,
@@ -54,15 +21,6 @@
      12
     ],
     "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-08 hiratsuka 8R",
-   "diag": {
-    "venue": "hiratsuka",
-    "race_id": "3520261008010008",
-    "primary": "skipped",
     "day_parsed": false
    }
   },
@@ -73,7 +31,7 @@
     "race_id": "4820261007020008",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202610070200/",
-    "day_html_len": 137995,
+    "day_html_len": 136936,
     "day_races": [
      1,
      2,
@@ -90,10 +48,45 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-08 hiratsuka 10R",
+   "diag": {
+    "venue": "hiratsuka",
+    "race_id": "3520261008010010",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-08 maebashi 1R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    3,
+    1,
+    4,
+    6,
+    5,
+    7,
+    2
+   ]
+  },
+  {
+   "race": "2026-10-08 ogaki 3R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    6,
+    3,
+    5,
+    4,
+    2,
+    1,
+    7
+   ]
   }
  ],
  "tracked": 365,
- "with_result": 247,
+ "with_result": 273,
  "without_url": 0,
- "pending_eligible": 55
+ "pending_eligible": 58
 }
