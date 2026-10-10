@@ -107,6 +107,9 @@ def record_predictions(log, all_race_data, date_str):
             # 各選手の予測（車番, 1着率%, 3着内率%）と、そのとき使った1着率の絞り込み（毎日の自動補正用）
             "probs": [[r["car"], round(r["adjusted"], 2), round(r.get("place_rate", 0), 1)] for r in rows],
             "sf": (pred.get("settings") or {}).get("sharpness_first"),
+            # バフを掛ける前の1着率（自動補正の学習用）と、そのとき掛けたバフの強さ
+            "p0": [[c, v] for c, v in (pred.get("pre_buff") or {}).items()],
+            "fb": pred.get("formula_buff") or 0.0,
             # 2着・3着の確率を後から再計算するための入力（毎日の自動補正用。calibration.py）
             "cond": pred.get("cond_inputs"),
             # 勝利の方程式（能力値+L+M）の順位つき点数。成績ページで答え合わせする
