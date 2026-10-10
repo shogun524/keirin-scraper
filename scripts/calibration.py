@@ -41,6 +41,11 @@ S23_SCALE, LFB_SCALE = 0.4, 30.0     # 事前分布の幅（この幅ぶん基�
 PRIOR_K_23 = 12.0
 LFB_DEFAULT = 45.0
 
+# --- 勝利の方程式バフ（1着率に exp(β×z) を掛ける） ---
+MIN_RACES_B = 80            # 方程式を記録したレースがこの件数たまるまで適用しない
+BETA_MIN, BETA_MAX = 0.0, 1.0   # 負にはしない（方程式が高い選手を下げることはしない）
+PRIOR_B = 20.0              # β=0 への引き戻し（β=0.3 で対数尤度 -0.9 ぶんの罰則）
+
 
 def _default_gamma():
     from model import DEFAULT_SETTINGS
@@ -69,6 +74,9 @@ def get_overrides(docs_dir):
     out = {}
     if p.get("active") and GAMMA_MIN <= p.get("sharpness_first", 0) <= GAMMA_MAX:
         out["sharpness_first"] = float(p["sharpness_first"])
+    bp = p.get("buff") or {}
+    if bp.get("active") and BETA_MIN < bp.get("beta", 0) <= BETA_MAX:
+        out["formula_buff"] = float(bp["beta"])
     go = {}
     for g, gp in (p.get("groups") or {}).items():
         if gp.get("active") and S23_MIN <= gp.get("sharp23_mult", 0) * _sharp() <= S23_MAX + 1e-6 \
@@ -83,11 +91,12 @@ def _samples(log, today):
     cutoff = (today - datetime.timedelta(days=WINDOW_DAYS)).isoformat()
     out = []
     for e in log.values():
-        res, probs = e.get("result"), e.get("probs")
+        res = e.get("result")
+        probs = e.get("p0") or e.get("probs")   # バフ前の値で学習する（バフ自身を学習に混ぜない）
         if not res or not probs or e.get("date", "") < cutoff or not res.get("finish_order"):
             continue
         winner = res["finish_order"][0]
-        pm = {int(c): float(p1) for c, p1, _ in probs if p1 and p1 > 0}
+        pm = {int(c): float(p1) for c, p1, *_ in probs if p1 and p1 > 0}
         if winner not in pm or len(pm) < 3:
             continue
         out.append((pm, float(e.get("sf") or _default_gamma()), winner))
@@ -113,6 +122,56 @@ def fit_gamma(samples, gamma0):
         if obj > best_obj:
             best, best_obj = g, obj
         g += GRID_STEP
+    return best
+
+
+def _z_from_ev(ev):
+    vals = [float(t) for _, t in ev]
+    n = len(vals)
+    if n < 3:
+        return None
+    m = sum(vals) / n
+    sd = math.sqrt(sum((v - m) ** 2 for v in vals) / n)
+    if sd <= 0:
+        return None
+    return {int(c): (float(t) - m) / sd for c, t in ev}
+
+
+def _buff_samples(log, today):
+    """バフの学習に使えるレース: バフ前の1着率・方程式の記録・結果がそろっているもの。"""
+    cutoff = (today - datetime.timedelta(days=WINDOW_DAYS)).isoformat()
+    out = []
+    for e in log.values():
+        res, ev = e.get("result"), e.get("ev")
+        probs = e.get("p0") or e.get("probs")
+        if not res or not ev or not probs or e.get("date", "") < cutoff or not res.get("finish_order"):
+            continue
+        z = _z_from_ev(ev)
+        winner = res["finish_order"][0]
+        pm = {int(c): float(p1) for c, p1, *_ in probs if p1 and p1 > 0}
+        if not z or winner not in pm or len(pm) < 3 or any(c not in z for c in pm):
+            continue
+        out.append((pm, float(e.get("sf") or _default_gamma()), winner, z))
+    return out
+
+
+def _loglik_buff(samples, gamma, beta):
+    total = 0.0
+    for pm, sf, winner, z in samples:
+        e = gamma / sf
+        w = {c: (p ** e) * math.exp(beta * z[c]) for c, p in pm.items()}
+        total += math.log(max(w[winner] / sum(w.values()), 1e-9))
+    return total
+
+
+def fit_beta(samples, gamma):
+    best, best_obj = 0.0, -1e18
+    b = BETA_MIN
+    while b <= BETA_MAX + 1e-9:
+        obj = _loglik_buff(samples, gamma, b) - 0.5 * PRIOR_B * b * b
+        if obj > best_obj:
+            best, best_obj = b, obj
+        b += 0.025
     return best
 
 
@@ -211,6 +270,25 @@ def update_params(docs_dir, log, today):
             "ll_per_race_new": round(_loglik(samples, g_new) / n, 4),
         })
         params["history"].append({"date": today_s, "gamma": g_new, "n": n})
+    # ---- 勝利の方程式バフ（1着率への上乗せ） ----
+    bsamples = _buff_samples(log, today)
+    pb = prev.get("buff") or {}
+    bp = {"n": len(bsamples), "min_races": MIN_RACES_B, "active": False, "beta": 0.0}
+    if len(bsamples) >= MIN_RACES_B:
+        g_used = params["sharpness_first"]
+        b_prev = pb.get("beta", 0.0) if pb.get("active") else 0.0
+        b_fit = fit_beta(bsamples, g_used)
+        b_new = max(BETA_MIN, min(BETA_MAX, round(SMOOTH * b_prev + (1 - SMOOTH) * b_fit, 3)))
+        nb = len(bsamples)
+        bp.update({
+            "active": b_new > 0.01, "beta": b_new, "fit_raw": round(b_fit, 3),
+            "ll_per_race_default": round(_loglik_buff(bsamples, g_used, 0.0) / nb, 4),
+            "ll_per_race_new": round(_loglik_buff(bsamples, g_used, b_new) / nb, 4),
+        })
+        print(f"[INFO] 方程式バフ: {nb}レースで β={b_new:.3f}（学習値{b_fit:.3f}）に更新。")
+    else:
+        print(f"[INFO] 方程式バフ: 学習に使えるレースが{len(bsamples)}件（{MIN_RACES_B}件以上で適用開始）。")
+    params["buff"] = bp
     # ---- 2着・3着（車立て別） ----
     from model import DEFAULT_SETTINGS
     sharp = float(DEFAULT_SETTINGS["sharpness"])
