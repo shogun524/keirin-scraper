@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-10 06:36",
+ "updated": "2026-10-10 10:40",
  "failures": [
   {
    "race": "2026-10-09 yahiko 3R",
@@ -8,7 +8,7 @@
     "race_id": "2120261009010003",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202610090100/",
-    "day_html_len": 142241,
+    "day_html_len": 142243,
     "day_races": [
      1,
      2,
@@ -49,7 +49,7 @@
     "race_id": "3520261008020004",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/hiratsuka/raceresult/35202610080200/",
-    "day_html_len": 137307,
+    "day_html_len": 137309,
     "day_races": [
      1,
      2,
@@ -74,7 +74,7 @@
     "race_id": "4820261007030006",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202610070300/",
-    "day_html_len": 137628,
+    "day_html_len": 137630,
     "day_races": [
      1,
      2,
@@ -94,7 +94,7 @@
   }
  ],
  "tracked": 437,
- "with_result": 306,
+ "with_result": 312,
  "without_url": 0,
- "pending_eligible": 59
+ "pending_eligible": 60
 }
