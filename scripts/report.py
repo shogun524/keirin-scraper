@@ -2158,8 +2158,15 @@ def render_results_page(log, date=None, model_params=None):
                           f'（{gp["n"]}レース／1レースあたり対数尤度 {gp.get("ll_per_race_default", 0):.3f} → {gp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
         else:
             grp_lines += f'<br>2着・3着の確率（{label}）：<b>学習中</b>　補正に使えるレース {gp.get("n", 0)}件（{gp.get("min_races", 100)}件以上で適用開始）'
+    bp = mp.get("buff") or {}
+    if bp.get("active"):
+        grp_lines += (f'<br>勝利の方程式バフ：<b>適用中</b>　1着率に exp({bp["beta"]:.2f}×方程式のz得点) を掛けています'
+                      f'（{bp["n"]}レース／1レースあたり対数尤度 {bp.get("ll_per_race_default", 0):.3f} → {bp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
+    elif bp:
+        grp_lines += (f'<br>勝利の方程式バフ：<b>{"学習中" if bp.get("n", 0) < bp.get("min_races", 80) else "効果なし（バフ0のまま）"}</b>　'
+                      f'学習に使えるレース {bp.get("n", 0)}件（{bp.get("min_races", 80)}件以上で判定。効果が見つかったときだけ適用）')
     model_html = (f'<div class="hp-lead" style="margin-top:8px;">モデルの自動補正（毎日1回）：{cal_line}{grp_lines}'
-                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みと、2着・3着の確率（絞り込み・ライン追走の強さ）を見直します。</span></div>')
+                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みと、2着・3着の確率（絞り込み・ライン追走の強さ）、勝利の方程式バフの強さを見直します。</span></div>')
 
     def pct(v):
         return f"{v:.1f}%"
@@ -2957,6 +2964,10 @@ def render_formula_block(race_data, uid):
         return ""
     info = race_data["race_info"]
     key = f'{info.get("venue")}_{info.get("race_no")}'
+    pred = race_data["prediction"]
+    pre = pred.get("pre_buff") or {}
+    fbuff = pred.get("formula_buff") or 0.0
+    adj_by_car = {r["car"]: r["adjusted"] for r in pred["rows"]}
     trs = ""
     for x in f:
         bg, fg = car_color(x["car"])
@@ -2964,6 +2975,11 @@ def render_formula_block(race_data, uid):
         why = f'<div class="kf-why">Mの内訳：{" ／ ".join(x["m_why"])}</div>' if x["m_why"] else '<div class="kf-why">Mの内訳：加点なし</div>'
         age = f'{x["age"]}歳' if x["age"] else ""
         pen = f'−{x["age_pen"]}' if x["age_pen"] else "0"
+        buff_txt = ""
+        if fbuff and x["car"] in pre:
+            d = adj_by_car[x["car"]] - pre[x["car"]]
+            buff_txt = (f'<div class="kf-why" style="color:#2f6b3a;">方程式バフ（強さ{fbuff:.2f}）：AIの1着率 '
+                        f'{pre[x["car"]]:.1f}% → <b>{adj_by_car[x["car"]]:.1f}%</b>（{d:+.1f}pt）</div>')
         trs += (f'<div class="kf-row{" kf-top" if x["rank"] == 1 else ""}" data-ab="{x["ability"]:.2f}" data-l="{x["L"]}">'
                 f'<div class="kf-h"><span class="car" style="background:{bg};color:{fg}">{x["car"]}</span>'
                 f'<div class="kf-nm">{x["name"]}<small>{age}</small></div>'
@@ -2974,7 +2990,7 @@ def render_formula_block(race_data, uid):
                 f'<span class="kf-t">M指数 <input class="kf-m" type="number" min="0" max="10" step="1" inputmode="numeric" '
                 f'data-car="{x["car"]}" data-def="{x["m"]}" value="{x["m"]}"></span></div>'
                 f'<div class="kf-det">能力値＝得点 {x["score"]:.1f} ＋ B {b} ＋ 逃捲差 {x["kim3"]} − 年齢減 {x["age_pen"] if x["age_pen"] else 0}'
-                f'　／　L＝{x["line_size"]}人×3</div>{why}</div>')
+                f'　／　L＝{x["line_size"]}人×3</div>{why}{buff_txt}</div>')
     top = f[0]
     ai_top = min(f, key=lambda x: x["ai_rank"])
     agree = "AIの本命と一致" if top["car"] == ai_top["car"] else f'AIの本命は{ai_top["car"]}番（方程式では{ai_top["rank"]}位）'
