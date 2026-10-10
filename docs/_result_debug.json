@@ -1,53 +1,6 @@
 {
- "updated": "2026-10-11 00:13",
+ "updated": "2026-10-11 05:00",
  "failures": [
-  {
-   "race": "2026-10-09 yokkaichi 6R",
-   "diag": {
-    "venue": "yokkaichi",
-    "race_id": "4820261007030006",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202610070300/",
-    "day_html_len": 137675,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-09 nara 3R",
-   "diag": {
-    "venue": "nara",
-    "race_id": "5320261009010003",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/nara/raceresult/53202610090100/",
-    "day_html_len": 118148,
-    "day_races": [
-     1,
-     2,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-10 toyama 2R",
    "diag": {
@@ -86,6 +39,55 @@
     "venue": "toyama",
     "race_id": "4620261010010005",
     "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-10 yahiko 8R",
+   "diag": {
+    "venue": "yahiko",
+    "race_id": "2120261009020008",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202610090200/",
+    "day_html_len": 142856,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     9,
+     10,
+     11,
+     12
+    ],
+    "day_text_head": "",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-10 hiratsuka 5R",
+   "diag": {
+    "venue": "hiratsuka",
+    "race_id": "3520261008030005",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/hiratsuka/raceresult/35202610080300/",
+    "day_html_len": 137402,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     6,
+     7,
+     8,
+     10,
+     11,
+     12
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   }
