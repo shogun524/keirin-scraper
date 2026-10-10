@@ -26759,7 +26759,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-09_yahiko_4": {
@@ -26982,7 +26982,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-09_yahiko_5": {
@@ -27205,7 +27205,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-09_yahiko_6": {
@@ -30015,7 +30015,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-09_yokkaichi_7": {
@@ -31965,7 +31965,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-09_hiratsuka_5": {
@@ -40748,7 +40748,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-09_nara_4": {
@@ -42156,7 +42156,20 @@
     102.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    9,
+    2,
+    4,
+    6,
+    1,
+    3,
+    8,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -42379,7 +42392,18 @@
     110.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    8,
+    9,
+    6,
+    1,
+    2,
+    7,
+    4
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -42602,7 +42626,20 @@
     101.6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    2,
+    9,
+    7,
+    4,
+    1,
+    3,
+    8,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -42826,7 +42863,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-10_yahiko_5": {
@@ -46964,7 +47001,18 @@
     71.3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    4,
+    5,
+    6,
+    3,
+    7,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -47152,7 +47200,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-10_toyama_3": {
@@ -47338,7 +47386,18 @@
     77.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    5,
+    7,
+    3,
+    4,
+    6,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -50265,7 +50324,18 @@
     68.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    5,
+    6,
+    1,
+    7,
+    4,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
   "parser_v": 4
  },
