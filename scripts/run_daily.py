@@ -198,6 +198,7 @@ def main():
                 venue_slug=race["race_info"]["venue"],
                 rivalry_records=rivalry_records, form_records=form_records,
                 settings=model_overrides or None,
+                race_title=race["race_info"].get("title"),
             )
         except Exception as e:
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
