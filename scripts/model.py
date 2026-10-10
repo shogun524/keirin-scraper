@@ -12,6 +12,7 @@ from race_simulation import simulate_race_development
 from rivalry_records import get_rivalry_summary, rivalry_multiplier
 from form_records import get_form_trend, form_multiplier
 from hole_index import compute_hole_candidates
+from formula import compute_formula, is_girls
 
 # ============================================================
 # 学習済みモデル（2020〜2025年・43,650レース／出走306,577人分のデータで学習）
@@ -656,6 +657,9 @@ DEFAULT_SETTINGS = {
     # （2日間106レース）で、本命の実際の1着率（45.3%）が予測の平均（34.5%）を大きく上回り、
     # 予測が控えめすぎたため、1.3→1.75に上げた。件数が貯まったら見直す。
     "sharpness_first": 1.75,
+    # 勝利の方程式バフ：方程式の期待値をレース内でz得点にし、1着率に exp(formula_buff × z) を掛ける（0=無効）。
+    # 毎日の自動補正（calibration.py）が成績から決める。ガールズ戦（ラインなし）には掛けない。
+    "formula_buff": 0.0,
     "trifecta_max_combos": 999,  # 実質無制限（7車立て210通り／9車立て504通りまで、全組み合わせを一覧表示するため）
     "bank_affinity_strength": 15,
     "rivalry_strength": 12,
@@ -665,7 +669,7 @@ DEFAULT_SETTINGS = {
 
 
 def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
-                  rivalry_records=None, form_records=None):
+                  rivalry_records=None, form_records=None, race_title=None):
     """
     racers: list of dict, each with:
       car, name, mark, rank, tactic, souhyou, waku, gear, score, age, period,
@@ -717,6 +721,27 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     ]
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
         base_scores, combined_adj, dev_scores, s["development_weight"], s["sharpness_first"])
+
+    # 勝利の方程式（能力値+L指数+M指数）：レース内のz得点。バフが有効なら1着率に掛ける。
+    pre_buff_rates = list(final_rates)
+    formula_z = None
+    try:
+        tmp = [{**r, "line_info": line_map.get(r["car"]), "dominant_type": dominant[i]["type"],
+                "rivalry_summary": rivalry_summaries[i]} for i, r in enumerate(racers)]
+        if len(racers) >= 3 and not is_girls(tmp, race_title):
+            tot = {x["car"]: x["total"] for x in compute_formula(tmp, venue_slug, race_title or "")}
+            vals = [tot[r["car"]] for r in racers]
+            mean = sum(vals) / len(vals)
+            sd = math.sqrt(sum((v - mean) ** 2 for v in vals) / len(vals))
+            if sd > 0:
+                formula_z = [(v - mean) / sd for v in vals]
+    except Exception:
+        formula_z = None
+    fbuff = float(s.get("formula_buff") or 0.0)
+    if fbuff and formula_z:
+        boosted = [max(v, 1e-9) * math.exp(fbuff * z) for v, z in zip(final_rates, formula_z)]
+        bsum = sum(boosted) or 1.0
+        final_rates = [b / bsum * 100 for b in boosted]
 
     rows = []
     for i, r in enumerate(racers):
@@ -799,6 +824,10 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         "is_close_race": max(r["place_rate"] for r in rows) < s["th_close_place"],
         "venue_slug": venue_slug,
         "settings": s,
+        # バフ前の1着率（毎日の自動補正の学習には、バフが掛かる前の値を使う）と、方程式のz得点
+        "pre_buff": {r["car"]: round(pre_buff_rates[i], 3) for i, r in enumerate(racers)},
+        "formula_z": ({r["car"]: round(formula_z[i], 3) for i, r in enumerate(racers)} if formula_z else None),
+        "formula_buff": fbuff if formula_z else 0.0,
         # 2着・3着の毎日の自動補正（calibration.py）で再計算に使う入力（予想成績ログに記録する）
         "cond_inputs": {
             "scores": [round(float(x), 6) for x in combined_scores],
