@@ -44,6 +44,8 @@ LFB_DEFAULT = 45.0
 # --- 勝利の方程式バフ（1着率に exp(β×z) を掛ける） ---
 MIN_RACES_B = 80            # 方程式を記録したレースがこの件数たまるまで適用しない
 BETA_MIN, BETA_MAX = 0.0, 1.0   # 負にはしない（方程式が高い選手を下げることはしない）
+LR_CRIT_1 = 3.84    # 尤度比検定（自由度1, 5%）：補正した効果が偶然の範囲なら適用しない
+LR_CRIT_2 = 5.99    # 同（自由度2）
 PRIOR_B = 20.0              # β=0 への引き戻し（β=0.3 で対数尤度 -0.9 ぶんの罰則）
 
 
@@ -264,12 +266,16 @@ def update_params(docs_dir, log, today):
         g_fit = fit_gamma(samples, gamma0)
         g_new = SMOOTH * g_prev + (1 - SMOOTH) * g_fit
         g_new = max(GAMMA_MIN, min(GAMMA_MAX, round(g_new, 3)))
+        lr_g = 2 * (_loglik(samples, g_fit) - _loglik(samples, gamma0))   # 検定は平滑化前の推定値で行う
+        sig = lr_g >= LR_CRIT_1
+        if not sig:
+            g_new = gamma0          # 偶然の範囲の改善なら基準値のまま（過学習を避ける）
         params.update({
-            "active": True, "sharpness_first": g_new, "fit_raw": round(g_fit, 3),
+            "active": sig, "sharpness_first": g_new, "fit_raw": round(g_fit, 3), "lr": round(lr_g, 2),
             "ll_per_race_default": round(_loglik(samples, gamma0) / n, 4),
             "ll_per_race_new": round(_loglik(samples, g_new) / n, 4),
         })
-        params["history"].append({"date": today_s, "gamma": g_new, "n": n})
+        params["history"].append({"date": today_s, "gamma": g_new, "n": n, "lr": round(lr_g, 2)})
     # ---- 勝利の方程式バフ（1着率への上乗せ） ----
     bsamples = _buff_samples(log, today)
     pb = prev.get("buff") or {}
@@ -280,8 +286,12 @@ def update_params(docs_dir, log, today):
         b_fit = fit_beta(bsamples, g_used)
         b_new = max(BETA_MIN, min(BETA_MAX, round(SMOOTH * b_prev + (1 - SMOOTH) * b_fit, 3)))
         nb = len(bsamples)
+        lr_b = 2 * (_loglik_buff(bsamples, g_used, b_fit) - _loglik_buff(bsamples, g_used, 0.0))
+        sig_b = lr_b >= LR_CRIT_1 and b_new > 0.01
+        if not sig_b:
+            b_new = 0.0
         bp.update({
-            "active": b_new > 0.01, "beta": b_new, "fit_raw": round(b_fit, 3),
+            "active": sig_b, "beta": b_new if sig_b else 0.0, "fit_raw": round(b_fit, 3), "lr": round(lr_b, 2),
             "ll_per_race_default": round(_loglik_buff(bsamples, g_used, 0.0) / nb, 4),
             "ll_per_race_new": round(_loglik_buff(bsamples, g_used, b_new) / nb, 4),
         })
@@ -308,8 +318,12 @@ def update_params(docs_dir, log, today):
             s23_new = max(S23_MIN, min(S23_MAX, SMOOTH * s23_prev + (1 - SMOOTH) * s23_fit))
             lfb_new = max(LFB_MIN, min(LFB_MAX, SMOOTH * lfb_prev + (1 - SMOOTH) * lfb_fit))
             n_s = len(samples23)
+            lr_23 = 2 * (_ll23(samples23, s23_fit, lfb_fit) - _ll23(samples23, s23_0, LFB_DEFAULT))
+            if lr_23 < LR_CRIT_2:
+                s23_new, lfb_new = s23_0, LFB_DEFAULT
             gp.update({
-                "active": True, "sharp23_mult": round(s23_new / sharp, 3), "line_follow_bonus": round(lfb_new, 1),
+                "active": lr_23 >= LR_CRIT_2, "lr": round(lr_23, 2),
+                "sharp23_mult": round(s23_new / sharp, 3), "line_follow_bonus": round(lfb_new, 1),
                 "fit_raw": [round(s23_fit, 2), round(lfb_fit, 1)],
                 "ll_per_race_default": round(_ll23(samples23, s23_0, LFB_DEFAULT) / n_s, 4),
                 "ll_per_race_new": round(_ll23(samples23, s23_new, lfb_new) / n_s, 4),
