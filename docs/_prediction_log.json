@@ -43805,7 +43805,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-10_yahiko_9": {
@@ -45676,7 +45676,7 @@
   },
   "ev": null,
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_hiratsuka_6": {
@@ -46457,7 +46457,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_hiratsuka_10": {
@@ -47407,7 +47407,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 4
  },
  "2026-10-10_toyama_3": {
@@ -47792,7 +47792,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-10_toyama_5": {
@@ -47979,7 +47979,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 4
  },
  "2026-10-10_toyama_6": {
@@ -50789,7 +50789,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_2": {
@@ -50958,7 +50958,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_3": {
@@ -51127,7 +51127,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_4": {
@@ -51296,7 +51296,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_5": {
@@ -51465,7 +51465,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_6": {
@@ -51634,7 +51634,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_7": {
@@ -51803,7 +51803,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_8": {
@@ -51972,7 +51972,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_kawasaki_9": {
@@ -52141,7 +52141,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_1": {
@@ -52310,7 +52310,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_2": {
@@ -52479,7 +52479,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_3": {
@@ -52648,7 +52648,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_4": {
@@ -52817,7 +52817,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_5": {
@@ -52986,7 +52986,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_6": {
@@ -53155,7 +53155,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_7": {
@@ -53324,7 +53324,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_8": {
@@ -53493,7 +53493,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_nara_9": {
@@ -53662,7 +53662,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_gifu_1": {
@@ -55177,7 +55177,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_gifu_9": {
@@ -55364,7 +55364,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 4
  },
  "2026-10-10_gifu_10": {
@@ -56021,7 +56021,20 @@
     115.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    7,
+    1,
+    4,
+    2,
+    3,
+    8,
+    9,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -56283,7 +56296,20 @@
     102.6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    7,
+    5,
+    1,
+    9,
+    4,
+    6,
+    3,
+    8
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -56545,7 +56571,20 @@
     96.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    7,
+    1,
+    6,
+    5,
+    3,
+    8,
+    9,
+    4
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -56807,7 +56846,20 @@
     110.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    4,
+    7,
+    5,
+    9,
+    2,
+    1,
+    8,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -57069,7 +57121,18 @@
     114.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    8,
+    7,
+    4,
+    9,
+    6,
+    1,
+    2
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -57331,7 +57394,20 @@
     102.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    8,
+    1,
+    2,
+    3,
+    7,
+    4,
+    9,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -57593,7 +57669,20 @@
     115.3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    2,
+    9,
+    5,
+    8,
+    4,
+    3,
+    1,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -57855,7 +57944,20 @@
     119.5
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    2,
+    4,
+    1,
+    9,
+    8,
+    3,
+    5,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -59077,7 +59179,16 @@
     77.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    3,
+    2,
+    5,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -59273,7 +59384,17 @@
     76.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    6,
+    1,
+    4,
+    3,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -59491,7 +59612,18 @@
     73.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    7,
+    1,
+    6,
+    4,
+    5,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -59710,7 +59842,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-11_toyama_5": {
@@ -59927,7 +60059,18 @@
     87.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    2,
+    3,
+    1,
+    7,
+    6,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -60116,7 +60259,18 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    6,
+    5,
+    7,
+    4,
+    2,
+    3,
+    1
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -60305,7 +60459,18 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    5,
+    1,
+    2,
+    7,
+    4,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -60523,7 +60688,18 @@
     99.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    2,
+    1,
+    3,
+    7,
+    5,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -60742,7 +60918,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-11_toyama_10": {
@@ -64182,7 +64358,17 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    2,
+    1,
+    4,
+    6,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
   "parser_v": 4
  },
@@ -64400,7 +64586,18 @@
     47.1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    3,
+    4,
+    1,
+    5,
+    7,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -64619,7 +64816,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 4
  },
  "2026-10-11_takeo_4": {
@@ -64836,7 +65033,18 @@
     53.1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    5,
+    3,
+    7,
+    4,
+    2,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -65054,7 +65262,18 @@
     57.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    6,
+    2,
+    4,
+    1,
+    7,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -65243,7 +65462,18 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    3,
+    4,
+    5,
+    2,
+    7,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
@@ -65461,7 +65691,18 @@
     80.6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    3,
+    5,
+    2,
+    4,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
   "parser_v": 4
  },
