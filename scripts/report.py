@@ -2145,6 +2145,9 @@ def render_results_page(log, date=None, model_params=None):
     if mp.get("active"):
         cal_line = (f'<b>適用中</b>：1着率の絞り込み {mp.get("default", 0):.2f} → <b>{mp["sharpness_first"]:.2f}</b>'
                     f'（補正に使った{n_cal}レース／1レースあたり対数尤度 {mp.get("ll_per_race_default", 0):.3f} → {mp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
+    elif n_cal >= min_cal:
+        cal_line = (f'<b>適用なし（基準値{mp.get("default", 0):.2f}のまま）</b>：{n_cal}レースで探した結果、改善が偶然の範囲'
+                    f'（尤度比 {mp.get("lr", 0):.1f} ＜ 3.84）だったため')
     else:
         cal_line = f'<b>学習中</b>：補正に使えるレースが{n_cal}件（{min_cal}件以上で適用開始。それまでは基準値のまま）'
     grp_lines = ""
@@ -2156,12 +2159,15 @@ def render_results_page(log, date=None, model_params=None):
             grp_lines += (f'<br>2着・3着の確率（{label}）：<b>適用中</b>　絞り込み {gp.get("default_sharp23", 0):.2f} → <b>{gp["sharp23_mult"] * 1.3:.2f}</b>、'
                           f'ライン追走 {gp.get("default_line_follow_bonus", 45):.0f} → <b>{gp["line_follow_bonus"]:.0f}</b>'
                           f'（{gp["n"]}レース／1レースあたり対数尤度 {gp.get("ll_per_race_default", 0):.3f} → {gp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
+        elif gp.get("n", 0) >= gp.get("min_races", 100):
+            grp_lines += (f'<br>2着・3着の確率（{label}）：<b>適用なし（基準値のまま）</b>　{gp["n"]}レースで探した結果、'
+                          f'改善が偶然の範囲（尤度比 {gp.get("lr", 0):.1f} ＜ 5.99）')
         else:
             grp_lines += f'<br>2着・3着の確率（{label}）：<b>学習中</b>　補正に使えるレース {gp.get("n", 0)}件（{gp.get("min_races", 100)}件以上で適用開始）'
     bp = mp.get("buff") or {}
     if bp.get("active"):
         grp_lines += (f'<br>勝利の方程式バフ：<b>適用中</b>　1着率に exp({bp["beta"]:.2f}×方程式のz得点) を掛けています'
-                      f'（{bp["n"]}レース／1レースあたり対数尤度 {bp.get("ll_per_race_default", 0):.3f} → {bp.get("ll_per_race_new", 0):.3f}、大きいほど良い）')
+                      f'（{bp["n"]}レース／尤度比 {bp.get("lr", 0):.1f}）')
     elif bp:
         grp_lines += (f'<br>勝利の方程式バフ：<b>{"学習中" if bp.get("n", 0) < bp.get("min_races", 80) else "効果なし（バフ0のまま）"}</b>　'
                       f'学習に使えるレース {bp.get("n", 0)}件（{bp.get("min_races", 80)}件以上で判定。効果が見つかったときだけ適用）')
@@ -3083,6 +3089,9 @@ def _formula_analysis_html(an):
                     "期待値", rows_v, '<th>1着</th><th>3着内</th>')
     html += tbl("タグ別（堅い／拮抗）", "方程式の1位が、AIの「堅い」「拮抗」判定のレースでどう働くか。",
                 "区分", "".join(cmp_row(l, t) for l, t in an["by_tag"]), cmp_head)
+    if an.get("by_gapfix"):
+        html += tbl("方程式の点差（固定しきい値）", "2026-10-11時点で「点差5未満は本命が当たりにくい」という観察があり、その前向き検証用です（境界は毎回同じ）。",
+                    "1位−2位", "".join(cmp_row(l, t) for l, t in an["by_gapfix"]), cmp_head)
     html += tbl("車立て別", "7車以下と8車以上（9車の重賞など）の比較。",
                 "区分", "".join(cmp_row(l, t) for l, t in an["by_cars"]), cmp_head)
     return html
