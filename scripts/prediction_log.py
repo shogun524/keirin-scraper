@@ -343,6 +343,17 @@ def formula_analysis(evaluated):
     out["by_tag"] = [("本命が堅い", seg(lambda e: e.get("is_high"))),
                      ("拮抗", seg(lambda e: e.get("is_close"))),
                      ("どちらでもない", seg(lambda e: not e.get("is_high") and not e.get("is_close")))]
+    def seg_gap(lo, hi):
+        t = acc()
+        for e, f, fin in rows:
+            g = f[0][1] - f[1][1]
+            if lo <= g < hi:
+                add(t, f[0][0], e["order"][0], fin)
+        return t
+    # 固定しきい値（分位ではなく毎回同じ境界）。成績が溜まった後で「前向き検証」するための区分
+    out["by_gapfix"] = [("点差5未満（方程式が割れている）", seg_gap(-1e9, 5)),
+                        ("点差5以上10未満", seg_gap(5, 10)),
+                        ("点差10以上", seg_gap(10, 1e9))]
     out["by_cars"] = [("7車立て以下", seg(lambda e: len(e["order"]) <= 7)),
                       ("8車立て以上", seg(lambda e: len(e["order"]) >= 8))]
     return out
