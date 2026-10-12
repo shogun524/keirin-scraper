@@ -1,62 +1,31 @@
 {
- "updated": "2026-10-13 03:51",
+ "updated": "2026-10-13 07:34",
  "failures": [
   {
-   "race": "2026-10-12 kokura 6R",
+   "race": "2026-10-12 iwakitaira 1R",
    "diag": {
-    "venue": "kokura",
-    "race_id": "8120261011020006",
+    "venue": "iwakitaira",
+    "race_id": "1320261012010001",
     "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/kokura/raceresult/81202610110200/",
-    "day_html_len": 3007,
-    "day_races": [],
-    "day_text_head": "DERUCA | 定期メンテナンス | 現在、システムメンテナンス中のため全てのサービスを停止しております。 | 申し訳ございませんが、作業終了までしばらくお待ちください。 | メンテナンス時間：2026年10月13日 01:00 ～ 07:00 | 大変ご迷惑をおかけ致しますが、ご理解の程、よろしくお願い致します。 | ※メンテナンス中のお問い合わせは以下へご連絡ください。 | お問い合わせの内容によっては回答にお時間がかかる場合がございます。 | あらかじめご了承ください。 | • 楽天Kドリームス『kcs@kdreams.jp』 | • デルカ『dcs@deruca.jp』 | • GambooBET『gcs@vote.gamboo.jp』 | • エンジョイ『c_support@vote.yen-joy.net』 | COPYRIGHT(C) DERUCA 2026. ALL RIGHTS RESERVED.",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-12 gifu 6R",
-   "diag": {
-    "venue": "gifu",
-    "race_id": "4320261010030006",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/gifu/raceresult/43202610100300/",
-    "day_html_len": 3007,
-    "day_races": [],
-    "day_text_head": "DERUCA | 定期メンテナンス | 現在、システムメンテナンス中のため全てのサービスを停止しております。 | 申し訳ございませんが、作業終了までしばらくお待ちください。 | メンテナンス時間：2026年10月13日 01:00 ～ 07:00 | 大変ご迷惑をおかけ致しますが、ご理解の程、よろしくお願い致します。 | ※メンテナンス中のお問い合わせは以下へご連絡ください。 | お問い合わせの内容によっては回答にお時間がかかる場合がございます。 | あらかじめご了承ください。 | • 楽天Kドリームス『kcs@kdreams.jp』 | • デルカ『dcs@deruca.jp』 | • GambooBET『gcs@vote.gamboo.jp』 | • エンジョイ『c_support@vote.yen-joy.net』 | COPYRIGHT(C) DERUCA 2026. ALL RIGHTS RESERVED.",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-12 kokura 7R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261011020007",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-12 gifu 7R",
-   "diag": {
-    "venue": "gifu",
-    "race_id": "4320261010030007",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-12 kokura 8R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261011020008",
-    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/iwakitaira/raceresult/13202610120100/",
+    "day_html_len": 118590,
+    "day_races": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   }
  ],
- "tracked": 581,
- "with_result": 446,
+ "tracked": 641,
+ "with_result": 476,
  "without_url": 0,
- "pending_eligible": 135
+ "pending_eligible": 105
 }
