@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13 10:15",
+ "updated": "2026-10-13 18:14",
  "failures": [
   {
    "race": "2026-10-12 iwakitaira 1R",
@@ -8,7 +8,7 @@
     "race_id": "1320261012010001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/iwakitaira/raceresult/13202610120100/",
-    "day_html_len": 118590,
+    "day_html_len": 117900,
     "day_races": [
      2,
      3,
@@ -24,17 +24,44 @@
    }
   },
   {
-   "race": "2026-10-13 omiya 6R",
+   "race": "2026-10-13 kokura 2R",
    "diag": {
-    "venue": "omiya",
-    "race_id": "2520261012020006",
+    "venue": "kokura",
+    "race_id": "8120261011030002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-13 kokura 5R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261011030005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-13 maebashi 6R",
+   "diag": {
+    "venue": "maebashi",
+    "race_id": "2220261013010006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-13 kokura 7R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261011030007",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 641,
- "with_result": 481,
+ "with_result": 504,
  "without_url": 0,
- "pending_eligible": 106
+ "pending_eligible": 109
 }
