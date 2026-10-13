@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13 07:34",
+ "updated": "2026-10-13 10:15",
  "failures": [
   {
    "race": "2026-10-12 iwakitaira 1R",
@@ -22,10 +22,19 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-13 omiya 6R",
+   "diag": {
+    "venue": "omiya",
+    "race_id": "2520261012020006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 641,
- "with_result": 476,
+ "with_result": 481,
  "without_url": 0,
- "pending_eligible": 105
+ "pending_eligible": 106
 }
