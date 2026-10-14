@@ -52,6 +52,26 @@ def audit(log):
     print(f"  方程式を記録したレース {n_ev}件 / 記録のない結果あり {len(res) - n_ev}件（ガールズ戦・記録開始前）")
 
 
+def recount(log):
+    """ページの集計とは別の実装で、見出しの指標を数え直す（同じ除外ルール：結果3着ぶん・締切後記録を除く）。"""
+    n = t1 = t2 = t3 = box = tri1 = tri5 = 0
+    for e in log.values():
+        r = e.get("result")
+        if not r or len(r.get("finish_order", [])) < 3 or e.get("late"):
+            continue
+        fin, order, tf = r["finish_order"], e["order"], e.get("trifecta") or []
+        n += 1
+        t1 += order[0] == fin[0]
+        t2 += order[0] in fin[:2]
+        t3 += order[0] in fin[:3]
+        box += set(order[:3]) == set(fin[:3])
+        tri1 += bool(tf) and tf[0] == fin[:3]
+        tri5 += fin[:3] in [list(c) for c in tf[:5]]
+    if n:
+        print(f"\n[独立の数え直し] 評価対象{n}レース: 本命1着{t1 / n * 100:.1f}% 2着内{t2 / n * 100:.1f}% 3着内{t3 / n * 100:.1f}% "
+              f"3連複BOX{box / n * 100:.1f}% 3連単1点{tri1 / n * 100:.1f}% 5点{tri5 / n * 100:.1f}%  ← 予想成績ページの数字と一致するか確認")
+
+
 def calib_table(res):
     bins = [(0, .05), (.05, .1), (.1, .15), (.15, .2), (.2, .3), (.3, .4), (.4, .5), (.5, 1.01)]
     acc = {b: [0, 0.0, 0] for b in bins}
@@ -171,6 +191,7 @@ if __name__ == "__main__":
     log = load(path)
     audit(log)
     res = [e for e in log.values() if e.get("result") and len(e["result"].get("finish_order", [])) >= 3]
+    recount(log)
     calib_table(res)
     walk_forward(log)
     gap_split(log)

@@ -37,6 +37,7 @@ from report import (render_index, render_venue_page, render_venues_page, render_
 from course_records import update_course_records, get_course_record
 from rivalry_records import update_rivalry_records
 from prediction_log import refresh_log
+from evaluation import build_report, save_report, load_report
 from calibration import get_overrides, update_params, load_params
 from form_records import update_form_records
 from odds_alerts import compute_odds_value_alerts
@@ -259,12 +260,21 @@ def main():
         print(f"[WARN] モデルの自動補正に失敗しました: {e}")
         model_params = {}
 
+    # 確率の質・校正・前向き検証の評価（docs/_eval_report.json）。失敗しても他の処理は止めない。
+    try:
+        eval_report = build_report(prediction_log, today) if prediction_log else {}
+        if eval_report:
+            save_report(DOCS_DIR, eval_report)
+    except Exception as e:
+        print(f"[WARN] 予想の評価レポートの作成に失敗しました: {e}")
+        eval_report = load_report(DOCS_DIR)
+
     # 全競輪場横断の集計ページ（本命が堅い／拮抗／妙味／全レース早見表）。
     # 1ページの失敗が他のページや日次処理全体を止めないよう、ページごとに独立して書き出す。
     for filename, render_fn in (
         ("high_prob.html", render_high_prob_page),
         ("close_race.html", render_close_race_page),
-        ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params)),
+        ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params, eval_report)),
         ("print.html", render_print_page),
         ("formula.html", render_formula_page),
     ):
