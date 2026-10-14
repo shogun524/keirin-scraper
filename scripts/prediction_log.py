@@ -21,6 +21,7 @@ import json
 import datetime
 
 import scraper
+from validity import finish_order_ok
 from scraper import extract_race_id_from_url, fetch_race_result
 
 LOG_FILENAME = "_prediction_log.json"
@@ -32,7 +33,7 @@ TRIFECTA_KEEP = 5         # ログに残す3連単の上位組合せ数
 # 結果ページの読み取り方式の版。版が変わったとき、結果が取れていないレースの失敗回数を
 # 0に戻して取り直す（旧方式の不具合で積み上がった失敗回数のせいで、直った後も諦められたままに
 # ならないようにするため）。読み取り方式を直したら数字を1つ上げる。
-PARSER_VERSION = 4
+PARSER_VERSION = 5
 
 # キャリブレーション表の区分（本命の予測1着率の下限, 上限, 表示ラベル）
 CALIBRATION_BUCKETS = [
@@ -76,13 +77,35 @@ def _formula_top(rd):
         return None
 
 
-def record_predictions(log, all_race_data, date_str):
+def exclusion_reason(entry):
+    """
+    評価（成績の分母）に入れない理由。入れてよければ None。
+      "bad_order": 着順が壊れている（見出し行の数字の誤読など。結果を再取得して直す） / "pending": 結果が未取得 / "short": 着順が3着ぶん揃っていない（中止・欠場・解析失敗など）
+      "late": 締切の後にはじめて予想を記録したレース。締切後は、そのレース自身の結果が当地成績・対戦履歴・
+              直近の調子の自前集計に取り込まれたあとに予想を計算している可能性があり、未来情報が混ざりうる。
+    記録時刻(rec_at)のない旧ログは、締切前だったか確認できないので除外せず、「時刻不明」として別に数える。
+    """
+    res = entry.get("result")
+    if not res:
+        return "pending"
+    if len(res.get("finish_order", [])) < 3:
+        return "short"
+    if not finish_order_ok(entry):
+        return "bad_order"
+    if entry.get("late"):
+        return "late"
+    return None
+
+
+def record_predictions(log, all_race_data, date_str, rec_at=None):
     """
     all_race_data: run_daily.py の all_race_data（"race_info"/"prediction"/"url"）。
     すでに記録済みのレースは上書きしない（後から結果由来の補正で予想が動いても、
     「最初に出した予想」で成績を評価するため）。戻り値: 新規に記録した件数。
+    rec_at: 記録時刻 "YYYY-MM-DD HH:MM"（JST）。締切より後の記録は late=True にして評価から外す。
     """
     added = 0
+    rec_hm = rec_at[11:16] if rec_at else None
     for rd in all_race_data:
         pred = rd.get("prediction")
         if not pred:
@@ -98,6 +121,10 @@ def record_predictions(log, all_race_data, date_str):
             "venue": info["venue"],
             "race_no": info["race_no"],
             "deadline": info.get("deadline"),
+            "rec_at": rec_at,
+            "late": bool(rec_hm and info.get("deadline") and rec_hm >= info["deadline"]),
+            "n_cars": len(rows),
+            "has_line": any(r.get("line_info") for r in rows),
             "url": rd.get("url"),
             "order": [r["car"] for r in rows],
             "top_adj": round(rows[0]["adjusted"], 2),
@@ -137,6 +164,11 @@ def update_results(log, today, now_hm, debug=None):
     fetched = 0
     newly = 0
     failed = 0
+    for v in log.values():
+        if v.get("result") is not None and not finish_order_ok(v):
+            v["result"] = None      # 壊れた着順は捨てて、直したパーサで取り直す
+            v["attempts"] = 0
+            v["parser_v"] = PARSER_VERSION
     for v in log.values():
         if v.get("result") is None and v.get("parser_v") != PARSER_VERSION:
             v["attempts"] = 0
@@ -179,10 +211,21 @@ def update_results(log, today, now_hm, debug=None):
                 debug["failures"].append({"race": f"{v['date']} {v['venue']} {v['race_no']}R",
                                           "error": "結果の車番が出走車番と一致しない", "cars": [r["car"] for r in res]})
             continue
+        cand = {"result": {"finish_order": [r["car"] for r in res]}, "order": v.get("order"),
+                "cond": v.get("cond"), "probs": v.get("probs")}
+        if not finish_order_ok(cand):     # 着順が壊れて見える（見出し行の誤読など）ものは記録しない
+            v["attempts"] = v.get("attempts", 0) + 1
+            failed += 1
+            if debug is not None and len(debug["failures"]) < 5:
+                debug["failures"].append({"race": f"{v['date']} {v['venue']} {v['race_no']}R",
+                                          "error": "着順が壊れて見えるため記録しない", "cars": [r["car"] for r in res]})
+            continue
         v["result"] = {
             "finish_order": [r["car"] for r in res],
+            "ranks": [r["finish"] for r in res],     # 着順の数字（同着や欠けがないかの監査用）
             "winner_kimarite": res[0].get("kimarite"),
         }
+        v["res_at"] = f"{today_str} {now_hm}"
         newly += 1
     if fetched:
         print(f"[INFO] 予想成績: 結果ページ{fetched}件を取得し、{newly}件で着順を記録、{failed}件は未確定または解析失敗でした。")
@@ -192,7 +235,7 @@ def update_results(log, today, now_hm, debug=None):
 def refresh_log(docs_dir, all_race_data, today, now_hm):
     """予想の記録→結果の照合→保存までを一括で行う。戻り値: (log, 新規記録数, 新規結果数)。"""
     log = load_log(docs_dir)
-    added = record_predictions(log, all_race_data, today.isoformat())
+    added = record_predictions(log, all_race_data, today.isoformat(), rec_at=f"{today.isoformat()} {now_hm}")
     debug = {"updated": f"{today.isoformat()} {now_hm}", "failures": []}
     newly = update_results(log, today, now_hm, debug)
     _prune(log, today)
@@ -217,9 +260,9 @@ def refresh_log(docs_dir, all_race_data, today, now_hm):
 # ============================================================
 def _evaluate(entry):
     """1レースの予想と結果を突き合わせる（結果がなければNone）。"""
-    res = entry.get("result")
-    if not res or len(res.get("finish_order", [])) < 3:
+    if exclusion_reason(entry) is not None:
         return None
+    res = entry["result"]
     order = entry["order"]
     fin = res["finish_order"]
     top = order[0]
@@ -418,9 +461,18 @@ def compute_prediction_stats(log):
                 t[k] += bool(v)
     fa["seg"] = fa_seg
     fa["analysis"] = formula_analysis(evaluated)
+    excluded = {"late": 0, "short": 0, "bad_order": 0, "no_time": 0}
+    for e in log.values():
+        r = exclusion_reason(e)
+        if r in ("late", "short", "bad_order"):
+            excluded[r] += 1
+        elif r is None and not e.get("rec_at"):
+            excluded["no_time"] += 1    # 記録時刻のない旧ログ（除外はしないが締切前か確認できない）
+    dates = sorted(e["date"] for e, _ in evaluated)
     pending = sum(1 for e in log.values() if e.get("result") is None and e.get("attempts", 0) < MAX_ATTEMPTS)
     return {
         "overall": _summarize(evals), "segments": segments, "calibration": calibration,
         "by_day": by_day_list, "recent": recent, "pending_count": pending,
-        "tracked_count": len(log), "formula": fa,
+        "tracked_count": len(log), "formula": fa, "excluded": excluded,
+        "period": (dates[0], dates[-1]) if dates else None,
     }

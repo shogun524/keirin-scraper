@@ -79,7 +79,7 @@ class TestExclusionAndStats(unittest.TestCase):
         }
         st = P.compute_prediction_stats(log)
         self.assertEqual(st["overall"]["n"], 2)                 # a と e だけが分母
-        self.assertEqual(st["excluded"], {"late": 1, "short": 1, "no_time": 1})
+        self.assertEqual(st["excluded"], {"late": 1, "short": 1, "bad_order": 0, "no_time": 1})
         self.assertEqual(st["pending_count"], 1)
         self.assertAlmostEqual(st["overall"]["top1"], 50.0)
 

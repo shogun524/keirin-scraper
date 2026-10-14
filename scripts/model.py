@@ -272,8 +272,45 @@ def sharpen_probabilities(scored, exponent):
     return scored
 
 
+def apply_place_calibration(scored, cal):
+    """
+    2着・3着の確率への追加補正（calibration.py が毎日学習。ゲートを通ったときだけ cal が渡される）。
+      確率 ∝ 確率^slope × exp(adj×[1着/2着と同ラインで隣（距離1以内）] + same×[同ライン])
+    cal=None なら何もしない。scored の各要素は "same_line" と "dist"（同ラインでの最短距離）を持つこと。
+    """
+    if not cal:
+        return scored
+    slope = float(cal.get("slope", 1.0))
+    ta, ts = float(cal.get("adj", 0.0)), float(cal.get("same", 0.0))
+    w = []
+    for x in scored:
+        d = x.get("dist")
+        v = max(x["prob"], 1e-6) ** slope
+        if x.get("same_line"):
+            v *= math.exp(ts + (ta if d is not None and d <= 1 else 0.0))
+        w.append(v)
+    t = sum(w) or 1.0
+    for x, v in zip(scored, w):
+        x["prob"] = v / t * 100
+    return scored
+
+
+def apply_first_place_tilt(rates, dominant, tilt):
+    """
+    1着率への決まり手補正（calibration.py が学習）。確率 ∝ 確率^a × exp(θ[予測決まり手])（逃が基準）。
+    実績では、逃・捲りの勝ちを少なく、差し・マークの勝ちを多く見積もりすぎる偏りがあった。
+    tilt=None なら何もしない。rates は%（合計100）。
+    """
+    if not tilt:
+        return list(rates)
+    a = float(tilt.get("a", 1.0))
+    w = [max(r, 1e-9) ** a * math.exp(float(tilt.get(d["type"], 0.0))) for r, d in zip(rates, dominant)]
+    t = sum(w) or 1.0
+    return [v / t * 100 for v in w]
+
+
 def compute_second_place_candidates(racers, winner_idx, base_scores, dominant, line_map,
-                                     adv_bonus, adv_penalty, line_follow_bonus, sharpness):
+                                     adv_bonus, adv_penalty, line_follow_bonus, sharpness, cal=None):
     winner_type = dominant[winner_idx]["type"]
     winner_car = racers[winner_idx]["car"]
     winner_info = line_map.get(winner_car)
@@ -293,18 +330,20 @@ def compute_second_place_candidates(racers, winner_idx, base_scores, dominant, l
         else:
             same_type = winner_type and dominant[i]["type"] == winner_type
             score *= (1 - adv_penalty / 100) if same_type else (1 + adv_bonus / 100)
-        scored.append({**r, "score": max(score, 0), "same_line": same_line, "idx": i})
+        scored.append({**r, "score": max(score, 0), "same_line": same_line, "idx": i,
+                       "dist": abs(o_info["position"] - winner_info["position"]) if same_line else None})
 
     total = sum(x["score"] for x in scored) or 1.0
     for x in scored:
         x["prob"] = (x["score"] / total) * 100
     sharpen_probabilities(scored, sharpness)
+    apply_place_calibration(scored, cal)
     scored.sort(key=lambda x: -x["prob"])
     return scored
 
 
 def compute_third_place_candidates(racers, winner_idx, second_idx, base_scores, dominant, line_map,
-                                    adv_bonus, adv_penalty, line_follow_bonus, sharpness):
+                                    adv_bonus, adv_penalty, line_follow_bonus, sharpness, cal=None):
     ref_types = [dominant[winner_idx]["type"], dominant[second_idx]["type"]]
     ref_infos = [
         {"car": racers[winner_idx]["car"], "info": line_map.get(racers[winner_idx]["car"])},
@@ -335,12 +374,14 @@ def compute_third_place_candidates(racers, winner_idx, second_idx, base_scores, 
                 score *= (1 - adv_penalty / 100) ** same_type_count
             else:
                 score *= 1 + adv_bonus / 100
-        scored.append({**r, "score": max(score, 0), "same_line": best_same_line is not None, "idx": i})
+        scored.append({**r, "score": max(score, 0), "same_line": best_same_line is not None, "idx": i,
+                       "dist": best_same_line})
 
     total = sum(x["score"] for x in scored) or 1.0
     for x in scored:
         x["prob"] = (x["score"] / total) * 100
     sharpen_probabilities(scored, sharpness)
+    apply_place_calibration(scored, cal)
     scored.sort(key=lambda x: -x["prob"])
     return scored
 
@@ -350,21 +391,22 @@ def compute_third_place_candidates(racers, winner_idx, second_idx, base_scores, 
 #                  表5：さらに2着も確定したうえでの3着確率）
 # ============================================================
 def compute_second_place_matrix(racers, base_scores, dominant, line_map,
-                                 adv_bonus, adv_penalty, line_follow_bonus, sharpness):
+                                 adv_bonus, adv_penalty, line_follow_bonus, sharpness, cal2=None):
     """
     戻り値: {winner_car: [{"car":.., "name":.., "prob":.., "same_line":..}, ...]}
     """
     matrix = {}
     for i, r in enumerate(racers):
         candidates = compute_second_place_candidates(
-            racers, i, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+            racers, i, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness,
+            cal=cal2)
         matrix[r["car"]] = candidates
     return matrix
 
 
 def compute_third_place_matrix(racers, base_scores, dominant, line_map,
                                 adv_bonus, adv_penalty, line_follow_bonus, sharpness,
-                                second_place_matrix=None):
+                                second_place_matrix=None, cal2=None, cal3=None):
     """
     各号車が仮に1着だった場合、その号車における最有力2着候補を自動選定した上で、
     3着候補の確率を算出する。
@@ -372,7 +414,8 @@ def compute_third_place_matrix(racers, base_scores, dominant, line_map,
     """
     if second_place_matrix is None:
         second_place_matrix = compute_second_place_matrix(
-            racers, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+            racers, base_scores, dominant, line_map, adv_bonus, adv_penalty, line_follow_bonus, sharpness,
+            cal2=cal2)
 
     matrix = {}
     if len(racers) <= 2:
@@ -387,13 +430,13 @@ def compute_third_place_matrix(racers, base_scores, dominant, line_map,
             continue
         third_candidates = compute_third_place_candidates(
             racers, i, second_idx, base_scores, dominant, line_map,
-            adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+            adv_bonus, adv_penalty, line_follow_bonus, sharpness, cal=cal3)
         matrix[r["car"]] = {"second_car": second_car, "candidates": third_candidates}
     return matrix
 
 
 def compute_full_third_place_data(racers, base_scores, dominant, line_map,
-                                   adv_bonus, adv_penalty, line_follow_bonus, sharpness):
+                                   adv_bonus, adv_penalty, line_follow_bonus, sharpness, cal3=None):
     """
     「1着候補→2着候補→3着候補」をすべてタップで選べるようにするため、
     あり得る (1着, 2着) の組み合わせすべてについて3着候補を計算しておく
@@ -412,7 +455,7 @@ def compute_full_third_place_data(racers, base_scores, dominant, line_map,
                 continue
             third_candidates = compute_third_place_candidates(
                 racers, i, j, base_scores, dominant, line_map,
-                adv_bonus, adv_penalty, line_follow_bonus, sharpness)
+                adv_bonus, adv_penalty, line_follow_bonus, sharpness, cal=cal3)
             result[r["car"]][r2["car"]] = third_candidates
     return result
 
@@ -719,8 +762,11 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         line_adj[i] * bank_affinity_mult[i] * rivalry_mult[i] * form_mult[i]
         for i in range(len(racers))
     ]
+    sc = (s.get("stage_cal") or {}).get("9" if len(racers) >= 8 else "7") or {}
+    # 決まり手補正(s1)が有効なときは、その補正が前提にしている既定の絞り込みを使う（日々のγ補正と二重にしない）
+    gamma1 = DEFAULT_SETTINGS["sharpness_first"] if sc.get("s1") else s["sharpness_first"]
     final_rates, effective_mult, combined_scores = compute_adjusted_rates(
-        base_scores, combined_adj, dev_scores, s["development_weight"], s["sharpness_first"])
+        base_scores, combined_adj, dev_scores, s["development_weight"], gamma1)
 
     # 勝利の方程式（能力値+L指数+M指数）：レース内のz得点。バフが有効なら1着率に掛ける。
     pre_buff_rates = list(final_rates)
@@ -737,6 +783,16 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
                 formula_z = [(v - mean) / sd for v in vals]
     except Exception:
         formula_z = None
+    # 決まり手による1着率の補正（ゲートを通ったときだけ。車立てグループ別）
+    tilt = sc.get("s1")
+    if tilt:
+        final_rates = apply_first_place_tilt(final_rates, dominant, tilt)
+    cal2, cal3 = sc.get("s2"), sc.get("s3")
+    if cal2 or cal3:
+        # 2着・3着の同ライン補正は「既定のライン追走・絞り込み」を前提に学習しているので、
+        # 有効なときは日々の自動補正(group_overrides)を使わず既定値に戻す（二重補正の防止）
+        sharp23 = s["sharpness"] * max(1.0, (len(racers) - 1) / 6)
+        lfb23 = s["line_follow_bonus"]
     fbuff = float(s.get("formula_buff") or 0.0)
     if fbuff and formula_z:
         boosted = [max(v, 1e-9) * math.exp(fbuff * z) for v, z in zip(final_rates, formula_z)]
@@ -758,25 +814,25 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     top = rows[0]
     second_candidates = compute_second_place_candidates(
         racers, top["idx"], combined_scores, dominant, line_map,
-        s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
+        s["adv_bonus"], s["adv_penalty"], lfb23, sharp23, cal=cal2)
 
     third_candidates = []
     if second_candidates and len(racers) > 2:
         second_idx = second_candidates[0]["idx"]
         third_candidates = compute_third_place_candidates(
             racers, top["idx"], second_idx, combined_scores, dominant, line_map,
-            s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
+            s["adv_bonus"], s["adv_penalty"], lfb23, sharp23, cal=cal3)
 
     close_group = [r for r in rows if top["adjusted"] - r["adjusted"] <= s["close_threshold"]]
     most_reliable = max(close_group, key=lambda r: r["confidence"]["score"]) if len(close_group) >= 2 else None
 
     second_place_matrix = compute_second_place_matrix(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23, cal2=cal2)
     third_place_matrix = compute_third_place_matrix(
         racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23,
-        second_place_matrix=second_place_matrix)
+        second_place_matrix=second_place_matrix, cal2=cal2, cal3=cal3)
     full_third_place_data = compute_full_third_place_data(
-        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23)
+        racers, combined_scores, dominant, line_map, s["adv_bonus"], s["adv_penalty"], lfb23, sharp23, cal3=cal3)
 
     # 「予測3着内率」を、同じモデルのP(1着)+P(2着)+P(3着)の積み上げから算出する
     # （1着率との整合性が構造的に保証される。詳細は関数のdocstring参照）
@@ -828,6 +884,7 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         "pre_buff": {r["car"]: round(pre_buff_rates[i], 3) for i, r in enumerate(racers)},
         "formula_z": ({r["car"]: round(formula_z[i], 3) for i, r in enumerate(racers)} if formula_z else None),
         "formula_buff": fbuff if formula_z else 0.0,
+        "stage_cal_used": {k: bool(v) for k, v in (("s1", tilt), ("s2", cal2), ("s3", cal3))},
         # 2着・3着の毎日の自動補正（calibration.py）で再計算に使う入力（予想成績ログに記録する）
         "cond_inputs": {
             "scores": [round(float(x), 6) for x in combined_scores],

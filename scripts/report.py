@@ -9,6 +9,7 @@ GitHub Pages で公開する docs/ 以下のファイルを生成する。
 """
 
 import datetime
+import math
 from zoneinfo import ZoneInfo
 from model import KIMARITE_LABELS, KIMARITE
 from venue_data import VENUE_BANK_DATA, bank_class, straight_tendency, kimarite_venue_average
@@ -2127,7 +2128,7 @@ def render_venues_today_page(all_race_data, date=None):
         body=body, current="venues_today.html", script=_sortable_table_script("vtTable", 2, -1))
 
 
-def render_results_page(log, date=None, model_params=None):
+def render_results_page(log, date=None, model_params=None, eval_report=None):
     """
     予想成績ページ。prediction_log に溜めた「予想」と「確定結果」から、
     本命が実際に何%勝ったか／予測1着率は実際と合っているか（キャリブレーション）／
@@ -2164,15 +2165,29 @@ def render_results_page(log, date=None, model_params=None):
                           f'改善が偶然の範囲（尤度比 {gp.get("lr", 0):.1f} ＜ 5.99）')
         else:
             grp_lines += f'<br>2着・3着の確率（{label}）：<b>学習中</b>　補正に使えるレース {gp.get("n", 0)}件（{gp.get("min_races", 100)}件以上で適用開始）'
-    bp = mp.get("buff") or {}
-    if bp.get("active"):
-        grp_lines += (f'<br>勝利の方程式バフ：<b>適用中</b>　1着率に exp({bp["beta"]:.2f}×方程式のz得点) を掛けています'
-                      f'（{bp["n"]}レース／尤度比 {bp.get("lr", 0):.1f}）')
-    elif bp:
-        grp_lines += (f'<br>勝利の方程式バフ：<b>{"学習中" if bp.get("n", 0) < bp.get("min_races", 80) else "効果なし（バフ0のまま）"}</b>　'
-                      f'学習に使えるレース {bp.get("n", 0)}件（{bp.get("min_races", 80)}件以上で判定。効果が見つかったときだけ適用）')
+    grp_lines += ('<br>勝利の方程式バフ：<b>廃止</b>　検証で、決まり手補正を入れたあとは方程式の上乗せに効果が見つからなかったため、'
+                  '1着率には掛けていません（方程式は参考の指標として表示のみ）。')
+    names = {"s1": "1着の決まり手補正", "s2": "2着の同ライン補正", "s3": "3着の同ライン補正"}
+    for g, label in (("7", "7車以下"), ("9", "8車以上")):
+        st = (mp.get("stage_cal") or {}).get(g) or {}
+        for k in ("s1", "s2", "s3"):
+            info = st.get(k)
+            if not info:
+                continue
+            if info.get("active"):
+                coef = "、".join(f"{kk}={vv:+.2f}" if kk not in ("a", "slope") else f"{ {'a': '傾き', 'slope': '傾き'}[kk]}={vv:.2f}"
+                                 for kk, vv in info["coef"].items())
+                grp_lines += (f'<br>{names[k]}（{label}）：<b>適用中</b>　{coef}'
+                              f'（{info["n"]}レース／日抜き検証で1レースあたり対数損失 {info.get("loo_gain_per_race", 0):+.3f} 改善'
+                              f'・{info.get("loo_days_better", 0)}/{info.get("loo_days", 0)}日で改善）')
+            elif info.get("n", 0) < info.get("min_races", 200) or info.get("venues", 0) < info.get("min_venues", 6):
+                grp_lines += (f'<br>{names[k]}（{label}）：<b>学習中</b>　使えるレース {info.get("n", 0)}件・開催場 {info.get("venues", 0)}か所'
+                              f'（{info.get("min_races", 200)}件以上・開催場{info.get("min_venues", 6)}か所以上で適用開始）')
+            else:
+                grp_lines += (f'<br>{names[k]}（{label}）：<b>見送り</b>　{info.get("n", 0)}レースで探したが、'
+                              f'偶然の範囲または日ごとに安定せず（尤度比 {info.get("lr", 0):.1f}）')
     model_html = (f'<div class="hp-lead" style="margin-top:8px;">モデルの自動補正（毎日1回）：{cal_line}{grp_lines}'
-                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みと、2着・3着の確率（絞り込み・ライン追走の強さ）、勝利の方程式バフの強さを見直します。</span></div>')
+                  f'<br><span class="dim">更新日 {mp.get("updated", "—")}。各選手の予測を記録したレースの答え合わせから、1着率の絞り込みと、2着・3着の確率（絞り込み・ライン追走の強さ）に加え、1着の決まり手補正と2着・3着の同ライン補正を見直します。偶然では説明しにくいと確認できた補正だけを適用します。</span></div>')
 
     def pct(v):
         return f"{v:.1f}%"
@@ -2289,11 +2304,12 @@ def render_results_page(log, date=None, model_params=None):
   .rs-value{ font-size:22px; font-weight:800; color:var(--brick); margin-top:2px; font-variant-numeric:tabular-nums; }
   .rs-sub{ font-size:11px; color:var(--ink-soft); margin-top:2px; min-height:14px; }
   .delta-up{ color:var(--pine); } .delta-down{ color:var(--brick); }
+  .kf-note{ font-size:12px; color:var(--ink-soft); line-height:1.7; margin:4px 0 8px; }
 """
     return _page_shell(
         title="予想成績", heading="予想成績", date_str=_fmt_date_jp(date),
         tagline="AIの予想は実際どれくらい当たったか。毎時自動で記録して答え合わせしています。",
-        body=summary + formula_html + seg_html + cal_html + day_html + recent_html,
+        body=render_results_header(stats, eval_report) + summary + render_eval_section(eval_report) + formula_html + seg_html + ("" if (eval_report and eval_report.get("n_races")) else cal_html) + day_html + render_recent_table(stats),
         current="results.html", extra_style=style)
 
 
@@ -3095,3 +3111,164 @@ def _formula_analysis_html(an):
     html += tbl("車立て別", "7車以下と8車以上（9車の重賞など）の比較。",
                 "区分", "".join(cmp_row(l, t) for l, t in an["by_cars"]), cmp_head)
     return html
+
+
+# ---------------------------------------------------------------------------
+# 予想成績ページ：統計的に正しい評価の表示（元データは docs/_prediction_log.json と docs/_eval_report.json）
+# ---------------------------------------------------------------------------
+def _reliability_svg(rows, title):
+    """校正グラフ：横=予測確率、縦=実際の1着率。縦線は95%信頼区間、点線は理想（y=x）。"""
+    rows = [r for r in rows if r["n"] >= 10]      # 件数が少なすぎる帯は区間が広すぎるのでグラフには描かない（表には出る）
+    if not rows:
+        return ""
+    W, H, L, B, T, R = 340, 300, 38, 32, 14, 12
+    top = min(100.0, float(math.ceil(max(max(r["ci_hi"] for r in rows), max(r["pred"] for r in rows)) / 10.0) * 10))
+    top = max(top, 20.0)
+    xs = lambda v: L + (W - L - R) * v / top
+    ys = lambda v: H - B - (H - B - T) * v / top
+    g = [f'<line x1="{L}" y1="{ys(0)}" x2="{W - R}" y2="{ys(0)}" stroke="#999"/>',
+         f'<line x1="{L}" y1="{ys(0)}" x2="{L}" y2="{ys(top)}" stroke="#999"/>',
+         f'<line x1="{xs(0)}" y1="{ys(0)}" x2="{xs(top)}" y2="{ys(top)}" stroke="#bbb" stroke-dasharray="4 3"/>']
+    t = 0
+    while t <= top:
+        g.append(f'<text x="{L - 4}" y="{ys(t) + 3}" font-size="9" text-anchor="end" fill="#666">{t:.0f}</text>')
+        g.append(f'<text x="{xs(t)}" y="{H - B + 12}" font-size="9" text-anchor="middle" fill="#666">{t:.0f}</text>')
+        t += top / 5 if top / 5 >= 1 else 1
+    for r in rows:
+        ok = r["ci_contains_pred"]
+        col = "#2f6b3a" if ok else "#b5472f"
+        x, y = xs(r["pred"]), ys(r["actual"])
+        g.append(f'<line x1="{x}" y1="{ys(min(r["ci_lo"], top))}" x2="{x}" y2="{ys(min(r["ci_hi"], top))}" stroke="{col}" stroke-width="2"/>')
+        g.append(f'<circle cx="{x}" cy="{y}" r="4" fill="{col}"/>')
+        g.append(f'<text x="{x + 6}" y="{y - 5}" font-size="9" fill="#444">n={r["n"]}</text>')
+    g.append(f'<text x="{(L + W - R) / 2}" y="{H - 4}" font-size="10" text-anchor="middle" fill="#444">予測確率（%）</text>')
+    g.append(f'<text x="10" y="{(T + H - B) / 2}" font-size="10" fill="#444" transform="rotate(-90 10 {(T + H - B) / 2})" text-anchor="middle">実際の1着率（%）</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" role="img" aria-label="{title}">'
+            + "".join(g) + '</svg>')
+
+
+def render_eval_section(rep):
+    """予想成績ページに差し込む、確率の質・校正・前向き検証・回収率の欄。rep は evaluation.build_report の結果。"""
+    if not rep or not rep.get("n_races"):
+        return ('<h2 class="section">確率の質と前向き検証</h2><p class="hp-lead">評価できるレース（締切前に記録され、結果が確定したもの）がまだありません。'
+                '回収率・収支は、払戻・オッズをログに保存していないため<b>評価不能</b>です。</p>')
+    n = rep["n_races"]
+    mf, m0 = rep.get("metrics_final") or {}, rep.get("metrics_pre_buff") or {}
+    f3 = lambda v: "—" if v is None else f"{v:.3f}"
+    tiles = "".join(
+        f'<div class="rs-tile"><div class="rs-label">{a}</div><div class="rs-value">{b}</div><div class="rs-sub">{c}</div></div>'
+        for a, b, c in [
+            ("Log Loss（小さいほど良い）", f3(mf.get("logloss")), f'ランダム={f3(mf.get("uniform_logloss"))}'),
+            ("Brier（小さいほど良い）", f3(mf.get("brier")), "多クラス（全選手の合計）"),
+            ("本命の的中（1着）", f'{mf.get("accuracy", 0):.1f}%', f"{n}レース"),
+        ])
+    html = ('<h2 class="section">確率の質と前向き検証（指標は別々に見ます）</h2>'
+            f'<p class="hp-lead">評価期間 {rep["period"][0]} 〜 {rep["period"][1]}、{n}レース。{rep.get("exclusion", "")}。'
+            f'<br>的中率・確率の質（Log Loss／Brier／校正）・回収率・収支は<b>別の指標</b>です。的中率が高くても確率が正しい／儲かるとは限りません。</p>'
+            f'<div class="rs-tiles">{tiles}</div>'
+            f'<div class="rs-tile" style="margin-top:8px;"><div class="rs-label">回収率・収支</div><div class="rs-value">評価不能</div>'
+            f'<div class="rs-sub">{rep.get("payout", "")}</div></div>')
+    cal = rep.get("calibration_all") or []
+    if cal:
+        rows = "".join(
+            f'<tr><td class="l">{r["lo"]}〜{r["hi"]}%</td><td>{r["n"]}</td><td>{r["pred"]:.1f}%</td><td><b>{r["actual"]:.1f}%</b></td>'
+            f'<td>{r["ci_lo"]:.1f}〜{r["ci_hi"]:.1f}%</td>'
+            f'<td><span class="{"delta-up" if r["ci_contains_pred"] else "delta-down"}">{r["diff"]:+.1f}pt{"" if r["ci_contains_pred"] else "（区間外）"}</span></td></tr>'
+            for r in cal)
+        html += ('<h3 style="font-size:14px;margin:16px 0 4px;">校正：全選手の予測1着率と実際（95%信頼区間つき）</h3>'
+                 '<p class="kf-note">緑＝予測が信頼区間の中（偶然の範囲）、赤＝区間の外（ズレが偶然では説明しにくい）。縦線が信頼区間、点線が理想です。</p>'
+                 + _reliability_svg(cal, "全選手の校正グラフ")
+                 + '<div class="ov-scroll"><table class="ov"><thead><tr><th>予測帯</th><th>選手数</th><th>予測平均</th><th>実際の1着率</th><th>95%区間</th><th>差</th></tr></thead>'
+                 f'<tbody>{rows}</tbody></table></div>')
+    fav = rep.get("favorite_bands") or []
+    if fav:
+        rows = "".join(
+            f'<tr><td class="l">{r["lo"]}〜{r["hi"]}%</td><td>{r["n"]}</td><td>{r["pred"]:.1f}%</td><td><b>{r["actual"]:.1f}%</b></td>'
+            f'<td>{r["ci_lo"]:.1f}〜{r["ci_hi"]:.1f}%</td>'
+            f'<td><span class="{"delta-up" if r["ci_contains_pred"] else "delta-down"}">{r["diff"]:+.1f}pt{"" if r["ci_contains_pred"] else "（区間外）"}</span></td></tr>'
+            for r in fav)
+        html += ('<h3 style="font-size:14px;margin:16px 0 4px;">校正：本命の予測1着率の帯別（95%信頼区間つき）</h3>'
+                 '<div class="ov-scroll"><table class="ov"><thead><tr><th>本命の予測</th><th>レース数</th><th>予測平均</th><th>実際の1着率</th><th>95%区間</th><th>差</th></tr></thead>'
+                 f'<tbody>{rows}</tbody></table></div>')
+    wf = rep.get("walk_forward") or {}
+    if wf.get("n_test"):
+        label = {"uniform": "ランダム（基準）", "current(p0)": "現行AI（バフ前）", "gamma_refit": "絞り込み(γ)を前日までで再学習",
+                 "gamma+formula": "γ再学習＋勝利の方程式バフ", "isotonic": "等調回帰で校正（候補）"}
+        rows = ""
+        for k, v in (wf.get("models") or {}).items():
+            d = v.get("logloss_diff_vs_current")
+            ci = v.get("diff_ci")
+            rows += (f'<tr><td class="l">{label.get(k, k)}</td><td>{v["logloss"]:.4f}</td><td>{v["brier"]:.4f}</td>'
+                     f'<td>{"—" if d is None else f"{d:+.4f}"}</td><td>{"—" if not ci else f"{ci[0]:+.4f}〜{ci[1]:+.4f}"}</td>'
+                     f'<td class="l">{v.get("verdict", "基準")}</td></tr>')
+        html += (f'<h3 style="font-size:14px;margin:16px 0 4px;">前向き検証（日付順ウォークフォワード）</h3>'
+                 f'<p class="kf-note">各日、前日までのデータだけで補正を学習し、その日のレースを評価。評価レース {wf["n_test"]}件（{wf["first_test_day"]}以降）。'
+                 f'損失の差は現行AIとの差で、負なら改善。区間は日単位ブートストラップの95%区間で、0をまたぐ間は「改善とは言えない」ので本番へは採用しません。</p>'
+                 '<div class="ov-scroll"><table class="ov"><thead><tr><th>モデル</th><th>Log Loss</th><th>Brier</th><th>差（Log Loss）</th><th>差の95%区間</th><th>判定</th></tr></thead>'
+                 f'<tbody>{rows}</tbody></table></div>')
+    else:
+        html += (f'<p class="hp-lead">前向き検証は、学習に必要な{60}レース以上が日付をまたいで溜まるまで<b>評価不能</b>です。</p>')
+    html += (f'<p class="kf-note">計算根拠：docs/_prediction_log.json（予想・結果の原データ）→ docs/_eval_report.json（この欄の数値）。'
+             f'更新 {rep.get("generated", "—")}（JST）。</p>')
+    return html
+
+
+def render_results_header(stats, rep, updated=None):
+    """予想成績ページの最上部：集計期間・確定件数・結果待ち・除外・更新日時と、更新が止まっていたときの警告。"""
+    ov = stats["overall"]
+    ex = stats.get("excluded") or {}
+    per = stats.get("period")
+    per_txt = f"{per[0]} 〜 {per[1]}" if per else "—"
+    upd = (rep or {}).get("generated") or updated or ""
+    warn = (f'<div id="rsStale" data-updated="{upd}" style="display:none;background:#fdecea;border:1px solid #b5472f;color:#7a2a1b;'
+            f'padding:8px 10px;border-radius:6px;margin:0 0 8px;font-size:13px;">⚠ 最終更新（{upd} JST）から3時間以上たっています。'
+            f'自動更新が止まっているか、データ取得に失敗している可能性があります。表示中の成績は古い可能性があります。</div>')
+    script = ("<script>(function(){var el=document.getElementById('rsStale');if(!el)return;var u=el.getAttribute('data-updated');"
+              "if(!u)return;var t=Date.parse(u.replace(' ','T')+':00+09:00');if(isNaN(t))return;"
+              "if(Date.now()-t>3*3600*1000)el.style.display='block';})();</script>")
+    return (warn + '<div class="rs-tile" style="margin:0 0 8px;"><div class="rs-label">集計の範囲</div>'
+            f'<div style="font-size:13px;line-height:1.8;">期間 <b>{per_txt}</b>／結果確定（評価対象） <b>{ov.get("n", 0)}</b>レース／結果待ち <b>{stats.get("pending_count", 0)}</b>件'
+            f'<br>評価から除外：締切後に記録 {ex.get("late", 0)}件・着順不足（中止/欠場/解析失敗） {ex.get("short", 0)}件・着順が壊れていて結果を取り直し中 {ex.get("bad_order", 0)}件'
+            f'／記録時刻なしの旧ログ（含めています） {ex.get("no_time", 0)}件'
+            f'<br>最終更新 {upd or "—"}（JST）。同着は着順の数字だけでは判別できないため、現在は評価不能として扱っていません。</div></div>' + script)
+
+
+def render_recent_table(stats, limit=100):
+    """直近の答え合わせ（予想時刻・本命・予測確率・結果・3連単・オッズ取得可否・的中判定）。日付・競輪場・車立てで絞り込める。"""
+    rows, venues, dates = "", {}, set()
+    for e in stats["recent"][:limit]:
+        fin = e["result"]["finish_order"]
+        top = e["order"][0]
+        mark = "◎" if fin[0] == top else ("○" if top in fin[:3] else "×")
+        venues[e["venue"]] = VENUE_NAMES.get(e["venue"], e["venue"])
+        dates.add(e["date"])
+        n_cars = e.get("n_cars") or len(e["order"])
+        prob = next((p for c, p, *_ in (e.get("probs") or []) if c == top), None)
+        tri = e["trifecta"] or []
+        tri_txt = "-".join(map(str, tri[0])) if tri else "—"
+        hit = any(t == fin[:3] for t in tri[:5])
+        rec = (e.get("rec_at") or "—")[5:]
+        rows += (f'<tr data-v="{e["venue"]}" data-d="{e["date"]}" data-c="{"8" if n_cars >= 8 else "7"}">'
+                 f'<td class="l">{e["date"][5:]} {VENUE_NAMES.get(e["venue"], e["venue"])} {e["race_no"]}R</td><td>{rec}</td>'
+                 f'<td>{top}{"" if prob is None else f"<br><span class=dim>{prob:.0f}%</span>"}</td>'
+                 f'<td><b class="{"delta-up" if mark != "×" else "delta-down"}">{mark}</b></td>'
+                 f'<td>{"-".join(map(str, fin[:3]))}</td><td>{tri_txt}{" 的中" if hit else ""}<br><span class="dim">上位5点{"的中" if hit else "外れ"}</span></td>'
+                 f'<td class="dim">取得なし</td></tr>')
+    if not rows:
+        return ""
+    vopt = "".join(f'<option value="{k}">{v}</option>' for k, v in sorted(venues.items(), key=lambda kv: kv[1]))
+    dopt = "".join(f'<option value="{d}">{d}</option>' for d in sorted(dates, reverse=True))
+    script = ("<script>(function(){var t=document.getElementById('rcTbl');if(!t)return;var f=['rcV','rcD','rcC'].map(function(i){return document.getElementById(i);});"
+              "function ap(){var v=f[0].value,d=f[1].value,c=f[2].value,n=0;[].slice.call(t.querySelectorAll('tbody tr')).forEach(function(r){"
+              "var ok=(!v||r.dataset.v===v)&&(!d||r.dataset.d===d)&&(!c||r.dataset.c===c);r.style.display=ok?'':'none';if(ok)n++;});"
+              "var m=document.getElementById('rcN');if(m)m.textContent=n;}f.forEach(function(x){x.addEventListener('change',ap);});})();</script>")
+    return (f'<h2 class="section">直近の答え合わせ（新しい順・最大{limit}件）</h2>'
+            '<p class="hp-lead">◎＝本命が1着、○＝本命が3着以内、×＝圏外。件数が少ない絞り込みでは割合を判断しないでください。'
+            'オッズは現在保存していないため「取得なし」です（回収率は評価不能）。</p>'
+            '<div class="pv-row" style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0;">'
+            f'<label>日付 <select id="rcD"><option value="">すべて</option>{dopt}</select></label>'
+            f'<label>競輪場 <select id="rcV"><option value="">すべて</option>{vopt}</select></label>'
+            '<label>車立て <select id="rcC"><option value="">すべて</option><option value="7">7車以下</option><option value="8">8車以上</option></select></label>'
+            f'<span class="dim">表示 <b id="rcN">{len(stats["recent"][:limit])}</b>件</span></div>'
+            '<div class="ov-scroll"><table class="ov" id="rcTbl"><thead><tr><th>レース</th><th>予想時刻</th><th>本命(予測)</th><th>結果</th><th>確定(1-2-3着)</th><th>予想の3連単1位／上位5点</th><th>オッズ</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>' + script)

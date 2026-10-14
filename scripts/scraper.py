@@ -797,6 +797,14 @@ def _rows_from_tokens(data):
     return rows
 
 
+_NOT_NAME = {"枠", "連", "複", "単", "ワイド", "車", "枠複", "枠単", "2車複", "2車単", "3連複", "3連単", "着"}
+
+
+def _is_name(t):
+    """選手名らしい文字列か（払戻の見出し「枠」「連」などは除く）。"""
+    return bool(re.search(r"[\u3040-\u30ff\u4e00-\u9fff]", t)) and t not in _NOT_NAME and len(t) >= 2
+
+
 def parse_day_results(html):
     """
     開催日ごとの「払戻金・結果一覧」ページ（/{競輪場}/raceresult/{開催ID14桁}/）から、
@@ -810,8 +818,6 @@ def parse_day_results(html):
     の順。決まり手はこのページには無いので kimarite は None。
     """
     lines = _clean_text(html)
-    name_re = re.compile(r"[\u3040-\u30ff\u4e00-\u9fff]")
-
     markers = []  # (行位置, レース番号)
     for i, t in enumerate(lines):
         m = re.fullmatch(r"(\d{1,2})R", t)
@@ -828,32 +834,22 @@ def parse_day_results(html):
             continue
         if seg[k0:k0 + 3] != ["1着", "2着", "3着"]:
             continue
-        base = k0 + 3  # 「3着」の次の位置
-        for size in range(3, 10):
-            i = base
-            ok = True
-            for lab in range(4, size + 1):  # 見出し「4」「5」…
-                if i < len(seg) and seg[i] == str(lab):
-                    i += 1
-                else:
-                    ok = False
-                    break
-            if not ok:
-                break
-            pairs, seen = [], set()
-            for _ in range(size):
-                if i + 1 < len(seg) and len(seg[i]) == 1 and seg[i] in "123456789" \
-                        and name_re.search(seg[i + 1]) and int(seg[i]) not in seen:
-                    seen.add(int(seg[i]))
-                    pairs.append((int(seg[i]), seg[i + 1]))
-                    i += 2
-                else:
-                    pairs = None
-                    break
-            if pairs:
-                out[race_no] = [{"finish": f + 1, "car": c, "name": nm, "kimarite": None}
-                                for f, (c, nm) in enumerate(pairs)]
-                break
+        i = k0 + 3  # 「3着」の次の位置
+        # 見出し「4」「5」…を読む。ただし「4 | 氏名」のように直後が氏名なら、それは見出しではなく
+        # 着順の行（車番+氏名）なので読まない（欠場・失格で着順の行が見出しより少ないレースで、
+        # 見出しの数字を車番と取り違えていた不具合の対策）。
+        size, lab = 3, 4
+        while i < len(seg) and seg[i] == str(lab) and not (i + 1 < len(seg) and _is_name(seg[i + 1])):
+            size, lab, i = lab, lab + 1, i + 1
+        pairs, seen = [], set()
+        while len(pairs) < size and i + 1 < len(seg) and len(seg[i]) == 1 and seg[i] in "123456789" \
+                and _is_name(seg[i + 1]) and int(seg[i]) not in seen:
+            seen.add(int(seg[i]))
+            pairs.append((int(seg[i]), seg[i + 1]))
+            i += 2
+        if len(pairs) >= 3:
+            out[race_no] = [{"finish": f + 1, "car": c, "name": nm, "kimarite": None}
+                            for f, (c, nm) in enumerate(pairs)]
     return out
 
 

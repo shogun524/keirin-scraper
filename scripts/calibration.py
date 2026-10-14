@@ -24,6 +24,7 @@ import os
 import json
 import math
 import datetime
+from validity import finish_order_ok
 
 PARAMS_FILENAME = "_model_params.json"
 MIN_RACES = 120
@@ -77,8 +78,8 @@ def get_overrides(docs_dir):
     if p.get("active") and GAMMA_MIN <= p.get("sharpness_first", 0) <= GAMMA_MAX:
         out["sharpness_first"] = float(p["sharpness_first"])
     bp = p.get("buff") or {}
-    if bp.get("active") and BETA_MIN < bp.get("beta", 0) <= BETA_MAX:
-        out["formula_buff"] = float(bp["beta"])
+    # 方程式バフは廃止（第三者レビューと自前の検証で、決まり手補正を入れたあとは上乗せの効果が検出されなかった）。
+    # 学習結果（params["buff"]）は診断として残すが、予想には反映しない。
     go = {}
     for g, gp in (p.get("groups") or {}).items():
         if gp.get("active") and S23_MIN <= gp.get("sharp23_mult", 0) * _sharp() <= S23_MAX + 1e-6 \
@@ -86,6 +87,10 @@ def get_overrides(docs_dir):
             go[g] = {"sharp23_mult": float(gp["sharp23_mult"]), "line_follow_bonus": float(gp["line_follow_bonus"])}
     if go:
         out["group_overrides"] = go
+    import stage_cal
+    sc = stage_cal.overrides(p.get("stage_cal"))
+    if sc:
+        out["stage_cal"] = sc
     return out
 
 
@@ -93,6 +98,8 @@ def _samples(log, today):
     cutoff = (today - datetime.timedelta(days=WINDOW_DAYS)).isoformat()
     out = []
     for e in log.values():
+        if e.get("late") or not finish_order_ok(e):
+            continue    # 締切後に記録した予想・着順が壊れたレースは学習に使わない
         res = e.get("result")
         probs = e.get("p0") or e.get("probs")   # バフ前の値で学習する（バフ自身を学習に混ぜない）
         if not res or not probs or e.get("date", "") < cutoff or not res.get("finish_order"):
@@ -144,6 +151,8 @@ def _buff_samples(log, today):
     cutoff = (today - datetime.timedelta(days=WINDOW_DAYS)).isoformat()
     out = []
     for e in log.values():
+        if e.get("late") or not finish_order_ok(e):
+            continue
         res, ev = e.get("result"), e.get("ev")
         probs = e.get("p0") or e.get("probs")
         if not res or not ev or not probs or e.get("date", "") < cutoff or not res.get("finish_order"):
@@ -186,6 +195,8 @@ def _cond_samples(log, today):
     cutoff = (today - datetime.timedelta(days=WINDOW_DAYS)).isoformat()
     groups = {"7": [], "9": []}
     for e in log.values():
+        if e.get("late") or not finish_order_ok(e):
+            continue
         res, cond = e.get("result"), e.get("cond")
         if not res or not cond or e.get("date", "") < cutoff:
             continue
@@ -332,6 +343,21 @@ def update_params(docs_dir, log, today):
         else:
             print(f"[INFO] モデル自動補正({g}車立て): 2着・3着の補正に使えるレースが{len(samples23)}件（{MIN_RACES_23}件以上で適用開始）。")
         params["groups"][g] = gp
+    # ---- 段階別の追加補正（1着の決まり手補正・2着/3着の同ライン補正。stage_cal.py） ----
+    try:
+        import stage_cal
+        cutoff = (today - datetime.timedelta(days=WINDOW_DAYS)).isoformat()
+        ents = [(e.get("date", ""), e.get("venue", ""), e) for e in log.values()
+                if not e.get("late") and e.get("result") and finish_order_ok(e) and e.get("date", "") >= cutoff]
+        params["stage_cal"] = stage_cal.fit_all(ents, prev.get("stage_cal"))
+        for g, st in params["stage_cal"].items():
+            for k, info in st.items():
+                tag = "適用" if info.get("active") else f"見送り（{info.get('reason', '')}）"
+                print(f"[INFO] 段階補正 {g}車立て {k}: {info['n']}レース {tag}"
+                      + (f" 係数{info['coef']}" if info.get("active") else ""))
+    except Exception as ex:      # 補正の失敗で毎時の更新を止めない
+        print(f"[WARN] 段階別の追加補正の学習に失敗しました: {ex!r}")
+        params["stage_cal"] = prev.get("stage_cal") or {}
     try:
         with open(os.path.join(docs_dir, PARAMS_FILENAME), "w", encoding="utf-8") as f:
             json.dump(params, f, ensure_ascii=False, indent=1)

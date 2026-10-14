@@ -25,7 +25,7 @@ class TestGate(unittest.TestCase):
         p, d = self.run_update(synth_log(12, 40, beta_true=0.6))
         self.assertTrue(p["buff"]["active"])
         self.assertGreater(p["buff"]["lr"], C.LR_CRIT_1)
-        self.assertGreater(C.get_overrides(d)["formula_buff"], 0.2)
+        self.assertNotIn("formula_buff", C.get_overrides(d))   # 診断は残すが、予想には掛けない（廃止）
 
     def test_late_entries_not_used_for_learning(self):
         log = synth_log(12, 40, beta_true=0.6)
