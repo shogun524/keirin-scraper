@@ -27,6 +27,9 @@ jobs:
       - name: 依存ライブラリをインストール
         run: pip install requests beautifulsoup4
 
+      - name: テストを実行（失敗したら予想の生成・公開をしない）
+        run: python -m unittest discover -s tests
+
       - name: 予想を生成
         working-directory: scripts
         env:
