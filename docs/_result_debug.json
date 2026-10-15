@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-15 16:16",
+ "updated": "2026-10-15 19:54",
  "failures": [
   {
    "race": "2026-10-05 hofu 3R",
@@ -8,7 +8,7 @@
     "race_id": "6320261004020003",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610040200/",
-    "day_html_len": 104726,
+    "day_html_len": 104311,
     "day_races": [
      1,
      2,
@@ -36,7 +36,7 @@
     "race_id": "5320261005010004",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/nara/raceresult/53202610050100/",
-    "day_html_len": 136056,
+    "day_html_len": 135641,
     "day_races": [
      1,
      2,
@@ -61,7 +61,7 @@
     "race_id": "1320261004020003",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/iwakitaira/raceresult/13202610040200/",
-    "day_html_len": 130167,
+    "day_html_len": 129752,
     "day_races": [
      1,
      2,
@@ -93,7 +93,7 @@
   }
  ],
  "tracked": 792,
- "with_result": 573,
+ "with_result": 574,
  "without_url": 0,
- "pending_eligible": 181
+ "pending_eligible": 197
 }
