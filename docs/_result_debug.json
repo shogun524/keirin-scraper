@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-16 21:17",
+ "updated": "2026-10-17 02:20",
  "failures": [
   {
    "race": "2026-10-15 nara 7R",
@@ -37,6 +37,16 @@
     "venue": "aomori",
     "race_id": "1220261014030005",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/aomori/raceresult/12202610140300/",
+    "day_html_len": 105225,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     7
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -50,8 +60,8 @@
    }
   }
  ],
- "tracked": 852,
+ "tracked": 923,
  "with_result": 680,
  "without_url": 0,
- "pending_eligible": 159
+ "pending_eligible": 172
 }
