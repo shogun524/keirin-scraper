@@ -1,25 +1,6 @@
 {
- "updated": "2026-10-17 12:58",
+ "updated": "2026-10-17 17:31",
  "failures": [
-  {
-   "race": "2026-10-16 aomori 6R",
-   "diag": {
-    "venue": "aomori",
-    "race_id": "1220261014030006",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/aomori/raceresult/12202610140300/",
-    "day_html_len": 105226,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-16 shizuoka 1R",
    "error": "結果の車番が出走車番と一致しない",
@@ -71,10 +52,23 @@
     7,
     5
    ]
+  },
+  {
+   "race": "2026-10-16 shizuoka 3R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    7,
+    4,
+    6,
+    2,
+    3,
+    5
+   ]
   }
  ],
  "tracked": 923,
- "with_result": 696,
+ "with_result": 717,
  "without_url": 0,
- "pending_eligible": 174
+ "pending_eligible": 176
 }
