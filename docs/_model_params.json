@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-18",
- "n": 548,
+ "updated": "2026-10-19",
+ "n": 613,
  "min_races": 120,
  "default": 1.75,
  "active": false,
@@ -57,41 +57,47 @@
    "gamma": 1.75,
    "n": 548,
    "lr": 1.11
+  },
+  {
+   "date": "2026-10-19",
+   "gamma": 1.75,
+   "n": 613,
+   "lr": 0.13
   }
  ],
- "fit_raw": 1.675,
- "lr": 1.11,
- "ll_per_race_default": -1.6059,
- "ll_per_race_new": -1.6059,
+ "fit_raw": 1.725,
+ "lr": 0.13,
+ "ll_per_race_default": -1.582,
+ "ll_per_race_new": -1.582,
  "buff": {
-  "n": 494,
+  "n": 553,
   "min_races": 80,
   "active": true,
-  "beta": 0.197,
-  "fit_raw": 0.2,
-  "lr": 18.14,
-  "ll_per_race_default": -1.6397,
-  "ll_per_race_new": -1.6214
+  "beta": 0.211,
+  "fit_raw": 0.225,
+  "lr": 23.89,
+  "ll_per_race_default": -1.6173,
+  "ll_per_race_new": -1.5958
  },
  "groups": {
   "7": {
-   "n": 498,
+   "n": 553,
    "min_races": 100,
    "active": true,
-   "sharp23_mult": 0.925,
-   "line_follow_bonus": 81.0,
+   "sharp23_mult": 0.924,
+   "line_follow_bonus": 85.5,
    "default_sharp23": 1.3,
    "default_line_follow_bonus": 45.0,
-   "lr": 64.54,
+   "lr": 83.5,
    "fit_raw": [
     1.2,
-    85.0
+    90.0
    ],
-   "ll_per_race_default": -3.0345,
-   "ll_per_race_new": -2.9742
+   "ll_per_race_default": -3.0325,
+   "ll_per_race_new": -2.9623
   },
   "9": {
-   "n": 50,
+   "n": 60,
    "min_races": 100,
    "active": false,
    "sharp23_mult": 1.333,
@@ -103,80 +109,80 @@
  "stage_cal": {
   "7": {
    "s1": {
-    "n": 498,
+    "n": 553,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
-    "venues": 19,
-    "lr": 69.61,
+    "venues": 21,
+    "lr": 74.67,
     "fit_raw": [
-     0.85,
-     0.047,
-     -0.713,
-     -0.935
+     0.881,
+     0.083,
+     -0.708,
+     -0.904
     ],
-    "ll_per_race_default": 1.5918,
-    "loo_gain_per_race": 0.0628,
-    "loo_days_better": 10,
-    "loo_days": 10,
+    "ll_per_race_default": 1.5704,
+    "loo_gain_per_race": 0.061,
+    "loo_days_better": 11,
+    "loo_days": 11,
     "coef": {
-     "a": 0.874,
-     "捲": 0.049,
-     "差": -0.624,
-     "マ": -0.814
+     "a": 0.877,
+     "捲": 0.066,
+     "差": -0.666,
+     "マ": -0.859
     },
-    "ll_per_race_new": 1.524
+    "ll_per_race_new": 1.5035
    },
    "s2": {
-    "n": 498,
+    "n": 553,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
-    "venues": 19,
-    "lr": 83.9,
+    "venues": 21,
+    "lr": 109.98,
     "fit_raw": [
-     0.796,
-     0.135,
-     0.896
+     0.774,
+     0.158,
+     0.962
     ],
-    "ll_per_race_default": 1.5006,
-    "loo_gain_per_race": 0.0792,
-    "loo_days_better": 10,
-    "loo_days": 10,
+    "ll_per_race_default": 1.5016,
+    "loo_gain_per_race": 0.0941,
+    "loo_days_better": 9,
+    "loo_days": 11,
     "coef": {
-     "slope": 0.812,
-     "same": 0.127,
-     "adj": 0.77
+     "slope": 0.793,
+     "same": 0.143,
+     "adj": 0.866
     },
-    "ll_per_race_new": 1.4186
+    "ll_per_race_new": 1.4036
    },
    "s3": {
-    "n": 498,
+    "n": 553,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
-    "venues": 19,
-    "lr": 74.45,
+    "venues": 21,
+    "lr": 85.03,
     "fit_raw": [
-     0.508,
-     0.484,
-     0.355
+     0.525,
+     0.609,
+     0.262
     ],
-    "ll_per_race_default": 1.5339,
-    "loo_gain_per_race": 0.0712,
-    "loo_days_better": 10,
-    "loo_days": 10,
+    "ll_per_race_default": 1.5309,
+    "loo_gain_per_race": 0.0734,
+    "loo_days_better": 11,
+    "loo_days": 11,
     "coef": {
-     "slope": 0.65,
-     "same": 0.39,
-     "adj": 0.333
+     "slope": 0.625,
+     "same": 0.499,
+     "adj": 0.297
     },
-    "ll_per_race_new": 1.4638
+    "ll_per_race_new": 1.4567
    }
   },
   "9": {
    "s1": {
-    "n": 50,
+    "n": 60,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
@@ -184,7 +190,7 @@
     "reason": "件数不足"
    },
    "s2": {
-    "n": 50,
+    "n": 60,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
@@ -192,7 +198,7 @@
     "reason": "件数不足"
    },
    "s3": {
-    "n": 50,
+    "n": 60,
     "min_races": 150,
     "min_venues": 4,
     "active": false,

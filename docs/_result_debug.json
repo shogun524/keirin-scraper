@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-18 23:29",
+ "updated": "2026-10-19 03:00",
  "failures": [
   {
    "race": "2026-10-18 takeo 4R",
@@ -37,6 +37,21 @@
     "venue": "keiokaku",
     "race_id": "2720261017020003",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202610170200/",
+    "day_html_len": 142697,
+    "day_races": [
+     1,
+     2,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     11,
+     12
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -50,8 +65,8 @@
    }
   }
  ],
- "tracked": 994,
- "with_result": 791,
+ "tracked": 1072,
+ "with_result": 793,
  "without_url": 0,
- "pending_eligible": 203
+ "pending_eligible": 201
 }
