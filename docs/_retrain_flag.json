@@ -1,9 +1,9 @@
 {
-  "flagged_at": "2026-10-12",
+  "flagged_at": "2026-10-18",
   "reasons": [
-    "新規レース結果が311件蓄積（閾値300件）"
+    "新規レース結果が302件蓄積（閾値300件）"
   ],
-  "cumulative_new_races": 311,
-  "days_elapsed": 14,
+  "cumulative_new_races": 302,
+  "days_elapsed": 6,
   "message": "モデル（model.py のハードコード係数）の再学習を検討する時期です。最新の race_x.pkl/race_y.pkl 相当のデータで再フィットし、係数を更新したら acknowledge_retrain() でこのフラグをリセットしてください。"
 }
