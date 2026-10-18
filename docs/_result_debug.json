@@ -1,15 +1,6 @@
 {
- "updated": "2026-10-19 05:32",
+ "updated": "2026-10-19 08:00",
  "failures": [
-  {
-   "race": "2026-10-18 takeo 4R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    4,
-    3,
-    2
-   ]
-  },
   {
    "race": "2026-10-18 toyama 7R",
    "error": "着順が壊れて見えるため記録しない",
@@ -38,7 +29,7 @@
     "race_id": "2720261017020003",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202610170200/",
-    "day_html_len": 142697,
+    "day_html_len": 142738,
     "day_races": [
      1,
      2,
@@ -61,6 +52,28 @@
     "venue": "keiokaku",
     "race_id": "2720261017020010",
     "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-18 hiroshima 3R",
+   "diag": {
+    "venue": "hiroshima",
+    "race_id": "6220261018010003",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/hiroshima/raceresult/62202610180100/",
+    "day_html_len": 117855,
+    "day_races": [
+     1,
+     2,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   }
