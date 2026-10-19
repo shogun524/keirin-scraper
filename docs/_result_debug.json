@@ -1,27 +1,6 @@
 {
- "updated": "2026-10-19 08:00",
+ "updated": "2026-10-19 10:04",
  "failures": [
-  {
-   "race": "2026-10-18 toyama 7R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    7,
-    4,
-    3,
-    1,
-    6,
-    5
-   ]
-  },
-  {
-   "race": "2026-10-18 kochi 9R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    4,
-    2,
-    5
-   ]
-  },
   {
    "race": "2026-10-18 keiokaku 3R",
    "diag": {
@@ -76,10 +55,28 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-19 takeo 5R",
+   "diag": {
+    "venue": "takeo",
+    "race_id": "8420261017030005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-19 aomori 5R",
+   "diag": {
+    "venue": "aomori",
+    "race_id": "1220261019010005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 1072,
- "with_result": 793,
+ "with_result": 801,
  "without_url": 0,
- "pending_eligible": 201
+ "pending_eligible": 203
 }
