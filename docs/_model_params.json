@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-19",
- "n": 613,
+ "updated": "2026-10-20",
+ "n": 667,
  "min_races": 120,
  "default": 1.75,
  "active": false,
@@ -63,41 +63,47 @@
    "gamma": 1.75,
    "n": 613,
    "lr": 0.13
+  },
+  {
+   "date": "2026-10-20",
+   "gamma": 1.75,
+   "n": 667,
+   "lr": 0.9
   }
  ],
- "fit_raw": 1.725,
- "lr": 0.13,
- "ll_per_race_default": -1.582,
- "ll_per_race_new": -1.582,
+ "fit_raw": 1.675,
+ "lr": 0.9,
+ "ll_per_race_default": -1.5958,
+ "ll_per_race_new": -1.5958,
  "buff": {
-  "n": 553,
+  "n": 605,
   "min_races": 80,
   "active": true,
-  "beta": 0.211,
-  "fit_raw": 0.225,
-  "lr": 23.89,
-  "ll_per_race_default": -1.6173,
-  "ll_per_race_new": -1.5958
+  "beta": 0.205,
+  "fit_raw": 0.2,
+  "lr": 23.09,
+  "ll_per_race_default": -1.6284,
+  "ll_per_race_new": -1.6093
  },
  "groups": {
   "7": {
-   "n": 553,
+   "n": 599,
    "min_races": 100,
    "active": true,
    "sharp23_mult": 0.924,
-   "line_follow_bonus": 85.5,
+   "line_follow_bonus": 90.2,
    "default_sharp23": 1.3,
    "default_line_follow_bonus": 45.0,
-   "lr": 83.5,
+   "lr": 94.53,
    "fit_raw": [
     1.2,
-    90.0
+    95.0
    ],
-   "ll_per_race_default": -3.0325,
-   "ll_per_race_new": -2.9623
+   "ll_per_race_default": -3.028,
+   "ll_per_race_new": -2.9541
   },
   "9": {
-   "n": 60,
+   "n": 68,
    "min_races": 100,
    "active": false,
    "sharp23_mult": 1.333,
@@ -109,80 +115,80 @@
  "stage_cal": {
   "7": {
    "s1": {
-    "n": 553,
+    "n": 599,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
-    "venues": 21,
-    "lr": 74.67,
+    "venues": 23,
+    "lr": 76.09,
     "fit_raw": [
-     0.881,
+     0.844,
      0.083,
-     -0.708,
-     -0.904
+     -0.652,
+     -0.933
     ],
-    "ll_per_race_default": 1.5704,
-    "loo_gain_per_race": 0.061,
-    "loo_days_better": 11,
-    "loo_days": 11,
+    "ll_per_race_default": 1.5902,
+    "loo_gain_per_race": 0.0565,
+    "loo_days_better": 12,
+    "loo_days": 12,
     "coef": {
-     "a": 0.877,
-     "捲": 0.066,
-     "差": -0.666,
-     "マ": -0.859
+     "a": 0.86,
+     "捲": 0.074,
+     "差": -0.659,
+     "マ": -0.896
     },
-    "ll_per_race_new": 1.5035
+    "ll_per_race_new": 1.527
    },
    "s2": {
-    "n": 553,
+    "n": 599,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
-    "venues": 21,
-    "lr": 109.98,
+    "venues": 23,
+    "lr": 109.17,
     "fit_raw": [
-     0.774,
-     0.158,
-     0.962
+     0.773,
+     0.082,
+     0.985
     ],
-    "ll_per_race_default": 1.5016,
-    "loo_gain_per_race": 0.0941,
-    "loo_days_better": 9,
-    "loo_days": 11,
+    "ll_per_race_default": 1.5076,
+    "loo_gain_per_race": 0.0861,
+    "loo_days_better": 10,
+    "loo_days": 12,
     "coef": {
-     "slope": 0.793,
-     "same": 0.143,
-     "adj": 0.866
+     "slope": 0.783,
+     "same": 0.113,
+     "adj": 0.925
     },
-    "ll_per_race_new": 1.4036
+    "ll_per_race_new": 1.4168
    },
    "s3": {
-    "n": 553,
+    "n": 599,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
-    "venues": 21,
-    "lr": 85.03,
+    "venues": 23,
+    "lr": 90.75,
     "fit_raw": [
-     0.525,
-     0.609,
-     0.262
+     0.55,
+     0.6,
+     0.289
     ],
-    "ll_per_race_default": 1.5309,
-    "loo_gain_per_race": 0.0734,
-    "loo_days_better": 11,
-    "loo_days": 11,
+    "ll_per_race_default": 1.5204,
+    "loo_gain_per_race": 0.0723,
+    "loo_days_better": 12,
+    "loo_days": 12,
     "coef": {
-     "slope": 0.625,
-     "same": 0.499,
-     "adj": 0.297
+     "slope": 0.613,
+     "same": 0.55,
+     "adj": 0.293
     },
-    "ll_per_race_new": 1.4567
+    "ll_per_race_new": 1.4457
    }
   },
   "9": {
    "s1": {
-    "n": 60,
+    "n": 68,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
@@ -190,7 +196,7 @@
     "reason": "件数不足"
    },
    "s2": {
-    "n": 60,
+    "n": 68,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
@@ -198,7 +204,7 @@
     "reason": "件数不足"
    },
    "s3": {
-    "n": 60,
+    "n": 68,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
