@@ -772,6 +772,7 @@ RACE_PANEL_STYLE = """
   .line-info-block.warn{ background:var(--paper2); color:#8a5a12; border:1px solid #e0cfa0; }
   .line-group{ display:inline-flex; align-items:center; gap:3px; }
   .line-arrow{ color:var(--ink-soft); font-size:11px; }
+  .tf-be{ margin-left:8px; font-size:11px; color:#2f6b3a; white-space:nowrap; }
   .tf-list{ display:flex; flex-direction:column; gap:2px; }
   .tf-row{ display:flex; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); }
   .tf-row:first-child{ background:rgba(198,154,78,.10); border-radius:3px; }
@@ -950,6 +951,7 @@ function renderTrifectaGroups(tabId){
         '<span class="car" style="background:'+carColorLookup(payload,c.third).bg+';color:'+carColorLookup(payload,c.third).fg+';">'+c.third+'</span>' +
       '</span>' +
       '<span class="tf-prob">'+c.prob.toFixed(2)+'%</span>' +
+      '<span class="tf-be" title="この倍率以上のオッズなら、予測が正しいとき期待値が100円超えになります">'+(c.prob>0?(100/c.prob).toFixed(c.prob>=1?0:0):'-')+'倍〜</span>' +
     '</div>';
   }).join('') : '<p class="dim">データがありません</p>';
 }
