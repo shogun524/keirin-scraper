@@ -295,16 +295,25 @@ def apply_place_calibration(scored, cal):
     return scored
 
 
-def apply_first_place_tilt(rates, dominant, tilt):
+def apply_first_place_tilt(rates, dominant, tilt, positions=None):
     """
-    1着率への決まり手補正（calibration.py が学習）。確率 ∝ 確率^a × exp(θ[予測決まり手])（逃が基準）。
-    実績では、逃・捲りの勝ちを少なく、差し・マークの勝ちを多く見積もりすぎる偏りがあった。
-    tilt=None なら何もしない。rates は%（合計100）。
+    1着率への補正（calibration.py が学習）。
+      確率 ∝ 確率^a × exp(θ[予測決まり手] + hinge×max(0, ln(確率) − ln 0.30) + pos2×[ライン内3番手以降])
+    実績では、逃・捲りの勝ちを少なく、差し・マークの勝ちを多く見積もり、さらに本命級（30%超）を過信していた。
+    tilt=None なら何もしない。rates は%（合計100）。positions はライン内の位置（先頭0, 番手1, …。ラインなしは None）。
     """
     if not tilt:
         return list(rates)
     a = float(tilt.get("a", 1.0))
-    w = [max(r, 1e-9) ** a * math.exp(float(tilt.get(d["type"], 0.0))) for r, d in zip(rates, dominant)]
+    h, q = float(tilt.get("hinge", 0.0)), float(tilt.get("pos2", 0.0))
+    tot = sum(max(r, 1e-9) for r in rates) or 1.0
+    positions = positions or [None] * len(rates)
+    w = []
+    for r, d, pos in zip(rates, dominant, positions):
+        lp = math.log(max(r, 1e-9) / tot)
+        z = a * lp + float(tilt.get(d["type"], 0.0)) + h * max(0.0, lp - math.log(0.30)) \
+            + (q if (pos is not None and pos >= 2) else 0.0)
+        w.append(math.exp(z))
     t = sum(w) or 1.0
     return [v / t * 100 for v in w]
 
@@ -786,7 +795,9 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     # 決まり手による1着率の補正（ゲートを通ったときだけ。車立てグループ別）
     tilt = sc.get("s1")
     if tilt:
-        final_rates = apply_first_place_tilt(final_rates, dominant, tilt)
+        final_rates = apply_first_place_tilt(
+            final_rates, dominant, tilt,
+            [(line_map[r["car"]]["position"] if r["car"] in line_map else None) for r in racers])
     cal2, cal3 = sc.get("s2"), sc.get("s3")
     if cal2 or cal3:
         # 2着・3着の同ライン補正は「既定のライン追走・絞り込み」を前提に学習しているので、
