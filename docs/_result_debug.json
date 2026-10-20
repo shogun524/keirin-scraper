@@ -1,26 +1,6 @@
 {
- "updated": "2026-10-20 14:52",
+ "updated": "2026-10-20 20:19",
  "failures": [
-  {
-   "race": "2026-10-19 takeo 5R",
-   "diag": {
-    "venue": "takeo",
-    "race_id": "8420261017030005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/takeo/raceresult/84202610170300/",
-    "day_html_len": 105200,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-19 toride 5R",
    "diag": {
@@ -28,7 +8,7 @@
     "race_id": "2320261019010005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/toride/raceresult/23202610190100/",
-    "day_html_len": 130970,
+    "day_html_len": 130410,
     "day_races": [
      1,
      2,
@@ -72,7 +52,7 @@
     "race_id": "2720261017030008",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202610170300/",
-    "day_html_len": 142786,
+    "day_html_len": 141684,
     "day_races": [
      1,
      2,
@@ -88,10 +68,19 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-19 keiokaku 11R",
+   "diag": {
+    "venue": "keiokaku",
+    "race_id": "2720261017030011",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 1143,
- "with_result": 871,
+ "with_result": 895,
  "without_url": 0,
- "pending_eligible": 226
+ "pending_eligible": 229
 }
