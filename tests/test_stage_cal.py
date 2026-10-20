@@ -130,6 +130,19 @@ class TestModelApplication(unittest.TestCase):
         self.assertEqual(model.apply_first_place_tilt([60, 40], [{"type": "逃"}] * 2, None), [60, 40])
 
 
+class TestFavoriteCorrection(unittest.TestCase):
+    def test_hinge_shrinks_only_favorites_and_pos2_lifts_third_in_line(self):
+        dom = [{"type": "逃"}] * 3
+        base = model.apply_first_place_tilt([60, 25, 15], dom, {"a": 1.0})
+        hin = model.apply_first_place_tilt([60, 25, 15], dom, {"a": 1.0, "hinge": -0.5})
+        self.assertLess(hin[0], base[0]); self.assertAlmostEqual(sum(hin), 100.0, places=6)
+        q = model.apply_first_place_tilt([40, 30, 30], dom, {"a": 1.0, "pos2": 0.5}, [0, 1, 2])
+        self.assertGreater(q[2], 30); self.assertLess(q[0], 40)
+        # hinge の起点(30%)以下だけなら変化なし
+        flat = model.apply_first_place_tilt([25, 25, 25, 25], dom + [{"type": "逃"}], {"a": 1.0, "hinge": -0.5})
+        self.assertAlmostEqual(flat[0], 25.0, places=6)
+
+
 class TestResultIntegrity(unittest.TestCase):
     def test_broken_order_detected(self):
         e = {"result": {"finish_order": [6, 2, 7, 3, 4]}, "order": list(range(1, 8))}
