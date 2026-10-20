@@ -2,7 +2,8 @@
 """
 段階別の追加補正（毎日の再学習）。予想成績ログの「補正前の確率」と実際の着順から、次の3つを別々に学習する。
 
-  s1（1着）: 確率 ∝ p^a × exp(θ[予測決まり手])    … 逃が基準。実績では逃・捲りが過小、差し・マークが過大だった
+  s1（1着）: 確率 ∝ p^a × exp(θ[予測決まり手] + h×max(0, ln p − ln 0.30) + q×[3番手以降])
+            … 逃が基準。実績では逃・捲りが過小、差し・マークが過大、本命級(p>30%)が過信だった
   s2（2着）: 確率 ∝ p^slope × exp(same + adj)    … 1着と同じライン／そのうち隣の位置、の上乗せ
   s3（3着）: 同上（1着・2着のどちらかと同じライン）
 
@@ -23,10 +24,11 @@ MIN_RACES = {"7": 200, "9": 150}
 MIN_VENUES = {"7": 6, "9": 4}
 LAMBDA = 3.0
 SMOOTH = 0.5
-CHI2_99 = {2: 9.21, 3: 11.34, 4: 13.28}
-CLIP = {"a": (0.6, 1.1), "slope": (0.6, 1.15), "dom": (-1.2, 0.6), "adj": (-0.5, 1.5), "same": (-0.5, 1.5)}
+CHI2_99 = {2: 9.21, 3: 11.34, 4: 13.28, 5: 15.09, 6: 16.81}
+CLIP = {"a": (0.6, 1.1), "slope": (0.6, 1.15), "dom": (-1.2, 0.6), "hinge": (-1.5, 0.3), "pos2": (-0.5, 0.8), "adj": (-0.5, 1.5), "same": (-0.5, 1.5)}
 MIN_DAYS = 5
 LFB_DEFAULT = 45.0
+HINGE_AT = math.log(0.30)     # 本命級（正規化した1着率30%超）の過信を直す折れ線の起点
 
 
 def _solve(A, b):
@@ -115,7 +117,11 @@ def stage1_data(entries):
         # 記録時の絞り込み(sf)がまちまちなので、既定の絞り込みにそろえた確率で学習する（推論側も既定の絞り込みを使う）
         sf = float(e.get("sf") or 0) or _gamma0()
         pn = _norm_pct({c: v ** (_gamma0() / sf) for c, v in pm.items()})
-        F = [[math.log(max(pn[c], 1e-9))] + [1.0 if d == k else 0.0 for k in DOMS] for c, d in zip(cars, doms)]
+        lines = cond.get("line") or [None] * len(cars)
+        F = [[math.log(max(pn[c], 1e-9))] + [1.0 if d == k else 0.0 for k in DOMS]
+             + [max(0.0, math.log(max(pn[c], 1e-9)) - HINGE_AT),
+                1.0 if (ln and ln[1] >= 2) else 0.0]
+             for c, d, ln in zip(cars, doms, lines)]
         out.append((F, cars.index(fin[0]), (date, venue)))
     return out
 
@@ -232,7 +238,8 @@ def fit_all(log_entries, prev_cal=None):
             i = pv.get(k) or {}
             return i.get("coef") if i.get("active") else None
         out[g] = {
-            "s1": fit_stage(d1, g, ["a", "捲", "差", "マ"], ["a", "dom", "dom", "dom"], [1.0, 0.0, 0.0, 0.0], pc("s1")),
+            "s1": fit_stage(d1, g, ["a", "捲", "差", "マ", "hinge", "pos2"], ["a", "dom", "dom", "dom", "hinge", "pos2"],
+                            [1.0, 0.0, 0.0, 0.0, 0.0, 0.0], pc("s1")),
             "s2": fit_stage(d2, g, ["slope", "same", "adj"], ["slope", "same", "adj"], [1.0, 0.0, 0.0], pc("s2")),
             "s3": fit_stage(d3, g, ["slope", "same", "adj"], ["slope", "same", "adj"], [1.0, 0.0, 0.0], pc("s3")),
         }
