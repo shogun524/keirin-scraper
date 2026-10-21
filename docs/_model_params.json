@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-21",
- "n": 718,
+ "updated": "2026-10-22",
+ "n": 762,
  "min_races": 120,
  "default": 1.75,
  "active": false,
@@ -75,38 +75,44 @@
    "gamma": 1.75,
    "n": 718,
    "lr": 1.1
+  },
+  {
+   "date": "2026-10-22",
+   "gamma": 1.75,
+   "n": 762,
+   "lr": 0.57
   }
  ],
- "fit_raw": 1.675,
- "lr": 1.1,
- "ll_per_race_default": -1.5993,
- "ll_per_race_new": -1.5993,
+ "fit_raw": 1.7,
+ "lr": 0.57,
+ "ll_per_race_default": -1.5875,
+ "ll_per_race_new": -1.5875,
  "buff": {
-  "n": 656,
+  "n": 700,
   "min_races": 80,
   "active": true,
-  "beta": 0.202,
+  "beta": 0.201,
   "fit_raw": 0.2,
-  "lr": 21.68,
-  "ll_per_race_default": -1.6297,
-  "ll_per_race_new": -1.6132
+  "lr": 26.94,
+  "ll_per_race_default": -1.615,
+  "ll_per_race_new": -1.5957
  },
  "groups": {
   "7": {
-   "n": 641,
+   "n": 685,
    "min_races": 100,
    "active": true,
    "sharp23_mult": 0.924,
-   "line_follow_bonus": 92.6,
+   "line_follow_bonus": 93.8,
    "default_sharp23": 1.3,
    "default_line_follow_bonus": 45.0,
-   "lr": 100.51,
+   "lr": 106.33,
    "fit_raw": [
     1.2,
     95.0
    ],
-   "ll_per_race_default": -3.0164,
-   "ll_per_race_new": -2.9405
+   "ll_per_race_default": -3.0067,
+   "ll_per_race_new": -2.9304
   },
   "9": {
    "n": 77,
@@ -121,75 +127,79 @@
  "stage_cal": {
   "7": {
    "s1": {
-    "n": 641,
+    "n": 685,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 24,
-    "lr": 75.75,
+    "lr": 97.01,
     "fit_raw": [
-     0.851,
-     0.051,
-     -0.646,
-     -0.911
+     0.968,
+     -0.016,
+     -0.933,
+     -1.177,
+     -0.499,
+     0.339
     ],
-    "ll_per_race_default": 1.5878,
-    "loo_gain_per_race": 0.0527,
-    "loo_days_better": 12,
-    "loo_days": 13,
+    "ll_per_race_default": 1.5754,
+    "loo_gain_per_race": 0.0628,
+    "loo_days_better": 13,
+    "loo_days": 14,
     "coef": {
-     "a": 0.856,
-     "捲": 0.063,
-     "差": -0.653,
-     "マ": -0.904
+     "a": 0.912,
+     "捲": 0.024,
+     "差": -0.793,
+     "マ": -1.041,
+     "hinge": -0.25,
+     "pos2": 0.17
     },
-    "ll_per_race_new": 1.5287
+    "ll_per_race_new": 1.5082
    },
    "s2": {
-    "n": 641,
+    "n": 685,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 24,
-    "lr": 119.04,
+    "lr": 127.47,
     "fit_raw": [
      0.785,
      0.13,
-     0.951
+     0.953
     ],
-    "ll_per_race_default": 1.5013,
-    "loo_gain_per_race": 0.0883,
-    "loo_days_better": 11,
-    "loo_days": 13,
+    "ll_per_race_default": 1.4971,
+    "loo_gain_per_race": 0.089,
+    "loo_days_better": 12,
+    "loo_days": 14,
     "coef": {
-     "slope": 0.784,
-     "same": 0.121,
-     "adj": 0.938
+     "slope": 0.785,
+     "same": 0.126,
+     "adj": 0.946
     },
-    "ll_per_race_new": 1.4086
+    "ll_per_race_new": 1.4041
    },
    "s3": {
-    "n": 641,
+    "n": 685,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 24,
-    "lr": 90.79,
+    "lr": 92.3,
     "fit_raw": [
-     0.561,
-     0.577,
-     0.292
+     0.573,
+     0.557,
+     0.297
     ],
-    "ll_per_race_default": 1.5151,
-    "loo_gain_per_race": 0.0677,
-    "loo_days_better": 13,
-    "loo_days": 13,
+    "ll_per_race_default": 1.5096,
+    "loo_gain_per_race": 0.0645,
+    "loo_days_better": 14,
+    "loo_days": 14,
     "coef": {
-     "slope": 0.607,
-     "same": 0.563,
-     "adj": 0.292
+     "slope": 0.603,
+     "same": 0.56,
+     "adj": 0.294
     },
-    "ll_per_race_new": 1.4447
+    "ll_per_race_new": 1.4425
    }
   },
   "9": {
