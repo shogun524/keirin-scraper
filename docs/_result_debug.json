@@ -1,22 +1,28 @@
 {
- "updated": "2026-10-21 08:47",
+ "updated": "2026-10-21 13:15",
  "failures": [
-  {
-   "race": "2026-10-20 odawara 1R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    5,
-    1,
-    6,
-    4
-   ]
-  },
   {
    "race": "2026-10-20 odawara 10R",
    "diag": {
     "venue": "odawara",
     "race_id": "3620261020010010",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/odawara/raceresult/36202610200100/",
+    "day_html_len": 130559,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     11,
+     12
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -27,7 +33,7 @@
     "race_id": "2320261019020011",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/toride/raceresult/23202610190200/",
-    "day_html_len": 130747,
+    "day_html_len": 130748,
     "day_races": [
      1,
      2,
@@ -69,10 +75,23 @@
     5,
     6
    ]
+  },
+  {
+   "race": "2026-10-20 hiroshima 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    5,
+    2,
+    6,
+    4,
+    3,
+    1,
+    7
+   ]
   }
  ],
  "tracked": 1217,
- "with_result": 899,
+ "with_result": 915,
  "without_url": 0,
  "pending_eligible": 246
 }
