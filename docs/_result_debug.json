@@ -1,11 +1,11 @@
 {
- "updated": "2026-10-22 17:43",
+ "updated": "2026-10-22 18:56",
  "failures": [
   {
-   "race": "2026-10-21 yokkaichi 8R",
+   "race": "2026-10-21 yokkaichi 9R",
    "diag": {
     "venue": "yokkaichi",
-    "race_id": "4820261021010008",
+    "race_id": "4820261021010009",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202610210100/",
     "day_html_len": 2224,
@@ -15,10 +15,10 @@
    }
   },
   {
-   "race": "2026-10-21 kawasaki 8R",
+   "race": "2026-10-21 kawasaki 9R",
    "diag": {
     "venue": "kawasaki",
-    "race_id": "3420261020020008",
+    "race_id": "3420261020020009",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/kawasaki/raceresult/34202610200200/",
     "day_html_len": 2224,
@@ -28,28 +28,28 @@
    }
   },
   {
-   "race": "2026-10-21 yokkaichi 9R",
-   "diag": {
-    "venue": "yokkaichi",
-    "race_id": "4820261021010009",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-21 kawasaki 9R",
-   "diag": {
-    "venue": "kawasaki",
-    "race_id": "3420261020020009",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
    "race": "2026-10-21 yokkaichi 10R",
    "diag": {
     "venue": "yokkaichi",
     "race_id": "4820261021010010",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-21 kawasaki 10R",
+   "diag": {
+    "venue": "kawasaki",
+    "race_id": "3420261020020010",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-21 yokkaichi 11R",
+   "diag": {
+    "venue": "yokkaichi",
+    "race_id": "4820261021010011",
     "primary": "skipped",
     "day_parsed": false
    }
