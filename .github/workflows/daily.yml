@@ -36,6 +36,14 @@ jobs:
           PYTHONIOENCODING: "utf-8"
         run: python run_daily.py
 
+      - name: winticket版の予想ページを生成（失敗しても他は止めない）
+        continue-on-error: true
+        timeout-minutes: 15
+        working-directory: scripts
+        env:
+          PYTHONIOENCODING: "utf-8"
+        run: python winticket_page.py
+
       - name: 生成結果をコミット
         run: |
           git config user.name "github-actions[bot]"
