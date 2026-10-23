@@ -267,6 +267,8 @@ def update_params(docs_dir, log, today):
     today_s = today.isoformat()
     if prev.get("updated") == today_s:
         return prev
+    # winticket（代替データ元）で予想したレースは、記者印・総評が学習時と違うので補正の学習には使わない
+    log = {k: v for k, v in log.items() if "winticket.jp" not in (v.get("url") or "")}
     gamma0 = _default_gamma()
     samples = _samples(log, today)
     n = len(samples)
