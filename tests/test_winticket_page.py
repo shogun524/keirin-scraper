@@ -27,3 +27,22 @@ class TestWinticketPage(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestWinticketSource(unittest.TestCase):
+    COM = {
+        "players": [{"id": "a", "name": "甲", "age": 30, "term": 100, "prefecture": "奈良"}],
+        "records": [{"playerId": "a", "gearRatio": 3.92, "style": "逃", "racePoint": 90.5, "predictionMark": 1,
+                     "standing": 1, "back": 5, "frontRunner": 3, "stalker": 1, "deepCloser": 2, "marker": 0,
+                     "first": 4, "second": 3, "third": 2, "others": 10}],
+        "entries": [{"number": 1, "playerId": "a", "bracketNumber": 1, "absent": False,
+                     "playerCurrentTermClass": 1, "playerCurrentTermGroup": 2}],
+        "linePrediction": {"lines": [{"entries": [{"numbers": [2]}, {"numbers": [5]}]}, {"entries": [{"numbers": [4]}]}]},
+    }
+
+    def test_racers_and_line(self):
+        import winticket_source as ws
+        r = ws._racers(self.COM)[0]
+        self.assertEqual((r["car"], r["rank"], r["mark"], r["score"]), (1, "S2", "◎", 90.5))
+        self.assertEqual(r["kimarite"], {"逃": 3, "捲": 2, "差": 1, "マ": 0})
+        self.assertEqual(ws._line_text(self.COM), "2-5,4")
