@@ -145,6 +145,17 @@ def main():
         traceback.print_exc()
         races = []
 
+    if not races:
+        # kドリームズが取れない日（メンテナンス等）は winticket から同じ形式で取る
+        try:
+            import winticket_source
+            races = winticket_source.fetch_all_todays_races(today)
+            print(f"[INFO] kドリームズから取得できなかったため、winticketから {len(races)} レース取得しました。")
+        except Exception as e:
+            print(f"[ERROR] winticketからの取得にも失敗しました: {e}")
+            traceback.print_exc()
+            races = []
+
     print(f"[INFO] {len(races)} レース分のデータを取得しました。")
 
     os.makedirs(DOCS_DIR, exist_ok=True)
