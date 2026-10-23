@@ -182,13 +182,18 @@ def update_results(log, today, now_hm, debug=None):
     for v in pending:
         if fetched >= MAX_FETCH_PER_RUN:
             break
-        race_id = extract_race_id_from_url(v["url"])
-        if not race_id:
+        is_wt = "winticket.jp" in v["url"]
+        race_id = None if is_wt else extract_race_id_from_url(v["url"])
+        if not race_id and not is_wt:
             v["attempts"] = MAX_ATTEMPTS  # URLから識別できないレースは諦める
             continue
         fetched += 1
         try:
-            res = fetch_race_result(v["venue"], race_id)
+            if is_wt:
+                import winticket_source  # kドリームズが使えない日の代替データ元
+                res = winticket_source.fetch_result(v["url"])
+            else:
+                res = fetch_race_result(v["venue"], race_id)
         except Exception as e:
             v["attempts"] = v.get("attempts", 0) + 1
             print(f"[WARN] {v['venue']} {v['race_no']}R: 予想成績用の結果取得に失敗しました: {e}")
