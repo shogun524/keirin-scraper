@@ -1,0 +1,188 @@
+<title>競輪AI予想 winticket版</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap">
+<style>
+/* layout: 場タブ(固定) → 場サマリー表 → レースカード縦並び。表の下に説明。スマホ優先・1カラム */
+:root{
+  --bg:#f3f4f7; --surface:#ffffff; --fg:#1b1e27; --muted:#5d6475; --line:#dcdfe7;
+  --accent:#23408e; --accent-soft:#e3e8f6; --good:#1e7a46; --good-soft:#e2f3e8; --warn:#9a5b00;
+  --bar:#23408e;
+  --f-head:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  --f-body:"BIZ UDPGothic","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12141a; --surface:#1b1e27; --fg:#e8eaf0; --muted:#9aa1b2; --line:#2e3340;
+  --accent:#8fa8ff; --accent-soft:#232c48; --good:#6fd39b; --good-soft:#173324; --warn:#f0b450; --bar:#7d97f0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12141a; --surface:#1b1e27; --fg:#e8eaf0; --muted:#9aa1b2; --line:#2e3340;
+  --accent:#8fa8ff; --accent-soft:#232c48; --good:#6fd39b; --good-soft:#173324; --warn:#f0b450; --bar:#7d97f0; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 48px}
+header.top{padding-block:16px 8px}
+h1{font-family:var(--f-head);font-weight:900;font-size:1.45rem;margin:0;text-wrap:balance}
+.sub{color:var(--muted);font-size:.82rem;margin-top:4px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:8px max(16px,env(safe-area-inset-left,0px));display:flex;gap:6px;overflow-x:auto}
+nav.tabs button{font:700 .9rem var(--f-body);border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:6px 14px;white-space:nowrap;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h2{font-family:var(--f-head);font-size:1.15rem;margin:18px 0 2px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:5px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:.72rem;color:var(--muted);font-weight:700;letter-spacing:.04em}
+td.n{text-align:right}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-top:8px}
+.sum td a{color:var(--accent);font-weight:700;text-decoration:none}
+.race{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-top:14px;padding:12px}
+.rh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.rh .no{font-family:var(--f-head);font-weight:900;font-size:1.3rem}
+.rh .tt{font-weight:700}
+.rh .tm{color:var(--muted)}
+.lineinfo{margin:6px 0 8px;font-size:.85rem}
+.chip{display:inline-block;font-size:.7rem;border-radius:4px;padding:1px 6px;margin-left:4px;font-weight:700;vertical-align:1px}
+.chip.off{background:var(--accent-soft);color:var(--accent)}
+.chip.est{background:#fff1d6;color:#7a4a00}
+:root[data-theme="dark"] .chip.est{background:#3a2c10;color:#f0c070}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip.est{background:#3a2c10;color:#f0c070}}
+.car{display:inline-flex;align-items:center;justify-content:center;width:1.6em;height:1.6em;border-radius:4px;font-weight:700;font-size:.85rem;border:1px solid #888}
+.c1{background:#fff;color:#111}.c2{background:#111;color:#fff;border-color:#111}.c3{background:#d0121b;color:#fff;border-color:#d0121b}
+.c4{background:#1f5bd6;color:#fff;border-color:#1f5bd6}.c5{background:#f5d000;color:#111;border-color:#d8b800}.c6{background:#17924a;color:#fff;border-color:#17924a}
+.c7{background:#f28a00;color:#111;border-color:#f28a00}.c8{background:#f08cb4;color:#111;border-color:#f08cb4}.c9{background:#7a3db8;color:#fff;border-color:#7a3db8}
+.bar{position:relative;min-width:74px}
+.bar i{position:absolute;left:0;top:50%;transform:translateY(-50%);height:14px;background:var(--bar);opacity:.22;border-radius:2px}
+.bar span{position:relative}
+tr.top1 td{font-weight:700}
+.nm small{color:var(--muted);font-weight:400;margin-left:4px}
+.cm{color:var(--muted);font-size:.78rem;white-space:normal;min-width:7em}
+h3{font-size:.85rem;margin:12px 0 2px;color:var(--muted)}
+td.ev{font-weight:700}
+td.ev.hi{color:var(--good);background:var(--good-soft)}
+.note{font-size:.78rem;color:var(--muted);margin-top:8px}
+.note p{margin:3px 0}
+.filt{display:flex;flex-direction:column;gap:6px;margin:4px 0 6px}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{font:700 .78rem var(--f-body);border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:6px;padding:4px 10px;cursor:pointer}
+.seg.cars button{padding:3px 5px}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+tr.tot td{font-weight:700;border-bottom:none}
+tr.hit td{background:var(--good-soft)}
+.chip.hitc{background:var(--good);color:var(--surface)}
+.result{margin:10px 0 2px;padding:6px 10px;border-radius:6px;background:var(--accent-soft);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.result span{color:var(--muted);font-size:.8rem}
+.foot{margin-top:24px;font-size:.8rem;color:var(--muted)}
+.foot li{margin:3px 0}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1 id="h1">競輪AI予想</h1>
+    <div class="sub" id="sub"></div>
+  </header>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+  <main id="main"></main>
+  <section class="foot">
+    <h2>表の見方と注意</h2>
+    <ul>
+      <li><b>1着率・3着内率</b>はAIモデル(最新の自動補正パラメータ)の出力です。</li>
+      <li><b>分岐オッズ</b>はその確率で収支トントンになるオッズ(100÷確率%)。実オッズがこれより高いと期待値プラスです。</li>
+      <li><b>期待値</b>=確率×オッズ。1.0超を緑にしています。ただし過去の実績では、1着率40%以上の本命は約9ポイント過大評価でした。期待値は甘めに出ます。</li>
+      <li><b>3連単</b>は確率0.9%以上の出目をすべて載せています。車番ボタンで、その車の1着・2着・3着・絡みの出目だけに絞れます(0.9%以上が5点未満のときは上位5点)。</li>
+      <li><b>修正版</b>:10/23の44レースでAIとオッズ(人気)を比べると、オッズの方がはっきり当たっていました。そこで修正確率=オッズ確率^1.1×AI確率^0.1(正規化)としています。中身はほぼ人気順で、AIは微調整です。オッズが出ていないレースは修正版なし(元のAIのみ)。</li>
+      <li><b>結果</b>は終わったレースに表示。AI確率は全出目の中での順位です。終わったレースのオッズは確定オッズです。</li>
+      <li><b>オッズ</b>はwinticketの取得時点のオッズです(1時間ごとに自動更新)。締切までに大きく動きます。未発売は「—」。</li>
+      <li><b>並び</b>:winticketの公式並び予想で計算。並びが未発表のレースは全員単騎扱いで、発表後の更新で計算し直します。</li>
+      <li><b>印</b>はwinticketの記者印で、kドリームズ本紙の印ではありません。総評データは入っていません。</li>
+      <li><b>方程式</b>は能力値+L+Mの参考指数です。各レースに内訳表があります。ガールズは対象外。過去の検証では、AI予想に方程式を足しても的中は上がりませんでした。</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+const D=__DATA__;
+const $=s=>document.querySelector(s);
+$('#h1').textContent=`${D.date} 競輪AI予想(${D.order.length}場)`;
+$('#sub').textContent=`データ取得 ${D.fetched}(winticket) / 全${Object.values(D.venues).reduce((a,v)=>a+v.length,0)}レース`+(D.summary&&D.summary.n?` / 確定${D.summary.n}レース中 AI本命1着 ${D.summary.ai_top_win}回`:'');
+const car=n=>`<span class="car c${n}">${n}</span>`;
+const fmtLine=l=>l?l.split(',').map(g=>g.split('-').map(car).join('')).join('<span style="margin:0 6px;color:var(--muted)">/</span>'):'全員単騎';
+const RACE={};
+function comboRows(r,pos,cn,src){
+  const C=(src==='fix'&&r.cc)?r.cc:r.combos;
+  let list;
+  if(pos==='all'||cn==null){list=C.filter(c=>c[1]>=0.9);}
+  else{
+    const f=c=>{const k=c[0].split('-').map(Number);return pos==='any'?k.includes(cn):k[+pos]===cn};
+    const all=C.filter(f);list=all.filter(c=>c[1]>=0.9);
+    if(list.length<5)list=all.slice(0,5);
+  }
+  const hit=r.res&&r.res.k;
+  let h=list.map(c=>`<tr class="${c[0]===hit?'hit':''}"><td>${c[0].split('-').map(Number).map(car).join(' ')}${c[0]===hit?' <span class="chip hitc">的中</span>':''}</td><td class="n">${c[1].toFixed(2)}%</td><td class="n">${c[2]}倍</td><td class="n">${c[3]!=null?c[3]+'倍':'—'}</td><td class="n ev ${c[4]!=null&&c[4]>=1?'hi':''}">${c[4]!=null?c[4].toFixed(2):'—'}</td></tr>`).join('');
+  const sum=list.reduce((a,c)=>a+c[1],0);
+  h+=`<tr class="tot"><td>${list.length}点 合計</td><td class="n">${sum.toFixed(1)}%</td><td colspan="3" class="cm">${pos!=='all'&&cn!=null&&list.some(c=>c[1]<0.9)?'0.9%以上が5点未満のため上位5点を表示':''}</td></tr>`;
+  return h;
+}
+function venueHTML(slug){
+  const races=D.venues[slug]||[];
+  let h=`<h2>${D.names[slug]}<span class="chip off">${D.day[slug]}</span></h2>`;
+  h+=`<div class="sum scroll"><table><thead><tr><th>R</th><th>発走</th><th>種別</th><th>1着率トップ</th><th>3連単1番手</th><th>期待値最大(0.9%以上内)</th></tr></thead><tbody>`;
+  for(const r of races){
+    const t=[...r.rows].sort((a,b)=>b[7]-a[7])[0];
+    const c=r.combos[0];
+    const ev=r.combos.filter(x=>x[4]!=null).sort((a,b)=>b[4]-a[4])[0];
+    h+=`<tr><td><a href="#${slug}-${r.r}">${r.r}R</a></td><td>${r.s}</td><td>${r.t}</td><td>${car(t[0])} ${t[1]} <b>${t[7]}%</b></td><td>${c[0]} <span style="color:var(--muted)">${c[1]}%</span></td><td>${ev?`${ev[0]} ×${ev[4]}`:'—'}</td></tr>`;
+  }
+  h+=`</tbody></table></div><p class="note">各レースの1着率トップと3連単の最上位。期待値は取得時点のオッズで計算しています。</p>`;
+  for(const r of races){
+    RACE[`${slug}-${r.r}`]=r;
+    const top=Math.max(...r.rows.map(x=>x[7]));
+    const maxw=Math.max(...r.rows.map(x=>x[7]));
+    h+=`<article class="race" id="${slug}-${r.r}"><div class="rh"><span class="no">${r.r}R</span><span class="tt">${r.t}</span><span class="tm">${r.s}発走 / ${r.rows.length}車</span></div>`;
+    h+=`<div class="lineinfo">並び ${fmtLine(r.line)} <span class="chip ${r.lsrc.startsWith('公式')?'off':'est'}">${r.lsrc}${r.lt?'・'+r.lt:''}</span></div>`;
+    h+=`<div class="scroll"><table><thead><tr><th>車</th><th>選手</th><th>級</th><th>脚</th><th class="n">得点</th><th>1着率</th>${r.cw?'<th class="n">修正1着</th>':''}<th class="n">3着内</th><th class="n">方程式</th><th>印</th><th>コメント</th></tr></thead><tbody>`;
+    for(const x of r.rows){
+      h+=`<tr class="${x[7]===top?'top1':''}"><td>${car(x[0])}</td><td class="nm">${x[1]}<small>${x[5]}${x[6]}</small></td><td>${x[2]}</td><td>${x[3]}</td><td class="n">${x[4].toFixed(2)}</td>`+
+         `<td class="bar"><i style="width:${(x[7]/maxw*70).toFixed(0)}px"></i><span>${x[7].toFixed(1)}%</span></td>${r.cw?`<td class="n"><b>${(r.cw[x[0]]||0).toFixed(1)}%</b></td>`:''}<td class="n">${x[8].toFixed(1)}%</td><td class="n">${r.girls?'—':x[10]+'位'}</td><td>${x[11]||''}</td><td class="cm">${x[12]}</td></tr>`;
+    }
+    h+=`</tbody></table></div>`;
+    if(r.girls){h+=`<h3>方程式</h3><p class="note">ガールズは全員単騎でラインがないため、方程式は計算対象外です。</p>`;}
+    else{
+      h+=`<h3>方程式(合計 = 能力値 + L + M)</h3><div class="scroll"><table><thead><tr><th>順</th><th>車</th><th>選手</th><th class="n">得点</th><th class="n">B</th><th class="n">逃捲差</th><th class="n">年齢減</th><th class="n">能力値</th><th class="n">L</th><th class="n">M</th><th class="n">合計</th><th>Mの内訳</th></tr></thead><tbody>`;
+      for(const f of r.fm){h+=`<tr class="${f[0]===1?'top1':''}"><td>${f[0]}</td><td>${car(f[1])}</td><td>${f[2]}</td><td class="n">${f[3].toFixed(2)}</td><td class="n">${f[4]}</td><td class="n">${f[5]}</td><td class="n">${f[6]?'−'+f[6]:0}</td><td class="n">${f[7].toFixed(2)}</td><td class="n">${f[9]}<small style="color:var(--muted)">(${f[8]}車)</small></td><td class="n">${f[10]}</td><td class="n"><b>${f[12].toFixed(1)}</b></td><td class="cm">${f[11]||'—'}</td></tr>`;}
+      const aiTop=[...r.rows].sort((a,b)=>b[7]-a[7])[0][0];
+      h+=`</tbody></table></div><p class="note">能力値 = 得点 + B回数 + (逃+捲+差) − 年齢減点(35歳超1歳ごと1)。L = ライン人数×3。M = 位置・車番・地元などの加点。方程式の並び ${r.fm.slice(0,3).map(f=>f[1]).join('-')}${r.fm[0][1]===aiTop?'。1位はAIの本命と一致':'。1位はAIの本命('+aiTop+'番)と不一致'}。</p>`;
+    }
+    const key=`${slug}-${r.r}`;
+    if(r.res){h+=`<div class="result">結果 ${r.res.k.split('-').map(Number).map(car).join(' ')} <b>${r.res.pay.toLocaleString()}円</b><span>AI確率 ${r.res.p!=null?r.res.p.toFixed(2)+'%':'—'}(${r.res.rank}番目)</span></div>`;}
+    h+=`<h3>3連単</h3><div class="filt" data-k="${key}">`+(r.cc?`<div class="seg" data-g="src"><button data-v="fix" aria-pressed="true">修正版</button><button data-v="ai" aria-pressed="false">元のAI</button></div>`:'')+`<div class="seg" data-g="pos">${[['all','全部'],['0','1着'],['1','2着'],['2','3着'],['any','絡み']].map(([v,t])=>`<button data-v="${v}" aria-pressed="${v==='all'}">${t}</button>`).join('')}</div>`+
+       `<div class="seg cars" data-g="car">${[...r.rows].map(x=>x[0]).sort((a,b)=>a-b).map(n=>`<button data-v="${n}" aria-pressed="false">${car(n)}</button>`).join('')}</div></div>`;
+    h+=`<div class="scroll"><table><thead><tr><th>買い目</th><th class="n">確率</th><th class="n">分岐オッズ</th><th class="n">オッズ</th><th class="n">期待値</th></tr></thead><tbody id="cb-${key}">${comboRows(r,'all',null,r.cc?'fix':'ai')}</tbody></table></div>`;
+    h+=`</tbody></table></div><div class="note"><p>1着率の太字が本命。分岐オッズより実オッズが高い買い目が期待値1.0超(緑)。</p>${r.lsrc.startsWith('推定')?'<p>並びは推定です。実際の並びが違うと確率は大きく変わります。</p>':''}</div></article>`;
+  }
+  return h;
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.filt button');if(!b)return;
+  const f=b.closest('.filt'),g=b.parentElement.dataset.g,r=RACE[f.dataset.k];
+  if(g==='src'){for(const x of b.parentElement.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');}
+  else if(g==='car'){const on=b.getAttribute('aria-pressed')==='true';for(const x of b.parentElement.children)x.setAttribute('aria-pressed','false');if(!on)b.setAttribute('aria-pressed','true');
+    const ps=f.querySelector('[data-g=pos] [aria-pressed=true]');if(!on&&ps&&ps.dataset.v==='all'){ps.setAttribute('aria-pressed','false');f.querySelector('[data-g=pos] [data-v="0"]').setAttribute('aria-pressed','true');}}
+  else{for(const x of b.parentElement.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');
+    if(b.dataset.v==='all')for(const x of f.querySelectorAll('[data-g=car] button'))x.setAttribute('aria-pressed','false');}
+  const pos=f.querySelector('[data-g=pos] [aria-pressed=true]').dataset.v;
+  const cb=f.querySelector('[data-g=car] [aria-pressed=true]');
+  document.getElementById('cb-'+f.dataset.k).innerHTML=comboRows(r,cb?pos:'all',cb?+cb.dataset.v:null,(f.querySelector('[data-g=src] [aria-pressed=true]')||{dataset:{v:'ai'}}).dataset.v);
+});
+const tabs=$('#tabs');
+function show(slug,push){
+  for(const b of tabs.children)b.setAttribute('aria-selected',b.dataset.v===slug);
+  $('#main').innerHTML=venueHTML(slug);
+  try{localStorage.setItem('kv',slug)}catch(e){}
+}
+D.order.forEach(s=>{const b=document.createElement('button');b.textContent=D.names[s];b.dataset.v=s;b.setAttribute('role','tab');b.onclick=()=>{show(s);window.scrollTo({top:0})};tabs.appendChild(b)});
+let init=D.order[0];
+const hv=(location.hash||'').slice(1).split('-')[0];
+if(D.order.includes(hv))init=hv;else{try{const v=localStorage.getItem('kv');if(D.order.includes(v))init=v}catch(e){}}
+show(init);
+</script>
