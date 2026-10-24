@@ -54,6 +54,15 @@ class TestMarketFix(unittest.TestCase):
         self.assertIsNotNone(buy["synth_all"])
         self.assertTrue(any("AI1位" in c["badges"] for c in combos))
 
+    def test_auto_plan(self):
+        rc = _racers()
+        odds = {k: 10.0 + k[0] + k[1] * 0.1 for k in itertools.permutations(range(1, 8), 3)}
+        r = market_fix.apply(model.predict_race(rc, "1-2-3,4-5,6-7"), rc, odds)
+        auto = r["trifecta"]["auto"]
+        self.assertIn(auto["type"], ("堅い", "中間", "混戦"))
+        self.assertGreaterEqual(len(auto["keys"]), 3)
+        self.assertTrue(any("おすすめ" in c["badges"] for c in r["trifecta"]["combos"]))
+
     def test_too_few_odds_falls_back(self):
         rc = _racers()
         r = market_fix.apply(model.predict_race(rc, "1-2-3,4-5,6-7"), rc, {(1, 2, 3): 5.0})
