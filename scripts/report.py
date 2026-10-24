@@ -315,7 +315,35 @@ def build_trifecta_payload(trifecta, rows):
         cars_meta.append({"car": car, "bg": bg, "fg": fg, "total": round(car_totals[car], 1)})
 
     default_car = cars_meta[0]["car"] if cars_meta else None
-    return {"default": default_car, "cars": cars_meta, "groups": groups, "buy": trifecta.get("buy")}
+    # 買い目ビルダー用：全組み合わせを確率順に [1着,2着,3着,確率%,オッズ,補正前AI%]
+    all_combos = [[c["first"], c["second"], c["third"], round(c["prob"], 3), c.get("odds"),
+                   (round(c["ai"], 3) if c.get("ai") is not None else None)]
+                  for c in sorted(trifecta["combos"], key=lambda x: -x["prob"])]
+    return {"default": default_car, "cars": cars_meta, "groups": groups, "buy": trifecta.get("buy"),
+            "all": all_combos}
+
+
+def render_auto_box(auto, car_color_fn=None):
+    """自動判定した『このレースの買い方』を、予想タブの一番上に出す"""
+    if not auto:
+        return ""
+    def chip(k, p, o):
+        cars = "".join(f'<span class="car" style="background:{car_color(int(n))[0]};color:{car_color(int(n))[1]};">{n}</span>'
+                       for n in k.split("-"))
+        return (f'<div class="auto-row"><span class="auto-k">{cars}</span>'
+                f'<span class="tf-prob">{p:.2f}%</span>' + (f'<span class="tf-odds">{o}倍</span>' if o else "") + "</div>")
+    rows = "".join(chip(k, p, o) for k, p, o in zip(auto["keys"], auto["probs"], auto["odds"] or [None] * len(auto["keys"])))
+    syn = f'・合成オッズ <b>{auto["synth"]}倍</b>' if auto.get("synth") else "・オッズ発売後に合成オッズを表示"
+    src = "" if auto.get("mode") == "odds" else '<div class="buy-note">オッズ発売前のため補正AIの順位で仮に選んでいます。発売後の更新で選び直します。</div>'
+    keys = " ".join(auto["keys"])
+    return f"""
+    <div class="auto-box">
+      <div class="auto-title"><span class="auto-type">{auto["type"]}</span>このレースの買い方：<b>{auto["plan"]}</b></div>
+      <div class="auto-sum">{len(auto["keys"])}点・当たる見込み <b>{auto["p"]}%</b>{syn}</div>
+      <div class="tf-list">{rows}</div>
+      <div class="buy-note">{keys}<br>判定の根拠：{auto["hist"]}（人気ベースの確率で試算・回収を保証するものではありません）</div>
+      {src}
+    </div>"""
 
 
 def render_buy_box(buy):
@@ -350,6 +378,7 @@ def render_trifecta_groups(tab_id, payload):
     return render_buy_box(payload.get("buy")) + f"""
     <div class="mw-chips" id="{tab_id}_tf_chips"></div>
     <div class="tf-list" id="{tab_id}_tf_list"></div>
+
     <script>window.TRIFECTA_DATA=window.TRIFECTA_DATA||{{}}; window.TRIFECTA_DATA["{tab_id}"]={payload_json};</script>"""
 
 
@@ -673,6 +702,7 @@ def render_race_card(race_data, tab_id):
     has_trifecta = bool(trifecta_payload)
     has_dev = bool(dev_payload) or bool(hole_html)
     formula_html = render_formula_block(race_data, tab_id)
+    auto_html = render_auto_box((result.get("trifecta") or {}).get("auto"))
     subtab_bar_html = ""
     if has_trifecta or has_dev or formula_html:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
@@ -721,6 +751,7 @@ def render_race_card(race_data, tab_id):
         {odds_trend_html}
         {subtab_bar_html}
     <div id="{tab_id}_sub_main" class="subtab-panel">
+        {auto_html}
         <table class="main">
           <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>予測1着率</th><th>信頼度</th><th>予測3着内率</th></tr></thead>
           <tbody>{rows_html}</tbody>
@@ -806,6 +837,24 @@ RACE_PANEL_STYLE = """
   .buy-line{ display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:3px 0; font-size:12px; }
   .buy-line .tf-badge{ margin-left:0; margin-right:4px; }
   .buy-k{ font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:4px; padding:0 5px; background:var(--paper); }
+  .b-rec{ background:#2f6b3a; color:#fff; }
+  .auto-box{ border:2px solid #2f6b3a; border-radius:8px; padding:10px 12px; margin:8px 0 12px; background:rgba(47,107,58,.06); }
+  .auto-title{ font-size:14px; margin-bottom:4px; } .auto-type{ display:inline-block; background:#2f6b3a; color:#fff; font-size:11px; font-weight:700; border-radius:4px; padding:1px 7px; margin-right:6px; }
+  .auto-sum{ font-size:13px; margin-bottom:4px; }
+  .auto-row{ display:flex; align-items:center; gap:10px; padding:4px 2px; border-bottom:1px solid var(--line); }
+  .auto-k{ flex:1; display:flex; gap:4px; }
+  .bd-wrap{ border-top:2px solid var(--line); margin-top:14px; padding-top:10px; }
+  .bd-row{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:6px 0; font-size:12px; }
+  .bd-row select, .bd-row input{ font:inherit; font-size:13px; padding:3px 4px; border:1px solid var(--line); border-radius:4px; background:var(--paper); color:inherit; }
+  .bd-row input[type=number]{ width:58px; }
+  .bd-head{ min-width:30px; height:28px; border:2px solid var(--line); border-radius:6px; background:transparent; font-weight:700; cursor:pointer; color:inherit; }
+  .bd-hint{ color:var(--ink-soft); font-size:11px; }
+  .bd-sum{ font-size:13px; margin:8px 0 4px; line-height:1.6; }
+  .bd-good{ color:#2f6b3a; }
+  .bd-hist{ font-size:11px; color:var(--ink-soft); }
+  .bd-copy{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:6px; font-size:12px; }
+  .bd-copy button{ font:inherit; font-size:12px; padding:4px 10px; border:1px solid var(--line); border-radius:4px; background:var(--paper); cursor:pointer; color:inherit; }
+  .bd-keys{ color:var(--ink-soft); word-break:break-all; }
   .buy-note{ font-size:11px; color:var(--ink-soft); margin-top:4px; line-height:1.5; }
   .tf-list{ display:flex; flex-direction:column; gap:2px; }
   .tf-row{ display:flex; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); }
@@ -984,12 +1033,13 @@ function renderTrifectaGroups(tabId){
         '<span class="tf-arrow">\\u2192</span>' +
         '<span class="car" style="background:'+carColorLookup(payload,c.third).bg+';color:'+carColorLookup(payload,c.third).fg+';">'+c.third+'</span>' +
       '</span>' +
-      (c.badges||[]).map(function(b){ return '<span class="tf-badge '+(b==='本線'?'b-hon':b==='押さえ'?'b-osa':'b-ai')+'">'+b+'</span>'; }).join('') +
+      (c.badges||[]).map(function(b){ return '<span class="tf-badge '+(b==='本線'?'b-hon':b==='押さえ'?'b-osa':b==='おすすめ'?'b-rec':'b-ai')+'">'+b+'</span>'; }).join('') +
       '<span class="tf-prob">'+c.prob.toFixed(2)+'%</span>' +
       (c.odds ? '<span class="tf-odds">'+c.odds+'倍</span>' : '') +
       '<span class="tf-be" title="この倍率以上のオッズなら、予測が正しいとき期待値が100円超えになります">'+(c.prob>0?(100/c.prob).toFixed(c.prob>=1?0:0):'-')+'倍〜</span>' +
     '</div>';
   }).join('') : '<p class="dim">データがありません</p>';
+  bdInit(tabId);
 }
 function carColorLookup(payload, car){
   const found = payload.cars.find(function(x){ return x.car === car; });
@@ -998,6 +1048,117 @@ function carColorLookup(payload, car){
 function selectTrifectaCar(tabId, car){
   window.TRIFECTA_DATA[tabId].selected = car;
   renderTrifectaGroups(tabId);
+}
+
+// ---- 買い目ビルダー ----
+// 実績は10/23・10/24の確定86レース（人気ベースの確率順）で試算した的中率／回収率
+var BD_PRESETS = [
+  ['honsen','本線(1-5位)','34%／66%'], ['osae','押さえまで(1-10位)','59%／101%'],
+  ['osae2','押さえの押さえまで(1-20位)','72%／84%'], ['osae2only','押さえの押さえだけ(11-20位)','13%／68%'],
+  ['synth','合成オッズ目標まで広げる','目標3倍で17%／73%'], ['ana','穴(30-150倍の確率上位10点)','16%／76%'],
+  ['oana','大穴(100-500倍の確率上位10点)','8%／109%'], ['aiana','AI穴(AIが人気の1.5倍以上評価・20倍以上)','3%／29%'],
+  ['custom','自由に設定','—']
+];
+function bdState(p){
+  if(!p.bd) p.bd = {preset:'osae', rf:1, rt:10, omin:'', omax:'', synth:3, csynth:0, max:0, heads:[]};
+  return p.bd;
+}
+function bdUntil(list, T){
+  var out = [], inv = 0;
+  for(var i=0;i<list.length;i++){
+    var c = list[i]; if(!c.o) continue;
+    var ni = inv + 1/c.o;
+    if(1/ni < T) break;
+    out.push(c); inv = ni;
+  }
+  return out;
+}
+function bdSelect(p, st){
+  var A = (p.all||[]).map(function(c,i){ return {k:c[0]+'-'+c[1]+'-'+c[2], f:c[0], p:c[3], o:c[4], ai:c[5], r:i+1}; });
+  if(st.heads.length) A = A.filter(function(c){ return st.heads.indexOf(c.f) >= 0; });
+  var S;
+  switch(st.preset){
+    case 'honsen': S = A.filter(function(c){return c.r<=5;}); break;
+    case 'osae': S = A.filter(function(c){return c.r<=10;}); break;
+    case 'osae2': S = A.filter(function(c){return c.r<=20;}); break;
+    case 'osae2only': S = A.filter(function(c){return c.r>10 && c.r<=20;}); break;
+    case 'synth': S = bdUntil(A, +st.synth || 3); break;
+    case 'ana': S = A.filter(function(c){return c.o && c.o>=30 && c.o<=150;}).slice(0,10); break;
+    case 'oana': S = A.filter(function(c){return c.o && c.o>=100 && c.o<=500;}).slice(0,10); break;
+    case 'aiana': S = A.filter(function(c){return c.o && c.o>=20 && c.ai!=null && c.ai>=1.5*c.p;})
+                      .sort(function(a,b){return b.ai-a.ai;}).slice(0,10); break;
+    default:
+      S = A.filter(function(c){
+        return c.r >= (+st.rf||1) && c.r <= (+st.rt||9999) &&
+          (st.omin==='' || (c.o && c.o >= +st.omin)) && (st.omax==='' || (c.o && c.o <= +st.omax));
+      });
+      if(+st.csynth > 0) S = bdUntil(S, +st.csynth);
+      if(+st.max > 0) S = S.slice(0, +st.max);
+  }
+  return S;
+}
+function bdInit(tabId){
+  var p = window.TRIFECTA_DATA[tabId], el = document.getElementById(tabId+'_bd_ctl');
+  if(!p || !el || !p.all || p.bdReady) return;
+  p.bdReady = true;
+  var st = bdState(p);
+  var opts = BD_PRESETS.map(function(x){ return '<option value="'+x[0]+'"'+(x[0]===st.preset?' selected':'')+'>'+x[1]+'</option>'; }).join('');
+  var heads = p.cars.slice().sort(function(a,b){return a.car-b.car;}).map(function(c){
+    return '<button type="button" class="bd-head" data-car="'+c.car+'" style="border-color:'+c.bg+'" onclick="bdHead(\\''+tabId+'\\','+c.car+',this)">'+c.car+'</button>';
+  }).join('');
+  el.innerHTML =
+    '<div class="bd-row"><label>買い方 <select id="'+tabId+'_bd_preset" onchange="bdSet(\\''+tabId+'\\',\\'preset\\',this.value)">'+opts+'</select></label></div>' +
+    '<div class="bd-row">1着を絞る '+heads+'<span class="bd-hint">(押さない＝全部)</span></div>' +
+    '<div class="bd-row bd-custom" id="'+tabId+'_bd_custom">' +
+      '<label>順位 <input type="number" min="1" value="'+st.rf+'" onchange="bdSet(\\''+tabId+'\\',\\'rf\\',this.value)">〜<input type="number" min="1" value="'+st.rt+'" onchange="bdSet(\\''+tabId+'\\',\\'rt\\',this.value)">位</label>' +
+      '<label>オッズ <input type="number" min="1" placeholder="下限" onchange="bdSet(\\''+tabId+'\\',\\'omin\\',this.value)">〜<input type="number" min="1" placeholder="上限" onchange="bdSet(\\''+tabId+'\\',\\'omax\\',this.value)">倍</label>' +
+      '<label>最大 <input type="number" min="0" value="0" onchange="bdSet(\\''+tabId+'\\',\\'max\\',this.value)">点(0=制限なし)</label>' +
+      '<label>合成オッズ <input type="number" min="0" step="0.5" value="0" onchange="bdSet(\\''+tabId+'\\',\\'csynth\\',this.value)">倍以上を保つ(0=なし)</label>' +
+    '</div>' +
+    '<div class="bd-row" id="'+tabId+'_bd_synthrow"><label>合成オッズの目標 <input type="number" min="0" step="0.5" value="'+st.synth+'" onchange="bdSet(\\''+tabId+'\\',\\'synth\\',this.value)">倍以上を保って広げる</label></div>';
+  bdRender(tabId);
+}
+function bdSet(tabId, key, val){
+  var p = window.TRIFECTA_DATA[tabId], st = bdState(p);
+  st[key] = (key==='preset') ? val : (val===''?'':val);
+  bdRender(tabId);
+}
+function bdHead(tabId, car, btn){
+  var p = window.TRIFECTA_DATA[tabId], st = bdState(p), i = st.heads.indexOf(car);
+  if(i >= 0){ st.heads.splice(i,1); btn.classList.remove('on'); btn.style.background=''; btn.style.color=''; }
+  else { st.heads.push(car); btn.classList.add('on'); var c = carColorLookup(p, car); btn.style.background=c.bg; btn.style.color=c.fg; }
+  bdRender(tabId);
+}
+function bdRender(tabId){
+  var p = window.TRIFECTA_DATA[tabId], st = bdState(p), out = document.getElementById(tabId+'_bd_out');
+  if(!out) return;
+  var cu = document.getElementById(tabId+'_bd_custom'), sr = document.getElementById(tabId+'_bd_synthrow');
+  if(cu) cu.style.display = st.preset==='custom' ? '' : 'none';
+  if(sr) sr.style.display = st.preset==='synth' ? '' : 'none';
+  var S = bdSelect(p, st);
+  var hasOdds = S.length && S.every(function(c){return c.o;});
+  var prob = S.reduce(function(a,c){return a+c.p;},0);
+  var inv = hasOdds ? S.reduce(function(a,c){return a+1/c.o;},0) : 0;
+  var syn = inv ? 1/inv : null;
+  var ev = syn ? prob*syn/100 : null;
+  var hist = (BD_PRESETS.filter(function(x){return x[0]===st.preset;})[0]||[])[2];
+  var head = '<div class="bd-sum"><b>'+S.length+'点</b>・当たる見込み <b>'+prob.toFixed(1)+'%</b>' +
+    (syn ? '・合成オッズ <b>'+syn.toFixed(1)+'倍</b>・期待値 <b class="'+(ev>=1?'bd-good':'')+'">'+ev.toFixed(2)+'</b>' : '・オッズ発売前（合成オッズは発売後に表示）') +
+    (hist && hist!=='—' ? '<div class="bd-hist">過去86レースの実績(的中率／回収率): '+hist+(st.heads.length?'(1着を絞らない場合の数字)':'')+'</div>' : '') + '</div>';
+  var list = S.length ? S.map(function(c){
+    var parts = c.k.split('-').map(Number);
+    return '<div class="tf-row"><span class="tf-rank">'+c.r+'</span><span class="tf-combo">' +
+      parts.map(function(n){ var cc = carColorLookup(p,n); return '<span class="car" style="background:'+cc.bg+';color:'+cc.fg+';">'+n+'</span>'; }).join('<span class="tf-arrow">→</span>') +
+      '</span><span class="tf-prob">'+c.p.toFixed(2)+'%</span>' + (c.o?'<span class="tf-odds">'+c.o+'倍</span>':'') +
+      (c.ai!=null?'<span class="tf-odds">AI '+c.ai.toFixed(2)+'%</span>':'') + '</div>';
+  }).join('') : '<p class="dim">条件に合う買い目がありません</p>';
+  var keys = S.map(function(c){return c.k;}).join(' ');
+  out.innerHTML = head + '<div class="tf-list">'+list+'</div>' +
+    (S.length ? '<div class="bd-copy"><button type="button" onclick="bdCopy(this)" data-k="'+keys+'">買い目をコピー</button><span class="bd-keys">'+keys+'</span></div>' : '');
+}
+function bdCopy(btn){
+  var t = btn.getAttribute('data-k');
+  if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ btn.textContent='コピーしました'; }, function(){ btn.textContent='長押しで選択してください'; }); }
 }
 
 // 展開シミュレーションのアニメーション再生（実際のバンク形状の上を動かす）
