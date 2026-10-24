@@ -32,8 +32,8 @@ JST = datetime.timezone(datetime.timedelta(hours=9))
 SLUG_TO_MODEL = {"iwakidaira": "iwakitaira"}  # winticket と本システムで綴りが違う場
 MARK = {1: "◎", 2: "○", 3: "▲", 4: "△"}
 GRADE = {1: "F2", 2: "F1", 3: "G3", 4: "G2", 5: "G1", 6: "GP"}
-# 修正版: オッズ確率^B × AI確率^A を正規化（10/23の44レースで決めた値）
-A_AI, B_MKT = 0.1, 1.1
+# 修正版: オッズ確率^B × AI確率^A を正規化（10/23・10/24の66レースで、AIを混ぜない方が当たったため A=0）
+A_AI, B_MKT = 0.0, 1.15
 SLEEP = 0.7
 
 session = requests.Session()
