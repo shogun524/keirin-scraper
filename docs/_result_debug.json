@@ -1,10 +1,6 @@
 {
- "updated": "2026-10-24 16:06",
+ "updated": "2026-10-24 16:16",
  "failures": [
-  {
-   "race": "2026-10-24 kumamoto 11R",
-   "diag": {}
-  },
   {
    "race": "2026-10-24 komatsushima 12R",
    "diag": {}
@@ -12,10 +8,14 @@
   {
    "race": "2026-10-24 nagoya 1R",
    "diag": {}
+  },
+  {
+   "race": "2026-10-24 nara 2R",
+   "diag": {}
   }
  ],
  "tracked": 1307,
- "with_result": 989,
+ "with_result": 990,
  "without_url": 0,
  "pending_eligible": 278
 }

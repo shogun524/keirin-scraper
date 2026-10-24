@@ -242347,9 +242347,32 @@
     108.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    3,
+    1,
+    9,
+    6,
+    4,
+    7,
+    8
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-10-24 16:16"
  },
  "2026-10-24_kumamoto_12": {
   "date": "2026-10-24",
@@ -243079,7 +243102,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-10-24_nara_3": {
@@ -251020,7 +251043,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-10-24_nagoya_2": {
@@ -256131,7 +256154,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  }
 }
