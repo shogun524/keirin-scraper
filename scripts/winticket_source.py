@@ -67,6 +67,9 @@ def fetch_all_todays_races(date):
                 "racers": racers,
                 "line_prediction_text": _line_text(com),
                 "url": f"{BASE}/{c['slug']}/racecard/{c['cup']}/{c['index']}/{R['race']}",
+                # 3連単オッズ {(1着,2着,3着): 倍率}（market_fix で予想の補正に使う。未発売は除く）
+                "wt_odds": {tuple(o["key"]): o["odds"] for o in (R.get("odds") or {}).get("trifecta") or []
+                            if o.get("odds") and o["odds"] < 9000},
             })
         print(f"[INFO] winticket {c['name']}: {len([r for r in out if r['race_info']['venue'] == venue])} レース")
     return out
