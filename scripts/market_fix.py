@@ -138,7 +138,64 @@ def _synth(odds_list):
     return round(1 / inv, 1) if inv else None
 
 
-def mark_buys(result, odds, ai_top):
+# レースの型ごとの自動おすすめ（10/23・10/24の確定86レースで試算。件数が少ないので暫定）
+#   堅い（本命の1着率45%以上, 53R）: 押さえまで10点が的中66%・回収100%（本線5点は55%、合成2倍は60%）
+#   中間（30〜45%, 30R）          : 合成オッズ2倍を保って広げる（平均約7点）が的中47%・回収116%
+#   混戦（30%未満, 3R）           : データ不足。中間と同じ買い方
+AUTO = {
+    "堅い": {"plan": "押さえまで10点", "hist": "53レースで的中66%・回収率100%"},
+    "中間": {"plan": "合成オッズ2倍まで", "hist": "30レースで的中47%・回収率116%"},
+    "混戦": {"plan": "合成オッズ2倍まで", "hist": "混戦はまだ3レースしかなく参考程度（中間と同じ買い方）"},
+}
+
+
+def race_type(rows):
+    top = max(r["adjusted"] for r in rows)
+    return "堅い" if top >= 45 else ("混戦" if top < 30 else "中間")
+
+
+def auto_plan(result, odds):
+    """レースの型を判定して、買い目を自動で選ぶ。trifecta["auto"] に入れる。"""
+    combos = (result.get("trifecta") or {}).get("combos") or []
+    if not combos:
+        return None
+    rtype = race_type(result["rows"])
+    cfg = AUTO[rtype]
+    keyed = [((c["first"], c["second"], c["third"]), c) for c in combos]
+    plan = cfg["plan"]
+    if plan == "押さえまで10点" or not odds:
+        sel = keyed[:OSAE_N]
+        if plan != "押さえまで10点":
+            plan = "押さえまで10点（オッズ発売前のため仮）"
+    else:
+        sel, inv = [], 0.0
+        for k, c in keyed:
+            o = odds.get(k)
+            if not o:
+                continue
+            if 1 / (inv + 1 / o) < 2.0:
+                break
+            sel.append((k, c))
+            inv += 1 / o
+        if len(sel) < 3:          # 2点以下しか取れないときは押さえまで10点に戻す
+            sel, plan = keyed[:OSAE_N], "押さえまで10点（合成2倍では点数が少なすぎるため）"
+    ol = [odds.get(k) for k, _ in sel] if odds else []
+    auto = {
+        "type": rtype, "plan": plan, "hist": cfg["hist"],
+        "keys": ["-".join(map(str, k)) for k, _ in sel],
+        "probs": [round(c["prob"], 2) for _, c in sel],
+        "odds": ol,
+        "p": round(sum(c["prob"] for _, c in sel), 1),
+        "synth": _synth(ol) if ol and all(ol) else None,
+        "mode": result.get("fix_mode"),
+    }
+    for _, c in sel:
+        c.setdefault("badges", []).append("おすすめ")
+    result["trifecta"]["auto"] = auto
+    return auto
+
+
+def mark_buys(result, odds, ai_top, ai_probs=None):
     """3連単一覧に「本線」「押さえ」「AI1位」のバッジを付け、買い目の目安を trifecta["buy"] に入れる"""
     tri = result.get("trifecta") or {}
     combos = tri.get("combos") or []
@@ -153,6 +210,8 @@ def mark_buys(result, odds, ai_top):
         if ai_top and k == ai_top:
             badges.append("AI1位")
         c["badges"] = badges
+        if ai_probs is not None:
+            c["ai"] = round(ai_probs.get(k, 0.0) * 100, 3)   # 補正前のAIの確率（%）
         if odds and k in odds:
             c["odds"] = odds[k]
     top = combos[:OSAE_N]
@@ -168,6 +227,7 @@ def mark_buys(result, odds, ai_top):
         "hist": HIST[mode],
     }
     result["trifecta"] = tri
+    auto_plan(result, odds)
     return result
 
 
@@ -182,7 +242,7 @@ def apply(result, racers, odds=None):
     if odds and len(odds) >= total * MIN_ODDS_COVERAGE:
         rebuild(result, market_joint(odds))
         result["fix_mode"] = "odds"
-        return mark_buys(result, odds, ai_top)
+        return mark_buys(result, odds, ai_top, aj0)
     w = corrected_win(result["rows"], racers, result.get("line_map") or {})
     aj = ai_joint(result)
     head = {}
@@ -192,4 +252,4 @@ def apply(result, racers, odds=None):
     s = sum(joint.values()) or 1
     rebuild(result, {k: v / s for k, v in joint.items()})
     result["fix_mode"] = "ai_fix"
-    return mark_buys(result, odds, ai_top)
+    return mark_buys(result, odds, ai_top, aj0)
