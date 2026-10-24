@@ -69,6 +69,7 @@ td.ev.hi{color:var(--good);background:var(--good-soft)}
 .seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 tr.tot td{font-weight:700;border-bottom:none}
 tr.hit td{background:var(--good-soft)}
+.chip.bhon{background:#b8322a;color:#fff}.chip.bosa{background:#e8d9b5;color:#5a4310}.chip.bai{background:#1f4e8c;color:#fff}
 .chip.hitc{background:var(--good);color:var(--surface)}
 .result{margin:10px 0 2px;padding:6px 10px;border-radius:6px;background:var(--accent-soft);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
 .result span{color:var(--muted);font-size:.8rem}
@@ -89,6 +90,7 @@ tr.hit td{background:var(--good-soft)}
       <li><b>1着率・3着内率</b>はAIモデル(最新の自動補正パラメータ)の出力です。</li>
       <li><b>分岐オッズ</b>はその確率で収支トントンになるオッズ(100÷確率%)。実オッズがこれより高いと期待値プラスです。</li>
       <li><b>期待値</b>=確率×オッズ。1.0超を緑にしています。ただし過去の実績では、1着率40%以上の本命は約9ポイント過大評価でした。期待値は甘めに出ます。</li>
+      <li><b>バッジ</b>:人気ベース(オッズ発売前は元のAI)の確率順で1〜5位が「本線」、6〜10位が「押さえ」。10/23・10/24の86レースでは、人気順1〜5位で34%、1〜10位で59%が的中しました。「AI1位」は元のAIの最上位(86レースで14%、過去942レースでは7.7%)。回収率100%を保証するものではありません。</li>
       <li><b>3連単</b>は確率0.9%以上の出目をすべて載せています。車番ボタンで、その車の1着・2着・3着・絡みの出目だけに絞れます(0.9%以上が5点未満のときは上位5点)。</li>
       <li><b>修正版</b>:10/23の44レースでAIとオッズ(人気)を比べると、オッズの方がはっきり当たっていました。そこで修正確率=オッズ確率^1.1×AI確率^0.1(正規化)としています。中身はほぼ人気順で、AIは微調整です。オッズが出ていないレースは修正版なし(元のAIのみ)。</li>
       <li><b>結果</b>は終わったレースに表示。AI確率は全出目の中での順位です。終わったレースのオッズは確定オッズです。</li>
@@ -118,7 +120,10 @@ function comboRows(r,pos,cn,src){
     if(list.length<5)list=all.slice(0,5);
   }
   const hit=r.res&&r.res.k;
-  let h=list.map(c=>`<tr class="${c[0]===hit?'hit':''}"><td>${c[0].split('-').map(Number).map(car).join(' ')}${c[0]===hit?' <span class="chip hitc">的中</span>':''}</td><td class="n">${c[1].toFixed(2)}%</td><td class="n">${c[2]}倍</td><td class="n">${c[3]!=null?c[3]+'倍':'—'}</td><td class="n ev ${c[4]!=null&&c[4]>=1?'hi':''}">${c[4]!=null?c[4].toFixed(2):'—'}</td></tr>`).join('');
+  const base=r.cc||r.combos, bm={};
+  base.slice(0,10).forEach((c,i)=>{bm[c[0]]=[i<5?'本線':'押さえ'];});
+  const aiTop=r.combos[0]&&r.combos[0][0]; if(aiTop){(bm[aiTop]=bm[aiTop]||[]).push('AI1位');}
+  let h=list.map(c=>`<tr class="${c[0]===hit?'hit':''}"><td>${c[0].split('-').map(Number).map(car).join(' ')}${c[0]===hit?' <span class="chip hitc">的中</span>':''}${(bm[c[0]]||[]).map(b=>`<span class="chip ${b==='本線'?'bhon':b==='押さえ'?'bosa':'bai'}">${b}</span>`).join('')}</td><td class="n">${c[1].toFixed(2)}%</td><td class="n">${c[2]}倍</td><td class="n">${c[3]!=null?c[3]+'倍':'—'}</td><td class="n ev ${c[4]!=null&&c[4]>=1?'hi':''}">${c[4]!=null?c[4].toFixed(2):'—'}</td></tr>`).join('');
   const sum=list.reduce((a,c)=>a+c[1],0);
   h+=`<tr class="tot"><td>${list.length}点 合計</td><td class="n">${sum.toFixed(1)}%</td><td colspan="3" class="cm">${pos!=='all'&&cn!=null&&list.some(c=>c[1]<0.9)?'0.9%以上が5点未満のため上位5点を表示':''}</td></tr>`;
   return h;
