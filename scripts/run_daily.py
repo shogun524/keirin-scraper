@@ -215,6 +215,13 @@ def main():
         except Exception as e:
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
             result = None
+        if result and race["race_info"].get("source") == "winticket":
+            # winticket のレースは実績に合わせて補正（オッズがあれば人気ベース、無ければAIを補正）
+            try:
+                import market_fix
+                market_fix.apply(result, race["racers"], race.get("wt_odds"))
+            except Exception as e:
+                print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の補正に失敗: {e}")
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
 
     try:
