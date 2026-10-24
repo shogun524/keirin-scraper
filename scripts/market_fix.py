@@ -23,6 +23,12 @@ COEF = {
 }
 MIN_ODDS_COVERAGE = 0.7
 
+# 買い目の目安（10/23・10/24の確定86レースの分析から）
+#   人気ベースの確率順: 1〜5位で34%、1〜10位で59%が的中（6〜10位だけで26%）
+#   元のAIの確率順   : 1〜10位で35%。AIの1位の出目は14%（kドリームズ期942レースでは7.7%）
+HONSEN_N, OSAE_N = 5, 10
+HIST = {"odds": {"honsen": 34, "osae": 59, "n": 86}, "ai_fix": {"honsen": 26, "osae": 35, "n": 86}}
+
 
 def _features(rows, racers, line_map):
     mk = {r["car"]: r for r in racers}
@@ -126,16 +132,57 @@ def rebuild(result, joint, th_high=None, th_close=None):
     return result
 
 
+def _synth(odds_list):
+    """合成オッズ（この点数を同じ金額ずつ買ったとき、どれか当たった場合の平均払戻倍率）"""
+    inv = sum(1 / o for o in odds_list if o)
+    return round(1 / inv, 1) if inv else None
+
+
+def mark_buys(result, odds, ai_top):
+    """3連単一覧に「本線」「押さえ」「AI1位」のバッジを付け、買い目の目安を trifecta["buy"] に入れる"""
+    tri = result.get("trifecta") or {}
+    combos = tri.get("combos") or []
+    mode = result.get("fix_mode", "ai_fix")
+    for i, c in enumerate(combos):
+        k = (c["first"], c["second"], c["third"])
+        badges = []
+        if i < HONSEN_N:
+            badges.append("本線")
+        elif i < OSAE_N:
+            badges.append("押さえ")
+        if ai_top and k == ai_top:
+            badges.append("AI1位")
+        c["badges"] = badges
+        if odds and k in odds:
+            c["odds"] = odds[k]
+    top = combos[:OSAE_N]
+    tri["buy"] = {
+        "mode": mode,
+        "honsen": ["-".join(map(str, (c["first"], c["second"], c["third"]))) for c in combos[:HONSEN_N]],
+        "osae": ["-".join(map(str, (c["first"], c["second"], c["third"]))) for c in combos[HONSEN_N:OSAE_N]],
+        "ai_top": "-".join(map(str, ai_top)) if ai_top else None,
+        "p_honsen": round(sum(c["prob"] for c in combos[:HONSEN_N]), 1),
+        "p_all": round(sum(c["prob"] for c in top), 1),
+        "synth_honsen": _synth([c.get("odds") for c in combos[:HONSEN_N]]) if odds else None,
+        "synth_all": _synth([c.get("odds") for c in top]) if odds else None,
+        "hist": HIST[mode],
+    }
+    result["trifecta"] = tri
+    return result
+
+
 def apply(result, racers, odds=None):
     """result を直して返す。odds: {(1着,2着,3着): 倍率} または None。result["fix_mode"] に方式を記録。"""
     if not result or not result.get("trifecta"):
         return result
     n = len(result["rows"])
     total = n * (n - 1) * (n - 2)
+    aj0 = ai_joint(result)
+    ai_top = max(aj0, key=aj0.get) if aj0 else None
     if odds and len(odds) >= total * MIN_ODDS_COVERAGE:
         rebuild(result, market_joint(odds))
         result["fix_mode"] = "odds"
-        return result
+        return mark_buys(result, odds, ai_top)
     w = corrected_win(result["rows"], racers, result.get("line_map") or {})
     aj = ai_joint(result)
     head = {}
@@ -145,4 +192,4 @@ def apply(result, racers, odds=None):
     s = sum(joint.values()) or 1
     rebuild(result, {k: v / s for k, v in joint.items()})
     result["fix_mode"] = "ai_fix"
-    return result
+    return mark_buys(result, odds, ai_top)
