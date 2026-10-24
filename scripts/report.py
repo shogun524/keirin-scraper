@@ -302,6 +302,7 @@ def build_trifecta_payload(trifecta, rows):
             "second": c["second"], "second_name": c["second_name"],
             "third": c["third"], "third_name": c["third_name"],
             "prob": round(c["prob"], 2),
+            "badges": c.get("badges") or [], "odds": c.get("odds"),
         })
         car_totals[car] = car_totals.get(car, 0) + c["prob"]
 
@@ -314,7 +315,31 @@ def build_trifecta_payload(trifecta, rows):
         cars_meta.append({"car": car, "bg": bg, "fg": fg, "total": round(car_totals[car], 1)})
 
     default_car = cars_meta[0]["car"] if cars_meta else None
-    return {"default": default_car, "cars": cars_meta, "groups": groups}
+    return {"default": default_car, "cars": cars_meta, "groups": groups, "buy": trifecta.get("buy")}
+
+
+def render_buy_box(buy):
+    """買い目の目安（本線・押さえ）のまとめ。market_fix.mark_buys が作った情報を表示する。"""
+    if not buy:
+        return ""
+    h = buy.get("hist") or {}
+    src = "人気（オッズ）ベース" if buy.get("mode") == "odds" else "補正AI（オッズ発売前）"
+    syn = (f'合成オッズ 本線{buy["synth_honsen"]}倍／10点{buy["synth_all"]}倍'
+           if buy.get("synth_all") else "オッズ発売後に合成オッズを表示")
+    def chips(keys):
+        return " ".join(f'<span class="buy-k">{k}</span>' for k in keys)
+    ai = (f'<div class="buy-line"><span class="tf-badge b-ai">AI1位</span>{buy["ai_top"]}</div>'
+          if buy.get("ai_top") else "")
+    return f"""
+    <div class="buy-box">
+      <div class="buy-title">買い目の目安 <span class="buy-src">{src}</span></div>
+      <div class="buy-line"><span class="tf-badge b-hon">本線</span>{chips(buy["honsen"])}</div>
+      <div class="buy-line"><span class="tf-badge b-osa">押さえ</span>{chips(buy["osae"])}</div>
+      {ai}
+      <div class="buy-note">見込み 本線5点{buy["p_honsen"]}%／10点{buy["p_all"]}%・{syn}。
+      過去{h.get("n", 0)}レースの実績{"" if buy.get("mode") == "odds" else "（補正前AIの順位）"}: 本線{h.get("honsen", "-")}%・10点{h.get("osae", "-")}%が的中。
+      合成オッズが「100÷見込み%」より低いと、当たっても割に合いません。</div>
+    </div>"""
 
 
 def render_trifecta_groups(tab_id, payload):
@@ -322,7 +347,7 @@ def render_trifecta_groups(tab_id, payload):
     if not payload:
         return ""
     payload_json = _json.dumps(payload, ensure_ascii=False)
-    return f"""
+    return render_buy_box(payload.get("buy")) + f"""
     <div class="mw-chips" id="{tab_id}_tf_chips"></div>
     <div class="tf-list" id="{tab_id}_tf_list"></div>
     <script>window.TRIFECTA_DATA=window.TRIFECTA_DATA||{{}}; window.TRIFECTA_DATA["{tab_id}"]={payload_json};</script>"""
@@ -773,6 +798,15 @@ RACE_PANEL_STYLE = """
   .line-group{ display:inline-flex; align-items:center; gap:3px; }
   .line-arrow{ color:var(--ink-soft); font-size:11px; }
   .tf-be{ margin-left:8px; font-size:11px; color:#2f6b3a; white-space:nowrap; }
+  .tf-badge{ display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; margin-left:4px; white-space:nowrap; }
+  .b-hon{ background:#b8322a; color:#fff; } .b-osa{ background:#e8d9b5; color:#5a4310; } .b-ai{ background:#1f4e8c; color:#fff; }
+  .tf-odds{ margin-left:6px; font-size:11px; color:var(--ink-soft); white-space:nowrap; }
+  .buy-box{ border:1px solid var(--line); border-radius:6px; padding:8px 10px; margin:6px 0 10px; background:rgba(198,154,78,.06); }
+  .buy-title{ font-weight:700; font-size:13px; margin-bottom:4px; } .buy-src{ font-weight:400; font-size:11px; color:var(--ink-soft); }
+  .buy-line{ display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:3px 0; font-size:12px; }
+  .buy-line .tf-badge{ margin-left:0; margin-right:4px; }
+  .buy-k{ font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:4px; padding:0 5px; background:var(--paper); }
+  .buy-note{ font-size:11px; color:var(--ink-soft); margin-top:4px; line-height:1.5; }
   .tf-list{ display:flex; flex-direction:column; gap:2px; }
   .tf-row{ display:flex; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); }
   .tf-row:first-child{ background:rgba(198,154,78,.10); border-radius:3px; }
@@ -950,7 +984,9 @@ function renderTrifectaGroups(tabId){
         '<span class="tf-arrow">\\u2192</span>' +
         '<span class="car" style="background:'+carColorLookup(payload,c.third).bg+';color:'+carColorLookup(payload,c.third).fg+';">'+c.third+'</span>' +
       '</span>' +
+      (c.badges||[]).map(function(b){ return '<span class="tf-badge '+(b==='本線'?'b-hon':b==='押さえ'?'b-osa':'b-ai')+'">'+b+'</span>'; }).join('') +
       '<span class="tf-prob">'+c.prob.toFixed(2)+'%</span>' +
+      (c.odds ? '<span class="tf-odds">'+c.odds+'倍</span>' : '') +
       '<span class="tf-be" title="この倍率以上のオッズなら、予測が正しいとき期待値が100円超えになります">'+(c.prob>0?(100/c.prob).toFixed(c.prob>=1?0:0):'-')+'倍〜</span>' +
     '</div>';
   }).join('') : '<p class="dim">データがありません</p>';
