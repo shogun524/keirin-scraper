@@ -1,1 +1,722 @@
-{}
+{
+  "odawara_1_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 1,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 228,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_2_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 2,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 136,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_3_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 3,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 153,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_4_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 4,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 168,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_5_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 5,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 208,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_6_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 6,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 88,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_7_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 7,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 49,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_8_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 8,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 64,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_9_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 9,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 100,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_10_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 10,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 136,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_11_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 11,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 274,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "odawara_12_2026-10-27": {
+    "venue": "odawara",
+    "race_no": 12,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 295,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_1_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 1,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 45,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_2_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 2,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 33,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_3_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 3,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 55,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_4_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 4,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 57,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_5_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 5,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 51,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_6_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 6,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 16,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_7_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 7,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 20,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_8_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 8,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 21,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_9_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 9,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 19,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_10_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 10,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 34,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_11_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 11,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 23,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "keiokaku_12_2026-10-27": {
+    "venue": "keiokaku",
+    "race_no": 12,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 40,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_1_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 1,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 4404,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_2_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 2,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 1058,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_3_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 3,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 616,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_4_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 4,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 355,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_5_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 5,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 473,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_6_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 6,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 734,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "wakayama_7_2026-10-27": {
+    "venue": "wakayama",
+    "race_no": 7,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 591,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_1_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 1,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 14,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_2_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 2,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 11,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_3_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 3,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 12,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_4_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 4,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 40,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_5_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 5,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 10,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_6_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 6,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 10,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_7_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 7,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 9,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_8_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 8,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 17,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_9_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 9,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 8,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_10_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 10,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 10,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "takeo_11_2026-10-27": {
+    "venue": "takeo",
+    "race_no": 11,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 132,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "ogaki_1_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 1,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 110,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "ogaki_2_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 2,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 108,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "ogaki_3_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 3,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 3,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "ogaki_4_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 4,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 4,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "ogaki_5_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 5,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 5,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "ogaki_6_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 6,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 3,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "ogaki_7_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 7,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 3,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "ogaki_8_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 8,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 4,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "ogaki_9_2026-10-27": {
+    "venue": "ogaki",
+    "race_no": 9,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 32,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "kurume_1_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 1,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 18,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "kurume_2_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 2,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 14,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "kurume_3_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 3,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 4,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "kurume_4_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 4,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 5,
+        "as_of": "2026/10/27 07:33"
+      }
+    ]
+  },
+  "kurume_5_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 5,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 10,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "kurume_6_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 6,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 5,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "kurume_7_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 7,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 3,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "kurume_8_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 8,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 3,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  },
+  "kurume_9_2026-10-27": {
+    "venue": "kurume",
+    "race_no": 9,
+    "date": "2026-10-27",
+    "snapshots": [
+      {
+        "ts": "2026-10-27 07:30",
+        "ticket_total": 5,
+        "as_of": "2026/10/27 07:30"
+      }
+    ]
+  }
+}

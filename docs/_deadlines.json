@@ -2,78 +2,6 @@
   "date": "2026-10-27",
   "races": [
     {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 1,
-      "deadline": "15:40"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 2,
-      "deadline": "16:02"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 3,
-      "deadline": "16:28"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 4,
-      "deadline": "16:54"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 5,
-      "deadline": "17:20"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 6,
-      "deadline": "17:46"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 7,
-      "deadline": "18:12"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 8,
-      "deadline": "18:38"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 9,
-      "deadline": "19:04"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 10,
-      "deadline": "19:30"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 11,
-      "deadline": "19:57"
-    },
-    {
-      "venue": "keiokaku",
-      "venue_name": "京王閣",
-      "race_no": 12,
-      "deadline": "20:25"
-    },
-    {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 1,
@@ -146,6 +74,78 @@
       "deadline": "16:09"
     },
     {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 1,
+      "deadline": "15:40"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 2,
+      "deadline": "16:02"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 3,
+      "deadline": "16:28"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 4,
+      "deadline": "16:54"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 5,
+      "deadline": "17:20"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 6,
+      "deadline": "17:46"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 7,
+      "deadline": "18:12"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 8,
+      "deadline": "18:38"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 9,
+      "deadline": "19:04"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 10,
+      "deadline": "19:30"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 11,
+      "deadline": "19:57"
+    },
+    {
+      "venue": "keiokaku",
+      "venue_name": "京王閣",
+      "race_no": 12,
+      "deadline": "20:25"
+    },
+    {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 1,
@@ -186,6 +186,72 @@
       "venue_name": "和歌山",
       "race_no": 7,
       "deadline": "10:30"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 1,
+      "deadline": "15:51"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 2,
+      "deadline": "16:16"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 3,
+      "deadline": "16:41"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 4,
+      "deadline": "17:07"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 5,
+      "deadline": "17:33"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 6,
+      "deadline": "17:59"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 7,
+      "deadline": "18:25"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 8,
+      "deadline": "18:51"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 9,
+      "deadline": "19:17"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 10,
+      "deadline": "19:43"
+    },
+    {
+      "venue": "takeo",
+      "venue_name": "武雄",
+      "race_no": 11,
+      "deadline": "20:11"
     },
     {
       "venue": "ogaki",
@@ -294,72 +360,6 @@
       "venue_name": "久留米",
       "race_no": 9,
       "deadline": "23:15"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 1,
-      "deadline": "15:51"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 2,
-      "deadline": "16:16"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 3,
-      "deadline": "16:41"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 4,
-      "deadline": "17:07"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 5,
-      "deadline": "17:33"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 6,
-      "deadline": "17:59"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 7,
-      "deadline": "18:25"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 8,
-      "deadline": "18:51"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 9,
-      "deadline": "19:17"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 10,
-      "deadline": "19:43"
-    },
-    {
-      "venue": "takeo",
-      "venue_name": "武雄",
-      "race_no": 11,
-      "deadline": "20:11"
     }
   ]
 }
