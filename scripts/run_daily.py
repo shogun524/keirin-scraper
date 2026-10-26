@@ -202,6 +202,17 @@ def main():
     if model_overrides:
         print(f"[INFO] 自動補正の設定を適用: {model_overrides}")
 
+    # kドリームズのレースにも winticket と同じ「おすすめ予想」（補正・買い目の自動選択）を付けるため、
+    # winticket から3連単オッズを集める（取れなければ補正AIの順位で代用）
+    kd_odds = {}
+    if any(r["race_info"].get("source") != "winticket" for r in races):
+        try:
+            import winticket_source
+            kd_odds = winticket_source.fetch_odds_map(today)
+        except Exception as e:
+            print(f"[WARN] kドリームズ用のオッズ取得に失敗しました（補正AIで代用）: {e}")
+            kd_odds = {}
+
     all_race_data = []
     for race in races:
         try:
@@ -215,11 +226,16 @@ def main():
         except Exception as e:
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
             result = None
-        if result and race["race_info"].get("source") == "winticket":
-            # winticket のレースは実績に合わせて補正（オッズがあれば人気ベース、無ければAIを補正）
+        if result:
+            # 全レースを実績に合わせて補正（オッズがあれば人気ベース、無ければAIを補正）。
+            # winticket のレースは自前のオッズ、kドリームズのレースは winticket から集めたオッズを使う
             try:
                 import market_fix
-                market_fix.apply(result, race["racers"], race.get("wt_odds"))
+                if race["race_info"].get("source") == "winticket":
+                    odds = race.get("wt_odds")
+                else:
+                    odds = kd_odds.get((race["race_info"]["venue"], race["race_info"]["race_no"]))
+                market_fix.apply(result, race["racers"], odds)
             except Exception as e:
                 print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の補正に失敗: {e}")
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
