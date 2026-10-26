@@ -75,6 +75,27 @@ def fetch_all_todays_races(date):
     return out
 
 
+def fetch_odds_map(date):
+    """kドリームズで取ったレースにも「おすすめ予想」を付けるため、winticketから3連単オッズだけ集める。
+    戻り値 {(場slug, レース番号): {(1着,2着,3着): 倍率}}。取れない場・レースは含めない（その場合は補正AIで代用）。"""
+    ds = date.strftime("%Y%m%d")
+    out = {}
+    for c in cups_for(ds):
+        try:
+            races = fetch_races(c)
+        except Exception as e:
+            print(f"[WARN] winticket {c['slug']} のオッズ取得に失敗: {e}")
+            continue
+        venue = SLUG_TO_MODEL.get(c["slug"], c["slug"])
+        for R in races:
+            odds = {tuple(o["key"]): o["odds"] for o in (R.get("odds") or {}).get("trifecta") or []
+                    if o.get("odds") and o["odds"] < 9000}
+            if odds:
+                out[(venue, R["race"])] = odds
+    print(f"[INFO] winticketから {len(out)} レース分のオッズを取得しました（kドリームズ用おすすめ予想）。")
+    return out
+
+
 def fetch_result(url):
     """winticket のレースURLから着順を取る。戻り値 [{"car":車番, "finish":着順}, ...]（未確定なら None）"""
     st, _ = get_state(url)
