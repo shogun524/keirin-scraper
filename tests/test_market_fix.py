@@ -65,6 +65,15 @@ class TestMarketFix(unittest.TestCase):
         # 見送り目安の型（中間・混戦）には「おすすめ」バッジを付けない
         self.assertEqual(has_badge, not auto["skip"])
 
+    def test_market_joint_shape(self):
+        # 折れ点(30倍)をまたいでも確率は単調に減り、合計は1になる
+        odds = {(1, 2, 3): 5.0, (1, 3, 2): 29.9, (2, 1, 3): 30.1, (3, 1, 2): 300.0}
+        j = market_fix.market_joint(odds)
+        self.assertAlmostEqual(sum(j.values()), 1.0)
+        ps = [j[k] for k in sorted(odds, key=odds.get)]
+        self.assertTrue(all(a > b for a, b in zip(ps, ps[1:])))
+        self.assertLess(abs(j[(1, 3, 2)] / j[(2, 1, 3)] - 1), 0.02)
+
     def test_too_few_odds_falls_back(self):
         rc = _racers()
         r = market_fix.apply(model.predict_race(rc, "1-2-3,4-5,6-7"), rc, {(1, 2, 3): 5.0})
