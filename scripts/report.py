@@ -339,6 +339,7 @@ def render_auto_box(auto, car_color_fn=None):
     return f"""
     <div class="auto-box">
       <div class="auto-title"><span class="auto-type">{auto["type"]}</span>このレースの買い方：<b>{auto["plan"]}</b></div>
+      {'<div class="buy-note"><b>過去の成績では、この型は回収率が控除後の水準(約75%)を超えていないため、見送りを目安にしています。</b>以下は参考の5点です。</div>' if auto.get("skip") else ""}
       <div class="auto-sum">{len(auto["keys"])}点・当たる見込み <b>{auto["p"]}%</b>{syn}</div>
       <div class="tf-list">{rows}</div>
       <div class="buy-note">{keys}<br>判定の根拠：{auto["hist"]}（人気ベースの確率で試算・回収を保証するものではありません）</div>
@@ -1051,12 +1052,12 @@ function selectTrifectaCar(tabId, car){
 }
 
 // ---- 買い目ビルダー ----
-// 実績は10/23・10/24の確定86レース（人気ベースの確率順）で試算した的中率／回収率
+// 実績は人気ベースの確率順で試算した的中率／回収率。本線・押さえは10/24〜10/26の181レース、それ以外は10/23・10/24の86レース
 var BD_PRESETS = [
-  ['honsen','本線(1-5位)','34%／66%'], ['osae','押さえまで(1-10位)','59%／101%'],
-  ['osae2','押さえの押さえまで(1-20位)','72%／84%'], ['osae2only','押さえの押さえだけ(11-20位)','13%／68%'],
-  ['synth','合成オッズ目標まで広げる','目標3倍で17%／73%'], ['ana','穴(30-150倍の確率上位10点)','16%／76%'],
-  ['oana','大穴(100-500倍の確率上位10点)','8%／109%'], ['aiana','AI穴(AIが人気の1.5倍以上評価・20倍以上)','3%／29%'],
+  ['honsen','本線(1-5位)','181レース 39%／83%'], ['osae','押さえまで(1-10位)','181レース 52%／76%'],
+  ['osae2','押さえの押さえまで(1-20位)','86レース 72%／84%'], ['osae2only','押さえの押さえだけ(11-20位)','86レース 13%／68%'],
+  ['synth','合成オッズ目標まで広げる','86レース 目標3倍で17%／73%'], ['ana','穴(30-150倍の確率上位10点)','86レース 16%／76%'],
+  ['oana','大穴(100-500倍の確率上位10点)','86レース 8%／109%'], ['aiana','AI穴(AIが人気の1.5倍以上評価・20倍以上)','86レース 3%／29%'],
   ['custom','自由に設定','—']
 ];
 function bdState(p){
@@ -1144,7 +1145,7 @@ function bdRender(tabId){
   var hist = (BD_PRESETS.filter(function(x){return x[0]===st.preset;})[0]||[])[2];
   var head = '<div class="bd-sum"><b>'+S.length+'点</b>・当たる見込み <b>'+prob.toFixed(1)+'%</b>' +
     (syn ? '・合成オッズ <b>'+syn.toFixed(1)+'倍</b>・期待値 <b class="'+(ev>=1?'bd-good':'')+'">'+ev.toFixed(2)+'</b>' : '・オッズ発売前（合成オッズは発売後に表示）') +
-    (hist && hist!=='—' ? '<div class="bd-hist">過去86レースの実績(的中率／回収率): '+hist+(st.heads.length?'(1着を絞らない場合の数字)':'')+'</div>' : '') + '</div>';
+    (hist && hist!=='—' ? '<div class="bd-hist">過去の実績(的中率／回収率): '+hist+(st.heads.length?'(1着を絞らない場合の数字)':'')+'</div>' : '') + '</div>';
   var list = S.length ? S.map(function(c){
     var parts = c.k.split('-').map(Number);
     return '<div class="tf-row"><span class="tf-rank">'+c.r+'</span><span class="tf-combo">' +
