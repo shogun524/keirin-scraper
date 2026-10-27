@@ -23,11 +23,11 @@ COEF = {
 }
 MIN_ODDS_COVERAGE = 0.7
 
-# 買い目の目安（10/23・10/24の確定86レースの分析から）
+# 買い目の目安（10/24〜10/26の確定181レース=保存済みwinticketページの分析から。10/23分はアーカイブ無し）
 #   人気ベースの確率順: 1〜5位で34%、1〜10位で59%が的中（6〜10位だけで26%）
 #   元のAIの確率順   : 1〜10位で35%。AIの1位の出目は14%（kドリームズ期942レースでは7.7%）
 HONSEN_N, OSAE_N = 5, 10
-HIST = {"odds": {"honsen": 34, "osae": 59, "n": 86}, "ai_fix": {"honsen": 26, "osae": 35, "n": 86}}
+HIST = {"odds": {"honsen": 39, "osae": 52, "n": 181}, "ai_fix": {"honsen": 26, "osae": 35, "n": 86}}  # ai_fix は旧集計(86レース)のまま
 
 
 def _features(rows, racers, line_map):
@@ -138,20 +138,50 @@ def _synth(odds_list):
     return round(1 / inv, 1) if inv else None
 
 
-# レースの型ごとの自動おすすめ（10/23・10/24の確定86レースで試算。件数が少ないので暫定）
-#   堅い（本命の1着率45%以上, 53R）: 押さえまで10点が的中66%・回収100%（本線5点は55%、合成2倍は60%）
-#   中間（30〜45%, 30R）          : 合成オッズ2倍を保って広げる（平均約7点）が的中47%・回収116%
-#   混戦（30%未満, 3R）           : データ不足。中間と同じ買い方
+# レースの型ごとの自動おすすめ。成績は buy_stats が毎日の自動記録（docs/_buy_log.json）から集計して差し替える（LIVE_HIST）。
+#
+# 10/24〜10/26の確定181レースでの検証（オッズは保存ページの約8割の組を使った近似、回収率は的中時の払戻で計算）:
+#   堅い(99R): 合成1.5倍まで 的中58%・回収93%（90%区間74〜116）。押さえまで10点は的中65%・回収88%、本線5点は80%。
+#              （点数が少なすぎるとき10点に戻す処理を入れた実装での数字。処理なしだと99%）
+#   中間(56R): 5点が71%で最良。ほかは44〜69%で、全部、控除率25%の控除後の水準(75%)を下回る → 見送り目安
+#   混戦(26R): 買い方で回収が8〜142%とブレが極端で、件数も少ない → 見送り目安
+# 注意: 40通り（4型×10買い方）を試して良いものを選んでいるので、堅い×合成1.5倍の高さは「選び方の偏り」で
+#       高く見えている可能性がある。今日以降の自動記録（live）で前向きに検証し直す。
 AUTO = {
-    "堅い": {"plan": "押さえまで10点", "hist": "53レースで的中66%・回収率100%"},
-    "中間": {"plan": "合成オッズ2倍まで", "hist": "30レースで的中47%・回収率116%"},
-    "混戦": {"plan": "合成オッズ2倍まで", "hist": "混戦はまだ3レースしかなく参考程度（中間と同じ買い方）"},
+    "堅い": {"plan": "合成オッズ1.5倍まで", "id": "syn1.5", "target": 1.5, "skip": False,
+             "hist": "10/24〜10/26の99レースで的中58%・回収率93%（前向き検証はこれから）"},
+    "中間": {"plan": "見送り目安（買うなら5点）", "id": "top5", "target": None, "skip": True,
+             "hist": "10/24〜10/26の56レースで5点の回収率71%（どの買い方も控除後の75%以下）"},
+    "混戦": {"plan": "見送り目安（買うなら5点）", "id": "top5", "target": None, "skip": True,
+             "hist": "10/24〜10/26の26レース。買い方で回収が大きくブレて判断できない"},
 }
+LIVE_HIST = {}  # {型: 成績の文章}。buy_stats.publish_hist が毎回セットする
 
 
 def race_type(rows):
     top = max(r["adjusted"] for r in rows)
     return "堅い" if top >= 45 else ("混戦" if top < 30 else "中間")
+
+
+def pick_synth(items, target):
+    """items: [(キー, オッズ)] を確率の高い順に並べたもの。合成オッズが target を下回る手前まで取る。"""
+    sel, inv = [], 0.0
+    for k, o in items:
+        if not o:
+            continue
+        if 1 / (inv + 1 / o) < target:
+            break
+        sel.append(k)
+        inv += 1 / o
+    return sel
+
+
+def pick_plan(items, plan_id):
+    """items: [(キー, オッズ)]（確率の高い順）。plan_id: 'syn1.5' / 'syn2' / 'topN'。選んだキーの一覧を返す。"""
+    if plan_id.startswith("syn"):
+        sel = pick_synth(items, float(plan_id[3:]))
+        return sel if len(sel) >= 3 else [k for k, _ in items[:OSAE_N]]  # 点数が少なすぎるときは10点
+    return [k for k, _ in items[:int(plan_id[3:])]]
 
 
 def auto_plan(result, odds):
@@ -163,25 +193,22 @@ def auto_plan(result, odds):
     cfg = AUTO[rtype]
     keyed = [((c["first"], c["second"], c["third"]), c) for c in combos]
     plan = cfg["plan"]
-    if plan == "押さえまで10点" or not odds:
-        sel = keyed[:OSAE_N]
-        if plan != "押さえまで10点":
-            plan = "押さえまで10点（オッズ発売前のため仮）"
+    if odds and cfg["target"]:
+        chosen = pick_plan([(k, odds.get(k)) for k, _ in keyed], cfg["id"])
+        cmap = dict(keyed)
+        sel = [(k, cmap[k]) for k in chosen]
+        if len(chosen) == OSAE_N and cfg["id"].startswith("syn"):
+            pts = pick_synth([(k, odds.get(k)) for k, _ in keyed], cfg["target"])
+            if len(pts) < 3:
+                plan = f"押さえまで10点（合成{cfg['target']}倍では点数が少なすぎるため）"
     else:
-        sel, inv = [], 0.0
-        for k, c in keyed:
-            o = odds.get(k)
-            if not o:
-                continue
-            if 1 / (inv + 1 / o) < 2.0:
-                break
-            sel.append((k, c))
-            inv += 1 / o
-        if len(sel) < 3:          # 2点以下しか取れないときは押さえまで10点に戻す
-            sel, plan = keyed[:OSAE_N], "押さえまで10点（合成2倍では点数が少なすぎるため）"
+        n = 5 if cfg["skip"] else OSAE_N
+        sel = keyed[:n]
+        if not cfg["skip"]:
+            plan = "押さえまで10点（オッズ発売前のため仮）"
     ol = [odds.get(k) for k, _ in sel] if odds else []
     auto = {
-        "type": rtype, "plan": plan, "hist": cfg["hist"],
+        "type": rtype, "plan": plan, "hist": LIVE_HIST.get(rtype) or cfg["hist"], "skip": cfg["skip"],
         "keys": ["-".join(map(str, k)) for k, _ in sel],
         "probs": [round(c["prob"], 2) for _, c in sel],
         "odds": ol,
@@ -189,8 +216,9 @@ def auto_plan(result, odds):
         "synth": _synth(ol) if ol and all(ol) else None,
         "mode": result.get("fix_mode"),
     }
-    for _, c in sel:
-        c.setdefault("badges", []).append("おすすめ")
+    if not cfg["skip"]:
+        for _, c in sel:
+            c.setdefault("badges", []).append("おすすめ")
     result["trifecta"]["auto"] = auto
     return auto
 
