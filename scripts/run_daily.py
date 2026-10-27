@@ -42,6 +42,7 @@ from calibration import get_overrides, update_params, load_params
 from form_records import update_form_records
 from odds_alerts import compute_odds_value_alerts
 from retrain_check import check_retrain_trigger
+import buy_stats
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS_DIR = os.path.join(os.path.dirname(__file__), "..", "docs")
@@ -213,6 +214,12 @@ def main():
             print(f"[WARN] kドリームズ用のオッズ取得に失敗しました（補正AIで代用）: {e}")
             kd_odds = {}
 
+    # 「このレースの買い方」の判定の根拠：毎日の自動記録から集計した成績を画面に出す
+    try:
+        buy_stats.publish_hist(DOCS_DIR)
+    except Exception as e:
+        print(f"[WARN] 買い方の成績の読み込みに失敗しました（初期の文言を使います）: {e}")
+
     all_race_data = []
     for race in races:
         try:
@@ -286,6 +293,12 @@ def main():
     except Exception as e:
         print(f"[WARN] 予想成績ログの更新に失敗しました: {e}")
         prediction_log = {}
+
+    # 買い方の成績ログ：締切前のおすすめを記録し、結果が出たレースを答え合わせして成績を増やす
+    try:
+        buy_stats.update(DOCS_DIR, all_race_data, prediction_log, today, now_hm)
+    except Exception as e:
+        print(f"[WARN] 買い方の成績ログの更新に失敗しました: {e}")
 
     # モデルの毎日の自動補正：答え合わせ済みのレースから、1着率の絞り込みを見直す（1日1回）
     try:
