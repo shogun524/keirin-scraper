@@ -1,60 +1,60 @@
 {
   "updated": "2026-10-28",
-  "races": 43,
+  "races": 59,
   "summary": {
     "堅い": {
       "syn1.5": {
         "all": {
-          "races": 0,
+          "races": 1,
           "hits": 0,
-          "points": 0,
+          "points": 11,
           "return": 0,
-          "hit_pct": null,
-          "roi_pct": null
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
         },
         "live": {
-          "races": 0,
+          "races": 1,
           "hits": 0,
-          "points": 0,
+          "points": 11,
           "return": 0,
-          "hit_pct": null,
-          "roi_pct": null
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
         }
       },
       "top5": {
         "all": {
-          "races": 0,
+          "races": 1,
           "hits": 0,
-          "points": 0,
+          "points": 5,
           "return": 0,
-          "hit_pct": null,
-          "roi_pct": null
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
         },
         "live": {
-          "races": 0,
+          "races": 1,
           "hits": 0,
-          "points": 0,
+          "points": 5,
           "return": 0,
-          "hit_pct": null,
-          "roi_pct": null
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
         }
       },
       "top10": {
         "all": {
-          "races": 0,
+          "races": 1,
           "hits": 0,
-          "points": 0,
+          "points": 10,
           "return": 0,
-          "hit_pct": null,
-          "roi_pct": null
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
         },
         "live": {
-          "races": 0,
+          "races": 1,
           "hits": 0,
-          "points": 0,
+          "points": 10,
           "return": 0,
-          "hit_pct": null,
-          "roi_pct": null
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
         }
       }
     },
