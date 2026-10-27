@@ -61,7 +61,9 @@ class TestMarketFix(unittest.TestCase):
         auto = r["trifecta"]["auto"]
         self.assertIn(auto["type"], ("堅い", "中間", "混戦"))
         self.assertGreaterEqual(len(auto["keys"]), 3)
-        self.assertTrue(any("おすすめ" in c["badges"] for c in r["trifecta"]["combos"]))
+        has_badge = any("おすすめ" in c["badges"] for c in r["trifecta"]["combos"])
+        # 見送り目安の型（中間・混戦）には「おすすめ」バッジを付けない
+        self.assertEqual(has_badge, not auto["skip"])
 
     def test_too_few_odds_falls_back(self):
         rc = _racers()
