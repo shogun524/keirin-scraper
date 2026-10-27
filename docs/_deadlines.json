@@ -1,59 +1,59 @@
 {
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "races": [
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 1,
-      "deadline": "10:40"
+      "deadline": "10:52"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 2,
-      "deadline": "11:08"
+      "deadline": "11:18"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 3,
-      "deadline": "11:37"
+      "deadline": "11:46"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 4,
-      "deadline": "12:06"
+      "deadline": "12:14"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 5,
-      "deadline": "12:35"
+      "deadline": "12:42"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 6,
-      "deadline": "13:04"
+      "deadline": "13:10"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 7,
-      "deadline": "13:33"
+      "deadline": "13:38"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 8,
-      "deadline": "14:02"
+      "deadline": "14:06"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 9,
-      "deadline": "14:32"
+      "deadline": "14:34"
     },
     {
       "venue": "odawara",
@@ -65,13 +65,13 @@
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 11,
-      "deadline": "15:33"
+      "deadline": "15:32"
     },
     {
       "venue": "odawara",
       "venue_name": "小田原",
       "race_no": 12,
-      "deadline": "16:09"
+      "deadline": "16:10"
     },
     {
       "venue": "keiokaku",
@@ -146,58 +146,130 @@
       "deadline": "20:25"
     },
     {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 1,
+      "deadline": "10:40"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 2,
+      "deadline": "11:05"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 3,
+      "deadline": "11:32"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 4,
+      "deadline": "12:00"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 5,
+      "deadline": "12:28"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 6,
+      "deadline": "12:56"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 7,
+      "deadline": "13:24"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 8,
+      "deadline": "13:52"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 9,
+      "deadline": "14:20"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 10,
+      "deadline": "14:48"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 11,
+      "deadline": "15:17"
+    },
+    {
+      "venue": "gifu",
+      "venue_name": "岐阜",
+      "race_no": 12,
+      "deadline": "15:47"
+    },
+    {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 1,
-      "deadline": "08:25"
+      "deadline": "08:35"
     },
     {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 2,
-      "deadline": "08:45"
+      "deadline": "08:55"
     },
     {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 3,
-      "deadline": "09:06"
+      "deadline": "09:15"
     },
     {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 4,
-      "deadline": "09:27"
+      "deadline": "09:35"
     },
     {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 5,
-      "deadline": "09:48"
+      "deadline": "09:55"
     },
     {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 6,
-      "deadline": "10:09"
+      "deadline": "10:15"
     },
     {
       "venue": "wakayama",
       "venue_name": "和歌山",
       "race_no": 7,
-      "deadline": "10:30"
+      "deadline": "10:35"
     },
     {
       "venue": "takeo",
       "venue_name": "武雄",
       "race_no": 1,
-      "deadline": "15:51"
+      "deadline": "15:54"
     },
     {
       "venue": "takeo",
       "venue_name": "武雄",
       "race_no": 2,
-      "deadline": "16:16"
+      "deadline": "16:17"
     },
     {
       "venue": "takeo",
@@ -360,6 +432,48 @@
       "venue_name": "久留米",
       "race_no": 9,
       "deadline": "23:15"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 1,
+      "deadline": "08:25"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 2,
+      "deadline": "08:45"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 3,
+      "deadline": "09:05"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 4,
+      "deadline": "09:25"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 5,
+      "deadline": "09:45"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 6,
+      "deadline": "10:05"
+    },
+    {
+      "venue": "beppu",
+      "venue_name": "別府",
+      "race_no": 7,
+      "deadline": "10:25"
     }
   ]
 }

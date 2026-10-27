@@ -1,27 +1,8 @@
 {
- "updated": "2026-10-27 23:18",
- "failures": [
-  {
-   "race": "2026-10-27 ogaki 8R",
-   "diag": {
-    "venue": "kurume",
-    "race_id": "8320261027010009",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-27 kurume 9R",
-   "diag": {
-    "venue": "kurume",
-    "race_id": "8320261027010009",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  }
- ],
- "tracked": 1511,
- "with_result": 1233,
+ "updated": "2026-10-28 05:01",
+ "failures": [],
+ "tracked": 1590,
+ "with_result": 1236,
  "without_url": 0,
- "pending_eligible": 277
+ "pending_eligible": 275
 }
