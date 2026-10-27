@@ -1,18 +1,27 @@
 {
- "updated": "2026-10-27 16:41",
+ "updated": "2026-10-27 23:18",
  "failures": [
   {
-   "race": "2026-10-27 keiokaku 3R",
+   "race": "2026-10-27 ogaki 8R",
    "diag": {
-    "venue": "takeo",
-    "race_id": "8420261027010002",
+    "venue": "kurume",
+    "race_id": "8320261027010009",
     "primary": "skipped",
-    "day_parsed": true
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-27 kurume 9R",
+   "diag": {
+    "venue": "kurume",
+    "race_id": "8320261027010009",
+    "primary": "skipped",
+    "day_parsed": false
    }
   }
  ],
  "tracked": 1511,
- "with_result": 1199,
+ "with_result": 1233,
  "without_url": 0,
- "pending_eligible": 276
+ "pending_eligible": 277
 }
