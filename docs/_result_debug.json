@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28 14:06",
+ "updated": "2026-10-28 20:31",
  "failures": [
   {
    "race": "2026-10-28 wakayama 5R",
@@ -11,17 +11,35 @@
    }
   },
   {
-   "race": "2026-10-28 gifu 8R",
+   "race": "2026-10-28 takeo 2R",
    "diag": {
-    "venue": "gifu",
-    "race_id": "4320261028010008",
+    "venue": "takeo",
+    "race_id": "8420261027020002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-28 keiokaku 3R",
+   "diag": {
+    "venue": "keiokaku",
+    "race_id": "2720261026030003",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-28 keiokaku 12R",
+   "diag": {
+    "venue": "keiokaku",
+    "race_id": "2720261026030012",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 1590,
- "with_result": 1263,
+ "with_result": 1293,
  "without_url": 0,
- "pending_eligible": 277
+ "pending_eligible": 279
 }
