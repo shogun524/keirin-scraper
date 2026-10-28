@@ -1,27 +1,27 @@
 {
- "updated": "2026-10-28 08:46",
+ "updated": "2026-10-28 14:06",
  "failures": [
   {
-   "race": "2026-10-28 wakayama 1R",
+   "race": "2026-10-28 wakayama 5R",
    "diag": {
     "venue": "wakayama",
-    "race_id": "5520261026030001",
+    "race_id": "5520261026030005",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-10-28 beppu 2R",
+   "race": "2026-10-28 gifu 8R",
    "diag": {
-    "venue": "beppu",
-    "race_id": "8620261028010002",
+    "venue": "gifu",
+    "race_id": "4320261028010008",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 1590,
- "with_result": 1237,
+ "with_result": 1263,
  "without_url": 0,
  "pending_eligible": 277
 }
