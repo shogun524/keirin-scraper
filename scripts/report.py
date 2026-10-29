@@ -347,6 +347,36 @@ def render_auto_box(auto, car_color_fn=None):
     </div>"""
 
 
+def render_ana_box(ana):
+    """穴目予想（万車券の出やすさと、50倍以上の穴目5点）を予想タブに出す"""
+    if not ana:
+        return ""
+    chance = ana["man_chance"]
+    mo = ana.get("man_odds")
+    ref = mo if mo is not None else chance
+    level = "高め" if ref >= 33 else ("ふつう" if ref >= 18 else "低め")
+    rate = (f'<b>万車率 {mo}%</b>（オッズから計算）／過去の目安 {chance}%' if mo is not None
+            else f'<b>過去の目安 {chance}%</b>（オッズ発売後に、オッズから計算した万車率も表示）')
+    rows = ""
+    for k, p, o in zip(ana.get("keys") or [], ana.get("probs") or [], ana.get("odds") or []):
+        cars = "".join(f'<span class="car" style="background:{car_color(int(n))[0]};color:{car_color(int(n))[1]};">{n}</span>'
+                       for n in k.split("-"))
+        rows += (f'<div class="auto-row"><span class="auto-k">{cars}</span>'
+                 f'<span class="tf-prob">{p:.2f}%</span><span class="tf-odds">{o}倍</span></div>')
+    body = (f'<div class="auto-sum">穴目5点（50倍以上で確率が高い順）・当たる見込み <b>{ana["p"]}%</b></div>'
+            f'<div class="tf-list">{rows}</div>') if rows else \
+        '<div class="buy-note">オッズ発売後に、穴目の5点を表示します。</div>'
+    girls = "（ガールズは万車券が出にくい傾向）" if ana.get("girls") else ""
+    return f"""
+    <div class="auto-box ana-box">
+      <div class="auto-title"><span class="auto-type">穴目</span>万車券（100倍以上）の出やすさ：<b>{level}</b></div>
+      <div class="auto-sum">{rate}</div>
+      <div class="buy-note">本命の1着率が{ana["top"]}%のレース。本命が弱いほど万車券が出やすい傾向です{girls}。</div>
+      {body}
+      <div class="buy-note">根拠：{ana["hist"]}。回収率は控除後の水準(約75%)を超えていないため、参考の穴目です（回収を保証するものではありません）。</div>
+    </div>"""
+
+
 def render_buy_box(buy):
     """買い目の目安（本線・押さえ）のまとめ。market_fix.mark_buys が作った情報を表示する。"""
     if not buy:
@@ -703,7 +733,7 @@ def render_race_card(race_data, tab_id):
     has_trifecta = bool(trifecta_payload)
     has_dev = bool(dev_payload) or bool(hole_html)
     formula_html = render_formula_block(race_data, tab_id)
-    auto_html = render_auto_box((result.get("trifecta") or {}).get("auto"))
+    auto_html = render_auto_box((result.get("trifecta") or {}).get("auto")) + render_ana_box((result.get("trifecta") or {}).get("ana"))
     subtab_bar_html = ""
     if has_trifecta or has_dev or formula_html:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
