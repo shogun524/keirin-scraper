@@ -243,6 +243,8 @@ def main():
                 else:
                     odds = kd_odds.get((race["race_info"]["venue"], race["race_info"]["race_no"]))
                 market_fix.apply(result, race["racers"], odds)
+                from formula import is_girls
+                market_fix.ana_plan(result, odds, is_girls(result["rows"], race["race_info"].get("title", "")))
             except Exception as e:
                 print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の補正に失敗: {e}")
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
