@@ -1,83 +1,70 @@
 {
- "updated": "2026-10-29 13:49",
+ "updated": "2026-10-29 14:18",
  "failures": [
   {
-   "race": "2026-10-28 kurume 1R",
+   "race": "2026-10-28 kurume 4R",
    "error": "結果の車番が出走車番と一致しない",
    "cars": [
     2,
     1,
+    6,
     3,
     4,
-    6,
     5,
     7
    ]
   },
   {
-   "race": "2026-10-28 ogaki 1R",
-   "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261027020001",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/ogaki/raceresult/44202610270200/",
-    "day_html_len": 117984,
-    "day_races": [
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-28 kurume 2R",
+   "race": "2026-10-28 ogaki 4R",
    "error": "結果の車番が出走車番と一致しない",
    "cars": [
-    1,
-    5,
+    3,
     2,
     6,
-    3,
+    5,
     4,
+    1,
     7
    ]
   },
   {
-   "race": "2026-10-28 ogaki 2R",
+   "race": "2026-10-28 kurume 5R",
    "error": "結果の車番が出走車番と一致しない",
    "cars": [
-    1,
-    2,
     3,
+    1,
     5,
+    4,
+    2,
     7,
-    6,
-    4
+    6
    ]
   },
   {
-   "race": "2026-10-28 kurume 3R",
+   "race": "2026-10-28 kurume 6R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    3,
+    2,
+    1,
+    5,
+    6,
+    4,
+    7
+   ]
+  },
+  {
+   "race": "2026-10-28 ogaki 6R",
    "error": "結果の車番が出走車番と一致しない",
    "cars": [
     5,
-    1,
     4,
-    2,
-    3,
-    6,
     7
    ]
   }
  ],
  "tracked": 1650,
- "with_result": 1308,
+ "with_result": 1309,
  "without_url": 0,
  "pending_eligible": 296
 }
