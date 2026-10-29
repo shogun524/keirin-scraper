@@ -1,26 +1,6 @@
 {
- "updated": "2026-10-29 08:06",
+ "updated": "2026-10-29 13:00",
  "failures": [
-  {
-   "race": "2026-10-28 wakayama 5R",
-   "diag": {
-    "venue": "wakayama",
-    "race_id": "5520261026030005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/wakayama/raceresult/55202610260300/",
-    "day_html_len": 104884,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-28 takeo 2R",
    "diag": {
@@ -28,7 +8,7 @@
     "race_id": "8420261027020002",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/takeo/raceresult/84202610270200/",
-    "day_html_len": 129987,
+    "day_html_len": 129989,
     "day_races": [
      1,
      3,
@@ -52,7 +32,7 @@
     "race_id": "2720261026030003",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202610260300/",
-    "day_html_len": 136449,
+    "day_html_len": 136451,
     "day_races": [
      1,
      2,
@@ -90,7 +70,7 @@
     "race_id": "4420261027020001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/ogaki/raceresult/44202610270200/",
-    "day_html_len": 117982,
+    "day_html_len": 117984,
     "day_races": [
      2,
      3,
@@ -104,10 +84,23 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-28 kurume 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    5,
+    2,
+    6,
+    3,
+    4,
+    7
+   ]
   }
  ],
  "tracked": 1650,
- "with_result": 1296,
+ "with_result": 1307,
  "without_url": 0,
- "pending_eligible": 294
+ "pending_eligible": 295
 }
