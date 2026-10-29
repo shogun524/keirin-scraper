@@ -65,6 +65,34 @@ class TestMarketFix(unittest.TestCase):
         # 見送り目安の型（中間・混戦）には「おすすめ」バッジを付けない
         self.assertEqual(has_badge, not auto["skip"])
 
+    def test_ana_plan(self):
+        rc = _racers()
+        odds = {k: 10.0 + k[0] * 20 + k[1] * 7 + k[2] for k in itertools.permutations(range(1, 8), 3)}
+        r = market_fix.apply(model.predict_race(rc, "1-2-3,4-5,6-7"), rc, odds)
+        ana = market_fix.ana_plan(r, odds)
+        self.assertEqual(r["trifecta"]["ana"], ana)
+        self.assertIn(ana["man_chance"], (38, 39, 21, 10))
+        self.assertTrue(0 < ana["man_odds"] < 100)
+        self.assertEqual(len(ana["keys"]), market_fix.ANA_N)
+        self.assertTrue(all(o >= market_fix.ANA_MIN_ODDS for o in ana["odds"]))
+        self.assertEqual(ana["probs"], sorted(ana["probs"], reverse=True))
+        import report
+        html = report.render_ana_box(ana)
+        self.assertIn("穴目", html)
+        self.assertEqual(report.render_ana_box(None), "")
+
+    def test_ana_plan_without_odds(self):
+        rc = _racers()
+        r = market_fix.apply(model.predict_race(rc, "1-2-3,4-5,6-7"), rc, None)
+        ana = market_fix.ana_plan(r, None)
+        self.assertEqual(ana["keys"], [])
+        self.assertNotIn("man_odds", ana)
+        self.assertIn("オッズ発売後", __import__("report").render_ana_box(ana))
+
+    def test_man_chance(self):
+        self.assertEqual([market_fix.man_chance(t) for t in (20, 40, 50, 70)], [38, 39, 21, 10])
+        self.assertEqual(market_fix.man_chance(40, girls=True), 7)
+
     def test_market_joint_shape(self):
         # 折れ点(30倍)をまたいでも確率は単調に減り、合計は1になる
         odds = {(1, 2, 3): 5.0, (1, 3, 2): 29.9, (2, 1, 3): 30.1, (3, 1, 2): 300.0}
