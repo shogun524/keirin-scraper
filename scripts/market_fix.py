@@ -231,6 +231,54 @@ def auto_plan(result, odds):
     return auto
 
 
+# ---- 穴目予想（万車券＝3連単が1万円以上＝100倍以上）----
+# 10/24〜10/26の確定181レースの分析（万車券は49レース=27%）:
+#   本命の1着率(補正後)別の万車券率: 30%未満38%(10/26) / 30〜45%39%(24/62) / 45〜60%21%(11/53) / 60%以上10%(4/40)
+#   ガールズは1/14=7%と少ない。→ 「本命が弱いレースほど出やすい」をレース単位の目安として表示する。
+#   買い目は、確率が高い順に50倍以上から5点を選ぶ形が一番マシだった（的中6%・回収70%）。
+#   100倍以上だけに絞ると的中2〜5%・回収40〜55%と悪かった。どれも控除後の水準(75%)を超えていないので、
+#   「万車券を狙う穴目の参考」であって、儲かる買い方としては出さない。
+#   オッズから出した万車率（100倍以上の組の確率の合計）は、予測が高いほど実際も高く並びが合っていた。
+#   予測12%→実際12%（33R）、20%→22%（88R）、29%→40%（47R）、41%→60%（10R）。平均は予測23%・実際27%で、やや低め。
+#   注意: 保存ページのオッズは約8割の組だけで、万車券49件のうち勝ち出目が入っていたのは29件(59%)。検証は甘め。
+MAN_ODDS = 100.0
+ANA_MIN_ODDS = 50.0
+ANA_N = 5
+MAN_RATE = [(30.0, 38), (45.0, 39), (60.0, 21), (1e9, 10)]  # (本命1着率の上限, 万車券率%)
+MAN_RATE_GIRLS = 7
+
+
+def man_chance(top, girls=False):
+    """本命の1着率(%)から、このレースが万車券になる目安(%)を返す（過去181レースの実績率）。"""
+    if girls:
+        return MAN_RATE_GIRLS
+    for lim, rate in MAN_RATE:
+        if top < lim:
+            return rate
+    return MAN_RATE[-1][1]
+
+
+def ana_plan(result, odds, girls=False):
+    """穴目予想を trifecta["ana"] に入れる。オッズが無いときは万車券の出やすさだけ。"""
+    if not result or not result.get("trifecta") or not result.get("rows"):
+        return None
+    top = max(r["adjusted"] for r in result["rows"])
+    ana = {"man_chance": man_chance(top, girls), "top": round(top, 1), "girls": bool(girls),
+           "keys": [], "probs": [], "odds": [], "mode": result.get("fix_mode"),
+           "hist": "10/24〜10/26の181レース: 万車券は27%。穴目5点（50倍以上）は的中6%・回収70%"}
+    if odds and result.get("fix_mode") == "odds":
+        joint = market_joint(odds)
+        cand = sorted(((k, p) for k, p in joint.items() if odds.get(k, 0) >= ANA_MIN_ODDS), key=lambda kv: -kv[1])[:ANA_N]
+        ana["keys"] = ["-".join(map(str, k)) for k, _ in cand]
+        ana["probs"] = [round(p * 100, 2) for _, p in cand]
+        ana["odds"] = [odds[k] for k, _ in cand]
+        ana["p"] = round(sum(ana["probs"]), 1)
+        # 万車率：オッズから見た「100倍以上の出目が来る確率」（全組の確率の合計。過去181レースでは実際より2〜4pt低め）
+        ana["man_odds"] = round(sum(p for k, p in joint.items() if odds.get(k, 0) >= MAN_ODDS) * 100, 1)
+    result["trifecta"]["ana"] = ana
+    return ana
+
+
 def mark_buys(result, odds, ai_top, ai_probs=None):
     """3連単一覧に「本線」「押さえ」「AI1位」のバッジを付け、買い目の目安を trifecta["buy"] に入れる"""
     tri = result.get("trifecta") or {}
