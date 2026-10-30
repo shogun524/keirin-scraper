@@ -11208,7 +11208,7 @@
   "杉浦__yahiko": {
     "name": "杉浦",
     "venue": "yahiko",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -11234,7 +11234,7 @@
   "佐々木__yahiko": {
     "name": "佐々木",
     "venue": "yahiko",
-    "races": 9,
+    "races": 10,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -14328,7 +14328,7 @@
   "大竹__gifu": {
     "name": "大竹",
     "venue": "gifu",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -17175,7 +17175,7 @@
   "佐藤__gifu": {
     "name": "佐藤",
     "venue": "gifu",
-    "races": 5,
+    "races": 6,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -17396,7 +17396,7 @@
   "竹内__gifu": {
     "name": "竹内",
     "venue": "gifu",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -25391,7 +25391,7 @@
   "中園__beppu": {
     "name": "中園",
     "venue": "beppu",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -28160,7 +28160,7 @@
   "伊藤__beppu": {
     "name": "伊藤",
     "venue": "beppu",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -49844,9 +49844,9 @@
   "古川 貴之__beppu": {
     "name": "古川 貴之",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 1,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -49883,7 +49883,7 @@
   "安谷屋__beppu": {
     "name": "安谷屋",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -49896,7 +49896,7 @@
   "守安__beppu": {
     "name": "守安",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50260,7 +50260,7 @@
   "田川__gifu": {
     "name": "田川",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50286,7 +50286,7 @@
   "山崎__gifu": {
     "name": "山崎",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50299,9 +50299,9 @@
   "平根 優大__gifu": {
     "name": "平根 優大",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -50311,6 +50311,19 @@
   },
   "山崎 司__gifu": {
     "name": "山崎 司",
+    "venue": "gifu",
+    "races": 3,
+    "wins": 1,
+    "top3": 3,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "秋葉 大輔__gifu": {
+    "name": "秋葉 大輔",
     "venue": "gifu",
     "races": 2,
     "wins": 0,
@@ -50322,23 +50335,10 @@
       "マ": 0
     }
   },
-  "秋葉 大輔__gifu": {
-    "name": "秋葉 大輔",
-    "venue": "gifu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
-    "kimarite": {
-      "逃": 0,
-      "捲": 0,
-      "差": 0,
-      "マ": 0
-    }
-  },
   "宇賀神__gifu": {
     "name": "宇賀神",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50351,7 +50351,7 @@
   "吉永__gifu": {
     "name": "吉永",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50364,7 +50364,7 @@
   "佐伯__gifu": {
     "name": "佐伯",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50377,7 +50377,7 @@
   "柏野__gifu": {
     "name": "柏野",
     "venue": "gifu",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50390,9 +50390,9 @@
   "永井 清史__gifu": {
     "name": "永井 清史",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -50442,7 +50442,7 @@
   "内藤__gifu": {
     "name": "内藤",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50520,7 +50520,7 @@
   "上田__gifu": {
     "name": "上田",
     "venue": "gifu",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50533,7 +50533,7 @@
   "滝山__gifu": {
     "name": "滝山",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50546,7 +50546,7 @@
   "鈴木__gifu": {
     "name": "鈴木",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50689,7 +50689,7 @@
   "中村__gifu": {
     "name": "中村",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50702,7 +50702,7 @@
   "伊藤__gifu": {
     "name": "伊藤",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -50793,7 +50793,7 @@
   "奥村__gifu": {
     "name": "奥村",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51118,9 +51118,9 @@
   "二條 祐也__beppu": {
     "name": "二條 祐也",
     "venue": "beppu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51157,7 +51157,7 @@
   "舛井__beppu": {
     "name": "舛井",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51170,7 +51170,7 @@
   "田村__beppu": {
     "name": "田村",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51183,9 +51183,9 @@
   "中釜 健次__beppu": {
     "name": "中釜 健次",
     "venue": "beppu",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51196,9 +51196,9 @@
   "宮司 周郎__beppu": {
     "name": "宮司 周郎",
     "venue": "beppu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51222,7 +51222,7 @@
   "藤原__beppu": {
     "name": "藤原",
     "venue": "beppu",
-    "races": 5,
+    "races": 7,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51248,7 +51248,7 @@
   "天野__beppu": {
     "name": "天野",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51261,7 +51261,7 @@
   "武市__beppu": {
     "name": "武市",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51274,9 +51274,9 @@
   "一ノ瀬 匠__beppu": {
     "name": "一ノ瀬 匠",
     "venue": "beppu",
-    "races": 2,
-    "wins": 2,
-    "top3": 2,
+    "races": 3,
+    "wins": 3,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51287,9 +51287,9 @@
   "飯田 裕次__beppu": {
     "name": "飯田 裕次",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 1,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51313,7 +51313,7 @@
   "屋良__beppu": {
     "name": "屋良",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51326,7 +51326,7 @@
   "立花__beppu": {
     "name": "立花",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51339,7 +51339,7 @@
   "太田__beppu": {
     "name": "太田",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51378,9 +51378,9 @@
   "吉本 哲郎__beppu": {
     "name": "吉本 哲郎",
     "venue": "beppu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51391,9 +51391,9 @@
   "近谷 涼__beppu": {
     "name": "近谷 涼",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51404,7 +51404,7 @@
   "青井__beppu": {
     "name": "青井",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51430,7 +51430,7 @@
   "曽我__beppu": {
     "name": "曽我",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51443,9 +51443,9 @@
   "竹野 百香__beppu": {
     "name": "竹野 百香",
     "venue": "beppu",
-    "races": 2,
-    "wins": 2,
-    "top3": 2,
+    "races": 3,
+    "wins": 3,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51521,9 +51521,9 @@
   "鈴木 奈央__beppu": {
     "name": "鈴木 奈央",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 1,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -51534,9 +51534,9 @@
   "神戸 暖稀羽__beppu": {
     "name": "神戸 暖稀羽",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -52327,9 +52327,9 @@
   "佐藤 愼太郎__gifu": {
     "name": "佐藤 愼太郎",
     "venue": "gifu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -52366,7 +52366,7 @@
   "小林__gifu": {
     "name": "小林",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -52457,7 +52457,7 @@
   "中島__gifu": {
     "name": "中島",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -52535,7 +52535,7 @@
   "山田__gifu": {
     "name": "山田",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -52587,7 +52587,7 @@
   "柴崎__gifu": {
     "name": "柴崎",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -52613,7 +52613,7 @@
   "下井__gifu": {
     "name": "下井",
     "venue": "gifu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -53718,9 +53718,9 @@
   "森 飛龍__gifu": {
     "name": "森 飛龍",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -53731,9 +53731,9 @@
   "片折 勇輝__gifu": {
     "name": "片折 勇輝",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -53770,7 +53770,7 @@
   "松田__gifu": {
     "name": "松田",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -53822,7 +53822,7 @@
   "岩原__gifu": {
     "name": "岩原",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -53848,9 +53848,9 @@
   "山口 聖矢__beppu": {
     "name": "山口 聖矢",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -53900,9 +53900,9 @@
   "増田 仁__beppu": {
     "name": "増田 仁",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -53913,9 +53913,9 @@
   "伊藤 健詞__beppu": {
     "name": "伊藤 健詞",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -53952,7 +53952,7 @@
   "池田__beppu": {
     "name": "池田",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -53991,7 +53991,7 @@
   "八尋__beppu": {
     "name": "八尋",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -54030,7 +54030,7 @@
   "野津__beppu": {
     "name": "野津",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -54069,7 +54069,7 @@
   "内野__beppu": {
     "name": "内野",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -54082,7 +54082,7 @@
   "川原__beppu": {
     "name": "川原",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -54121,9 +54121,9 @@
   "桐山 敬太郎__gifu": {
     "name": "桐山 敬太郎",
     "venue": "gifu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -54160,9 +54160,9 @@
   "西岡 拓朗__gifu": {
     "name": "西岡 拓朗",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -54173,9 +54173,9 @@
   "齋藤 雄行__gifu": {
     "name": "齋藤 雄行",
     "venue": "gifu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -55681,6 +55681,838 @@
   "中西__kurume": {
     "name": "中西",
     "venue": "kurume",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "関根 健太郎__gifu": {
+    "name": "関根 健太郎",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松岡 孝高__gifu": {
+    "name": "松岡 孝高",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松岡 晋乃介__gifu": {
+    "name": "松岡 晋乃介",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "足達 重満__gifu": {
+    "name": "足達 重満",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "太田 剛司__gifu": {
+    "name": "太田 剛司",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "白石 大輔__gifu": {
+    "name": "白石 大輔",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "鮫島__gifu": {
+    "name": "鮫島",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤根 俊貴__gifu": {
+    "name": "藤根 俊貴",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉武__gifu": {
+    "name": "吉武",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐藤 雅春__gifu": {
+    "name": "佐藤 雅春",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "宝満__gifu": {
+    "name": "宝満",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "兼本 将太__gifu": {
+    "name": "兼本 将太",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "竹内 雄作__gifu": {
+    "name": "竹内 雄作",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "長谷部 龍一__gifu": {
+    "name": "長谷部 龍一",
+    "venue": "gifu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山中 秀将__yahiko": {
+    "name": "山中 秀将",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "柴田 祐也__yahiko": {
+    "name": "柴田 祐也",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉岡 伸太郎__yahiko": {
+    "name": "吉岡 伸太郎",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山根__yahiko": {
+    "name": "山根",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "武井__yahiko": {
+    "name": "武井",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "櫻井__yahiko": {
+    "name": "櫻井",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中村__yahiko": {
+    "name": "中村",
+    "venue": "yahiko",
+    "races": 2,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "坂上 忠克__yahiko": {
+    "name": "坂上 忠克",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "石口 慶多__yahiko": {
+    "name": "石口 慶多",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松尾 淳__yahiko": {
+    "name": "松尾 淳",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "米村__yahiko": {
+    "name": "米村",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "森田__yahiko": {
+    "name": "森田",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "高鍋__yahiko": {
+    "name": "高鍋",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "坪内 恒__yahiko": {
+    "name": "坪内 恒",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "本田 拓也__yahiko": {
+    "name": "本田 拓也",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "平 総一__yahiko": {
+    "name": "平 総一",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "川野__yahiko": {
+    "name": "川野",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "猪俣__yahiko": {
+    "name": "猪俣",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "牛田__yahiko": {
+    "name": "牛田",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "鈴木 庸之__yahiko": {
+    "name": "鈴木 庸之",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "三澤 康人__yahiko": {
+    "name": "三澤 康人",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山本 勝利__yahiko": {
+    "name": "山本 勝利",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "堀川__yahiko": {
+    "name": "堀川",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "大瀬戸__yahiko": {
+    "name": "大瀬戸",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤井__yahiko": {
+    "name": "藤井",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山田 諒__yahiko": {
+    "name": "山田 諒",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "八日市屋 浩之__yahiko": {
+    "name": "八日市屋 浩之",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "岩本 和也__yahiko": {
+    "name": "岩本 和也",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "鈴木__yahiko": {
+    "name": "鈴木",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "白戸__yahiko": {
+    "name": "白戸",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松川__yahiko": {
+    "name": "松川",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "田中__yahiko": {
+    "name": "田中",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "芦澤 大輔__yahiko": {
+    "name": "芦澤 大輔",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小林 弘和__yahiko": {
+    "name": "小林 弘和",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "邊見 光輝__yahiko": {
+    "name": "邊見 光輝",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "依田__yahiko": {
+    "name": "依田",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "金成__yahiko": {
+    "name": "金成",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "津村__yahiko": {
+    "name": "津村",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "三ツ石__yahiko": {
+    "name": "三ツ石",
+    "venue": "yahiko",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小浦 凪__beppu": {
+    "name": "小浦 凪",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "上吹越 俊一__beppu": {
+    "name": "上吹越 俊一",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤原 浩__beppu": {
+    "name": "藤原 浩",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "梶原__beppu": {
+    "name": "梶原",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "金子 貴志__beppu": {
+    "name": "金子 貴志",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "普久原 美海__beppu": {
+    "name": "普久原 美海",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "荒川 ひかり__beppu": {
+    "name": "荒川 ひかり",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "北津留 千羽__beppu": {
+    "name": "北津留 千羽",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "成海__beppu": {
+    "name": "成海",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "細中__beppu": {
+    "name": "細中",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉村__beppu": {
+    "name": "吉村",
+    "venue": "beppu",
     "races": 1,
     "wins": 0,
     "top3": 0,
