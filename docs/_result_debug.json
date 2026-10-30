@@ -1,30 +1,6 @@
 {
- "updated": "2026-10-30 18:24",
+ "updated": "2026-10-30 21:36",
  "failures": [
-  {
-   "race": "2026-10-29 gifu 8R",
-   "diag": {
-    "venue": "gifu",
-    "race_id": "4320261028020008",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/gifu/raceresult/43202610280200/",
-    "day_html_len": 136347,
-    "day_races": [
-     1,
-     2,
-     4,
-     5,
-     6,
-     7,
-     9,
-     10,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-29 aomori 11R",
    "error": "着順が壊れて見えるため記録しない",
@@ -74,10 +50,23 @@
     7,
     1
    ]
+  },
+  {
+   "race": "2026-10-29 ogaki 3R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    3,
+    2,
+    4,
+    1,
+    6,
+    7,
+    5
+   ]
   }
  ],
  "tracked": 1725,
- "with_result": 1377,
+ "with_result": 1393,
  "without_url": 0,
- "pending_eligible": 317
+ "pending_eligible": 319
 }
