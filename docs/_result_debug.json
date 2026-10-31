@@ -1,29 +1,6 @@
 {
- "updated": "2026-11-01 00:22",
+ "updated": "2026-11-01 00:44",
  "failures": [
-  {
-   "race": "2026-10-30 aomori 10R",
-   "diag": {
-    "venue": "aomori",
-    "race_id": "1220261029020010",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/aomori/raceresult/12202610290200/",
-    "day_html_len": 136912,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     7,
-     8,
-     9,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-30 seibuen 5R",
    "diag": {
@@ -103,6 +80,29 @@
      10,
      11,
      12
+    ],
+    "day_text_head": "",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-31 yahiko 5R",
+   "diag": {
+    "venue": "yahiko",
+    "race_id": "2120261030020005",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202610300200/",
+    "day_html_len": 137842,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     6,
+     8,
+     9,
+     10,
+     11
     ],
     "day_text_head": "",
     "day_parsed": false
