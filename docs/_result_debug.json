@@ -1,46 +1,6 @@
 {
- "updated": "2026-11-01 00:44",
+ "updated": "2026-11-01 04:53",
  "failures": [
-  {
-   "race": "2026-10-30 seibuen 5R",
-   "diag": {
-    "venue": "seibuen",
-    "race_id": "2620261030010005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/seibuen/raceresult/26202610300100/",
-    "day_html_len": 106248,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-30 nagoya 7R",
-   "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261030010007",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202610300100/",
-    "day_html_len": 106168,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     6
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-31 kumamoto 1R",
    "diag": {
@@ -48,7 +8,7 @@
     "race_id": "8720261031010001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/kumamoto/raceresult/87202610310100/",
-    "day_html_len": 105354,
+    "day_html_len": 105395,
     "day_races": [
      2,
      3,
@@ -68,7 +28,7 @@
     "race_id": "6320261031010001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310100/",
-    "day_html_len": 141945,
+    "day_html_len": 141986,
     "day_races": [
      2,
      3,
@@ -92,7 +52,7 @@
     "race_id": "2120261030020005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202610300200/",
-    "day_html_len": 137842,
+    "day_html_len": 137883,
     "day_races": [
      1,
      2,
@@ -105,6 +65,24 @@
      11
     ],
     "day_text_head": "",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-31 hofu 5R",
+   "diag": {
+    "venue": "hofu",
+    "race_id": "6320261031010005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-10-31 yahiko 7R",
+   "diag": {
+    "venue": "yahiko",
+    "race_id": "2120261030020007",
+    "primary": "skipped",
     "day_parsed": false
    }
   }
