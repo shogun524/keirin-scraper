@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31 07:57",
+ "updated": "2026-10-31 11:14",
  "failures": [
   {
    "race": "2026-10-30 yahiko 1R",
@@ -8,7 +8,7 @@
     "race_id": "2120261030010001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202610300100/",
-    "day_html_len": 136905,
+    "day_html_len": 136906,
     "day_races": [
      2,
      3,
@@ -41,7 +41,7 @@
     "race_id": "1220261029020005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/aomori/raceresult/12202610290200/",
-    "day_html_len": 136867,
+    "day_html_len": 136868,
     "day_races": [
      1,
      2,
@@ -64,7 +64,7 @@
     "race_id": "2420261030010005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202610300100/",
-    "day_html_len": 130761,
+    "day_html_len": 130762,
     "day_races": [
      1,
      2,
@@ -92,7 +92,7 @@
   }
  ],
  "tracked": 1800,
- "with_result": 1406,
+ "with_result": 1412,
  "without_url": 0,
- "pending_eligible": 319
+ "pending_eligible": 322
 }
