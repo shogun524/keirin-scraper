@@ -1,50 +1,6 @@
 {
- "updated": "2026-11-01 08:18",
+ "updated": "2026-11-01 14:32",
  "failures": [
-  {
-   "race": "2026-10-31 kumamoto 1R",
-   "diag": {
-    "venue": "kumamoto",
-    "race_id": "8720261031010001",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/kumamoto/raceresult/87202610310100/",
-    "day_html_len": 105395,
-    "day_races": [
-     2,
-     3,
-     4,
-     5,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-10-31 hofu 1R",
-   "diag": {
-    "venue": "hofu",
-    "race_id": "6320261031010001",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310100/",
-    "day_html_len": 141986,
-    "day_races": [
-     2,
-     3,
-     4,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-10-31 yahiko 5R",
    "diag": {
@@ -52,7 +8,7 @@
     "race_id": "2120261030020005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202610300200/",
-    "day_html_len": 137883,
+    "day_html_len": 137541,
     "day_races": [
      1,
      2,
@@ -74,6 +30,21 @@
     "venue": "hofu",
     "race_id": "6320261031010005",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310100/",
+    "day_html_len": 141644,
+    "day_races": [
+     2,
+     3,
+     4,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -85,10 +56,28 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-10-31 aomori 1R",
+   "error": "着順が壊れて見えるため記録しない",
+   "cars": [
+    4,
+    1,
+    5
+   ]
+  },
+  {
+   "race": "2026-10-31 yahiko 12R",
+   "diag": {
+    "venue": "yahiko",
+    "race_id": "2120261030020012",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 1882,
- "with_result": 1459,
+ "with_result": 1484,
  "without_url": 0,
- "pending_eligible": 341
+ "pending_eligible": 347
 }
