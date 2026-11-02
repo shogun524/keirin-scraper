@@ -1,90 +1,74 @@
 {
- "updated": "2026-11-02 19:51",
+ "updated": "2026-11-03 05:45",
  "failures": [
   {
-   "race": "2026-11-01 hofu 10R",
-   "diag": {
-    "venue": "hofu",
-    "race_id": "6320261031020010",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310200/",
-    "day_html_len": 142187,
-    "day_races": [
-     1,
-     2,
-     4,
-     5,
-     7,
-     8,
-     9,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
+   "race": "2026-11-01 seibuen 4R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    6,
+    2,
+    7,
+    1,
+    4,
+    5,
+    3
+   ]
   },
   {
-   "race": "2026-11-01 kurume 4R",
-   "diag": {
-    "venue": "kurume",
-    "race_id": "8320261101010004",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/kurume/raceresult/83202611010100/",
-    "day_html_len": 136441,
-    "day_races": [
-     1,
-     2,
-     3,
-     5,
-     6,
-     7,
-     8,
-     9,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
+   "race": "2026-11-01 nagoya 5R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    1,
+    4,
+    7,
+    6,
+    5,
+    3
+   ]
   },
   {
-   "race": "2026-11-01 kurume 7R",
-   "error": "着順が壊れて見えるため記録しない",
+   "race": "2026-11-01 matsudo 5R",
+   "error": "結果の車番が出走車番と一致しない",
    "cars": [
     7,
-    2,
     3,
-    5,
+    2,
     1,
+    4,
+    5,
     6
    ]
   },
   {
-   "race": "2026-11-01 kurume 10R",
-   "diag": {
-    "venue": "kurume",
-    "race_id": "8320261101010010",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-01 nagoya 1R",
+   "race": "2026-11-01 seibuen 5R",
    "error": "結果の車番が出走車番と一致しない",
    "cars": [
+    1,
+    4,
+    3,
     2,
     6,
     7,
-    5,
-    3,
+    5
+   ]
+  },
+  {
+   "race": "2026-11-01 nagoya 6R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
     1,
+    6,
+    3,
+    7,
+    5,
     4
    ]
   }
  ],
- "tracked": 1953,
- "with_result": 1550,
+ "tracked": 2029,
+ "with_result": 1573,
  "without_url": 0,
- "pending_eligible": 379
+ "pending_eligible": 380
 }
