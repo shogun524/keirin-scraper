@@ -1,74 +1,78 @@
 {
- "updated": "2026-11-03 05:45",
+ "updated": "2026-11-03 11:54",
  "failures": [
   {
-   "race": "2026-11-01 seibuen 4R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    6,
-    2,
-    7,
-    1,
-    4,
-    5,
-    3
-   ]
+   "race": "2026-11-02 kumamoto 4R",
+   "diag": {
+    "venue": "kumamoto",
+    "race_id": "8720261031030004",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/kumamoto/raceresult/87202610310300/",
+    "day_html_len": 105159,
+    "day_races": [
+     1,
+     2,
+     3,
+     5,
+     6,
+     7
+    ],
+    "day_text_head": "",
+    "day_parsed": false
+   }
   },
   {
-   "race": "2026-11-01 nagoya 5R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    2,
-    1,
-    4,
-    7,
-    6,
-    5,
-    3
-   ]
+   "race": "2026-11-02 hofu 2R",
+   "diag": {
+    "venue": "hofu",
+    "race_id": "6320261031030002",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310300/",
+    "day_html_len": 136564,
+    "day_races": [
+     1,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "day_text_head": "",
+    "day_parsed": false
+   }
   },
   {
-   "race": "2026-11-01 matsudo 5R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    7,
-    3,
-    2,
-    1,
-    4,
-    5,
-    6
-   ]
+   "race": "2026-11-02 hofu 10R",
+   "diag": {
+    "venue": "hofu",
+    "race_id": "6320261031030010",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   },
   {
-   "race": "2026-11-01 seibuen 5R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    1,
-    4,
-    3,
-    2,
-    6,
-    7,
-    5
-   ]
+   "race": "2026-11-02 hofu 11R",
+   "diag": {
+    "venue": "hofu",
+    "race_id": "6320261031030011",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   },
   {
-   "race": "2026-11-01 nagoya 6R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    2,
-    1,
-    6,
-    3,
-    7,
-    5,
-    4
-   ]
+   "race": "2026-11-02 hofu 12R",
+   "diag": {
+    "venue": "hofu",
+    "race_id": "6320261031030012",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 2029,
- "with_result": 1573,
+ "with_result": 1582,
  "without_url": 0,
- "pending_eligible": 380
+ "pending_eligible": 383
 }
