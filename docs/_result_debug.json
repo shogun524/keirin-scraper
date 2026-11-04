@@ -1,34 +1,6 @@
 {
- "updated": "2026-11-04 20:39",
+ "updated": "2026-11-04 23:12",
  "failures": [
-  {
-   "race": "2026-11-03 odawara 3R",
-   "diag": {
-    "venue": "odawara",
-    "race_id": "3620261101030003",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/odawara/raceresult/36202611010300/",
-    "day_html_len": 105111,
-    "day_races": [
-     1,
-     2,
-     5,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-03 odawara 4R",
-   "diag": {
-    "venue": "odawara",
-    "race_id": "3620261101030004",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-03 hofu 7R",
    "diag": {
@@ -36,7 +8,7 @@
     "race_id": "6320261031040007",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310400/",
-    "day_html_len": 140709,
+    "day_html_len": 140749,
     "day_races": [
      1,
      2,
@@ -61,7 +33,7 @@
     "race_id": "4520261102020003",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/toyohashi/raceresult/45202611020200/",
-    "day_html_len": 137298,
+    "day_html_len": 137338,
     "day_races": [
      1,
      2,
@@ -85,10 +57,32 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-03 toyohashi 11R",
+   "diag": {
+    "venue": "toyohashi",
+    "race_id": "4520261102020011",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-03 takeo 1R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    1,
+    4,
+    6,
+    3,
+    5,
+    7
+   ]
   }
  ],
  "tracked": 2104,
- "with_result": 1678,
+ "with_result": 1695,
  "without_url": 0,
- "pending_eligible": 406
+ "pending_eligible": 407
 }
