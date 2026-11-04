@@ -1,1 +1,902 @@
-{}
+{
+  "toyohashi_1_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 97,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_2_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 79,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_3_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 71,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_4_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 57,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_5_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 407,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_6_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 59,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_7_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 83,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_8_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 8,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 113,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_9_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 9,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 76,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_10_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 10,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 352,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_11_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 11,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 591,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toyohashi_12_2026-11-04": {
+    "venue": "toyohashi",
+    "race_no": 12,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 1142,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_1_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 427,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_2_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 368,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_3_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 372,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_4_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 287,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_5_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 333,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_6_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 178,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_7_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 128,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_8_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 8,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 153,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_9_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 9,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 111,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_10_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 10,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 541,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_11_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 11,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 330,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "aomori_12_2026-11-04": {
+    "venue": "aomori",
+    "race_no": 12,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 636,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_1_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 607,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_2_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 305,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_3_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 257,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_4_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 229,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_5_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 525,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_6_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 324,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_7_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 300,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_8_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 8,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 153,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_9_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 9,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 182,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_10_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 10,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 238,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_11_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 11,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 295,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "omiya_12_2026-11-04": {
+    "venue": "omiya",
+    "race_no": 12,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 908,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_1_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 47,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_2_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 14,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_3_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 21,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_4_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 10,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_5_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 9,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_6_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 90,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "shizuoka_7_2026-11-04": {
+    "venue": "shizuoka",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 108,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "nara_1_2026-11-04": {
+    "venue": "nara",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 4,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "nara_2_2026-11-04": {
+    "venue": "nara",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 7,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "nara_3_2026-11-04": {
+    "venue": "nara",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 7,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "nara_4_2026-11-04": {
+    "venue": "nara",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 9,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "nara_5_2026-11-04": {
+    "venue": "nara",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 8,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "nara_6_2026-11-04": {
+    "venue": "nara",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 8,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "nara_7_2026-11-04": {
+    "venue": "nara",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 23,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "takeo_1_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 38,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "takeo_2_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 8,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "takeo_3_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 7,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "takeo_4_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 8,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "takeo_5_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 7,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "takeo_6_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 231,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "takeo_7_2026-11-04": {
+    "venue": "takeo",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 44,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "toride_1_2026-11-04": {
+    "venue": "toride",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 409933,
+        "as_of": "2026/11/04 08:52"
+      }
+    ]
+  },
+  "toride_2_2026-11-04": {
+    "venue": "toride",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 94592,
+        "as_of": "2026/11/04 08:56"
+      }
+    ]
+  },
+  "toride_3_2026-11-04": {
+    "venue": "toride",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 41660,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toride_4_2026-11-04": {
+    "venue": "toride",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 22609,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toride_5_2026-11-04": {
+    "venue": "toride",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 20313,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toride_6_2026-11-04": {
+    "venue": "toride",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 14994,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "toride_7_2026-11-04": {
+    "venue": "toride",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 30825,
+        "as_of": "2026/11/04 08:54"
+      }
+    ]
+  },
+  "beppu_1_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 1,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 92,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_2_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 2,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 38,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_3_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 3,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 33,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_4_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 4,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 120,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_5_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 5,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 399,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_6_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 6,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 352,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_7_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 7,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 35,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_8_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 8,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 43,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_9_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 9,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 41,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_10_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 10,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 35,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  },
+  "beppu_11_2026-11-04": {
+    "venue": "beppu",
+    "race_no": 11,
+    "date": "2026-11-04",
+    "snapshots": [
+      {
+        "ts": "2026-11-04 08:55",
+        "ticket_total": 106,
+        "as_of": "2026/11/04 08:57"
+      }
+    ]
+  }
+}
