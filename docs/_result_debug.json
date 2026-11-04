@@ -1,39 +1,14 @@
 {
- "updated": "2026-11-04 23:12",
+ "updated": "2026-11-05 06:14",
  "failures": [
   {
-   "race": "2026-11-03 hofu 7R",
-   "diag": {
-    "venue": "hofu",
-    "race_id": "6320261031040007",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/hofu/raceresult/63202610310400/",
-    "day_html_len": 140749,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     8,
-     9,
-     10,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-03 toyohashi 3R",
+   "race": "2026-11-03 toyohashi 11R",
    "diag": {
     "venue": "toyohashi",
-    "race_id": "4520261102020003",
+    "race_id": "4520261102020011",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/toyohashi/raceresult/45202611020200/",
-    "day_html_len": 137338,
+    "day_html_len": 137176,
     "day_races": [
      1,
      2,
@@ -50,24 +25,6 @@
    }
   },
   {
-   "race": "2026-11-03 toyohashi 5R",
-   "diag": {
-    "venue": "toyohashi",
-    "race_id": "4520261102020005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-03 toyohashi 11R",
-   "diag": {
-    "venue": "toyohashi",
-    "race_id": "4520261102020011",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
    "race": "2026-11-03 takeo 1R",
    "error": "結果の車番が出走車番と一致しない",
    "cars": [
@@ -79,10 +36,49 @@
     5,
     7
    ]
+  },
+  {
+   "race": "2026-11-03 shizuoka 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    2,
+    4,
+    3,
+    6,
+    5,
+    7
+   ]
+  },
+  {
+   "race": "2026-11-03 nara 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    5,
+    3,
+    2,
+    1,
+    4,
+    6,
+    7
+   ]
+  },
+  {
+   "race": "2026-11-03 takeo 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    2,
+    6,
+    4,
+    3,
+    5,
+    7
+   ]
   }
  ],
- "tracked": 2104,
- "with_result": 1695,
+ "tracked": 2183,
+ "with_result": 1699,
  "without_url": 0,
- "pending_eligible": 407
+ "pending_eligible": 405
 }
