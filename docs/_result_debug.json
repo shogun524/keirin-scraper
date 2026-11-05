@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05 11:10",
+ "updated": "2026-11-05 19:40",
  "failures": [
   {
    "race": "2026-11-05 fukui 5R",
@@ -20,26 +20,35 @@
    }
   },
   {
-   "race": "2026-11-05 toride 7R",
+   "race": "2026-11-05 beppu 1R",
    "diag": {
-    "venue": "toride",
-    "race_id": "2320261104020007",
+    "venue": "beppu",
+    "race_id": "8620261104020001",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-05 omiya 1R",
+   "race": "2026-11-05 beppu 2R",
    "diag": {
-    "venue": "omiya",
-    "race_id": "2520261104020001",
+    "venue": "beppu",
+    "race_id": "8620261104020002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-05 yokkaichi 10R",
+   "diag": {
+    "venue": "yokkaichi",
+    "race_id": "4820261105010010",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2183,
- "with_result": 1710,
+ "with_result": 1751,
  "without_url": 0,
- "pending_eligible": 409
+ "pending_eligible": 410
 }
