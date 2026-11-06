@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06 03:41",
+ "updated": "2026-11-06 09:03",
  "failures": [
   {
    "race": "2026-11-05 fukui 5R",
@@ -8,7 +8,7 @@
     "race_id": "5120261105010005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/fukui/raceresult/51202611050100/",
-    "day_html_len": 105106,
+    "day_html_len": 105107,
     "day_races": [
      1,
      2,
@@ -28,7 +28,7 @@
     "race_id": "2320261104020005",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/toride/raceresult/23202611040200/",
-    "day_html_len": 106138,
+    "day_html_len": 106139,
     "day_races": [
      1,
      2,
@@ -48,7 +48,7 @@
     "race_id": "8620261104020001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/beppu/raceresult/86202611040200/",
-    "day_html_len": 130481,
+    "day_html_len": 130482,
     "day_races": [
      3,
      4,
@@ -79,6 +79,18 @@
     "venue": "kokura",
     "race_id": "8120261105010002",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/kokura/raceresult/81202611050100/",
+    "day_html_len": 117736,
+    "day_races": [
+     1,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   }
@@ -86,5 +98,5 @@
  "tracked": 2262,
  "with_result": 1772,
  "without_url": 0,
- "pending_eligible": 411
+ "pending_eligible": 413
 }
