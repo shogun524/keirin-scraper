@@ -1,46 +1,6 @@
 {
- "updated": "2026-11-06 23:58",
+ "updated": "2026-11-07 05:49",
  "failures": [
-  {
-   "race": "2026-11-05 fukui 5R",
-   "diag": {
-    "venue": "fukui",
-    "race_id": "5120261105010005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/fukui/raceresult/51202611050100/",
-    "day_html_len": 105429,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-05 toride 5R",
-   "diag": {
-    "venue": "toride",
-    "race_id": "2320261104020005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/toride/raceresult/23202611040200/",
-    "day_html_len": 105704,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-05 beppu 1R",
    "diag": {
@@ -48,7 +8,7 @@
     "race_id": "8620261104020001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/beppu/raceresult/86202611040200/",
-    "day_html_len": 130047,
+    "day_html_len": 130129,
     "day_races": [
      3,
      4,
@@ -80,7 +40,7 @@
     "race_id": "8120261105010002",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/kokura/raceresult/81202611050100/",
-    "day_html_len": 117504,
+    "day_html_len": 118143,
     "day_races": [
      1,
      4,
@@ -93,9 +53,38 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-05 kokura 3R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261105010003",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-06 toride 6R",
+   "diag": {
+    "venue": "toride",
+    "race_id": "2320261104030006",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/toride/raceresult/23202611040300/",
+    "day_html_len": 105805,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     7
+    ],
+    "day_text_head": "",
+    "day_parsed": false
+   }
   }
  ],
- "tracked": 2262,
+ "tracked": 2334,
  "with_result": 1836,
  "without_url": 0,
  "pending_eligible": 426

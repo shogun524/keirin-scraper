@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-06",
- "n": 1223,
+ "updated": "2026-11-07",
+ "n": 1287,
  "min_races": 120,
  "default": 1.75,
  "active": false,
@@ -171,137 +171,143 @@
    "gamma": 1.75,
    "n": 1223,
    "lr": 1.46
+  },
+  {
+   "date": "2026-11-07",
+   "gamma": 1.75,
+   "n": 1287,
+   "lr": 0.84
   }
  ],
- "fit_raw": 1.675,
- "lr": 1.46,
- "ll_per_race_default": -1.596,
- "ll_per_race_new": -1.596,
+ "fit_raw": 1.7,
+ "lr": 0.84,
+ "ll_per_race_default": -1.5901,
+ "ll_per_race_new": -1.5901,
  "buff": {
-  "n": 1131,
+  "n": 1189,
   "min_races": 80,
   "active": true,
-  "beta": 0.224,
-  "fit_raw": 0.225,
-  "lr": 50.15,
-  "ll_per_race_default": -1.6173,
-  "ll_per_race_new": -1.5952
+  "beta": 0.237,
+  "fit_raw": 0.25,
+  "lr": 59.81,
+  "ll_per_race_default": -1.6128,
+  "ll_per_race_new": -1.5877
  },
  "groups": {
   "7": {
-   "n": 1102,
+   "n": 1156,
    "min_races": 100,
    "active": true,
    "sharp23_mult": 0.924,
-   "line_follow_bonus": 109.6,
+   "line_follow_bonus": 112.3,
    "default_sharp23": 1.3,
    "default_line_follow_bonus": 45.0,
-   "lr": 207.0,
+   "lr": 224.34,
    "fit_raw": [
     1.2,
-    110.0
+    115.0
    ],
-   "ll_per_race_default": -3.0162,
-   "ll_per_race_new": -2.9227
+   "ll_per_race_default": -3.02,
+   "ll_per_race_new": -2.9251
   },
   "9": {
-   "n": 121,
+   "n": 131,
    "min_races": 100,
    "active": true,
-   "sharp23_mult": 1.165,
-   "line_follow_bonus": 66.2,
+   "sharp23_mult": 1.159,
+   "line_follow_bonus": 68.1,
    "default_sharp23": 1.733,
    "default_line_follow_bonus": 45.0,
-   "lr": 27.72,
+   "lr": 29.11,
    "fit_raw": [
     1.5,
     70.0
    ],
-   "ll_per_race_default": -3.5261,
-   "ll_per_race_new": -3.4225
+   "ll_per_race_default": -3.5027,
+   "ll_per_race_new": -3.397
   }
  },
  "stage_cal": {
   "7": {
    "s1": {
-    "n": 1102,
+    "n": 1156,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 33,
-    "lr": 159.89,
+    "lr": 166.67,
     "fit_raw": [
-     0.974,
-     0.098,
-     -0.926,
-     -1.163,
-     -0.548,
-     0.334
+     0.977,
+     0.12,
+     -0.909,
+     -1.119,
+     -0.524,
+     0.302
     ],
-    "ll_per_race_default": 1.5844,
-    "loo_gain_per_race": 0.067,
+    "ll_per_race_default": 1.5809,
+    "loo_gain_per_race": 0.0669,
     "loo_days_better": 21,
-    "loo_days": 22,
+    "loo_days": 23,
     "coef": {
-     "a": 0.974,
-     "捲": 0.081,
-     "差": -0.929,
-     "マ": -1.162,
-     "hinge": -0.539,
-     "pos2": 0.333
+     "a": 0.976,
+     "捲": 0.1,
+     "差": -0.919,
+     "マ": -1.14,
+     "hinge": -0.531,
+     "pos2": 0.318
     },
-    "ll_per_race_new": 1.5119
+    "ll_per_race_new": 1.5087
    },
    "s2": {
-    "n": 1102,
+    "n": 1156,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 33,
-    "lr": 199.65,
+    "lr": 203.53,
     "fit_raw": [
-     0.787,
-     0.074,
-     0.989
+     0.788,
+     0.081,
+     0.972
     ],
-    "ll_per_race_default": 1.4972,
-    "loo_gain_per_race": 0.0886,
-    "loo_days_better": 21,
-    "loo_days": 22,
+    "ll_per_race_default": 1.4987,
+    "loo_gain_per_race": 0.0862,
+    "loo_days_better": 22,
+    "loo_days": 23,
     "coef": {
-     "slope": 0.799,
-     "same": 0.076,
-     "adj": 0.981
+     "slope": 0.794,
+     "same": 0.078,
+     "adj": 0.976
     },
-    "ll_per_race_new": 1.4067
+    "ll_per_race_new": 1.4107
    },
    "s3": {
-    "n": 1102,
+    "n": 1156,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 33,
-    "lr": 169.53,
+    "lr": 181.25,
     "fit_raw": [
-     0.527,
-     0.511,
-     0.389
+     0.52,
+     0.537,
+     0.369
     ],
-    "ll_per_race_default": 1.519,
-    "loo_gain_per_race": 0.0747,
-    "loo_days_better": 21,
-    "loo_days": 22,
+    "ll_per_race_default": 1.5213,
+    "loo_gain_per_race": 0.0764,
+    "loo_days_better": 22,
+    "loo_days": 23,
     "coef": {
      "slope": 0.601,
      "same": 0.537,
-     "adj": 0.354
+     "adj": 0.362
     },
-    "ll_per_race_new": 1.4431
+    "ll_per_race_new": 1.4442
    }
   },
   "9": {
    "s1": {
-    "n": 121,
+    "n": 131,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
@@ -309,7 +315,7 @@
     "reason": "件数不足"
    },
    "s2": {
-    "n": 121,
+    "n": 131,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
@@ -317,7 +323,7 @@
     "reason": "件数不足"
    },
    "s3": {
-    "n": 121,
+    "n": 131,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
