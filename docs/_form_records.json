@@ -77,12 +77,6 @@
     "name": "塚本",
     "recent": [
       {
-        "date": "2026-10-11",
-        "venue": "takeo",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-17",
         "venue": "takeo",
         "finish": 6,
@@ -134,6 +128,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -245,24 +245,6 @@
     "name": "佐藤",
     "recent": [
       {
-        "date": "2026-11-02",
-        "venue": "hofu",
-        "finish": 8,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-02",
-        "venue": "kurume",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-03",
-        "venue": "hofu",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-03",
         "venue": "hofu",
         "finish": 5,
@@ -302,6 +284,24 @@
         "date": "2026-11-05",
         "venue": "beppu",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -350,18 +350,6 @@
     "name": "山本",
     "recent": [
       {
-        "date": "2026-10-30",
-        "venue": "yahiko",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-01",
-        "venue": "odawara",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-01",
         "venue": "yahiko",
         "finish": 4,
@@ -407,6 +395,18 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -566,12 +566,6 @@
     "recent": [
       {
         "date": "2026-10-06",
-        "venue": "matsuyama",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-06",
         "venue": "nara",
         "finish": 5,
         "kimarite": null
@@ -616,6 +610,18 @@
         "date": "2026-11-04",
         "venue": "omiya",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -714,6 +720,18 @@
         "date": "2026-10-31",
         "venue": "aomori",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -932,12 +950,6 @@
     "name": "水谷",
     "recent": [
       {
-        "date": "2026-10-11",
-        "venue": "toyama",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-12",
         "venue": "toyama",
         "finish": 7,
@@ -990,18 +1002,18 @@
         "venue": "yokkaichi",
         "finish": 8,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
   "早坂": {
     "name": "早坂",
     "recent": [
-      {
-        "date": "2026-10-08",
-        "venue": "shizuoka",
-        "finish": 7,
-        "kimarite": null
-      },
       {
         "date": "2026-10-09",
         "venue": "shizuoka",
@@ -1054,6 +1066,12 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -1124,6 +1142,12 @@
         "date": "2026-11-04",
         "venue": "toyohashi",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -1323,18 +1347,18 @@
         "venue": "yokkaichi",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
   "坂本": {
     "name": "坂本",
     "recent": [
-      {
-        "date": "2026-10-28",
-        "venue": "wakayama",
-        "finish": 6,
-        "kimarite": null
-      },
       {
         "date": "2026-10-31",
         "venue": "hofu",
@@ -1388,6 +1412,12 @@
         "venue": "yokkaichi",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -1438,6 +1468,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -1492,12 +1528,6 @@
     "name": "山崎",
     "recent": [
       {
-        "date": "2026-10-30",
-        "venue": "gifu",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-31",
         "venue": "hofu",
         "finish": 5,
@@ -1548,6 +1578,12 @@
       {
         "date": "2026-11-05",
         "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 6,
         "kimarite": null
       }
@@ -1928,6 +1964,12 @@
         "venue": "omiya",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -2101,6 +2143,12 @@
         "date": "2026-11-03",
         "venue": "hofu",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -2537,6 +2585,12 @@
         "venue": "odawara",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -2624,6 +2678,12 @@
         "venue": "omiya",
         "finish": 7,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
@@ -2670,6 +2730,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -3091,6 +3157,12 @@
         "venue": "kurume",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -3201,12 +3273,6 @@
     "name": "小谷",
     "recent": [
       {
-        "date": "2026-10-06",
-        "venue": "nara",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-07",
         "venue": "nara",
         "finish": 6,
@@ -3259,18 +3325,18 @@
         "venue": "hofu",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
   "齋藤": {
     "name": "齋藤",
     "recent": [
-      {
-        "date": "2026-10-31",
-        "venue": "aomori",
-        "finish": 5,
-        "kimarite": null
-      },
       {
         "date": "2026-10-31",
         "venue": "yahiko",
@@ -3323,6 +3389,12 @@
         "date": "2026-11-05",
         "venue": "yokkaichi",
         "finish": 9,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -3387,6 +3459,12 @@
         "date": "2026-10-19",
         "venue": "kochi",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -3465,18 +3543,6 @@
     "recent": [
       {
         "date": "2026-10-30",
-        "venue": "yahiko",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-30",
-        "venue": "aomori",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-30",
         "venue": "utsunomiya",
         "finish": 5,
         "kimarite": null
@@ -3522,18 +3588,24 @@
         "venue": "beppu",
         "finish": 7,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
   "伊藤": {
     "name": "伊藤",
     "recent": [
-      {
-        "date": "2026-11-02",
-        "venue": "kurume",
-        "finish": 4,
-        "kimarite": null
-      },
       {
         "date": "2026-11-03",
         "venue": "aomori",
@@ -3586,6 +3658,12 @@
         "date": "2026-11-05",
         "venue": "beppu",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -3890,6 +3968,12 @@
         "venue": "nara",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -4020,12 +4104,6 @@
     "name": "内山",
     "recent": [
       {
-        "date": "2026-10-06",
-        "venue": "nara",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-07",
         "venue": "nara",
         "finish": 6,
@@ -4077,6 +4155,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -4259,18 +4343,18 @@
         "venue": "omiya",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
   "松本": {
     "name": "松本",
     "recent": [
-      {
-        "date": "2026-10-19",
-        "venue": "kochi",
-        "finish": 4,
-        "kimarite": null
-      },
       {
         "date": "2026-10-19",
         "venue": "aomori",
@@ -4323,6 +4407,12 @@
         "date": "2026-10-29",
         "venue": "beppu",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -4440,6 +4530,12 @@
         "venue": "keiokaku",
         "finish": 7,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -4529,12 +4625,6 @@
     "name": "原田",
     "recent": [
       {
-        "date": "2026-10-16",
-        "venue": "nara",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-18",
         "venue": "kochi",
         "finish": 4,
@@ -4584,6 +4674,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "omiya",
+        "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "omiya",
         "finish": 7,
         "kimarite": null
@@ -4897,6 +4993,12 @@
         "venue": "toride",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -4938,12 +5040,6 @@
   "落合": {
     "name": "落合",
     "recent": [
-      {
-        "date": "2026-10-18",
-        "venue": "toyama",
-        "finish": 5,
-        "kimarite": null
-      },
       {
         "date": "2026-10-19",
         "venue": "aomori",
@@ -4996,6 +5092,12 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -5069,18 +5171,6 @@
     "name": "川口",
     "recent": [
       {
-        "date": "2026-10-16",
-        "venue": "aomori",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-16",
-        "venue": "beppu",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-21",
         "venue": "odawara",
         "finish": 5,
@@ -5126,6 +5216,18 @@
         "date": "2026-11-04",
         "venue": "nara",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -5444,12 +5546,6 @@
     "name": "山田",
     "recent": [
       {
-        "date": "2026-10-31",
-        "venue": "utsunomiya",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-01",
         "venue": "utsunomiya",
         "finish": 4,
@@ -5500,6 +5596,12 @@
       {
         "date": "2026-11-05",
         "venue": "beppu",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
         "finish": 5,
         "kimarite": null
       }
@@ -5590,6 +5692,12 @@
         "venue": "fukui",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -5606,6 +5714,12 @@
         "date": "2026-10-07",
         "venue": "omiya",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -5624,48 +5738,18 @@
         "venue": "maebashi",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
   "鈴木": {
     "name": "鈴木",
     "recent": [
-      {
-        "date": "2026-10-31",
-        "venue": "utsunomiya",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-01",
-        "venue": "yahiko",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-01",
-        "venue": "utsunomiya",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-02",
-        "venue": "toyohashi",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-03",
-        "venue": "toyohashi",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-04",
-        "venue": "toride",
-        "finish": 7,
-        "kimarite": null
-      },
       {
         "date": "2026-11-04",
         "venue": "takeo",
@@ -5688,6 +5772,42 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -5732,6 +5852,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "fukui",
+        "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "fukui",
         "finish": 7,
         "kimarite": null
@@ -6231,6 +6357,12 @@
         "venue": "tamano",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -6633,6 +6765,12 @@
         "venue": "kochi",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -6748,6 +6886,12 @@
         "date": "2026-10-16",
         "venue": "beppu",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -7359,12 +7503,6 @@
     "name": "井上",
     "recent": [
       {
-        "date": "2026-10-20",
-        "venue": "kawasaki",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-21",
         "venue": "toride",
         "finish": 6,
@@ -7417,18 +7555,18 @@
         "venue": "toride",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
   "中野": {
     "name": "中野",
     "recent": [
-      {
-        "date": "2026-10-19",
-        "venue": "kochi",
-        "finish": 5,
-        "kimarite": null
-      },
       {
         "date": "2026-10-19",
         "venue": "toyama",
@@ -7481,6 +7619,12 @@
         "date": "2026-11-04",
         "venue": "omiya",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -7720,12 +7864,6 @@
     "name": "柴田",
     "recent": [
       {
-        "date": "2026-10-21",
-        "venue": "yokkaichi",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-27",
         "venue": "odawara",
         "finish": 7,
@@ -7777,6 +7915,12 @@
         "date": "2026-11-04",
         "venue": "nara",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -7853,12 +7997,6 @@
     "name": "工藤",
     "recent": [
       {
-        "date": "2026-10-14",
-        "venue": "maebashi",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-15",
         "venue": "maebashi",
         "finish": 7,
@@ -7910,6 +8048,12 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -8050,12 +8194,6 @@
     "name": "岡田",
     "recent": [
       {
-        "date": "2026-10-27",
-        "venue": "wakayama",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-28",
         "venue": "wakayama",
         "finish": 7,
@@ -8106,6 +8244,12 @@
       {
         "date": "2026-11-05",
         "venue": "yokkaichi",
+        "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
         "finish": 7,
         "kimarite": null
       }
@@ -8240,18 +8384,6 @@
     "name": "中川",
     "recent": [
       {
-        "date": "2026-10-27",
-        "venue": "wakayama",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-27",
-        "venue": "odawara",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-28",
         "venue": "kurume",
         "finish": 6,
@@ -8297,6 +8429,18 @@
         "date": "2026-11-04",
         "venue": "beppu",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -8431,6 +8575,12 @@
         "venue": "fukui",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -8447,6 +8597,12 @@
         "date": "2026-10-21",
         "venue": "aomori",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -8527,6 +8683,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "fukui",
+        "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "fukui",
         "finish": 2,
         "kimarite": null
@@ -9142,18 +9304,6 @@
     "name": "須藤",
     "recent": [
       {
-        "date": "2026-10-06",
-        "venue": "iwakitaira",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-07",
-        "venue": "shizuoka",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-09",
         "venue": "shizuoka",
         "finish": 6,
@@ -9200,6 +9350,18 @@
         "venue": "toride",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
@@ -9234,12 +9396,6 @@
   "小林": {
     "name": "小林",
     "recent": [
-      {
-        "date": "2026-11-01",
-        "venue": "utsunomiya",
-        "finish": 4,
-        "kimarite": null
-      },
       {
         "date": "2026-11-02",
         "venue": "hofu",
@@ -9291,6 +9447,12 @@
       {
         "date": "2026-11-05",
         "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 6,
         "kimarite": null
       }
@@ -9365,12 +9527,6 @@
       {
         "date": "2026-11-02",
         "venue": "odawara",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-02",
-        "venue": "odawara",
         "finish": 4,
         "kimarite": null
       },
@@ -9420,6 +9576,12 @@
         "date": "2026-11-05",
         "venue": "beppu",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -9881,6 +10043,12 @@
         "venue": "fukui",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -10198,6 +10366,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -10978,6 +11152,12 @@
         "venue": "fukui",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -11065,12 +11245,6 @@
     "name": "松田",
     "recent": [
       {
-        "date": "2026-10-07",
-        "venue": "kochi",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-08",
         "venue": "kochi",
         "finish": 5,
@@ -11122,6 +11296,12 @@
         "date": "2026-10-31",
         "venue": "yahiko",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -11489,18 +11669,6 @@
     "name": "福田",
     "recent": [
       {
-        "date": "2026-10-14",
-        "venue": "beppu",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-15",
-        "venue": "beppu",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-16",
         "venue": "nara",
         "finish": 4,
@@ -11546,6 +11714,18 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -11882,6 +12062,12 @@
         "venue": "toride",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -11920,6 +12106,12 @@
       {
         "date": "2026-10-18",
         "venue": "yokkaichi",
+        "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 3,
         "kimarite": null
       }
@@ -12740,6 +12932,12 @@
         "venue": "fukui",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -13015,12 +13213,6 @@
     "recent": [
       {
         "date": "2026-10-17",
-        "venue": "takeo",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-17",
         "venue": "keiokaku",
         "finish": 5,
         "kimarite": null
@@ -13071,6 +13263,12 @@
         "date": "2026-11-05",
         "venue": "aomori",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -13159,12 +13357,6 @@
     "name": "木村",
     "recent": [
       {
-        "date": "2026-10-30",
-        "venue": "aomori",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-31",
         "venue": "hofu",
         "finish": 9,
@@ -13216,6 +13408,12 @@
         "date": "2026-11-05",
         "venue": "yokkaichi",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -14358,6 +14556,12 @@
         "venue": "omiya",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -14915,6 +15119,12 @@
         "venue": "aomori",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -15380,6 +15590,12 @@
         "date": "2026-11-04",
         "venue": "omiya",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -16078,6 +16294,12 @@
         "venue": "omiya",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -16308,6 +16530,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -16654,6 +16882,12 @@
         "venue": "omiya",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -16822,6 +17056,12 @@
         "date": "2026-10-29",
         "venue": "aomori",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -17300,6 +17540,12 @@
         "venue": "keiokaku",
         "finish": 7,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -17457,6 +17703,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "fukui",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "fukui",
         "finish": 1,
         "kimarite": null
@@ -18198,18 +18450,6 @@
     "name": "久保",
     "recent": [
       {
-        "date": "2026-10-08",
-        "venue": "kochi",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-09",
-        "venue": "kochi",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-17",
         "venue": "toyama",
         "finish": 7,
@@ -18255,6 +18495,18 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -18364,6 +18616,12 @@
         "date": "2026-10-27",
         "venue": "takeo",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -19396,6 +19654,12 @@
         "venue": "omiya",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -20073,6 +20337,12 @@
         "venue": "toride",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -20089,6 +20359,12 @@
         "date": "2026-10-19",
         "venue": "takeo",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -20250,12 +20526,6 @@
     "name": "中島",
     "recent": [
       {
-        "date": "2026-10-29",
-        "venue": "gifu",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-30",
         "venue": "gifu",
         "finish": 7,
@@ -20308,18 +20578,18 @@
         "venue": "omiya",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
   "齊藤": {
     "name": "齊藤",
     "recent": [
-      {
-        "date": "2026-10-14",
-        "venue": "beppu",
-        "finish": 6,
-        "kimarite": null
-      },
       {
         "date": "2026-10-15",
         "venue": "beppu",
@@ -20372,6 +20642,12 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -20590,6 +20866,12 @@
         "venue": "utsunomiya",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -20771,12 +21053,6 @@
     "name": "三宅",
     "recent": [
       {
-        "date": "2026-10-17",
-        "venue": "yokkaichi",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-27",
         "venue": "odawara",
         "finish": 4,
@@ -20826,6 +21102,12 @@
       },
       {
         "date": "2026-11-04",
+        "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "omiya",
         "finish": 6,
         "kimarite": null
@@ -20919,6 +21201,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "fukui",
+        "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "fukui",
         "finish": 3,
         "kimarite": null
@@ -21085,6 +21373,12 @@
         "date": "2026-11-03",
         "venue": "hofu",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -21451,6 +21745,12 @@
         "venue": "omiya",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -21621,12 +21921,6 @@
     "recent": [
       {
         "date": "2026-10-29",
-        "venue": "gifu",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-29",
         "venue": "beppu",
         "finish": 5,
         "kimarite": null
@@ -21677,6 +21971,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -21818,12 +22118,6 @@
     "name": "清水",
     "recent": [
       {
-        "date": "2026-10-18",
-        "venue": "yokkaichi",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-20",
         "venue": "keiokaku",
         "finish": 9,
@@ -21875,6 +22169,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -23713,6 +24013,12 @@
         "venue": "kochi",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -24374,6 +24680,12 @@
         "venue": "toride",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -24910,6 +25222,12 @@
         "venue": "keiokaku",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -24943,6 +25261,12 @@
       {
         "date": "2026-10-28",
         "venue": "odawara",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 1,
         "kimarite": null
       }
@@ -25042,6 +25366,12 @@
         "date": "2026-11-04",
         "venue": "toride",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -26368,12 +26698,6 @@
     "name": "新井",
     "recent": [
       {
-        "date": "2026-10-10",
-        "venue": "toyama",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-11",
         "venue": "toyama",
         "finish": 6,
@@ -26425,6 +26749,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -26517,6 +26847,12 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -27256,24 +27592,6 @@
     "name": "近藤",
     "recent": [
       {
-        "date": "2026-10-17",
-        "venue": "yokkaichi",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-20",
-        "venue": "odawara",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
-        "date": "2026-10-27",
-        "venue": "keiokaku",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-27",
         "venue": "kurume",
         "finish": 6,
@@ -27313,6 +27631,24 @@
         "date": "2026-11-02",
         "venue": "odawara",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -27533,6 +27869,12 @@
         "date": "2026-11-04",
         "venue": "omiya",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -28177,6 +28519,12 @@
         "venue": "omiya",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -28538,6 +28886,12 @@
         "venue": "toyama",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -28865,6 +29219,12 @@
         "date": "2026-10-14",
         "venue": "maebashi",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -29841,6 +30201,12 @@
         "venue": "omiya",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -29869,6 +30235,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -29971,6 +30343,12 @@
       {
         "date": "2026-10-31",
         "venue": "yahiko",
+        "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 2,
         "kimarite": null
       }
@@ -30266,6 +30644,12 @@
         "venue": "keiokaku",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -30473,6 +30857,12 @@
         "venue": "yahiko",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -30499,6 +30889,12 @@
       {
         "date": "2026-10-11",
         "venue": "kokura",
+        "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 3,
         "kimarite": null
       }
@@ -30909,6 +31305,12 @@
         "date": "2026-10-29",
         "venue": "kurume",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -32281,6 +32683,12 @@
         "venue": "omiya",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -32349,6 +32757,12 @@
         "date": "2026-11-04",
         "venue": "omiya",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -32632,6 +33046,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "omiya",
         "finish": 1,
         "kimarite": null
@@ -33053,12 +33473,6 @@
     "name": "西村",
     "recent": [
       {
-        "date": "2026-10-14",
-        "venue": "beppu",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-15",
         "venue": "beppu",
         "finish": 5,
@@ -33110,6 +33524,12 @@
         "date": "2026-11-05",
         "venue": "omiya",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -33273,12 +33693,6 @@
     "name": "藤井",
     "recent": [
       {
-        "date": "2026-10-12",
-        "venue": "gifu",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-13",
         "venue": "omiya",
         "finish": 4,
@@ -33329,6 +33743,12 @@
       {
         "date": "2026-11-01",
         "venue": "nagoya",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
         "finish": 4,
         "kimarite": null
       }
@@ -33499,6 +33919,12 @@
       {
         "date": "2026-10-18",
         "venue": "takeo",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 1,
         "kimarite": null
       }
@@ -33699,6 +34125,12 @@
       {
         "date": "2026-10-20",
         "venue": "kawasaki",
+        "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
         "finish": 2,
         "kimarite": null
       }
@@ -33954,6 +34386,12 @@
         "venue": "fukui",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
@@ -34084,6 +34522,12 @@
       {
         "date": "2026-10-29",
         "venue": "aomori",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 1,
         "kimarite": null
       }
@@ -35212,6 +35656,12 @@
         "venue": "sasebo",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -35537,6 +35987,12 @@
       {
         "date": "2026-10-14",
         "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
         "finish": 3,
         "kimarite": null
       }
@@ -36179,6 +36635,12 @@
         "venue": "omiya",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -36516,6 +36978,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "omiya",
         "finish": 2,
         "kimarite": null
@@ -39877,6 +40345,12 @@
         "venue": "omiya",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -39933,6 +40407,12 @@
         "date": "2026-10-21",
         "venue": "yokkaichi",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -40980,6 +41460,12 @@
         "venue": "omiya",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -41260,6 +41746,12 @@
       {
         "date": "2026-11-04",
         "venue": "shizuoka",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 4,
         "kimarite": null
       }
@@ -41777,6 +42269,12 @@
         "venue": "toride",
         "finish": 7,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
@@ -41846,6 +42344,12 @@
         "venue": "omiya",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -41898,6 +42402,12 @@
         "date": "2026-11-05",
         "venue": "yokkaichi",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -43310,6 +43820,12 @@
         "venue": "omiya",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -44668,6 +45184,12 @@
         "venue": "omiya",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -45226,6 +45748,12 @@
         "date": "2026-10-28",
         "venue": "kurume",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -45822,6 +46350,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -46545,6 +47079,12 @@
         "venue": "wakayama",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -47042,6 +47582,12 @@
         "date": "2026-10-19",
         "venue": "kochi",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -48221,6 +48767,12 @@
         "venue": "fukui",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -48364,6 +48916,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "toride",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "toride",
         "finish": 6,
         "kimarite": null
@@ -48608,6 +49166,12 @@
         "date": "2026-10-17",
         "venue": "yokkaichi",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -48948,6 +49512,12 @@
         "date": "2026-10-18",
         "venue": "kochi",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -50642,6 +51212,12 @@
         "venue": "gifu",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -50717,6 +51293,12 @@
         "date": "2026-10-30",
         "venue": "beppu",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -51307,6 +51889,12 @@
         "venue": "omiya",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -51594,6 +52182,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -52175,6 +52769,12 @@
         "venue": "toride",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -52191,6 +52791,12 @@
         "date": "2026-10-27",
         "venue": "ogaki",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -52254,6 +52860,12 @@
         "date": "2026-10-31",
         "venue": "aomori",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -52826,6 +53438,12 @@
         "venue": "kurume",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -52863,6 +53481,12 @@
       {
         "date": "2026-10-20",
         "venue": "odawara",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 1,
         "kimarite": null
       }
@@ -52933,6 +53557,12 @@
         "date": "2026-10-31",
         "venue": "aomori",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -53229,6 +53859,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "fukui",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "fukui",
         "finish": 1,
         "kimarite": null
@@ -54257,6 +54893,12 @@
         "venue": "omiya",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -54922,6 +55564,12 @@
         "date": "2026-11-01",
         "venue": "yahiko",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -56412,6 +57060,12 @@
         "venue": "omiya",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -56534,6 +57188,12 @@
         "date": "2026-10-28",
         "venue": "wakayama",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -56767,6 +57427,12 @@
         "venue": "omiya",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -56933,6 +57599,12 @@
       },
       {
         "date": "2026-11-05",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
         "venue": "omiya",
         "finish": 5,
         "kimarite": null
@@ -57517,6 +58189,12 @@
         "venue": "gifu",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -57718,6 +58396,12 @@
         "venue": "aomori",
         "finish": 6,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -57816,6 +58500,12 @@
       {
         "date": "2026-10-29",
         "venue": "ogaki",
+        "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
         "finish": 2,
         "kimarite": null
       }
@@ -58012,6 +58702,12 @@
         "venue": "yahiko",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 7,
+        "kimarite": null
       }
     ]
   },
@@ -58180,6 +58876,12 @@
         "date": "2026-10-31",
         "venue": "aomori",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -58607,6 +59309,12 @@
         "date": "2026-10-30",
         "venue": "aomori",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -59169,6 +59877,12 @@
         "venue": "toride",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -59201,6 +59915,12 @@
         "date": "2026-10-31",
         "venue": "aomori",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -61202,6 +61922,12 @@
         "venue": "omiya",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -61290,6 +62016,12 @@
         "date": "2026-11-04",
         "venue": "toride",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -61387,6 +62119,12 @@
         "venue": "toride",
         "finish": 4,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -61415,6 +62153,12 @@
         "venue": "toride",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 4,
+        "kimarite": null
       }
     ]
   },
@@ -61431,6 +62175,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -61476,6 +62226,12 @@
         "date": "2026-11-04",
         "venue": "toride",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 1,
         "kimarite": null
       }
     ]
@@ -61625,6 +62381,12 @@
         "date": "2026-11-04",
         "venue": "beppu",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -61929,6 +62691,12 @@
         "venue": "toride",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -61939,6 +62707,12 @@
         "date": "2026-11-05",
         "venue": "toride",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -61972,6 +62746,12 @@
         "date": "2026-11-05",
         "venue": "fukui",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -62149,6 +62929,12 @@
         "venue": "omiya",
         "finish": 7,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -62159,6 +62945,259 @@
         "date": "2026-11-05",
         "venue": "beppu",
         "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "山田 哲也": {
+    "name": "山田 哲也",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "渡辺 十夢": {
+    "name": "渡辺 十夢",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "小林 令": {
+    "name": "小林 令",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "梅崎": {
+    "name": "梅崎",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "omiya",
+        "finish": 5,
+        "kimarite": null
+      }
+    ]
+  },
+  "近藤 寛央": {
+    "name": "近藤 寛央",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
+        "kimarite": null
+      }
+    ]
+  },
+  "坂田 学": {
+    "name": "坂田 学",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "片山 弘城": {
+    "name": "片山 弘城",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
+        "kimarite": null
+      }
+    ]
+  },
+  "池野 健太": {
+    "name": "池野 健太",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "中村 健志": {
+    "name": "中村 健志",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "半田": {
+    "name": "半田",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 5,
+        "kimarite": null
+      }
+    ]
+  },
+  "林 慶次郎": {
+    "name": "林 慶次郎",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "西田 将士": {
+    "name": "西田 将士",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 2,
+        "kimarite": null
+      }
+    ]
+  },
+  "尾方": {
+    "name": "尾方",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "kumamoto",
+        "finish": 4,
+        "kimarite": null
+      }
+    ]
+  },
+  "瀧野 勝太": {
+    "name": "瀧野 勝太",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "緒方 剛": {
+    "name": "緒方 剛",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "松根 真": {
+    "name": "松根 真",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "小坂 敏之": {
+    "name": "小坂 敏之",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 2,
+        "kimarite": null
+      }
+    ]
+  },
+  "十文字 菊雄": {
+    "name": "十文字 菊雄",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "田頭 寛之": {
+    "name": "田頭 寛之",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "toride",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "伊藤 翼": {
+    "name": "伊藤 翼",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "中嶋 樹": {
+    "name": "中嶋 樹",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "鰐渕 正利": {
+    "name": "鰐渕 正利",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "山元": {
+    "name": "山元",
+    "recent": [
+      {
+        "date": "2026-11-06",
+        "venue": "fukui",
+        "finish": 4,
         "kimarite": null
       }
     ]
