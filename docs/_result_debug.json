@@ -1,36 +1,6 @@
 {
- "updated": "2026-11-07 09:50",
+ "updated": "2026-11-07 16:00",
  "failures": [
-  {
-   "race": "2026-11-05 kokura 2R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261105010002",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/kokura/raceresult/81202611050100/",
-    "day_html_len": 118143,
-    "day_races": [
-     1,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-05 kokura 3R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261105010003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-06 toride 6R",
    "diag": {
@@ -38,7 +8,7 @@
     "race_id": "2320261104030006",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/toride/raceresult/23202611040300/",
-    "day_html_len": 105805,
+    "day_html_len": 105807,
     "day_races": [
      1,
      2,
@@ -68,7 +38,7 @@
     "race_id": "2520261104030006",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/omiya/raceresult/25202611040300/",
-    "day_html_len": 137380,
+    "day_html_len": 137382,
     "day_races": [
      1,
      2,
@@ -84,10 +54,28 @@
     "day_text_head": "",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-06 omiya 9R",
+   "diag": {
+    "venue": "omiya",
+    "race_id": "2520261104030009",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-06 kumamoto 12R",
+   "diag": {
+    "venue": "kumamoto",
+    "race_id": "8720261106010012",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 2334,
- "with_result": 1839,
+ "with_result": 1872,
  "without_url": 0,
- "pending_eligible": 427
+ "pending_eligible": 432
 }
