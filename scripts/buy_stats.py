@@ -64,10 +64,13 @@ def record(log, all_race_data, today, now_hm):
             continue
         k = _key(today.isoformat(), info["venue"], info["race_no"])
         old = log.get(k) or {}
+        # CLV（締切時オッズとの比較）用に、最初に見た時点のオッズを1回だけ残す。以後は上書きしない。
+        first = old.get("first") or {"ts": now_hm, "items": [[c[0], c[1]] for c in items]}
         log[k] = {"date": today.isoformat(), "venue": info["venue"], "race_no": info["race_no"],
                   "deadline": dl, "type": market_fix.race_type(pred["rows"]),
                   "top": round(max(r["adjusted"] for r in pred["rows"]), 1),
-                  "items": items, "winner": old.get("winner"), "src": "live"}
+                  "items": items, "winner": old.get("winner"), "src": "live",
+                  "first": first, "last_ts": now_hm}
         n += 1
     return n
 
