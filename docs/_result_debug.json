@@ -1,41 +1,6 @@
 {
- "updated": "2026-11-09 02:00",
+ "updated": "2026-11-09 06:05",
  "failures": [
-  {
-   "race": "2026-11-07 kokura 8R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261105030008",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/kokura/raceresult/81202611050300/",
-    "day_html_len": 8427,
-    "day_races": [],
-    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-07 keiokaku 9R",
-   "diag": {
-    "venue": "keiokaku",
-    "race_id": "2720261105030009",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/keiokaku/raceresult/27202611050300/",
-    "day_html_len": 8427,
-    "day_races": [],
-    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-07 kokura 9R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261105030009",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-08 aomori 2R",
    "diag": {
@@ -54,6 +19,41 @@
    "diag": {
     "venue": "aomori",
     "race_id": "1220261108010005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-08 yahiko 2R",
+   "diag": {
+    "venue": "yahiko",
+    "race_id": "2120261107020002",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/yahiko/raceresult/21202611070200/",
+    "day_html_len": 8427,
+    "day_races": [],
+    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-08 kumamoto 7R",
+   "diag": {
+    "venue": "kumamoto",
+    "race_id": "8720261106030007",
+    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/kumamoto/raceresult/87202611060300/",
+    "day_html_len": 8427,
+    "day_races": [],
+    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-08 kumamoto 9R",
+   "diag": {
+    "venue": "kumamoto",
+    "race_id": "8720261106030009",
     "primary": "skipped",
     "day_parsed": false
    }
