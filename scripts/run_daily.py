@@ -302,6 +302,14 @@ def main():
     except Exception as e:
         print(f"[WARN] 買い方の成績ログの更新に失敗しました: {e}")
 
+    # 検証・資金管理ページ：回収率の信頼区間・前向き検証・CLV・仮想資金（失敗しても他の処理は止めない）
+    try:
+        import edge_page
+        edge_page.build(DOCS_DIR, today)
+        print("[INFO] docs/edge.html を書き出しました。")
+    except Exception as e:
+        print(f"[WARN] 検証ページの生成に失敗しました: {e}")
+
     # モデルの毎日の自動補正：答え合わせ済みのレースから、1着率の絞り込みを見直す（1日1回）
     try:
         model_params = update_params(DOCS_DIR, prediction_log, today) if prediction_log else load_params(DOCS_DIR)
