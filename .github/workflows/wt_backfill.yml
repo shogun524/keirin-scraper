@@ -1,0 +1,134 @@
+name: 競輪 過去レース(出走表・結果・全オッズ)の取得
+
+# winticket の終わったレースから、出走表・着順・全券種の確定オッズを取得してリリース wt-data に貯める。
+# 【初回】Run workflow で start=2025-01-01(end は空欄=今日)。1回5時間で区切り、終わるまで自分を再実行する。
+# 【毎日】23:23 JST に、データの最終日の翌日〜今日の分を取り足す(その日の結果も入る → 成績ページ・再学習に使う)。
+on:
+  schedule:
+    - cron: "47 15 * * *"   # JST 0:47(ミッドナイト競輪の後)
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "取得開始日(YYYY-MM-DD)。空欄=続きから/最終日の翌日から"
+        required: false
+        default: ""
+      end:
+        description: "取得終了日(YYYY-MM-DD)。空欄=今日"
+        required: false
+        default: ""
+      workers:
+        description: "同時取得数"
+        required: false
+        default: "3"
+      max_minutes:
+        description: "1回の実行で取得に使う最大時間(分)"
+        required: false
+        default: "300"
+      round:
+        description: "自動再実行の回数(内部用)"
+        required: false
+        default: "1"
+
+concurrency:
+  group: wt-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  MAX_ROUNDS: "12"
+  FILES: "wt_races.csv wt_entries.csv wt_odds.jsonl.gz wt_progress.json wt_days_done.json wt_range.txt"
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas requests
+
+      - name: 既存データと途中経過を取得
+        run: |
+          mkdir -p data
+          if gh release view wt-data >/dev/null 2>&1; then
+            for f in $FILES; do gh release download wt-data --pattern "$f" --dir data --clobber || true; done
+          fi
+          ls -la data
+
+      - name: 取得期間を決定
+        id: range
+        env:
+          IN_START: ${{ github.event.inputs.start }}
+          IN_END: ${{ github.event.inputs.end }}
+        run: |
+          today=$(TZ='Asia/Tokyo' date +%F)
+          end="${IN_END:-$today}"
+          saved=""
+          [ -f data/wt_range.txt ] && saved=$(cat data/wt_range.txt)
+          if [ -n "$IN_START" ]; then
+            start="$IN_START"
+          elif [ -n "$saved" ]; then
+            read start old_end <<< "$saved"
+            echo "::notice::前回の続きから再開: $start 〜 $end"
+          elif [ -f data/wt_races.csv ]; then
+            last=$(python - <<'PY'
+          import pandas as pd
+          d = pd.read_csv("data/wt_races.csv", usecols=["date"], dtype=str)
+          print(pd.to_datetime(d["date"], format="%Y%m%d").dt.strftime("%Y-%m-%d").dropna().max())
+          PY
+          )
+            start=$(date -d "$last +1 day" +%F)
+          else
+            echo "::error::初回は start を指定してください(例: 2025-01-01)"; exit 1
+          fi
+          if [[ "$start" > "$end" ]]; then echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "$start $end" > data/wt_range.txt
+          echo "start=$start" >> "$GITHUB_OUTPUT"
+          echo "end=$end" >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "### 取得期間: $start 〜 $end" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 結果と払戻を取得
+        id: fetch
+        if: steps.range.outputs.skip == 'false'
+        env:
+          W: ${{ github.event.inputs.workers || '3' }}
+          M: ${{ github.event.inputs.max_minutes || '300' }}
+        run: |
+          set +e
+          python scripts/wt_backfill.py "${{ steps.range.outputs.start }}" "${{ steps.range.outputs.end }}" \
+            --out-dir data --workers "$W" --max-minutes "$M"
+          code=$?
+          set -e
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "レース数: $(($(wc -l < data/wt_races.csv) - 1)) / 選手行: $(($(wc -l < data/wt_entries.csv) - 1))" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" != "0" ] && [ "$code" != "3" ]; then exit "$code"; fi
+          # 期間を最後まで処理したら、次回は「最終日の翌日から」にする
+          if [ "$code" = "0" ]; then rm -f data/wt_range.txt; fi
+
+      - name: 保存
+        if: always() && steps.range.outputs.skip == 'false'
+        run: |
+          gh release view wt-data >/dev/null 2>&1 || \
+            gh release create wt-data --title "競輪データ(自動)" --notes "wt_backfill.yml が集めた過去結果・払戻・進捗"
+          for f in $FILES; do
+            if [ -f "data/$f" ]; then gh release upload wt-data "data/$f" --clobber; fi
+          done
+          # 範囲ファイルを消した場合はリリースからも消す
+          if [ ! -f data/wt_range.txt ]; then gh release delete-asset wt-data wt_range.txt -y 2>/dev/null || true; fi
+
+      - name: 続きを自動で再実行
+        if: steps.fetch.outputs.code == '3'
+        env:
+          ROUND: ${{ github.event.inputs.round || '1' }}
+          W: ${{ github.event.inputs.workers || '3' }}
+          M: ${{ github.event.inputs.max_minutes || '300' }}
+        run: |
+          if [ "$ROUND" -ge "$MAX_ROUNDS" ]; then echo "::warning::自動再実行が上限に達しました"; exit 0; fi
+          gh workflow run wt_backfill.yml --ref "${GITHUB_REF_NAME}" -f round=$((ROUND + 1)) -f workers="$W" -f max_minutes="$M"
