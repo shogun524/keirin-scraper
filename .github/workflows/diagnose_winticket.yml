@@ -1,0 +1,30 @@
+name: winticket 取得の診断
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r scripts/requirements.txt
+      - name: 診断
+        run: |
+          python tools/diagnose_winticket.py diag || true
+          { echo '```'; cat diag/summary.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: 保存
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          zip -qr diag.zip diag || true
+          gh release view diagnostics >/dev/null 2>&1 || gh release create diagnostics --prerelease --title "診断結果(自動)" --notes "診断ジョブの出力"
+          gh release upload diagnostics diag.zip --clobber
