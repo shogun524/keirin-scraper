@@ -2,7 +2,7 @@ name: 競輪 過去レース(出走表・結果・全オッズ)の取得
 
 # winticket の終わったレースから、出走表・着順・全券種の確定オッズを取得してリリース wt-data に貯める。
 # 【初回】Run workflow で start=2025-01-01(end は空欄=今日)。1回5時間で区切り、終わるまで自分を再実行する。
-# 【毎日】23:23 JST に、データの最終日の翌日〜今日の分を取り足す(その日の結果も入る → 成績ページ・再学習に使う)。
+# 【毎日】0:47 JST に、データの最終日の翌日〜前日の分を取り足す(ミッドナイト競輪まで確定済み)。
 on:
   schedule:
     - cron: "47 15 * * *"   # JST 0:47(ミッドナイト競輪の後)
@@ -13,7 +13,7 @@ on:
         required: false
         default: ""
       end:
-        description: "取得終了日(YYYY-MM-DD)。空欄=今日"
+        description: "取得終了日(YYYY-MM-DD)。空欄=前日"
         required: false
         default: ""
       workers:
@@ -67,8 +67,8 @@ jobs:
           IN_START: ${{ github.event.inputs.start }}
           IN_END: ${{ github.event.inputs.end }}
         run: |
-          today=$(TZ='Asia/Tokyo' date +%F)
-          end="${IN_END:-$today}"
+          yesterday=$(TZ='Asia/Tokyo' date -d '-1 day' +%F)
+          end="${IN_END:-$yesterday}"
           saved=""
           [ -f data/wt_range.txt ] && saved=$(cat data/wt_range.txt)
           if [ -n "$IN_START" ]; then
