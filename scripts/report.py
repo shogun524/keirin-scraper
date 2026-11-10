@@ -677,12 +677,13 @@ def render_manshaken_box(info):
             items = " ".join(
                 f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
                 f'padding:1px 6px;border-radius:999px">{label}</span> <b>{" ".join(t)}</b>' for k, label, t in rec)
-            parts.append(f'推奨(3連単) {items}')
+            parts.insert(0, f'推奨(3連単) {items}')
         else:
-            parts.append('推奨 <span class="dim">見送り</span>')
-    return ('<div class="mansha-box" style="margin:6px 0;padding:8px 10px;border:1px solid #DDE1E8;border-radius:8px;'
-            'background:#FAFBFC;font-size:13px;line-height:1.7">' + ' ・ '.join(parts) +
-            ' <a href="../picks.html" style="font-size:12px">説明</a></div>')
+            parts.insert(0, '推奨 <span class="dim">見送り(買う根拠のあるルールに当たらない)</span>')
+    return ('<div class="mansha-box" style="margin:6px 0;padding:8px 10px;border:2px solid #C8402A33;border-radius:8px;'
+            'background:#fff;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">'
+            'このレースの買い目</div>' + '<br>'.join(parts) +
+            ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
 def render_race_card(race_data, tab_id):
@@ -721,7 +722,7 @@ def render_race_card(race_data, tab_id):
             arrow = "↑" if rise > 0 else "↓"
             cls = "delta-up" if rise > 0 else "delta-down"
             rise_html = f'<span class="{cls}">{abs(rise):.1f}pt{arrow}</span>'
-        rate_html = f'<b>{adjusted_pct:.1f}%</b><br><span class="dim">基礎{base_pct:.1f}%</span><br>{rise_html}'
+        rate_html = f'<b>{adjusted_pct:.1f}%</b><br>{rise_html}'
 
         rows_html += f"""
         <tr style="{highlight}">
@@ -757,10 +758,15 @@ def render_race_card(race_data, tab_id):
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
     odds_alert_html = render_odds_alert_badge(info)
     pick_color = car_color(top["car"])[0]
-    has_trifecta = bool(trifecta_payload)
+    has_trifecta = bool(trifecta_payload) or bool(_ai_boxes)
     has_dev = bool(dev_payload) or bool(hole_html)
     formula_html = render_formula_block(race_data, tab_id)
-    auto_html = render_auto_box((result.get("trifecta") or {}).get("auto")) + render_ana_box((result.get("trifecta") or {}).get("ana"))
+    _ai_boxes = render_auto_box((result.get("trifecta") or {}).get("auto")) + render_ana_box((result.get("trifecta") or {}).get("ana"))
+    auto_html = ""
+    if _ai_boxes:
+        # AIの出目による買い方・穴目は回収率が控除水準(約75%)なので、3連単タブの中にたたんで置く
+        trifecta_html = (f'<details class="ai-ref"><summary>AIの出目による買い方・穴目(参考・回収率は控除水準)</summary>'
+                         f'{_ai_boxes}</details>') + trifecta_html
     subtab_bar_html = ""
     if has_trifecta or has_dev or formula_html:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
@@ -816,9 +822,6 @@ def render_race_card(race_data, tab_id):
           <tbody>{rows_html}</tbody>
         </table>
 
-        <div class="chart-block">
-          {bar_chart}
-        </div>
 
         <div class="chart-block">{kimarite_table_html}</div>
         <div class="chart-block">{matrix_widget_html}</div>
@@ -897,6 +900,8 @@ RACE_PANEL_STYLE = """
   .buy-line .tf-badge{ margin-left:0; margin-right:4px; }
   .buy-k{ font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:4px; padding:0 5px; background:var(--paper); }
   .b-rec{ background:#2f6b3a; color:#fff; }
+  details.ai-ref{ margin:8px 0; border:1px solid #ddd; border-radius:8px; padding:6px 10px; background:#fff; }
+  details.ai-ref summary{ cursor:pointer; font-size:13px; font-weight:700; color:#666; }
   .auto-box{ border:2px solid #2f6b3a; border-radius:8px; padding:10px 12px; margin:8px 0 12px; background:rgba(47,107,58,.06); }
   .auto-title{ font-size:14px; margin-bottom:4px; } .auto-type{ display:inline-block; background:#2f6b3a; color:#fff; font-size:11px; font-weight:700; border-radius:4px; padding:1px 7px; margin-right:6px; }
   .auto-sum{ font-size:13px; margin-bottom:4px; }
@@ -1494,9 +1499,13 @@ def render_index(all_race_data, date=None, now=None):
           <span class="meta next-race-meta">…</span>
         </a>"""
 
+    # 開催している場だけをカードで並べる(開催なしの場を全部並べると画面の大半が灰色のタイルになるため)
+    open_slugs = [v for row in VENUE_GRID for v in row if v and by_venue.get(v)]
     rows_html = ""
-    for row in VENUE_GRID:
-        rows_html += '<div class="venue-row">' + "".join(venue_card(v) for v in row) + '</div>'
+    for i in range(0, len(open_slugs), 2):
+        rows_html += '<div class="venue-row">' + "".join(venue_card(v) for v in open_slugs[i:i + 2]) + '</div>'
+    if not open_slugs:
+        rows_html = '<p class="dim">本日の開催はありません。</p>'
 
     index_script = """
     function minutesUntilDeadline(deadlineStr, nowJstMinutes){

@@ -323,43 +323,47 @@ def board_html(board, todays, now):
     by = {}
     for p in todays:
         by.setdefault(p["url"], []).append(p)
-    rows = []
+    main_rows, other_rows = [], []
     for b in sorted(board, key=lambda x: (x["start_at"], x["venue"], x["race_no"])):
         hm = datetime.datetime.fromtimestamp(b["start_at"], JST).strftime("%H:%M") if b["start_at"] else "--:--"
         passed = b["start_at"] and b["start_at"] < now.timestamp()
         if b["man"] is None:
-            man, pay = "オッズ待ち", ""
+            man, pay = '<span class="skip">オッズ待ち</span>', ""
         else:
             lvl = "hi" if b["man"] >= 0.4 else ("lo" if b["man"] < 0.2 else "")
             man = f'<span class="man {lvl}">{b["man"]:.0%}</span>'
-            pay = f'{b["q50"]:,.0f}円<br><small>{b["q25"]:,.0f}〜{b["q75"]:,.0f}円</small>'
+            pay = f'{b["q50"]:,.0f}円<br><small>{b["q25"]:,.0f}〜{b["q75"]:,.0f}</small>'
         ps = by.get(b["url"], [])
         win = [p for p in ps if p["rule"] in ("A", "B", "C", "D")]
         big = [p for p in ps if p["rule"] in BIG and p.get("tickets")]
         ref = [p for p in ps if p["rule"] == "E"]
-        rec = []
-        seen = set()
+        rec, seen = [], set()
         for p in win:
             if p["ticket"] not in seen:
                 seen.add(p["ticket"])
                 rules = "・".join(sorted(q["rule"] for q in win if q["ticket"] == p["ticket"]))
                 rec.append(f'<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
         for p in big:
-            rec.append(f'<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
+            rec.append('<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
         if not rec and ref:
             rec.append(f'<span class="rk ref">参考</span> {html.escape(ref[0]["ticket"])}')
-        if not rec:
+        skip = not rec
+        if skip:
             rec.append('<span class="skip">見送り</span>')
-        rows.append(f'<tr class="{"passed" if passed else ""}"><td>{hm}</td><td>{html.escape(b["venue"])}{b["race_no"]}R'
-                    f'<br><small>{html.escape(str(b.get("race_type") or ""))} {b["n"]}車</small></td>'
-                    f'<td>{man}</td><td>{pay}</td><td class="rec">{"<br>".join(rec)}</td></tr>')
-    return ('<h2>全レース一覧(万車率・配当の目安・推奨)</h2>'
-            '<p class="why">万車率 = 3連単が1万円以上になる確率。配当の目安 = 3連単の払戻の中央値(下は25〜75%の範囲)。'
-            'どちらも今のオッズから計算(過去2.3万レースで予測と実際がほぼ一致)。'
-            '推奨: <span class="rk win">A〜D</span>=検証で回収率100%超の勝ち筋 / <span class="rk big">重賞</span>=トントン圏 / '
-            '<span class="rk ref">参考</span>=最強ラインの並び通り(回収率91%・的中率21%、勝ち筋ではない) / 見送り=買う根拠なし</p>'
-            '<div class="tbl"><table class="board"><tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨買い目(3連単)</th></tr>'
-            + "".join(rows) + "</table></div>")
+        row = (f'<tr class="{"passed" if passed else ""}"><td>{hm}</td><td>{html.escape(b["venue"])}{b["race_no"]}R'
+               f'<br><small>{html.escape(str(b.get("race_type") or ""))} {b["n"]}車</small></td>'
+               f'<td>{man}</td><td>{pay}</td><td class="rec">{"<br>".join(rec)}</td></tr>')
+        (other_rows if (skip or passed) else main_rows).append(row)
+    head = '<tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨(3連単)</th></tr>'
+    out = ('<h2>全レース一覧</h2>'
+           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は半分のレースが入る範囲)。今のオッズから計算。'
+           '<span class="rk win">A〜D</span> 勝ち筋 ・ <span class="rk big">重賞</span> トントン圏 ・ <span class="rk ref">参考</span> 損が一番少ない1点</p>')
+    out += ('<div class="tbl"><table class="board">' + head + "".join(main_rows) + '</table></div>') if main_rows else \
+        '<p class="none">これから発走で推奨のあるレースはありません。</p>'
+    if other_rows:
+        out += (f'<details class="more"><summary>見送り・発走済みのレース({len(other_rows)})</summary>'
+                '<div class="tbl"><table class="board">' + head + "".join(other_rows) + '</table></div></details>')
+    return out
 
 
 def render(log, now, board=None):
@@ -424,8 +428,8 @@ def render(log, now, board=None):
     for key, title, roi in (("G", "重賞(G戦)の決勝・準決勝", "107%"), ("H", "重賞(G戦)の予選・特選・選抜など", "102%")):
         bigs = [p for p in todays if p["rule"] == key]
         if bigs:
-            body += (f'<h2>{title}</h2><p class="why">ルール外でも重賞は全レース出します。'
-                     f'検証ではトントン圏(回収率{roi})なので、楽しむ枠として。</p>' + "".join(card(p) for p in bigs))
+            body += (f'<h2>{title}</h2><p class="why">トントン圏(検証の回収率{roi})。楽しむ枠として。</p>'
+                     + "".join(card(p) for p in bigs))
     body += board_html(board, todays, now)
 
     done = [p for p in log if p.get("settled") and not p.get("refund")]
@@ -479,6 +483,8 @@ def render(log, now, board=None):
   .pick.big {{ border-left-color:#B8862B; }} .pick.big .tag {{ background:#B8862B; }}
   .combo {{ display:inline-block; font-weight:700; font-variant-numeric:tabular-nums; border:1px solid var(--line); background:#FAF7EE;
             border-radius:6px; padding:1px 8px; margin:2px 4px 2px 0; }}
+  details.more {{ margin:12px 0; background:#fff; border:1px solid var(--line); border-radius:8px; padding:8px 12px; }}
+  details.more summary {{ cursor:pointer; font-weight:700; font-size:.88rem; color:var(--soft); }}
   .combo.star {{ background:#FFE9C2; border-color:#E2B25A; }}
   .tbl {{ overflow-x:auto; }}
   table.board td {{ text-align:left; vertical-align:top; }}
@@ -496,10 +502,10 @@ def render(log, now, board=None):
 <header><h1>買うべきレース(競輪)</h1>
 <p>{html.escape(today)} ・ 更新 {now.strftime('%H:%M')}(1時間おき) ・ <a href="index.html">全レースの予想</a></p></header>
 <main>{body}{stat}</main>
-<footer><ul>{notes}</ul>
+<footer><details class="more"><summary>ルールの説明と注意</summary><ul>{notes}</ul>
 <p>ラインの強さは「予想印の合計」で決めるので、オッズを見なくても判定できます。並び予想や印が変わると買い目も変わるので、
 買う直前にもう一度開いてください。A〜Dは1レース1点、重賞パックは決勝・準決勝が最大5点・予選などが平均2.5点(各100円)。過去の確定データでの検証結果で、
-大きい配当に頼った成績(上位5本の的中を除くと回収率93%)なので、プラスを保証するものではありません。</p></footer>
+大きい配当に頼った成績(上位5本の的中を除くと回収率93%)なので、プラスを保証するものではありません。</p></details></footer>
 </body></html>"""
 
 
