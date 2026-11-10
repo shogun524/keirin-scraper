@@ -25,7 +25,7 @@ jobs:
           python-version: "3.11"
 
       - name: 依存ライブラリをインストール
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 numpy
 
       - name: テストを実行（失敗したら予想の生成・公開をしない）
         run: python -m unittest discover -s tests
