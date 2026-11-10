@@ -39,6 +39,37 @@ G_RULE = ("G", "重賞パック(G戦の決勝・準決勝): 印◎→◎の番�
           "検証 422レース・的中54回・回収率107%(2025年117%・2026年95%)。トントン圏")
 
 
+# 重賞(G戦)の決勝・準決勝以外(予選・特選・選抜・一般など)は「重賞パック(予選など)」:
+#   3人以上のラインを全部 並び通り(先頭→番手→3番手) + 印で最強ラインの番手→先頭→3番手(番手差し)
+# 検証: 3918レース 平均2.5点 的中535回(的中率14%)回収率102%(2025年100%・2026年105%)。トントン圏
+H_RULE = ("H", "重賞パック(G戦の予選など): 3車以上のライン全部を並び通り + 最強ラインの番手差し",
+          "検証 3918レース・的中535回・回収率102%(2025年100%・2026年105%)。トントン圏")
+BIG = {"G": G_RULE, "H": H_RULE}
+
+
+def is_g_race(grade):
+    return str(grade or "").startswith("G")
+
+
+def prelim_tickets(R):
+    """重賞パック(予選など)の買い目"""
+    entries = [e for e in R.get("entries", []) if not e.get("absent")]
+    cars = {int(e["number"]) for e in entries}
+    lp = R.get("linePrediction") or {}
+    lines = [[n for en in L.get("entries", []) for n in en.get("numbers", []) if n in cars] for L in lp.get("lines", [])]
+    lines = [L for L in lines if L]
+    rec = {r["playerId"]: r for r in R.get("records", [])}
+    mark = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("predictionMark") for e in entries}
+    point = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("racePoint") or 0 for e in entries}
+    if len(lines) < 2 or not any(mark.values()):
+        return []
+    tks = [f"{L[0]}-{L[1]}-{L[2]}" for L in lines if len(L) >= 3]
+    L1 = lines[line_rank(lines, mark, point)[0]]
+    if len(L1) >= 3:
+        tks.append(f"{L1[1]}-{L1[0]}-{L1[2]}")
+    return list(dict.fromkeys(tks))
+
+
 def is_big_race(grade, race_type):
     return str(grade or "").startswith("G") and race_type in ("決勝", "準決勝")
 
@@ -172,6 +203,15 @@ def collect(today):
                                   start_at=race.get("startAt") or 0, close_at=race.get("closeAt") or 0,
                                   cls=race.get("class"), race_type=race.get("raceType3"),
                                   line=f"◎{ab[0]}・番手{ab[1]}" if ab and ab[1] else ("◎に番手なし → 見送り" if ab else "並び・印待ち")))
+            elif is_g_race(c["grade"]) and not race.get("cancel"):
+                tks = prelim_tickets(R)
+                lp = R.get("linePrediction") or {}
+                picks.append(dict(date=today.isoformat(), rule="H", ticket=" / ".join(tks), tickets=tks, url=url,
+                                  venue=c["venue"], race_no=n, cup=c["name"], grade=c["grade"],
+                                  start_at=race.get("startAt") or 0, close_at=race.get("closeAt") or 0,
+                                  cls=race.get("class"), race_type=race.get("raceType3"),
+                                  line=("並び " + " / ".join("-".join(str(x) for en in L.get("entries", []) for x in en.get("numbers", []))
+                                                           for L in lp.get("lines", []))) if tks else "3車ラインなし → 見送り"))
             for key, ticket, L in hits:
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
@@ -194,7 +234,8 @@ def merge(log, picks):
 def render(log, now):
     today = now.date().isoformat()
     rule_desc = {k: (d, b) for k, _, _, d, b in RULES}
-    rule_desc["G"] = (G_RULE[1], G_RULE[2])
+    for k, (_, d, b) in BIG.items():
+        rule_desc[k] = (d, b)
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -202,7 +243,14 @@ def render(log, now):
     todays = [p for p in log if p["date"] == today]
 
     def npts(p):
-        return len(p.get("tickets") or [p["ticket"]]) if (p.get("tickets") or p.get("rule") != "G") else 0
+        return len(p.get("tickets") or [p["ticket"]]) if (p.get("tickets") or p.get("rule") not in BIG) else 0
+
+    # 同じレースの A〜C の買い目(重賞パックのカードの中で★を付け、別カードは出さない)
+    abc = {}
+    for p in todays:
+        if p["rule"] not in BIG:
+            abc.setdefault(p["url"], {})[p["ticket"]] = p["rule"]
+    big_urls = {p["url"] for p in todays if p["rule"] in BIG}
 
     def card(p):
         passed = p["start_at"] and p["start_at"] < now.timestamp()
@@ -210,38 +258,50 @@ def render(log, now):
         if p.get("settled"):
             res = (f'<span class="hit">的中 {p["payout"]:,}円</span>' if p.get("payout") else
                    f'<span class="miss">{"中止(返還)" if p.get("refund") else "はずれ " + html.escape(p.get("result") or "")}</span>')
-        tks = p.get("tickets") or ([p["ticket"]] if p["rule"] != "G" else [])
-        bet = ("".join(f'<span class="combo">{html.escape(t)}</span>' for t in tks) if tks else "見送り")
-        return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] == 'G' else ''}">
+        tks = p.get("tickets") or ([p["ticket"]] if p["rule"] not in BIG else [])
+        star = abc.get(p["url"], {}) if p["rule"] in BIG else {}
+        bet = ("".join(f'<span class="combo{" star" if t in star else ""}">{"★" if t in star else ""}{html.escape(t)}</span>'
+                       for t in tks) if tks else "見送り")
+        extra = [t for t in star if t not in tks]
+        if extra:
+            bet += "".join(f'<span class="combo star">★{html.escape(t)}</span>' for t in extra)
+            tks = tks + extra
+        note = ("<div class=\"why\">★ = ルール" + "・".join(sorted(set(star.values()))) + "(1点ルール)の買い目</div>") if star else ""
+        return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] in BIG else ''}">
   <div class="top"><span class="time">{hm(p['start_at'])}</span><span class="race">{html.escape(p['venue'])}{p['race_no']}R</span>
-  <span class="tag">{'重賞' if p['rule'] == 'G' else p['rule']}</span>{res}</div>
+  <span class="tag">{'重賞' if p['rule'] in BIG else p['rule']}</span>{res}</div>
   <div class="sub">{html.escape(p.get('cup') or '')} {html.escape(p.get('grade') or '')} {html.escape(p.get('race_type') or '')}</div>
   <div class="bet">3連単 {bet}{f' <small>各100円・{len(tks)}点</small>' if tks else ''}</div>
-  <div class="why">{html.escape(rule_desc[p['rule']][0])}({html.escape(p['line'])})</div>
+  <div class="why">{html.escape(rule_desc[p['rule']][0])}({html.escape(p['line'])})</div>{note}
 </article>""")
 
-    body = "".join(card(p) for p in todays if p["rule"] != "G") or \
-        '<p class="none">今日の対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
-    bigs = [p for p in todays if p["rule"] == "G"]
-    if bigs:
-        body += ('<h2>重賞(G戦)の決勝・準決勝</h2><p class="why">ルール外でも重賞の勝負レースは毎回出します。'
-                 '検証ではトントン圏(回収率107%)なので、楽しむ枠として。</p>' + "".join(card(p) for p in bigs))
+    body = "".join(card(p) for p in todays if p["rule"] not in BIG and p["url"] not in big_urls) or \
+        '<p class="none">今日の1点ルールの対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
+    for key, title, roi in (("G", "重賞(G戦)の決勝・準決勝", "107%"), ("H", "重賞(G戦)の予選・特選・選抜など", "102%")):
+        bigs = [p for p in todays if p["rule"] == key]
+        if bigs:
+            body += (f'<h2>{title}</h2><p class="why">ルール外でも重賞は全レース出します。'
+                     f'検証ではトントン圏(回収率{roi})なので、楽しむ枠として。</p>' + "".join(card(p) for p in bigs))
 
     done = [p for p in log if p.get("settled") and not p.get("refund")]
     stat = ""
     if done:
         rows = []
-        for key in ["A", "B", "C", "G", "全体"]:
-            s = done if key == "全体" else [p for p in done if p["rule"] == key]
+        for key in ["A", "B", "C", "G", "H", "全体"]:
+            if key == "全体":  # 重賞パックに含まれる A〜C の買い目は二重に数えない
+                bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
+                s = [p for p in done if p["rule"] in BIG or p["url"] not in bu]
+            else:
+                s = [p for p in done if p["rule"] == key]
             pts = sum(npts(p) for p in s)
             if pts:
                 pay = sum(p["payout"] for p in s)
-                rows.append(f"<tr><td>{'重賞パック' if key == 'G' else key}</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
+                rows.append(f"<tr><td>{ {'G': '重賞パック(決勝・準決勝)', 'H': '重賞パック(予選など)'}.get(key, key) }</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
                             f"<td>{pay:,}円</td><td>{pay / (pts * 100):.0%}</td></tr>")
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
-    notes += f"<li><b>重賞パック</b>: {html.escape(G_RULE[1])}。{html.escape(G_RULE[2])}。</li>"
+    notes += "".join(f"<li><b>{html.escape(d.split('(')[0])}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for _, d, b in BIG.values())
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>買うべきレース</title>
@@ -264,6 +324,7 @@ def render(log, now):
   .pick.big {{ border-left-color:#B8862B; }} .pick.big .tag {{ background:#B8862B; }}
   .combo {{ display:inline-block; font-weight:700; font-variant-numeric:tabular-nums; border:1px solid var(--line); background:#FAF7EE;
             border-radius:6px; padding:1px 8px; margin:2px 4px 2px 0; }}
+  .combo.star {{ background:#FFE9C2; border-color:#E2B25A; }}
   .none {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; text-align:center; }}
   h2 {{ font-size:1rem; margin:20px 0 8px; }}
   table {{ border-collapse:collapse; width:100%; background:#fff; font-size:.88rem; }}
@@ -275,7 +336,7 @@ def render(log, now):
 <main>{body}{stat}</main>
 <footer><ul>{notes}</ul>
 <p>ラインの強さは「予想印の合計」で決めるので、オッズを見なくても判定できます。並び予想や印が変わると買い目も変わるので、
-買う直前にもう一度開いてください。A〜Cは1レース1点、重賞パックは最大5点(各100円)。過去の確定データでの検証結果で、
+買う直前にもう一度開いてください。A〜Cは1レース1点、重賞パックは決勝・準決勝が最大5点・予選などが平均2.5点(各100円)。過去の確定データでの検証結果で、
 大きい配当に頼った成績(上位5本の的中を除くと回収率93%)なので、プラスを保証するものではありません。</p></footer>
 </body></html>"""
 

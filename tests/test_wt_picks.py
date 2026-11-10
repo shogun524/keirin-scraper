@@ -80,3 +80,22 @@ class TestBigRace(unittest.TestCase):
         self.assertIn("重賞(G戦)の決勝・準決勝", h)
         self.assertIn("重賞パック", h)
         self.assertIn("2500%", h)  # 5000円 / (2点×100円)
+
+
+class TestPrelim(unittest.TestCase):
+    def test_prelim_tickets(self):
+        R = race(9, [[1, 4, 7], [2, 5, 8], [3, 6, 9]], {1: 1, 2: 2, 3: 3})
+        self.assertEqual(P.prelim_tickets(R), ["1-4-7", "2-5-8", "3-6-9", "4-1-7"])
+        R = race(7, [[1, 4], [2, 5], [3, 6, 7]], {2: 1})
+        self.assertEqual(P.prelim_tickets(R), ["3-6-7"])          # 最強ライン(2-5)は2車なので番手差しなし
+
+    def test_star_and_no_double_card(self):
+        now = datetime.datetime(2026, 11, 10, 12, 0, tzinfo=P.JST)
+        base = dict(date="2026-11-10", url="u", venue="立川", race_no=5, cup="記念", grade="G3", start_at=0, close_at=0,
+                    cls="S級", race_type="一予選")
+        log = [dict(base, rule="H", ticket="", tickets=["1-4-7", "2-5-8", "3-6-9", "4-1-7"], line="並び"),
+               dict(base, rule="A", ticket="2-5-8", line="2-5-8")]
+        h = P.render(log, now)
+        self.assertIn("★2-5-8", h)
+        self.assertEqual(h.count('<article'), 1)                   # A の別カードは出さない
+        self.assertIn("重賞(G戦)の予選・特選・選抜など", h)
