@@ -119,3 +119,38 @@ class TestRuleD(unittest.TestCase):
         h = P.render([dict(base, rule="A", line="2-5-8"), dict(base, rule="D", line="2-5-8・15.0倍")], now)
         self.assertEqual(h.count("<article"), 1)
         self.assertIn(">A・D<", h)
+
+
+class TestBoard(unittest.TestCase):
+    def test_market_view(self):
+        import wt_manshaken as M
+        v = M.market_view([2.0] + [50.0] * 20 + [500.0] * 30)
+        self.assertTrue(0 < v["man"] < 1)
+        self.assertLessEqual(v["q25"], v["q50"])
+        self.assertLessEqual(v["q50"], v["q75"])
+        self.assertIsNone(M.market_view([5.0, 6.0]))
+
+    def test_line_ticket_first(self):
+        R = race(7, [[1, 4, 7], [2, 5, 6], [3]], {1: 1, 2: 2})
+        self.assertEqual(P.line_ticket(R, 1), ("1-4-7", [1, 4, 7]))
+
+    def test_board_render(self):
+        now = datetime.datetime(2026, 11, 10, 12, 0, tzinfo=P.JST)
+        base = dict(date="2026-11-10", url="u", venue="立川", race_no=5, cup="記念", grade="F1", start_at=0, close_at=0,
+                    cls="A級", race_type="予選")
+        log = [dict(base, rule="D", ticket="2-5-6", line="2-5-6・15.0倍"), dict(base, rule="E", ticket="1-4-7", line="1-4-7・6.0倍"),
+               dict(base, url="v", race_no=6, rule="E", ticket="3-1-2", line="3-1-2・4.0倍")]
+        board = [dict(url="u", venue="立川", race_no=5, start_at=0, grade="F1", race_type="予選", cls="A級", n=7,
+                      man=0.31, q25=1500, q50=4200, q75=12000, odds={}),
+                 dict(url="v", venue="立川", race_no=6, start_at=0, grade="F1", race_type="予選", cls="A級", n=7,
+                      man=0.12, q25=600, q50=1200, q75=2500, odds={}),
+                 dict(url="w", venue="立川", race_no=7, start_at=0, grade="F1", race_type="予選", cls="A級", n=7,
+                      man=None, q25=None, q50=None, q75=None, odds={})]
+        h = P.render(log, now, board)
+        self.assertIn("全レース一覧", h)
+        self.assertIn("31%", h)
+        self.assertIn("4,200円", h)
+        self.assertIn(">D</span> <b>2-5-6</b>", h)      # 勝ち筋があるレースは参考を出さない
+        self.assertIn(">参考</span> 3-1-2", h)
+        self.assertIn("見送り", h)
+        self.assertEqual(h.count("<article"), 1)          # E はカードにしない

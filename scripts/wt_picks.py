@@ -22,6 +22,7 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from wt_backfill import BASE, get_state, month_cups, queries, race_numbers  # noqa: E402
+from wt_manshaken import market_view  # noqa: E402
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs")
@@ -42,6 +43,17 @@ D_ODDS = (10.0, 30.0)
 
 def second_line_ticket(R):
     """印2番目のライン(3車以上)の並び通りの買い目。無ければ None"""
+    return line_ticket(R, 2)
+
+
+# E(参考): 印で最強のラインの並び通りが10倍以下のとき。検証 15124点・的中率21%・回収率91%(両年とも90%前後)。
+# 勝ち筋ではないが、ルールに当たらないレースで「買うならこれ」という一番損の少ない1点
+E_RULE = ("E", "参考: 最強ラインの並び通り(3連単10倍以下のとき)", "検証 15124点・的中率21%・回収率91%(勝ち筋ではない)")
+E_ODDS = 10.0
+
+
+def line_ticket(R, k):
+    """印でk番目のライン(3車以上)の並び通りの買い目。無ければ None"""
     entries = [e for e in R.get("entries", []) if not e.get("absent")]
     cars = {int(e["number"]) for e in entries}
     lp = R.get("linePrediction") or {}
@@ -52,7 +64,10 @@ def second_line_ticket(R):
     point = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("racePoint") or 0 for e in entries}
     if len(lines) < 2 or not any(mark.values()):
         return None
-    L = lines[line_rank(lines, mark, point)[1]]
+    order = line_rank(lines, mark, point)
+    if len(order) < k:
+        return None
+    L = lines[order[k - 1]]
     return (f"{L[0]}-{L[1]}-{L[2]}", L) if len(L) >= 3 else None
 
 
@@ -197,7 +212,7 @@ def settle(log, now):
 
 def collect(today):
     ym = today.strftime("%Y%m")
-    picks, checked, skipped = [], 0, {}
+    picks, checked, skipped, board = [], 0, {}, []
     for c in month_cups(ym):
         if not c["slug"]:
             continue
@@ -242,19 +257,31 @@ def collect(today):
                                   cls=race.get("class"), race_type=race.get("raceType3"),
                                   line=("並び " + " / ".join("-".join(str(x) for en in L.get("entries", []) for x in en.get("numbers", []))
                                                            for L in lp.get("lines", []))) if tks else "3車ラインなし → 見送り"))
+            tri = trifecta_odds(O)
             d = second_line_ticket(R) if not race.get("cancel") else None
             if d:
-                od = trifecta_odds(O).get(d[0])
+                od = tri.get(d[0])
                 if od and D_ODDS[0] <= od <= D_ODDS[1]:
                     hits.append(("D", d[0], d[1]))
                     dodds = od
+            e1 = line_ticket(R, 1) if not race.get("cancel") else None
+            if e1 and tri.get(e1[0]) and tri[e1[0]] <= E_ODDS:
+                hits.append(("E", e1[0], e1[1]))
             for key, ticket, L in hits:
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
                                   close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
-                                  line="-".join(map(str, L)) + (f"・{dodds:.1f}倍" if key == "D" else "")))
+                                  line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E") and tri.get(ticket) else "")))
+            if not race.get("cancel"):
+                mv = market_view(tri) if tri else None
+                board.append(dict(url=url, venue=c["venue"], race_no=n, start_at=race.get("startAt") or 0,
+                                  grade=c["grade"], race_type=race.get("raceType3"), cls=race.get("class"),
+                                  n=len([x for x in R.get("entries", []) if not x.get("absent")]),
+                                  man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,
+                                  q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
+                                  odds={t: tri.get(t) for _, t, _ in hits}))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
-    return picks
+    return picks, board
 
 
 def merge(log, picks):
@@ -267,12 +294,59 @@ def merge(log, picks):
     return sorted(keep, key=lambda p: (p["date"], p["start_at"], p["rule"]))
 
 
-def render(log, now):
+def board_html(board, todays, now):
+    """全レースの 万車率・配当の目安・推奨買い目 の一覧"""
+    if not board:
+        return ""
+    by = {}
+    for p in todays:
+        by.setdefault(p["url"], []).append(p)
+    rows = []
+    for b in sorted(board, key=lambda x: (x["start_at"], x["venue"], x["race_no"])):
+        hm = datetime.datetime.fromtimestamp(b["start_at"], JST).strftime("%H:%M") if b["start_at"] else "--:--"
+        passed = b["start_at"] and b["start_at"] < now.timestamp()
+        if b["man"] is None:
+            man, pay = "オッズ待ち", ""
+        else:
+            lvl = "hi" if b["man"] >= 0.4 else ("lo" if b["man"] < 0.2 else "")
+            man = f'<span class="man {lvl}">{b["man"]:.0%}</span>'
+            pay = f'{b["q50"]:,.0f}円<br><small>{b["q25"]:,.0f}〜{b["q75"]:,.0f}円</small>'
+        ps = by.get(b["url"], [])
+        win = [p for p in ps if p["rule"] in ("A", "B", "C", "D")]
+        big = [p for p in ps if p["rule"] in BIG and p.get("tickets")]
+        ref = [p for p in ps if p["rule"] == "E"]
+        rec = []
+        seen = set()
+        for p in win:
+            if p["ticket"] not in seen:
+                seen.add(p["ticket"])
+                rules = "・".join(sorted(q["rule"] for q in win if q["ticket"] == p["ticket"]))
+                rec.append(f'<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
+        for p in big:
+            rec.append(f'<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
+        if not rec and ref:
+            rec.append(f'<span class="rk ref">参考</span> {html.escape(ref[0]["ticket"])}')
+        if not rec:
+            rec.append('<span class="skip">見送り</span>')
+        rows.append(f'<tr class="{"passed" if passed else ""}"><td>{hm}</td><td>{html.escape(b["venue"])}{b["race_no"]}R'
+                    f'<br><small>{html.escape(str(b.get("race_type") or ""))} {b["n"]}車</small></td>'
+                    f'<td>{man}</td><td>{pay}</td><td class="rec">{"<br>".join(rec)}</td></tr>')
+    return ('<h2>全レース一覧(万車率・配当の目安・推奨)</h2>'
+            '<p class="why">万車率 = 3連単が1万円以上になる確率。配当の目安 = 3連単の払戻の中央値(下は25〜75%の範囲)。'
+            'どちらも今のオッズから計算(過去2.3万レースで予測と実際がほぼ一致)。'
+            '推奨: <span class="rk win">A〜D</span>=検証で回収率100%超の勝ち筋 / <span class="rk big">重賞</span>=トントン圏 / '
+            '<span class="rk ref">参考</span>=最強ラインの並び通り(回収率91%・的中率21%、勝ち筋ではない) / 見送り=買う根拠なし</p>'
+            '<div class="tbl"><table class="board"><tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨買い目(3連単)</th></tr>'
+            + "".join(rows) + "</table></div>")
+
+
+def render(log, now, board=None):
     today = now.date().isoformat()
     rule_desc = {k: (d, b) for k, _, _, d, b in RULES}
     for k, (_, d, b) in BIG.items():
         rule_desc[k] = (d, b)
     rule_desc["D"] = (D_RULE[1], D_RULE[2])
+    rule_desc["E"] = (E_RULE[1], E_RULE[2])
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -285,14 +359,14 @@ def render(log, now):
     # 同じレースの A〜C の買い目(重賞パックのカードの中で★を付け、別カードは出さない)
     abc = {}
     for p in todays:
-        if p["rule"] not in BIG:
+        if p["rule"] not in BIG and p["rule"] != "E":
             abc.setdefault(p["url"], {})[p["ticket"]] = p["rule"]
     big_urls = {p["url"] for p in todays if p["rule"] in BIG}
 
     # 同じレース・同じ買い目に当てはまる1点ルール(A と D など)は1枚のカードにまとめる
     tags = {}
     for p in todays:
-        if p["rule"] not in BIG:
+        if p["rule"] not in BIG and p["rule"] != "E":
             tags.setdefault((p["url"], p["ticket"]), []).append(p["rule"])
 
     def card(p):
@@ -320,7 +394,7 @@ def render(log, now):
 
     seen, singles = set(), []
     for p in todays:
-        if p["rule"] not in BIG and p["url"] not in big_urls and (p["url"], p["ticket"]) not in seen:
+        if p["rule"] not in BIG and p["rule"] != "E" and p["url"] not in big_urls and (p["url"], p["ticket"]) not in seen:
             seen.add((p["url"], p["ticket"]))
             singles.append(p)
     body = "".join(card(p) for p in singles) or \
@@ -330,16 +404,19 @@ def render(log, now):
         if bigs:
             body += (f'<h2>{title}</h2><p class="why">ルール外でも重賞は全レース出します。'
                      f'検証ではトントン圏(回収率{roi})なので、楽しむ枠として。</p>' + "".join(card(p) for p in bigs))
+    body += board_html(board, todays, now)
 
     done = [p for p in log if p.get("settled") and not p.get("refund")]
     stat = ""
     if done:
         rows = []
-        for key in ["A", "B", "C", "D", "G", "H", "全体"]:
+        for key in ["A", "B", "C", "D", "G", "H", "全体", "E"]:
             if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
                 s, sk = [], set()
                 for p in done:
+                    if p["rule"] == "E":
+                        continue
                     if p["rule"] in BIG:
                         s.append(p)
                     elif p["url"] not in bu and (p["url"], p["ticket"]) not in sk:
@@ -350,12 +427,13 @@ def render(log, now):
             pts = sum(npts(p) for p in s)
             if pts:
                 pay = sum(p["payout"] for p in s)
-                rows.append(f"<tr><td>{ {'G': '重賞パック(決勝・準決勝)', 'H': '重賞パック(予選など)'}.get(key, key) }</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
+                rows.append(f"<tr><td>{ {'G': '重賞パック(決勝・準決勝)', 'H': '重賞パック(予選など)', '全体': '全体(A〜D・重賞)', 'E': 'E 参考(最強ライン並び通り)'}.get(key, key) }</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
                             f"<td>{pay:,}円</td><td>{pay / (pts * 100):.0%}</td></tr>")
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
     notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
+    notes += f"<li><b>E(参考)</b>: {html.escape(E_RULE[1])}。{html.escape(E_RULE[2])}。</li>"
     notes += "".join(f"<li><b>{html.escape(d.split('(')[0])}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for _, d, b in BIG.values())
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -380,6 +458,13 @@ def render(log, now):
   .combo {{ display:inline-block; font-weight:700; font-variant-numeric:tabular-nums; border:1px solid var(--line); background:#FAF7EE;
             border-radius:6px; padding:1px 8px; margin:2px 4px 2px 0; }}
   .combo.star {{ background:#FFE9C2; border-color:#E2B25A; }}
+  .tbl {{ overflow-x:auto; }}
+  table.board td {{ text-align:left; vertical-align:top; }}
+  table.board tr.passed {{ opacity:.5; }}
+  .man {{ font-weight:700; font-variant-numeric:tabular-nums; }} .man.hi {{ color:#C8402A; }} .man.lo {{ color:#2F6B4F; }}
+  .rk {{ font-size:.7rem; font-weight:700; color:#fff; padding:1px 6px; border-radius:999px; }}
+  .rk.win {{ background:#C8402A; }} .rk.big {{ background:#B8862B; }} .rk.ref {{ background:#7A8494; }}
+  .skip {{ color:var(--soft); font-size:.85rem; }} td.rec b {{ font-variant-numeric:tabular-nums; }}
   .none {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; text-align:center; }}
   h2 {{ font-size:1rem; margin:20px 0 8px; }}
   table {{ border-collapse:collapse; width:100%; background:#fff; font-size:.88rem; }}
@@ -399,14 +484,25 @@ def render(log, now):
 def main():
     now = datetime.datetime.now(JST)
     log = load_log()
+    board_path = os.path.join(DOCS, "_race_board.json")
+    board = None
     try:
-        log = merge(log, collect(now.date()))
+        picks, board = collect(now.date())
+        log = merge(log, picks)
+        with open(board_path, "w", encoding="utf-8") as f:
+            json.dump(dict(date=now.date().isoformat(), races=board), f, ensure_ascii=False)
     except Exception as e:  # noqa: BLE001
         print(f"[WARN] 今日の判定に失敗: {e}")
+        try:
+            with open(board_path, encoding="utf-8") as f:
+                b = json.load(f)
+            board = b["races"] if b.get("date") == now.date().isoformat() else None
+        except (OSError, ValueError, KeyError):
+            board = None
     settle(log, now)
     save_log(log)
     with open(os.path.join(DOCS, "picks.html"), "w", encoding="utf-8") as f:
-        f.write(render(log, now))
+        f.write(render(log, now, board))
     print("[INFO] docs/picks.html を書き出しました。")
 
 
