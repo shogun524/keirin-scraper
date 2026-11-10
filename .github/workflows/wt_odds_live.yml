@@ -2,9 +2,8 @@ name: 競輪 締切前オッズの記録（10分おき・全券種）
 
 # 締切まで65分以内のレースの全券種オッズを記録し、リリース wt-odds-live の wt_live_YYYYMMDD.jsonl.gz に追記する。
 # ルールD(3連単10〜30倍)や万車率を、確定オッズではなく締切前オッズで検証し直すためのデータ。
+# 定期実行は closing.yml(10分おき)の中で行う。これは手動で1回だけ記録したいとき用。
 on:
-  schedule:
-    - cron: "3,13,23,33,43,53 * * * *"
   workflow_dispatch: {}
 
 permissions:

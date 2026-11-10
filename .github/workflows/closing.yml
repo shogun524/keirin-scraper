@@ -10,6 +10,9 @@ on:
 permissions:
   contents: write
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 concurrency:
   group: closing-odds
   cancel-in-progress: false
@@ -36,6 +39,19 @@ jobs:
         env:
           PYTHONIOENCODING: "utf-8"
         run: python closing_odds.py
+
+      - name: 締切前オッズ(全券種・締切65分前から)をリリース wt-odds-live に追記（失敗しても他は止めない）
+        continue-on-error: true
+        env:
+          PYTHONIOENCODING: "utf-8"
+        run: |
+          mkdir -p live
+          f="wt_live_$(TZ=Asia/Tokyo date +%Y%m%d).jsonl.gz"
+          gh release view wt-odds-live >/dev/null 2>&1 || \
+            gh release create wt-odds-live --title "競輪 締切前オッズ(自動)" --notes "10分おきに記録する全券種オッズ"
+          gh release download wt-odds-live --pattern "$f" --dir live --clobber 2>/dev/null || true
+          (cd scripts && python wt_odds_snapshot.py --out-dir ../live)
+          if [ -f "live/$f" ]; then gh release upload wt-odds-live "live/$f" --clobber; fi
 
       - name: 記録をコミット
         run: |
