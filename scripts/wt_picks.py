@@ -275,7 +275,7 @@ def collect(today):
             if not race.get("cancel"):
                 mv = market_view(tri) if tri else None
                 board.append(dict(url=url, venue=c["venue"], slug={"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"]),
-                                  race_no=n, start_at=race.get("startAt") or 0,
+                                  race_no=n, start_at=race.get("startAt") or 0, close_at=race.get("closeAt") or 0,
                                   grade=c["grade"], race_type=race.get("raceType3"), cls=race.get("class"),
                                   n=len([x for x in R.get("entries", []) if not x.get("absent")]),
                                   man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,

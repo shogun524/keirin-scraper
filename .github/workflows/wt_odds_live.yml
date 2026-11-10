@@ -1,0 +1,44 @@
+name: 競輪 締切前オッズの記録（10分おき・全券種）
+
+# 締切まで65分以内のレースの全券種オッズを記録し、リリース wt-odds-live の wt_live_YYYYMMDD.jsonl.gz に追記する。
+# ルールD(3連単10〜30倍)や万車率を、確定オッズではなく締切前オッズで検証し直すためのデータ。
+on:
+  schedule:
+    - cron: "3,13,23,33,43,53 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wt-odds-live
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests beautifulsoup4
+      - name: 今日の記録ファイルを取得
+        run: |
+          mkdir -p live
+          f="wt_live_$(TZ=Asia/Tokyo date +%Y%m%d).jsonl.gz"
+          echo "FILE=$f" >> "$GITHUB_ENV"
+          gh release view wt-odds-live >/dev/null 2>&1 || \
+            gh release create wt-odds-live --title "競輪 締切前オッズ(自動)" --notes "wt_odds_live.yml が10分おきに記録する全券種オッズ"
+          gh release download wt-odds-live --pattern "$f" --dir live --clobber 2>/dev/null || true
+      - name: オッズを記録
+        working-directory: scripts
+        env:
+          PYTHONIOENCODING: "utf-8"
+        run: python wt_odds_snapshot.py --out-dir ../live
+      - name: 保存
+        run: |
+          if [ -f "live/$FILE" ]; then gh release upload wt-odds-live "live/$FILE" --clobber; fi
