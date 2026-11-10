@@ -33,6 +33,33 @@ RULES = [
     ("C", 7, 3, "7車立て・印3番目のライン 並び通り", "検証 2462点 回収率122%"),
 ]
 
+# D: 車立てを問わず、印2番目のラインの並び通り3連単が「10〜30倍」のとき(レース結果からの逆算で見つけた物)
+# 検証: 3548点 的中214回 回収率111%(2025年111%・2026年110%)、上位5本の的中を除いても106%(大穴頼みではない)
+D_RULE = ("D", "印2番目のライン 並び通り(3連単が10〜30倍のとき)",
+          "検証 3548点・的中214回・回収率111%(2025年111%・2026年110%、上位5本の的中を除いても106%)")
+D_ODDS = (10.0, 30.0)
+
+
+def second_line_ticket(R):
+    """印2番目のライン(3車以上)の並び通りの買い目。無ければ None"""
+    entries = [e for e in R.get("entries", []) if not e.get("absent")]
+    cars = {int(e["number"]) for e in entries}
+    lp = R.get("linePrediction") or {}
+    lines = [[n for en in L.get("entries", []) for n in en.get("numbers", []) if n in cars] for L in lp.get("lines", [])]
+    lines = [L for L in lines if L]
+    rec = {r["playerId"]: r for r in R.get("records", [])}
+    mark = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("predictionMark") for e in entries}
+    point = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("racePoint") or 0 for e in entries}
+    if len(lines) < 2 or not any(mark.values()):
+        return None
+    L = lines[line_rank(lines, mark, point)[1]]
+    return (f"{L[0]}-{L[1]}-{L[2]}", L) if len(L) >= 3 else None
+
+
+def trifecta_odds(O):
+    return {"-".join(map(str, x["key"])): x.get("odds") for x in (O or {}).get("trifecta") or [] if x.get("odds")}
+
+
 # 重賞(G戦)の決勝・準決勝は毎レース出す「重賞パック」: 印◎ → ◎のライン番手 → 印順の相手5車(5点)
 # 検証: 422レース 的中54回 回収率107%(2025年117%・2026年95%、決勝121%・準決勝103%)。トントン圏で、勝ちとまでは言えない
 G_RULE = ("G", "重賞パック(G戦の決勝・準決勝): 印◎→◎の番手→印順の相手5車",
@@ -187,12 +214,15 @@ def collect(today):
             url = f"{BASE}/{c['slug']}/racecard/{c['cup']}/{idx}/{n}"
             try:
                 st, _ = get_state(url)
-                R = queries(st).get("FETCH_KEIRIN_RACE") or {}
+                qq = queries(st)
+                R = qq.get("FETCH_KEIRIN_RACE") or {}
+                O = qq.get("FETCH_KEIRIN_RACE_ODDS") or {}
             except Exception as e:  # noqa: BLE001
                 print(f"[WARN] {url}: {e}")
                 continue
             checked += 1
             hits, why = evaluate_race(R)
+            dodds = None
             if why:
                 skipped[why] = skipped.get(why, 0) + 1
             race = R.get("race") or {}
@@ -212,11 +242,17 @@ def collect(today):
                                   cls=race.get("class"), race_type=race.get("raceType3"),
                                   line=("並び " + " / ".join("-".join(str(x) for en in L.get("entries", []) for x in en.get("numbers", []))
                                                            for L in lp.get("lines", []))) if tks else "3車ラインなし → 見送り"))
+            d = second_line_ticket(R) if not race.get("cancel") else None
+            if d:
+                od = trifecta_odds(O).get(d[0])
+                if od and D_ODDS[0] <= od <= D_ODDS[1]:
+                    hits.append(("D", d[0], d[1]))
+                    dodds = od
             for key, ticket, L in hits:
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
                                   close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
-                                  line="-".join(map(str, L))))
+                                  line="-".join(map(str, L)) + (f"・{dodds:.1f}倍" if key == "D" else "")))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
     return picks
 
@@ -236,6 +272,7 @@ def render(log, now):
     rule_desc = {k: (d, b) for k, _, _, d, b in RULES}
     for k, (_, d, b) in BIG.items():
         rule_desc[k] = (d, b)
+    rule_desc["D"] = (D_RULE[1], D_RULE[2])
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -251,6 +288,12 @@ def render(log, now):
         if p["rule"] not in BIG:
             abc.setdefault(p["url"], {})[p["ticket"]] = p["rule"]
     big_urls = {p["url"] for p in todays if p["rule"] in BIG}
+
+    # 同じレース・同じ買い目に当てはまる1点ルール(A と D など)は1枚のカードにまとめる
+    tags = {}
+    for p in todays:
+        if p["rule"] not in BIG:
+            tags.setdefault((p["url"], p["ticket"]), []).append(p["rule"])
 
     def card(p):
         passed = p["start_at"] and p["start_at"] < now.timestamp()
@@ -269,13 +312,18 @@ def render(log, now):
         note = ("<div class=\"why\">★ = ルール" + "・".join(sorted(set(star.values()))) + "(1点ルール)の買い目</div>") if star else ""
         return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] in BIG else ''}">
   <div class="top"><span class="time">{hm(p['start_at'])}</span><span class="race">{html.escape(p['venue'])}{p['race_no']}R</span>
-  <span class="tag">{'重賞' if p['rule'] in BIG else p['rule']}</span>{res}</div>
+  <span class="tag">{'重賞' if p['rule'] in BIG else '・'.join(sorted(tags.get((p['url'], p['ticket']), [p['rule']])))}</span>{res}</div>
   <div class="sub">{html.escape(p.get('cup') or '')} {html.escape(p.get('grade') or '')} {html.escape(p.get('race_type') or '')}</div>
   <div class="bet">3連単 {bet}{f' <small>各100円・{len(tks)}点</small>' if tks else ''}</div>
-  <div class="why">{html.escape(rule_desc[p['rule']][0])}({html.escape(p['line'])})</div>{note}
+  <div class="why">{html.escape(' / '.join(rule_desc[k][0] for k in sorted(tags.get((p['url'], p['ticket']), [p['rule']]))))}({html.escape(p['line'])})</div>{note}
 </article>""")
 
-    body = "".join(card(p) for p in todays if p["rule"] not in BIG and p["url"] not in big_urls) or \
+    seen, singles = set(), []
+    for p in todays:
+        if p["rule"] not in BIG and p["url"] not in big_urls and (p["url"], p["ticket"]) not in seen:
+            seen.add((p["url"], p["ticket"]))
+            singles.append(p)
+    body = "".join(card(p) for p in singles) or \
         '<p class="none">今日の1点ルールの対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
     for key, title, roi in (("G", "重賞(G戦)の決勝・準決勝", "107%"), ("H", "重賞(G戦)の予選・特選・選抜など", "102%")):
         bigs = [p for p in todays if p["rule"] == key]
@@ -287,10 +335,16 @@ def render(log, now):
     stat = ""
     if done:
         rows = []
-        for key in ["A", "B", "C", "G", "H", "全体"]:
-            if key == "全体":  # 重賞パックに含まれる A〜C の買い目は二重に数えない
+        for key in ["A", "B", "C", "D", "G", "H", "全体"]:
+            if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
-                s = [p for p in done if p["rule"] in BIG or p["url"] not in bu]
+                s, sk = [], set()
+                for p in done:
+                    if p["rule"] in BIG:
+                        s.append(p)
+                    elif p["url"] not in bu and (p["url"], p["ticket"]) not in sk:
+                        sk.add((p["url"], p["ticket"]))
+                        s.append(p)
             else:
                 s = [p for p in done if p["rule"] == key]
             pts = sum(npts(p) for p in s)
@@ -301,6 +355,7 @@ def render(log, now):
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
+    notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
     notes += "".join(f"<li><b>{html.escape(d.split('(')[0])}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for _, d, b in BIG.values())
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -336,7 +391,7 @@ def render(log, now):
 <main>{body}{stat}</main>
 <footer><ul>{notes}</ul>
 <p>ラインの強さは「予想印の合計」で決めるので、オッズを見なくても判定できます。並び予想や印が変わると買い目も変わるので、
-買う直前にもう一度開いてください。A〜Cは1レース1点、重賞パックは決勝・準決勝が最大5点・予選などが平均2.5点(各100円)。過去の確定データでの検証結果で、
+買う直前にもう一度開いてください。A〜Dは1レース1点、重賞パックは決勝・準決勝が最大5点・予選などが平均2.5点(各100円)。過去の確定データでの検証結果で、
 大きい配当に頼った成績(上位5本の的中を除くと回収率93%)なので、プラスを保証するものではありません。</p></footer>
 </body></html>"""
 

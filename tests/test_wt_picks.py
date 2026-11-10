@@ -99,3 +99,23 @@ class TestPrelim(unittest.TestCase):
         self.assertIn("★2-5-8", h)
         self.assertEqual(h.count('<article'), 1)                   # A の別カードは出さない
         self.assertIn("重賞(G戦)の予選・特選・選抜など", h)
+
+
+class TestRuleD(unittest.TestCase):
+    def test_second_line_ticket(self):
+        R = race(7, [[1, 4, 7], [2, 5, 6], [3]], {1: 1, 2: 2})
+        self.assertEqual(P.second_line_ticket(R), ("2-5-6", [2, 5, 6]))
+        R = race(7, [[1, 4, 7], [2, 5], [3, 6]], {1: 1, 2: 2})
+        self.assertIsNone(P.second_line_ticket(R))
+
+    def test_trifecta_odds(self):
+        O = {"trifecta": [{"key": [2, 5, 6], "odds": 18.5}, {"key": [1, 4, 7], "odds": None}]}
+        self.assertEqual(P.trifecta_odds(O), {"2-5-6": 18.5})
+
+    def test_merge_card_a_and_d(self):
+        now = datetime.datetime(2026, 11, 10, 12, 0, tzinfo=P.JST)
+        base = dict(date="2026-11-10", url="u", venue="立川", race_no=5, cup="記念", grade="F1", start_at=0, close_at=0,
+                    cls="S級", race_type="予選", ticket="2-5-8")
+        h = P.render([dict(base, rule="A", line="2-5-8"), dict(base, rule="D", line="2-5-8・15.0倍")], now)
+        self.assertEqual(h.count("<article"), 1)
+        self.assertIn(">A・D<", h)
