@@ -48,3 +48,35 @@ class TestPicks(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestBigRace(unittest.TestCase):
+    def test_big_race_tickets(self):
+        # ◎=1(ライン1-4-7の先頭) → 番手4 → 印順の相手5車
+        R = race(9, [[1, 4, 7], [2, 5, 8], [3, 6, 9]], {1: 1, 2: 2, 3: 3, 5: 4})
+        tks, ab = P.big_race_tickets(R)
+        self.assertEqual(ab, (1, 4))
+        self.assertEqual(tks[:4], ["1-4-2", "1-4-3", "1-4-5", "1-4-9"][:1] + tks[1:4])
+        self.assertEqual(len(tks), 5)
+        self.assertTrue(all(t.startswith("1-4-") for t in tks))
+        self.assertEqual(tks[0], "1-4-2")
+
+    def test_no_bante(self):
+        R = race(9, [[4, 7, 1], [2, 5, 8], [3, 6, 9]], {1: 1})
+        self.assertEqual(P.big_race_tickets(R), ([], (1, None)))
+
+    def test_is_big_race(self):
+        self.assertTrue(P.is_big_race("G1", "決勝"))
+        self.assertTrue(P.is_big_race("G3", "準決勝"))
+        self.assertFalse(P.is_big_race("F1", "決勝"))
+        self.assertFalse(P.is_big_race("G2", "予選"))
+
+    def test_render_big(self):
+        now = datetime.datetime(2026, 11, 10, 12, 0, tzinfo=P.JST)
+        p = dict(date="2026-11-10", rule="G", ticket="1-4-2 / 1-4-3", tickets=["1-4-2", "1-4-3"], url="u", venue="平塚",
+                 race_no=12, cup="グランプリ", grade="GP", start_at=0, close_at=0, cls="S級", race_type="決勝", line="◎1・番手4",
+                 settled=True, payout=5000)
+        h = P.render([p], now)
+        self.assertIn("重賞(G戦)の決勝・準決勝", h)
+        self.assertIn("重賞パック", h)
+        self.assertIn("2500%", h)  # 5000円 / (2点×100円)

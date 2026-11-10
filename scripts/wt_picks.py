@@ -33,6 +33,37 @@ RULES = [
     ("C", 7, 3, "7車立て・印3番目のライン 並び通り", "検証 2462点 回収率122%"),
 ]
 
+# 重賞(G戦)の決勝・準決勝は毎レース出す「重賞パック」: 印◎ → ◎のライン番手 → 印順の相手5車(5点)
+# 検証: 422レース 的中54回 回収率107%(2025年117%・2026年95%、決勝121%・準決勝103%)。トントン圏で、勝ちとまでは言えない
+G_RULE = ("G", "重賞パック(G戦の決勝・準決勝): 印◎→◎の番手→印順の相手5車",
+          "検証 422レース・的中54回・回収率107%(2025年117%・2026年95%)。トントン圏")
+
+
+def is_big_race(grade, race_type):
+    return str(grade or "").startswith("G") and race_type in ("決勝", "準決勝")
+
+
+def big_race_tickets(R):
+    """重賞パックの買い目。◎が番手を持たない(単騎・最後尾)レースは空"""
+    entries = [e for e in R.get("entries", []) if not e.get("absent")]
+    cars = {int(e["number"]) for e in entries}
+    lp = R.get("linePrediction") or {}
+    lines = [[n for en in L.get("entries", []) for n in en.get("numbers", []) if n in cars] for L in lp.get("lines", [])]
+    lines = [L for L in lines if L]
+    rec = {r["playerId"]: r for r in R.get("records", [])}
+    mark = {int(e["number"]): int((rec.get(e["playerId"]) or {}).get("predictionMark") or 0) for e in entries}
+    point = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("racePoint") or 0 for e in entries}
+    if not lines or not any(mark.values()):
+        return [], None
+    order = sorted(cars, key=lambda c: -(MARK_PT.get(mark[c], 0) + 0.001 * point[c]))
+    a = order[0]
+    L = next((x for x in lines if a in x), [a])
+    i = L.index(a)
+    if i + 1 >= len(L):
+        return [], (a, None)
+    b = L[i + 1]
+    return [f"{a}-{b}-{c}" for c in [x for x in order if x not in (a, b)][:5]], (a, b)
+
 
 def line_rank(lines, mark, point):
     def score(L):
@@ -99,8 +130,9 @@ def settle(log, now):
             pay = {"-".join(map(str, m[i]["key"])): m[i].get("payoffUnitPrice") or 0
                    for i in (R.get("trifectaWinningOddsIds") or []) if i in m}
             final = {"-".join(map(str, x["key"])): x.get("odds") for x in O.get("trifecta") or []}
-            p.update(settled=True, result="・".join(wins), payout=int(pay.get(p["ticket"], 0)),
-                     final_odds=final.get(p["ticket"]))
+            tks = p.get("tickets") or [p["ticket"]]
+            p.update(settled=True, result="・".join(wins), payout=int(sum(pay.get(t, 0) or 0 for t in tks)),
+                     final_odds=final.get(tks[0]) if len(tks) == 1 else None)
         except Exception as e:  # noqa: BLE001
             print(f"[WARN] 結果の取得に失敗 {p['url']}: {e}")
 
@@ -133,6 +165,13 @@ def collect(today):
             if why:
                 skipped[why] = skipped.get(why, 0) + 1
             race = R.get("race") or {}
+            if is_big_race(c["grade"], race.get("raceType3")):
+                tks, ab = big_race_tickets(R)
+                picks.append(dict(date=today.isoformat(), rule="G", ticket=" / ".join(tks), tickets=tks, url=url,
+                                  venue=c["venue"], race_no=n, cup=c["name"], grade=c["grade"],
+                                  start_at=race.get("startAt") or 0, close_at=race.get("closeAt") or 0,
+                                  cls=race.get("class"), race_type=race.get("raceType3"),
+                                  line=f"◎{ab[0]}・番手{ab[1]}" if ab and ab[1] else ("◎に番手なし → 見送り" if ab else "並び・印待ち")))
             for key, ticket, L in hits:
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
@@ -155,40 +194,54 @@ def merge(log, picks):
 def render(log, now):
     today = now.date().isoformat()
     rule_desc = {k: (d, b) for k, _, _, d, b in RULES}
+    rule_desc["G"] = (G_RULE[1], G_RULE[2])
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
 
     todays = [p for p in log if p["date"] == today]
-    cards = []
-    for p in todays:
+
+    def npts(p):
+        return len(p.get("tickets") or [p["ticket"]]) if (p.get("tickets") or p.get("rule") != "G") else 0
+
+    def card(p):
         passed = p["start_at"] and p["start_at"] < now.timestamp()
         res = ""
         if p.get("settled"):
             res = (f'<span class="hit">的中 {p["payout"]:,}円</span>' if p.get("payout") else
                    f'<span class="miss">{"中止(返還)" if p.get("refund") else "はずれ " + html.escape(p.get("result") or "")}</span>')
-        cards.append(f"""<article class="pick{' passed' if passed else ''}">
+        tks = p.get("tickets") or ([p["ticket"]] if p["rule"] != "G" else [])
+        bet = ("".join(f'<span class="combo">{html.escape(t)}</span>' for t in tks) if tks else "見送り")
+        return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] == 'G' else ''}">
   <div class="top"><span class="time">{hm(p['start_at'])}</span><span class="race">{html.escape(p['venue'])}{p['race_no']}R</span>
-  <span class="tag">{p['rule']}</span>{res}</div>
+  <span class="tag">{'重賞' if p['rule'] == 'G' else p['rule']}</span>{res}</div>
   <div class="sub">{html.escape(p.get('cup') or '')} {html.escape(p.get('grade') or '')} {html.escape(p.get('race_type') or '')}</div>
-  <div class="bet">3連単 <b>{html.escape(p['ticket'])}</b> 100円</div>
-  <div class="why">{html.escape(rule_desc[p['rule']][0])}(並び {html.escape(p['line'])})</div>
+  <div class="bet">3連単 {bet}{f' <small>各100円・{len(tks)}点</small>' if tks else ''}</div>
+  <div class="why">{html.escape(rule_desc[p['rule']][0])}({html.escape(p['line'])})</div>
 </article>""")
-    body = "".join(cards) or '<p class="none">今日の対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
+
+    body = "".join(card(p) for p in todays if p["rule"] != "G") or \
+        '<p class="none">今日の対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
+    bigs = [p for p in todays if p["rule"] == "G"]
+    if bigs:
+        body += ('<h2>重賞(G戦)の決勝・準決勝</h2><p class="why">ルール外でも重賞の勝負レースは毎回出します。'
+                 '検証ではトントン圏(回収率107%)なので、楽しむ枠として。</p>' + "".join(card(p) for p in bigs))
 
     done = [p for p in log if p.get("settled") and not p.get("refund")]
     stat = ""
     if done:
         rows = []
-        for key in ["A", "B", "C", "全体"]:
+        for key in ["A", "B", "C", "G", "全体"]:
             s = done if key == "全体" else [p for p in done if p["rule"] == key]
-            if s:
+            pts = sum(npts(p) for p in s)
+            if pts:
                 pay = sum(p["payout"] for p in s)
-                rows.append(f"<tr><td>{key}</td><td>{len(s)}</td><td>{sum(1 for p in s if p['payout'])}</td>"
-                            f"<td>{pay:,}円</td><td>{pay / (len(s) * 100):.0%}</td></tr>")
+                rows.append(f"<tr><td>{'重賞パック' if key == 'G' else key}</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
+                            f"<td>{pay:,}円</td><td>{pay / (pts * 100):.0%}</td></tr>")
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
+    notes += f"<li><b>重賞パック</b>: {html.escape(G_RULE[1])}。{html.escape(G_RULE[2])}。</li>"
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>買うべきレース</title>
@@ -208,6 +261,9 @@ def render(log, now):
   .hit {{ color:#0A7A3B; font-weight:700; }} .miss {{ color:var(--soft); font-size:.85rem; }}
   .sub, .why {{ font-size:.78rem; color:var(--soft); }}
   .bet {{ margin-top:6px; font-size:1.05rem; }} .bet b {{ font-size:1.25rem; letter-spacing:.04em; font-variant-numeric:tabular-nums; }}
+  .pick.big {{ border-left-color:#B8862B; }} .pick.big .tag {{ background:#B8862B; }}
+  .combo {{ display:inline-block; font-weight:700; font-variant-numeric:tabular-nums; border:1px solid var(--line); background:#FAF7EE;
+            border-radius:6px; padding:1px 8px; margin:2px 4px 2px 0; }}
   .none {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; text-align:center; }}
   h2 {{ font-size:1rem; margin:20px 0 8px; }}
   table {{ border-collapse:collapse; width:100%; background:#fff; font-size:.88rem; }}
@@ -219,7 +275,7 @@ def render(log, now):
 <main>{body}{stat}</main>
 <footer><ul>{notes}</ul>
 <p>ラインの強さは「予想印の合計」で決めるので、オッズを見なくても判定できます。並び予想や印が変わると買い目も変わるので、
-買う直前にもう一度開いてください。各ルールとも1レース1点(100円)。過去の確定データでの検証結果で、
+買う直前にもう一度開いてください。A〜Cは1レース1点、重賞パックは最大5点(各100円)。過去の確定データでの検証結果で、
 大きい配当に頼った成績(上位5本の的中を除くと回収率93%)なので、プラスを保証するものではありません。</p></footer>
 </body></html>"""
 
