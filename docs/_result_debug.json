@@ -1,31 +1,6 @@
 {
- "updated": "2026-11-10 20:46",
+ "updated": "2026-11-10 21:25",
  "failures": [
-  {
-   "race": "2026-11-09 takeo 1R",
-   "diag": {
-    "venue": "takeo",
-    "race_id": "8420261109010001",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/takeo/raceresult/84202611090100/",
-    "day_html_len": 137466,
-    "day_races": [
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-09 takeo 9R",
    "error": "着順が壊れて見えるため記録しない",
@@ -91,10 +66,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-09 utsunomiya 5R",
+   "diag": {
+    "venue": "utsunomiya",
+    "race_id": "2420261108020005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 2578,
- "with_result": 2080,
+ "with_result": 2082,
  "without_url": 0,
- "pending_eligible": 482
+ "pending_eligible": 483
 }
