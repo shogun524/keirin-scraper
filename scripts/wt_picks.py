@@ -356,7 +356,7 @@ def board_html(board, todays, now):
         (other_rows if (skip or passed) else main_rows).append(row)
     head = '<tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨(3連単)</th></tr>'
     out = ('<h2>全レース一覧</h2>'
-           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は半分のレースが入る範囲)。今のオッズから計算。'
+           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は、半分のレースが入る一番狭い範囲)。今のオッズから計算。'
            '<span class="rk win">A〜D</span> 勝ち筋 ・ <span class="rk big">重賞</span> トントン圏 ・ <span class="rk ref">参考</span> 損が一番少ない1点</p>')
     out += ('<div class="tbl"><table class="board">' + head + "".join(main_rows) + '</table></div>') if main_rows else \
         '<p class="none">これから発走で推奨のあるレースはありません。</p>'

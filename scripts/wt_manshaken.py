@@ -3,14 +3,15 @@
 
 やり方: 3連単の全組のオッズから、各組が来る確率を q ∝ (1/オッズ)^β で出す(β>1 は「人気薄ほど買われすぎ」の補正)。
   万車率   = オッズ100倍以上の組の q の合計
-  配当目安 = q で重み付けした「オッズ×100円」の 25% / 50% / 75% 点
+  配当目安 = q で重み付けした「オッズ×100円」の中央値と、確率50%を含む一番狭い範囲
+           (25〜75%点だと中央値のレースで約7倍の幅だったのが、同じ50%の当たり具合で約4倍の幅になる)
 β は過去レースの「実際に来た組」の当たりやすさが最大になる値(2025年で 1.05)。
 
 検証(2025年で β を決め → 2026年 23,000レース):
   万車率: 予測と実際がほぼ一致(予測10〜20%→実際13.9%、20〜30%→24.3%、30〜40%→35.2%、50〜60%→53.8%)。
   機械学習(LightGBM・ロジスティック、出走表の特徴も入れた物)と比べても当たり具合はほぼ同じ(対数損失 0.548 vs 0.547)なので、
   オッズだけで出すこの方式を使う(締切前のオッズでその場で計算できる)。
-  配当目安: 実際の払戻が 25〜75%の範囲に入った割合 57%、帯ごとの中央値は実際とほぼ一致。
+  配当目安: 実際の払戻が「50%の一番狭い範囲」に入った割合 50.6%(幅の中央値 4.0倍。25〜75%点なら57%・7.0倍)。
 
 使い方(検証): python scripts/wt_manshaken.py data/ --fit-until 2026-01-01
 本番: wt_picks.py から market_view() を呼ぶ。
@@ -25,6 +26,24 @@ BETA = 1.05
 MAN = 100.0  # 万車 = 100倍(1万円)以上
 
 
+def shortest_interval(values, weights, mass=0.5):
+    """重み付き分布で、確率 mass を含む「対数で一番狭い」区間 (下限, 上限)。
+    25〜75%点より狭くなる(配当の分布は人気決着側に山があり、穴側に長く伸びるため)"""
+    idx = np.argsort(values)
+    v = np.asarray(values, dtype=float)[idx]
+    lv = np.log(v)
+    c = np.concatenate([[0.0], np.cumsum(np.asarray(weights, dtype=float)[idx])])
+    best, j = (np.inf, v[0], v[-1]), 0
+    for i in range(len(v)):
+        while j < len(v) and c[j + 1] - c[i] < mass:
+            j += 1
+        if j >= len(v):
+            break
+        if lv[j] - lv[i] < best[0]:
+            best = (lv[j] - lv[i], v[i], v[j])
+    return float(best[1]), float(best[2])
+
+
 def market_view(odds, beta=BETA):
     """odds: 3連単オッズの配列(または {組: オッズ})。-> dict(man=万車率, q25, q50, q75=配当の目安(円))。オッズが無ければ None"""
     if isinstance(odds, dict):
@@ -36,8 +55,10 @@ def market_view(odds, beta=BETA):
     q /= q.sum()
     idx = np.argsort(o)
     c = np.cumsum(q[idx])
-    qs = [float(o[idx][min(int(np.searchsorted(c, x)), len(c) - 1)] * 100) for x in (0.25, 0.5, 0.75)]
-    return dict(man=float(q[o >= MAN].sum()), q25=qs[0], q50=qs[1], q75=qs[2])
+    q50 = float(o[idx][min(int(np.searchsorted(c, 0.5)), len(c) - 1)] * 100)
+    lo, hi = shortest_interval(o * 100, q, 0.5)
+    # q25/q75 という名前のまま「半分のレースが入る、一番狭い範囲」を入れる(表示側を変えずに済むように)
+    return dict(man=float(q[o >= MAN].sum()), q25=lo, q50=q50, q75=hi)
 
 
 def load(path):
@@ -60,7 +81,7 @@ def load(path):
             wk = max(pay, key=lambda k: float(pay[k] or 0))
             if wk not in ks or not float(pay[wk] or 0):
                 continue
-            out.append((str(o["race_id"]).zfill(12), np.array(vs, dtype=np.float32), ks.index(wk), float(pay[wk])))
+            out.append((str(o["race_id"]).zfill(12), np.array(vs, dtype=np.float64), ks.index(wk), float(pay[wk])))
     return out
 
 
@@ -98,7 +119,8 @@ def main():
     print(T.groupby("bin", observed=True).agg(レース=("man", "size"), 予測万車率=("man_pred", "mean"), 実際=("man", "mean"),
                                               配当目安の中央値=("q50", "median"), 実際の払戻の中央値=("pay", "median"))
           .to_string(float_format="%.3f"))
-    print(f"実際の払戻が目安の25〜75%に入った割合: {((T.pay >= T.q25) & (T.pay <= T.q75)).mean():.3f}")
+    print(f"実際の払戻が目安の範囲(50%の一番狭い範囲)に入った割合: {((T.pay >= T.q25) & (T.pay <= T.q75)).mean():.3f}"
+          f" / 幅(上限÷下限)の中央値 {(T.q75 / T.q25).median():.1f}倍")
 
 
 if __name__ == "__main__":
