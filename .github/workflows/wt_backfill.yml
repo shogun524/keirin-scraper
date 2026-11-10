@@ -40,7 +40,7 @@ permissions:
 env:
   GH_TOKEN: ${{ github.token }}
   MAX_ROUNDS: "12"
-  FILES: "wt_races.csv wt_entries.csv wt_odds.jsonl.gz wt_progress.json wt_days_done.json wt_range.txt"
+  FILES: "wt_races.csv wt_entries.csv wt_odds.jsonl.gz wt_progress.json wt_days_done.json wt_noresult.json wt_range.txt"
 
 jobs:
   backfill:

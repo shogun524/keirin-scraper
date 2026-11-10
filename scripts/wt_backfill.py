@@ -36,6 +36,11 @@ UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
 GRADE = {1: "F2", 2: "F1", 3: "G3", 4: "G2", 5: "G1", 6: "GP"}
 ODDS_TYPES = {"quinella": "2車複", "exacta": "2車単", "quinellaPlace": "ワイド", "trio": "3連複", "trifecta": "3連単"}
 FAIL_STREAK_LIMIT = 30
+NO_RESULT_LIMIT = 2  # ページは開けたのに結果が無い過去レース(中止など)は、別々の実行で2回そうなら諦める
+
+
+class NoResult(Exception):
+    """ページは取れたが結果が無い(中止・未確定)。アクセス失敗とは区別する"""
 
 RACE_COLS = ["race_id", "cup_id", "date", "venue_id", "venue_slug", "venue", "cup_name", "grade", "day", "index",
              "duration", "race_no", "class", "race_type", "distance", "lap", "entries", "start_at", "close_at",
@@ -104,7 +109,7 @@ def parse_race(c, index, date, n, state):
     q = queries(state)
     R, O = q.get("FETCH_KEIRIN_RACE"), q.get("FETCH_KEIRIN_RACE_ODDS")
     if not R or not R.get("results"):
-        raise ValueError("結果がまだ無い")
+        raise NoResult("結果がまだ無い")
     race = R["race"]
     if race.get("cancel"):
         return None
@@ -165,6 +170,7 @@ def main():
     P = lambda f: os.path.join(a.out_dir, f)  # noqa: E731
     done = set(json.load(open(P("wt_progress.json"))) if os.path.exists(P("wt_progress.json")) else [])
     days_done = set(json.load(open(P("wt_days_done.json"))) if os.path.exists(P("wt_days_done.json")) else [])
+    noresult = json.load(open(P("wt_noresult.json"))) if os.path.exists(P("wt_noresult.json")) else {}
     fr = open(P("wt_races.csv"), "a", newline="", encoding="utf-8")
     fe = open(P("wt_entries.csv"), "a", newline="", encoding="utf-8")
     fo = gzip.open(P("wt_odds.jsonl.gz"), "at", encoding="utf-8")
@@ -202,6 +208,19 @@ def main():
                     st["streak"] = 0
                 time.sleep(random.uniform(0.4, 0.9))
                 return True
+            except NoResult as e:
+                key = f"{c['cup']}:{index}:{n}"
+                with lock:
+                    # 当日のレースは未確定なだけなので数えない。過去のレースで2回続けて結果なし → 中止とみなす
+                    if date < today.strftime("%Y%m%d"):
+                        noresult[key] = noresult.get(key, 0) + 1
+                        if noresult[key] >= NO_RESULT_LIMIT:
+                            done.add(key)
+                            print(f"  [{c['slug']} {c['cup']} {index}日目 {n}R] 結果なしが{NO_RESULT_LIMIT}回 → 中止レースとして飛ばします", flush=True)
+                            return True
+                    print(f"  [{c['slug']} {c['cup']} {index}日目 {n}R] {e}", flush=True)
+                time.sleep(random.uniform(0.4, 0.9))
+                return False
             except Exception as e:
                 if attempt == 2:
                     with lock:
@@ -214,6 +233,7 @@ def main():
     def save_progress():
         json.dump(sorted(done), open(P("wt_progress.json"), "w"))
         json.dump(sorted(days_done), open(P("wt_days_done.json"), "w"))
+        json.dump(noresult, open(P("wt_noresult.json"), "w"))
         fr.flush()
         fe.flush()
         fo.flush()
