@@ -658,6 +658,33 @@ def render_line_info_block(result, race_title=""):
     return '<div class="line-info-block ok">' + "".join(parts) + '</div>'
 
 
+def render_manshaken_box(info):
+    """万車率・配当の目安・推奨買い目(買うべきレースのページと同じ判定)の帯"""
+    mv = info.get("manshaken")
+    rec = info.get("recommend")
+    if not mv and rec is None:
+        return ""
+    parts = []
+    if mv:
+        lvl = "#C8402A" if mv["man"] >= 0.4 else ("#2F6B4F" if mv["man"] < 0.2 else "inherit")
+        parts.append(f'万車率 <b style="color:{lvl}">{mv["man"] * 100:.0f}%</b>')
+        parts.append(f'配当の目安 <b>{mv["q50"]:,.0f}円</b> <span class="dim">({mv["q25"]:,.0f}〜{mv["q75"]:,.0f}円)</span>')
+    else:
+        parts.append('万車率 <span class="dim">オッズ待ち</span>')
+    if rec is not None:
+        if rec:
+            col = {"win": "#C8402A", "big": "#B8862B", "ref": "#7A8494"}
+            items = " ".join(
+                f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
+                f'padding:1px 6px;border-radius:999px">{label}</span> <b>{" ".join(t)}</b>' for k, label, t in rec)
+            parts.append(f'推奨(3連単) {items}')
+        else:
+            parts.append('推奨 <span class="dim">見送り</span>')
+    return ('<div class="mansha-box" style="margin:6px 0;padding:8px 10px;border:1px solid #DDE1E8;border-radius:8px;'
+            'background:#FAFBFC;font-size:13px;line-height:1.7">' + ' ・ '.join(parts) +
+            ' <a href="../picks.html" style="font-size:12px">説明</a></div>')
+
+
 def render_race_card(race_data, tab_id):
     info = race_data["race_info"]
     result = race_data["prediction"]
@@ -778,6 +805,7 @@ def render_race_card(race_data, tab_id):
           {odds_alert_html}
         </div>
         {banner_html}
+        {render_manshaken_box(info)}
         {line_info_html}
         {odds_trend_html}
         {subtab_bar_html}

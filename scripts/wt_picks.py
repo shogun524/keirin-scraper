@@ -274,12 +274,14 @@ def collect(today):
                                   line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E") and tri.get(ticket) else "")))
             if not race.get("cancel"):
                 mv = market_view(tri) if tri else None
-                board.append(dict(url=url, venue=c["venue"], race_no=n, start_at=race.get("startAt") or 0,
+                board.append(dict(url=url, venue=c["venue"], slug={"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"]),
+                                  race_no=n, start_at=race.get("startAt") or 0,
                                   grade=c["grade"], race_type=race.get("raceType3"), cls=race.get("class"),
                                   n=len([x for x in R.get("entries", []) if not x.get("absent")]),
                                   man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,
                                   q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
-                                  odds={t: tri.get(t) for _, t, _ in hits}))
+                                  odds={t: tri.get(t) for _, t, _ in hits},
+                                  rec=race_recommendation(picks, url)))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
     return picks, board
 
@@ -292,6 +294,26 @@ def merge(log, picks):
     keep = [p for p in log if p["date"] not in today or p.get("settled")]
     keep += [p for p in picks if keyf(p) not in settled]
     return sorted(keep, key=lambda p: (p["date"], p["start_at"], p["rule"]))
+
+
+def race_recommendation(picks, url):
+    """そのレースの推奨買い目 [(種類, ラベル, [買い目])]。勝ち筋(A〜D) → 重賞パック → 参考(E) → 見送り(空)"""
+    ps = [p for p in picks if p["url"] == url]
+    out, seen = [], set()
+    for p in ps:
+        if p["rule"] in ("A", "B", "C", "D") and p["ticket"] not in seen:
+            seen.add(p["ticket"])
+            out.append(("win", "・".join(sorted(q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCD")),
+                        [p["ticket"]]))
+    for p in ps:
+        if p["rule"] in BIG and p.get("tickets"):
+            out.append(("big", "重賞", p["tickets"]))
+    if not out:
+        for p in ps:
+            if p["rule"] == "E":
+                out.append(("ref", "参考", [p["ticket"]]))
+                break
+    return out
 
 
 def board_html(board, todays, now):

@@ -30,6 +30,14 @@ jobs:
       - name: テストを実行（失敗したら予想の生成・公開をしない）
         run: python -m unittest discover -s tests
 
+      - name: 買うべきレース・全レースの推奨を生成（レースのタブで使うので予想より先。失敗しても他は止めない）
+        continue-on-error: true
+        timeout-minutes: 15
+        working-directory: scripts
+        env:
+          PYTHONIOENCODING: "utf-8"
+        run: python wt_picks.py
+
       - name: 予想を生成
         working-directory: scripts
         env:
@@ -43,14 +51,6 @@ jobs:
         env:
           PYTHONIOENCODING: "utf-8"
         run: python winticket_page.py
-
-      - name: 買うべきレース(ライン並び通り3連単)を生成（失敗しても他は止めない）
-        continue-on-error: true
-        timeout-minutes: 15
-        working-directory: scripts
-        env:
-          PYTHONIOENCODING: "utf-8"
-        run: python wt_picks.py
 
       - name: 生成結果をコミット
         run: |

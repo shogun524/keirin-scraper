@@ -220,6 +220,21 @@ def main():
     except Exception as e:
         print(f"[WARN] 買い方の成績の読み込みに失敗しました（初期の文言を使います）: {e}")
 
+    # 買うべきレース(wt_picks.py、この前に実行)が作った「推奨買い目」を各レースに付ける
+    rec_board = {}
+    try:
+        with open(os.path.join(DOCS_DIR, "_race_board.json"), encoding="utf-8") as f:
+            b = json.load(f)
+        if b.get("date") == today.isoformat():
+            rec_board = {(r.get("slug"), r["race_no"]): r for r in b["races"]}
+    except (OSError, ValueError, KeyError):
+        rec_board = {}
+    try:
+        from wt_manshaken import market_view
+    except Exception as e:  # numpy が無い等
+        print(f"[WARN] 万車率の計算を使えません: {e}")
+        market_view = None
+
     all_race_data = []
     for race in races:
         try:
@@ -247,6 +262,15 @@ def main():
                 market_fix.ana_plan(result, odds, is_girls(result["rows"], race["race_info"].get("title", "")))
             except Exception as e:
                 print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の補正に失敗: {e}")
+        info = race["race_info"]
+        try:
+            odds = race.get("wt_odds") if info.get("source") == "winticket" else kd_odds.get((info["venue"], info["race_no"]))
+            info["manshaken"] = market_view(odds) if (market_view and odds) else None
+        except Exception as e:
+            print(f"[WARN] {info['venue']} {info['race_no']}R の万車率の計算に失敗: {e}")
+            info["manshaken"] = None
+        br = rec_board.get((info["venue"], info["race_no"]))
+        info["recommend"] = br.get("rec") if br else None
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
 
     try:
