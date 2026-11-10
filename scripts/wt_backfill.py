@@ -282,6 +282,14 @@ def main():
                     list(ex.map(work, todo))
                 if nums and all(f"{c['cup']}:{i}:{n}" in done for n in nums):
                     days_done.add(key)
+                elif not nums and d < today:
+                    # レースが1つも無い過去の開催日(開催中止)。別々の実行で2回そうなら終わったことにする
+                    noresult[key] = noresult.get(key, 0) + 1
+                    if noresult[key] >= NO_RESULT_LIMIT:
+                        days_done.add(key)
+                        print(f"[{d} {c['venue']}{i}日目] レースなしが{NO_RESULT_LIMIT}回 → 開催中止として飛ばします", flush=True)
+                    else:
+                        finished = False
                 else:
                     finished = False
                 save_progress()
