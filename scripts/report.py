@@ -1708,6 +1708,7 @@ def _fmt_date_jp(date=None):
 # ナビゲーションの並び順・文言はここ1か所で管理する。
 AGG_GROUPS = [
     ("レースをさがす", [
+        ("picks.html", "買うべきレース"),
         ("high_prob.html", "本命が堅い"),
         ("close_race.html", "拮抗レース"),
         ("formula.html", "勝利の方程式"),
