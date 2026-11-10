@@ -1,24 +1,6 @@
 {
- "updated": "2026-11-10 23:07",
+ "updated": "2026-11-10 23:42",
  "failures": [
-  {
-   "race": "2026-11-10 takeo 1R",
-   "diag": {
-    "venue": "takeo",
-    "race_id": "8420261109020001",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-10 takeo 4R",
-   "diag": {
-    "venue": "takeo",
-    "race_id": "8420261109020004",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-10 utsunomiya 4R",
    "diag": {
@@ -49,10 +31,36 @@
     6,
     7
    ]
+  },
+  {
+   "race": "2026-11-10 nara 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    4,
+    2,
+    7,
+    6,
+    3,
+    5
+   ]
+  },
+  {
+   "race": "2026-11-10 matsuyama 3R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    7,
+    4,
+    1,
+    6,
+    3,
+    5
+   ]
   }
  ],
  "tracked": 2578,
  "with_result": 2083,
  "without_url": 0,
- "pending_eligible": 493
+ "pending_eligible": 495
 }
