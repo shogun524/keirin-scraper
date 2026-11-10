@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10 12:23",
+ "updated": "2026-11-10 19:44",
  "failures": [
   {
    "race": "2026-11-09 aomori 6R",
@@ -8,7 +8,7 @@
     "race_id": "1220261108020006",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/aomori/raceresult/12202611080200/",
-    "day_html_len": 104813,
+    "day_html_len": 104815,
     "day_races": [
      1,
      2,
@@ -28,7 +28,7 @@
     "race_id": "8420261109010001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/takeo/raceresult/84202611090100/",
-    "day_html_len": 136923,
+    "day_html_len": 137463,
     "day_races": [
      2,
      3,
@@ -63,7 +63,7 @@
     "race_id": "7420261107030010",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/kochi/raceresult/74202611070300/",
-    "day_html_len": 136078,
+    "day_html_len": 136080,
     "day_races": [
      1,
      2,
@@ -88,7 +88,7 @@
     "race_id": "2420261108020001",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/utsunomiya/raceresult/24202611080200/",
-    "day_html_len": 131671,
+    "day_html_len": 131673,
     "day_races": [
      2,
      3,
@@ -105,7 +105,7 @@
   }
  ],
  "tracked": 2578,
- "with_result": 2043,
+ "with_result": 2075,
  "without_url": 0,
- "pending_eligible": 478
+ "pending_eligible": 482
 }
