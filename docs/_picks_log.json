@@ -1323,7 +1323,11 @@
 "close_at": 1794405300,
 "cls": "A級",
 "race_type": "特予選",
-"line": "1-2-6・3.3倍"
+"line": "1-2-6・3.3倍",
+"settled": true,
+"result": "1-2-6",
+"payout": 330,
+"final_odds": 3.3
 },
 {
 "date": "2026-11-11",
@@ -1338,6 +1342,10 @@
 "close_at": 1794405900,
 "cls": "A級",
 "race_type": "予選",
-"line": "1-2-6・4.1倍"
+"line": "1-2-6・4.1倍",
+"settled": true,
+"result": "1-4-2",
+"payout": 0,
+"final_odds": 4.1
 }
 ]
