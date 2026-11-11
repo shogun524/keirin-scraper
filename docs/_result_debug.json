@@ -1,53 +1,54 @@
 {
- "updated": "2026-11-11 10:13",
+ "updated": "2026-11-11 18:11",
  "failures": [
   {
-   "race": "2026-11-10 matsuyama 9R",
+   "race": "2026-11-11 fukui 1R",
    "diag": {
-    "venue": "matsuyama",
-    "race_id": "7520261108030009",
+    "venue": "fukui",
+    "race_id": "5120261111010001",
     "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202611080300/",
-    "day_html_len": 117548,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8
-    ],
-    "day_text_head": "",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-10 nara 9R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    5,
-    3,
-    1,
-    4,
-    2,
-    6,
-    7
-   ]
+   "race": "2026-11-11 takeo 5R",
+   "diag": {
+    "venue": "takeo",
+    "race_id": "8420261109030005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   },
   {
-   "race": "2026-11-11 omiya 5R",
+   "race": "2026-11-11 matsudo 3R",
    "diag": {
-    "venue": "omiya",
-    "race_id": "2520261110020005",
+    "venue": "matsudo",
+    "race_id": "3120261109030003",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-11 matsudo 6R",
+   "diag": {
+    "venue": "matsudo",
+    "race_id": "3120261109030006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-11 yokkaichi 7R",
+   "diag": {
+    "venue": "yokkaichi",
+    "race_id": "4820261111010007",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2662,
- "with_result": 2087,
+ "with_result": 2133,
  "without_url": 0,
- "pending_eligible": 496
+ "pending_eligible": 500
 }
