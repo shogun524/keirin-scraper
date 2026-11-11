@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11 18:11",
+ "updated": "2026-11-11 21:23",
  "failures": [
   {
    "race": "2026-11-11 fukui 1R",
@@ -29,26 +29,26 @@
    }
   },
   {
-   "race": "2026-11-11 matsudo 6R",
+   "race": "2026-11-11 yokkaichi 10R",
    "diag": {
-    "venue": "matsudo",
-    "race_id": "3120261109030006",
+    "venue": "yokkaichi",
+    "race_id": "4820261111010010",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-11 yokkaichi 7R",
+   "race": "2026-11-11 matsusaka 2R",
    "diag": {
-    "venue": "yokkaichi",
-    "race_id": "4820261111010007",
+    "venue": "matsusaka",
+    "race_id": "4720261111010002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2662,
- "with_result": 2133,
+ "with_result": 2148,
  "without_url": 0,
- "pending_eligible": 500
+ "pending_eligible": 501
 }
