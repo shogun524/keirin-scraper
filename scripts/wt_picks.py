@@ -41,6 +41,13 @@ D_RULE = ("D", "印2番目のライン 並び通り(3連単が10〜30倍のと�
 D_ODDS = (10.0, 30.0)
 
 
+# F(穴): 印3番目のラインの並び通り3連単が「30〜300倍」のとき(レース結果からの逆算で見つけた穴の買い方)
+# 検証: 2824点 的中34回 回収率139%(2025年140%・2026年136%)、平均配当11,507円、上位5本の的中を除くと96%
+F_RULE = ("F", "穴: 印3番目のライン 並び通り(3連単が30〜300倍のとき)",
+          "検証 2824点・的中34回・回収率139%(2025年140%・2026年136%)、平均配当11,507円")
+F_ODDS = (30.0, 300.0)
+
+
 def second_line_ticket(R):
     """印2番目のライン(3車以上)の並び通りの買い目。無ければ None"""
     return line_ticket(R, 2)
@@ -264,6 +271,11 @@ def collect(today):
                 if od and D_ODDS[0] <= od <= D_ODDS[1]:
                     hits.append(("D", d[0], d[1]))
                     dodds = od
+            f3 = line_ticket(R, 3) if not race.get("cancel") else None
+            if f3:
+                od = tri.get(f3[0])
+                if od and F_ODDS[0] <= od <= F_ODDS[1]:
+                    hits.append(("F", f3[0], f3[1]))
             e1 = line_ticket(R, 1) if not race.get("cancel") else None
             if e1 and tri.get(e1[0]) and tri[e1[0]] <= E_ODDS:
                 hits.append(("E", e1[0], e1[1]))
@@ -271,7 +283,7 @@ def collect(today):
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
                                   close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
-                                  line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E") and tri.get(ticket) else "")))
+                                  line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E", "F") and tri.get(ticket) else "")))
             if not race.get("cancel"):
                 mv = market_view(tri) if tri else None
                 board.append(dict(url=url, venue=c["venue"], slug={"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"]),
@@ -301,19 +313,14 @@ def race_recommendation(picks, url):
     ps = [p for p in picks if p["url"] == url]
     out, seen = [], set()
     for p in ps:
-        if p["rule"] in ("A", "B", "C", "D") and p["ticket"] not in seen:
+        if p["rule"] in ("A", "B", "C", "D", "F") and p["ticket"] not in seen:
             seen.add(p["ticket"])
-            out.append(("win", "・".join(sorted(q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCD")),
+            out.append(("win", "・".join(sorted(q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCDF")),
                         [p["ticket"]]))
     for p in ps:
         if p["rule"] in BIG and p.get("tickets"):
             out.append(("big", "重賞", p["tickets"]))
-    if not out:
-        for p in ps:
-            if p["rule"] == "E":
-                out.append(("ref", "参考", [p["ticket"]]))
-                break
-    return out
+    return out  # 本命寄りの参考(E: 最強ラインの並び通り10倍以下)は穴党向けに出さない(記録だけ続ける)
 
 
 def board_html(board, todays, now):
@@ -334,7 +341,7 @@ def board_html(board, todays, now):
             man = f'<span class="man {lvl}">{b["man"]:.0%}</span>'
             pay = f'{b["q50"]:,.0f}円<br><small>{b["q25"]:,.0f}〜{b["q75"]:,.0f}</small>'
         ps = by.get(b["url"], [])
-        win = [p for p in ps if p["rule"] in ("A", "B", "C", "D")]
+        win = [p for p in ps if p["rule"] in ("A", "B", "C", "D", "F")]
         big = [p for p in ps if p["rule"] in BIG and p.get("tickets")]
         ref = [p for p in ps if p["rule"] == "E"]
         rec, seen = [], set()
@@ -345,19 +352,19 @@ def board_html(board, todays, now):
                 rec.append(f'<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
         for p in big:
             rec.append('<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
-        if not rec and ref:
-            rec.append(f'<span class="rk ref">参考</span> {html.escape(ref[0]["ticket"])}')
         skip = not rec
         if skip:
             rec.append('<span class="skip">見送り</span>')
-        row = (f'<tr class="{"passed" if passed else ""}"><td>{hm}</td><td>{html.escape(b["venue"])}{b["race_no"]}R'
+        row = (f'<tr class="{"passed" if passed else ""}{" honmei" if (b["man"] is not None and b["man"] < 0.3) else ""}"><td>{hm}</td><td>{html.escape(b["venue"])}{b["race_no"]}R'
                f'<br><small>{html.escape(str(b.get("race_type") or ""))} {b["n"]}車</small></td>'
                f'<td>{man}</td><td>{pay}</td><td class="rec">{"<br>".join(rec)}</td></tr>')
         (other_rows if (skip or passed) else main_rows).append(row)
     head = '<tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨(3連単)</th></tr>'
     out = ('<h2>全レース一覧</h2>'
            '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は、半分のレースが入る一番狭い範囲)。今のオッズから計算。'
-           '<span class="rk win">A〜D</span> 勝ち筋 ・ <span class="rk big">重賞</span> トントン圏 ・ <span class="rk ref">参考</span> 損が一番少ない1点</p>')
+           '<span class="rk win">A〜D・F</span> 勝ち筋(Fは穴) ・ <span class="rk big">重賞</span> トントン圏</p>'
+           '<p class="why"><label><input type="checkbox" id="anaOnly" checked onchange="document.body.classList.toggle(\'ana\', this.checked)"> '
+           '穴党モード: 万車率30%未満(本命寄り)のレースを隠す</label></p>')
     out += ('<div class="tbl"><table class="board">' + head + "".join(main_rows) + '</table></div>') if main_rows else \
         '<p class="none">これから発走で推奨のあるレースはありません。</p>'
     if other_rows:
@@ -373,6 +380,7 @@ def render(log, now, board=None):
         rule_desc[k] = (d, b)
     rule_desc["D"] = (D_RULE[1], D_RULE[2])
     rule_desc["E"] = (E_RULE[1], E_RULE[2])
+    rule_desc["F"] = (F_RULE[1], F_RULE[2])
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -436,7 +444,7 @@ def render(log, now, board=None):
     stat = ""
     if done:
         rows = []
-        for key in ["A", "B", "C", "D", "G", "H", "全体", "E"]:
+        for key in ["A", "B", "C", "D", "F", "G", "H", "全体", "E"]:
             if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
                 s, sk = [], set()
@@ -459,7 +467,8 @@ def render(log, now, board=None):
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
     notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
-    notes += f"<li><b>E(参考)</b>: {html.escape(E_RULE[1])}。{html.escape(E_RULE[2])}。</li>"
+    notes += f"<li><b>F(穴)</b>: {html.escape(F_RULE[1])}。{html.escape(F_RULE[2])}。上位5本の的中を除くと96%。</li>"
+    notes += f"<li><b>E(参考・表示なし)</b>: {html.escape(E_RULE[1])}。{html.escape(E_RULE[2])}。</li>"
     notes += "".join(f"<li><b>{html.escape(d.split('(')[0])}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for _, d, b in BIG.values())
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -487,6 +496,7 @@ def render(log, now, board=None):
   details.more summary {{ cursor:pointer; font-weight:700; font-size:.88rem; color:var(--soft); }}
   .combo.star {{ background:#FFE9C2; border-color:#E2B25A; }}
   .tbl {{ overflow-x:auto; }}
+  body.ana tr.honmei, body.ana article.honmei {{ display:none; }}
   table.board td {{ text-align:left; vertical-align:top; }}
   table.board tr.passed {{ opacity:.5; }}
   .man {{ font-weight:700; font-variant-numeric:tabular-nums; }} .man.hi {{ color:#C8402A; }} .man.lo {{ color:#2F6B4F; }}
@@ -498,13 +508,13 @@ def render(log, now, board=None):
   table {{ border-collapse:collapse; width:100%; background:#fff; font-size:.88rem; }}
   th, td {{ border:1px solid var(--line); padding:6px 8px; text-align:right; }} th:first-child, td:first-child {{ text-align:left; }}
   footer {{ font-size:.75rem; color:var(--soft); }} footer ul {{ padding-left:18px; }}
-</style></head><body>
+</style></head><body class="ana">
 <header><h1>買うべきレース(競輪)</h1>
 <p>{html.escape(today)} ・ 更新 {now.strftime('%H:%M')}(1時間おき) ・ <a href="index.html">全レースの予想</a></p></header>
 <main>{body}{stat}</main>
 <footer><details class="more"><summary>ルールの説明と注意</summary><ul>{notes}</ul>
 <p>ラインの強さは「予想印の合計」で決めるので、オッズを見なくても判定できます。並び予想や印が変わると買い目も変わるので、
-買う直前にもう一度開いてください。A〜Dは1レース1点、重賞パックは決勝・準決勝が最大5点・予選などが平均2.5点(各100円)。過去の確定データでの検証結果で、
+買う直前にもう一度開いてください。A〜D・Fは1レース1点、重賞パックは決勝・準決勝が最大5点・予選などが平均2.5点(各100円)。過去の確定データでの検証結果で、
 大きい配当に頼った成績(上位5本の的中を除くと回収率93%)なので、プラスを保証するものではありません。</p></details></footer>
 </body></html>"""
 

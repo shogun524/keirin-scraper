@@ -151,6 +151,18 @@ class TestBoard(unittest.TestCase):
         self.assertIn("31%", h)
         self.assertIn("4,200円", h)
         self.assertIn(">D</span> <b>2-5-6</b>", h)      # 勝ち筋があるレースは参考を出さない
-        self.assertIn(">参考</span> 3-1-2", h)
+        self.assertNotIn(">参考</span> 3-1-2", h)             # 本命寄りの参考(E)は出さない
+        self.assertIn("honmei", h)                             # 万車率30%未満は穴党モードで隠す
         self.assertIn("見送り", h)
         self.assertEqual(h.count("<article"), 1)          # E はカードにしない
+
+
+class TestRuleF(unittest.TestCase):
+    def test_third_line(self):
+        R = race(9, [[1, 4, 7], [2, 5, 8], [3, 6, 9]], {1: 1, 2: 2, 3: 3})
+        self.assertEqual(P.line_ticket(R, 3), ("3-6-9", [3, 6, 9]))
+
+    def test_recommendation_includes_f_not_e(self):
+        ps = [dict(url="u", rule="F", ticket="3-6-9"), dict(url="u", rule="E", ticket="1-4-7")]
+        self.assertEqual(P.race_recommendation(ps, "u"), [("win", "F", ["3-6-9"])])
+        self.assertEqual(P.race_recommendation([dict(url="u", rule="E", ticket="1-4-7")], "u"), [])
