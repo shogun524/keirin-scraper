@@ -556957,7 +556957,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-11_takeo_6": {
@@ -559360,7 +559360,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-11_matsudo_4": {
@@ -561763,7 +561763,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-11_fukui_2": {
@@ -566783,7 +566783,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-11_yokkaichi_11": {
@@ -571974,7 +571974,7 @@
   },
   "ev": null,
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-11_matsusaka_3": {
@@ -573167,9 +573167,30 @@
     82.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    2,
+    1,
+    3,
+    6,
+    4,
+    7
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-11 23:14"
  },
  "2026-11-11_matsusaka_8": {
   "date": "2026-11-11",
@@ -573390,7 +573411,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-11_matsusaka_9": {
@@ -575041,7 +575062,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 5
  },
  "2026-11-11_sasebo_7": {
@@ -575262,9 +575283,30 @@
     80.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    3,
+    4,
+    6,
+    5,
+    7
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-11 23:14"
  },
  "2026-11-11_sasebo_8": {
   "date": "2026-11-11",
@@ -575484,9 +575526,26 @@
     71.8
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    2,
+    6,
+    3,
+    5
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-11 23:14"
  },
  "2026-11-11_sasebo_9": {
   "date": "2026-11-11",
