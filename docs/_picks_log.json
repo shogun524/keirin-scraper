@@ -685,6 +685,25 @@
 },
 {
 "date": "2026-11-11",
+"rule": "F",
+"ticket": "3-5-6",
+"url": "https://www.winticket.jp/keirin/fukui/racecard/2026111151/1/1",
+"venue": "福井",
+"race_no": 1,
+"cup": "中日スポーツ杯ブルーサンダー賞",
+"grade": "F1",
+"start_at": 1794362700,
+"close_at": 1794362400,
+"cls": "A級",
+"race_type": "予選",
+"line": "3-5-6・117.3倍",
+"settled": true,
+"result": "1-7-6",
+"payout": 0,
+"final_odds": 117.3
+},
+{
+"date": "2026-11-11",
 "rule": "E",
 "ticket": "5-1-3",
 "url": "https://www.winticket.jp/keirin/toyama/racecard/2026111046/2/1",
@@ -951,6 +970,25 @@
 },
 {
 "date": "2026-11-11",
+"rule": "F",
+"ticket": "2-5-6",
+"url": "https://www.winticket.jp/keirin/takeo/racecard/2026110984/3/11",
+"venue": "武雄",
+"race_no": 11,
+"cup": "日本名輪会Ｃ佐々木昭彦杯",
+"grade": "F1",
+"start_at": 1794379440,
+"close_at": 1794379140,
+"cls": "A級",
+"race_type": "決勝",
+"line": "2-5-6・103.4倍",
+"settled": true,
+"result": "1-7-4",
+"payout": 0,
+"final_odds": 103.4
+},
+{
+"date": "2026-11-11",
 "rule": "C",
 "ticket": "3-5-6",
 "url": "https://www.winticket.jp/keirin/yokkaichi/racecard/2026111148/1/1",
@@ -963,6 +1001,25 @@
 "cls": "A級",
 "race_type": "予選",
 "line": "3-5-6",
+"settled": true,
+"result": "2-5-3",
+"payout": 0,
+"final_odds": 39.1
+},
+{
+"date": "2026-11-11",
+"rule": "F",
+"ticket": "3-5-6",
+"url": "https://www.winticket.jp/keirin/yokkaichi/racecard/2026111148/1/1",
+"venue": "四日市",
+"race_no": 1,
+"cup": "スポーツ報知杯",
+"grade": "F1",
+"start_at": 1794379800,
+"close_at": 1794379500,
+"cls": "A級",
+"race_type": "予選",
+"line": "3-5-6・39.1倍",
 "settled": true,
 "result": "2-5-3",
 "payout": 0,
@@ -1171,7 +1228,30 @@
 "close_at": 1794400500,
 "cls": "A級",
 "race_type": "チ予選",
-"line": "1-7-2-6・2.6倍"
+"line": "1-7-2-6・2.5倍",
+"settled": true,
+"result": "1-7-4",
+"payout": 0,
+"final_odds": 2.5
+},
+{
+"date": "2026-11-11",
+"rule": "D",
+"ticket": "3-6-4",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/1/5",
+"venue": "佐世保",
+"race_no": 5,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794402000,
+"close_at": 1794401700,
+"cls": "A級",
+"race_type": "特予選",
+"line": "3-6-4・13.6倍",
+"settled": true,
+"result": "3-4-6",
+"payout": 0,
+"final_odds": 13.6
 },
 {
 "date": "2026-11-11",
@@ -1186,7 +1266,41 @@
 "close_at": 1794401700,
 "cls": "A級",
 "race_type": "特予選",
-"line": "1-2-5・8.3倍"
+"line": "1-2-5・6.1倍",
+"settled": true,
+"result": "3-4-6",
+"payout": 0,
+"final_odds": 6.1
+},
+{
+"date": "2026-11-11",
+"rule": "E",
+"ticket": "2-3-5",
+"url": "https://www.winticket.jp/keirin/matsusaka/racecard/2026111147/1/5",
+"venue": "松阪",
+"race_no": 5,
+"cup": "仲間と繋がるＴＩＰＳＴＡＲ杯",
+"grade": "F2",
+"start_at": 1794402600,
+"close_at": 1794402300,
+"cls": "A級",
+"race_type": "予選",
+"line": "2-3-5・8.5倍"
+},
+{
+"date": "2026-11-11",
+"rule": "E",
+"ticket": "2-1-6",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/1/7",
+"venue": "佐世保",
+"race_no": 7,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794404400,
+"close_at": 1794404100,
+"cls": "A級",
+"race_type": "特予選",
+"line": "2-1-6-7・9.9倍"
 },
 {
 "date": "2026-11-11",
@@ -1201,7 +1315,7 @@
 "close_at": 1794405300,
 "cls": "A級",
 "race_type": "特予選",
-"line": "1-2-6・7.1倍"
+"line": "1-2-6・5.3倍"
 },
 {
 "date": "2026-11-11",
@@ -1216,6 +1330,6 @@
 "close_at": 1794405900,
 "cls": "A級",
 "race_type": "予選",
-"line": "1-2-6・7.5倍"
+"line": "1-2-6・4.9倍"
 }
 ]
