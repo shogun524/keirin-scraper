@@ -1,0 +1,65 @@
+name: 競輪 当日の常駐更新（10分おきオッズ記録・30分おき予想更新）
+
+# GitHub の定期実行(cron)は混雑時に大きく間引かれる(1時間おき指定でも1日2回しか動かない日がある)。
+# そこで1つのジョブを長時間動かし続け、その中で
+#   ・10分おき: 締切前オッズの記録(wt_odds_snapshot.py → リリース wt-odds-live)
+#   ・30分おき: 予想・買うべきレースの更新(daily.yml を手動実行で呼ぶ。手動実行は間引かれない)
+# を行う。1回は最大5時間40分で、終わったら23:30(JST)まで自分を呼び直して続ける。
+# 朝の起動用に cron を何本か置き(どれか1本動けば十分)、重複して起動しても concurrency で1つだけ動く。
+on:
+  schedule:
+    - cron: "17 22 * * *"   # JST 07:17
+    - cron: "41 23 * * *"   # JST 08:41(朝の起動が間引かれたときの予備)
+    - cron: "29 2 * * *"    # JST 11:29(予備)
+    - cron: "53 5 * * *"    # JST 14:53(予備)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: keirin-keeper
+  cancel-in-progress: false
+
+jobs:
+  keep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONIOENCODING: "utf-8"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests beautifulsoup4 numpy
+      - name: 10分おきにオッズ記録、30分おきに予想更新
+        run: |
+          gh release view wt-odds-live >/dev/null 2>&1 || \
+            gh release create wt-odds-live --title "競輪 締切前オッズ(自動)" --notes "10分おきに記録する全券種オッズ"
+          start=$(date +%s)
+          i=0
+          while :; do
+            now=$(date +%s)
+            hm=$(TZ=Asia/Tokyo date +%H%M)
+            # 1回の上限(5時間40分)か、その日の最終(23:50 JST)で終わる
+            if [ $((now - start)) -ge $((340 * 60)) ] || [ "$hm" -ge 2350 ]; then break; fi
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" || git fetch -q origin "${GITHUB_REF_NAME}"
+            f="wt_live_$(TZ=Asia/Tokyo date +%Y%m%d).jsonl.gz"
+            mkdir -p live
+            gh release download wt-odds-live --pattern "$f" --dir live --clobber 2>/dev/null || true
+            (cd scripts && python wt_odds_snapshot.py --out-dir ../live) || echo "::warning::オッズ記録に失敗"
+            if [ -f "live/$f" ]; then gh release upload wt-odds-live "live/$f" --clobber || true; fi
+            if [ $((i % 3)) -eq 0 ] && [ "$hm" -ge 0700 ]; then
+              gh workflow run daily.yml --ref "${GITHUB_REF_NAME}" || echo "::warning::予想更新の呼び出しに失敗"
+            fi
+            i=$((i + 1))
+            sleep $((600 - ($(date +%s) - now) % 600))
+          done
+      - name: 23:30(JST)より前なら続きを呼ぶ
+        if: always()
+        run: |
+          hm=$(TZ=Asia/Tokyo date +%H%M)
+          if [ "$hm" -lt 2330 ] && [ "$hm" -ge 0600 ]; then gh workflow run keeper.yml --ref "${GITHUB_REF_NAME}"; fi

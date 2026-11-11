@@ -166,3 +166,15 @@ class TestRuleF(unittest.TestCase):
         ps = [dict(url="u", rule="F", ticket="3-6-9"), dict(url="u", rule="E", ticket="1-4-7")]
         self.assertEqual(P.race_recommendation(ps, "u"), [("win", "F", ["3-6-9"])])
         self.assertEqual(P.race_recommendation([dict(url="u", rule="E", ticket="1-4-7")], "u"), [])
+
+
+class TestSmooth(unittest.TestCase):
+    def test_median_of_last_three(self):
+        old = [dict(url="u", hist=[[1, 0.30, 1, 2, 3], [2, 0.50, 1, 2, 3]])]
+        new = [dict(url="u", man=0.32, q25=1, q50=2, q75=3), dict(url="v", man=None, q25=None, q50=None, q75=None)]
+        b = P.smooth_board(new, old, 3)
+        self.assertAlmostEqual(b[0]["man"], 0.32)          # 0.30, 0.50, 0.32 の中央値
+        self.assertEqual(len(b[0]["hist"]), 3)
+        self.assertIsNone(b[1]["man"])
+        b2 = P.smooth_board([dict(url="u", man=0.9, q25=1, q50=2, q75=3)], b, 4)
+        self.assertAlmostEqual(b2[0]["man"], 0.50)         # 0.50, 0.32, 0.90 → 0.50(1回の急な値に引っぱられない)

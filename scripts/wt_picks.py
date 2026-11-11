@@ -16,6 +16,8 @@
 import datetime
 import html
 import json
+
+import numpy as np
 import os
 import sys
 from zoneinfo import ZoneInfo
@@ -323,6 +325,24 @@ def race_recommendation(picks, url):
     return out  # 本命寄りの参考(E: 最強ラインの並び通り10倍以下)は穴党向けに出さない(記録だけ続ける)
 
 
+def smooth_board(board, old_board, now_ts, keep=6, window=3):
+    """万車率・配当の目安を、直近の更新(最大3回)の中央値にする。オッズは更新のたびに少しずつ動くので、
+    1回ごとの値をそのまま出すと見るたびに数字が変わる。値の履歴は hist に残す"""
+    old = {b["url"]: b for b in (old_board or [])}
+    for b in board:
+        hist = list((old.get(b["url"]) or {}).get("hist") or [])
+        if b.get("man") is not None:
+            hist.append([int(now_ts), b["man"], b["q25"], b["q50"], b["q75"]])
+        hist = hist[-keep:]
+        b["hist"] = hist
+        if hist:
+            last = np.array([h[1:] for h in hist[-window:]], dtype=float)
+            med = np.median(last, axis=0)
+            b["man"], b["q25"], b["q50"], b["q75"] = (float(x) for x in med)
+            b["man_ts"] = hist[-1][0]
+    return board
+
+
 def board_html(board, todays, now):
     """全レースの 万車率・配当の目安・推奨買い目 の一覧"""
     if not board:
@@ -527,6 +547,13 @@ def main():
     try:
         picks, board = collect(now.date())
         log = merge(log, picks)
+        try:
+            with open(board_path, encoding="utf-8") as f:
+                ob = json.load(f)
+            old_board = ob["races"] if ob.get("date") == now.date().isoformat() else None
+        except (OSError, ValueError, KeyError):
+            old_board = None
+        board = smooth_board(board, old_board, now.timestamp())
         with open(board_path, "w", encoding="utf-8") as f:
             json.dump(dict(date=now.date().isoformat(), races=board), f, ensure_ascii=False)
     except Exception as e:  # noqa: BLE001

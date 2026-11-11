@@ -263,13 +263,17 @@ def main():
             except Exception as e:
                 print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の補正に失敗: {e}")
         info = race["race_info"]
-        try:
-            odds = race.get("wt_odds") if info.get("source") == "winticket" else kd_odds.get((info["venue"], info["race_no"]))
-            info["manshaken"] = market_view(odds) if (market_view and odds) else None
-        except Exception as e:
-            print(f"[WARN] {info['venue']} {info['race_no']}R の万車率の計算に失敗: {e}")
-            info["manshaken"] = None
         br = rec_board.get((info["venue"], info["race_no"]))
+        if br and br.get("man") is not None:
+            # 買うべきレースのページと同じ値(直近3回の中央値)を使う。ページごとに数字が違うと混乱するため
+            info["manshaken"] = {k: br[k] for k in ("man", "q25", "q50", "q75")}
+        else:
+            try:
+                odds = race.get("wt_odds") if info.get("source") == "winticket" else kd_odds.get((info["venue"], info["race_no"]))
+                info["manshaken"] = market_view(odds) if (market_view and odds) else None
+            except Exception as e:
+                print(f"[WARN] {info['venue']} {info['race_no']}R の万車率の計算に失敗: {e}")
+                info["manshaken"] = None
         info["recommend"] = br.get("rec") if br else None
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
 
