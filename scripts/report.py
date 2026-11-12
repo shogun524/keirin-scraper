@@ -3015,8 +3015,17 @@ def _print_card_html(rd):
     deadline = info.get("deadline") or ""
 
     flags, flag_html = [], []
-    if result.get("is_high_prob"):
-        flags.append("high"); flag_html.append("<span>本命堅い</span>")
+    _mv = info.get("manshaken") or {}
+    _hon = _mv.get("man") is not None and _mv["man"] < 0.30
+    _keshi = info.get("ai_keshi") or []
+    _rec = [(k, lb, [t for t in ts if t not in _keshi]) for k, lb, ts in (info.get("recommend") or [])]
+    _rec = [x for x in _rec if x[2]]
+    if _hon:
+        flags.append("honmei"); flag_html.append("<span>本命(見送り)</span>")
+    else:
+        flags.append("nothonmei")
+        if _rec:
+            flags.append("ana"); flag_html.append("<span>穴目あり</span>")
     if result.get("is_close_race"):
         flags.append("close"); flag_html.append("<span>拮抗</span>")
     if info.get("odds_value_alert"):
@@ -3107,18 +3116,23 @@ def _print_card_html(rd):
              "<th class='pv-opt'>逃</th><th class='pv-opt'>捲</th><th class='pv-opt'>差</th><th class='pv-opt'>マ</th>"
              "<th>1着</th><th class='pv-opt'>2着</th><th class='pv-opt'>3着</th><th>3着内</th></tr>")
 
-    combos = (result.get("trifecta") or {}).get("combos", [])[:10]
-    tri = "".join(f'<div><span>{c["first"]}-{c["second"]}-{c["third"]}</span><span>{c["prob"]:.1f}%</span></div>' for c in combos)
-    tri_html = f'<div class="pv-box"><div class="pv-box-t">3連単 確率の高い順</div><div class="pv-tri">{tri}</div></div>' if tri else ""
-    tk = _ticket_lists(result)
-    mix = ""
-    for name in ("2車単", "2車複", "ワイド", "3連複"):
-        lines = "".join(f'<div style="display:flex;justify-content:space-between;border-bottom:1px dotted #bbb;line-height:1.55;"><span>{k}</span><span>{v:.1f}%</span></div>' for k, v in tk[name])
-        mix += f'<div><div class="pv-box-t">{name}</div>{lines}</div>'
-    mix_html = f'<div class="pv-box"><div class="pv-box-t" style="border:none;margin:0;">券種別 確率の高い順（AIの予測）</div><div class="pv-mix">{mix}</div></div>' if combos else ""
-    tickets = f'<div class="pv-tickets pv-opt">{tri_html}{mix_html}</div>' if (tri_html or mix_html) else ""
-    form = _formation_text(result)
-    form_html = f'<div class="pv-form pv-opt">{form}</div>' if form else ""
+    # 穴党向け: AIの確率上位の買い目(=消し目)は出さず、穴の買い目・消し目・万車率を出す
+    if _mv.get("man") is not None:
+        man_txt = (f'万車率 <b>{_mv["man"] * 100:.0f}%</b>　配当の目安 <b>{_mv["q50"]:,.0f}円</b>'
+                   f'（半分は {_mv["q25"]:,.0f}〜{_mv["q75"]:,.0f}円）')
+    else:
+        man_txt = "万車率：オッズ待ち"
+    if _hon:
+        buy_txt = "<b>本命レース（万車率30%未満）— 見送り</b>"
+    elif _rec:
+        lab = {"win": "勝ち筋", "big": "重賞", "ana": "穴目", "ref": "参考"}
+        buy_txt = "　".join(f'<b>[{lab.get(k, k)}{"" if lb in ("穴", "重賞") else " " + lb}]</b> {" ".join(ts)}' for k, lb, ts in _rec)
+    else:
+        buy_txt = "穴の買い目なし（見送り）"
+    keshi_txt = (f'<div class="pv-sub">消し目（AI推奨・買わない）：<s>{" ".join(_keshi[:12])}</s></div>' if _keshi else "")
+    tickets = (f'<div class="pv-box"><div class="pv-box-t">穴党の買い目（3連単）</div>'
+               f'<div class="pv-sub">{man_txt}</div><div class="pv-sub">{buy_txt}</div>{keshi_txt}</div>')
+    form_html = ""
 
     dev = result.get("development_simulation") or {}
     dev_rows = ""
@@ -3145,11 +3159,11 @@ def _print_card_html(rd):
         <span class="pv-t">{info.get('title') or ''} {('締切 ' + deadline) if deadline else ''}</span>
         <span class="pv-flags">{''.join(flag_html)}</span></div>
       {bank_html}
+      {tickets}
       <div class="pv-sub">{sub}</div>
       {dev_html}
       <table class="pv-t">{thead}{trs}</table>
       {view}
-      {tickets}
       {mx}
       <div class="pv-memo pv-opt">メモ：</div>
     </div>"""
@@ -3182,8 +3196,8 @@ def render_print_page(all_race_data, date=None):
     <div class="pv-vchips">{chips}</div>
     <div class="pv-row">
       <label>絞り込み
-        <select id="pvFlag"><option value="all">全レース</option><option value="high">本命が堅い</option>
-        <option value="close">拮抗</option><option value="value">妙味</option></select></label>
+        <select id="pvFlag"><option value="nothonmei" selected>本命レースを除く（穴党）</option><option value="ana">穴目のあるレースだけ</option>
+        <option value="all">全レース</option><option value="close">拮抗</option></select></label>
       <label>列数
         <select id="pvCols"><option value="1">詳細（1ページ1レース）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
       <label>出目確率表
@@ -3195,7 +3209,8 @@ def render_print_page(all_race_data, date=None):
     <div class="pv-row"><button type="button" class="pv-print-btn" id="pvPrint">印刷 / PDFに保存</button></div>
     <p class="pv-hint">開催場ごとに改ページ、詳細は1レース1ページです。印刷画面で「PDFとして保存」を選ぶとPDFになります
     （iPhone/iPadは、共有ボタン → 「プリント」→ プレビューをピンチアウト → 共有でPDF保存）。
-    AI＝予測1着率の上位印（◎○▲△）、級＝級班、1着率・3着内％はAIの予測です。</p>
+    AI＝予測1着率の上位印（◎○▲△）、級＝級班、1着率・3着内％はAIの予測です。
+    穴党の買い目＝穴レースのページと同じ判定（勝ち筋・穴目・重賞）。AIが推す組は「消し目」として買い目から外しています。</p>
   </div>"""
     body = controls + (sections or '<p class="dim">本日は予想できたレースがありません。</p>')
     return _page_shell(
