@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12 20:16",
+ "updated": "2026-11-12 20:46",
  "failures": [
   {
    "race": "2026-11-12 tamano 10R",
@@ -11,17 +11,26 @@
    }
   },
   {
-   "race": "2026-11-12 tamano 11R",
+   "race": "2026-11-12 sasebo 1R",
    "diag": {
-    "venue": "tamano",
-    "race_id": "6120261112010011",
+    "venue": "sasebo",
+    "race_id": "8520261111020001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-12 matsusaka 1R",
+   "diag": {
+    "venue": "matsusaka",
+    "race_id": "4720261111020001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2745,
- "with_result": 2215,
+ "with_result": 2217,
  "without_url": 0,
- "pending_eligible": 511
+ "pending_eligible": 512
 }
