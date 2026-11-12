@@ -1879,7 +1879,11 @@
 "close_at": 1794457140,
 "cls": "A級",
 "race_type": "特一般",
-"line": "2-7-4・24.7倍"
+"line": "2-7-4・24.7倍",
+"settled": true,
+"result": "1-3-5",
+"payout": 0,
+"final_odds": 24.7
 },
 {
 "date": "2026-11-12",
@@ -1894,7 +1898,11 @@
 "close_at": 1794457140,
 "cls": "A級",
 "race_type": "特一般",
-"line": "3-5-1・6.8倍"
+"line": "3-5-1・6.8倍",
+"settled": true,
+"result": "1-3-5",
+"payout": 0,
+"final_odds": 6.8
 },
 {
 "date": "2026-11-12",
@@ -1909,7 +1917,11 @@
 "close_at": 1794457620,
 "cls": "S級",
 "race_type": "一般",
-"line": "2-7-5・19.0倍"
+"line": "2-7-5・19.0倍",
+"settled": true,
+"result": "4-1-3・4-1-6",
+"payout": 0,
+"final_odds": 19
 },
 {
 "date": "2026-11-12",
@@ -1924,7 +1936,11 @@
 "close_at": 1794458220,
 "cls": "S級",
 "race_type": "一予選",
-"line": "9-1-5"
+"line": "9-1-5",
+"settled": true,
+"result": "1-5-6",
+"payout": 0,
+"final_odds": 30.9
 },
 {
 "date": "2026-11-12",
@@ -1939,22 +1955,11 @@
 "close_at": 1794458220,
 "cls": "S級",
 "race_type": "一予選",
-"line": "6-3-8"
-},
-{
-"date": "2026-11-12",
-"rule": "D",
-"ticket": "9-1-5",
-"url": "https://www.winticket.jp/keirin/tachikawa/racecard/2026111228/1/7",
-"venue": "立川",
-"race_no": 7,
-"cup": "施設整備等協賛競輪Ｂｅｔｉｍｏ",
-"grade": "G3",
-"start_at": 1794458520,
-"close_at": 1794458220,
-"cls": "S級",
-"race_type": "一予選",
-"line": "9-1-5・28.3倍"
+"line": "6-3-8",
+"settled": true,
+"result": "1-5-6",
+"payout": 0,
+"final_odds": 42.9
 },
 {
 "date": "2026-11-12",
@@ -1969,7 +1974,11 @@
 "close_at": 1794458220,
 "cls": "S級",
 "race_type": "一予選",
-"line": "6-3-8・216.7倍"
+"line": "6-3-8・42.9倍",
+"settled": true,
+"result": "1-5-6",
+"payout": 0,
+"final_odds": 42.9
 },
 {
 "date": "2026-11-12",
@@ -1990,7 +1999,11 @@
 "close_at": 1794458220,
 "cls": "S級",
 "race_type": "一予選",
-"line": "並び 9-1-5 / 6-3-8 / 2-7-4"
+"line": "並び 9-1-5 / 6-3-8 / 2-7-4",
+"settled": true,
+"result": "1-5-6",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-12",
@@ -2160,7 +2173,7 @@
 "close_at": 1794467100,
 "cls": "S級",
 "race_type": "準決勝",
-"line": "7-6-3・124.1倍"
+"line": "7-6-3・101.8倍"
 },
 {
 "date": "2026-11-12",
@@ -2210,7 +2223,7 @@
 "close_at": 1794469680,
 "cls": "A級",
 "race_type": "チ予選",
-"line": "1-7-3・7.3倍"
+"line": "1-7-3・6.4倍"
 },
 {
 "date": "2026-11-12",
@@ -2225,7 +2238,7 @@
 "close_at": 1794471780,
 "cls": "A級",
 "race_type": "準決勝",
-"line": "5-3-6・21.9倍"
+"line": "5-3-6・24.6倍"
 },
 {
 "date": "2026-11-12",
@@ -2240,7 +2253,7 @@
 "close_at": 1794472500,
 "cls": "A級",
 "race_type": "チ予選",
-"line": "4-2-7・5.5倍"
+"line": "4-2-7・5.7倍"
 },
 {
 "date": "2026-11-12",
@@ -2255,7 +2268,7 @@
 "close_at": 1794475440,
 "cls": "A級",
 "race_type": "特予選",
-"line": "5-1-3・6.8倍"
+"line": "5-1-3・7.2倍"
 },
 {
 "date": "2026-11-12",
@@ -2270,7 +2283,22 @@
 "close_at": 1794477000,
 "cls": "A級",
 "race_type": "特予選",
-"line": "5-7-2・25.0倍"
+"line": "5-7-2・25.2倍"
+},
+{
+"date": "2026-11-12",
+"rule": "E",
+"ticket": "5-1-7",
+"url": "https://www.winticket.jp/keirin/yokkaichi/racecard/2026111148/2/11",
+"venue": "四日市",
+"race_no": 11,
+"cup": "スポーツ報知杯",
+"grade": "F1",
+"start_at": 1794481260,
+"close_at": 1794480960,
+"cls": "S級",
+"race_type": "準決勝",
+"line": "5-1-7・9.3倍"
 },
 {
 "date": "2026-11-12",
@@ -2285,6 +2313,51 @@
 "close_at": 1794482700,
 "cls": "S級",
 "race_type": "準決勝",
-"line": "7-1-5・6.0倍"
+"line": "7-1-5・5.5倍"
+},
+{
+"date": "2026-11-12",
+"rule": "E",
+"ticket": "1-5-2",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/2/2",
+"venue": "佐世保",
+"race_no": 2,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794484800,
+"close_at": 1794484500,
+"cls": "A級",
+"race_type": "チ一般",
+"line": "1-5-2・9.5倍"
+},
+{
+"date": "2026-11-12",
+"rule": "C",
+"ticket": "5-4-6",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/2/6",
+"venue": "佐世保",
+"race_no": 6,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794489600,
+"close_at": 1794489300,
+"cls": "A級",
+"race_type": "特一般",
+"line": "5-4-6"
+},
+{
+"date": "2026-11-12",
+"rule": "F",
+"ticket": "5-4-6",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/2/6",
+"venue": "佐世保",
+"race_no": 6,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794489600,
+"close_at": 1794489300,
+"cls": "A級",
+"race_type": "特一般",
+"line": "5-4-6・204.7倍"
 }
 ]
