@@ -1,28 +1,8 @@
 {
- "updated": "2026-11-12 09:27",
- "failures": [
-  {
-   "race": "2026-11-11 sasebo 6R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    5,
-    2,
-    4,
-    1
-   ]
-  },
-  {
-   "race": "2026-11-12 omiya 3R",
-   "diag": {
-    "venue": "omiya",
-    "race_id": "2520261110030003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  }
- ],
+ "updated": "2026-11-12 10:07",
+ "failures": [],
  "tracked": 2745,
- "with_result": 2163,
+ "with_result": 2165,
  "without_url": 0,
- "pending_eligible": 502
+ "pending_eligible": 501
 }
