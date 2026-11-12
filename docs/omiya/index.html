@@ -96,6 +96,9 @@
   .buy-line .tf-badge{ margin-left:0; margin-right:4px; }
   .buy-k{ font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:4px; padding:0 5px; background:var(--paper); }
   .b-rec{ background:#2f6b3a; color:#fff; }
+  .tab-btn.hon{ opacity:.45; }
+  .tab-ana{ display:inline-block; margin-left:2px; background:#6A4FA0; color:#fff; font-size:9px; font-weight:700; padding:0 4px; border-radius:999px; vertical-align:middle; }
+  .tab-hon{ font-size:9px; color:#888; }
   details.ai-ref{ margin:8px 0; border:1px solid #ddd; border-radius:8px; padding:6px 10px; background:#fff; }
   details.ai-ref summary{ cursor:pointer; font-size:13px; font-weight:700; color:#666; }
   .auto-box{ border:2px solid #2f6b3a; border-radius:8px; padding:10px 12px; margin:8px 0 12px; background:rgba(47,107,58,.06); }
@@ -176,7 +179,7 @@
   <div class="gate-stripe"><span style="background:#ffffff;"></span><span style="background:#1b1b1b;"></span><span style="background:#d8322a;"></span><span style="background:#1f5fc4;"></span><span style="background:#e8c221;"></span><span style="background:#2f8f4e;"></span><span style="background:#e07a1f;"></span><span style="background:#e2699a;"></span><span style="background:#8a5fb0;"></span></div>
 </header>
 <main>
-  <div class="tab-bar"><button class="tab-btn" data-deadline="08:45" data-race-no="1" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>08:45</span></button><button class="tab-btn" data-deadline="09:05" data-race-no="2" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>09:05</span></button><button class="tab-btn" data-deadline="09:26" data-race-no="3" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>09:26</span></button><button class="tab-btn" data-deadline="09:47" data-race-no="4" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>09:47</span></button><button class="tab-btn" data-deadline="10:08" data-race-no="5" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>10:08</span></button><button class="tab-btn" data-deadline="10:29" data-race-no="6" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>10:29</span></button><button class="tab-btn" data-deadline="10:50" data-race-no="7" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>10:50</span></button></div>
+  <div class="tab-bar"><button class="tab-btn hon" data-deadline="08:45" data-race-no="1" onclick="showTab('race1', this)">1R<br><span class='tab-deadline'>08:45</span><br><span class='tab-hon'>本命</span></button><button class="tab-btn hon" data-deadline="09:05" data-race-no="2" onclick="showTab('race2', this)">2R<br><span class='tab-deadline'>09:05</span><br><span class='tab-hon'>本命</span></button><button class="tab-btn" data-deadline="09:26" data-race-no="3" onclick="showTab('race3', this)">3R<br><span class='tab-deadline'>09:26</span></button><button class="tab-btn" data-deadline="09:47" data-race-no="4" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>09:47</span></button><button class="tab-btn" data-deadline="10:08" data-race-no="5" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>10:08</span></button><button class="tab-btn hon" data-deadline="10:29" data-race-no="6" onclick="showTab('race6', this)">6R<br><span class='tab-deadline'>10:29</span><br><span class='tab-hon'>本命</span></button><button class="tab-btn hon" data-deadline="10:50" data-race-no="7" onclick="showTab('race7', this)">7R<br><span class='tab-deadline'>10:50</span><br><span class='tab-hon'>本命</span></button></div>
   
     <div id="race1" class="race-panel" style="display:none;">
       <div class="race-card" style="--pick-color:#e8c221;">
