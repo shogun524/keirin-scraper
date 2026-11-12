@@ -50,6 +50,56 @@ F_RULE = ("F", "穴: 印3番目のライン 並び通り(3連単が30〜300倍�
 F_ODDS = (30.0, 300.0)
 
 
+# 穴目の表(wt_result_patterns.py の結果): 「ライン何番目 × 並び通り/番手差し × 3連単のオッズ帯」ごとの過去の回収率
+ANA_TABLE_PATH = os.path.join(DOCS, "_ana_table.json")
+ANA_MIN_ROI, ANA_MIN_HITS = 0.85, 15     # これ未満の穴目は出さない(損が大きい・当たりが少なすぎて当てにならない)
+HONMEI_MAN = 0.30                         # 万車率がこれ未満は本命レース(穴党は見送り)
+
+
+def load_ana_table():
+    try:
+        with open(ANA_TABLE_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return []
+
+
+ANA_TABLE = load_ana_table()
+
+
+def race_lines(R):
+    entries = [e for e in R.get("entries", []) if not e.get("absent")]
+    cars = {int(e["number"]) for e in entries}
+    lp = R.get("linePrediction") or {}
+    lines = [[n for en in L.get("entries", []) for n in en.get("numbers", []) if n in cars] for L in lp.get("lines", [])]
+    lines = [L for L in lines if L]
+    rec = {r["playerId"]: r for r in R.get("records", [])}
+    mark = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("predictionMark") for e in entries}
+    point = {int(e["number"]): (rec.get(e["playerId"]) or {}).get("racePoint") or 0 for e in entries}
+    if len(lines) < 2 or not any(mark.values()):
+        return []
+    return [lines[i] for i in line_rank(lines, mark, point)]
+
+
+def ana_candidates(R, tri, table=None):
+    """このレースの穴目: 印で並べたライン1〜3番目の「並び通り」「番手差し」のうち、今のオッズ帯で過去の回収率が
+    ANA_MIN_ROI 以上(的中 ANA_MIN_HITS 回以上)のもの。10倍未満(本命)と1000倍以上は出さない。過去の回収率の高い順"""
+    table = ANA_TABLE if table is None else table
+    out = []
+    for k, L in enumerate(race_lines(R)[:3], start=1):
+        if len(L) < 3:
+            continue
+        for pat, t in (("並び通り", f"{L[0]}-{L[1]}-{L[2]}"), ("番手差し", f"{L[1]}-{L[0]}-{L[2]}")):
+            od = tri.get(t)
+            if not od or od < 10 or od >= 1000:
+                continue
+            cell = next((c for c in table if c["pattern"] == pat and c["line"] == k and c["lo"] <= od < c["hi"]), None)
+            if cell and cell["roi"] >= ANA_MIN_ROI and cell["hits"] >= ANA_MIN_HITS:
+                out.append(dict(ticket=t, odds=od, label=f"{k}番目のライン {pat}", roi=cell["roi"], hits=cell["hits"],
+                                win=cell["roi"] >= 1.0 and min(cell["roi2025"], cell["roi2026"]) >= 0.95))
+    return sorted(out, key=lambda x: -x["roi"])
+
+
 def second_line_ticket(R):
     """印2番目のライン(3車以上)の並び通りの買い目。無ければ None"""
     return line_ticket(R, 2)
@@ -295,7 +345,10 @@ def collect(today):
                                   man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,
                                   q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
                                   odds={t: tri.get(t) for _, t, _ in hits},
-                                  rec=race_recommendation(picks, url)))
+                                  ana=ana_candidates(R, tri),
+                                  rec=race_recommendation(picks, url) + [("ana" if not a["win"] else "win", "穴", [a["ticket"]])
+                                                                           for a in ana_candidates(R, tri)
+                                                                           if a["ticket"] not in {t for x in race_recommendation(picks, url) for t in x[2]}]))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
     return picks, board
 
@@ -372,7 +425,15 @@ def board_html(board, todays, now):
                 rec.append(f'<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
         for p in big:
             rec.append('<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
-        skip = not rec
+        for a in b.get("ana") or []:
+            if a["ticket"] not in seen:
+                seen.add(a["ticket"])
+                rec.append(f'<span class="rk {"win" if a["win"] else "ana"}">穴</span> <b>{html.escape(a["ticket"])}</b>'
+                           f' <small>{a["odds"]:.0f}倍・過去{a["roi"]:.0%}</small>')
+        honmei = b["man"] is not None and b["man"] < HONMEI_MAN
+        if honmei:
+            rec = ['<span class="skip">本命レース(見送り)</span>']
+        skip = honmei or not rec
         if skip:
             rec.append('<span class="skip">見送り</span>')
         row = (f'<tr class="{"passed" if passed else ""}{" honmei" if (b["man"] is not None and b["man"] < 0.3) else ""}"><td>{hm}</td><td>{html.escape(b["venue"])}{b["race_no"]}R'
@@ -382,7 +443,8 @@ def board_html(board, todays, now):
     head = '<tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨(3連単)</th></tr>'
     out = ('<h2>全レース一覧</h2>'
            '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は、半分のレースが入る一番狭い範囲)。今のオッズから計算。'
-           '<span class="rk win">A〜D・F</span> 勝ち筋(Fは穴) ・ <span class="rk big">重賞</span> トントン圏</p>'
+           '<span class="rk win">赤</span> 勝ち筋(過去の回収率100%超・両年とも) ・ <span class="rk ana">穴</span> 穴目(過去85〜100%) ・ '
+           '<span class="rk big">重賞</span> トントン圏。万車率30%未満は本命レースとして見送り</p>'
            '<p class="why"><label><input type="checkbox" id="anaOnly" checked onchange="document.body.classList.toggle(\'ana\', this.checked)"> '
            '穴党モード: 万車率30%未満(本命寄り)のレースを隠す</label></p>')
     out += ('<div class="tbl"><table class="board">' + head + "".join(main_rows) + '</table></div>') if main_rows else \
@@ -423,6 +485,8 @@ def render(log, now, board=None):
         if p["rule"] not in BIG and p["rule"] != "E":
             tags.setdefault((p["url"], p["ticket"]), []).append(p["rule"])
 
+    man_of = {b["url"]: b.get("man") for b in (board or [])}
+
     def card(p):
         passed = p["start_at"] and p["start_at"] < now.timestamp()
         res = ""
@@ -438,7 +502,9 @@ def render(log, now, board=None):
             bet += "".join(f'<span class="combo star">★{html.escape(t)}</span>' for t in extra)
             tks = tks + extra
         note = ("<div class=\"why\">★ = ルール" + "・".join(sorted(set(star.values()))) + "(1点ルール)の買い目</div>") if star else ""
-        return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] in BIG else ''}">
+        hon = man_of.get(p["url"])
+        hon_cls = " honmei" if (hon is not None and hon < HONMEI_MAN) else ""
+        return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] in BIG else ''}{hon_cls}">
   <div class="top"><span class="time">{hm(p['start_at'])}</span><span class="race">{html.escape(p['venue'])}{p['race_no']}R</span>
   <span class="tag">{'重賞' if p['rule'] in BIG else '・'.join(sorted(tags.get((p['url'], p['ticket']), [p['rule']])))}</span>{res}</div>
   <div class="sub">{html.escape(p.get('cup') or '')} {html.escape(p.get('grade') or '')} {html.escape(p.get('race_type') or '')}</div>
@@ -521,7 +587,7 @@ def render(log, now, board=None):
   table.board tr.passed {{ opacity:.5; }}
   .man {{ font-weight:700; font-variant-numeric:tabular-nums; }} .man.hi {{ color:#C8402A; }} .man.lo {{ color:#2F6B4F; }}
   .rk {{ font-size:.7rem; font-weight:700; color:#fff; padding:1px 6px; border-radius:999px; }}
-  .rk.win {{ background:#C8402A; }} .rk.big {{ background:#B8862B; }} .rk.ref {{ background:#7A8494; }}
+  .rk.win {{ background:#C8402A; }} .rk.ana {{ background:#6A4FA0; }} .rk.big {{ background:#B8862B; }} .rk.ref {{ background:#7A8494; }}
   .skip {{ color:var(--soft); font-size:.85rem; }} td.rec b {{ font-variant-numeric:tabular-nums; }}
   .none {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; text-align:center; }}
   h2 {{ font-size:1rem; margin:20px 0 8px; }}

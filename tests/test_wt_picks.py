@@ -178,3 +178,17 @@ class TestSmooth(unittest.TestCase):
         self.assertIsNone(b[1]["man"])
         b2 = P.smooth_board([dict(url="u", man=0.9, q25=1, q50=2, q75=3)], b, 4)
         self.assertAlmostEqual(b2[0]["man"], 0.50)         # 0.50, 0.32, 0.90 → 0.50(1回の急な値に引っぱられない)
+
+
+class TestAna(unittest.TestCase):
+    TABLE = [dict(pattern="並び通り", line=2, lo=10, hi=30, tickets=3521, hits=212, roi=1.10, roi2025=1.10, roi2026=1.09, trim5=1.06),
+             dict(pattern="番手差し", line=2, lo=30, hi=100, tickets=7365, hits=130, roi=0.85, roi2025=0.80, roi2026=0.91, trim5=0.79),
+             dict(pattern="並び通り", line=1, lo=10, hi=30, tickets=12019, hits=643, roi=0.84, roi2025=0.83, roi2026=0.86, trim5=0.83)]
+
+    def test_candidates(self):
+        R = race(9, [[1, 4, 7], [2, 5, 8], [3, 6, 9]], {1: 1, 2: 2, 3: 3})
+        tri = {"2-5-8": 18.0, "5-2-8": 45.0, "1-4-7": 12.0, "4-1-7": 8.0}
+        c = P.ana_candidates(R, tri, self.TABLE)
+        self.assertEqual([x["ticket"] for x in c], ["2-5-8", "5-2-8"])   # 1-4-7 は過去84%で出さない、4-1-7 は10倍未満
+        self.assertTrue(c[0]["win"])
+        self.assertFalse(c[1]["win"])

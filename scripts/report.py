@@ -671,9 +671,13 @@ def render_manshaken_box(info):
         parts.append(f'配当の目安 <b>{mv["q50"]:,.0f}円</b> <span class="dim">({mv["q25"]:,.0f}〜{mv["q75"]:,.0f}円)</span>')
     else:
         parts.append('万車率 <span class="dim">オッズ待ち</span>')
+    if mv and mv["man"] < 0.30:
+        # 穴党向け: 本命レースは買い目を出さない
+        parts.insert(0, '<span class="dim">本命レース(万車率30%未満)— 見送り</span>')
+        rec = None
     if rec is not None:
         if rec:
-            col = {"win": "#C8402A", "big": "#B8862B", "ref": "#7A8494"}
+            col = {"win": "#C8402A", "big": "#B8862B", "ref": "#7A8494", "ana": "#6A4FA0"}
             items = " ".join(
                 f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
                 f'padding:1px 6px;border-radius:999px">{label}</span> <b>{" ".join(t)}</b>' for k, label, t in rec)
