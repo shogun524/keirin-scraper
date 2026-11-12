@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12 13:06",
+ "updated": "2026-11-12 13:36",
  "failures": [
   {
    "race": "2026-11-12 tachikawa 3R",
@@ -30,26 +30,26 @@
    }
   },
   {
-   "race": "2026-11-12 tachikawa 5R",
+   "race": "2026-11-12 fukui 6R",
    "diag": {
-    "venue": "tachikawa",
-    "race_id": "2820261112010005",
+    "venue": "fukui",
+    "race_id": "5120261111020006",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-12 toyama 5R",
+   "race": "2026-11-12 toyama 6R",
    "diag": {
     "venue": "toyama",
-    "race_id": "4620261110030005",
+    "race_id": "4620261110030006",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2745,
- "with_result": 2178,
+ "with_result": 2181,
  "without_url": 0,
  "pending_eligible": 507
 }
