@@ -918,6 +918,9 @@ RACE_PANEL_STYLE = """
   .buy-line .tf-badge{ margin-left:0; margin-right:4px; }
   .buy-k{ font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:4px; padding:0 5px; background:var(--paper); }
   .b-rec{ background:#2f6b3a; color:#fff; }
+  .tab-btn.hon{ opacity:.45; }
+  .tab-ana{ display:inline-block; margin-left:2px; background:#6A4FA0; color:#fff; font-size:9px; font-weight:700; padding:0 4px; border-radius:999px; vertical-align:middle; }
+  .tab-hon{ font-size:9px; color:#888; }
   details.ai-ref{ margin:8px 0; border:1px solid #ddd; border-radius:8px; padding:6px 10px; background:#fff; }
   details.ai-ref summary{ cursor:pointer; font-size:13px; font-weight:700; color:#666; }
   .auto-box{ border:2px solid #2f6b3a; border-radius:8px; padding:10px 12px; margin:8px 0 12px; background:rgba(47,107,58,.06); }
@@ -1432,8 +1435,13 @@ def render_venue_page(venue, races, date, now=None):
         no = r["race_info"]["race_no"]
         deadline = r["race_info"].get("deadline") or ""
         tab_id = f"race{no}"
-        label = f"{no}R" + (f"<br><span class='tab-deadline'>{deadline}</span>" if deadline else "")
-        tabs += (f'<button class="tab-btn" data-deadline="{deadline}" data-race-no="{no}" '
+        _mv = r["race_info"].get("manshaken") or {}
+        _hon = _mv.get("man") is not None and _mv["man"] < 0.30
+        _ana = (not _hon) and any(x[2] for x in (r["race_info"].get("recommend") or []))
+        label = (f"{no}R" + ("<span class='tab-ana'>穴</span>" if _ana else "") +
+                 (f"<br><span class='tab-deadline'>{deadline}</span>" if deadline else "") +
+                 ("<br><span class='tab-hon'>本命</span>" if _hon else ""))
+        tabs += (f'<button class="tab-btn{" hon" if _hon else ""}" data-deadline="{deadline}" data-race-no="{no}" '
                  f'onclick="showTab(\'{tab_id}\', this)">{label}</button>')
         panels += render_race_card(r, tab_id)
 
@@ -1467,9 +1475,12 @@ def _race_flags(rd):
     """レースの特記事項（本命が堅い／拮抗／妙味候補）のキー一覧を返す。"""
     flags = []
     result = rd.get("prediction")
+    mv = rd["race_info"].get("manshaken")
+    if mv and mv.get("man") is not None and mv["man"] < 0.30:
+        return ["honmei"]
+    if [x for x in (rd["race_info"].get("recommend") or []) if x[2]]:
+        flags.append("ana")
     if result:
-        if result.get("is_high_prob"):
-            flags.append("high")
         if result.get("is_close_race"):
             flags.append("close")
     if rd["race_info"].get("odds_value_alert"):
@@ -1492,7 +1503,8 @@ def render_index(all_race_data, date=None, now=None):
     all_races_json = json.dumps([
         {"venue": rd["race_info"]["venue"], "name": VENUE_NAMES.get(rd["race_info"]["venue"], rd["race_info"]["venue"]),
          "race_no": rd["race_info"]["race_no"], "deadline": rd["race_info"].get("deadline"),
-         "flags": _race_flags(rd)}
+         "flags": _race_flags(rd),
+         "man": round((rd["race_info"].get("manshaken") or {}).get("man") or 0, 3)}
         for rd in all_race_data if rd["race_info"].get("deadline")
     ], ensure_ascii=False)
 
@@ -1554,15 +1566,16 @@ def render_index(all_race_data, date=None, now=None):
           return {r: r, mins: minutesUntilDeadline(r.deadline, nowJstMinutes)};
         });
         withMins.sort(function(a,b){ return a.mins - b.mins; });
-        const upcoming = withMins.filter(function(x){ return x.mins < 1e9; }).slice(0, 8);
+        const upcoming = withMins.filter(function(x){ return x.mins < 1e9 && (x.r.flags||[]).indexOf('honmei') < 0; }).slice(0, 8);
         if(upcoming.length){
-          let html = '<h2 class="section">まもなく締切のレース</h2><div class="upcoming-list">';
+          let html = '<h2 class="section">まもなく締切の穴レース</h2><div class="upcoming-list">';
           upcoming.forEach(function(x, idx){
             const r = x.r;
             const soon = x.mins <= 5 ? ' soon' : '';
             // 特記事項バッジ（本命が堅い／拮抗／妙味候補）
-            const FLAG_LABELS = {high:'本命堅い', close:'拮抗', value:'妙味'};
-            const badges = (r.flags || []).map(function(f){
+            const FLAG_LABELS = {ana:'穴目あり', close:'拮抗', value:'妙味'};
+            const badges = (r.man ? '<span class="up-badge up-badge-man">万車率' + Math.round(r.man*100) + '%</span>' : '') +
+              (r.flags || []).filter(function(f){ return FLAG_LABELS[f]; }).map(function(f){
               return '<span class="up-badge up-badge-' + f + '">' + FLAG_LABELS[f] + '</span>';
             }).join('');
             // レース番号つきで遷移する（?r=N）。付けないと、その場の「締切が一番近いレース」が開いてしまう
@@ -1628,6 +1641,7 @@ def render_index(all_race_data, date=None, now=None):
   .up-badges{{ display:flex; flex-wrap:wrap; gap:4px; }}
   .up-badge{{ font-size:10.5px; font-weight:700; color:#fff; border-radius:4px; padding:1px 6px; }}
   .up-badge-high{{ background:var(--brick); }} .up-badge-close{{ background:var(--slate); }}
+  .up-badge-ana{{ background:#6A4FA0; }} .up-badge-man{{ background:#C8402A; }}
   .up-badge-value{{ background:#8a5a12; }}
   .up-time{{ font-size:12px; color:#8a5a12; font-weight:700; white-space:nowrap; }}
   @media (max-width:520px){{ .venue-row{{ grid-template-columns:repeat(2,1fr); }} }}
@@ -1763,8 +1777,7 @@ def _fmt_date_jp(date=None):
 # ナビゲーションの並び順・文言はここ1か所で管理する。
 AGG_GROUPS = [
     ("レースをさがす", [
-        ("picks.html", "買うべきレース"),
-        ("high_prob.html", "本命が堅い"),
+        ("picks.html", "穴レース"),
         ("close_race.html", "拮抗レース"),
         ("formula.html", "勝利の方程式"),
     ]),

@@ -533,7 +533,7 @@ def render(log, now, board=None):
             seen.add((p["url"], p["ticket"]))
             singles.append(p)
     body = "".join(card(p) for p in singles) or \
-        '<p class="none">今日の1点ルールの対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
+        '<p class="none">今日の勝ち筋ルールの対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
     for key, title, roi in (("G", "重賞(G戦)の決勝・準決勝", "107%"), ("H", "重賞(G戦)の予選・特選・選抜など", "102%")):
         bigs = [p for p in todays if p["rule"] == key]
         if bigs:
@@ -573,7 +573,7 @@ def render(log, now, board=None):
     notes += "".join(f"<li><b>{html.escape(d.split('(')[0])}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for _, d, b in BIG.values())
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>買うべきレース</title>
+<title>穴レース</title>
 <style>
   :root {{ --navy:#1B2A4A; --paper:#F5F6F8; --line:#DDE1E8; --ink:#1E2430; --soft:#5F6878; --accent:#C8402A; }}
   * {{ box-sizing:border-box; }}
@@ -610,7 +610,7 @@ def render(log, now, board=None):
   th, td {{ border:1px solid var(--line); padding:6px 8px; text-align:right; }} th:first-child, td:first-child {{ text-align:left; }}
   footer {{ font-size:.75rem; color:var(--soft); }} footer ul {{ padding-left:18px; }}
 </style></head><body class="ana">
-<header><h1>買うべきレース(競輪)</h1>
+<header><h1>穴レース(競輪)</h1>
 <p>{html.escape(today)} ・ 更新 {now.strftime('%H:%M')}(1時間おき) ・ <a href="index.html">全レースの予想</a></p></header>
 <main>{body}{stat}</main>
 <footer><details class="more"><summary>ルールの説明と注意</summary><ul>{notes}</ul>
