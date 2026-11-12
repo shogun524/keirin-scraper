@@ -1,8 +1,18 @@
 {
- "updated": "2026-11-12 10:07",
- "failures": [],
+ "updated": "2026-11-12 10:37",
+ "failures": [
+  {
+   "race": "2026-11-12 omiya 6R",
+   "diag": {
+    "venue": "omiya",
+    "race_id": "2520261110030006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  }
+ ],
  "tracked": 2745,
- "with_result": 2165,
+ "with_result": 2166,
  "without_url": 0,
- "pending_eligible": 501
+ "pending_eligible": 502
 }
