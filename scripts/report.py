@@ -1778,6 +1778,7 @@ def _fmt_date_jp(date=None):
 AGG_GROUPS = [
     ("レースをさがす", [
         ("picks.html", "穴レース"),
+        ("drops.html", "オッズ急落"),
         ("close_race.html", "拮抗レース"),
         ("formula.html", "勝利の方程式"),
     ]),

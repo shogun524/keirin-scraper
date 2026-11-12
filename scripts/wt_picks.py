@@ -611,7 +611,7 @@ def render(log, now, board=None):
   footer {{ font-size:.75rem; color:var(--soft); }} footer ul {{ padding-left:18px; }}
 </style></head><body class="ana">
 <header><h1>穴レース(競輪)</h1>
-<p>{html.escape(today)} ・ 更新 {now.strftime('%H:%M')}(1時間おき) ・ <a href="index.html">全レースの予想</a></p></header>
+<p>{html.escape(today)} ・ 更新 {now.strftime('%H:%M')}(30分おき) ・ <a href="index.html">全レースの予想</a> ・ <a href="drops.html">オッズ急落</a></p></header>
 <main>{body}{stat}</main>
 <footer><details class="more"><summary>ルールの説明と注意</summary><ul>{notes}</ul>
 <p>ラインの強さは「予想印の合計」で決めるので、オッズを見なくても判定できます。並び予想や印が変わると買い目も変わるので、

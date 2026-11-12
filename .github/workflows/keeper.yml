@@ -1,8 +1,8 @@
-name: 競輪 当日の常駐更新（10分おきオッズ記録・30分おき予想更新）
+name: 競輪 当日の常駐更新（5分おきオッズ記録・急落ページ、30分おき予想更新）
 
 # GitHub の定期実行(cron)は混雑時に大きく間引かれる(1時間おき指定でも1日2回しか動かない日がある)。
 # そこで1つのジョブを長時間動かし続け、その中で
-#   ・10分おき: 締切前オッズの記録(wt_odds_snapshot.py → リリース wt-odds-live)
+#   ・5分おき: 締切前オッズの記録(wt_odds_snapshot.py → リリース wt-odds-live)と、オッズ急落ページ(drops.html)の更新
 #   ・30分おき: 予想・買うべきレースの更新(daily.yml を手動実行で呼ぶ。手動実行は間引かれない)
 # を行う。1回は最大5時間40分で、終わったら23:30(JST)まで自分を呼び直して続ける。
 # 朝の起動用に cron を何本か置き(どれか1本動けば十分)、重複して起動しても concurrency で1つだけ動く。
@@ -51,12 +51,23 @@ jobs:
             mkdir -p live
             gh release download wt-odds-live --pattern "$f" --dir live --clobber 2>/dev/null || true
             (cd scripts && python wt_odds_snapshot.py --out-dir ../live) || echo "::warning::オッズ記録に失敗"
-            if [ -f "live/$f" ]; then gh release upload wt-odds-live "live/$f" --clobber || true; fi
-            if [ $((i % 3)) -eq 0 ] && [ "$hm" -ge 0700 ]; then
+            if [ -f "live/$f" ]; then
+              gh release upload wt-odds-live "live/$f" --clobber || true
+              # オッズ急落ページ(drops.html)を更新して公開
+              if (cd scripts && python wt_drops.py --live "../live/$f"); then
+                git config user.name "keirin-bot"; git config user.email "bot@example.com"
+                git add docs/drops.html docs/_drops.json
+                if ! git diff --cached --quiet; then
+                  git commit -q -m "オッズ急落を更新 $(TZ=Asia/Tokyo date '+%H:%M')"
+                  for k in 1 2 3; do git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 5; done
+                fi
+              fi
+            fi
+            if [ $((i % 6)) -eq 0 ] && [ "$hm" -ge 0700 ]; then
               gh workflow run daily.yml --ref "${GITHUB_REF_NAME}" || echo "::warning::予想更新の呼び出しに失敗"
             fi
             i=$((i + 1))
-            sleep $((600 - ($(date +%s) - now) % 600))
+            sleep $((300 - ($(date +%s) - now) % 300))
           done
       - name: 23:30(JST)より前なら続きを呼ぶ
         if: always()
