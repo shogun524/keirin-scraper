@@ -406,7 +406,7 @@ def render_trifecta_groups(tab_id, payload):
     if not payload:
         return ""
     payload_json = _json.dumps(payload, ensure_ascii=False)
-    return render_buy_box(payload.get("buy")) + f"""
+    return f"""
     <div class="mw-chips" id="{tab_id}_tf_chips"></div>
     <div class="tf-list" id="{tab_id}_tf_list"></div>
 
@@ -658,6 +658,15 @@ def render_line_info_block(result, race_title=""):
     return '<div class="line-info-block ok">' + "".join(parts) + '</div>'
 
 
+def ai_keshi(result):
+    """AI推奨の買い目(本線・押さえ・AI1位・このレースの買い方・穴目5点)= 当たらないので『消し目』として扱う組"""
+    tri = (result or {}).get("trifecta") or {}
+    buy, auto, ana = tri.get("buy") or {}, tri.get("auto") or {}, tri.get("ana") or {}
+    keys = list(buy.get("honsen") or []) + list(buy.get("osae") or []) + ([buy["ai_top"]] if buy.get("ai_top") else [])
+    keys += list(auto.get("keys") or []) + list(ana.get("keys") or [])
+    return list(dict.fromkeys(k for k in keys if k))
+
+
 def render_manshaken_box(info):
     """万車率・配当の目安・推奨買い目(買うべきレースのページと同じ判定)の帯"""
     mv = info.get("manshaken")
@@ -675,6 +684,10 @@ def render_manshaken_box(info):
         # 穴党向け: 本命レースは買い目を出さない
         parts.insert(0, '<span class="dim">本命レース(万車率30%未満)— 見送り</span>')
         rec = None
+    keshi = info.get("ai_keshi") or []
+    if rec:
+        rec = [(k, label, [t for t in ts if t not in keshi]) for k, label, ts in rec]
+        rec = [x for x in rec if x[2]]
     if rec is not None:
         if rec:
             col = {"win": "#C8402A", "big": "#B8862B", "ref": "#7A8494", "ana": "#6A4FA0"}
@@ -684,6 +697,10 @@ def render_manshaken_box(info):
             parts.insert(0, f'推奨(3連単) {items}')
         else:
             parts.insert(0, '推奨 <span class="dim">見送り(買う根拠のあるルールに当たらない)</span>')
+    if keshi:
+        parts.append('<span style="background:#555;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">'
+                     '消し目</span> <span class="dim">AI推奨の組(当たらないので買わない): '
+                     + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span>')
     return ('<div class="mansha-box" style="margin:6px 0;padding:8px 10px;border:2px solid #C8402A33;border-radius:8px;'
             'background:#fff;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">'
             'このレースの買い目</div>' + '<br>'.join(parts) +
@@ -762,15 +779,12 @@ def render_race_card(race_data, tab_id):
     deadline_html = f'<span class="deadline">締切 {deadline}</span>' if deadline else ""
     odds_alert_html = render_odds_alert_badge(info)
     pick_color = car_color(top["car"])[0]
-    has_trifecta = bool(trifecta_payload) or bool(_ai_boxes)
+    has_trifecta = bool(trifecta_payload)
     has_dev = bool(dev_payload) or bool(hole_html)
     formula_html = render_formula_block(race_data, tab_id)
     _ai_boxes = render_auto_box((result.get("trifecta") or {}).get("auto")) + render_ana_box((result.get("trifecta") or {}).get("ana"))
     auto_html = ""
-    if _ai_boxes:
-        # AIの出目による買い方・穴目は回収率が控除水準(約75%)なので、3連単タブの中にたたんで置く
-        trifecta_html = (f'<details class="ai-ref"><summary>AIの出目による買い方・穴目(参考・回収率は控除水準)</summary>'
-                         f'{_ai_boxes}</details>') + trifecta_html
+    # AIの出目による買い方・穴目は当たらないので出さない(組は「消し目」として買い目の帯に出す)
     subtab_bar_html = ""
     if has_trifecta or has_dev or formula_html:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
@@ -1101,7 +1115,7 @@ function renderTrifectaGroups(tabId){
         '<span class="tf-arrow">\\u2192</span>' +
         '<span class="car" style="background:'+carColorLookup(payload,c.third).bg+';color:'+carColorLookup(payload,c.third).fg+';">'+c.third+'</span>' +
       '</span>' +
-      (c.badges||[]).map(function(b){ return '<span class="tf-badge '+(b==='本線'?'b-hon':b==='押さえ'?'b-osa':b==='おすすめ'?'b-rec':'b-ai')+'">'+b+'</span>'; }).join('') +
+      ((c.badges||[]).length ? '<span class="tf-badge" style="background:#555;color:#fff">消し(AI推奨)</span>' : '') +
       '<span class="tf-prob">'+c.prob.toFixed(2)+'%</span>' +
       (c.odds ? '<span class="tf-odds">'+c.odds+'倍</span>' : '') +
       '<span class="tf-be" title="この倍率以上のオッズなら、予測が正しいとき期待値が100円超えになります">'+(c.prob>0?(100/c.prob).toFixed(c.prob>=1?0:0):'-')+'倍〜</span>' +

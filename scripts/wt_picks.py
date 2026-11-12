@@ -67,6 +67,16 @@ def load_ana_table():
 ANA_TABLE = load_ana_table()
 
 
+def load_keshi(today):
+    """予想ページ(run_daily.py)が保存した AI推奨の組 = 消し目。{"場スラッグ:R": [組, ...]}"""
+    try:
+        with open(os.path.join(DOCS, "_ai_keshi.json"), encoding="utf-8") as f:
+            d = json.load(f)
+        return d["races"] if d.get("date") == today.isoformat() else {}
+    except (OSError, ValueError, KeyError):
+        return {}
+
+
 def race_lines(R):
     entries = [e for e in R.get("entries", []) if not e.get("absent")]
     cars = {int(e["number"]) for e in entries}
@@ -272,6 +282,7 @@ def settle(log, now):
 def collect(today):
     ym = today.strftime("%Y%m")
     picks, checked, skipped, board = [], 0, {}, []
+    keshi_map = load_keshi(today)
     for c in month_cups(ym):
         if not c["slug"]:
             continue
@@ -331,6 +342,8 @@ def collect(today):
             e1 = line_ticket(R, 1) if not race.get("cancel") else None
             if e1 and tri.get(e1[0]) and tri[e1[0]] <= E_ODDS:
                 hits.append(("E", e1[0], e1[1]))
+            keshi = set(keshi_map.get(f'{ {"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"])}:{n}') or [])
+            hits = [h for h in hits if h[1] not in keshi]   # AI推奨の組(消し目)は買い目にしない
             for key, ticket, L in hits:
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
@@ -345,10 +358,12 @@ def collect(today):
                                   man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,
                                   q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
                                   odds={t: tri.get(t) for _, t, _ in hits},
-                                  ana=ana_candidates(R, tri),
+                                  ana=[a for a in ana_candidates(R, tri) if a["ticket"] not in keshi],
+                                  keshi=sorted(keshi),
                                   rec=race_recommendation(picks, url) + [("ana" if not a["win"] else "win", "穴", [a["ticket"]])
                                                                            for a in ana_candidates(R, tri)
-                                                                           if a["ticket"] not in {t for x in race_recommendation(picks, url) for t in x[2]}]))
+                                                                           if a["ticket"] not in keshi
+                                                                           and a["ticket"] not in {t for x in race_recommendation(picks, url) for t in x[2]}]))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
     return picks, board
 

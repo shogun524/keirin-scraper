@@ -30,7 +30,7 @@ except AttributeError:
 
 from scraper import fetch_all_todays_races
 from model import predict_race
-from report import (render_index, render_venue_page, render_venues_page, render_venue_bank_page,
+from report import (ai_keshi, render_index, render_venue_page, render_venues_page, render_venue_bank_page,
                      render_high_prob_page, render_close_race_page,
                      render_value_page, render_overview_page, render_players_page,
                      render_venues_today_page, render_results_page, render_print_page, render_formula_page, VENUE_NAMES)
@@ -235,6 +235,7 @@ def main():
         print(f"[WARN] 万車率の計算を使えません: {e}")
         market_view = None
 
+    ai_keshi_map = {}
     all_race_data = []
     for race in races:
         try:
@@ -275,8 +276,16 @@ def main():
                 print(f"[WARN] {info['venue']} {info['race_no']}R の万車率の計算に失敗: {e}")
                 info["manshaken"] = None
         info["recommend"] = br.get("rec") if br else None
+        info["ai_keshi"] = ai_keshi(result)
+        ai_keshi_map[f'{info["venue"]}:{info["race_no"]}'] = info["ai_keshi"]
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})
 
+    # AI推奨の組(消し目)を保存: 買うべきレース(wt_picks.py)が次の更新で穴目・ルールから外すのに使う
+    try:
+        with open(os.path.join(DOCS_DIR, "_ai_keshi.json"), "w", encoding="utf-8") as f:
+            json.dump(dict(date=today.isoformat(), races=ai_keshi_map), f, ensure_ascii=False)
+    except OSError as e:
+        print(f"[WARN] 消し目の保存に失敗: {e}")
     try:
         odds_trends = update_odds_history(all_race_data, today, now_str)
     except Exception as e:
