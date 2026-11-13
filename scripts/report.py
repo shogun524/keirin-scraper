@@ -678,6 +678,8 @@ def render_manshaken_box(info):
         lvl = "#C8402A" if mv["man"] >= 0.4 else ("#2F6B4F" if mv["man"] < 0.2 else "inherit")
         parts.append(f'万車率 <b style="color:{lvl}">{mv["man"] * 100:.0f}%</b>')
         parts.append(f'配当の目安 <b>{mv["q50"]:,.0f}円</b> <span class="dim">({mv["q25"]:,.0f}〜{mv["q75"]:,.0f}円)</span>')
+        if mv.get("chu") is not None:
+            parts.append(f'中穴率(5,000円以上) <b>{mv["chu"]:.0%}</b>')
     else:
         parts.append('万車率 <span class="dim">オッズ待ち</span>')
     if mv and mv["man"] < 0.30:
@@ -3204,7 +3206,8 @@ def _print_card_html(rd):
     # 穴党向け: AIの確率上位の買い目(=消し目)は出さず、穴の買い目・消し目・万車率を出す
     if _mv.get("man") is not None:
         man_txt = (f'万車率 <b>{_mv["man"] * 100:.0f}%</b>　配当の目安 <b>{_mv["q50"]:,.0f}円</b>'
-                   f'（半分は {_mv["q25"]:,.0f}〜{_mv["q75"]:,.0f}円）')
+                   f'（真ん中3分の1は {_mv["q25"]:,.0f}〜{_mv["q75"]:,.0f}円）'
+                   + (f'　中穴率(5,000円以上) <b>{_mv["chu"]:.0%}</b>' if _mv.get("chu") is not None else ""))
     else:
         man_txt = "万車率：オッズ待ち"
     if _hon:

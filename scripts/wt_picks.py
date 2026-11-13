@@ -54,6 +54,11 @@ F_ODDS = (30.0, 300.0)
 ANA_TABLE_PATH = os.path.join(DOCS, "_ana_table.json")
 ANA_MIN_ROI, ANA_MIN_HITS = 0.85, 15     # これ未満の穴目は出さない(損が大きい・当たりが少なすぎて当てにならない)
 from keirin_region import line_relation  # noqa: E402
+# 中穴(3連単5,000円以上): ルールA〜C・Fのうち今のオッズが50倍以上の買い目。
+# 中でも「C・Fで、ラインの前3人が同じ地区」は 994点・的中14回・回収率199%(2025年148%・2026年259%)、
+# F だけなら 1186点・的中17回・回収率217%(2025年184%・2026年257%、上位5本を除いても117%、平均配当15,123円)→ 中穴★
+# (ライン構成の組み合わせを総当たりした50〜300倍の買い目は、2025年で選んでも2026年は71%で使えなかった)
+CHU_ODDS = 50.0
 HONMEI_MAN = 0.30                         # 万車率がこれ未満は本命レース(穴党は見送り)
 
 
@@ -351,6 +356,8 @@ def collect(today):
                 rel = line_relation([pref_of.get(x) for x in L])
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
                                   region=rel["label"], same3=rel["same3"],
+                                  chu=bool(tri.get(ticket) and tri[ticket] >= CHU_ODDS and key in ("A", "B", "C", "F")),
+                                  chu_star=bool(tri.get(ticket) and tri[ticket] >= CHU_ODDS and key in ("C", "F") and rel["same3"]),
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
                                   close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
                                   line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E", "F") and tri.get(ticket) else "")))
@@ -360,7 +367,7 @@ def collect(today):
                                   race_no=n, start_at=race.get("startAt") or 0, close_at=race.get("closeAt") or 0,
                                   grade=c["grade"], race_type=race.get("raceType3"), cls=race.get("class"),
                                   n=len([x for x in R.get("entries", []) if not x.get("absent")]),
-                                  man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,
+                                  man=mv["man"] if mv else None, chu=mv.get("chu") if mv else None, q25=mv["q25"] if mv else None,
                                   q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
                                   odds={t: tri.get(t) for _, t, _ in hits},
                                   comments={str(e.get("number")): (next((r for r in R.get("records", []) if r.get("playerId") == e.get("playerId")), {}) or {}).get("comment") or ""
@@ -435,6 +442,8 @@ def board_html(board, todays, now):
             lvl = "hi" if b["man"] >= 0.4 else ("lo" if b["man"] < 0.2 else "")
             man = f'<span class="man {lvl}">{b["man"]:.0%}</span>'
             pay = f'{b["q50"]:,.0f}円<br><small>{b["q25"]:,.0f}〜{b["q75"]:,.0f}</small>'
+            if b.get("chu") is not None:
+                man += f'<br><small>中穴 {b["chu"]:.0%}</small>'
         ps = by.get(b["url"], [])
         win = [p for p in ps if p["rule"] in ("A", "B", "C", "D", "F")]
         big = [p for p in ps if p["rule"] in BIG and p.get("tickets")]
@@ -444,7 +453,10 @@ def board_html(board, todays, now):
             if p["ticket"] not in seen:
                 seen.add(p["ticket"])
                 rules = "・".join(sorted(q["rule"] for q in win if q["ticket"] == p["ticket"]))
-                rec.append(f'<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
+                chu = next((q for q in win if q["ticket"] == p["ticket"] and q.get("chu")), None)
+                star = any(q.get("chu_star") for q in win if q["ticket"] == p["ticket"])
+                tag = '<span class="rk chu">中穴★</span> ' if star else ('<span class="rk chu2">中穴</span> ' if chu else "")
+                rec.append(f'{tag}<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
         for p in big:
             rec.append('<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
         for a in b.get("ana") or []:
@@ -464,7 +476,9 @@ def board_html(board, todays, now):
         (other_rows if (skip or passed) else main_rows).append(row)
     head = '<tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨(3連単)</th></tr>'
     out = ('<h2>全レース一覧</h2>'
-           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は25〜75%点。実際の払戻が半分くらいこの範囲に入る)。今のオッズから計算。'
+           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は真ん中3分の1の範囲。実際の払戻は3回に1回くらいこの範囲、上下に外れるのは同じくらい)。'
+           '中穴 = 5,000円以上になる確率。今のオッズから計算。<span class="rk chu">中穴★</span> 5,000円以上で過去の回収率が高い本線(C・Fの3人同地区ライン) ・ '
+           '<span class="rk chu2">中穴</span> 5,000円以上の勝ち筋の買い目。'
            '<span class="rk win">赤</span> 勝ち筋(過去の回収率100%超・両年とも) ・ <span class="rk ana">穴</span> 穴目(過去85〜100%) ・ '
            '<span class="rk big">重賞</span> トントン圏。万車率30%未満は本命レースとして見送り</p>'
            '<p class="why"><label><input type="checkbox" id="anaOnly" checked onchange="document.body.classList.toggle(\'ana\', this.checked)"> '
@@ -535,7 +549,7 @@ def render(log, now, board=None):
         hon_cls = " honmei" if (hon is not None and hon < HONMEI_MAN) else ""
         return (f"""<article class="pick{' passed' if passed else ''}{' big' if p['rule'] in BIG else ''}{hon_cls}">
   <div class="top"><span class="time">{hm(p['start_at'])}</span><span class="race">{html.escape(p['venue'])}{p['race_no']}R</span>
-  <span class="tag">{'重賞' if p['rule'] in BIG else '・'.join(sorted(tags.get((p['url'], p['ticket']), [p['rule']])))}</span>{res}</div>
+  <span class="tag">{'重賞' if p['rule'] in BIG else '・'.join(sorted(tags.get((p['url'], p['ticket']), [p['rule']])))}</span>{'<span class="rk chu">中穴★</span>' if p.get('chu_star') else ('<span class="rk chu2">中穴</span>' if p.get('chu') else '')}{res}</div>
   <div class="sub">{html.escape(p.get('cup') or '')} {html.escape(p.get('grade') or '')} {html.escape(p.get('race_type') or '')}</div>
   <div class="bet">3連単 {bet}{f' <small>各100円・{len(tks)}点</small>' if tks else ''}</div>
   <div class="why">{html.escape(' / '.join(rule_desc[k][0] for k in sorted(tags.get((p['url'], p['ticket']), [p['rule']]))))}({html.escape(p['line'])})</div>{region_note(p)}{note}
@@ -546,7 +560,14 @@ def render(log, now, board=None):
         if p["rule"] not in BIG and p["rule"] != "E" and p["url"] not in big_urls and (p["url"], p["ticket"]) not in seen:
             seen.add((p["url"], p["ticket"]))
             singles.append(p)
-    body = "".join(card(p) for p in singles) or \
+    chu = [p for p in singles if p.get("chu")]
+    chu.sort(key=lambda p: (not p.get("chu_star"), p["start_at"]))
+    body = ('<h2>中穴(5,000円以上)の買い目</h2>'
+            '<p class="why">勝ち筋ルール(A〜C・F)のうち、今の3連単オッズが50倍以上の買い目。<b>★</b> はC・Fでラインの前3人が同じ地区のもの'
+            '(過去 994点・的中14回・回収率199%、Fだけなら217%・平均配当15,123円)。当たりは70点に1回くらい。</p>'
+            + ("".join(card(p) for p in chu) or '<p class="none">今のところ中穴の買い目はありません。</p>')
+            + '<h2>勝ち筋ルールの買い目(全部)</h2>')
+    body += "".join(card(p) for p in singles) or \
         '<p class="none">今日の勝ち筋ルールの対象レースはまだありません(並び予想が出ると1時間おきに追加されます)。</p>'
     for key, title, roi in (("G", "重賞(G戦)の決勝・準決勝", "107%"), ("H", "重賞(G戦)の予選・特選・選抜など", "102%")):
         bigs = [p for p in todays if p["rule"] == key]
@@ -617,6 +638,7 @@ def render(log, now, board=None):
   table.board tr.passed {{ opacity:.5; }}
   .man {{ font-weight:700; font-variant-numeric:tabular-nums; }} .man.hi {{ color:#C8402A; }} .man.lo {{ color:#2F6B4F; }}
   .rk {{ font-size:.7rem; font-weight:700; color:#fff; padding:1px 6px; border-radius:999px; }}
+  .rk.chu {{ background:#0E7C66; }} .rk.chu2 {{ background:#5FA593; }}
   .rk.win {{ background:#C8402A; }} .rk.ana {{ background:#6A4FA0; }} .rk.big {{ background:#B8862B; }} .rk.ref {{ background:#7A8494; }}
   .skip {{ color:var(--soft); font-size:.85rem; }} td.rec b {{ font-variant-numeric:tabular-nums; }}
   .none {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; text-align:center; }}

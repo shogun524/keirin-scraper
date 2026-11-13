@@ -267,7 +267,7 @@ def main():
         br = rec_board.get((info["venue"], info["race_no"]))
         if br and br.get("man") is not None:
             # 買うべきレースのページと同じ値(直近3回の中央値)を使う。ページごとに数字が違うと混乱するため
-            info["manshaken"] = {k: br[k] for k in ("man", "q25", "q50", "q75")}
+            info["manshaken"] = {k: br.get(k) for k in ("man", "q25", "q50", "q75", "chu")}
         else:
             try:
                 odds = race.get("wt_odds") if info.get("source") == "winticket" else kd_odds.get((info["venue"], info["race_no"]))
