@@ -2665,7 +2665,11 @@
 "close_at": 1794548520,
 "cls": "S級",
 "race_type": "二予選",
-"line": "並び 1-5-9 / 8-2 / 3-6 / 7-4"
+"line": "並び 1-5-9 / 8-2 / 3-6 / 7-4",
+"settled": true,
+"result": "7-1-3",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-13",
@@ -2680,7 +2684,11 @@
 "close_at": 1794550200,
 "cls": "S級",
 "race_type": "二予選",
-"line": "8-1-5"
+"line": "8-1-5",
+"settled": true,
+"result": "2-9-1",
+"payout": 0,
+"final_odds": 132.3
 },
 {
 "date": "2026-11-13",
@@ -2700,7 +2708,11 @@
 "close_at": 1794550200,
 "cls": "S級",
 "race_type": "二予選",
-"line": "並び 7-2-9-6 / 8-1-5 / 4-3"
+"line": "並び 7-2-9-6 / 8-1-5 / 4-3",
+"settled": true,
+"result": "2-9-1",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-13",
@@ -2745,7 +2757,7 @@
 "close_at": 1794552120,
 "cls": "S級",
 "race_type": "二予選",
-"line": "2-5-7・96.5倍"
+"line": "2-5-7・98.8倍"
 },
 {
 "date": "2026-11-13",
@@ -2815,7 +2827,7 @@
 "close_at": 1794556200,
 "cls": "A級",
 "race_type": "チ準決",
-"line": "1-6-4・89.5倍"
+"line": "1-6-4・95.7倍"
 },
 {
 "date": "2026-11-13",
@@ -2845,7 +2857,7 @@
 "close_at": 1794561960,
 "cls": "A級",
 "race_type": "特一般",
-"line": "6-2-4・106.0倍"
+"line": "6-2-4・80.8倍"
 },
 {
 "date": "2026-11-13",
@@ -2875,7 +2887,37 @@
 "close_at": 1794566520,
 "cls": "A級",
 "race_type": "準決勝",
-"line": "3-5-6・37.9倍"
+"line": "3-5-6・42.7倍"
+},
+{
+"date": "2026-11-13",
+"rule": "C",
+"ticket": "7-6-2",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/5",
+"venue": "佐世保",
+"race_no": 5,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794574800,
+"close_at": 1794574500,
+"cls": "A級",
+"race_type": "特一般",
+"line": "7-6-2"
+},
+{
+"date": "2026-11-13",
+"rule": "F",
+"ticket": "7-6-2",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/5",
+"venue": "佐世保",
+"race_no": 5,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794574800,
+"close_at": 1794574500,
+"cls": "A級",
+"race_type": "特一般",
+"line": "7-6-2・36.0倍"
 },
 {
 "date": "2026-11-13",
@@ -2905,6 +2947,6 @@
 "close_at": 1794575700,
 "cls": "A級",
 "race_type": "特選",
-"line": "5-6-7・172.1倍"
+"line": "5-6-7・132.5倍"
 }
 ]
