@@ -457,7 +457,7 @@ def board_html(board, todays, now):
         (other_rows if (skip or passed) else main_rows).append(row)
     head = '<tr><th>発走</th><th>レース</th><th>万車率</th><th>配当の目安</th><th>推奨(3連単)</th></tr>'
     out = ('<h2>全レース一覧</h2>'
-           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は、半分のレースが入る一番狭い範囲)。今のオッズから計算。'
+           '<p class="why">万車率 = 3連単が1万円以上になる確率、配当の目安 = 払戻の中央値(下は25〜75%点。実際の払戻が半分くらいこの範囲に入る)。今のオッズから計算。'
            '<span class="rk win">赤</span> 勝ち筋(過去の回収率100%超・両年とも) ・ <span class="rk ana">穴</span> 穴目(過去85〜100%) ・ '
            '<span class="rk big">重賞</span> トントン圏。万車率30%未満は本命レースとして見送り</p>'
            '<p class="why"><label><input type="checkbox" id="anaOnly" checked onchange="document.body.classList.toggle(\'ana\', this.checked)"> '
