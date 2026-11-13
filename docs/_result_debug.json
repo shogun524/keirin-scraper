@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13 20:50",
+ "updated": "2026-11-13 21:20",
  "failures": [
   {
    "race": "2026-11-13 yokkaichi 11R",
@@ -11,26 +11,26 @@
    }
   },
   {
-   "race": "2026-11-13 sasebo 1R",
+   "race": "2026-11-13 matsusaka 2R",
    "diag": {
-    "venue": "sasebo",
-    "race_id": "8520261111030001",
+    "venue": "matsusaka",
+    "race_id": "4720261111030002",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-13 matsusaka 1R",
+   "race": "2026-11-13 sasebo 3R",
    "diag": {
-    "venue": "matsusaka",
-    "race_id": "4720261111030001",
+    "venue": "sasebo",
+    "race_id": "8520261111030003",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2817,
- "with_result": 2272,
+ "with_result": 2275,
  "without_url": 0,
  "pending_eligible": 529
 }
