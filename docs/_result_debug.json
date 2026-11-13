@@ -1,15 +1,6 @@
 {
- "updated": "2026-11-13 14:39",
+ "updated": "2026-11-13 15:04",
  "failures": [
-  {
-   "race": "2026-11-13 tachikawa 3R",
-   "diag": {
-    "venue": "tachikawa",
-    "race_id": "2820261112020003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-13 fukui 6R",
    "diag": {
@@ -20,17 +11,17 @@
    }
   },
   {
-   "race": "2026-11-13 fukui 9R",
+   "race": "2026-11-13 fukui 10R",
    "diag": {
     "venue": "fukui",
-    "race_id": "5120261111030009",
+    "race_id": "5120261111030010",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2817,
- "with_result": 2242,
+ "with_result": 2244,
  "without_url": 0,
  "pending_eligible": 527
 }
