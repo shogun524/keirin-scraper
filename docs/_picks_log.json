@@ -2513,37 +2513,11 @@
 "close_at": 1794543600,
 "cls": "S級",
 "race_type": "二予選",
-"line": "5-3-8"
-},
-{
-"date": "2026-11-13",
-"rule": "B",
-"ticket": "4-7-2",
-"url": "https://www.winticket.jp/keirin/tachikawa/racecard/2026111228/2/6",
-"venue": "立川",
-"race_no": 6,
-"cup": "施設整備等協賛競輪Ｂｅｔｉｍｏ",
-"grade": "G3",
-"start_at": 1794543900,
-"close_at": 1794543600,
-"cls": "S級",
-"race_type": "二予選",
-"line": "4-7-2"
-},
-{
-"date": "2026-11-13",
-"rule": "F",
-"ticket": "4-7-2",
-"url": "https://www.winticket.jp/keirin/tachikawa/racecard/2026111228/2/6",
-"venue": "立川",
-"race_no": 6,
-"cup": "施設整備等協賛競輪Ｂｅｔｉｍｏ",
-"grade": "G3",
-"start_at": 1794543900,
-"close_at": 1794543600,
-"cls": "S級",
-"race_type": "二予選",
-"line": "4-7-2・58.6倍"
+"line": "5-3-8",
+"settled": true,
+"result": "1-3-9",
+"payout": 0,
+"final_odds": 139.8
 },
 {
 "date": "2026-11-13",
@@ -2564,7 +2538,30 @@
 "close_at": 1794543600,
 "cls": "S級",
 "race_type": "二予選",
-"line": "並び 9-1-6 / 4-7-2 / 5-3-8"
+"line": "並び 9-1-6 / 4-7-2 / 5-3-8",
+"settled": true,
+"result": "1-3-9",
+"payout": 0,
+"final_odds": null
+},
+{
+"date": "2026-11-13",
+"rule": "D",
+"ticket": "6-1-5",
+"url": "https://www.winticket.jp/keirin/fukui/racecard/2026111151/3/7",
+"venue": "福井",
+"race_no": 7,
+"cup": "中日スポーツ杯ブルーサンダー賞",
+"grade": "F1",
+"start_at": 1794544680,
+"close_at": 1794544380,
+"cls": "S級",
+"race_type": "一般",
+"line": "6-1-5・28.7倍",
+"settled": true,
+"result": "1-7-2",
+"payout": 0,
+"final_odds": 28.7
 },
 {
 "date": "2026-11-13",
@@ -2594,7 +2591,7 @@
 "close_at": 1794545160,
 "cls": "S級",
 "race_type": "二予選",
-"line": "4-1-6・216.0倍"
+"line": "4-1-6・124.8倍"
 },
 {
 "date": "2026-11-13",
@@ -2732,7 +2729,7 @@
 "close_at": 1794552120,
 "cls": "S級",
 "race_type": "二予選",
-"line": "2-5-7・98.8倍"
+"line": "2-5-7・99.2倍"
 },
 {
 "date": "2026-11-13",
@@ -2802,7 +2799,7 @@
 "close_at": 1794556200,
 "cls": "A級",
 "race_type": "チ準決",
-"line": "1-6-4・92.6倍"
+"line": "1-6-4・96.7倍"
 },
 {
 "date": "2026-11-13",
@@ -2832,7 +2829,7 @@
 "close_at": 1794561960,
 "cls": "A級",
 "race_type": "特一般",
-"line": "6-2-4・202.5倍"
+"line": "6-2-4・183.8倍"
 },
 {
 "date": "2026-11-13",
@@ -2862,7 +2859,37 @@
 "close_at": 1794566520,
 "cls": "A級",
 "race_type": "準決勝",
-"line": "3-5-6・43.1倍"
+"line": "3-5-6・42.0倍"
+},
+{
+"date": "2026-11-13",
+"rule": "C",
+"ticket": "7-6-2",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/5",
+"venue": "佐世保",
+"race_no": 5,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794574800,
+"close_at": 1794574500,
+"cls": "A級",
+"race_type": "特一般",
+"line": "7-6-2"
+},
+{
+"date": "2026-11-13",
+"rule": "F",
+"ticket": "7-6-2",
+"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/5",
+"venue": "佐世保",
+"race_no": 5,
+"cup": "前検コメはウィンチケット杯",
+"grade": "F2",
+"start_at": 1794574800,
+"close_at": 1794574500,
+"cls": "A級",
+"race_type": "特一般",
+"line": "7-6-2・61.3倍"
 },
 {
 "date": "2026-11-13",
@@ -2892,6 +2919,6 @@
 "close_at": 1794575700,
 "cls": "A級",
 "race_type": "特選",
-"line": "5-6-7・257.2倍"
+"line": "5-6-7・285.7倍"
 }
 ]
