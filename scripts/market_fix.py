@@ -28,6 +28,33 @@ COEF = {
 }
 MIN_ODDS_COVERAGE = 0.7
 
+# 締切の何時間も前のオッズは、まだ売れておらず平らすぎる(本命の確率が低く、人気薄の確率が高く出る)。
+# サイトに出した1着率を実際の結果と比べると(10/20〜11/13の1419レース、締切の4.5〜20時間前に作った予想)、
+#   予想 3.3%→実際 2.1%、7.2%→5.1%、54.5%→59.0% とずれていた。確定オッズで作ると1着率はぴったり合う(2025・2026年とも補正なしが最適)。
+# そこで、締切までの時間が長いほど同時確率を τ 乗して尖らせる: 60分以内 τ=1.0、6時間以上 τ=1.18、間は直線。
+#   τ は「締切6時間以上前」の予想で最適だった値(6〜12時間前 1.17、12時間以上前 1.19。前半・後半の日で分けても1.08〜1.32で常に1より大)
+SHARP_TAU = 1.18
+SHARP_FROM_MIN, SHARP_FULL_MIN = 60.0, 360.0
+
+
+def sharpen_tau(minutes_to_close):
+    if minutes_to_close is None:
+        return 1.0
+    m = float(minutes_to_close)
+    if m <= SHARP_FROM_MIN:
+        return 1.0
+    if m >= SHARP_FULL_MIN:
+        return SHARP_TAU
+    return 1.0 + (SHARP_TAU - 1.0) * (m - SHARP_FROM_MIN) / (SHARP_FULL_MIN - SHARP_FROM_MIN)
+
+
+def sharpen(joint, tau):
+    if tau == 1.0 or not joint:
+        return joint
+    q = {k: v ** tau for k, v in joint.items() if v > 0}
+    s = sum(q.values()) or 1
+    return {k: v / s for k, v in q.items()}
+
 # 買い目の目安（10/24〜10/26の確定181レース=保存済みwinticketページの分析から。10/23分はアーカイブ無し）
 #   人気ベースの確率順: 1〜5位で34%、1〜10位で59%が的中（6〜10位だけで26%）
 #   元のAIの確率順   : 1〜10位で35%。AIの1位の出目は14%（kドリームズ期942レースでは7.7%）
@@ -315,8 +342,9 @@ def mark_buys(result, odds, ai_top, ai_probs=None):
     return result
 
 
-def apply(result, racers, odds=None):
-    """result を直して返す。odds: {(1着,2着,3着): 倍率} または None。result["fix_mode"] に方式を記録。"""
+def apply(result, racers, odds=None, minutes_to_close=None):
+    """result を直して返す。odds: {(1着,2着,3着): 倍率} または None。result["fix_mode"] に方式を記録。
+    minutes_to_close: 締切まであと何分のオッズか(早いオッズほど確率を尖らせる。sharpen_tau 参照)"""
     if not result or not result.get("trifecta"):
         return result
     n = len(result["rows"])
@@ -324,8 +352,10 @@ def apply(result, racers, odds=None):
     aj0 = ai_joint(result)
     ai_top = max(aj0, key=aj0.get) if aj0 else None
     if odds and len(odds) >= total * MIN_ODDS_COVERAGE:
-        rebuild(result, market_joint(odds))
+        tau = sharpen_tau(minutes_to_close)
+        rebuild(result, sharpen(market_joint(odds), tau))
         result["fix_mode"] = "odds"
+        result["sharpen_tau"] = round(tau, 3)
         return mark_buys(result, odds, ai_top, aj0)
     w = corrected_win(result["rows"], racers, result.get("line_map") or {})
     aj = ai_joint(result)

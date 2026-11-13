@@ -258,7 +258,15 @@ def main():
                     odds = race.get("wt_odds")
                 else:
                     odds = kd_odds.get((race["race_info"]["venue"], race["race_info"]["race_no"]))
-                market_fix.apply(result, race["racers"], odds)
+                mtc = None
+                try:  # 締切まで何分か(早いオッズほど確率を尖らせる)
+                    hh, mm = map(int, str(race["race_info"].get("deadline") or "").split(":")[:2])
+                    _now = datetime.datetime.now(JST)
+                    mtc = (hh * 60 + mm) - (_now.hour * 60 + _now.minute)
+                    mtc = mtc if mtc >= -30 else None
+                except (ValueError, TypeError):
+                    mtc = None
+                market_fix.apply(result, race["racers"], odds, minutes_to_close=mtc)
                 from formula import is_girls
                 market_fix.ana_plan(result, odds, is_girls(result["rows"], race["race_info"].get("title", "")))
             except Exception as e:

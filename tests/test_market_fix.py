@@ -108,5 +108,22 @@ class TestMarketFix(unittest.TestCase):
         self.assertEqual(r["fix_mode"], "ai_fix")
 
 
+class TestSharpen(unittest.TestCase):
+    def test_tau_by_time(self):
+        import market_fix as M
+        self.assertEqual(M.sharpen_tau(None), 1.0)
+        self.assertEqual(M.sharpen_tau(30), 1.0)
+        self.assertAlmostEqual(M.sharpen_tau(600), M.SHARP_TAU)
+        self.assertTrue(1.0 < M.sharpen_tau(200) < M.SHARP_TAU)
+
+    def test_sharpen_makes_favorite_stronger(self):
+        import market_fix as M
+        j = {(1, 2, 3): 0.5, (2, 1, 3): 0.3, (3, 1, 2): 0.2}
+        s = M.sharpen(j, 1.2)
+        self.assertAlmostEqual(sum(s.values()), 1.0)
+        self.assertGreater(s[(1, 2, 3)], 0.5)
+        self.assertLess(s[(3, 1, 2)], 0.2)
+
+
 if __name__ == "__main__":
     unittest.main()
