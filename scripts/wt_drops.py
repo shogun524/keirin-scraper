@@ -6,7 +6,9 @@
   基準 = 締切30分以上前で、一番締切に近い記録のオッズ(それより前は売れておらずオッズが当てにならない)
   今   = 一番新しい記録のオッズ
   下落率 = 今 ÷ 基準 − 1
-を組ごとに出し、3連単・2車単で 下落率 −25% 以下(−40%以下は赤で強調) かつ 今のオッズが 10〜300倍(穴の範囲)の組を、下落の大きい順に並べる。
+を組ごとに出し、3連単で 下落率 −25% 以下(−40%以下は赤で強調) の組を、オッズの帯ごとに下落の大きい順に並べる。
+  2桁台(今10〜99.9倍)を最大6組 + 万車(100〜300倍)を最大2組。
+  (11/13: 下落率だけで並べると、オッズが大きく動きやすい万車ばかりが上に来て2桁台が出なかったので帯を分けた。2車単はやめた)
 ※ 直前に下がった組は当たりやすいが、オッズが下がった分だけ回収率は下がるという話もある。記録がたまったら
    「急落した組を買った回収率」を検証する(scripts/wt_drops.py --evaluate)。
 
@@ -22,12 +24,13 @@ from zoneinfo import ZoneInfo
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs")
-BET_TYPES = ("3連単", "2車単")
+BET_TYPES = ("3連単",)
 BASE_MIN = 30          # 基準にする記録: 締切30分以上前
 DROP_TH = -0.25        # これ以下の下落を出す(11/13に -40% から広げた: 11/12の81レースで、出した組が当たったレースが 6→14)
 STRONG_TH = -0.40      # これ以下は「大きく下落」として強調
 ODDS_RANGE = (10.0, 300.0)
-SHOW_PER_RACE = 8
+BANDS = (("2桁台", 10.0, 99.95, 6), ("万車", 99.95, 300.0, 2))   # (名前, 下限, 上限, 1レースに出す数)
+SHOW_PER_RACE = sum(b[3] for b in BANDS)
 
 
 def load_live(path):
@@ -67,8 +70,10 @@ def race_drops(snaps):
             if d <= DROP_TH:
                 lst.append((k, bo[k], o, d))
         lst.sort(key=lambda t: t[3])
-        if lst:
-            out[bt] = lst
+        for name, lo, hi, _ in BANDS:
+            band = [t for t in lst if lo <= t[2] < hi]
+            if band:
+                out[name] = band
     return out, b, c
 
 
@@ -94,11 +99,12 @@ def render(races, now):
         hm = datetime.datetime.fromtimestamp(r["close_at"], JST).strftime("%H:%M")
         mins = (r["close_at"] - ts) / 60
         rows = ""
+        limit = {b[0]: b[3] for b in BANDS}
         for bt, lst in r["drops"].items():
-            for k, bo, o, d in lst[:SHOW_PER_RACE]:
+            for k, bo, o, d in lst[:limit.get(bt, SHOW_PER_RACE)]:
                 rows += (f'<tr class="{"strong" if d <= STRONG_TH else ""}"><td>{bt}</td><td><b>{html.escape(k)}</b></td><td>{bo:.1f}</td><td>→ <b>{o:.1f}</b></td>'
                          f'<td class="d">{d:.0%}</td></tr>')
-        body = (f'<table><tr><th>券種</th><th>組</th><th>基準</th><th>今</th><th>下落</th></tr>{rows}</table>' if rows
+        body = (f'<table><tr><th>3連単</th><th>組</th><th>基準</th><th>今</th><th>下落</th></tr>{rows}</table>' if rows
                 else '<p class="dim">急落した組はありません</p>')
         when = "締切済み" if passed else f"締切 {hm}(あと{max(mins, 0):.0f}分)"
         basis = (f'基準=締切{r["base_mins"]:.0f}分前 → 今=締切{r["cur_mins"]:.0f}分前の記録' if r.get("base_mins") is not None
@@ -134,7 +140,7 @@ def render(races, now):
 <header><h1>オッズ急落(競輪)</h1>
 <p>{now:%m/%d %H:%M} 時点(5分おきに記録・1分おきに再読み込み) ・ <a href="picks.html">穴レース</a> ・ <a href="index.html">予想</a></p></header>
 <main>
-<p class="dim">締切30分以上前のオッズから{abs(DROP_TH):.0%}以上下がった組(3連単・2車単、今のオッズ{ODDS_RANGE[0]:.0f}〜{ODDS_RANGE[1]:.0f}倍)。
+<p class="dim">締切30分以上前のオッズから{abs(DROP_TH):.0%}以上下がった3連単の組。2桁台(今10〜99.9倍)を最大6組、万車(100〜300倍)を最大2組。
 赤い行は{abs(STRONG_TH):.0%}以上の大きな下落。
 直前に大きく買われた組です。当たりやすくなる一方、オッズが下がった分だけ割安さは減ります(回収率は記録がたまり次第検証)。</p>
 <h2>締切30分以内</h2>{main}

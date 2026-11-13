@@ -14,8 +14,16 @@ class TestDrops(unittest.TestCase):
              snap(4, 200, {"1-2-3": 40.0, "2-5-8": 45.0, "3-1-2": 5.0})]
         d, b, c = W.race_drops(s)
         self.assertEqual(b["mins"], 32)                               # 60分前(売れていない)ではなく30分前に一番近い記録
-        self.assertEqual([x[0] for x in d["3連単"]], ["1-2-3"])        # 2-5-8 は-10%、3-1-2 は10倍未満
-        self.assertAlmostEqual(d["3連単"][0][3], -0.6)
+        self.assertEqual([x[0] for x in d["2桁台"]], ["1-2-3"])        # 2-5-8 は-10%、3-1-2 は10倍未満
+        self.assertAlmostEqual(d["2桁台"][0][3], -0.6)
+        self.assertNotIn("2車単", d)
+
+    def test_bands_split(self):
+        s = [snap(35, 0, {"1-2-3": 80.0, "4-5-6": 900.0, "7-8-9": 400.0}, {"1-2": 30.0}),
+             snap(3, 10, {"1-2-3": 55.0, "4-5-6": 150.0, "7-8-9": 200.0}, {"1-2": 10.0})]
+        d, _, _ = W.race_drops(s)
+        self.assertEqual([x[0] for x in d["2桁台"]], ["1-2-3"])         # −31%でも万車の−83%に埋もれない
+        self.assertEqual([x[0] for x in d["万車"]], ["4-5-6", "7-8-9"])
 
     def test_no_base(self):
         self.assertEqual(W.race_drops([snap(20, 0, {"1-2-3": 50.0}), snap(5, 1, {"1-2-3": 10.0})])[0], {})
