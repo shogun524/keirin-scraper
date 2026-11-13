@@ -313,6 +313,11 @@ def main():
         for row in rd["prediction"]["rows"]:
             row["course_record"] = get_course_record(course_records, row["name"], venue)
 
+    if os.environ.get("KEIRIN_DUMP"):  # 表示の確認用: 計算済みのレースデータを保存(本番では使わない)
+        import pickle
+        with open(os.environ["KEIRIN_DUMP"], "wb") as f:
+            pickle.dump((all_race_data, today), f)
+
     by_venue = {}
     for rd in all_race_data:
         by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)

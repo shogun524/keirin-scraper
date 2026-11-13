@@ -2729,7 +2729,21 @@ def render_venue_bank_page(slug, date=None):
 # 印刷用ページ（A4で紙に出す／PDFに保存する用）
 # ============================================================
 _PRINT_STYLE = """
-  main.wide{ max-width:1000px; }
+  main.wide{ max-width:1250px; }
+  .pv-quick{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
+  .pv-quick button, .pv-controls .mini{ border:1px solid #1f3a5f; background:#fff; color:#1f3a5f; border-radius:999px; padding:6px 12px; font-size:12.5px; font-weight:700; }
+  .pv-controls .mini{ padding:2px 10px; font-size:11.5px; margin-left:6px; }
+  .pv-vrow{ border-top:1px solid #e3ddcf; padding:8px 0; }
+  .pv-vname{ font-weight:700; margin-bottom:6px; }
+  .pv-chips{ display:grid; grid-template-columns:repeat(auto-fill, minmax(66px,1fr)); gap:6px; }
+  .rc-chip input{ position:absolute; opacity:0; pointer-events:none; }
+  .rc-chip span{ display:flex; flex-direction:column; align-items:center; border:2px solid #cfc8b8; border-radius:8px; padding:4px 2px; background:#efece4; color:#8a8478; cursor:pointer; line-height:1.25; }
+  .rc-chip b{ font-size:14px; } .rc-chip small{ font-size:10px; } .rc-chip i{ font-style:normal; font-size:11px; font-weight:700; color:#222; }
+  .rc-chip em{ font-style:normal; font-size:11px; font-weight:700; } .rc-chip em u{ text-decoration:none; font-size:9.5px; margin-left:2px; color:#888; }
+  .rc-chip input:checked + span{ background:#fff; border-color:#1f3a5f; color:#111; box-shadow:inset 0 -3px 0 #1f3a5f; }
+  .rc-chip.hi em{ color:#c0392b; } .rc-chip.hon em{ color:#888; }
+  .pv-count{ font-weight:700; }
+  .pv-card{ overflow-x:auto; }
   .pv-controls{ background:var(--paper2); border:1px solid #d8d2c4; border-radius:10px; padding:12px; margin:10px 0 14px; }
   .pv-controls h3{ margin:0 0 6px; font-size:14px; }
   .pv-row{ display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; margin:6px 0; font-size:13px; }
@@ -2792,8 +2806,46 @@ _PRINT_STYLE = """
   .pv-form{ font-size:11px; margin-top:3px; border-top:1px dotted #999; padding-top:2px; }
   .pv-memo{ margin-top:7px; border-top:1px dashed #888; min-height:20px; font-size:11px; color:#777; }
   .pv-mxnote{ font-size:10.5px; color:#555; margin-top:3px; }
+  /* 新聞風の出走表 */
+  table.pv-t{ min-width:1100px; table-layout:fixed; }
+  .pv-grid.two table.pv-t{ min-width:0; table-layout:auto; } .pv-grid.two col{ width:auto !important; }
+  table.pv-t td{ vertical-align:middle; }
+  .pv-car.big{ min-width:26px; font-size:17px; line-height:1.4; }
+  table.pv-t td.mkc{ font-size:17px; font-weight:900; } table.pv-t td.ai{ color:#c0392b; }
+  table.pv-t td.nm .rn{ font-size:15px; font-weight:700; }
+  table.pv-t td.sc b{ font-size:15px; }
+  table.pv-t td.st{ text-align:left; line-height:1.35; } table.pv-t td.st b{ font-weight:700; }
+  table.pv-t td.aiw{ text-align:left; } table.pv-t td.aiw > b{ font-size:16px; } table.pv-t td.aiw small{ font-size:9px; }
+  .pv-bar{ display:inline-block; vertical-align:middle; width:34px; height:5px; background:#e5e5e5; border-radius:2px; margin-left:4px; }
+  .pv-bar span{ display:block; height:100%; background:#c0392b; border-radius:2px; }
+  table.pv-t td.rcn{ text-align:left; white-space:normal; padding:2px 3px; }
+  table.pv-t td.rcn.none{ background:repeating-linear-gradient(135deg,transparent 0 6px,#eee 6px 7px); }
+  .rv{ font-size:9.5px; color:#555; } .rit{ display:flex; flex-wrap:wrap; gap:2px 4px; }
+  .ri{ display:inline-flex; align-items:center; gap:1px; font-size:10px; } .ri i{ font-style:normal; color:#333; }
+  .ri b{ display:inline-block; min-width:16px; text-align:center; font-size:13px; font-weight:900; border-radius:3px; color:#444; }
+  .ri b.f1{ background:#c0392b; color:#fff; } .ri b.f23{ background:#f6d6d2; color:#b03024; }
+  table.pv-t td.oth{ text-align:left; line-height:1.4; } .oth b.up{ color:#c0392b; } .oth b.dn{ color:#2a6ad1; }
+  table.pv-t td.memo{ background:#fff; }
+  table.pv-t tr.rc td{ border-top:none; }
+  col.k-car{ width:34px; } col.k-mk{ width:30px; } col.k-nm{ width:170px; } col.k-sc{ width:46px; } col.k-st{ width:62px; } col.k-sb{ width:96px; }
+  col.k-ai{ width:92px; } col.k-oth{ width:118px; } col.k-memo{ width:70px; }
   @media print{
-    @page{ size:A4; margin:8mm; }
+    @page{ size:A4 landscape; margin:7mm; }
+    .pv-card{ overflow:visible; } table.pv-t{ min-width:0; }
+    .pv-mxgrid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+    .pv-grid.mxon .pv-card, .pv-grid:not(.two) .pv-card{ break-inside:auto; page-break-inside:auto; padding:3px 6px; }
+    .pv-venue:has(.pv-grid:not(.two)) > h2{ display:none; }
+    .pv-grid:not(.two) .pv-card + .pv-card{ break-before:page; page-break-before:always; }
+    table.pv-t tr{ break-inside:avoid; }
+    .pv-head{ padding-bottom:1px; margin-bottom:2px; } .pv-head b{ font-size:16px; }
+    .pv-sub{ font-size:10.5px; margin:1px 0; line-height:1.35; } .pv-box{ padding:1px 6px; } .pv-box-t{ font-size:10.5px; margin-bottom:0; }
+    table.pv-t{ margin-top:3px; } table.pv-t th{ font-size:9.5px; padding:1px 2px; }
+    table.pv-t th, table.pv-t td{ padding:1px 3px; line-height:1.18; }
+    table.pv-t td.nm .rn{ font-size:13px; } .pv-pref{ font-size:8.8px; } table.pv-t td.sm{ font-size:9.5px; }
+    .pv-car.big{ font-size:14px; } table.pv-t td.mkc{ font-size:14px; } table.pv-t td.sc b, table.pv-t td.aiw > b{ font-size:13px; }
+    .ri{ font-size:9px; } .ri b{ font-size:11px; min-width:14px; } .rv{ font-size:8.5px; }
+    table.pv-t td.pv-rc{ font-size:9px; line-height:1.15; padding:0 3px; }
+    .pv-view{ font-size:10.5px; line-height:1.45; padding:2px 6px; margin-top:3px; }
     html, body{ background:#fff !important; }
     header, footer, nav.tab-strip, .pv-controls, .gate-stripe{ display:none !important; }
     main, main.wide{ max-width:none !important; padding:0 !important; margin:0 !important; }
@@ -2813,30 +2865,24 @@ _PRINT_STYLE = """
 
 _PRINT_SCRIPT = """
 (function(){
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.pv-card'));
+  var ctl = document.querySelector('.pv-controls');
+  var KEY = 'keirin-print-' + (ctl ? ctl.dataset.date : '');
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.pv-r'));
   var venues = Array.prototype.slice.call(document.querySelectorAll('.pv-venue'));
   function nowHM(){ var d=new Date(); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+  function card(b){ return document.getElementById(b.value); }
+  function save(){ try{ var m={}; boxes.forEach(function(b){ m[b.value]=b.checked?1:0; }); localStorage.setItem(KEY, JSON.stringify(m)); }catch(e){} }
+  try{ var m=JSON.parse(localStorage.getItem(KEY)||'{}'); boxes.forEach(function(b){ if(b.value in m) b.checked=!!m[b.value]; }); }catch(e){}
   function apply(){
-    var chosen = {};
-    document.querySelectorAll('.pv-vchk').forEach(function(c){ chosen[c.value] = c.checked; });
-    var flag = document.getElementById('pvFlag').value;
-    var future = document.getElementById('pvFuture').checked;
-    var ntri = parseInt(document.getElementById('pvTri').value, 10);
     var two = document.getElementById('pvCols').value === '2';
     var thr = parseFloat(document.getElementById('pvMx').value);
-    var hm = nowHM();
-    cards.forEach(function(card){
-      var ok = chosen[card.dataset.venue] !== false;
-      if (ok && flag !== 'all') ok = (' ' + card.dataset.flags + ' ').indexOf(' ' + flag + ' ') >= 0;
-      if (ok && future && card.dataset.deadline && card.dataset.deadline < hm) ok = false;
-      card.style.display = ok ? '' : 'none';
-      card.querySelectorAll('.pv-tri div').forEach(function(d, i){ d.style.display = i < ntri ? '' : 'none'; });
+    var n = 0;
+    boxes.forEach(function(b){
+      var c = card(b); if (!c) return;
+      c.style.display = b.checked ? '' : 'none'; if (b.checked) n++;
       var shown = 0;
-      card.querySelectorAll('.pv-mx').forEach(function(m){
-        var show = parseFloat(m.dataset.p1) >= thr;
-        m.style.display = show ? '' : 'none'; if (show) shown++;
-      });
-      var wrap = card.querySelector('.pv-mxwrap'); if (wrap) wrap.dataset.shown = shown;
+      c.querySelectorAll('.pv-mx').forEach(function(m){ var show = parseFloat(m.dataset.p1) >= thr; m.style.display = show ? '' : 'none'; if (show) shown++; });
+      var wrap = c.querySelector('.pv-mxwrap'); if (wrap) wrap.dataset.shown = shown;
     });
     venues.forEach(function(v){
       var any = Array.prototype.some.call(v.querySelectorAll('.pv-card'), function(c){ return c.style.display !== 'none'; });
@@ -2845,10 +2891,22 @@ _PRINT_SCRIPT = """
       if (g){ g.classList.toggle('two', two); g.classList.toggle('mxon', !two && thr < 999); }
     });
     document.querySelectorAll('.pv-mxwrap').forEach(function(w){ w.style.display = (thr >= 999) ? 'none' : ''; });
+    document.getElementById('pvCount').textContent = n + 'レース選択中';
+    document.getElementById('pvPrint').disabled = (n === 0);
+    save();
   }
-  document.querySelectorAll('.pv-controls input, .pv-controls select').forEach(function(el){ el.addEventListener('change', apply); });
-  document.getElementById('pvAll').addEventListener('click', function(){ document.querySelectorAll('.pv-vchk').forEach(function(c){ c.checked = true; }); apply(); });
-  document.getElementById('pvNone').addEventListener('click', function(){ document.querySelectorAll('.pv-vchk').forEach(function(c){ c.checked = false; }); apply(); });
+  document.querySelectorAll('.pv-quick button').forEach(function(btn){ btn.addEventListener('click', function(){
+    var q = btn.dataset.q, hm = nowHM();
+    boxes.forEach(function(b){ var c = card(b); if (!c) return; var f = ' ' + (c.dataset.flags || '') + ' ';
+      b.checked = q === 'all' ? true : q === 'none' ? false : q === 'future' ? !(c.dataset.deadline && c.dataset.deadline < hm) : f.indexOf(' ' + q + ' ') >= 0; });
+    apply();
+  }); });
+  document.querySelectorAll('.pv-vrow .mini').forEach(function(btn){ btn.addEventListener('click', function(){
+    var on = btn.dataset.act === 'von';
+    btn.closest('.pv-vrow').querySelectorAll('.pv-r').forEach(function(b){ b.checked = on; }); apply();
+  }); });
+  boxes.forEach(function(b){ b.addEventListener('change', apply); });
+  document.querySelectorAll('#pvCols, #pvMx').forEach(function(el){ el.addEventListener('change', apply); });
   document.getElementById('pvPrint').addEventListener('click', function(){ apply(); window.print(); });
   apply();
 })();
@@ -3063,6 +3121,22 @@ def _print_card_html(rd):
     def num(v, fmt="{:.1f}"):
         return fmt.format(v) if isinstance(v, (int, float)) else "-"
 
+    def recent_cell(items, venue=""):
+        """今場所・前場所などの成績を新聞風に: 上に場名、下に「レース種別+着順(大きく)」を並べる"""
+        if not items:
+            return '<td class="pv-opt rcn none"></td>'
+        its = ""
+        for it in items:
+            kind = it.get("kind", "")
+            for x, y in _KIND_SHORT:
+                kind = kind.replace(x, y)
+            fin = str(it.get("finish", ""))
+            fin = fin[:-1] if fin.endswith("着") else fin
+            fcls = "f1" if fin == "1" else ("f23" if fin in ("2", "3") else "")
+            its += f'<span class="ri"><i>{kind}</i><b class="{fcls}">{fin or "-"}</b></span>'
+        head = f'<div class="rv">{venue}</div>' if venue else ""
+        return f'<td class="pv-opt rcn">{head}<div class="rit">{its}</div></td>'
+
     trs = ""
     for r in sorted(rows, key=lambda x: x["car"]):
         rank = by_rank[r["car"]]
@@ -3074,47 +3148,39 @@ def _print_card_html(rd):
         kp = r.get("kimarite_prediction") or {}
         w1 = r["adjusted"]
         w2 = second_m.get(r["car"], 0.0) * 100
-        w3 = max(r.get("place_rate", 0) - w1 - w2, 0.0)
         age = r.get("age"); per = r.get("period")
-        prof = f'{r.get("pref") or ""} {int(age) if age else ""}歳/{int(per) if per else ""}期'.strip()
-        rc_bits = []
+        prof = f'{r.get("pref") or ""} {int(age) if age else ""}歳 {int(per) if per else ""}期'.strip()
         rec = r.get("recent") or {}
-        if rec.get("now"):
-            rc_bits.append(f'<b>今場所</b> {_recent_txt(rec["now"])}')
-        if rec.get("prev"):
-            rc_bits.append(f'<b>前場所{("(" + rec["prev_venue"] + ")") if rec.get("prev_venue") else ""}</b> {_recent_txt(rec["prev"])}')
-        if rec.get("prev2"):
-            rc_bits.append(f'<b>前々場所{("(" + rec["prev2_venue"] + ")") if rec.get("prev2_venue") else ""}</b> {_recent_txt(rec["prev2"])}')
         cr = r.get("course_record")
-        if cr:
-            rc_bits.append(f'<b>当地</b> {cr["races"]}走{cr["wins"]}勝{cr["top3"]}連対')
         ft = r.get("form_trend")
-        if ft and ft.get("trend") in ("up", "down"):
-            rc_bits.append("調子" + ("↑" if ft["trend"] == "up" else "↓"))
         fin = r.get("finishes") or {}
-        rc_bits.append(f'<b>通算</b> {fin.get("f1", 0)}-{fin.get("f2", 0)}-{fin.get("f3", 0)}-{fin.get("fo", 0)}')
+        other = [f'通算 <b>{fin.get("f1", 0)}-{fin.get("f2", 0)}-{fin.get("f3", 0)}-{fin.get("fo", 0)}</b>']
+        if cr:
+            other.append(f'当地 <b>{cr["races"]}走{cr["wins"]}勝</b> 連対{cr["top3"]}')
+        if ft and ft.get("trend") in ("up", "down"):
+            other.append('調子 <b class="' + ("up" if ft["trend"] == "up" else "dn") + '">' + ("↑上向き" if ft["trend"] == "up" else "↓下降") + "</b>")
         comment = _rider_comment(r, rank, pos, kp)
-        rc_html = " ｜ ".join(rc_bits)
-        trs += (f'<tr class="{"top" if rank == 0 else ""}">'
-                f'<td><span class="pv-car" style="background:{bg};color:{fg};">{r["car"]}</span></td>'
-                f'<td>{r.get("mark") or ""}</td><td>{ai}</td>'
-                f'<td class="nm">{r["name"]}<br><span class="pv-pref">{prof}</span></td>'
-                f'<td>{r.get("rank") or ""}</td><td>{r.get("tactic") or ""}</td><td class="pv-opt sm">{pos}</td>'
-                f'<td class="pv-opt sm">{num(r.get("gear"), "{:.2f}")}</td><td class="pv-opt sm">{r.get("score", 0):.1f}</td>'
-                f'<td class="pv-opt sm">{num(r.get("win_rate"))}</td><td class="pv-opt sm">{num(r.get("rentai2"))}</td><td class="pv-opt sm">{num(r.get("rentai3"))}</td>'
-                f'<td class="pv-opt sm">{num(r.get("s_count"), "{:.0f}")}</td><td class="pv-opt sm">{num(r.get("b_count"), "{:.0f}")}</td>'
-                f'<td class="pv-opt sm">{kim.get("逃", 0)}</td><td class="pv-opt sm">{kim.get("捲", 0)}</td><td class="pv-opt sm">{kim.get("差", 0)}</td><td class="pv-opt sm">{kim.get("マ", 0)}</td>'
-                f'<td class="hl">{w1:.1f}</td><td class="pv-opt">{w2:.0f}</td><td class="pv-opt">{w3:.0f}</td>'
-                f'<td class="hl">{r.get("place_rate", 0):.0f}</td></tr>'
-                f'<tr class="pv-opt rc"><td></td><td class="pv-rc" colspan="21">{rc_html}'
-                f'<br><span class="cm">▶ {comment}</span></td></tr>')
-    thead = ("<tr><th rowspan=2>番</th><th rowspan=2>記者</th><th rowspan=2>AI</th><th rowspan=2>選手</th><th rowspan=2>級</th><th rowspan=2>脚質</th>"
-             "<th class='pv-opt' rowspan=2>位置</th><th class='pv-opt' rowspan=2>ギア</th><th class='pv-opt' rowspan=2>得点</th>"
-             "<th class='pv-opt' colspan=3>成績率(%)</th><th class='pv-opt' colspan=2>回数</th><th class='pv-opt' colspan=4>決まり手(回)</th>"
-             "<th colspan=4>AI予測(%)</th></tr>"
-             "<tr><th class='pv-opt'>勝率</th><th class='pv-opt'>2連</th><th class='pv-opt'>3連</th><th class='pv-opt'>S</th><th class='pv-opt'>B</th>"
-             "<th class='pv-opt'>逃</th><th class='pv-opt'>捲</th><th class='pv-opt'>差</th><th class='pv-opt'>マ</th>"
-             "<th>1着</th><th class='pv-opt'>2着</th><th class='pv-opt'>3着</th><th>3着内</th></tr>")
+        kim_txt = " ".join(f'{t}<b>{kim.get(t, 0)}</b>' for t in ("逃", "捲", "差", "マ"))
+        bar = f'<span class="pv-bar"><span style="width:{min(w1 * 2.5, 100):.0f}%"></span></span>'
+        trs += (f'<tr class="{"top" if rank == 0 else ""} r1">'
+                f'<td rowspan="2"><span class="pv-car big" style="background:{bg};color:{fg};">{r["car"]}</span></td>'
+                f'<td rowspan="2" class="mkc">{r.get("mark") or ""}</td><td rowspan="2" class="mkc ai">{ai}</td>'
+                f'<td class="nm"><div class="rn">{r["name"]}</div><div class="pv-pref">{prof}</div>'
+                f'<div class="pv-pref"><b>{r.get("rank") or ""}</b> {r.get("tactic") or ""} ・ {pos} ・ ギア{num(r.get("gear"), "{:.2f}")}</div></td>'
+                f'<td class="sc"><b>{r.get("score", 0):.1f}</b></td>'
+                f'<td class="pv-opt sm st">勝{num(r.get("win_rate"))}<br>2連{num(r.get("rentai2"))}<br>3連{num(r.get("rentai3"))}</td>'
+                f'<td class="pv-opt sm st">S<b>{num(r.get("s_count"), "{:.0f}")}</b> B<b>{num(r.get("b_count"), "{:.0f}")}</b><br>{kim_txt}</td>'
+                f'<td class="aiw"><b>{w1:.1f}</b><small>%</small>{bar}<div class="sm">2着{w2:.0f} 3内<b>{r.get("place_rate", 0):.0f}</b></div></td>'
+                f'{recent_cell(rec.get("now"), "今場所")}'
+                f'{recent_cell(rec.get("prev"), "前 " + (rec.get("prev_venue") or ""))}'
+                f'{recent_cell(rec.get("prev2"), "前々 " + (rec.get("prev2_venue") or ""))}'
+                f'<td class="pv-opt sm oth">{"<br>".join(other)}</td>'
+                f'<td rowspan="2" class="pv-opt memo"></td></tr>'
+                f'<tr class="pv-opt rc {"top" if rank == 0 else ""}"><td class="pv-rc" colspan="9"><span class="cm">▶ {comment}</span></td></tr>')
+    thead = ("<tr><th>番</th><th>記者</th><th>AI</th><th>選手 ／ 府県 年齢 期 ／ 級班 脚質 位置 ギア</th><th>得点</th>"
+             "<th class='pv-opt'>成績率%</th><th class='pv-opt'>S・B<br>決まり手(回)</th><th>AI 1着%<br>2着・3着内%</th>"
+             "<th class='pv-opt'>今場所</th><th class='pv-opt'>前場所</th><th class='pv-opt'>前々場所</th><th class='pv-opt'>通算・当地・調子</th>"
+             "<th class='pv-opt'>メモ</th></tr>")
 
     # 穴党向け: AIの確率上位の買い目(=消し目)は出さず、穴の買い目・消し目・万車率を出す
     if _mv.get("man") is not None:
@@ -3154,7 +3220,7 @@ def _print_card_html(rd):
           f'<div class="pv-mxgrid">{mats}</div>'
           f'<div class="pv-mxnote">濃いほど出やすい（0.7%以上／1.5%以上／3%以上で段階的に濃く）。"-"は0.05%未満。右端の「2着計」は、その選手が1着で、かつその車が2着になる確率の合計。</div></div>')
     return f"""
-    <div class="pv-card" data-venue="{info['venue']}" data-flags="{' '.join(flags)}" data-deadline="{deadline}">
+    <div class="pv-card" id="pv-{info['venue']}-{info['race_no']}" data-venue="{info['venue']}" data-flags="{' '.join(flags)}" data-deadline="{deadline}">
       <div class="pv-head"><b>{venue_name} {info['race_no']}R</b>
         <span class="pv-t">{info.get('title') or ''} {('締切 ' + deadline) if deadline else ''}</span>
         <span class="pv-flags">{''.join(flag_html)}</span></div>
@@ -3162,10 +3228,10 @@ def _print_card_html(rd):
       {tickets}
       <div class="pv-sub">{sub}</div>
       {dev_html}
-      <table class="pv-t">{thead}{trs}</table>
+      <table class="pv-t"><colgroup><col class="k-car"><col class="k-mk"><col class="k-mk"><col class="k-nm"><col class="k-sc"><col class="k-st pv-opt"><col class="k-sb pv-opt">
+      <col class="k-ai"><col class="pv-opt"><col class="pv-opt"><col class="pv-opt"><col class="k-oth pv-opt"><col class="k-memo pv-opt"></colgroup>{thead}{trs}</table>
       {view}
       {mx}
-      <div class="pv-memo pv-opt">メモ：</div>
     </div>"""
 
 
@@ -3180,37 +3246,51 @@ def render_print_page(all_race_data, date=None):
         if rd.get("prediction"):
             by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)
     venue_order = sorted(by_venue, key=lambda v: VENUE_NAMES.get(v, v))
-    sections, chips = "", ""
+    sections, picker = "", ""
     for v in venue_order:
         rds = sorted(by_venue[v], key=lambda rd: rd["race_info"]["race_no"])
         name = VENUE_NAMES.get(v, v)
-        chips += f'<label><input type="checkbox" class="pv-vchk" value="{v}" checked> {name}</label>'
+        chips = ""
+        for rd in rds:
+            info = rd["race_info"]
+            mv = info.get("manshaken") or {}
+            man = mv.get("man")
+            hon = man is not None and man < 0.30
+            cls = "hon" if hon else ("hi" if man is not None and man >= 0.5 else "")
+            n_car = len(rd["prediction"]["rows"])
+            chips += (f'<label class="rc-chip {cls}"><input type="checkbox" class="pv-r" value="pv-{v}-{info["race_no"]}"'
+                      f' data-hon="{1 if hon else 0}"{"" if hon else " checked"}>'
+                      f'<span><b>{info["race_no"]}R</b><small>{info.get("deadline") or ""}</small><i>{n_car}車</i>'
+                      f'<em>{"-" if man is None else f"{man * 100:.0f}%"}{"<u>本命</u>" if hon else ""}</em></span></label>')
+        picker += (f'<div class="pv-vrow"><div class="pv-vname">{name}'
+                   f'<button type="button" class="mini" data-act="von">全部</button><button type="button" class="mini" data-act="voff">外す</button></div>'
+                   f'<div class="pv-chips">{chips}</div></div>')
         sections += (f'<section class="pv-venue"><h2>{name}　{_fmt_date_jp(date)}</h2>'
                      f'<div class="pv-grid">{"".join(_print_card_html(rd) for rd in rds)}</div></section>')
     n_races = sum(len(x) for x in by_venue.values())
     controls = f"""
-  <div class="pv-controls">
-    <h3>印刷用：本日の予想一覧（{n_races}レース）</h3>
-    <div class="pv-row"><span>開催場：</span>
-      <button type="button" id="pvAll">全部</button><button type="button" id="pvNone">解除</button></div>
-    <div class="pv-vchips">{chips}</div>
+  <div class="pv-controls" data-date="{date}">
+    <h3>印刷するレースを選ぶ（全{n_races}レース）</h3>
+    <div class="pv-quick">
+      <button type="button" data-q="nothonmei">本命を除く（穴党）</button><button type="button" data-q="ana">穴目のあるレース</button>
+      <button type="button" data-q="close">拮抗</button><button type="button" data-q="future">締切前</button>
+      <button type="button" data-q="all">全部</button><button type="button" data-q="none">全部外す</button>
+    </div>
+    {picker}
     <div class="pv-row">
-      <label>絞り込み
-        <select id="pvFlag"><option value="nothonmei" selected>本命レースを除く（穴党）</option><option value="ana">穴目のあるレースだけ</option>
-        <option value="all">全レース</option><option value="close">拮抗</option></select></label>
-      <label>列数
-        <select id="pvCols"><option value="1">詳細（1ページ1レース）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
+      <label>レイアウト
+        <select id="pvCols"><option value="1">詳細（1ページ1レース・A4横）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
       <label>出目確率表
         <select id="pvMx"><option value="10" selected>1着率10%以上の選手</option><option value="0">全選手（網羅）</option><option value="5">1着率5%以上の選手</option><option value="999">出さない</option></select></label>
-      <label>3連単の点数
-        <select id="pvTri"><option value="5">5点</option><option value="10" selected>10点</option><option value="3">3点</option></select></label>
-      <label><input type="checkbox" id="pvFuture"> 締切前のレースだけ</label>
+      <span class="pv-count" id="pvCount"></span>
     </div>
-    <div class="pv-row"><button type="button" class="pv-print-btn" id="pvPrint">印刷 / PDFに保存</button></div>
-    <p class="pv-hint">開催場ごとに改ページ、詳細は1レース1ページです。印刷画面で「PDFとして保存」を選ぶとPDFになります
-    （iPhone/iPadは、共有ボタン → 「プリント」→ プレビューをピンチアウト → 共有でPDF保存）。
-    AI＝予測1着率の上位印（◎○▲△）、級＝級班、1着率・3着内％はAIの予測です。
-    穴党の買い目＝穴レースのページと同じ判定（勝ち筋・穴目・重賞）。AIが推す組は「消し目」として買い目から外しています。</p>
+    <div class="pv-row"><button type="button" class="pv-print-btn" id="pvPrint">選んだレースを印刷 / PDFに保存</button></div>
+    <p class="pv-hint">レース番号をタップで 選ぶ／外す（下の数字＝万車率、赤＝荒れそう、灰色の「本命」＝万車率30%未満で見送り。最初は本命以外が選ばれています）。
+    選んだレースだけ下に表示・印刷されます（選択はこのブラウザに覚えておきます）。印刷画面で「PDFとして保存」を選ぶとPDFになります
+    （iPhone/iPadは、共有ボタン → 「プリント」→ プレビューをピンチアウト → 共有でPDF保存）。<br>
+    表の見方：記者＝記者の印、AI＝予測1着率の上位印（◎○▲△）、AI 1着%（赤い棒）・2着・3着内％はAIの予測。
+    今場所・前場所・前々場所＝レース種別と着順（1着は赤地、2〜3着はピンク）。▶はデータから作った一言。
+    穴党の買い目＝穴レースのページと同じ判定。AIが推す組は「消し目」として外しています。</p>
   </div>"""
     body = controls + (sections or '<p class="dim">本日は予想できたレースがありません。</p>')
     return _page_shell(
