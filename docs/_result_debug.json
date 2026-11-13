@@ -1,27 +1,18 @@
 {
- "updated": "2026-11-13 18:39",
+ "updated": "2026-11-13 18:55",
  "failures": [
   {
-   "race": "2026-11-13 tamano 7R",
+   "race": "2026-11-13 tamano 8R",
    "diag": {
     "venue": "tamano",
-    "race_id": "6120261112020007",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-13 yokkaichi 8R",
-   "diag": {
-    "venue": "yokkaichi",
-    "race_id": "4820261111030008",
+    "race_id": "6120261112020008",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2817,
- "with_result": 2263,
+ "with_result": 2265,
  "without_url": 0,
- "pending_eligible": 528
+ "pending_eligible": 527
 }
