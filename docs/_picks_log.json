@@ -2727,7 +2727,11 @@
 "close_at": 1794552120,
 "cls": "S級",
 "race_type": "二予選",
-"line": "8-3-4"
+"line": "8-3-4",
+"settled": true,
+"result": "5-2-7",
+"payout": 0,
+"final_odds": 189.6
 },
 {
 "date": "2026-11-13",
@@ -2742,7 +2746,11 @@
 "close_at": 1794552120,
 "cls": "S級",
 "race_type": "二予選",
-"line": "2-5-7"
+"line": "2-5-7",
+"settled": true,
+"result": "5-2-7",
+"payout": 0,
+"final_odds": 101.1
 },
 {
 "date": "2026-11-13",
@@ -2757,7 +2765,11 @@
 "close_at": 1794552120,
 "cls": "S級",
 "race_type": "二予選",
-"line": "2-5-7・98.8倍"
+"line": "2-5-7・101.1倍",
+"settled": true,
+"result": "5-2-7",
+"payout": 0,
+"final_odds": 101.1
 },
 {
 "date": "2026-11-13",
@@ -2778,7 +2790,11 @@
 "close_at": 1794552120,
 "cls": "S級",
 "race_type": "二予選",
-"line": "並び 9-1-6 / 2-5-7 / 8-3-4"
+"line": "並び 9-1-6 / 2-5-7 / 8-3-4",
+"settled": true,
+"result": "5-2-7",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-13",
@@ -2827,7 +2843,7 @@
 "close_at": 1794556200,
 "cls": "A級",
 "race_type": "チ準決",
-"line": "1-6-4・95.7倍"
+"line": "1-6-4・100.2倍"
 },
 {
 "date": "2026-11-13",
@@ -2857,7 +2873,7 @@
 "close_at": 1794561960,
 "cls": "A級",
 "race_type": "特一般",
-"line": "6-2-4・80.8倍"
+"line": "6-2-4・81.4倍"
 },
 {
 "date": "2026-11-13",
@@ -2887,37 +2903,7 @@
 "close_at": 1794566520,
 "cls": "A級",
 "race_type": "準決勝",
-"line": "3-5-6・42.7倍"
-},
-{
-"date": "2026-11-13",
-"rule": "C",
-"ticket": "7-6-2",
-"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/5",
-"venue": "佐世保",
-"race_no": 5,
-"cup": "前検コメはウィンチケット杯",
-"grade": "F2",
-"start_at": 1794574800,
-"close_at": 1794574500,
-"cls": "A級",
-"race_type": "特一般",
-"line": "7-6-2"
-},
-{
-"date": "2026-11-13",
-"rule": "F",
-"ticket": "7-6-2",
-"url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/5",
-"venue": "佐世保",
-"race_no": 5,
-"cup": "前検コメはウィンチケット杯",
-"grade": "F2",
-"start_at": 1794574800,
-"close_at": 1794574500,
-"cls": "A級",
-"race_type": "特一般",
-"line": "7-6-2・36.0倍"
+"line": "3-5-6・42.5倍"
 },
 {
 "date": "2026-11-13",
@@ -2947,6 +2933,6 @@
 "close_at": 1794575700,
 "cls": "A級",
 "race_type": "特選",
-"line": "5-6-7・132.5倍"
+"line": "5-6-7・118.1倍"
 }
 ]
