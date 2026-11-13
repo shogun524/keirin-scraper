@@ -3179,11 +3179,12 @@ def _print_card_html(rd):
             other.append('調子 <b class="' + ("up" if ft["trend"] == "up" else "dn") + '">' + ("↑上向き" if ft["trend"] == "up" else "↓下降") + "</b>")
         comment = _rider_comment(r, rank, pos, kp)
         kim_txt = " ".join(f'{t}<b>{kim.get(t, 0)}</b>' for t in ("逃", "捲", "差", "マ"))
+        jr_tag = '<span class="jr">自力</span>' if says_jiriki(r.get("comment")) else ""
         bar = f'<span class="pv-bar"><span style="width:{min(w1 * 2.5, 100):.0f}%"></span></span>'
         trs += (f'<tr class="{"top" if rank == 0 else ""} r1">'
                 f'<td rowspan="2"><span class="pv-car big" style="background:{bg};color:{fg};">{r["car"]}</span></td>'
                 f'<td rowspan="2" class="mkc">{r.get("mark") or ""}</td><td rowspan="2" class="mkc ai">{ai}</td>'
-                f'<td class="nm"><div class="rn">{r["name"]}{'<span class="jr">自力</span>' if says_jiriki(r.get("comment")) else ""}</div><div class="pv-pref">{prof}</div>'
+                f'<td class="nm"><div class="rn">{r["name"]}{jr_tag}</div><div class="pv-pref">{prof}</div>'
                 f'<div class="pv-pref"><b>{r.get("rank") or ""}</b> {r.get("tactic") or ""} ・ {pos} ・ ギア{num(r.get("gear"), "{:.2f}")}</div></td>'
                 f'<td class="sc"><b>{r.get("score", 0):.1f}</b></td>'
                 f'<td class="pv-opt sm st">勝{num(r.get("win_rate"))}<br>2連{num(r.get("rentai2"))}<br>3連{num(r.get("rentai3"))}</td>'
