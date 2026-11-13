@@ -2813,7 +2813,11 @@
 "close_at": 1794554400,
 "cls": "S級",
 "race_type": "二予選",
-"line": "並び 1-7-5 / 2-8 / 3-4 / 6-9"
+"line": "並び 1-7-5 / 2-8 / 3-4 / 6-9",
+"settled": true,
+"result": "7-1-5",
+"payout": 390,
+"final_odds": null
 },
 {
 "date": "2026-11-13",
@@ -2843,7 +2847,7 @@
 "close_at": 1794556200,
 "cls": "A級",
 "race_type": "チ準決",
-"line": "1-6-4・59.6倍"
+"line": "1-6-4・101.8倍"
 },
 {
 "date": "2026-11-13",
@@ -2873,37 +2877,7 @@
 "close_at": 1794561960,
 "cls": "A級",
 "race_type": "特一般",
-"line": "6-2-4・91.3倍"
-},
-{
-"date": "2026-11-13",
-"rule": "C",
-"ticket": "3-5-6",
-"url": "https://www.winticket.jp/keirin/tamano/racecard/2026111261/2/10",
-"venue": "玉野",
-"race_no": 10,
-"cup": "両備バス杯＆ＣＴＣは３分前杯",
-"grade": "F2",
-"start_at": 1794566820,
-"close_at": 1794566520,
-"cls": "A級",
-"race_type": "準決勝",
-"line": "3-5-6"
-},
-{
-"date": "2026-11-13",
-"rule": "F",
-"ticket": "3-5-6",
-"url": "https://www.winticket.jp/keirin/tamano/racecard/2026111261/2/10",
-"venue": "玉野",
-"race_no": 10,
-"cup": "両備バス杯＆ＣＴＣは３分前杯",
-"grade": "F2",
-"start_at": 1794566820,
-"close_at": 1794566520,
-"cls": "A級",
-"race_type": "準決勝",
-"line": "3-5-6・51.0倍"
+"line": "6-2-4・113.7倍"
 },
 {
 "date": "2026-11-13",
@@ -2933,6 +2907,6 @@
 "close_at": 1794575700,
 "cls": "A級",
 "race_type": "特選",
-"line": "5-6-7・144.7倍"
+"line": "5-6-7・148.6倍"
 }
 ]
