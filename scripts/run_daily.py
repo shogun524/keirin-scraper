@@ -276,6 +276,10 @@ def main():
                 print(f"[WARN] {info['venue']} {info['race_no']}R の万車率の計算に失敗: {e}")
                 info["manshaken"] = None
         info["recommend"] = br.get("rec") if br else None
+        if br and br.get("comments") and result:  # 前検コメント(ウィンチケット)。新聞の「自力」印に使う
+            for row in result.get("rows", []):
+                if not row.get("comment"):
+                    row["comment"] = br["comments"].get(str(row["car"]), "")
         info["ai_keshi"] = ai_keshi(result)
         ai_keshi_map[f'{info["venue"]}:{info["race_no"]}'] = info["ai_keshi"]
         all_race_data.append({"race_info": race["race_info"], "prediction": result, "url": race.get("url")})

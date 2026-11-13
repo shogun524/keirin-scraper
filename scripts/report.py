@@ -2807,6 +2807,8 @@ _PRINT_STYLE = """
   .pv-memo{ margin-top:7px; border-top:1px dashed #888; min-height:20px; font-size:11px; color:#777; }
   .pv-mxnote{ font-size:10.5px; color:#555; margin-top:3px; }
   /* 新聞風の出走表 */
+  .reg3{ color:#b03024; font-size:.9em; } .reg2{ color:#7a6a4a; font-size:.85em; font-weight:400; }
+  .jr{ display:inline-block; margin-left:4px; font-size:9px; font-weight:700; color:#fff; background:#1f3a5f; border-radius:3px; padding:0 3px; vertical-align:middle; }
   table.pv-t{ min-width:1100px; table-layout:fixed; }
   .pv-grid.two table.pv-t{ min-width:0; table-layout:auto; } .pv-grid.two col{ width:auto !important; }
   table.pv-t td{ vertical-align:middle; }
@@ -2915,16 +2917,32 @@ _PRINT_SCRIPT = """
 _AI_MARKS = ["◎", "○", "▲", "△"]
 
 
-def _lines_label(rows):
-    """出走表の並び（ライン）を「1-2-3 ／ 4-5 ／ 6」の形で表す（ラインは並び予想の順、単騎は最後）。"""
+from keirin_region import says_jiriki  # noqa: E402
+
+
+def _lines_label(rows, with_region=False):
+    """出走表の並び（ライン）を「1-2-3 ／ 4-5 ／ 6」の形で表す（ラインは並び予想の順、単騎は最後）。
+    with_region=True なら各ラインに地区のまとまり（3人同地区・前2人同県）を添える（keirin_region.py の検証を参照）。"""
+    from keirin_region import line_relation
     lines, singles = {}, []
+    pref = {r["car"]: r.get("pref") for r in rows}
     for r in rows:
         li = r.get("line_info")
         if li:
             lines.setdefault(li["line_index"], []).append((li["position"], r["car"]))
         else:
             singles.append(r["car"])
-    parts = ["-".join(str(c) for _, c in sorted(lines[k])) for k in sorted(lines)]
+    parts = []
+    for k in sorted(lines):
+        cars = [c for _, c in sorted(lines[k])]
+        txt = "-".join(str(c) for c in cars)
+        if with_region and len(cars) >= 2:
+            rel = line_relation([pref.get(c) for c in cars])
+            if rel["same3"]:
+                txt += f'<span class="reg3">〔{rel["label"]}〕</span>'
+            elif rel["label"] in ("前2人同県", "前2人同地区"):
+                txt += f'<span class="reg2">〔{rel["label"]}〕</span>'
+        parts.append(txt)
     parts += [str(c) for c in sorted(singles)]
     return " ／ ".join(parts)
 
@@ -3106,7 +3124,7 @@ def _print_card_html(rd):
     ratio = result.get("kimarite_ratio") or {}
     ratio_txt = " ".join(f'{t}{ratio[t]:.0f}%' for t in ("逃", "捲", "差", "マ") if t in ratio)
     mr = result.get("most_reliable")
-    sub = f'並び：<b>{_lines_label(rows)}</b>'
+    sub = f'並び：<b>{_lines_label(rows, with_region=True)}</b>'
     if ratio_txt:
         sub += f'　／　予測の決まり手 {ratio_txt}'
     if mr:
@@ -3165,7 +3183,7 @@ def _print_card_html(rd):
         trs += (f'<tr class="{"top" if rank == 0 else ""} r1">'
                 f'<td rowspan="2"><span class="pv-car big" style="background:{bg};color:{fg};">{r["car"]}</span></td>'
                 f'<td rowspan="2" class="mkc">{r.get("mark") or ""}</td><td rowspan="2" class="mkc ai">{ai}</td>'
-                f'<td class="nm"><div class="rn">{r["name"]}</div><div class="pv-pref">{prof}</div>'
+                f'<td class="nm"><div class="rn">{r["name"]}{'<span class="jr">自力</span>' if says_jiriki(r.get("comment")) else ""}</div><div class="pv-pref">{prof}</div>'
                 f'<div class="pv-pref"><b>{r.get("rank") or ""}</b> {r.get("tactic") or ""} ・ {pos} ・ ギア{num(r.get("gear"), "{:.2f}")}</div></td>'
                 f'<td class="sc"><b>{r.get("score", 0):.1f}</b></td>'
                 f'<td class="pv-opt sm st">勝{num(r.get("win_rate"))}<br>2連{num(r.get("rentai2"))}<br>3連{num(r.get("rentai3"))}</td>'

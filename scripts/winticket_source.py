@@ -28,6 +28,7 @@ def _racers(com):
             "finishes": {"f1": r["first"], "f2": r["second"], "f3": r["third"], "fo": r["others"]},
             "pref": p["prefecture"], "s_count": r["standing"], "b_count": r["back"],
             "win_rate": r.get("firstRateStr"), "rentai2": r.get("secondRateStr"), "rentai3": r.get("thirdRateStr"),
+            "comment": r.get("comment") or "",
         })
     return out
 

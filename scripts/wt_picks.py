@@ -53,6 +53,7 @@ F_ODDS = (30.0, 300.0)
 # 穴目の表(wt_result_patterns.py の結果): 「ライン何番目 × 並び通り/番手差し × 3連単のオッズ帯」ごとの過去の回収率
 ANA_TABLE_PATH = os.path.join(DOCS, "_ana_table.json")
 ANA_MIN_ROI, ANA_MIN_HITS = 0.85, 15     # これ未満の穴目は出さない(損が大きい・当たりが少なすぎて当てにならない)
+from keirin_region import line_relation  # noqa: E402
 HONMEI_MAN = 0.30                         # 万車率がこれ未満は本命レース(穴党は見送り)
 
 
@@ -344,8 +345,12 @@ def collect(today):
                 hits.append(("E", e1[0], e1[1]))
             keshi = set(keshi_map.get(f'{ {"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"])}:{n}') or [])
             hits = [h for h in hits if h[1] not in keshi]   # AI推奨の組(消し目)は買い目にしない
+            pref_of = {int(e["number"]): (next((p for p in R.get("players", []) if p.get("id") == e.get("playerId")), {}) or {}).get("prefecture")
+                       for e in R.get("entries", []) if e.get("number") is not None}
             for key, ticket, L in hits:
+                rel = line_relation([pref_of.get(x) for x in L])
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
+                                  region=rel["label"], same3=rel["same3"],
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
                                   close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
                                   line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E", "F") and tri.get(ticket) else "")))
@@ -358,6 +363,8 @@ def collect(today):
                                   man=mv["man"] if mv else None, q25=mv["q25"] if mv else None,
                                   q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
                                   odds={t: tri.get(t) for _, t, _ in hits},
+                                  comments={str(e.get("number")): (next((r for r in R.get("records", []) if r.get("playerId") == e.get("playerId")), {}) or {}).get("comment") or ""
+                                            for e in R.get("entries", []) if not e.get("absent")},
                                   ana=[a for a in ana_candidates(R, tri) if a["ticket"] not in keshi],
                                   keshi=sorted(keshi),
                                   rec=race_recommendation(picks, url) + [("ana" if not a["win"] else "win", "穴", [a["ticket"]])
@@ -502,6 +509,13 @@ def render(log, now, board=None):
 
     man_of = {b["url"]: b.get("man") for b in (board or [])}
 
+    def region_note(p):
+        if not p.get("region") or p["rule"] not in ("C", "D", "F"):
+            return ""
+        if p.get("same3"):
+            return f'<div class="reg good">◎ {html.escape(p["region"])}のライン(このルールで3人同地区は回収率が高い: D 123%・F 192%・C 180%)</div>'
+        return f'<div class="reg">{html.escape(p["region"])}(3人同地区のときより回収率が低い: D 102%・F 87%・C 75%)</div>'
+
     def card(p):
         passed = p["start_at"] and p["start_at"] < now.timestamp()
         res = ""
@@ -524,7 +538,7 @@ def render(log, now, board=None):
   <span class="tag">{'重賞' if p['rule'] in BIG else '・'.join(sorted(tags.get((p['url'], p['ticket']), [p['rule']])))}</span>{res}</div>
   <div class="sub">{html.escape(p.get('cup') or '')} {html.escape(p.get('grade') or '')} {html.escape(p.get('race_type') or '')}</div>
   <div class="bet">3連単 {bet}{f' <small>各100円・{len(tks)}点</small>' if tks else ''}</div>
-  <div class="why">{html.escape(' / '.join(rule_desc[k][0] for k in sorted(tags.get((p['url'], p['ticket']), [p['rule']]))))}({html.escape(p['line'])})</div>{note}
+  <div class="why">{html.escape(' / '.join(rule_desc[k][0] for k in sorted(tags.get((p['url'], p['ticket']), [p['rule']]))))}({html.escape(p['line'])})</div>{region_note(p)}{note}
 </article>""")
 
     seen, singles = set(), []
@@ -589,6 +603,7 @@ def render(log, now, board=None):
   .tag {{ background:var(--accent); color:#fff; font-size:.72rem; font-weight:700; padding:2px 8px; border-radius:999px; }}
   .hit {{ color:#0A7A3B; font-weight:700; }} .miss {{ color:var(--soft); font-size:.85rem; }}
   .sub, .why {{ font-size:.78rem; color:var(--soft); }}
+  .reg {{ font-size:.76rem; color:var(--soft); margin-top:2px; }} .reg.good {{ color:#b03024; font-weight:700; }}
   .bet {{ margin-top:6px; font-size:1.05rem; }} .bet b {{ font-size:1.25rem; letter-spacing:.04em; font-variant-numeric:tabular-nums; }}
   .pick.big {{ border-left-color:#B8862B; }} .pick.big .tag {{ background:#B8862B; }}
   .combo {{ display:inline-block; font-weight:700; font-variant-numeric:tabular-nums; border:1px solid var(--line); background:#FAF7EE;
