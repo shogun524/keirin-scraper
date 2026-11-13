@@ -1,32 +1,6 @@
 {
- "updated": "2026-11-13 09:00",
+ "updated": "2026-11-13 09:29",
  "failures": [
-  {
-   "race": "2026-11-12 sasebo 7R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    1,
-    2,
-    7,
-    4,
-    5,
-    3,
-    6
-   ]
-  },
-  {
-   "race": "2026-11-12 matsusaka 7R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    1,
-    2,
-    7,
-    5,
-    6,
-    4,
-    3
-   ]
-  },
   {
    "race": "2026-11-12 sasebo 8R",
    "error": "結果の車番が出走車番と一致しない",
@@ -65,10 +39,19 @@
     6,
     5
    ]
+  },
+  {
+   "race": "2026-11-13 matsudo 3R",
+   "diag": {
+    "venue": "matsudo",
+    "race_id": "3120261113010003",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 2817,
- "with_result": 2221,
+ "with_result": 2223,
  "without_url": 0,
  "pending_eligible": 525
 }
