@@ -7555,7 +7555,7 @@
   "土屋__yokkaichi": {
     "name": "土屋",
     "venue": "yokkaichi",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -7906,7 +7906,7 @@
   "後藤__yokkaichi": {
     "name": "後藤",
     "venue": "yokkaichi",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -93576,7 +93576,7 @@
   "島村__yokkaichi": {
     "name": "島村",
     "venue": "yokkaichi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -93615,9 +93615,9 @@
   "平原 啓多__yokkaichi": {
     "name": "平原 啓多",
     "venue": "yokkaichi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -93654,9 +93654,9 @@
   "青柳 靖起__yokkaichi": {
     "name": "青柳 靖起",
     "venue": "yokkaichi",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -97606,7 +97606,7 @@
   "甲斐__tamano": {
     "name": "甲斐",
     "venue": "tamano",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -97736,7 +97736,7 @@
   "飯島__tamano": {
     "name": "飯島",
     "venue": "tamano",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -100725,6 +100725,71 @@
   },
   "時松__tamano": {
     "name": "時松",
+    "venue": "tamano",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山口 貴弘__yokkaichi": {
+    "name": "山口 貴弘",
+    "venue": "yokkaichi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "内山 拓__tamano": {
+    "name": "内山 拓",
+    "venue": "tamano",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "谷口 幸司__tamano": {
+    "name": "谷口 幸司",
+    "venue": "tamano",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉竹 尚城__tamano": {
+    "name": "吉竹 尚城",
+    "venue": "tamano",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "田代__tamano": {
+    "name": "田代",
     "venue": "tamano",
     "races": 1,
     "wins": 0,

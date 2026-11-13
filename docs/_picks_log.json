@@ -2864,6 +2864,8 @@
 "url": "https://www.winticket.jp/keirin/tamano/racecard/2026111261/2/7",
 "venue": "玉野",
 "race_no": 7,
+"region": "前2人同地区",
+"same3": false,
 "cup": "両備バス杯＆ＣＴＣは３分前杯",
 "grade": "F2",
 "start_at": 1794562260,
@@ -2879,13 +2881,15 @@
 "url": "https://www.winticket.jp/keirin/tamano/racecard/2026111261/2/7",
 "venue": "玉野",
 "race_no": 7,
+"region": "前2人同地区",
+"same3": false,
 "cup": "両備バス杯＆ＣＴＣは３分前杯",
 "grade": "F2",
 "start_at": 1794562260,
 "close_at": 1794561960,
 "cls": "A級",
 "race_type": "特一般",
-"line": "6-2-4・152.0倍"
+"line": "6-2-4・118.1倍"
 },
 {
 "date": "2026-11-13",
@@ -2894,6 +2898,8 @@
 "url": "https://www.winticket.jp/keirin/tamano/racecard/2026111261/2/10",
 "venue": "玉野",
 "race_no": 10,
+"region": "3人同地区(九州)",
+"same3": true,
 "cup": "両備バス杯＆ＣＴＣは３分前杯",
 "grade": "F2",
 "start_at": 1794566820,
@@ -2909,13 +2915,15 @@
 "url": "https://www.winticket.jp/keirin/tamano/racecard/2026111261/2/10",
 "venue": "玉野",
 "race_no": 10,
+"region": "3人同地区(九州)",
+"same3": true,
 "cup": "両備バス杯＆ＣＴＣは３分前杯",
 "grade": "F2",
 "start_at": 1794566820,
 "close_at": 1794566520,
 "cls": "A級",
 "race_type": "準決勝",
-"line": "3-5-6・59.0倍"
+"line": "3-5-6・60.5倍"
 },
 {
 "date": "2026-11-13",
@@ -2924,6 +2932,8 @@
 "url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/6",
 "venue": "佐世保",
 "race_no": 6,
+"region": "3人同地区(九州)",
+"same3": true,
 "cup": "前検コメはウィンチケット杯",
 "grade": "F2",
 "start_at": 1794576000,
@@ -2939,12 +2949,14 @@
 "url": "https://www.winticket.jp/keirin/sasebo/racecard/2026111185/3/6",
 "venue": "佐世保",
 "race_no": 6,
+"region": "3人同地区(九州)",
+"same3": true,
 "cup": "前検コメはウィンチケット杯",
 "grade": "F2",
 "start_at": 1794576000,
 "close_at": 1794575700,
 "cls": "A級",
 "race_type": "特選",
-"line": "5-6-7・126.7倍"
+"line": "5-6-7・107.6倍"
 }
 ]
