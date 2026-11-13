@@ -6,7 +6,7 @@
   基準 = 締切30分以上前で、一番締切に近い記録のオッズ(それより前は売れておらずオッズが当てにならない)
   今   = 一番新しい記録のオッズ
   下落率 = 今 ÷ 基準 − 1
-を組ごとに出し、3連単・2車単で 下落率 −40% 以下 かつ 今のオッズが 10〜300倍(穴の範囲)の組を、下落の大きい順に並べる。
+を組ごとに出し、3連単・2車単で 下落率 −25% 以下(−40%以下は赤で強調) かつ 今のオッズが 10〜300倍(穴の範囲)の組を、下落の大きい順に並べる。
 ※ 直前に下がった組は当たりやすいが、オッズが下がった分だけ回収率は下がるという話もある。記録がたまったら
    「急落した組を買った回収率」を検証する(scripts/wt_drops.py --evaluate)。
 
@@ -24,9 +24,10 @@ JST = ZoneInfo("Asia/Tokyo")
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs")
 BET_TYPES = ("3連単", "2車単")
 BASE_MIN = 30          # 基準にする記録: 締切30分以上前
-DROP_TH = -0.40        # これ以下の下落を「急落」
+DROP_TH = -0.25        # これ以下の下落を出す(11/13に -40% から広げた: 11/12の81レースで、出した組が当たったレースが 6→14)
+STRONG_TH = -0.40      # これ以下は「大きく下落」として強調
 ODDS_RANGE = (10.0, 300.0)
-SHOW_PER_RACE = 6
+SHOW_PER_RACE = 8
 
 
 def load_live(path):
@@ -95,7 +96,7 @@ def render(races, now):
         rows = ""
         for bt, lst in r["drops"].items():
             for k, bo, o, d in lst[:SHOW_PER_RACE]:
-                rows += (f'<tr><td>{bt}</td><td><b>{html.escape(k)}</b></td><td>{bo:.1f}</td><td>→ <b>{o:.1f}</b></td>'
+                rows += (f'<tr class="{"strong" if d <= STRONG_TH else ""}"><td>{bt}</td><td><b>{html.escape(k)}</b></td><td>{bo:.1f}</td><td>→ <b>{o:.1f}</b></td>'
                          f'<td class="d">{d:.0%}</td></tr>')
         body = (f'<table><tr><th>券種</th><th>組</th><th>基準</th><th>今</th><th>下落</th></tr>{rows}</table>' if rows
                 else '<p class="dim">急落した組はありません</p>')
@@ -125,7 +126,8 @@ def render(races, now):
   .top {{ display:flex; justify-content:space-between; gap:8px; }} .race-name {{ font-weight:800; font-size:1.1rem; }}
   .when {{ font-weight:700; color:var(--red); }} .basis, .dim {{ font-size:.75rem; color:var(--soft); }}
   table {{ width:100%; border-collapse:collapse; margin-top:6px; font-size:.9rem; font-variant-numeric:tabular-nums; }}
-  th, td {{ border-bottom:1px solid var(--line); padding:4px 6px; text-align:left; }} td.d {{ color:var(--red); font-weight:800; }}
+  th, td {{ border-bottom:1px solid var(--line); padding:4px 6px; text-align:left; }} td.d {{ color:var(--soft); font-weight:700; }}
+  tr.strong td {{ background:#FDECEA; }} tr.strong td.d {{ color:var(--red); font-weight:800; }}
   h2 {{ font-size:1rem; margin:20px 0 8px; }} .none {{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; text-align:center; }}
   details {{ margin-top:12px; }} summary {{ cursor:pointer; font-weight:700; color:var(--soft); }}
 </style></head><body>
@@ -133,6 +135,7 @@ def render(races, now):
 <p>{now:%m/%d %H:%M} 時点(5分おきに記録・1分おきに再読み込み) ・ <a href="picks.html">穴レース</a> ・ <a href="index.html">予想</a></p></header>
 <main>
 <p class="dim">締切30分以上前のオッズから{abs(DROP_TH):.0%}以上下がった組(3連単・2車単、今のオッズ{ODDS_RANGE[0]:.0f}〜{ODDS_RANGE[1]:.0f}倍)。
+赤い行は{abs(STRONG_TH):.0%}以上の大きな下落。
 直前に大きく買われた組です。当たりやすくなる一方、オッズが下がった分だけ割安さは減ります(回収率は記録がたまり次第検証)。</p>
 <h2>締切30分以内</h2>{main}
 {f'<details><summary>このあとのレース({len(later)})</summary>{later_html}</details>' if later else ''}
