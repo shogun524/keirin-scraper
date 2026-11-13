@@ -1,17 +1,6 @@
 {
- "updated": "2026-11-13 23:31",
+ "updated": "2026-11-13 23:50",
  "failures": [
-  {
-   "race": "2026-11-13 sasebo 3R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    2,
-    7,
-    1,
-    5,
-    3
-   ]
-  },
   {
    "race": "2026-11-13 sasebo 4R",
    "error": "結果の車番が出走車番と一致しない",
@@ -58,10 +47,23 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-13 sasebo 6R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    5,
+    7,
+    1,
+    6,
+    3,
+    2,
+    4
+   ]
   }
  ],
  "tracked": 2817,
- "with_result": 2277,
+ "with_result": 2278,
  "without_url": 0,
- "pending_eligible": 540
+ "pending_eligible": 539
 }
