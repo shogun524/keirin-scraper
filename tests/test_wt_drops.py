@@ -26,7 +26,7 @@ class TestDrops(unittest.TestCase):
         self.assertEqual([x[0] for x in d["万車"]], ["4-5-6", "7-8-9"])
 
     def test_no_base(self):
-        self.assertEqual(W.race_drops([snap(20, 0, {"1-2-3": 50.0}), snap(5, 1, {"1-2-3": 10.0})])[0], {})
+        self.assertEqual(W.race_drops([snap(8, 0, {"1-2-3": 50.0}), snap(3, 1, {"1-2-3": 10.0})])[0], {})
 
 
 if __name__ == "__main__":
