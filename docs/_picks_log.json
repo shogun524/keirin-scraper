@@ -3476,7 +3476,11 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "3連単",
-"line": "8-1-9"
+"line": "8-1-9",
+"settled": true,
+"result": "7-2-3",
+"payout": 0,
+"final_odds": 334.9
 },
 {
 "date": "2026-11-14",
@@ -3496,7 +3500,11 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "3連単",
-"line": "4-2-6"
+"line": "4-2-6",
+"settled": true,
+"result": "7-2-3",
+"payout": 0,
+"final_odds": 107.1
 },
 {
 "date": "2026-11-14",
@@ -3516,7 +3524,11 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "3連単",
-"line": "4-2-6・230.5倍"
+"line": "4-2-6・107.1倍",
+"settled": true,
+"result": "7-2-3",
+"payout": 0,
+"final_odds": 107.1
 },
 {
 "date": "2026-11-14",
@@ -3538,7 +3550,11 @@
 "close_at": 1794638580,
 "cls": "S級",
 "race_type": "準決勝",
-"line": "◎7・番手5"
+"line": "◎7・番手5",
+"settled": true,
+"result": "7-2-3",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-14",
@@ -3558,7 +3574,11 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "ワイド",
-"line": "3-7-5・ワイド5.6倍"
+"line": "3-7-5・ワイド5.0倍",
+"settled": true,
+"result": "2=3・2=7・3=7",
+"payout": 0,
+"final_odds": 5
 },
 {
 "date": "2026-11-14",
@@ -3600,7 +3620,7 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "ワイド",
-"line": "6-1-9・ワイド9.9倍"
+"line": "6-1-9・ワイド10.1倍"
 },
 {
 "date": "2026-11-14",
