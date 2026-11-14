@@ -667,6 +667,15 @@ def ai_keshi(result):
     return list(dict.fromkeys(k for k in keys if k))
 
 
+def _hit_line(info, cls="hitline"):
+    """的中率重視の買い目(人気順・回収率は見ない)。hit_plan.py 参照"""
+    h = info.get("hit")
+    if not h or not h.get("items"):
+        return ""
+    parts = " ／ ".join(f'{b} <b>{t}</b> <span class="hp">{p:.0%}</span>' for b, t, p in h["items"])
+    return f'<p class="{cls}" title="過去51,075レースの的中率(1番人気の1着率×車立てごと)">的中率重視: {parts}</p>'
+
+
 def render_manshaken_box(info):
     """万車率・配当の目安・推奨買い目(買うべきレースのページと同じ判定)の帯"""
     mv = info.get("manshaken")
@@ -687,6 +696,9 @@ def render_manshaken_box(info):
         parts.insert(0, '<span class="dim">本命レース(万車率30%未満)— 見送り</span>')
         rec = None
     keshi = info.get("ai_keshi") or []
+    hl = _hit_line(info, "hitline-in")
+    if hl:
+        parts.append(hl.replace('<p class="hitline-in"', '<span').replace("</p>", "</span>"))
     if rec:
         rec = [(k, label, [t for t in ts if t not in keshi]) for k, label, ts in rec]
         rec = [x for x in rec if x[2]]
@@ -2808,6 +2820,7 @@ _PRINT_STYLE = """
   .pv-form{ font-size:11px; margin-top:3px; border-top:1px dotted #999; padding-top:2px; }
   .pv-memo{ margin-top:7px; border-top:1px dashed #888; min-height:20px; font-size:11px; color:#777; }
   .pv-mxnote{ font-size:10.5px; color:#555; margin-top:3px; }
+  .hitline .hp, .hitline-in .hp, span .hp{ color:#0E7C66; font-weight:800; }
   /* 新聞風の出走表 */
   .reg3{ color:#b03024; font-size:.9em; } .reg2{ color:#7a6a4a; font-size:.85em; font-weight:400; }
   .jr{ display:inline-block; margin-left:4px; font-size:9px; font-weight:700; color:#fff; background:#1f3a5f; border-radius:3px; padding:0 3px; vertical-align:middle; }
@@ -3219,7 +3232,8 @@ def _print_card_html(rd):
         buy_txt = "穴の買い目なし（見送り）"
     keshi_txt = (f'<div class="pv-sub">消し目（AI推奨・買わない）：<s>{" ".join(_keshi[:12])}</s></div>' if _keshi else "")
     tickets = (f'<div class="pv-box"><div class="pv-box-t">穴党の買い目（3連単）</div>'
-               f'<div class="pv-sub">{man_txt}</div><div class="pv-sub">{buy_txt}</div>{keshi_txt}</div>')
+               f'<div class="pv-sub">{man_txt}</div><div class="pv-sub">{buy_txt}</div>{keshi_txt}'
+               f'{_hit_line(info, "pv-sub hitline")}</div>')
     form_html = ""
 
     dev = result.get("development_simulation") or {}

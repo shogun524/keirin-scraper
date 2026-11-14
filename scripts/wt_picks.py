@@ -54,6 +54,7 @@ F_ODDS = (30.0, 300.0)
 ANA_TABLE_PATH = os.path.join(DOCS, "_ana_table.json")
 ANA_MIN_ROI, ANA_MIN_HITS = 0.85, 15     # これ未満の穴目は出さない(損が大きい・当たりが少なすぎて当てにならない)
 from keirin_region import line_relation  # noqa: E402
+from hit_plan import plan as hit_plan  # noqa: E402
 # 中穴(3連単5,000円以上): ルールA〜C・Fのうち今のオッズが50倍以上の買い目。
 # 中でも「C・Fで、ラインの前3人が同じ地区」は 994点・的中14回・回収率199%(2025年148%・2026年259%)、
 # F だけなら 1186点・的中17回・回収率217%(2025年184%・2026年257%、上位5本を除いても117%、平均配当15,123円)→ 中穴★
@@ -370,6 +371,7 @@ def collect(today):
                                   man=mv["man"] if mv else None, chu=mv.get("chu") if mv else None, q25=mv["q25"] if mv else None,
                                   q50=mv["q50"] if mv else None, q75=mv["q75"] if mv else None,
                                   odds={t: tri.get(t) for _, t, _ in hits},
+                                  hit=hit_plan(tri, len([x for x in R.get("entries", []) if not x.get("absent")])) if tri else None,
                                   comments={str(e.get("number")): (next((r for r in R.get("records", []) if r.get("playerId") == e.get("playerId")), {}) or {}).get("comment") or ""
                                             for e in R.get("entries", []) if not e.get("absent")},
                                   ana=[a for a in ana_candidates(R, tri) if a["ticket"] not in keshi],
@@ -560,9 +562,18 @@ def render(log, now, board=None):
         if p["rule"] not in BIG and p["rule"] != "E" and p["url"] not in big_urls and (p["url"], p["ticket"]) not in seen:
             seen.add((p["url"], p["ticket"]))
             singles.append(p)
+    hits = [b for b in (board or []) if b.get("hit") and (b.get("close_at") or 0) > now.timestamp()]
+    hits.sort(key=lambda b: -b["hit"]["items"][0][2])
+    hit_sec = ""
+    if hits:
+        lis = "".join(f'<li><b>{html.escape(b["venue"])}{b["race_no"]}R</b> {datetime.datetime.fromtimestamp(b["close_at"], JST):%H:%M}締切 '
+                      f'ワイド <b>{html.escape(b["hit"]["items"][0][1])}</b> <span class="hp">{b["hit"]["items"][0][2]:.0%}</span>'
+                      f' ・ 3連複6点 <span class="hp">{b["hit"]["items"][2][2]:.0%}</span></li>' for b in hits[:6])
+        hit_sec = ('<h2>的中率が高いレース</h2><p class="why">回収率は見ず、当たりやすさだけ。1番人気の1着率と車立てごとの過去の的中率'
+                   '(2025年〜、51,075レース)。各レースのページに「的中率重視」の買い目があります。</p><ul class="hitl">' + lis + '</ul>')
     chu = [p for p in singles if p.get("chu")]
     chu.sort(key=lambda p: (not p.get("chu_star"), p["start_at"]))
-    body = ('<h2>中穴(5,000円以上)の買い目</h2>'
+    body = (hit_sec + '<h2>中穴(5,000円以上)の買い目</h2>'
             '<p class="why">勝ち筋ルール(A〜C・F)のうち、今の3連単オッズが50倍以上の買い目。<b>★</b> はC・Fでラインの前3人が同じ地区のもの'
             '(過去 994点・的中14回・回収率199%、Fだけなら217%・平均配当15,123円)。当たりは70点に1回くらい。</p>'
             + ("".join(card(p) for p in chu) or '<p class="none">今のところ中穴の買い目はありません。</p>')
@@ -638,6 +649,7 @@ def render(log, now, board=None):
   table.board tr.passed {{ opacity:.5; }}
   .man {{ font-weight:700; font-variant-numeric:tabular-nums; }} .man.hi {{ color:#C8402A; }} .man.lo {{ color:#2F6B4F; }}
   .rk {{ font-size:.7rem; font-weight:700; color:#fff; padding:1px 6px; border-radius:999px; }}
+  .hp {{ color:#0E7C66; font-weight:800; }} .hitl {{ font-size:.85rem; padding-left:18px; }}
   .rk.chu {{ background:#0E7C66; }} .rk.chu2 {{ background:#5FA593; }}
   .rk.win {{ background:#C8402A; }} .rk.ana {{ background:#6A4FA0; }} .rk.big {{ background:#B8862B; }} .rk.ref {{ background:#7A8494; }}
   .skip {{ color:var(--soft); font-size:.85rem; }} td.rec b {{ font-variant-numeric:tabular-nums; }}

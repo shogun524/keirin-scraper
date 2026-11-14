@@ -284,6 +284,7 @@ def main():
                 print(f"[WARN] {info['venue']} {info['race_no']}R の万車率の計算に失敗: {e}")
                 info["manshaken"] = None
         info["recommend"] = br.get("rec") if br else None
+        info["hit"] = br.get("hit") if br else None
         if br and br.get("comments") and result:  # 前検コメント(ウィンチケット)。新聞の「自力」印に使う
             for row in result.get("rows", []):
                 if not row.get("comment"):
