@@ -3,7 +3,8 @@
 競輪「オッズ急落」(docs/drops.html): 締切が近いレースで、オッズが大きく下がった(=直前に大きく買われた)組だけを出す。
 
 締切前オッズの記録(wt_odds_snapshot.py が5分おきに追記する wt_live_YYYYMMDD.jsonl.gz)から、
-  基準 = 締切30分以上前で、一番締切に近い記録のオッズ(それより前は売れておらずオッズが当てにならない)
+  基準 = 締切10分以上前で、一番締切に近い記録のオッズ(11/14: 30分前→10分前に。直前の動きを見るため。
+         11/11〜13の178レースでは、どちらの基準でも急落組は直前オッズどおりの当たり方で、差ははっきりしなかった)
   今   = 一番新しい記録のオッズ
   下落率 = 今 ÷ 基準 − 1
 を組ごとに出し、3連単で 下落率 −25% 以下(−40%以下は赤で強調) の組を、オッズの帯ごとに下落の大きい順に並べる。
@@ -25,7 +26,7 @@ from zoneinfo import ZoneInfo
 JST = ZoneInfo("Asia/Tokyo")
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs")
 BET_TYPES = ("3連単",)
-BASE_MIN = 30          # 基準にする記録: 締切30分以上前
+BASE_MIN = 10          # 基準にする記録: 締切10分以上前
 DROP_TH = -0.25        # これ以下の下落を出す(11/13に -40% から広げた: 11/12の81レースで、出した組が当たったレースが 6→14)
 STRONG_TH = -0.40      # これ以下は「大きく下落」として強調
 ODDS_RANGE = (10.0, 300.0)
@@ -55,7 +56,7 @@ def race_drops(snaps):
     base = [s for s in snaps if s.get("mins") is not None and s["mins"] >= BASE_MIN]
     if not base or len(snaps) < 2:
         return {}, None, None
-    b, c = base[-1], snaps[-1]   # 基準は締切30分前に一番近い記録(早すぎると売れておらずオッズが当てにならない)
+    b, c = base[-1], snaps[-1]   # 基準は締切10分前に一番近い記録
     if c["ts"] <= b["ts"]:
         return {}, b, c
     out = {}
@@ -140,7 +141,7 @@ def render(races, now):
 <header><h1>オッズ急落(競輪)</h1>
 <p>{now:%m/%d %H:%M} 時点(5分おきに記録・1分おきに再読み込み) ・ <a href="picks.html">穴レース</a> ・ <a href="index.html">予想</a></p></header>
 <main>
-<p class="dim">締切30分以上前のオッズから{abs(DROP_TH):.0%}以上下がった3連単の組。2桁台(今10〜99.9倍)を最大6組、万車(100〜300倍)を最大2組。
+<p class="dim">締切10分前(に一番近い記録)のオッズから{abs(DROP_TH):.0%}以上下がった3連単の組。2桁台(今10〜99.9倍)を最大6組、万車(100〜300倍)を最大2組。
 赤い行は{abs(STRONG_TH):.0%}以上の大きな下落。
 直前に大きく買われた組です。当たりやすくなる一方、オッズが下がった分だけ割安さは減ります(回収率は記録がたまり次第検証)。</p>
 <h2>締切30分以内</h2>{main}
