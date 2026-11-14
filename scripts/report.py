@@ -692,9 +692,9 @@ def render_manshaken_box(info):
     else:
         parts.append('万車率 <span class="dim">オッズ待ち</span>')
     if mv and mv["man"] < 0.30:
-        # 穴党向け: 本命レースは買い目を出さない
-        parts.insert(0, '<span class="dim">本命レース(万車率30%未満)— 見送り</span>')
-        rec = None
+        # 穴党向け: 本命レースは3連単の買い目を出さない(ワイドWは本命レースでも出す)
+        parts.insert(0, '<span class="dim">本命レース(万車率30%未満)— 3連単は見送り</span>')
+        rec = [x for x in (rec or []) if x[1].startswith("W")] or None
     keshi = info.get("ai_keshi") or []
     hl = _hit_line(info, "hitline-in")
     if hl:

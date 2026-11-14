@@ -50,6 +50,26 @@ F_RULE = ("F", "穴: 印3番目のライン 並び通り(3連単が30〜300倍�
 F_ODDS = (30.0, 300.0)
 
 
+# W(的中率と回収率の両立): 9車立てで、印1〜3番目のライン(3車以上)の「先頭と3番手」のワイドが 3〜12倍 のとき
+# (番手を飛ばして先頭-3番手。番手は先頭を残しにいき、3番手は最後に差し込むので、2人とも3着内が市場の見込みより多い)
+# 検証(確定オッズ): 2705点・的中率18.0%・回収率112.5%(2025年111.9%・2026年113.1%)、90%の幅104〜121%、上位5本を除いても110%
+#   9車以外(主に7車)は 94% 前後で控除率(約25%)よりずっと良いが100%に届かない。先頭-番手・番手-3番手のワイドは 77〜95%
+W_RULE = ("W", "ワイド: 9車立て・印1〜3番目のライン(3車以上)の先頭と3番手(3〜12倍のとき)",
+          "検証 2705点・的中率18%(5〜6レースに1回)・回収率112%(2025年112%・2026年113%、上位5本を除いても110%)")
+W_ODDS = (3.0, 12.0)
+
+
+def wide_odds(O):
+    """ワイドのオッズ(下限) {"小=大": オッズ}"""
+    out = {}
+    for x in (O or {}).get("quinellaPlace") or []:
+        if x.get("absent") or not x.get("minOdds"):
+            continue
+        a, b = sorted(x["key"][:2])
+        out[f"{a}={b}"] = x.get("minOdds")
+    return out
+
+
 # 穴目の表(wt_result_patterns.py の結果): 「ライン何番目 × 並び通り/番手差し × 3連単のオッズ帯」ごとの過去の回収率
 ANA_TABLE_PATH = os.path.join(DOCS, "_ana_table.json")
 ANA_MIN_ROI, ANA_MIN_HITS = 0.85, 15     # これ未満の穴目は出さない(損が大きい・当たりが少なすぎて当てにならない)
@@ -274,11 +294,19 @@ def settle(log, now):
                 continue
             if not R.get("results"):
                 continue
-            m = {x["id"]: x for x in O.get("trifecta") or []}
-            wins = ["-".join(map(str, m[i]["key"])) for i in (R.get("trifectaWinningOddsIds") or []) if i in m]
-            pay = {"-".join(map(str, m[i]["key"])): m[i].get("payoffUnitPrice") or 0
-                   for i in (R.get("trifectaWinningOddsIds") or []) if i in m}
-            final = {"-".join(map(str, x["key"])): x.get("odds") for x in O.get("trifecta") or []}
+            if p.get("bet") == "ワイド":   # ルールW
+                m = {x["id"]: x for x in O.get("quinellaPlace") or []}
+                ids = [i for i in (R.get("quinellaPlaceWinningOddsIds") or []) if i in m]
+                k2 = lambda x: "=".join(map(str, sorted(x["key"][:2])))  # noqa: E731
+                wins = [k2(m[i]) for i in ids]
+                pay = {k2(m[i]): m[i].get("payoffUnitPrice") or 0 for i in ids}
+                final = {k2(x): x.get("minOdds") for x in O.get("quinellaPlace") or []}
+            else:
+                m = {x["id"]: x for x in O.get("trifecta") or []}
+                wins = ["-".join(map(str, m[i]["key"])) for i in (R.get("trifectaWinningOddsIds") or []) if i in m]
+                pay = {"-".join(map(str, m[i]["key"])): m[i].get("payoffUnitPrice") or 0
+                       for i in (R.get("trifectaWinningOddsIds") or []) if i in m}
+                final = {"-".join(map(str, x["key"])): x.get("odds") for x in O.get("trifecta") or []}
             tks = p.get("tickets") or [p["ticket"]]
             p.update(settled=True, result="・".join(wins), payout=int(sum(pay.get(t, 0) or 0 for t in tks)),
                      final_odds=final.get(tks[0]) if len(tks) == 1 else None)
@@ -346,6 +374,18 @@ def collect(today):
                 od = tri.get(f3[0])
                 if od and F_ODDS[0] <= od <= F_ODDS[1]:
                     hits.append(("F", f3[0], f3[1]))
+            wide = wide_odds(O)
+            n_now = len([x for x in R.get("entries", []) if not x.get("absent")])
+            if n_now == 9 and not race.get("cancel"):
+                for k in (1, 2, 3):
+                    lt = line_ticket(R, k)
+                    if not lt:
+                        continue
+                    L = lt[1]
+                    a, b = sorted((L[0], L[2]))
+                    od = wide.get(f"{a}={b}")
+                    if od and W_ODDS[0] <= od < W_ODDS[1]:
+                        hits.append(("W", f"{a}={b}", L))
             e1 = line_ticket(R, 1) if not race.get("cancel") else None
             if e1 and tri.get(e1[0]) and tri[e1[0]] <= E_ODDS:
                 hits.append(("E", e1[0], e1[1]))
@@ -361,7 +401,9 @@ def collect(today):
                                   chu_star=bool(tri.get(ticket) and tri[ticket] >= CHU_ODDS and key in ("C", "F") and rel["same3"]),
                                   cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
                                   close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
-                                  line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E", "F") and tri.get(ticket) else "")))
+                                  bet="ワイド" if key == "W" else "3連単",
+                                  line="-".join(map(str, L)) + (f"・{tri.get(ticket):.1f}倍" if key in ("D", "E", "F") and tri.get(ticket) else "")
+                                  + (f"・ワイド{wide.get(ticket):.1f}倍" if key == "W" and wide.get(ticket) else "")))
             if not race.get("cancel"):
                 mv = market_view(tri) if tri else None
                 board.append(dict(url=url, venue=c["venue"], slug={"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"]),
@@ -399,6 +441,10 @@ def race_recommendation(picks, url):
     ps = [p for p in picks if p["url"] == url]
     out, seen = [], set()
     for p in ps:
+        if p["rule"] == "W" and p["ticket"] not in seen:
+            seen.add(p["ticket"])
+            out.append(("win", "W ワイド", [p["ticket"]]))
+            continue
         if p["rule"] in ("A", "B", "C", "D", "F") and p["ticket"] not in seen:
             seen.add(p["ticket"])
             out.append(("win", "・".join(sorted(q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCDF")),
@@ -459,6 +505,8 @@ def board_html(board, todays, now):
                 star = any(q.get("chu_star") for q in win if q["ticket"] == p["ticket"])
                 tag = '<span class="rk chu">中穴★</span> ' if star else ('<span class="rk chu2">中穴</span> ' if chu else "")
                 rec.append(f'{tag}<span class="rk win">{rules}</span> <b>{html.escape(p["ticket"])}</b>')
+        for p in [q for q in ps if q["rule"] == "W"]:
+            rec.append(f'<span class="rk wide">W ワイド</span> <b>{html.escape(p["ticket"])}</b>')
         for p in big:
             rec.append('<span class="rk big">重賞</span> ' + " ".join(html.escape(t) for t in p["tickets"]))
         for a in b.get("ana") or []:
@@ -499,6 +547,7 @@ def render(log, now, board=None):
     for k, (_, d, b) in BIG.items():
         rule_desc[k] = (d, b)
     rule_desc["D"] = (D_RULE[1], D_RULE[2])
+    rule_desc["W"] = (W_RULE[1], W_RULE[2])
     rule_desc["E"] = (E_RULE[1], E_RULE[2])
     rule_desc["F"] = (F_RULE[1], F_RULE[2])
 
@@ -571,9 +620,13 @@ def render(log, now, board=None):
                       f' ・ 3連複6点 <span class="hp">{b["hit"]["items"][2][2]:.0%}</span></li>' for b in hits[:6])
         hit_sec = ('<h2>的中率が高いレース</h2><p class="why">回収率は見ず、当たりやすさだけ。1番人気の1着率と車立てごとの過去の的中率'
                    '(2025年〜、51,075レース)。各レースのページに「的中率重視」の買い目があります。</p><ul class="hitl">' + lis + '</ul>')
+    wps = [p for p in singles if p["rule"] == "W"]
+    w_sec = ('<h2>的中率も回収率も: ワイドW</h2><p class="why">9車立てで、印1〜3番目のライン(3車以上)の先頭と3番手のワイド(3〜12倍)。'
+             '過去 2705点・的中率18%(5〜6レースに1回)・回収率112%(2025年112%・2026年113%)。</p>'
+             + ("".join(card(p) for p in wps) or '<p class="none">今日はまだ対象のレースがありません(9車立てのレースのみ)。</p>'))
     chu = [p for p in singles if p.get("chu")]
     chu.sort(key=lambda p: (not p.get("chu_star"), p["start_at"]))
-    body = (hit_sec + '<h2>中穴(5,000円以上)の買い目</h2>'
+    body = (w_sec + hit_sec + '<h2>中穴(5,000円以上)の買い目</h2>'
             '<p class="why">勝ち筋ルール(A〜C・F)のうち、今の3連単オッズが50倍以上の買い目。<b>★</b> はC・Fでラインの前3人が同じ地区のもの'
             '(過去 994点・的中14回・回収率199%、Fだけなら217%・平均配当15,123円)。当たりは70点に1回くらい。</p>'
             + ("".join(card(p) for p in chu) or '<p class="none">今のところ中穴の買い目はありません。</p>')
@@ -591,12 +644,12 @@ def render(log, now, board=None):
     stat = ""
     if done:
         rows = []
-        for key in ["A", "B", "C", "D", "F", "G", "H", "全体", "E"]:
+        for key in ["W", "A", "B", "C", "D", "F", "G", "H", "全体", "E"]:
             if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
                 s, sk = [], set()
                 for p in done:
-                    if p["rule"] == "E":
+                    if p["rule"] in ("E", "W"):
                         continue
                     if p["rule"] in BIG:
                         s.append(p)
@@ -608,11 +661,12 @@ def render(log, now, board=None):
             pts = sum(npts(p) for p in s)
             if pts:
                 pay = sum(p["payout"] for p in s)
-                rows.append(f"<tr><td>{ {'G': '重賞パック(決勝・準決勝)', 'H': '重賞パック(予選など)', '全体': '全体(A〜D・重賞)', 'E': 'E 参考(最強ライン並び通り)'}.get(key, key) }</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
+                rows.append(f"<tr><td>{ {'G': '重賞パック(決勝・準決勝)', 'H': '重賞パック(予選など)', '全体': '全体(A〜D・重賞)', 'E': 'E 参考(最強ライン並び通り)', 'W': 'W ワイド(9車・先頭-3番手)'}.get(key, key) }</td><td>{pts}</td><td>{sum(1 for p in s if p['payout'])}</td>"
                             f"<td>{pay:,}円</td><td>{pay / (pts * 100):.0%}</td></tr>")
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
+    notes += f"<li><b>W(ワイド)</b>: {html.escape(W_RULE[1])}。{html.escape(W_RULE[2])}。ワイドのオッズは1時間おきの更新時点の値なので、買う前に3〜12倍か確認。</li>"
     notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
     notes += f"<li><b>F(穴)</b>: {html.escape(F_RULE[1])}。{html.escape(F_RULE[2])}。上位5本の的中を除くと96%。</li>"
     notes += f"<li><b>E(参考・表示なし)</b>: {html.escape(E_RULE[1])}。{html.escape(E_RULE[2])}。</li>"
@@ -650,6 +704,7 @@ def render(log, now, board=None):
   .man {{ font-weight:700; font-variant-numeric:tabular-nums; }} .man.hi {{ color:#C8402A; }} .man.lo {{ color:#2F6B4F; }}
   .rk {{ font-size:.7rem; font-weight:700; color:#fff; padding:1px 6px; border-radius:999px; }}
   .hp {{ color:#0E7C66; font-weight:800; }} .hitl {{ font-size:.85rem; padding-left:18px; }}
+  .rk.wide {{ background:#2E5BA8; }}
   .rk.chu {{ background:#0E7C66; }} .rk.chu2 {{ background:#5FA593; }}
   .rk.win {{ background:#C8402A; }} .rk.ana {{ background:#6A4FA0; }} .rk.big {{ background:#B8862B; }} .rk.ref {{ background:#7A8494; }}
   .skip {{ color:var(--soft); font-size:.85rem; }} td.rec b {{ font-variant-numeric:tabular-nums; }}
