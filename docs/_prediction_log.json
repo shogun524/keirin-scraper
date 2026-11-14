@@ -612722,9 +612722,32 @@
     96.2
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    8,
+    3,
+    1,
+    2,
+    4,
+    6,
+    5,
+    7
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-14 12:11"
  },
  "2026-11-14_tachikawa_3": {
   "date": "2026-11-14",
@@ -612967,7 +612990,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-14_tachikawa_4": {
@@ -621639,7 +621662,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-14_matsudo_6": {
@@ -623010,7 +623033,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-14_takeo_5": {
