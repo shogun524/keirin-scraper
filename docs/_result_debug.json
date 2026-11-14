@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14 23:31",
+ "updated": "2026-11-15 01:35",
  "failures": [
   {
    "race": "2026-11-14 nagoya 6R",
@@ -7,21 +7,25 @@
     "venue": "nagoya",
     "race_id": "4220261114010006",
     "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-14 nagoya 9R",
-   "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261114010009",
-    "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202611140100/",
+    "day_html_len": 118302,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     7,
+     8,
+     9
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   }
  ],
- "tracked": 2884,
- "with_result": 2339,
+ "tracked": 2964,
+ "with_result": 2340,
  "without_url": 0,
- "pending_eligible": 545
+ "pending_eligible": 544
 }
