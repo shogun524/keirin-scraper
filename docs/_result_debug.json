@@ -1,53 +1,6 @@
 {
- "updated": "2026-11-14 06:23",
+ "updated": "2026-11-14 10:41",
  "failures": [
-  {
-   "race": "2026-11-13 sasebo 5R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    6,
-    2,
-    7,
-    3,
-    4,
-    5
-   ]
-  },
-  {
-   "race": "2026-11-13 matsusaka 5R",
-   "diag": {
-    "venue": "matsusaka",
-    "race_id": "4720261111030005",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/matsusaka/raceresult/47202611110300/",
-    "day_html_len": 117716,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     6,
-     7,
-     8,
-     9
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-13 sasebo 6R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    5,
-    7,
-    1,
-    6,
-    3,
-    2,
-    4
-   ]
-  },
   {
    "race": "2026-11-13 matsusaka 6R",
    "error": "結果の車番が出走車番と一致しない",
@@ -73,10 +26,49 @@
     4,
     7
    ]
+  },
+  {
+   "race": "2026-11-13 matsusaka 7R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    3,
+    7
+   ]
+  },
+  {
+   "race": "2026-11-13 sasebo 8R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    7,
+    1,
+    5,
+    6,
+    4,
+    3,
+    2
+   ]
+  },
+  {
+   "race": "2026-11-13 matsusaka 8R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    4,
+    3,
+    1,
+    7,
+    2,
+    6,
+    5
+   ]
   }
  ],
  "tracked": 2884,
- "with_result": 2278,
+ "with_result": 2286,
  "without_url": 0,
- "pending_eligible": 539
+ "pending_eligible": 543
 }
