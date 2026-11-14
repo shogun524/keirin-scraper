@@ -616095,7 +616095,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-14_kawasaki_3": {
@@ -616803,7 +616803,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-14_kawasaki_6": {
@@ -619283,9 +619283,30 @@
     60.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    6,
+    1,
+    5,
+    3,
+    2,
+    7
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-14 17:50"
  },
  "2026-11-14_tamano_5": {
   "date": "2026-11-14",
@@ -619506,7 +619527,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-14_tamano_6": {
