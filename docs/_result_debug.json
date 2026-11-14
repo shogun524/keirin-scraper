@@ -1,25 +1,12 @@
 {
- "updated": "2026-11-15 08:18",
+ "updated": "2026-11-15 08:48",
  "failures": [
   {
-   "race": "2026-11-14 nagoya 6R",
+   "race": "2026-11-15 takeo 1R",
    "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261114010006",
+    "venue": "takeo",
+    "race_id": "8420261114020001",
     "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202611140100/",
-    "day_html_len": 118302,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     7,
-     8,
-     9
-    ],
-    "day_text_head": "",
     "day_parsed": false
    }
   }
@@ -27,5 +14,5 @@
  "tracked": 2964,
  "with_result": 2340,
  "without_url": 0,
- "pending_eligible": 544
+ "pending_eligible": 545
 }
