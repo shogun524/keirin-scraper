@@ -3071,7 +3071,11 @@
 "close_at": 1794626640,
 "cls": "S級",
 "race_type": "選抜",
-"line": "3車ラインなし → 見送り"
+"line": "3車ラインなし → 見送り",
+"settled": true,
+"result": "5-6-1",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-14",
@@ -3148,7 +3152,7 @@
 "close_at": 1794630000,
 "cls": "S級",
 "race_type": "選抜",
-"line": "1-5-7・177.4倍"
+"line": "1-5-7・195.9倍"
 },
 {
 "date": "2026-11-14",
@@ -3231,6 +3235,25 @@
 },
 {
 "date": "2026-11-14",
+"rule": "A",
+"ticket": "3-7-5",
+"url": "https://www.winticket.jp/keirin/tachikawa/racecard/2026111228/3/10",
+"venue": "立川",
+"race_no": 10,
+"region": "前2人同地区",
+"same3": false,
+"chu": true,
+"chu_star": false,
+"cup": "施設整備等協賛競輪Ｂｅｔｉｍｏ",
+"grade": "G3",
+"start_at": 1794637140,
+"close_at": 1794636840,
+"cls": "S級",
+"race_type": "準決勝",
+"line": "3-7-5"
+},
+{
+"date": "2026-11-14",
 "rule": "G",
 "ticket": "1-6-9 / 1-6-7 / 1-6-3 / 1-6-5 / 1-6-2",
 "tickets": [
@@ -3306,7 +3329,7 @@
 "close_at": 1794638580,
 "cls": "S級",
 "race_type": "準決勝",
-"line": "4-2-6・264.5倍"
+"line": "4-2-6・266.5倍"
 },
 {
 "date": "2026-11-14",
@@ -3370,24 +3393,5 @@
 "cls": "A級",
 "race_type": "予選",
 "line": "7-5-6"
-},
-{
-"date": "2026-11-14",
-"rule": "E",
-"ticket": "6-4-1",
-"url": "https://www.winticket.jp/keirin/nara/racecard/2026111453/1/6",
-"venue": "奈良",
-"race_no": 6,
-"region": "前2人同地区",
-"same3": false,
-"chu": false,
-"chu_star": false,
-"cup": "チャリロト杯ｉｎ奈良",
-"grade": "F2",
-"start_at": 1794662400,
-"close_at": 1794662100,
-"cls": "A級",
-"race_type": "特予選",
-"line": "6-4-1・9.8倍"
 }
 ]
