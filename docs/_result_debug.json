@@ -1,18 +1,27 @@
 {
- "updated": "2026-11-14 16:11",
+ "updated": "2026-11-14 16:21",
  "failures": [
   {
-   "race": "2026-11-14 tamano 1R",
+   "race": "2026-11-14 kawasaki 2R",
    "diag": {
-    "venue": "tamano",
-    "race_id": "6120261112030001",
+    "venue": "kawasaki",
+    "race_id": "3420261114010002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-14 tachikawa 12R",
+   "diag": {
+    "venue": "tachikawa",
+    "race_id": "2820261112030012",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2884,
- "with_result": 2302,
+ "with_result": 2303,
  "without_url": 0,
- "pending_eligible": 542
+ "pending_eligible": 543
 }
