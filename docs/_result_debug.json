@@ -1,27 +1,18 @@
 {
- "updated": "2026-11-14 19:50",
+ "updated": "2026-11-14 20:20",
  "failures": [
   {
-   "race": "2026-11-14 kawasaki 5R",
-   "diag": {
-    "venue": "kawasaki",
-    "race_id": "3420261114010005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-14 tamano 10R",
+   "race": "2026-11-14 tamano 11R",
    "diag": {
     "venue": "tamano",
-    "race_id": "6120261112030010",
+    "race_id": "6120261112030011",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2884,
- "with_result": 2319,
+ "with_result": 2321,
  "without_url": 0,
  "pending_eligible": 544
 }
