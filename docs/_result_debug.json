@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14 12:11",
+ "updated": "2026-11-14 12:41",
  "failures": [
   {
    "race": "2026-11-14 takeo 4R",
@@ -20,17 +20,17 @@
    }
   },
   {
-   "race": "2026-11-14 tachikawa 3R",
+   "race": "2026-11-14 tachikawa 4R",
    "diag": {
     "venue": "tachikawa",
-    "race_id": "2820261112030003",
+    "race_id": "2820261112030004",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2884,
- "with_result": 2292,
+ "with_result": 2293,
  "without_url": 0,
  "pending_eligible": 542
 }

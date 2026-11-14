@@ -1,6 +1,6 @@
 {
   "updated": "2026-11-14",
-  "races": 1283,
+  "races": 1284,
   "summary": {
     "堅い": {
       "syn1.5": {
@@ -61,56 +61,56 @@
     "中間": {
       "syn1.5": {
         "all": {
-          "races": 482,
+          "races": 483,
           "hits": 287,
-          "points": 10643,
+          "points": 10682,
           "return": 9096.0,
-          "hit_pct": 59.5,
-          "roi_pct": 85.5
+          "hit_pct": 59.4,
+          "roi_pct": 85.2
         },
         "live": {
-          "races": 482,
+          "races": 483,
           "hits": 287,
-          "points": 10643,
+          "points": 10682,
           "return": 9096.0,
-          "hit_pct": 59.5,
-          "roi_pct": 85.5
+          "hit_pct": 59.4,
+          "roi_pct": 85.2
         }
       },
       "top5": {
         "all": {
-          "races": 482,
+          "races": 483,
           "hits": 149,
-          "points": 2410,
+          "points": 2415,
           "return": 2608.6,
-          "hit_pct": 30.9,
-          "roi_pct": 108.2
+          "hit_pct": 30.8,
+          "roi_pct": 108.0
         },
         "live": {
-          "races": 482,
+          "races": 483,
           "hits": 149,
-          "points": 2410,
+          "points": 2415,
           "return": 2608.6,
-          "hit_pct": 30.9,
-          "roi_pct": 108.2
+          "hit_pct": 30.8,
+          "roi_pct": 108.0
         }
       },
       "top10": {
         "all": {
-          "races": 482,
+          "races": 483,
           "hits": 214,
-          "points": 4820,
+          "points": 4830,
           "return": 4619.4,
-          "hit_pct": 44.4,
-          "roi_pct": 95.8
+          "hit_pct": 44.3,
+          "roi_pct": 95.6
         },
         "live": {
-          "races": 482,
+          "races": 483,
           "hits": 214,
-          "points": 4820,
+          "points": 4830,
           "return": 4619.4,
-          "hit_pct": 44.4,
-          "roi_pct": 95.8
+          "hit_pct": 44.3,
+          "roi_pct": 95.6
         }
       }
     },
