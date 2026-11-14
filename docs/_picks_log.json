@@ -3410,26 +3410,6 @@
 },
 {
 "date": "2026-11-14",
-"rule": "A",
-"ticket": "3-7-5",
-"url": "https://www.winticket.jp/keirin/tachikawa/racecard/2026111228/3/10",
-"venue": "立川",
-"race_no": 10,
-"region": "前2人同地区",
-"same3": false,
-"chu": true,
-"chu_star": false,
-"cup": "施設整備等協賛競輪Ｂｅｔｉｍｏ",
-"grade": "G3",
-"start_at": 1794637140,
-"close_at": 1794636840,
-"cls": "S級",
-"race_type": "準決勝",
-"bet": "3連単",
-"line": "3-7-5"
-},
-{
-"date": "2026-11-14",
 "rule": "G",
 "ticket": "1-6-9 / 1-6-7 / 1-6-3 / 1-6-5 / 1-6-2",
 "tickets": [
@@ -3448,7 +3428,11 @@
 "close_at": 1794636840,
 "cls": "S級",
 "race_type": "準決勝",
-"line": "◎1・番手6"
+"line": "◎1・番手6",
+"settled": true,
+"result": "7-3-8",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-14",
@@ -3468,7 +3452,11 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "ワイド",
-"line": "9-1-6・ワイド6.4倍"
+"line": "9-1-6・ワイド4.5倍",
+"settled": true,
+"result": "3=7・3=8・7=8",
+"payout": 0,
+"final_odds": 4.5
 },
 {
 "date": "2026-11-14",
@@ -3528,7 +3516,7 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "3連単",
-"line": "4-2-6・253.7倍"
+"line": "4-2-6・230.5倍"
 },
 {
 "date": "2026-11-14",
@@ -3570,7 +3558,7 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "ワイド",
-"line": "3-7-5・ワイド6.1倍"
+"line": "3-7-5・ワイド5.6倍"
 },
 {
 "date": "2026-11-14",
@@ -3612,7 +3600,7 @@
 "cls": "S級",
 "race_type": "準決勝",
 "bet": "ワイド",
-"line": "6-1-9・ワイド10.2倍"
+"line": "6-1-9・ワイド9.9倍"
 },
 {
 "date": "2026-11-14",
