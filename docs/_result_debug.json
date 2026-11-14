@@ -1,27 +1,18 @@
 {
- "updated": "2026-11-14 22:00",
+ "updated": "2026-11-14 22:31",
  "failures": [
   {
-   "race": "2026-11-14 nagoya 4R",
+   "race": "2026-11-14 nagoya 6R",
    "diag": {
     "venue": "nagoya",
-    "race_id": "4220261114010004",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-14 nara 5R",
-   "diag": {
-    "venue": "nara",
-    "race_id": "5320261114010005",
+    "race_id": "4220261114010006",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2884,
- "with_result": 2330,
+ "with_result": 2334,
  "without_url": 0,
- "pending_eligible": 545
+ "pending_eligible": 544
 }
