@@ -3196,6 +3196,29 @@
 },
 {
 "date": "2026-11-14",
+"rule": "A",
+"ticket": "7-1-9",
+"url": "https://www.winticket.jp/keirin/tachikawa/racecard/2026111228/3/7",
+"venue": "立川",
+"race_no": 7,
+"region": "前2人同地区",
+"same3": false,
+"chu": false,
+"chu_star": false,
+"cup": "施設整備等協賛競輪Ｂｅｔｉｍｏ",
+"grade": "G3",
+"start_at": 1794631980,
+"close_at": 1794631680,
+"cls": "S級",
+"race_type": "特選",
+"line": "7-1-9-3",
+"settled": true,
+"result": "2-5-4",
+"payout": 0,
+"final_odds": 48.7
+},
+{
+"date": "2026-11-14",
 "rule": "H",
 "ticket": "7-1-9 / 5-2-4 / 2-5-4",
 "tickets": [
@@ -3212,7 +3235,11 @@
 "close_at": 1794631680,
 "cls": "S級",
 "race_type": "特選",
-"line": "並び 7-1-9-3 / 5-2-4-8 / 6"
+"line": "並び 7-1-9-3 / 5-2-4-8 / 6",
+"settled": true,
+"result": "2-5-4",
+"payout": 660,
+"final_odds": null
 },
 {
 "date": "2026-11-14",
@@ -3349,7 +3376,7 @@
 "close_at": 1794638580,
 "cls": "S級",
 "race_type": "準決勝",
-"line": "4-2-6・256.1倍"
+"line": "4-2-6・247.3倍"
 },
 {
 "date": "2026-11-14",
