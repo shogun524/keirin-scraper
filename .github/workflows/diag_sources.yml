@@ -10,12 +10,10 @@ jobs:
       - run: |
           mkdir -p out && cd out
           python - <<'PY'
-          import requests, re
+          import requests
           S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
-          u="https://keirin.kdreams.jp/beppu/raceresult/86202611150100/"
-          r=S.get(u,timeout=20); open("kd_result_day.html","wb").write(r.content); t=r.text; print(r.status_code,len(t),t.count("3連単"))
-          for m in list(re.finditer("3連単",t))[:6]:
-              seg=re.sub(r"<[^>]+>","|",t[m.start()-300:m.start()+500]); seg=re.sub(r"\s+"," ",seg); seg=re.sub(r"(\| ?)+","|",seg); print("   ",seg[:400])
+          for rid in ["202611152801","202611152803"]:
+              r=S.get(f"https://keirin.netkeiba.com/race/result/?race_id={rid}",timeout=20); open(f"res_{rid}.html","wb").write(r.content); print(rid,r.status_code,len(r.content),"未公開" if "レース結果決定後に公開" in r.text else "公開")
           PY
       - uses: actions/checkout@v4
         with: { path: repo }
