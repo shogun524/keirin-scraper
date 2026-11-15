@@ -26,14 +26,14 @@ class TestProbabilities(unittest.TestCase):
 
     def test_buff_zero_changes_nothing(self):
         racers, line = make_race(3)
-        a = model.predict_race(racers, line, venue_slug="omiya", race_title="予選")
+        a = model.predict_race(racers, line, venue_slug="omiya", race_title="予選", settings={"formula_buff": 0.0, "formula_ai_pow": 1.0})
         b = model.predict_race(racers, line, venue_slug="omiya", race_title="予選", settings={"formula_buff": 0.0})
         self.assertEqual([(x["car"], x["adjusted"]) for x in a["rows"]], [(x["car"], x["adjusted"]) for x in b["rows"]])
 
     def test_buff_moves_probability_toward_higher_formula(self):
         racers, line = make_race(3)
-        a = model.predict_race(racers, line, venue_slug="omiya", race_title="予選")
-        b = model.predict_race(racers, line, venue_slug="omiya", race_title="予選", settings={"formula_buff": 1.0})
+        a = model.predict_race(racers, line, venue_slug="omiya", race_title="予選", settings={"formula_buff": 0.0})
+        b = model.predict_race(racers, line, venue_slug="omiya", race_title="予選", settings={"formula_buff": 1.0, "formula_ai_pow": 1.0})
         z = b["formula_z"]
         hi = max(z, key=z.get); lo = min(z, key=z.get)
         pa = {x["car"]: x["adjusted"] for x in a["rows"]}; pb = {x["car"]: x["adjusted"] for x in b["rows"]}

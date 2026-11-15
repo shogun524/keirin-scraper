@@ -711,7 +711,10 @@ DEFAULT_SETTINGS = {
     "sharpness_first": 1.75,
     # 勝利の方程式バフ：方程式の期待値をレース内でz得点にし、1着率に exp(formula_buff × z) を掛ける（0=無効）。
     # 毎日の自動補正（calibration.py）が成績から決める。ガールズ戦（ラインなし）には掛けない。
-    "formula_buff": 0.0,
+    # 勝利の方程式を1着率に混ぜる: 1着率 ∝ (AIの1着率)^formula_ai_pow × exp(formula_buff × 方程式のz得点)
+    # 11/15: winticket 2025年(約2万7千レース)で推定、2026年で検証(1レースあたりの対数損失 1.5751 → 1.5517)
+    "formula_buff": 0.283,
+    "formula_ai_pow": 0.712,
     "trifecta_max_combos": 999,  # 実質無制限（7車立て210通り／9車立て504通りまで、全組み合わせを一覧表示するため）
     "bank_affinity_strength": 15,
     "rivalry_strength": 12,
@@ -806,7 +809,8 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         lfb23 = s["line_follow_bonus"]
     fbuff = float(s.get("formula_buff") or 0.0)
     if fbuff and formula_z:
-        boosted = [max(v, 1e-9) * math.exp(fbuff * z) for v, z in zip(final_rates, formula_z)]
+        apow = float(s.get("formula_ai_pow") or 1.0)
+        boosted = [max(v, 1e-9) ** apow * math.exp(fbuff * z) for v, z in zip(final_rates, formula_z)]
         bsum = sum(boosted) or 1.0
         final_rates = [b / bsum * 100 for b in boosted]
 
