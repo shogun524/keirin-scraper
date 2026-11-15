@@ -1,27 +1,46 @@
 {
- "updated": "2026-11-15 14:02",
+ "updated": "2026-11-15 16:39",
  "failures": [
   {
    "race": "2026-11-15 tachikawa 7R",
+   "error": "着順が壊れて見えるため記録しない",
+   "cars": [
+    5,
+    3,
+    2,
+    1
+   ]
+  },
+  {
+   "race": "2026-11-15 beppu 1R",
    "diag": {
-    "venue": "tachikawa",
-    "race_id": "2820261112040007",
+    "venue": "beppu",
+    "race_id": "8620261115010001",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-15 toyama 8R",
+   "race": "2026-11-15 beppu 2R",
    "diag": {
-    "venue": "toyama",
-    "race_id": "4620261115010008",
+    "venue": "beppu",
+    "race_id": "8620261115010002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-15 beppu 3R",
+   "diag": {
+    "venue": "beppu",
+    "race_id": "8620261115010003",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2964,
- "with_result": 2365,
+ "with_result": 2377,
  "without_url": 0,
- "pending_eligible": 548
+ "pending_eligible": 550
 }
