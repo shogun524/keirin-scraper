@@ -696,7 +696,7 @@ def render_manshaken_box(info):
     # 11/15〜 本命・穴の両立: 本命レースでも買い目を出す。表示は3連単だけ(的中重視のワイド・2車複・3連複は出さない)
     keshi = info.get("ai_keshi") or []
     if rec:
-        rec = [(k, label, [t for t in ts if t not in keshi]) for k, label, ts in rec]
+        rec = [(k, label, [t for t in ts if k == "ref" or t not in keshi]) for k, label, ts in rec]   # 参考は消し目でも外さない(検証は消し目を外していない)
         rec = [x for x in rec if x[2]]
     if rec is not None:
         if rec:
