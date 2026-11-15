@@ -238,6 +238,44 @@ def k_tickets(R, tri):
     return None
 
 
+# 参考(どのレースにも出す3連単): 回収率100%の形に当たらないレースで「買うならこれ」。勝ち筋ではない。
+# 2025〜2026年 約5万レース・合成オッズ2倍以上で検証した、出せるレースが多い形の中で損の少ない順:
+#   印1番目のラインの並び通り(1点)            回収率84〜85%・的中率11%(3車以上のラインのレースの約6割)
+#   印1番目のライン 先頭→番手→全(流し)         回収率77〜81%・的中率17%
+#   人気上位3車BOX(6点)                       回収率72〜77%
+#   (どれも合成オッズ2倍未満になる堅いレース(約3%)は見送り)
+# (レースごとに一番良い形を細かい条件で選ぶ方法も53通りの形で試したが、選んだ年と別の年では74〜78%に落ちた=当てはめすぎ)
+REF_NOTE = "参考(勝ち筋ではない。過去の回収率72〜85%)"
+
+
+def ref_tickets(R, tri):
+    """参考の3連単 -> (ラベル, [買い目]) か None。合成オッズ2倍未満の形は飛ばす"""
+    if not tri:
+        return None
+    lines = race_lines(R)
+    cars = sorted({int(e["number"]) for e in R.get("entries", []) if not e.get("absent")})
+    cand = []
+    if lines and len(lines[0]) >= 3:
+        L = lines[0]
+        cand.append(("参考 1番目のライン並び通り(過去84%)", [f"{L[0]}-{L[1]}-{L[2]}"]))
+    if lines and len(lines[0]) >= 2:
+        h, b = lines[0][0], lines[0][1]
+        cand.append(("参考 1番目のライン 先頭→番手→全(過去80%)", [f"{h}-{b}-{c}" for c in cars if c not in (h, b)]))
+    head = {}
+    for t, o in tri.items():
+        if o:
+            head[t.split("-")[0]] = head.get(t.split("-")[0], 0) + 1 / o
+    fav = [int(x) for x in sorted(head, key=lambda x: -head[x])[:3]]
+    if len(fav) == 3:
+        import itertools as _it
+        cand.append(("参考 人気上位3車BOX(過去74%)", ["-".join(map(str, t)) for t in _it.permutations(fav, 3)]))
+    for lab, tks in cand:
+        cp = composite(tri, tks)
+        if cp and cp >= MIN_COMP:
+            return lab, tks
+    return None
+
+
 def is_g_race(grade):
     return str(grade or "").startswith("G")
 
@@ -502,7 +540,8 @@ def collect(today):
                                             for e in R.get("entries", []) if not e.get("absent")},
                                   ana=[a for a in ana_candidates(R, tri) if a["ticket"] not in keshi],
                                   keshi=sorted(keshi),
-                                  rec=race_recommendation(picks, url, tri)))
+                                  rec=race_recommendation(picks, url, tri) or
+                                  ([("ref", *ref_tickets(R, tri))] if ref_tickets(R, tri) else [])))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
     return picks, board
 
