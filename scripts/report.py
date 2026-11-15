@@ -718,6 +718,9 @@ def render_manshaken_box(info):
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
+BUY_MAX = 20   # 買うべき出目の上限(消し目が上位の組を消すと、合成2倍まで数十点になることがあるため)
+
+
 def render_formation_builder(tab_id, result, keshi=None):
     """3連単フォーメーションを組む道具: 1着・2着・3着の車番を押すと、点数・当たる確率・合成オッズ・期待回収率と
     買い目の一覧(確率・オッズ・期待値)を出す。確率は tri_model(市場+ラインの決まり方)。オッズが無いときは出さない"""
@@ -744,7 +747,7 @@ def render_formation_builder(tab_id, result, keshi=None):
     cand = sorted(((k, v) for k, v in data.items() if int(k.split("-")[0]) in base and k not in ks), key=lambda kv: -kv[1][0])
     buy, inv = [], 0.0
     for k, v in cand:
-        if 1 / (inv + 1 / v[1]) < 2:
+        if 1 / (inv + 1 / v[1]) < 2 or len(buy) >= BUY_MAX:
             break
         buy.append((k, v))
         inv += 1 / v[1]
@@ -752,7 +755,7 @@ def render_formation_builder(tab_id, result, keshi=None):
         bp = sum(v[0] for _, v in buy)
         bc = 1 / sum(1 / v[1] for _, v in buy)
         buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}を頭に、'
-                    f'消し目を除いて来る確率の高い順に合成2倍まで・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
+                    f'消し目を除いて来る確率の高い順に合成2倍まで(最大20点)・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
                     + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%}・期待値{v[0] * v[1]:.2f})</span>' for k, v in buy)
                     + '<div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。'
                       '合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div>')
