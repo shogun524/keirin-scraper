@@ -34,12 +34,14 @@ def winticket_ok():
 
 
 def _lines_from_text(text):
-    lines = []
-    for part in (text or "").split(","):
-        nums = [int(x) for x in re.findall(r"\d+", part)]
-        if nums:
-            lines.append({"entries": [{"numbers": [n]} for n in nums]})
-    return {"lines": lines}
+    """Kドリームスの並び予想(「4先行1追込6押え先2追込」など)を model.py と同じ方法で読んで、ラインの並びにする"""
+    from model import parse_line_prediction_text
+    lm = parse_line_prediction_text(text or "")
+    by = {}
+    for car, v in lm.items():
+        by.setdefault(v["line_index"], []).append((v["position"], int(car)))
+    lines = [[c for _, c in sorted(m)] for _, m in sorted(by.items())]
+    return {"lines": [{"entries": [{"numbers": [n]} for n in L]} for L in lines if L]}
 
 
 def _lines_from_nk(race_id):
@@ -66,7 +68,7 @@ def to_R(kd, nkr):
     racers = kd["racers"]
     info = kd["race_info"]
     lp = _lines_from_text(kd.get("line_prediction_text"))
-    if not lp["lines"] and nkr:
+    if len(lp["lines"]) < 2 and nkr:
         lp = _lines_from_nk(nkr["race_id"])
     return {
         "race": {"class": info.get("title") or (nkr or {}).get("name", ""), "raceType3": info.get("title") or "",
