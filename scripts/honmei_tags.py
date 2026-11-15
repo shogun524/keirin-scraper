@@ -23,13 +23,13 @@ CSS = (".tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6p
        ".aimk{font-weight:900;color:#C8402A;margin-right:2px}.mmv{font-size:11px;color:#777;white-space:nowrap}"
        ".kguide{font-size:12px;margin:6px 0;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff}"
        ".kguide summary{cursor:pointer;font-weight:700}.kguide ul{margin:4px 0 0;padding-left:18px;line-height:1.7}")
-GUIDE = ('<details class="kguide"><summary>見かた(◎・込%・一言・買い目)</summary><ul>'
+GUIDE = ('<details class="kguide"><summary>見かた(◎・込%・一言・本命/穴の買い目)</summary><ul>'
          '<li><b>◎○▲△</b> … AIの1着率の順(オッズは使わない)。1番人気以外も◎になる。</li>'
          '<li><b>込%</b> … オッズ込みの1着率。競輪はオッズがAIの材料をほぼ織り込んでいて、込%はオッズの1着率とほぼ同じ。オッズが出るまでは出ない。</li>'
          '<li><b>一言</b> … 普通=◎が1〜2番人気(オッズどおり) / 注意=◎が3番人気 / 危険！=◎が4番人気以下(過去の勝率10%) / '
          '推し=注意・危険のレースで代わりに推す選手(1番人気。過去 3着内72%)。</li>'
-         '<li><b>買い目(3連単だけ)</b> … 過去の検証で回収率が100%を超えた形に当たったレースだけ。形はレースごとに変わる'
-         '(フォーメーション・1点など)。合成オッズ2倍未満にはしない(<a href="../picks.html">ルールの説明</a>)。</li>'
+         '<li><b>本命(的中重視)</b> … 人気どおりの組。当たりやすいが回収率は75%前後。</li>'
+         '<li><b>穴(回収重視)</b> … ルールに当たったレースだけの3連単など(<a href="../picks.html">穴レース</a>)。当たりにくいが配当が大きい。</li>'
          '</ul></details>')
 
 

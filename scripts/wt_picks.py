@@ -185,59 +185,6 @@ H_RULE = ("H", "重賞パック(G戦の予選など): 3車以上のライン全�
 BIG = {"G": G_RULE, "H": H_RULE}
 
 
-# K: レースごとに買い方(フォーメーション/1点)を変える3連単ルール(11/15。scripts の外の検証: winticket 2025〜2026年 約5万レース、
-#    確定オッズで「合成オッズ2倍以上」の買い方だけを数えた。印でk番目のライン = ライン内の予想印の合計で並べた順)
-#   K1 印3番目のライン(3車以上)の先頭・番手の2車 → 1・2着(順不同) → 3着は全員 (2×(車数-2)点)
-#      合成オッズ8〜20倍・1番人気の1着率30〜45%のとき   2025年 468レース 回収率125% / 2026年 409レース 137%(的中率7〜11%)
-#   K4 印2番目のラインの並び通り(1点)が8〜20倍のとき    2025年 946点 120% / 2026年 873点 102%(的中率7〜9%)
-#   K6 三分戦(2車以上のラインが3本)で、印2番目のラインの並び通りが20〜60倍のとき
-#                                                       2025年 1157点 105% / 2026年 1014点 106%(的中率3%)
-#   K1→K4→K6 の順に1レース1つ。3つ合わせて 2025年121%・2026年128%(1日6〜7レース)。上位5本の的中を除くと82〜88%(大きい配当頼み)
-K_RULES = {
-    "K1": ("K1 フォーメーション: 印3番目のライン 先頭・番手 → 全(合成8〜20倍・1番人気30〜45%)",
-           "検証 2025年 468レース 回収率125%・2026年 409レース 137%(的中率7〜11%)"),
-    "K4": ("K4 1点: 印2番目のライン 並び通り(8〜20倍)", "検証 2025年 946点 120%・2026年 873点 102%(的中率7〜9%)"),
-    "K6": ("K6 1点(穴): 三分戦で印2番目のライン 並び通り(20〜60倍)", "検証 2025年 1157点 105%・2026年 1014点 106%(的中率3%)"),
-}
-MIN_COMP = 2.0   # 合成オッズがこれ未満の買い目は出さない
-
-
-def composite(tri, tickets):
-    inv = [1 / tri[t] for t in tickets if tri.get(t)]
-    return 1 / sum(inv) if inv and len(inv) == len(tickets) else None
-
-
-def k_tickets(R, tri):
-    """K1/K4/K6 のうち当てはまる最初の1つ -> (ルール, [買い目], 合成オッズ) か None"""
-    if not tri:
-        return None
-    lines = race_lines(R)
-    cars = sorted({int(e["number"]) for e in R.get("entries", []) if not e.get("absent")})
-    if len(lines) < 2 or len(cars) < 5:
-        return None
-    head = {}
-    for t, o in tri.items():
-        if o:
-            a = t.split("-")[0]
-            head[a] = head.get(a, 0) + 1 / o
-    q1 = max(head.values()) / sum(head.values()) if head else 0
-    if len(lines) >= 3 and len(lines[2]) >= 3:
-        a, b = lines[2][0], lines[2][1]
-        tks = [f"{x}-{y}-{c}" for x, y in ((a, b), (b, a)) for c in cars if c not in (a, b)]
-        cp = composite(tri, tks)
-        if cp and 8 <= cp < 20 and 0.30 <= q1 < 0.45:
-            return "K1", tks, cp
-    if len(lines[1]) >= 3:
-        L = lines[1]
-        t = f"{L[0]}-{L[1]}-{L[2]}"
-        od = tri.get(t)
-        if od and 8 <= od < 20:
-            return "K4", [t], od
-        if od and 20 <= od < 60 and sum(len(x) >= 2 for x in lines) == 3:
-            return "K6", [t], od
-    return None
-
-
 def is_g_race(grade):
     return str(grade or "").startswith("G")
 
@@ -423,14 +370,14 @@ def collect(today):
             if why:
                 skipped[why] = skipped.get(why, 0) + 1
             race = R.get("race") or {}
-            if False and is_big_race(c["grade"], race.get("raceType3")):   # 重賞パックはトントン圏なので出さない(11/15)
+            if is_big_race(c["grade"], race.get("raceType3")):
                 tks, ab = big_race_tickets(R)
                 picks.append(dict(date=today.isoformat(), rule="G", ticket=" / ".join(tks), tickets=tks, url=url,
                                   venue=c["venue"], race_no=n, cup=c["name"], grade=c["grade"],
                                   start_at=race.get("startAt") or 0, close_at=race.get("closeAt") or 0,
                                   cls=race.get("class"), race_type=race.get("raceType3"),
                                   line=f"◎{ab[0]}・番手{ab[1]}" if ab and ab[1] else ("◎に番手なし → 見送り" if ab else "並び・印待ち")))
-            elif False and is_g_race(c["grade"]) and not race.get("cancel"):
+            elif is_g_race(c["grade"]) and not race.get("cancel"):
                 tks = prelim_tickets(R)
                 lp = R.get("linePrediction") or {}
                 picks.append(dict(date=today.isoformat(), rule="H", ticket=" / ".join(tks), tickets=tks, url=url,
@@ -453,7 +400,7 @@ def collect(today):
                     hits.append(("F", f3[0], f3[1]))
             wide = wide_odds(O)
             n_now = len([x for x in R.get("entries", []) if not x.get("absent")])
-            if False and n_now == 9 and not race.get("cancel"):   # ワイドWは表示しない(3連単だけにする。11/15)
+            if n_now == 9 and not race.get("cancel"):
                 for k in (1, 2, 3):
                     lt = line_ticket(R, k)
                     if not lt:
@@ -470,13 +417,6 @@ def collect(today):
             hits = [h for h in hits if h[1] not in keshi]   # AI推奨の組(消し目)は買い目にしない
             pref_of = {int(e["number"]): (next((p for p in R.get("players", []) if p.get("id") == e.get("playerId")), {}) or {}).get("prefecture")
                        for e in R.get("entries", []) if e.get("number") is not None}
-            kt = k_tickets(R, tri) if not race.get("cancel") else None
-            if kt:
-                key, tks, cp = kt
-                picks.append(dict(date=today.isoformat(), rule=key, ticket=" / ".join(tks), tickets=tks, url=url, venue=c["venue"],
-                                  race_no=n, cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
-                                  close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
-                                  bet="3連単", line=f"{len(tks)}点・合成{cp:.1f}倍"))
             for key, ticket, L in hits:
                 rel = line_relation([pref_of.get(x) for x in L])
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=ticket, url=url, venue=c["venue"], race_no=n,
@@ -502,7 +442,10 @@ def collect(today):
                                             for e in R.get("entries", []) if not e.get("absent")},
                                   ana=[a for a in ana_candidates(R, tri) if a["ticket"] not in keshi],
                                   keshi=sorted(keshi),
-                                  rec=race_recommendation(picks, url, tri)))
+                                  rec=race_recommendation(picks, url) + [("ana" if not a["win"] else "win", "穴", [a["ticket"]])
+                                                                           for a in ana_candidates(R, tri)
+                                                                           if a["ticket"] not in keshi
+                                                                           and a["ticket"] not in {t for x in race_recommendation(picks, url) for t in x[2]}]))
     print(f"[INFO] {today} : {checked}レースを確認、買い目 {len(picks)}件、対象外の理由 {skipped}")
     return picks, board
 
@@ -517,16 +460,10 @@ def merge(log, picks):
     return sorted(keep, key=lambda p: (p["date"], p["start_at"], p["rule"]))
 
 
-def race_recommendation(picks, url, tri=None):
-    """そのレースの推奨買い目(3連単だけ) [(種類, ラベル, [買い目])]。
-    K(レースごとに形を変える) と 1点ルール(A〜D・F)。全部まとめた合成オッズが MIN_COMP 未満なら、低いオッズの組から外す"""
+def race_recommendation(picks, url):
+    """そのレースの推奨買い目 [(種類, ラベル, [買い目])]。勝ち筋(A〜D) → 重賞パック → 参考(E) → 見送り(空)"""
     ps = [p for p in picks if p["url"] == url]
     out, seen = [], set()
-    for p in ps:
-        if p["rule"] in K_RULES and p.get("tickets"):
-            seen.update(p["tickets"])
-            lab = {"K1": "K1 フォーメーション", "K4": "K4 1点", "K6": "K6 穴1点"}[p["rule"]]
-            out.append(("win" if p["rule"] != "K6" else "ana", lab, list(p["tickets"])))
     for p in ps:
         if p["rule"] == "W" and p["ticket"] not in seen:
             seen.add(p["ticket"])
@@ -536,14 +473,9 @@ def race_recommendation(picks, url, tri=None):
             seen.add(p["ticket"])
             out.append(("win", "・".join(sorted(q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCDF")),
                         [p["ticket"]]))
-    out = [x for x in out if x[0] != "big"]
-    if tri:
-        allt = [t for x in out for t in x[2]]
-        while allt and (composite(tri, allt) or 0) < MIN_COMP:
-            worst = min(allt, key=lambda t: tri.get(t) or 0)
-            allt.remove(worst)
-            out = [(k, lab, [t for t in ts if t != worst]) for k, lab, ts in out]
-        out = [x for x in out if x[2]]
+    for p in ps:
+        if p["rule"] in BIG and p.get("tickets"):
+            out.append(("big", "重賞", p["tickets"]))
     return out  # 本命寄りの参考(E: 最強ラインの並び通り10倍以下)は穴党向けに出さない(記録だけ続ける)
 
 
@@ -642,7 +574,6 @@ def render(log, now, board=None):
     rule_desc["W"] = (W_RULE[1], W_RULE[2])
     rule_desc["E"] = (E_RULE[1], E_RULE[2])
     rule_desc["F"] = (F_RULE[1], F_RULE[2])
-    rule_desc.update(K_RULES)
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -737,7 +668,7 @@ def render(log, now, board=None):
     stat = ""
     if done:
         rows = []
-        for key in ["K1", "K4", "K6", "A", "B", "C", "D", "F", "W", "G", "H", "全体", "E"]:
+        for key in ["W", "A", "B", "C", "D", "F", "G", "H", "全体", "E"]:
             if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
                 s, sk = [], set()
@@ -759,8 +690,7 @@ def render(log, now, board=None):
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
-    notes += "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, (d, b) in K_RULES.items())
-    notes += f"<li><b>W(ワイド・11/15から表示なし)</b>: {html.escape(W_RULE[1])}。{html.escape(W_RULE[2])}。ワイドのオッズは1時間おきの更新時点の値なので、買う前に3〜12倍か確認。</li>"
+    notes += f"<li><b>W(ワイド)</b>: {html.escape(W_RULE[1])}。{html.escape(W_RULE[2])}。ワイドのオッズは1時間おきの更新時点の値なので、買う前に3〜12倍か確認。</li>"
     notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
     notes += f"<li><b>F(穴)</b>: {html.escape(F_RULE[1])}。{html.escape(F_RULE[2])}。上位5本の的中を除くと96%。</li>"
     notes += f"<li><b>E(参考・表示なし)</b>: {html.escape(E_RULE[1])}。{html.escape(E_RULE[2])}。</li>"
