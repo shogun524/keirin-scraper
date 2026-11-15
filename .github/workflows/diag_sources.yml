@@ -10,15 +10,12 @@ jobs:
       - run: |
           mkdir -p out && cd out
           python - <<'PY'
-          import requests, re, json, time
+          import requests
           S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
-          API="https://keirin.netkeiba.com/api/race/"
-          def call(cls,**kw):
-              d=dict(input="UTF-8",output="json",**{"class":cls},method="get",compress="0",**kw)
-              r=S.post(API,data=d,timeout=20); return r
-          for cls,kw in [("AplRaceOdds",dict(race_id="202611152807")),("AplRaceHorse",dict(race_id="202611152807")),("AplRace",dict(kaisai_date="20261115",syusai="")),("AplKaisai",dict(year="2026",syusai="")),("AplNarabiYoso",dict(race_id="202611152807"))]:
-              t0=time.time(); r=call(cls,**kw); open(cls+".json","wb").write(r.content)
-              print(cls,r.status_code,len(r.content),round(time.time()-t0,2),"s",r.text[:600].replace("\n"," "))
+          for rid in ["202611152801","202611152802"]:
+              r=S.get(f"https://keirin.netkeiba.com/race/result/?race_id={rid}",timeout=20); open(f"res_{rid}.html","wb").write(r.content); print(rid,r.status_code,len(r.content))
+          r=S.post("https://keirin.netkeiba.com/api/race/",data=dict(input="UTF-8",output="json",**{"class":"AplRaceOdds"},method="get",compress="0",race_id="202611152801"),timeout=20)
+          open("odds_finished.json","wb").write(r.content); print("finished odds",r.text[:300])
           PY
       - uses: actions/checkout@v4
         with: { path: repo }
