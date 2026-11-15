@@ -139,20 +139,20 @@ def save_results(res):
 
 
 def parse_result(h):
-    """netkeirin の結果ページ -> ("5-4-3", 643430) か None(まだ確定していない)"""
-    i = h.find("Result_Pay_Back")
-    if i < 0 or "レース結果決定後に公開" in h[i:i + 400]:
+    """netkeirin の結果ページ -> ("2-6-5", 28260) か None(まだ確定していない)
+    払戻の表(id="result_payback_section")の「３連単 2>6>5 28,260円」を読む"""
+    i = h.find('id="result_payback_section"')
+    if i < 0:
         return None
-    seg = h[i:i + 20000]
-    txt = re.sub(r"<[^>]+>", " ", seg)
-    txt = re.sub(r"\s+", " ", txt)
-    m = re.search(r"(?:3|３)連単\s*([0-9０-９]+)\s*[-‐－→>＞]\s*([0-9０-９]+)\s*[-‐－→>＞]\s*([0-9０-９]+)\s*([0-9,，]+)\s*円", txt)
+    seg = html.unescape(re.sub(r"<[^>]+>", " ", h[i:i + 8000]))
+    seg = re.sub(r"\s+", " ", seg)
+    z = str.maketrans("０１２３４５６７８９，＞", "0123456789,>")
+    seg = seg.translate(z)
+    m = re.search(r"3連単\s*(\d+)\s*>\s*(\d+)\s*>\s*(\d+)\s*([\d,]+)\s*円", seg)
     if not m:
         return None
-    z = str.maketrans("０１２３４５６７８９，", "0123456789,")
-    a, b, c = (int(x.translate(z)) for x in m.groups()[:3])
-    pay = int(m.group(4).translate(z).replace(",", ""))
-    return f"{a}-{b}-{c}", pay
+    a, b, c = (int(x) for x in m.groups()[:3])
+    return f"{a}-{b}-{c}", int(m.group(4).replace(",", ""))
 
 
 def fetch_results(rids, res):
