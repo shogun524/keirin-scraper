@@ -201,6 +201,49 @@ K_RULES = {
 }
 MIN_COMP = 2.0   # 合成オッズがこれ未満の買い目は出さない
 
+# M: 万車率(3連単オッズ100倍以上の組の市場確率の合計)が高いレースで回収率が高かった形(11/15。winticket 2025〜2026年・確定オッズ)
+#   M3 万車率50%以上・印1番目のライン 先頭・番手→先頭・番手→3番手(2点)・合成5〜10倍  2025年114%・2026年116%(的中率16%)
+#   M2 万車率50%以上・印1番目のライン 番手→先頭→3番手(1点)                          2025年126%・2026年116%(的中率6%)
+#   M1 万車率30〜40%・印3番目のライン 先頭・番手→先頭・番手→3番手(2点)              2025年116%・2026年136%(的中率3%)
+#   (M4 全員→2番目のライン先頭・番手(2・3着) は単独では109〜131%だが、M3・M2と重ならないレースだけにすると88〜98%なので外した)
+#   M3→M2→M1 の順に1つ。合わせて 2025年116%・2026年126%(1日3〜4レース)。大きい配当頼みの面もある(M1は的中率3%)
+M_RULES = {
+    "M3": ("M3 万車率50%以上: 1番目のライン 先頭・番手→先頭・番手→3番手(2点・合成5〜10倍)", "検証 2025年114%・2026年116%(的中率16%)"),
+    "M2": ("M2 万車率50%以上: 1番目のライン 番手→先頭→3番手(1点)", "検証 2025年126%・2026年116%(的中率6%)"),
+    "M1": ("M1 万車率30〜40%: 3番目のライン 先頭・番手→先頭・番手→3番手(2点)", "検証 2025年116%・2026年136%(的中率3%)"),
+}
+
+
+def manshaken_rate(tri):
+    inv = {k: 1 / v for k, v in tri.items() if v}
+    s = sum(inv.values())
+    return sum(v for k, v in inv.items() if tri[k] >= 100) / s if s else None
+
+
+def m_tickets(R, tri):
+    """M3/M2/M1 のうち当てはまる最初の1つ -> (ルール, [買い目], 合成オッズ) か None"""
+    if not tri:
+        return None
+    man = manshaken_rate(tri)
+    lines = race_lines(R)
+    cars = sorted({int(e["number"]) for e in R.get("entries", []) if not e.get("absent")})
+    if man is None or len(lines) < 2:
+        return None
+
+    def box2_3(L):
+        return [f"{L[0]}-{L[1]}-{L[2]}", f"{L[1]}-{L[0]}-{L[2]}"]
+    c = []
+    if man >= 0.5 and len(lines[0]) >= 3:
+        c.append(("M3", box2_3(lines[0]), (5, 10)))
+        c.append(("M2", [f"{lines[0][1]}-{lines[0][0]}-{lines[0][2]}"], (2, 1e9)))
+    if 0.3 <= man < 0.4 and len(lines) >= 3 and len(lines[2]) >= 3:
+        c.append(("M1", box2_3(lines[2]), (2, 1e9)))
+    for key, tks, (lo, hi) in c:
+        cp = composite(tri, tks)
+        if cp and lo <= cp < hi and cp >= MIN_COMP:
+            return key, tks, cp
+    return None
+
 
 def composite(tri, tickets):
     inv = [1 / tri[t] for t in tickets if tri.get(t)]
@@ -509,6 +552,13 @@ def collect(today):
             pref_of = {int(e["number"]): (next((p for p in R.get("players", []) if p.get("id") == e.get("playerId")), {}) or {}).get("prefecture")
                        for e in R.get("entries", []) if e.get("number") is not None}
             kt = k_tickets(R, tri) if not race.get("cancel") else None
+            mt = m_tickets(R, tri) if not race.get("cancel") else None
+            if mt:
+                key, tks, cp = mt
+                picks.append(dict(date=today.isoformat(), rule=key, ticket=" / ".join(tks), tickets=tks, url=url, venue=c["venue"],
+                                  race_no=n, cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
+                                  close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
+                                  bet="3連単", line=f"{len(tks)}点・合成{cp:.1f}倍・万車率{manshaken_rate(tri):.0%}"))
             if kt:
                 key, tks, cp = kt
                 picks.append(dict(date=today.isoformat(), rule=key, ticket=" / ".join(tks), tickets=tks, url=url, venue=c["venue"],
@@ -562,9 +612,10 @@ def race_recommendation(picks, url, tri=None):
     ps = [p for p in picks if p["url"] == url]
     out, seen = [], set()
     for p in ps:
-        if p["rule"] in K_RULES and p.get("tickets"):
+        if (p["rule"] in K_RULES or p["rule"] in M_RULES) and p.get("tickets"):
             seen.update(p["tickets"])
-            lab = {"K1": "K1 フォーメーション", "K4": "K4 1点", "K6": "K6 穴1点"}[p["rule"]]
+            lab = {"K1": "K1 フォーメーション", "K4": "K4 1点", "K6": "K6 穴1点",
+                   "M3": "M3 万車・ライン2点", "M2": "M2 万車・番手差し", "M1": "M1 万車・3番目ライン"}[p["rule"]]
             out.append(("win" if p["rule"] != "K6" else "ana", lab, list(p["tickets"])))
     for p in ps:
         if p["rule"] == "W" and p["ticket"] not in seen:
@@ -682,6 +733,7 @@ def render(log, now, board=None):
     rule_desc["E"] = (E_RULE[1], E_RULE[2])
     rule_desc["F"] = (F_RULE[1], F_RULE[2])
     rule_desc.update(K_RULES)
+    rule_desc.update(M_RULES)
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -776,7 +828,7 @@ def render(log, now, board=None):
     stat = ""
     if done:
         rows = []
-        for key in ["K1", "K4", "K6", "A", "B", "C", "D", "F", "W", "G", "H", "全体", "E"]:
+        for key in ["M3", "M2", "M1", "K1", "K4", "K6", "A", "B", "C", "D", "F", "W", "G", "H", "全体", "E"]:
             if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
                 s, sk = [], set()
@@ -798,7 +850,7 @@ def render(log, now, board=None):
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
-    notes += "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, (d, b) in K_RULES.items())
+    notes += "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, (d, b) in {**M_RULES, **K_RULES}.items())
     notes += f"<li><b>W(ワイド・11/15から表示なし)</b>: {html.escape(W_RULE[1])}。{html.escape(W_RULE[2])}。ワイドのオッズは1時間おきの更新時点の値なので、買う前に3〜12倍か確認。</li>"
     notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
     notes += f"<li><b>F(穴)</b>: {html.escape(F_RULE[1])}。{html.escape(F_RULE[2])}。上位5本の的中を除くと96%。</li>"
