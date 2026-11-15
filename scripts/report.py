@@ -693,14 +693,8 @@ def render_manshaken_box(info):
             parts.append(f'中穴率(5,000円以上) <b>{mv["chu"]:.0%}</b>')
     else:
         parts.append('万車率 <span class="dim">オッズ待ち</span>')
-    if mv and mv["man"] < 0.30:
-        # 穴党向け: 本命レースは3連単の買い目を出さない(ワイドWは本命レースでも出す)
-        parts.insert(0, '<span class="dim">本命レース(万車率30%未満)— 穴の3連単は見送り。本命側の買い目は「本命(的中重視)」</span>')
-        rec = [x for x in (rec or []) if x[1].startswith("W")] or None
+    # 11/15〜 本命・穴の両立: 本命レースでも買い目を出す。表示は3連単だけ(的中重視のワイド・2車複・3連複は出さない)
     keshi = info.get("ai_keshi") or []
-    hl = _hit_line(info, "hitline-in")
-    if hl:
-        parts.append(hl.replace('<p class="hitline-in"', '<span').replace("</p>", "</span>"))
     if rec:
         rec = [(k, label, [t for t in ts if t not in keshi]) for k, label, ts in rec]
         rec = [x for x in rec if x[2]]
@@ -710,16 +704,16 @@ def render_manshaken_box(info):
             items = " ".join(
                 f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
                 f'padding:1px 6px;border-radius:999px">{label}</span> <b>{" ".join(t)}</b>' for k, label, t in rec)
-            parts.insert(0, f'<b style="color:#6A4FA0">穴(回収重視)</b> 3連単 {items}')
+            parts.insert(0, f'<b>買い目(3連単)</b> {items}')
         else:
-            parts.insert(0, '<b style="color:#6A4FA0">穴(回収重視)</b> <span class="dim">見送り(ルールに当たらない)</span>')
+            parts.insert(0, '<b>買い目(3連単)</b> <span class="dim">見送り(回収率の高い形に当たらない)</span>')
     if keshi:
         parts.append('<span style="background:#555;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">'
                      '消し目</span> <span class="dim">AI推奨の組(当たらないので買わない): '
                      + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span>')
     return ('<div class="mansha-box" style="margin:6px 0;padding:8px 10px;border:2px solid #C8402A33;border-radius:8px;'
             'background:#fff;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">'
-            'このレースの買い目(本命・穴)</div>' + '<br>'.join(parts) +
+            'このレースの買い目</div>' + '<br>'.join(parts) +
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
