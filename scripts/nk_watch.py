@@ -53,8 +53,17 @@ def push_page(now):
     sh(f'git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" '
        f'commit -q -m "chore: 締切直前オッズ {now:%H:%M}"')
     for _ in range(4):
-        if sh("git pull -q --rebase -X theirs").returncode == 0 and sh("git push -q").returncode == 0:
+        r1 = sh("git pull -q --rebase -X theirs")
+        r2 = sh("git push -q") if r1.returncode == 0 else r1
+        if r1.returncode == 0 and r2.returncode == 0:
+            print(f"[INFO] {now:%H:%M} ページを push")
             return
+        print("[WARN] push 失敗:", (r2.stderr or r2.stdout)[-300:])
+        sh("git rebase --abort")
+        sh("git fetch -q origin && git reset -q --soft origin/main")   # 取り込みが壊れたら最新に合わせて作り直す
+        sh("git add " + " ".join(files))
+        sh(f'git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" '
+           f'commit -q -m "chore: 締切直前オッズ {now:%H:%M}"')
         time.sleep(5)
     print("[WARN] push に失敗")
 
