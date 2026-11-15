@@ -744,7 +744,7 @@ def render_formation_builder(tab_id, result, keshi=None):
                    if all(int(x) in base for x in k.split("-")) and k not in ks), key=lambda kv: -kv[1][0] * kv[1][1])
     buy = []
     for k, v in cand[:5]:
-        if 1 / sum(1 / x[1] for x in buy + [(k, v)]) < 2:
+        if 1 / sum(1 / x[1][1] for x in buy + [(k, v)]) < 2:
             break
         buy.append((k, v))
     if buy:
