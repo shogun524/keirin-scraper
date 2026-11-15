@@ -505,7 +505,7 @@ def collect(today):
             if e1 and tri.get(e1[0]) and tri[e1[0]] <= E_ODDS:
                 hits.append(("E", e1[0], e1[1]))
             keshi = set(keshi_map.get(f'{ {"iwakidaira": "iwakitaira"}.get(c["slug"], c["slug"])}:{n}') or [])
-            hits = [h for h in hits if h[1] not in keshi]   # AI推奨の組(消し目)は買い目にしない
+            # 11/15: 消し目(AI推奨の組)も買い目から外さない
             pref_of = {int(e["number"]): (next((p for p in R.get("players", []) if p.get("id") == e.get("playerId")), {}) or {}).get("prefecture")
                        for e in R.get("entries", []) if e.get("number") is not None}
             kt = k_tickets(R, tri) if not race.get("cancel") else None

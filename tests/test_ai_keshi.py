@@ -16,8 +16,8 @@ class TestKeshi(unittest.TestCase):
                 "recommend": [("ana", "穴", ["2-5-8"]), ("win", "D", ["1-4-7"])], "ai_keshi": ["2-5-8", "1-2-3"]}
         h = report.render_manshaken_box(info)
         self.assertIn("1-4-7", h)
-        self.assertIn("<s>2-5-8</s>", h)               # 推奨からは外れ、消し目に出る
-        self.assertNotIn("<b>2-5-8</b>", h)
+        self.assertIn("<s>2-5-8</s>", h)               # 消し目にも出る
+        self.assertIn("<b>2-5-8</b>", h)               # 11/15〜 消し目も買い目から外さない
         self.assertIn("消し目", h)
 
 

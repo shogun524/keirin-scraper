@@ -698,7 +698,7 @@ def render_manshaken_box(info):
     # 11/15〜 本命・穴の両立: 本命レースでも買い目を出す。表示は3連単だけ(的中重視のワイド・2車複・3連複は出さない)
     keshi = info.get("ai_keshi") or []
     if rec:
-        rec = [(k, label, [t for t in ts if k == "ref" or t not in keshi]) for k, label, ts in rec]   # 参考は消し目でも外さない(検証は消し目を外していない)
+        pass   # 11/15: 消し目も含めて表示する(買い目から外さない)
         rec = [x for x in rec if x[2]]
     if rec is not None:
         if rec:
@@ -714,7 +714,7 @@ def render_manshaken_box(info):
             parts.insert(0, '<b>買い目(3連単)</b> <span class="dim">見送り(回収率の高い形に当たらない)</span>')
     if keshi:
         parts.append(f'<details style="display:inline"><summary class="dim">消し目 {len(keshi)}組</summary>'
-                     '<span class="dim">AI推奨の組(当たらないので買わない): ' + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span></details>')
+                     '<span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): ' + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span></details>')
     return ('<div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8">'
             '<div style="font-weight:800;font-size:12px;color:#C8402A">'
             'このレースの買い目</div>' + '<br>'.join(parts) +
@@ -770,7 +770,7 @@ def render_formation_builder(tab_id, result, keshi=None):
     # 買うべき出目: 1着率10%以上の選手を1着(頭)にした組を、消し目を除いて来る確率の高い順に全部。
     #   上から足していき、合成オッズが2倍を切る手前で止める
     base = [c for c in cars if p1[c] >= 0.10]
-    ks = set(keshi or [])
+    ks = set()   # 11/15: 消し目も含める
     cand = sorted(((k, v) for k, v in data.items() if int(k.split("-")[0]) in base and k not in ks), key=lambda kv: -kv[1][0])
     buy, inv = [], 0.0
     for k, v in cand:
@@ -783,7 +783,7 @@ def render_formation_builder(tab_id, result, keshi=None):
         bp = sum(v[0] for _, v in buy)
         bc = 1 / sum(1 / v[1] for _, v in buy)
         buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}を頭に、'
-                    f'消し目を除いて来る確率の高い順に合成2倍まで(最大20点)・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
+                    f'来る確率の高い順に合成2倍まで(最大20点)・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
                     + form_html
                     + '<details><summary class="dim">1点ずつ(オッズ・確率)</summary>'
                     + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%})</span>' for k, v in buy) + '</details>'
@@ -798,6 +798,7 @@ def render_formation_builder(tab_id, result, keshi=None):
         f'<button type="button" class="fb-b" data-pos="{pos}" data-car="{c}" '
         f'style="--bg:{car_color(c)[0]};--fg:{car_color(c)[1]}">{c}</button>' for c in cars)
     fid = f"fb_{tab_id}"
+    result["_buy_html"] = buy_html
     return f"""
 <div class="fb" id="{fid}">
   <div class="fb-h">3連単フォーメーションを組む</div>
@@ -832,6 +833,15 @@ def render_formation_builder(tab_id, result, keshi=None):
       if(i>=0){{sel[p].splice(i,1);b.classList.remove("on");}}else{{sel[p].push(c);b.classList.add("on");}} upd();}});}});
   }})();</script>
 </div>"""
+
+
+def _dev_sim_html(tab_id, result):
+    try:
+        import dev_sim
+        return dev_sim.render(tab_id, result)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] dev_sim: {e}")
+        return ""
 
 
 def render_tag_line(result):
@@ -930,7 +940,7 @@ def render_race_card(race_data, tab_id):
     odds_alert_html = render_odds_alert_badge(info)
     pick_color = car_color(top["car"])[0]
     has_trifecta = bool(trifecta_payload)
-    has_dev = bool(dev_payload) or bool(hole_html)
+    has_dev = bool(dev_payload) or bool(hole_html) or bool(result.get("trifecta"))
     formula_html = render_formula_block(race_data, tab_id)
     _ai_boxes = render_auto_box((result.get("trifecta") or {}).get("auto")) + render_ana_box((result.get("trifecta") or {}).get("ana"))
     auto_html = ""
@@ -955,11 +965,12 @@ def render_race_card(race_data, tab_id):
     <div id="{tab_id}_sub_kf" class="subtab-panel" style="display:none;">
       {formula_html}
     </div>'''
+    fb_html = render_formation_builder(tab_id, result, None)
     trifecta_block_html = ""
     if has_trifecta:
         trifecta_block_html = f"""
     <div id="{tab_id}_sub_tf" class="subtab-panel" style="display:none;">
-      {render_formation_builder(tab_id, result, info.get("ai_keshi"))}
+      {fb_html}
       <div class="chart-block">{matrix_widget_html}</div>
       {trifecta_html}
     </div>"""
@@ -967,9 +978,9 @@ def render_race_card(race_data, tab_id):
     if has_dev:
         dev_block_html = f"""
     <div id="{tab_id}_sub_dev" class="subtab-panel" style="display:none;">
+      {_dev_sim_html(tab_id, result) or dev_anim_html}
       <div class="chart-block">{kimarite_table_html}</div>
       {hole_html}
-      {dev_anim_html}
       {dev_html}
     </div>"""
     return f"""
@@ -982,7 +993,7 @@ def render_race_card(race_data, tab_id):
           {odds_alert_html}
         </div>
         {banner_html}
-        <div class="sumbox">{render_tag_line(result)}{render_manshaken_box(info)}</div>
+        <div class="sumbox">{render_tag_line(result)}{render_manshaken_box(info)}{result.get("_buy_html", "")}</div>
         {line_info_html}
         {odds_trend_html}
         {subtab_bar_html}
@@ -3247,7 +3258,7 @@ def _print_card_html(rd):
     _mv = info.get("manshaken") or {}
     _hon = _mv.get("man") is not None and _mv["man"] < 0.30
     _keshi = info.get("ai_keshi") or []
-    _rec = [(k, lb, [t for t in ts if t not in _keshi]) for k, lb, ts in (info.get("recommend") or [])]
+    _rec = [(k, lb, list(ts)) for k, lb, ts in (info.get("recommend") or [])]
     _rec = [x for x in _rec if x[2]]
     if _hon:
         flags.append("honmei"); flag_html.append("<span>本命(見送り)</span>")
