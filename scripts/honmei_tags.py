@@ -16,6 +16,40 @@
   注意/危険のときの推し = 1番人気(勝率37〜39%・3着内72%)
   ※ どの買い方も回収率100%は超えない(ワイド 1番人気→2〜4番人気 76〜77%・3連複 1番人気軸 72〜74%)。
 """
+# ---- %の当たり具合(2026年 約2万4千レース・各選手。AIの重みは〜2025年で作った)と、その補正 ----
+# AIの1着率: 15%以下はほぼ合う。40%以上は言いすぎ(予測45%→実際42%、54%→51%、64%→59%)
+# AIの3着内率: 低く出すぎ(予測28%→実際37%、55%→66%、74%→80%)
+# 込%(オッズ込みの1着率・3着内率): どの帯もほぼ合う(差は1〜2pt)→ 表示の主役は込%
+_AIW = ([0.0, 0.03, 0.071, 0.122, 0.173, 0.246, 0.348, 0.448, 0.544, 0.636, 0.723, 1.0],
+        [0.0, 0.04, 0.078, 0.123, 0.173, 0.241, 0.332, 0.418, 0.506, 0.589, 0.642, 0.9])
+_AIP = ([0.0, 0.152, 0.282, 0.447, 0.551, 0.651, 0.744, 0.827, 1.0],
+        [0.0, 0.228, 0.370, 0.545, 0.662, 0.742, 0.801, 0.845, 0.95])
+
+
+def _interp(x, xs, ys):
+    for i in range(1, len(xs)):
+        if x <= xs[i]:
+            t = (x - xs[i - 1]) / ((xs[i] - xs[i - 1]) or 1)
+            return ys[i - 1] + t * (ys[i] - ys[i - 1])
+    return ys[-1]
+
+
+def calib_win(probs):
+    """{car: AIの1着率(0〜1)} -> 実際に合わせた1着率(合計1に直す)"""
+    c = {k: _interp(max(v, 0), *_AIW) for k, v in probs.items()}
+    s = sum(c.values()) or 1
+    return {k: v / s for k, v in c.items()}
+
+
+def calib_place(x):
+    return _interp(max(x, 0), *_AIP)
+
+
+# 印・一言の実際(2026年)
+MARK_STATS = {"◎": "勝率43%・3着内77%", "○": "勝率22%・3着内63%", "▲": "勝率12%・3着内44%", "△": "勝率9%・3着内38%"}
+TAG_STATS = {"普通": "◎の勝率46%・3着内80%", "注意": "◎の勝率15%・3着内56%", "危険": "◎の勝率11%・3着内41%",
+             "推し": "勝率38%・3着内73%"}
+
 TAGS = {"普通": ("普通", "tg-ok"), "注意": ("注意", "tg-warn"), "危険": ("危険！", "tg-ng"), "推し": ("推し", "tg-push")}
 CSS = (".tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:9px;margin-left:3px;white-space:nowrap}"
        ".tg-ok{background:#E3F1E6;color:#2E7D46}.tg-warn{background:#FFF1D6;color:#9A6400}"
@@ -33,15 +67,17 @@ CSS = (".tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6p
        ".fb-list span{display:inline-block;margin:1px 4px 1px 0;font-size:11.5px;color:#555}.fb-list .good{color:#2E7D46;font-weight:700}"
        ".fb-t{font-size:12px;border-collapse:collapse}.fb-t td,.fb-t th{padding:2px 6px;border-bottom:1px solid #eee}"
        ".fb-two{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}.fb-two ol{margin:2px 0;padding-left:18px}"
+       ".sumbox{margin:6px 0;padding:8px 10px;border:2px solid #C8402A33;border-radius:8px;background:#fff;font-size:13px;line-height:1.8}"
+       ".sumbox .st{font-size:11px;color:#777}.rt-ai{font-size:10.5px;color:#999;white-space:nowrap}"
        ".kguide{font-size:12px;margin:6px 0;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff}"
        ".kguide summary{cursor:pointer;font-weight:700}.kguide ul{margin:4px 0 0;padding-left:18px;line-height:1.7}")
-GUIDE = ('<details class="kguide"><summary>見かた(◎・込%・一言・買い目)</summary><ul>'
-         '<li><b>◎○▲△</b> … AIの1着率の順(オッズは使わない)。1番人気以外も◎になる。</li>'
-         '<li><b>込%</b> … オッズ込みの1着率。競輪はオッズがAIの材料をほぼ織り込んでいて、込%はオッズの1着率とほぼ同じ。オッズが出るまでは出ない。</li>'
-         '<li><b>一言</b> … 普通=◎が1〜2番人気(オッズどおり) / 注意=◎が3番人気 / 危険！=◎が4番人気以下(過去の勝率10%) / '
-         '推し=注意・危険のレースで代わりに推す選手(1番人気。過去 3着内72%)。</li>'
-         '<li><b>買い目(3連単だけ)</b> … 過去の検証で回収率が100%を超えた形に当たったレースだけ。形はレースごとに変わる'
-         '(フォーメーション・1点など)。合成オッズ2倍未満にはしない(<a href="../picks.html">ルールの説明</a>)。</li>'
+GUIDE = ('<details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul>'
+         '<li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。'
+         'どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIだけの1着率。</li>'
+         '<li><b>印 ◎○▲△</b> … AIだけの1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li>'
+         '<li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / '
+         '危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li>'
+         '<li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li>'
          '</ul></details>')
 
 

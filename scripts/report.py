@@ -688,10 +688,11 @@ def render_manshaken_box(info):
     parts = []
     if mv:
         lvl = "#C8402A" if mv["man"] >= 0.4 else ("#2F6B4F" if mv["man"] < 0.2 else "inherit")
-        parts.append(f'万車率 <b style="color:{lvl}">{mv["man"] * 100:.0f}%</b>')
-        parts.append(f'配当の目安 <b>{mv["q50"]:,.0f}円</b> <span class="dim">({mv["q25"]:,.0f}〜{mv["q75"]:,.0f}円)</span>')
+        line = (f'<span class="dim">万車率 <b style="color:{lvl}">{mv["man"] * 100:.0f}%</b> ・ 配当の目安 {mv["q50"]:,.0f}円'
+                f'({mv["q25"]:,.0f}〜{mv["q75"]:,.0f}円)')
         if mv.get("chu") is not None:
-            parts.append(f'中穴率(5,000円以上) <b>{mv["chu"]:.0%}</b>')
+            line += f' ・ 中穴率 {mv["chu"]:.0%}'
+        parts.append(line + '</span>')
     else:
         parts.append('万車率 <span class="dim">オッズ待ち</span>')
     # 11/15〜 本命・穴の両立: 本命レースでも買い目を出す。表示は3連単だけ(的中重視のワイド・2車複・3連複は出さない)
@@ -702,18 +703,20 @@ def render_manshaken_box(info):
     if rec is not None:
         if rec:
             col = {"win": "#C8402A", "big": "#B8862B", "ref": "#7A8494", "ana": "#6A4FA0"}
-            items = " ".join(
-                f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
-                f'padding:1px 6px;border-radius:999px">{label}</span> <b>{" ".join(t)}</b>' for k, label, t in rec)
-            parts.insert(0, f'<b>買い目(3連単)</b> {items}')
+            def _lab(k, label):
+                short = "参考" if k == "ref" else label
+                tip = label.replace("参考 ", "") if k == "ref" else ""
+                return (f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
+                        f'padding:1px 6px;border-radius:999px">{short}</span>' + (f' <span class="dim">{tip}</span>' if tip else ""))
+            items = "<br>".join(f'{_lab(k, label)} <b>{" ".join(t)}</b>' for k, label, t in rec)
+            parts.insert(0, items)
         else:
             parts.insert(0, '<b>買い目(3連単)</b> <span class="dim">見送り(回収率の高い形に当たらない)</span>')
     if keshi:
-        parts.append('<span style="background:#555;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">'
-                     '消し目</span> <span class="dim">AI推奨の組(当たらないので買わない): '
-                     + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span>')
-    return ('<div class="mansha-box" style="margin:6px 0;padding:8px 10px;border:2px solid #C8402A33;border-radius:8px;'
-            'background:#fff;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">'
+        parts.append(f'<details style="display:inline"><summary class="dim">消し目 {len(keshi)}組</summary>'
+                     '<span class="dim">AI推奨の組(当たらないので買わない): ' + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span></details>')
+    return ('<div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8">'
+            '<div style="font-weight:800;font-size:12px;color:#C8402A">'
             'このレースの買い目</div>' + '<br>'.join(parts) +
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
@@ -832,16 +835,20 @@ def render_formation_builder(tab_id, result, keshi=None):
 
 
 def render_tag_line(result):
-    """◎の一言と推し(JRA版と同じ。honmei_tags.py)"""
+    """◎の一言と推し(JRA版と同じ。honmei_tags.py)。それぞれの過去の実際の勝率も出す"""
     tags = honmei_tags.race_tags(result)
     names = {r["car"]: r["name"] for r in result.get("rows") or []}
     if not tags:
         mk = honmei_tags.marks(result.get("rows") or [])
         h = next((c for c, m in mk.items() if m == "◎"), None)
-        return (f'<div style="font-size:13px;margin:6px 0">◎ {h}番 {names.get(h, "")} '
-                f'<span class="dim">(一言はオッズが出てから)</span></div>') if h else ""
-    parts = [f'{"◎" if t[2] == "◎" else "推し"} {c}番 {names.get(c, "")}{honmei_tags.tag_html(t)}' for c, t in tags.items()]
-    return '<div style="font-size:13px;margin:6px 0">' + " ／ ".join(parts) + '</div>'
+        return (f'<div>◎ <b>{h}番 {names.get(h, "")}</b> <span class="st">(◎の過去 {honmei_tags.MARK_STATS["◎"]}。'
+                f'一言はオッズが出てから)</span></div>') if h else ""
+    parts = []
+    for c, t in tags.items():
+        key = "推し" if t[2] == "推し" else next(k for k, v in honmei_tags.TAGS.items() if v[0] == t[0])
+        parts.append(f'<div>{"推し" if t[2] == "推し" else "◎"} <b>{c}番 {names.get(c, "")}</b>{honmei_tags.tag_html(t)} '
+                     f'<span class="st">過去 {honmei_tags.TAG_STATS[key]}</span></div>')
+    return "".join(parts)
 
 
 def render_race_card(race_data, tab_id):
@@ -858,6 +865,7 @@ def render_race_card(race_data, tab_id):
     tags = honmei_tags.race_tags(result)
     aip = honmei_tags.ai_probs(result["rows"])
     odds_mode = result.get("fix_mode") == "odds"
+    cw = honmei_tags.calib_win({c: v / 100 for c, v in aip.items()})
     rows_html = ""
     for r in sorted(result["rows"], key=lambda r: -aip[r["car"]]):
         bg, fg = car_color(r["car"])
@@ -884,22 +892,19 @@ def render_race_card(race_data, tab_id):
             arrow = "↑" if rise > 0 else "↓"
             cls = "delta-up" if rise > 0 else "delta-down"
             rise_html = f'<span class="{cls}">{abs(rise):.1f}pt{arrow}</span>'
-        rate_html = f'<b>{aip[r["car"]]:.1f}%</b>'
         if odds_mode:
-            rate_html += f'<br><span class="mmv">込{adjusted_pct:.1f}%</span>'
+            rate_html = f'<b>{adjusted_pct:.1f}%</b><br><span class="rt-ai">AI {aip[r["car"]]:.0f}%</span>'
+            place_pct = r.get("place_rate", 0)
         else:
-            rate_html += f'<br>{rise_html}'
+            rate_html = f'<b>{cw[r["car"]] * 100:.1f}%</b><br><span class="rt-ai">オッズ前</span>'
+            place_pct = honmei_tags.calib_place(r.get("place_rate", 0) / 100) * 100
 
         rows_html += f"""
         <tr style="{highlight}">
           <td><span class="aimk">{mks.get(r['car'], '')}</span><span class="car" style="background:{bg};color:{fg}">{r['car']}</span></td>
-          <td>{r['name']}{honmei_tags.tag_html(tags.get(r['car']))}{cr_html}{extra_badges_html}</td>
-          <td>{r['rank']}</td>
-          <td>{KIMARITE_LABELS.get(r['dominant_type'], '-')}<br><span class="dim">({r['kimarite_prediction']['ratio']*100:.0f}%)</span></td>
-          <td>{line_label}</td>
+          <td>{r['name']}{honmei_tags.tag_html(tags.get(r['car']))}<br><span class="dim">{r['rank']}・{line_label}・{KIMARITE_LABELS.get(r['dominant_type'], '-')}</span>{cr_html}{extra_badges_html}</td>
           <td>{rate_html}</td>
-          <td>{r['confidence']['score']:.0f}</td>
-          <td>{r.get('place_rate', 0):.1f}%</td>
+          <td>{place_pct:.0f}%</td>
         </tr>"""
 
     banner_html = ""
@@ -955,12 +960,14 @@ def render_race_card(race_data, tab_id):
         trifecta_block_html = f"""
     <div id="{tab_id}_sub_tf" class="subtab-panel" style="display:none;">
       {render_formation_builder(tab_id, result, info.get("ai_keshi"))}
+      <div class="chart-block">{matrix_widget_html}</div>
       {trifecta_html}
     </div>"""
     dev_block_html = ""
     if has_dev:
         dev_block_html = f"""
     <div id="{tab_id}_sub_dev" class="subtab-panel" style="display:none;">
+      <div class="chart-block">{kimarite_table_html}</div>
       {hole_html}
       {dev_anim_html}
       {dev_html}
@@ -975,22 +982,19 @@ def render_race_card(race_data, tab_id):
           {odds_alert_html}
         </div>
         {banner_html}
-        {render_tag_line(result)}
-        {render_manshaken_box(info)}
-        {honmei_tags.GUIDE}
+        <div class="sumbox">{render_tag_line(result)}{render_manshaken_box(info)}</div>
         {line_info_html}
         {odds_trend_html}
         {subtab_bar_html}
     <div id="{tab_id}_sub_main" class="subtab-panel">
         {auto_html}
         <table class="main">
-          <thead><tr><th>号車</th><th>選手</th><th>級班</th><th>予測決まり手</th><th>ライン</th><th>AI1着率<br><span class="mmv">込%</span></th><th>信頼度</th><th>予測3着内率</th></tr></thead>
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
           <tbody>{rows_html}</tbody>
         </table>
 
 
-        <div class="chart-block">{kimarite_table_html}</div>
-        <div class="chart-block">{matrix_widget_html}</div>
+        {honmei_tags.GUIDE}
     </div>
     {trifecta_block_html}
     {dev_block_html}
