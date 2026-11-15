@@ -34,6 +34,7 @@ AFTER = (90, 240, 480)  # 締切後に最終オッズを取り直す秒数
 LIST_EVERY = 600        # レース一覧を取り直す間隔(秒)
 PAGE_EVERY = 100        # ページを作り直す間隔(秒)
 UPLOAD_EVERY = 600      # 記録をリリースに上げる間隔(秒)
+DAILY_EVERY = 1800      # 予想ページ(daily.yml)を起こす間隔(秒)。daily の定期実行は混雑時に大きく間引かれるため(11/16 朝に未更新)
 
 
 def live_path(d):
@@ -103,6 +104,7 @@ def main():
     day = now.date()
     path = live_path(day)
     races, t_list, t_page, t_up = [], 0, 0, time.time()
+    t_daily = 0
     last_poll, last_odt, polls, after_done = {}, {}, {}, {}
     print(f"[INFO] {now:%H:%M} 開始 → {end:%H:%M} まで。記録: {path}")
     while datetime.datetime.now(JST) < end:
@@ -166,6 +168,10 @@ def main():
             print(r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-300:])
             if a.push:
                 push_page(datetime.datetime.now(JST))
+        if a.push and time.time() - t_daily > DAILY_EVERY:
+            t_daily = time.time()
+            r = sh('gh workflow run daily.yml')
+            print("[INFO] 予想ページの更新を起動" if r.returncode == 0 else f"[WARN] 予想ページの起動に失敗: {r.stderr[-200:]}")
         if a.push and time.time() - t_up > UPLOAD_EVERY:
             t_up = time.time()
             upload_live(path)
