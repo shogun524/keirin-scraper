@@ -21,6 +21,13 @@ CSS = (".tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6p
        ".tg-ok{background:#E3F1E6;color:#2E7D46}.tg-warn{background:#FFF1D6;color:#9A6400}"
        ".tg-ng{background:#FBE3E1;color:#B0433A}.tg-push{background:#E3ECFB;color:#1E5FA8}"
        ".aimk{font-weight:900;color:#C8402A;margin-right:2px}.mmv{font-size:11px;color:#777;white-space:nowrap}"
+       ".fb{margin:8px 0;padding:8px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;font-size:13px}"
+       ".fb-h{font-weight:800;font-size:13px}.fb-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:3px 0}"
+       ".fb-row span{width:30px;font-size:12px;color:#555}.fb-b{width:32px;height:32px;border-radius:50%;border:2px solid #ccc;background:#fff;font-weight:800;cursor:pointer}"
+       ".fb-b.on{background:var(--bg);color:var(--fg);border-color:#333}.fb-out{margin:6px 0;line-height:1.7}"
+       ".fb-list span{display:inline-block;margin:1px 4px 1px 0;font-size:11.5px;color:#555}.fb-list .good{color:#2E7D46;font-weight:700}"
+       ".fb-t{font-size:12px;border-collapse:collapse}.fb-t td,.fb-t th{padding:2px 6px;border-bottom:1px solid #eee}"
+       ".fb-two{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}.fb-two ol{margin:2px 0;padding-left:18px}"
        ".kguide{font-size:12px;margin:6px 0;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff}"
        ".kguide summary{cursor:pointer;font-weight:700}.kguide ul{margin:4px 0 0;padding-left:18px;line-height:1.7}")
 GUIDE = ('<details class="kguide"><summary>見かた(◎・込%・一言・買い目)</summary><ul>'

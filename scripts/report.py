@@ -9,6 +9,7 @@ GitHub Pages で公開する docs/ 以下のファイルを生成する。
 """
 
 import datetime
+import json
 import math
 from zoneinfo import ZoneInfo
 from model import KIMARITE_LABELS, KIMARITE
@@ -717,6 +718,66 @@ def render_manshaken_box(info):
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
+def render_formation_builder(tab_id, result):
+    """3連単フォーメーションを組む道具: 1着・2着・3着の車番を押すと、点数・当たる確率・合成オッズ・期待回収率と
+    買い目の一覧(確率・オッズ・期待値)を出す。確率は tri_model(市場+ラインの決まり方)。オッズが無いときは出さない"""
+    jt, od = result.get("tri_joint"), result.get("tri_odds")
+    if not jt or not od:
+        return ""
+    cars = sorted(r["car"] for r in result["rows"])
+    data = {f"{a}-{b}-{c}": [round(p, 6), od.get((a, b, c))] for (a, b, c), p in jt.items() if od.get((a, b, c))}
+    p1, p2, p3 = ({c: 0.0 for c in cars} for _ in range(3))
+    for (a, b, c), p in jt.items():
+        p1[a] = p1.get(a, 0) + p
+        p2[b] = p2.get(b, 0) + p
+        p3[c] = p3.get(c, 0) + p
+    names = {r["car"]: r["name"] for r in result["rows"]}
+    rows = "".join(
+        f'<tr><td><span class="car" style="background:{car_color(c)[0]};color:{car_color(c)[1]}">{c}</span> {names.get(c, "")}</td>'
+        f'<td>{p1[c]:.1%}</td><td>{p2[c]:.1%}</td><td>{p3[c]:.1%}</td><td>{p1[c] + p2[c] + p3[c]:.1%}</td></tr>'
+        for c in sorted(cars, key=lambda c: -p1[c]))
+    top_p = sorted(data.items(), key=lambda kv: -kv[1][0])[:8]
+    top_ev = sorted(((k, v) for k, v in data.items() if v[1] < 300), key=lambda kv: -kv[1][0] * kv[1][1])[:8]
+    li = lambda xs: "".join(f'<li><b>{k}</b> {v[0]:.1%} ・ {v[1]:.1f}倍 ・ 期待値{v[0] * v[1]:.2f}</li>' for k, v in xs)  # noqa: E731
+    btn = lambda pos: "".join(  # noqa: E731
+        f'<button type="button" class="fb-b" data-pos="{pos}" data-car="{c}" '
+        f'style="--bg:{car_color(c)[0]};--fg:{car_color(c)[1]}">{c}</button>' for c in cars)
+    fid = f"fb_{tab_id}"
+    return f"""
+<div class="fb" id="{fid}">
+  <div class="fb-h">3連単フォーメーションを組む</div>
+  <p class="dim" style="margin:2px 0 6px">確率 = 3連単オッズ(みんなの評価)に、市場が織り込み切れていないラインの決まり方を足したもの
+  (過去5万レースで、オッズだけより少しよく当たる)。期待値 = 確率 × オッズ(1.0で回収率100%の見込み)。</p>
+  <div class="fb-row"><span>1着</span>{btn(1)}</div>
+  <div class="fb-row"><span>2着</span>{btn(2)}</div>
+  <div class="fb-row"><span>3着</span>{btn(3)}</div>
+  <div class="fb-out">車番を押して選ぶ(もう一度押すと外す)</div>
+  <details><summary>材料: 選手ごとの1着・2着・3着の確率</summary>
+    <table class="fb-t"><tr><th>選手</th><th>1着</th><th>2着</th><th>3着</th><th>3着内</th></tr>{rows}</table></details>
+  <details><summary>材料: 来やすい組 / 期待値の高い組(300倍未満)</summary>
+    <div class="fb-two"><div><b>来やすい順</b><ol>{li(top_p)}</ol></div><div><b>期待値の高い順</b><ol>{li(top_ev)}</ol></div></div></details>
+  <script>(function(){{
+    var D={json.dumps(data)}, root=document.getElementById("{fid}"), sel={{1:[],2:[],3:[]}};
+    function upd(){{
+      var T=[],P=0,inv=0,ev=0;
+      sel[1].forEach(function(a){{sel[2].forEach(function(b){{sel[3].forEach(function(c){{
+        if(a!=b&&b!=c&&a!=c){{var k=a+"-"+b+"-"+c,v=D[k]; if(v){{T.push([k,v]);P+=v[0];inv+=1/v[1];ev+=v[0]*v[1];}}}}}});}});}});
+      var o=root.querySelector(".fb-out");
+      if(!T.length){{o.innerHTML="車番を押して選ぶ(もう一度押すと外す)";return;}}
+      var comp=1/inv, warn=comp<2?' <b style="color:#C8402A">合成オッズ2倍未満</b>':'';
+      T.sort(function(x,y){{return y[1][0]*y[1][1]-x[1][0]*x[1][1];}});
+      o.innerHTML="<b>"+T.length+"点</b> ・ 当たる確率 <b>"+(P*100).toFixed(1)+"%</b> ・ 合成オッズ <b>"+comp.toFixed(1)+"倍</b>"+warn+
+        " ・ 期待回収率 <b>"+(ev/T.length*100).toFixed(0)+"%</b><div class='fb-list'>"+
+        T.slice(0,30).map(function(t){{var e=t[1][0]*t[1][1];return "<span"+(e>=1?" class='good'":"")+">"+t[0]+" "+t[1][1].toFixed(1)+"倍("+(t[1][0]*100).toFixed(1)+"%)</span>";}}).join(" ")+
+        (T.length>30?" …":"")+"</div>";
+    }}
+    root.querySelectorAll(".fb-b").forEach(function(b){{b.addEventListener("click",function(){{
+      var p=b.dataset.pos,c=+b.dataset.car,i=sel[p].indexOf(c);
+      if(i>=0){{sel[p].splice(i,1);b.classList.remove("on");}}else{{sel[p].push(c);b.classList.add("on");}} upd();}});}});
+  }})();</script>
+</div>"""
+
+
 def render_tag_line(result):
     """◎の一言と推し(JRA版と同じ。honmei_tags.py)"""
     tags = honmei_tags.race_tags(result)
@@ -840,6 +901,7 @@ def render_race_card(race_data, tab_id):
     if has_trifecta:
         trifecta_block_html = f"""
     <div id="{tab_id}_sub_tf" class="subtab-panel" style="display:none;">
+      {render_formation_builder(tab_id, result)}
       {trifecta_html}
     </div>"""
     dev_block_html = ""

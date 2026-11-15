@@ -353,7 +353,18 @@ def apply(result, racers, odds=None, minutes_to_close=None):
     ai_top = max(aj0, key=aj0.get) if aj0 else None
     if odds and len(odds) >= total * MIN_ODDS_COVERAGE:
         tau = sharpen_tau(minutes_to_close)
-        rebuild(result, sharpen(market_joint(odds), tau))
+        try:   # 3連単の出目確率: 市場 + ラインの決まり方(tri_model.py)。失敗したら市場だけ
+            import tri_model
+            ai_p1 = {r["car"]: (r.get("ai_raw") if r.get("ai_raw") is not None else r["adjusted"]) / 100 for r in result["rows"]}
+            jt = tri_model.joint(odds, racers, result.get("line_map") or {}, ai_p1)
+            result["tri_model"] = True
+        except Exception as e:  # noqa: BLE001
+            print(f"[WARN] tri_model: {e}")
+            jt = market_joint(odds)
+        jt = sharpen(jt, tau)
+        result["tri_joint"] = jt          # フォーメーション作り(report.render_formation_builder)用
+        result["tri_odds"] = dict(odds)
+        rebuild(result, jt)
         result["fix_mode"] = "odds"
         result["sharpen_tau"] = round(tau, 3)
         return mark_buys(result, odds, ai_top, aj0)
