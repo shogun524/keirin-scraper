@@ -46,7 +46,8 @@ def sh(cmd):
 
 def push_page(now):
     """drops.html / _drops.json だけを push(他の自動更新とぶつかったら取り込み直して再挑戦)"""
-    sh("git add docs/drops.html docs/_drops.json docs/_drops_results.json")
+    files = [f for f in ("docs/drops.html", "docs/_drops.json", "docs/_drops_results.json") if os.path.exists(os.path.join(ROOT, f))]
+    sh("git add " + " ".join(files))   # 無いファイルを渡すと git add 全体が失敗するので、あるものだけ
     if sh("git diff --cached --quiet").returncode == 0:
         return
     sh(f'git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" '
@@ -66,6 +67,7 @@ def upload_live(path):
 
 
 def main():
+    sys.stdout.reconfigure(line_buffering=True)   # Actions のログにすぐ出す
     ap = argparse.ArgumentParser()
     ap.add_argument("--until", default="23:55", help="この時刻(JST)で終わる")
     ap.add_argument("--push", action="store_true")
