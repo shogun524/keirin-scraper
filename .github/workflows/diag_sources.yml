@@ -1,0 +1,25 @@
+name: diag_sources
+on: workflow_dispatch
+jobs:
+  d:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pip install -q requests
+      - run: |
+          python - <<'PY'
+          import requests
+          UAS={"pc":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+               "iphone":"Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"}
+          urls=["https://www.winticket.jp/keirin/","https://www.winticket.jp/keirin/schedules/20261115",
+                "https://keirin.netkeiba.com/","https://keirin.netkeiba.com/race/race_list/?kaisai_date=20261115",
+                "https://keirin.jp/pc/top","https://keirin.kdreams.jp/","https://keirin.kdreams.jp/racecard/",
+                "https://www.chariloto.com/keirin","https://www.oddspark.com/keirin/"]
+          for u in urls:
+              for k,ua in UAS.items():
+                  try:
+                      r=requests.get(u,headers={"User-Agent":ua,"Accept-Language":"ja"},timeout=20)
+                      t=r.text; title=t[t.find("<title>")+7:t.find("</title>")][:60] if "<title>" in t else ""
+                      print(f"{r.status_code} {len(t):>7} {k:6} {u} | {title}")
+                  except Exception as e:
+                      print("ERR", k, u, str(e)[:80])
+          PY
