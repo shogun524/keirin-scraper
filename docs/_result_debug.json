@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15 19:32",
+ "updated": "2026-11-15 19:41",
  "failures": [
   {
    "race": "2026-11-15 kawasaki 7R",
@@ -12,17 +12,17 @@
    ]
   },
   {
-   "race": "2026-11-15 beppu 10R",
+   "race": "2026-11-15 kawasaki 10R",
    "diag": {
-    "venue": "beppu",
-    "race_id": "8620261115010010",
+    "venue": "kawasaki",
+    "race_id": "3420261114020010",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2964,
- "with_result": 2390,
+ "with_result": 2391,
  "without_url": 0,
  "pending_eligible": 551
 }
