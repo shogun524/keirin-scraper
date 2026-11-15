@@ -737,27 +737,28 @@ def render_formation_builder(tab_id, result, keshi=None):
         f'<td>{p1[c]:.1%}</td><td>{p2[c]:.1%}</td><td>{p3[c]:.1%}</td><td>{p1[c] + p2[c] + p3[c]:.1%}</td></tr>'
         for c in sorted(cars, key=lambda c: -p1[c]))
     top_p = sorted(data.items(), key=lambda kv: -kv[1][0])[:8]
-    # 買うべき出目: 1着率10%以上の選手だけで組んだ組から、消し目を除いて来る確率の高い順に5点(合成オッズ2倍未満にならない所まで)
+    # 買うべき出目: 1着率10%以上の選手を1着(頭)にした組を、消し目を除いて来る確率の高い順に全部。
+    #   上から足していき、合成オッズが2倍を切る手前で止める
     base = [c for c in cars if p1[c] >= 0.10]
     ks = set(keshi or [])
-    cand = sorted(((k, v) for k, v in data.items()
-                   if all(int(x) in base for x in k.split("-")) and k not in ks), key=lambda kv: -kv[1][0])
-    buy = []
-    for k, v in cand[:5]:
-        if 1 / sum(1 / x[1][1] for x in buy + [(k, v)]) < 2:
+    cand = sorted(((k, v) for k, v in data.items() if int(k.split("-")[0]) in base and k not in ks), key=lambda kv: -kv[1][0])
+    buy, inv = [], 0.0
+    for k, v in cand:
+        if 1 / (inv + 1 / v[1]) < 2:
             break
         buy.append((k, v))
+        inv += 1 / v[1]
     if buy:
         bp = sum(v[0] for _, v in buy)
         bc = 1 / sum(1 / v[1] for _, v in buy)
-        buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}で組み、'
-                    f'消し目を除いて来る確率の高い順・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
+        buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}を頭に、'
+                    f'消し目を除いて来る確率の高い順に合成2倍まで・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
                     + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%}・期待値{v[0] * v[1]:.2f})</span>' for k, v in buy)
-                    + '<div class="dim" style="font-size:11px">2026年の検証(約1万6千レース): 確率の高い順3点で的中率12%・回収率71%、5点で的中率17%・回収率75%'
-                      '(期待値の高い順なら回収率81%だが的中率は8〜12%)。</div></div>')
+                    + '<div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。'
+                      '合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div>')
     else:
-        buy_html = (f'<div class="fb-buy dim">買うべき出目: 1着率10%以上の選手({"・".join(map(str, base)) or "なし"})では、'
-                    '合成オッズ2倍以上の組が作れない</div>')
+        buy_html = (f'<div class="fb-buy dim">買うべき出目: 1着率10%以上の選手({"・".join(map(str, base)) or "なし"})を頭にした組では、'
+                    '合成オッズ2倍以上にならない</div>')
     top_ev = sorted(((k, v) for k, v in data.items() if v[1] < 300), key=lambda kv: -kv[1][0] * kv[1][1])[:8]
     li = lambda xs: "".join(f'<li><b>{k}</b> {v[0]:.1%} ・ {v[1]:.1f}倍 ・ 期待値{v[0] * v[1]:.2f}</li>' for k, v in xs)  # noqa: E731
     btn = lambda pos: "".join(  # noqa: E731
