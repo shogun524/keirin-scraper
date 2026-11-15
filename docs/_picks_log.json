@@ -4543,6 +4543,30 @@
 {
 "date": "2026-11-15",
 "rule": "C",
+"ticket": "7-1-5",
+"url": "nk:202611158609:beppu",
+"venue": "別府",
+"race_no": 9,
+"region": "3人同地区(九州)",
+"same3": true,
+"chu": false,
+"chu_star": false,
+"cup": "Ｓ級 予 選",
+"grade": null,
+"start_at": 1794736920,
+"close_at": 1794736620,
+"cls": "S B",
+"race_type": "S B",
+"bet": "3連単",
+"line": "7-1-5",
+"settled": true,
+"result": "6-1-4",
+"payout": 0,
+"final_odds": 11.6
+},
+{
+"date": "2026-11-15",
+"rule": "C",
 "ticket": "4-1-6",
 "url": "nk:202611158611:beppu",
 "venue": "別府",
@@ -4578,7 +4602,7 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "4-1-6・184.6倍"
+"line": "4-1-6・149.1倍"
 },
 {
 "date": "2026-11-15",
@@ -4606,7 +4630,7 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "10点・合成13.4倍"
+"line": "10点・合成12.8倍"
 },
 {
 "date": "2026-11-15",
@@ -4634,6 +4658,6 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "10点・合成10.4倍"
+"line": "10点・合成10.2倍"
 }
 ]
