@@ -69,14 +69,20 @@ def upload_live(path):
 def main():
     sys.stdout.reconfigure(line_buffering=True)   # Actions のログにすぐ出す
     ap = argparse.ArgumentParser()
-    ap.add_argument("--until", default="23:55", help="この時刻(JST)で終わる")
+    ap.add_argument("--until", default="auto", help="この時刻(JST)で終わる。auto=5時間30分後(23:59まで)")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
     now = datetime.datetime.now(JST)
-    hh, mm = map(int, a.until.split(":"))
-    end = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
-    if end <= now:
-        end += datetime.timedelta(days=1)
+    if a.until == "auto":
+        end = min(now + datetime.timedelta(hours=5, minutes=30), now.replace(hour=23, minute=59, second=0))
+        if now.hour < 7:   # 深夜〜早朝はレースがないので何もしない
+            print("[INFO] 早朝なので終了")
+            return
+    else:
+        hh, mm = map(int, a.until.split(":"))
+        end = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        if end <= now:
+            end += datetime.timedelta(days=1)
     os.makedirs(LIVE, exist_ok=True)
     day = now.date()
     path = live_path(day)

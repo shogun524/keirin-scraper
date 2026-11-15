@@ -3,9 +3,8 @@ name: 締切直前オッズの記録(netkeirin・30〜60秒おき)
 # 「締切直前に動いた買い目」(docs/drops.html)を約2分おきに作り直す。1回の実行は最大5時間40分なので1日3回に分けて起動する。
 on:
   schedule:
-    - cron: "40 22 * * *"   # JST 07:40 〜 13:20
-    - cron: "15 4 * * *"    # JST 13:15 〜 18:55
-    - cron: "50 9 * * *"    # JST 18:50 〜 24:30(ミッドナイトは翌日分なので 23:59 まで)
+    # 1時間おきに起動を試みる(動いている間は1つだけ待機し、終わったらすぐ次が始まる。GitHubの予約起動は抜けることがあるため)
+    - cron: "7 * * * *"
   workflow_dispatch:
 permissions:
   contents: write
@@ -31,6 +30,4 @@ jobs:
       - name: 記録し続ける
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |
-          H=$(TZ=Asia/Tokyo date +%H)
-          if [ "$H" -lt 13 ]; then U=13:25; elif [ "$H" -lt 18 ]; then U=19:00; else U=23:59; fi
-          cd scripts && python nk_watch.py --until $U --push
+          cd scripts && python nk_watch.py --until auto --push
