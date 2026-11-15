@@ -737,11 +737,11 @@ def render_formation_builder(tab_id, result, keshi=None):
         f'<td>{p1[c]:.1%}</td><td>{p2[c]:.1%}</td><td>{p3[c]:.1%}</td><td>{p1[c] + p2[c] + p3[c]:.1%}</td></tr>'
         for c in sorted(cars, key=lambda c: -p1[c]))
     top_p = sorted(data.items(), key=lambda kv: -kv[1][0])[:8]
-    # 買うべき出目: 1着率10%以上の選手だけで組んだ組から、消し目を除いて期待値の高い順に5点(合成オッズ2倍未満にならない所まで)
+    # 買うべき出目: 1着率10%以上の選手だけで組んだ組から、消し目を除いて来る確率の高い順に5点(合成オッズ2倍未満にならない所まで)
     base = [c for c in cars if p1[c] >= 0.10]
     ks = set(keshi or [])
     cand = sorted(((k, v) for k, v in data.items()
-                   if all(int(x) in base for x in k.split("-")) and k not in ks), key=lambda kv: -kv[1][0] * kv[1][1])
+                   if all(int(x) in base for x in k.split("-")) and k not in ks), key=lambda kv: -kv[1][0])
     buy = []
     for k, v in cand[:5]:
         if 1 / sum(1 / x[1][1] for x in buy + [(k, v)]) < 2:
@@ -751,10 +751,10 @@ def render_formation_builder(tab_id, result, keshi=None):
         bp = sum(v[0] for _, v in buy)
         bc = 1 / sum(1 / v[1] for _, v in buy)
         buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}で組み、'
-                    f'消し目を除いて期待値の高い順・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
+                    f'消し目を除いて来る確率の高い順・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
                     + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%}・期待値{v[0] * v[1]:.2f})</span>' for k, v in buy)
-                    + '<div class="dim" style="font-size:11px">2026年の検証(約1万6千レース): 期待値の高い順3点で回収率81%(確率の高い順3点は71%)。'
-                      '1着率10%以上が5人いるレースは110%(1年だけ・1311レース)。100%を安定して超える形ではない。</div></div>')
+                    + '<div class="dim" style="font-size:11px">2026年の検証(約1万6千レース): 確率の高い順3点で的中率12%・回収率71%、5点で的中率17%・回収率75%'
+                      '(期待値の高い順なら回収率81%だが的中率は8〜12%)。</div></div>')
     else:
         buy_html = (f'<div class="fb-buy dim">買うべき出目: 1着率10%以上の選手({"・".join(map(str, base)) or "なし"})では、'
                     '合成オッズ2倍以上の組が作れない</div>')
