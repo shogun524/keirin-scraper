@@ -4606,7 +4606,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "4-1-6"
+"line": "4-1-6",
+"settled": true,
+"result": "2-7-3",
+"payout": 0,
+"final_odds": 253.8
 },
 {
 "date": "2026-11-15",
@@ -4626,7 +4630,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "4-1-6・253.8倍"
+"line": "4-1-6・253.8倍",
+"settled": true,
+"result": "2-7-3",
+"payout": 0,
+"final_odds": 253.8
 },
 {
 "date": "2026-11-15",
@@ -4654,6 +4662,6 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "10点・合成9.9倍"
+"line": "10点・合成8.4倍"
 }
 ]
