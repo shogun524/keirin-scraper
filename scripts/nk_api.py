@@ -90,6 +90,48 @@ def odds(race_id, types=("9",)):
             except (TypeError, ValueError, IndexError):
                 continue
             if v > 0:
-                m[_combo(row[0])] = v
+                if t == "7":   # ワイドは (下限, 上限)
+                    try:
+                        hi = float(row[2])
+                    except (TypeError, ValueError, IndexError):
+                        hi = v
+                    m[_combo(row[0])] = (v, hi)
+                else:
+                    m[_combo(row[0])] = v
         out[BET_LISTS[t]] = m
     return out
+
+
+RESULT_URL = "https://keirin.netkeiba.com/race/result/?race_id={}"
+BET_NAMES = ["枠複", "枠単", "2車複", "2車単", "ワイド", "3連複", "3連単"]
+
+
+def result(race_id):
+    """結果ページの払戻表 -> {"3連単": [("2-6-5", 28260)], "ワイド": [("2-6", 520), ...], ...}。未確定なら None"""
+    import html as _h
+    import re
+    r = _S.get(RESULT_URL.format(race_id), timeout=15)
+    h = r.content.decode("utf-8", "replace")
+    i = h.find('id="result_payback_section"')
+    if i < 0:
+        return None
+    seg = _h.unescape(re.sub(r"<[^>]+>", " | ", h[i:i + 8000]))
+    seg = seg.translate(str.maketrans("０１２３４５６７８９，＞", "0123456789,>"))
+    toks = [t.strip() for t in seg.split("|") if t.strip()]
+    out, cur = {}, None
+    k = 0
+    while k < len(toks):
+        t = toks[k]
+        if t in BET_NAMES:
+            cur = t
+            out.setdefault(cur, [])
+        elif cur and re.fullmatch(r"\d+(?:\s*[->]\s*\d+){1,2}", t) and k + 1 < len(toks):
+            m = re.fullmatch(r"([\d,]+)\s*円", toks[k + 1])
+            if m:
+                combo = "-".join(re.findall(r"\d+", t))
+                out[cur].append((combo, int(m.group(1).replace(",", ""))))
+                k += 1
+        elif t.startswith("$(") or t.startswith("function"):
+            break
+        k += 1
+    return out if out.get("3連単") else None

@@ -286,9 +286,13 @@ def settle(log, now):
         if p.get("settled") or p["start_at"] > now.timestamp() - 15 * 60:
             continue
         try:
-            st, _ = get_state(p["url"])
-            q = queries(st)
-            R, O = q.get("FETCH_KEIRIN_RACE") or {}, q.get("FETCH_KEIRIN_RACE_ODDS") or {}
+            if p["url"].startswith("nk:"):
+                import alt_source
+                R, O = alt_source.race_for_settle(p["url"])
+            else:
+                st, _ = get_state(p["url"])
+                q = queries(st)
+                R, O = q.get("FETCH_KEIRIN_RACE") or {}, q.get("FETCH_KEIRIN_RACE_ODDS") or {}
             if (R.get("race") or {}).get("cancel"):
                 p.update(settled=True, result="中止", payout=0, refund=True)
                 continue
@@ -314,10 +318,12 @@ def settle(log, now):
             print(f"[WARN] 結果の取得に失敗 {p['url']}: {e}")
 
 
-def collect(today):
+USE_WINTICKET = None
+
+
+def _winticket_races(today):
+    """winticket の開催・レース(今までのデータ元)"""
     ym = today.strftime("%Y%m")
-    picks, checked, skipped, board = [], 0, {}, []
-    keshi_map = load_keshi(today)
     for c in month_cups(ym):
         if not c["slug"]:
             continue
@@ -335,11 +341,29 @@ def collect(today):
             try:
                 st, _ = get_state(url)
                 qq = queries(st)
-                R = qq.get("FETCH_KEIRIN_RACE") or {}
-                O = qq.get("FETCH_KEIRIN_RACE_ODDS") or {}
+                yield c, n, url, qq.get("FETCH_KEIRIN_RACE") or {}, qq.get("FETCH_KEIRIN_RACE_ODDS") or {}
             except Exception as e:  # noqa: BLE001
                 print(f"[WARN] {url}: {e}")
-                continue
+
+
+def race_source(today):
+    """winticket が読めれば winticket、読めなければ Kドリームス+netkeirin(alt_source.py)"""
+    global USE_WINTICKET
+    import alt_source
+    if USE_WINTICKET is None:
+        USE_WINTICKET = alt_source.winticket_ok()
+        print(f"[INFO] データ元: {'winticket' if USE_WINTICKET else 'Kドリームス+netkeirin(winticketはアクセス制限中)'}")
+    if USE_WINTICKET:
+        yield from _winticket_races(today)
+    else:
+        yield from alt_source.todays_races(today)
+
+
+def collect(today):
+    ym = today.strftime("%Y%m")
+    picks, checked, skipped, board = [], 0, {}, []
+    keshi_map = load_keshi(today)
+    for c, n, url, R, O in race_source(today):
             checked += 1
             hits, why = evaluate_race(R)
             dodds = None

@@ -208,8 +208,12 @@ def main():
     kd_odds = {}
     if any(r["race_info"].get("source") != "winticket" for r in races):
         try:
-            import winticket_source
-            kd_odds = winticket_source.fetch_odds_map(today)
+            import alt_source
+            if alt_source.winticket_ok():
+                import winticket_source
+                kd_odds = winticket_source.fetch_odds_map(today)
+            else:   # 11/15〜 winticket がアクセス制限中 → netkeirin のオッズ
+                kd_odds = alt_source.fetch_odds_map(races, today)
         except Exception as e:
             print(f"[WARN] kドリームズ用のオッズ取得に失敗しました（補正AIで代用）: {e}")
             kd_odds = {}
