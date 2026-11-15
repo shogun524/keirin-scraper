@@ -1,27 +1,27 @@
 {
- "updated": "2026-11-15 20:28",
+ "updated": "2026-11-15 20:48",
  "failures": [
   {
-   "race": "2026-11-15 beppu 12R",
+   "race": "2026-11-15 nara 1R",
    "diag": {
-    "venue": "beppu",
-    "race_id": "8620261115010012",
+    "venue": "nara",
+    "race_id": "5320261114020001",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-15 kawasaki 12R",
+   "race": "2026-11-15 nagoya 1R",
    "diag": {
-    "venue": "kawasaki",
-    "race_id": "3420261114020012",
+    "venue": "nagoya",
+    "race_id": "4220261114020001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2964,
- "with_result": 2394,
+ "with_result": 2396,
  "without_url": 0,
  "pending_eligible": 552
 }
