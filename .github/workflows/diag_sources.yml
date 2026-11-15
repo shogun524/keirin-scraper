@@ -10,10 +10,20 @@ jobs:
       - run: |
           mkdir -p out && cd out
           python - <<'PY'
-          import requests
+          import requests, json, re
           S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
-          for rid in ["202611152801","202611152803"]:
-              r=S.get(f"https://keirin.netkeiba.com/race/result/?race_id={rid}",timeout=20); open(f"res_{rid}.html","wb").write(r.content); print(rid,r.status_code,len(r.content),"未公開" if "レース結果決定後に公開" in r.text else "公開")
+          def call(cls,**kw):
+              r=S.post("https://keirin.netkeiba.com/api/race/",data=dict(input="UTF-8",output="json",**{"class":cls},method="get",compress="0",**kw),timeout=20); return r
+          rl=call("AplRace",kaisai_date="20261115",syusai="").json()["data"]
+          rids=[r["race_id"] for v in list(rl.values())[0] for r in v["list"]]
+          rid=[x for x in rids if x.endswith("11")][0]; print("rid",rid)
+          for cls in ["AplRaceHorse","AplNarabiYoso","AplRaceOdds"]:
+              r=call(cls,race_id=rid); open(cls+".json","wb").write(r.content); print(cls,len(r.content))
+          for cls in ["AplRaceYoso","AplRaceMark","AplYoso","AplRaceInfo","AplRaceResult","AplRaceRefund","AplRacePayback"]:
+              r=call(cls,race_id=rid); print("try",cls,r.status_code,r.text[:160].replace("\n"," "))
+          r=S.get("https://keirin.kdreams.jp/racecard/",timeout=20)
+          m=sorted(set(re.findall(r"https://keirin\.kdreams\.jp/([a-z]+)/racedetail/(\d{2})\d+",r.text))); print("KD", m)
+          r=S.get(f"https://keirin.netkeiba.com/race/entry/?race_id={rid}",timeout=20); open("nk_entry.html","wb").write(r.content); print("entry",len(r.content))
           PY
       - uses: actions/checkout@v4
         with: { path: repo }
