@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15 17:52",
+ "updated": "2026-11-15 18:01",
  "failures": [
   {
    "race": "2026-11-15 tachikawa 7R",
@@ -37,10 +37,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-15 kawasaki 6R",
+   "diag": {
+    "venue": "kawasaki",
+    "race_id": "3420261114020006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 2964,
  "with_result": 2383,
  "without_url": 0,
- "pending_eligible": 550
+ "pending_eligible": 551
 }
