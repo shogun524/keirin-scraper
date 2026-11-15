@@ -45,26 +45,33 @@ def sh(cmd):
 
 
 def push_page(now):
-    """drops.html / _drops.json だけを push(他の自動更新とぶつかったら取り込み直して再挑戦)"""
+    """drops.html / _drops.json / _drops_results.json だけを push する。
+    他の自動更新とぶつかったら、最新の main に合わせ直してから、この3ファイルだけを上書きして作り直す
+    (11/15: 以前の作り直し方は古い checkout の他のファイルまで戻してしまったので、必ず最新の main を土台にする)"""
     files = [f for f in ("docs/drops.html", "docs/_drops.json", "docs/_drops_results.json") if os.path.exists(os.path.join(ROOT, f))]
-    sh("git add " + " ".join(files))   # 無いファイルを渡すと git add 全体が失敗するので、あるものだけ
-    if sh("git diff --cached --quiet").returncode == 0:
+    if not files:
         return
-    sh(f'git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" '
-       f'commit -q -m "chore: 締切直前オッズ {now:%H:%M}"')
-    for _ in range(4):
-        r1 = sh("git pull -q --rebase -X theirs")
-        r2 = sh("git push -q") if r1.returncode == 0 else r1
-        if r1.returncode == 0 and r2.returncode == 0:
+    msg = f'chore: 締切直前オッズ {now:%H:%M}'
+    git = 'git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com"'
+    for k in range(4):
+        keep = {f: open(os.path.join(ROOT, f), "rb").read() for f in files}
+        sh("git rebase --abort")
+        if sh("git fetch -q origin main").returncode != 0:
+            time.sleep(5)
+            continue
+        sh("git reset -q --hard origin/main")          # 最新の main(他のファイルは最新のまま)
+        for f, b in keep.items():
+            open(os.path.join(ROOT, f), "wb").write(b)  # この3ファイルだけ今回の内容にする
+        sh("git add " + " ".join(files))
+        if sh("git diff --cached --quiet").returncode == 0:
+            return
+        sh(f'{git} commit -q -m "{msg}"')
+        r = sh("git push -q origin HEAD:main")
+        if r.returncode == 0:
             print(f"[INFO] {now:%H:%M} ページを push")
             return
-        print("[WARN] push 失敗:", (r2.stderr or r2.stdout)[-300:])
-        sh("git rebase --abort")
-        sh("git fetch -q origin && git reset -q --soft origin/main")   # 取り込みが壊れたら最新に合わせて作り直す
-        sh("git add " + " ".join(files))
-        sh(f'git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" '
-           f'commit -q -m "chore: 締切直前オッズ {now:%H:%M}"')
-        time.sleep(5)
+        print("[WARN] push 失敗:", (r.stderr or r.stdout)[-300:])
+        time.sleep(5 + 5 * k)
     print("[WARN] push に失敗")
 
 
