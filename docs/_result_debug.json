@@ -1,18 +1,27 @@
 {
- "updated": "2026-11-15 08:48",
+ "updated": "2026-11-15 09:19",
  "failures": [
   {
-   "race": "2026-11-15 takeo 1R",
+   "race": "2026-11-15 takeo 2R",
    "diag": {
     "venue": "takeo",
-    "race_id": "8420261114020001",
+    "race_id": "8420261114020002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-15 matsudo 2R",
+   "diag": {
+    "venue": "matsudo",
+    "race_id": "3120261113030002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 2964,
- "with_result": 2340,
+ "with_result": 2342,
  "without_url": 0,
- "pending_eligible": 545
+ "pending_eligible": 546
 }
