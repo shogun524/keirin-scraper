@@ -10,13 +10,15 @@ jobs:
       - run: |
           mkdir -p out && cd out
           python - <<'PY'
-          import requests, re
+          import requests, re, json, time
           S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
-          for u in ["https://cdnv2.netkeiba.com/keirin/race/odds/tags/race_odds.min.js?20260408","https://cdnv2.netkeiba.com/keirin/api/race/common/js/race_api_indexdb.min.js?210616"]:
-              r=S.get(u,timeout=20); n=u.split("/")[-1].split("?")[0]; open(n,"wb").write(r.content); print(r.status_code,len(r.content),n)
-              t=r.text
-              for m in re.finditer(r"api_url|\.html|pid\s*[:=]",t):
-                  print("  ",n,"::",t[max(0,m.start()-160):m.start()+200].replace("\n"," "))
+          API="https://keirin.netkeiba.com/api/race/"
+          def call(cls,**kw):
+              d=dict(input="UTF-8",output="json",**{"class":cls},method="get",compress="0",**kw)
+              r=S.post(API,data=d,timeout=20); return r
+          for cls,kw in [("AplRaceOdds",dict(race_id="202611152807")),("AplRaceHorse",dict(race_id="202611152807")),("AplRace",dict(kaisai_date="20261115",syusai="")),("AplKaisai",dict(year="2026",syusai="")),("AplNarabiYoso",dict(race_id="202611152807"))]:
+              t0=time.time(); r=call(cls,**kw); open(cls+".json","wb").write(r.content)
+              print(cls,r.status_code,len(r.content),round(time.time()-t0,2),"s",r.text[:600].replace("\n"," "))
           PY
       - uses: actions/checkout@v4
         with: { path: repo }
