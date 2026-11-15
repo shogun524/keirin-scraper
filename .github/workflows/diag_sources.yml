@@ -10,20 +10,13 @@ jobs:
       - run: |
           mkdir -p out && cd out
           python - <<'PY'
-          import requests, json, re
+          import requests, json
           S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
-          def call(cls,**kw):
-              r=S.post("https://keirin.netkeiba.com/api/race/",data=dict(input="UTF-8",output="json",**{"class":cls},method="get",compress="0",**kw),timeout=20); return r
-          rl=call("AplRace",kaisai_date="20261115",syusai="").json()["data"]
-          rids=[r["race_id"] for v in list(rl.values())[0] for r in v["list"]]
-          rid=[x for x in rids if x.endswith("11")][0]; print("rid",rid)
-          for cls in ["AplRaceHorse","AplNarabiYoso","AplRaceOdds"]:
-              r=call(cls,race_id=rid); open(cls+".json","wb").write(r.content); print(cls,len(r.content))
-          for cls in ["AplRaceYoso","AplRaceMark","AplYoso","AplRaceInfo","AplRaceResult","AplRaceRefund","AplRacePayback"]:
-              r=call(cls,race_id=rid); print("try",cls,r.status_code,r.text[:160].replace("\n"," "))
-          r=S.get("https://keirin.kdreams.jp/racecard/",timeout=20)
-          m=sorted(set(re.findall(r"https://keirin\.kdreams\.jp/([a-z]+)/racedetail/(\d{2})\d+",r.text))); print("KD", m)
-          r=S.get(f"https://keirin.netkeiba.com/race/entry/?race_id={rid}",timeout=20); open("nk_entry.html","wb").write(r.content); print("entry",len(r.content))
+          r=S.post("https://keirin.netkeiba.com/api/race/",data=dict(input="UTF-8",output="json",**{"class":"AplRace"},method="get",compress="0",kaisai_date="20261115",syusai=""),timeout=20)
+          d=r.json()["data"]; v=list(d.values())[0]
+          print("VENUE_KEYS", {k:(x if not isinstance(x,list) else len(x)) for k,x in v[0].items()})
+          print("RACE", json.dumps(v[0]["list"][0],ensure_ascii=False))
+          for vv in v: print("V", vv.get("jyo"), vv.get("jyo_cd"), {k:vv.get(k) for k in vv if k not in ("list",)} )
           PY
       - uses: actions/checkout@v4
         with: { path: repo }
