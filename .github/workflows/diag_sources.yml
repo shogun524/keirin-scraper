@@ -10,12 +10,14 @@ jobs:
       - run: |
           mkdir -p out && cd out
           python - <<'PY'
-          import requests
+          import requests, re
           S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
-          for rid in ["202611152801","202611152802"]:
-              r=S.get(f"https://keirin.netkeiba.com/race/result/?race_id={rid}",timeout=20); open(f"res_{rid}.html","wb").write(r.content); print(rid,r.status_code,len(r.content))
-          r=S.post("https://keirin.netkeiba.com/api/race/",data=dict(input="UTF-8",output="json",**{"class":"AplRaceOdds"},method="get",compress="0",race_id="202611152801"),timeout=20)
-          open("odds_finished.json","wb").write(r.content); print("finished odds",r.text[:300])
+          for u in ["https://keirin.kdreams.jp/beppu/racedetail/8620261115010001/","https://keirin.kdreams.jp/beppu/racedetail/8620261115010001/result/",
+                    "https://keirin.netkeiba.com/race/result/?race_id=202611152801","https://keirin.netkeiba.com/race/result/?race_id=202611152801&rf=race_list"]:
+              r=S.get(u,timeout=20); n=re.sub(r"\W","_",u[8:])[:80]+".html"; open(n,"wb").write(r.content)
+              t=r.text; k=t.count("3連単"); print(r.status_code,len(t),k,u)
+              for m in list(re.finditer("3連単",t))[:4]:
+                  seg=re.sub(r"<[^>]+>","|",t[m.start():m.start()+400]); seg=re.sub(r"\s+"," ",seg); seg=re.sub(r"(\| ?)+","|",seg); print("   ",seg[:200])
           PY
       - uses: actions/checkout@v4
         with: { path: repo }
