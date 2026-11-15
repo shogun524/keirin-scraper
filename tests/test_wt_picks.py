@@ -164,7 +164,7 @@ class TestRuleF(unittest.TestCase):
 
     def test_recommendation_includes_f_not_e(self):
         ps = [dict(url="u", rule="F", ticket="3-6-9"), dict(url="u", rule="E", ticket="1-4-7")]
-        self.assertEqual(P.race_recommendation(ps, "u"), [("win", "F", ["3-6-9"])])
+        self.assertEqual(P.race_recommendation(ps, "u"), [("win", "F 並び1点・過去136〜140%", ["3-6-9"])])
         self.assertEqual(P.race_recommendation([dict(url="u", rule="E", ticket="1-4-7")], "u"), [])
 
 

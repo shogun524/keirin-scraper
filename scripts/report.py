@@ -708,7 +708,14 @@ def render_manshaken_box(info):
                 tip = label.replace("参考 ", "") if k == "ref" else ""
                 return (f'<span style="background:{col.get(k, "#7A8494")};color:#fff;font-size:11px;font-weight:700;'
                         f'padding:1px 6px;border-radius:999px">{short}</span>' + (f' <span class="dim">{tip}</span>' if tip else ""))
-            items = "<br>".join(f'{_lab(k, label)} <b>{" ".join(t)}</b>' for k, label, t in rec)
+            win = [x for x in rec if x[0] != "ref"]
+            ref = [x for x in rec if x[0] == "ref"]
+            items = "<br>".join(f'{_lab(k, label)} <b>{" ".join(t)}</b>' for k, label, t in win)
+            if ref:
+                rtxt = "<br>".join(f'{_lab(k, label)} <b>{" ".join(t)}</b>' for k, label, t in ref)
+                items = (items + "<br>" if items else '<span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br>') + \
+                    f'<details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary>{rtxt}</details>'
+
             parts.insert(0, items)
         else:
             parts.insert(0, '<b>買い目(3連単)</b> <span class="dim">見送り(回収率の高い形に当たらない)</span>')
@@ -717,7 +724,7 @@ def render_manshaken_box(info):
                      '<span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): ' + " ".join(f'<s>{k}</s>' for k in keshi[:12]) + '</span></details>')
     return ('<div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8">'
             '<div style="font-weight:800;font-size:12px;color:#C8402A">'
-            'このレースの買い目</div>' + '<br>'.join(parts) +
+            '回収率重視の買い目(過去の検証で回収率100%超え)</div>' + '<br>'.join(parts) +
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
@@ -993,7 +1000,7 @@ def render_race_card(race_data, tab_id):
           {odds_alert_html}
         </div>
         {banner_html}
-        <div class="sumbox">{render_tag_line(result)}{render_manshaken_box(info)}{result.get("_buy_html", "")}</div>
+        <div class="sumbox">{render_tag_line(result)}{render_manshaken_box(info)}{('<details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary>' + result["_buy_html"] + '</details>') if result.get("_buy_html") else ""}</div>
         {line_info_html}
         {odds_trend_html}
         {subtab_bar_html}
@@ -1667,6 +1674,7 @@ def render_index(all_race_data, date=None, now=None):
         {"venue": rd["race_info"]["venue"], "name": VENUE_NAMES.get(rd["race_info"]["venue"], rd["race_info"]["venue"]),
          "race_no": rd["race_info"]["race_no"], "deadline": rd["race_info"].get("deadline"),
          "flags": _race_flags(rd),
+         "rec": [[lb, " ".join(ts)] for k, lb, ts in (rd["race_info"].get("recommend") or []) if k != "ref"],
          "man": round((rd["race_info"].get("manshaken") or {}).get("man") or 0, 3)}
         for rd in all_race_data if rd["race_info"].get("deadline")
     ], ensure_ascii=False)
@@ -1729,28 +1737,27 @@ def render_index(all_race_data, date=None, now=None):
           return {r: r, mins: minutesUntilDeadline(r.deadline, nowJstMinutes)};
         });
         withMins.sort(function(a,b){ return a.mins - b.mins; });
-        const upcoming = withMins.filter(function(x){ return x.mins < 1e9 && (x.r.flags||[]).indexOf('honmei') < 0; }).slice(0, 8);
+        const recs = withMins.filter(function(x){ return x.mins < 1e9 && (x.r.rec||[]).length; });
+        const upcoming = recs.slice(0, 12);
+        let html = '<h2 class="section">回収率重視の買い目(これからのレース)</h2>' +
+          '<p class="dim" style="font-size:12px;margin:0 0 6px">過去の検証(2025〜2026年 約5万レース)で回収率100%を超えた形に当たったレースだけ。( )は過去の回収率</p>';
         if(upcoming.length){
-          let html = '<h2 class="section">まもなく締切の穴レース</h2><div class="upcoming-list">';
+          html += '<div class="upcoming-list">';
           upcoming.forEach(function(x, idx){
             const r = x.r;
             const soon = x.mins <= 5 ? ' soon' : '';
-            // 特記事項バッジ（本命が堅い／拮抗／妙味候補）
-            const FLAG_LABELS = {ana:'穴目あり', close:'拮抗', value:'妙味'};
-            const badges = (r.man ? '<span class="up-badge up-badge-man">万車率' + Math.round(r.man*100) + '%</span>' : '') +
-              (r.flags || []).filter(function(f){ return FLAG_LABELS[f]; }).map(function(f){
-              return '<span class="up-badge up-badge-' + f + '">' + FLAG_LABELS[f] + '</span>';
-            }).join('');
-            // レース番号つきで遷移する（?r=N）。付けないと、その場の「締切が一番近いレース」が開いてしまう
+            const bets = r.rec.map(function(b){ return '<span class="up-bet"><span class="up-badge up-badge-man">' + b[0] + '</span> <b>' + b[1] + '</b></span>'; }).join('');
             html += '<a class="upcoming-row' + soon + '" href="' + r.venue + '/index.html?r=' + r.race_no + '">' +
               '<span class="up-rank">' + (idx+1) + '</span>' +
-              '<span class="up-main"><span class="up-name">' + r.name + '競輪 ' + r.race_no + 'R</span>' +
-              (badges ? '<span class="up-badges">' + badges + '</span>' : '') + '</span>' +
-              '<span class="up-time">' + r.deadline + '（あと約' + x.mins + '分）</span></a>';
+              '<span class="up-main"><span class="up-name">' + r.name + ' ' + r.race_no + 'R</span>' +
+              '<span class="up-badges up-bets">' + bets + '</span></span>' +
+              '<span class="up-time">' + r.deadline + '<br>(あと約' + x.mins + '分)</span></a>';
           });
           html += '</div>';
-          box.innerHTML = html;
+        } else {
+          html += '<p class="dim">今日これから締切のレースに、回収率重視の買い目はありません。</p>';
         }
+        box.innerHTML = html;
       }
 
       // 各競輪場カードの「次走」表示（現在時刻に一番近いレース番号・締切）
@@ -1805,6 +1812,7 @@ def render_index(all_race_data, date=None, now=None):
   .up-badge{{ font-size:10.5px; font-weight:700; color:#fff; border-radius:4px; padding:1px 6px; }}
   .up-badge-high{{ background:var(--brick); }} .up-badge-close{{ background:var(--slate); }}
   .up-badge-ana{{ background:#6A4FA0; }} .up-badge-man{{ background:#C8402A; }}
+  .up-bets{{ display:flex; flex-direction:column; gap:2px; }} .up-bet{{ font-size:12px; }}
   .up-badge-value{{ background:#8a5a12; }}
   .up-time{{ font-size:12px; color:#8a5a12; font-weight:700; white-space:nowrap; }}
   @media (max-width:520px){{ .venue-row{{ grid-template-columns:repeat(2,1fr); }} }}
@@ -1816,12 +1824,12 @@ def render_index(all_race_data, date=None, now=None):
     <h1>競輪AI予想</h1>
     <span class="date">{date_str}</span>
   </div>
-  <p class="tagline">今日、どこで、どの目を買うか。</p>
+  <p class="tagline">回収率重視。過去に回収率100%を超えた買い方だけを出します。</p>
   {gate_stripe_html()}
 </header>
 <main>
-  {_tab_grid_html()}
   <div id="upcomingListBox"></div>
+  {_tab_grid_html()}
   <h2 class="section">本日の開催場</h2>
   {rows_html if by_venue else "<p style='text-align:center;color:var(--ink-soft);'>本日は取得できたレースがありませんでした。</p>"}
 </main>
@@ -1940,7 +1948,7 @@ def _fmt_date_jp(date=None):
 # ナビゲーションの並び順・文言はここ1か所で管理する。
 AGG_GROUPS = [
     ("レースをさがす", [
-        ("picks.html", "穴レース"),
+        ("picks.html", "今日の推奨一覧・成績"),
         ("drops.html", "オッズ急落"),
         ("close_race.html", "拮抗レース"),
         ("formula.html", "勝利の方程式"),
@@ -3475,7 +3483,7 @@ def render_print_page(all_race_data, date=None):
     （iPhone/iPadは、共有ボタン → 「プリント」→ プレビューをピンチアウト → 共有でPDF保存）。<br>
     表の見方：記者＝記者の印、AI＝予測1着率の上位印（◎○▲△）、AI 1着%（赤い棒）・2着・3着内％はAIの予測。
     今場所・前場所・前々場所＝レース種別と着順（1着は赤地、2〜3着はピンク）。▶はデータから作った一言。
-    穴党の買い目＝穴レースのページと同じ判定。AIが推す組は「消し目」として外しています。</p>
+    回収率重視の買い目＝過去の検証で回収率100%を超えた形(推奨一覧のページと同じ判定)。</p>
   </div>"""
     body = controls + (sections or '<p class="dim">本日は予想できたレースがありません。</p>')
     return _page_shell(

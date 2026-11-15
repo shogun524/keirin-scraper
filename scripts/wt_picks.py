@@ -606,6 +606,12 @@ def merge(log, picks):
     return sorted(keep, key=lambda p: (p["date"], p["start_at"], p["rule"]))
 
 
+# 各ルールの検証回収率(2025年・2026年。表示用)。回収率の高い順に並べるのにも使う(下限の値)
+RULE_ROI = {"F": ("136〜140%", 136), "M1": ("116〜136%", 116), "K1": ("125〜137%", 125), "A": ("129〜133%", 129),
+            "C": ("122%", 122), "M2": ("116〜126%", 116), "M3": ("114〜116%", 114), "D": ("110〜111%", 110),
+            "B": ("110%", 110), "K6": ("105〜106%", 105), "K4": ("102〜120%", 102)}
+
+
 def race_recommendation(picks, url, tri=None):
     """そのレースの推奨買い目(3連単だけ) [(種類, ラベル, [買い目])]。
     K(レースごとに形を変える) と 1点ルール(A〜D・F)。全部まとめた合成オッズが MIN_COMP 未満なら、低いオッズの組から外す"""
@@ -616,7 +622,7 @@ def race_recommendation(picks, url, tri=None):
             seen.update(p["tickets"])
             lab = {"K1": "K1 フォーメーション", "K4": "K4 1点", "K6": "K6 穴1点",
                    "M3": "M3 万車・ライン2点", "M2": "M2 万車・番手差し", "M1": "M1 万車・3番目ライン"}[p["rule"]]
-            out.append(("win" if p["rule"] != "K6" else "ana", lab, list(p["tickets"])))
+            out.append(("win" if p["rule"] != "K6" else "ana", f'{lab}・過去{RULE_ROI[p["rule"]][0]}', list(p["tickets"])))
     for p in ps:
         if p["rule"] == "W" and p["ticket"] not in seen:
             seen.add(p["ticket"])
@@ -624,9 +630,9 @@ def race_recommendation(picks, url, tri=None):
             continue
         if p["rule"] in ("A", "B", "C", "D", "F") and p["ticket"] not in seen:
             seen.add(p["ticket"])
-            out.append(("win", "・".join(sorted(q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCDF")),
-                        [p["ticket"]]))
-    out = [x for x in out if x[0] != "big"]
+            rs = sorted({q["rule"] for q in ps if q["ticket"] == p["ticket"] and q["rule"] in "ABCDF"}, key=lambda r: -RULE_ROI[r][1])
+            out.append(("win", "・".join(rs) + f' 並び1点・過去{RULE_ROI[rs[0]][0]}', [p["ticket"]]))
+    out = [x for x in out if x[0] != "big" and not x[1].startswith("W ")]   # 3連単だけ
     if tri:
         allt = [t for x in out for t in x[2]]
         while allt and (composite(tri, allt) or 0) < MIN_COMP:
@@ -858,7 +864,7 @@ def render(log, now, board=None):
     notes += "".join(f"<li><b>{html.escape(d.split('(')[0])}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for _, d, b in BIG.values())
     return f"""<!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>穴レース</title>
+<title>回収率重視の買い目</title>
 <style>
   :root {{ --navy:#1B2A4A; --paper:#F5F6F8; --line:#DDE1E8; --ink:#1E2430; --soft:#5F6878; --accent:#C8402A; }}
   * {{ box-sizing:border-box; }}
@@ -899,7 +905,7 @@ def render(log, now, board=None):
   th, td {{ border:1px solid var(--line); padding:6px 8px; text-align:right; }} th:first-child, td:first-child {{ text-align:left; }}
   footer {{ font-size:.75rem; color:var(--soft); }} footer ul {{ padding-left:18px; }}
 </style></head><body class="ana">
-<header><h1>穴レース(競輪)</h1>
+<header><h1>回収率重視の買い目(競輪)</h1>
 <p>{html.escape(today)} ・ 更新 {now.strftime('%H:%M')}(30分おき) ・ <a href="index.html">全レースの予想</a> ・ <a href="drops.html">オッズ急落</a></p></header>
 <main>{body}{stat}</main>
 <footer><details class="more"><summary>ルールの説明と注意</summary><ul>{notes}</ul>
