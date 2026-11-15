@@ -6,20 +6,27 @@ jobs:
     steps:
       - run: pip install -q requests
       - run: |
+          mkdir -p out && cd out
           python - <<'PY'
-          import requests
-          UAS={"pc":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
-               "iphone":"Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"}
-          urls=["https://www.winticket.jp/keirin/","https://www.winticket.jp/keirin/schedules/20261115",
-                "https://keirin.netkeiba.com/","https://keirin.netkeiba.com/race/race_list/?kaisai_date=20261115",
-                "https://keirin.jp/pc/top","https://keirin.kdreams.jp/","https://keirin.kdreams.jp/racecard/",
-                "https://www.chariloto.com/keirin","https://www.oddspark.com/keirin/"]
-          for u in urls:
-              for k,ua in UAS.items():
-                  try:
-                      r=requests.get(u,headers={"User-Agent":ua,"Accept-Language":"ja"},timeout=20)
-                      t=r.text; title=t[t.find("<title>")+7:t.find("</title>")][:60] if "<title>" in t else ""
-                      print(f"{r.status_code} {len(t):>7} {k:6} {u} | {title}")
-                  except Exception as e:
-                      print("ERR", k, u, str(e)[:80])
+          import requests, re
+          UA={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36","Accept-Language":"ja"}
+          S=requests.Session(); S.headers.update(UA)
+          def save(name,u):
+              r=S.get(u,timeout=20); open(name,"wb").write(r.content); print(r.status_code,len(r.content),name,u); return r
+          r=save("nk_list.html","https://keirin.netkeiba.com/race/race_list/?kaisai_date=20261115")
+          ids=sorted(set(re.findall(r"race_id=(\d{12,})",r.text)))[:400]; print("nk ids",len(ids),ids[:10])
+          if ids:
+              rid=ids[len(ids)//2]
+              save("nk_odds.html",f"https://keirin.netkeiba.com/race/odds/?race_id={rid}")
+              save("nk_odds3t.html",f"https://keirin.netkeiba.com/race/odds/?race_id={rid}&type=b8")
+              save("nk_shutuba.html",f"https://keirin.netkeiba.com/race/entry/?race_id={rid}")
+              save("nk_result.html",f"https://keirin.netkeiba.com/race/result/?race_id={ids[0]}")
+          r=save("kd_card.html","https://keirin.kdreams.jp/racecard/")
+          links=sorted(set(re.findall(r'href="(https://keirin\.kdreams\.jp/[a-z]+/racedetail/\d+/?)"',r.text)))[:50]; print("kd links",len(links),links[:5])
+          if links:
+              save("kd_detail.html",links[len(links)//2])
+              save("kd_odds.html",links[len(links)//2].rstrip("/")+"/odds/")
+          save("kj_top.html","https://keirin.jp/pc/top")
           PY
+      - uses: actions/upload-artifact@v4
+        with: { name: pages, path: out }
