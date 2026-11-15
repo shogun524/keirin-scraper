@@ -1,5 +1,7 @@
 name: diag_sources
 on: workflow_dispatch
+permissions:
+  contents: write
 jobs:
   d:
     runs-on: ubuntu-latest
@@ -22,11 +24,18 @@ jobs:
               save("nk_shutuba.html",f"https://keirin.netkeiba.com/race/entry/?race_id={rid}")
               save("nk_result.html",f"https://keirin.netkeiba.com/race/result/?race_id={ids[0]}")
           r=save("kd_card.html","https://keirin.kdreams.jp/racecard/")
-          links=sorted(set(re.findall(r'href="(https://keirin\.kdreams\.jp/[a-z]+/racedetail/\d+/?)"',r.text)))[:50]; print("kd links",len(links),links[:5])
+          links=sorted(set(re.findall(r'href="(https://keirin\.kdreams\.jp/[a-z]+/racedetail/\d+/?)"',r.text)))
+          links=[l for l in links if "20261115" in l]; print("kd links today",len(links),links[:3])
           if links:
-              save("kd_detail.html",links[len(links)//2])
-              save("kd_odds.html",links[len(links)//2].rstrip("/")+"/odds/")
+              L=links[min(5,len(links)-1)]
+              save("kd_detail.html",L)
+              for t in ["odds/","odds/3rentan/","odds/?type=3rentan"]:
+                  save("kd_odds_"+re.sub(r"\W","_",t)+".html",L.rstrip("/")+"/"+t)
+          save("nk_list_sp.html","https://keirin.netkeiba.com/race/race_list/?kaisai_date=20261115")
           save("kj_top.html","https://keirin.jp/pc/top")
           PY
-      - uses: actions/upload-artifact@v4
-        with: { name: pages, path: out }
+      - uses: actions/checkout@v4
+        with: { path: repo }
+      - run: |
+          cd repo && git checkout --orphan diag-pages && git rm -rqf . && cp ../out/* . && git add -A
+          git -c user.name=bot -c user.email=bot@example.com commit -qm diag && git push -qf origin diag-pages
