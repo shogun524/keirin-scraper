@@ -718,6 +718,30 @@ def render_manshaken_box(info):
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
+def render_formation_rows(tickets):
+    """3連単の組の集まり -> フォーメーションの行(1着 → 2着 → 3着)。
+    同じ1着・2着の3着をまとめ、3着の組が同じ2着をまとめ、さらに中身が同じ1着をまとめる"""
+    by = {}
+    for a, b, c in tickets:
+        by.setdefault(a, {}).setdefault(b, set()).add(c)
+    rows = {}
+    for a, sec in by.items():
+        grp = {}
+        for b, th in sec.items():
+            grp.setdefault(tuple(sorted(th)), []).append(b)
+        key = tuple(sorted((tuple(sorted(bs)), th) for th, bs in grp.items()))
+        rows.setdefault(key, []).append(a)
+    badge = lambda c: f'<span class="car" style="background:{car_color(c)[0]};color:{car_color(c)[1]}">{c}</span>'  # noqa: E731
+    out = []
+    for key, heads in sorted(rows.items(), key=lambda kv: (sorted(kv[1])[0])):
+        for bs, th in key:
+            n = len([1 for a in heads for b in bs for c in th if len({a, b, c}) == 3])
+            out.append(f'<div class="fm-row"><span class="fm-c">{"".join(badge(a) for a in sorted(heads))}</span><span class="fm-a">→</span>'
+                       f'<span class="fm-c">{"".join(badge(b) for b in bs)}</span><span class="fm-a">→</span>'
+                       f'<span class="fm-c">{"".join(badge(c) for c in th)}</span><span class="fm-n">{n}点</span></div>')
+    return '<div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div>' + "".join(out) + "</div>"
+
+
 BUY_MAX = 20   # 買うべき出目の上限(消し目が上位の組を消すと、合成2倍まで数十点になることがあるため)
 
 
@@ -752,11 +776,14 @@ def render_formation_builder(tab_id, result, keshi=None):
         buy.append((k, v))
         inv += 1 / v[1]
     if buy:
+        form_html = render_formation_rows([tuple(int(x) for x in k.split("-")) for k, _ in buy])
         bp = sum(v[0] for _, v in buy)
         bc = 1 / sum(1 / v[1] for _, v in buy)
         buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}を頭に、'
                     f'消し目を除いて来る確率の高い順に合成2倍まで(最大20点)・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
-                    + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%}・期待値{v[0] * v[1]:.2f})</span>' for k, v in buy)
+                    + form_html
+                    + '<details><summary class="dim">1点ずつ(オッズ・確率)</summary>'
+                    + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%})</span>' for k, v in buy) + '</details>'
                     + '<div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。'
                       '合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div>')
     else:
