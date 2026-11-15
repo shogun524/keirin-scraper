@@ -718,7 +718,7 @@ def render_manshaken_box(info):
             ' <a href="../picks.html" style="font-size:12px">ルールの説明</a></div>')
 
 
-def render_formation_builder(tab_id, result):
+def render_formation_builder(tab_id, result, keshi=None):
     """3連単フォーメーションを組む道具: 1着・2着・3着の車番を押すと、点数・当たる確率・合成オッズ・期待回収率と
     買い目の一覧(確率・オッズ・期待値)を出す。確率は tri_model(市場+ラインの決まり方)。オッズが無いときは出さない"""
     jt, od = result.get("tri_joint"), result.get("tri_odds")
@@ -737,6 +737,27 @@ def render_formation_builder(tab_id, result):
         f'<td>{p1[c]:.1%}</td><td>{p2[c]:.1%}</td><td>{p3[c]:.1%}</td><td>{p1[c] + p2[c] + p3[c]:.1%}</td></tr>'
         for c in sorted(cars, key=lambda c: -p1[c]))
     top_p = sorted(data.items(), key=lambda kv: -kv[1][0])[:8]
+    # 買うべき出目: 1着率10%以上の選手だけで組んだ組から、消し目を除いて期待値の高い順に5点(合成オッズ2倍未満にならない所まで)
+    base = [c for c in cars if p1[c] >= 0.10]
+    ks = set(keshi or [])
+    cand = sorted(((k, v) for k, v in data.items()
+                   if all(int(x) in base for x in k.split("-")) and k not in ks), key=lambda kv: -kv[1][0] * kv[1][1])
+    buy = []
+    for k, v in cand[:5]:
+        if 1 / sum(1 / x[1] for x in buy + [(k, v)]) < 2:
+            break
+        buy.append((k, v))
+    if buy:
+        bp = sum(v[0] for _, v in buy)
+        bc = 1 / sum(1 / v[1] for _, v in buy)
+        buy_html = (f'<div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の{"・".join(map(str, base))}で組み、'
+                    f'消し目を除いて期待値の高い順・{len(buy)}点・当たる確率{bp:.1%}・合成{bc:.1f}倍)</span><br>'
+                    + " ／ ".join(f'<b>{k}</b> {v[1]:.1f}倍 <span class="dim">({v[0]:.1%}・期待値{v[0] * v[1]:.2f})</span>' for k, v in buy)
+                    + '<div class="dim" style="font-size:11px">2026年の検証(約1万6千レース): 期待値の高い順3点で回収率81%(確率の高い順3点は71%)。'
+                      '1着率10%以上が5人いるレースは110%(1年だけ・1311レース)。100%を安定して超える形ではない。</div></div>')
+    else:
+        buy_html = (f'<div class="fb-buy dim">買うべき出目: 1着率10%以上の選手({"・".join(map(str, base)) or "なし"})では、'
+                    '合成オッズ2倍以上の組が作れない</div>')
     top_ev = sorted(((k, v) for k, v in data.items() if v[1] < 300), key=lambda kv: -kv[1][0] * kv[1][1])[:8]
     li = lambda xs: "".join(f'<li><b>{k}</b> {v[0]:.1%} ・ {v[1]:.1f}倍 ・ 期待値{v[0] * v[1]:.2f}</li>' for k, v in xs)  # noqa: E731
     btn = lambda pos: "".join(  # noqa: E731
@@ -748,6 +769,7 @@ def render_formation_builder(tab_id, result):
   <div class="fb-h">3連単フォーメーションを組む</div>
   <p class="dim" style="margin:2px 0 6px">確率 = 3連単オッズ(みんなの評価)に、市場が織り込み切れていないラインの決まり方を足したもの
   (過去5万レースで、オッズだけより少しよく当たる)。期待値 = 確率 × オッズ(1.0で回収率100%の見込み)。</p>
+  {buy_html}
   <div class="fb-row"><span>1着</span>{btn(1)}</div>
   <div class="fb-row"><span>2着</span>{btn(2)}</div>
   <div class="fb-row"><span>3着</span>{btn(3)}</div>
@@ -901,7 +923,7 @@ def render_race_card(race_data, tab_id):
     if has_trifecta:
         trifecta_block_html = f"""
     <div id="{tab_id}_sub_tf" class="subtab-panel" style="display:none;">
-      {render_formation_builder(tab_id, result)}
+      {render_formation_builder(tab_id, result, info.get("ai_keshi"))}
       {trifecta_html}
     </div>"""
     dev_block_html = ""
