@@ -9,7 +9,7 @@ nk_watch.py が記録した締切前オッズ(live/nk_live_YYYYMMDD.jsonl.gz、�
 を「締切直前にお金が入った3連単」として出す。締切前は同じ方法で「暫定」を出し、締切後に確定する。
 並べ方は 1着-2着-3着 の候補をまとめた書き方(例: 235-4-35 = 1着2・3・5、2着4、3着3・5 の組のうち選んだもの)。
 合成オッズ = 1 ÷ Σ(1/各組のオッズ)。選定時と、締切後の最終オッズの両方を出す。
-結果は netkeirin の結果ページから3連単の組と払戻を読んで、各100円で買った場合の収支を出す。
+結果は netkeirin の結果ページから3連単の組と払戻を読んで、1レース5,000円を資金配分(オッズに反比例・100円単位)で買った場合の収支を出す。
 
 使い方(scripts/ で): python nk_drops.py --live ../live/nk_live_20261115.jsonl.gz
 """
@@ -58,6 +58,37 @@ def shares(tri):
 def synth(tri, combos):
     inv = [1 / tri[c] for c in combos if tri.get(c)]
     return 1 / sum(inv) if inv else None
+
+
+BUDGET = 5000   # 1レースの資金(円)
+
+
+def allocate(tri, combos, budget=BUDGET):
+    """資金配分(どの組が当たっても払戻がほぼ同じになるよう、オッズに反比例して配る)。100円単位・合計 budget 円。
+    -> {組: 金額}。オッズの無い組は 0 円"""
+    inv = {c: 1 / tri[c] for c in combos if tri.get(c)}
+    if not inv:
+        return {}
+    tot = sum(inv.values())
+    st = {c: max(100, int(round(budget * v / tot / 100)) * 100) for c, v in inv.items()}
+    while sum(st.values()) != budget:
+        diff = budget - sum(st.values())
+        # 足りなければ一番オッズの低い組に足し、多ければ一番多い組(100円より上)から引く
+        if diff > 0:
+            st[max(inv, key=inv.get)] += 100
+        else:
+            k = max((c for c in st if st[c] > 100), key=lambda c: st[c], default=None)
+            if k is None:
+                break
+            st[k] -= 100
+    return st
+
+
+def payout(stakes, r):
+    """確定結果 r(combo, pay=100円あたりの払戻)で、配分した買い方の払戻"""
+    if not r:
+        return None
+    return int(stakes.get(r["combo"], 0) / 100 * r["pay"])
 
 
 # ------------------------------------------------------------ 選ぶ
@@ -245,12 +276,14 @@ def race_card(rid, snaps, sel, res, now_ts, provisional=False):
     left = (s0["close"] - now_ts) / 60
     when = f'締切 {hm(s0["close"])}' + (f'(あと{left:.0f}分)' if provisional else "")
     res_html = ""
+    stakes = allocate(cur["tri"], combos)
+    alloc_html = ('<details class="gr"><summary>5,000円の資金配分(選定時のオッズで、どれが当たっても払戻がほぼ同じ)</summary><p class="note">'
+                  + " ／ ".join(f'{c} {stakes[c]:,}円' for c in sorted(stakes, key=lambda c: -stakes[c])) + '</p></details>') if stakes else ""
     if not provisional:
-        n = len(combos)
         if r:
-            pay = r["pay"] if hit else 0
+            pay = payout(stakes, r) or 0
             res_html = (f'<p class="res {"hit" if hit else "miss"}">{"🎯 的中 " + hit if hit else "不的中"} ｜ 確定結果 {r["combo"]}({r["pay"]:,}円) ｜ '
-                        f'各100円試算 投資 {n * 100:,}円・払戻 {pay:,}円・収支 {pay - n * 100:+,}円</p>')
+                        f'5,000円配分 払戻 {pay:,}円・収支 {pay - BUDGET:+,}円</p>')
         else:
             res_html = '<p class="res wait">結果待ち</p>'
     svg = chart_svg(snaps, combos, s0["close"], hit)
@@ -261,6 +294,7 @@ def race_card(rid, snaps, sel, res, now_ts, provisional=False):
   <p class="syn">全{len(combos)}点の合成オッズ <b>{syn_sel:.2f}倍</b>(選定時){f" ／ 最終 {syn_fin:.2f}倍" if syn_fin else ""}</p>
   <p class="meta">締切前の記録で選定 ｜ {len(combos)}／{MAX_PICKS}点 ｜ {("提供元更新 " + odt_hms(prev.get("odt")) + " → " + odt_hms(cur.get("odt"))) if cur.get("odt") and prev.get("odt") else ("比べた記録 " + hm(prev["ts"], True) + " → " + hm(cur["ts"], True))} ｜ 記録{sum(1 for s in snaps if s["ts"] < s["close"])}回</p>
   {res_html}
+  {alloc_html}
   {f'<details class="gr"><summary>{len(combos)}点をグラフ表示</summary>{svg}<p class="note">縦軸はオッズ(対数)。点線が締切、右端が最後に取ったオッズ(締切後なら最終オッズ)。</p></details>' if svg else ""}
 </article>"""
 
@@ -290,16 +324,17 @@ def render(recs, res, now):
         state = "結果待ち"
         if r:
             n_r += 1
-            cost += 100 * len(combos)
+            cost += BUDGET
             h = r["combo"] in combos
+            got = payout(allocate(sel["cur"]["tri"], combos), r) or 0
             if h:
                 n_hit += 1
-                ret += r["pay"]
-            state = f'{"🎯 " if h else ""}{r["combo"]} {r["pay"]:,}円'
+                ret += got
+            state = f'{"🎯 " if h else ""}{r["combo"]} 払戻{got:,}円(収支{got - BUDGET:+,}円)'
         rows += (f'<tr><td>{hm(close)}</td><td>{html.escape(s0["venue"])}{s0["no"]}R</td><td>{len(combos)}点</td>'
                  f'<td>{synth(sel["cur"]["tri"], combos):.1f}</td><td class="l">{html.escape(" / ".join(formation(combos)))}</td><td>{state}</td></tr>')
-    summary = (f'<p class="sum">今日 {n_r}レース確定 ・ 的中 {n_hit} ・ 投資 {cost:,}円 ・ 払戻 {ret:,}円 ・ '
-               f'回収率 {ret / cost * 100:.0f}%</p>' if cost else '<p class="sum">今日の確定はまだありません</p>')
+    summary = (f'<p class="sum">今日 {n_r}レース確定(1レース5,000円を資金配分) ・ 的中 {n_hit} ・ 投資 {cost:,}円 ・ 払戻 {ret:,}円 ・ '
+               f'<b>収支 {ret - cost:+,}円</b> ・ 回収率 {ret / cost * 100:.0f}%</p>' if cost else '<p class="sum">今日の確定はまだありません</p>')
     up_html = "".join(race_card(rid, snaps, sel, res, now_ts, provisional=True) for _, rid, snaps, sel in up) or \
         '<p class="none">いま締切13分以内のレースはありません</p>'
     done_html = "".join(race_card(rid, snaps, sel, res, now_ts) for _, rid, snaps, sel in done[:40]) or \
@@ -341,7 +376,7 @@ details.more {{ background:#fff; border:1px solid var(--line); border-radius:12p
 <p>締切の約13分前から、netkeirin のオッズを60秒おき(締切4分前からは30秒おき)に取っています。公式のオッズ更新があったときだけ記録します。</p>
 <p>締切前の最後の記録(選定時)と、その45秒以上前の記録を比べます。各組の「支持の割合」(1/オッズを全組の合計で割ったもの)が増えた組を、増えた量が大きい順に最大15点選びます。つまり、締切直前にお金が多く入った組です。</p>
 <p>「235-4-35」のような書き方は、1着の候補が2・3・5、2着が4、3着が3・5を表します。この中で同じ車が重なる組を除いたものが、選んだ組です。</p>
-<p>合成オッズは、全点を同じ額ずつ買ったときの払戻倍率(1÷Σ(1/オッズ))です。最終は締切後の確定オッズで計算しています。結果は各組100円ずつ買った場合の試算です。</p>
+<p>合成オッズは、全点を同じ額ずつ買ったときの払戻倍率(1÷Σ(1/オッズ))です。最終は締切後の確定オッズで計算しています。結果は1レース5,000円を、選定時のオッズに反比例して配った(どの組が当たっても払戻がほぼ同じになる)場合の試算です(100円単位)。</p>
 <p>注意: ページの更新は約2分おきで、表示までさらに1分ほどかかります。「締切まもなく」の暫定は、締切までに入れ替わることがあります。直前にお金が入った組は当たりやすい半面、オッズが下がっているので回収率は下がるとも言われます。記録がたまったら回収率を検証します。</p>
 </details>
 <details class="more"><summary>各レースの買い目・結果一覧</summary>
