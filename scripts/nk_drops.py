@@ -259,7 +259,7 @@ def race_card(rid, snaps, sel, res, now_ts, provisional=False):
   <p class="type">三連単・最大{MAX_PICKS}点</p>
   <div class="chips">{chips}</div>
   <p class="syn">全{len(combos)}点の合成オッズ <b>{syn_sel:.2f}倍</b>(選定時){f" ／ 最終 {syn_fin:.2f}倍" if syn_fin else ""}</p>
-  <p class="meta">締切前の記録で選定 ｜ {len(combos)}／{MAX_PICKS}点 ｜ 提供元更新 {odt_hms(prev.get("odt"))} → {odt_hms(cur.get("odt"))} ｜ 取得 {hm(cur["ts"], True)}</p>
+  <p class="meta">締切前の記録で選定 ｜ {len(combos)}／{MAX_PICKS}点 ｜ {("提供元更新 " + odt_hms(prev.get("odt")) + " → " + odt_hms(cur.get("odt"))) if cur.get("odt") and prev.get("odt") else ("比べた記録 " + hm(prev["ts"], True) + " → " + hm(cur["ts"], True))} ｜ 記録{sum(1 for s in snaps if s["ts"] < s["close"])}回</p>
   {res_html}
   {f'<details class="gr"><summary>{len(combos)}点をグラフ表示</summary>{svg}<p class="note">縦軸はオッズ(対数)。点線が締切、右端が最後に取ったオッズ(締切後なら最終オッズ)。</p></details>' if svg else ""}
 </article>"""
