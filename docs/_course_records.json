@@ -12872,7 +12872,7 @@
   "山口__toyama": {
     "name": "山口",
     "venue": "toyama",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -28160,7 +28160,7 @@
   "伊藤__beppu": {
     "name": "伊藤",
     "venue": "beppu",
-    "races": 7,
+    "races": 9,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -88610,7 +88610,7 @@
   "田中__toyama": {
     "name": "田中",
     "venue": "toyama",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -102754,7 +102754,7 @@
   "江端__kawasaki": {
     "name": "江端",
     "venue": "kawasaki",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -102845,7 +102845,7 @@
   "石井__kawasaki": {
     "name": "石井",
     "venue": "kawasaki",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -105549,9 +105549,9 @@
   "窓場 千加頼__toyama": {
     "name": "窓場 千加頼",
     "venue": "toyama",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -105822,7 +105822,7 @@
   "高谷__kawasaki": {
     "name": "高谷",
     "venue": "kawasaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -105952,7 +105952,7 @@
   "高田__kawasaki": {
     "name": "高田",
     "venue": "kawasaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -106277,9 +106277,9 @@
   "横山 尚則__toyama": {
     "name": "横山 尚則",
     "venue": "toyama",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -106355,7 +106355,7 @@
   "阿部__beppu": {
     "name": "阿部",
     "venue": "beppu",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -109058,6 +109058,227 @@
   },
   "関根__komatsushima": {
     "name": "関根",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "池邉 聖__kawasaki": {
+    "name": "池邉 聖",
+    "venue": "kawasaki",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "巴 直也__kawasaki": {
+    "name": "巴 直也",
+    "venue": "kawasaki",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "加藤 寛治__kawasaki": {
+    "name": "加藤 寛治",
+    "venue": "kawasaki",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松本 秀之介__toyama": {
+    "name": "松本 秀之介",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "嶋田__toyama": {
+    "name": "嶋田",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "大森__toyama": {
+    "name": "大森",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "三好 陽一__beppu": {
+    "name": "三好 陽一",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "土井 慎二__beppu": {
+    "name": "土井 慎二",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "阿部 功__beppu": {
+    "name": "阿部 功",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "猪俣__beppu": {
+    "name": "猪俣",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "上川 直紀__komatsushima": {
+    "name": "上川 直紀",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "畝木 努__komatsushima": {
+    "name": "畝木 努",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "野中 祐志__komatsushima": {
+    "name": "野中 祐志",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "岡部__komatsushima": {
+    "name": "岡部",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小原__komatsushima": {
+    "name": "小原",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "野村__komatsushima": {
+    "name": "野村",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "堀川__komatsushima": {
+    "name": "堀川",
     "venue": "komatsushima",
     "races": 1,
     "wins": 0,
