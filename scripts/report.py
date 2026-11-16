@@ -11,6 +11,7 @@ GitHub Pages で公開する docs/ 以下のファイルを生成する。
 import datetime
 import json
 import math
+import re
 from zoneinfo import ZoneInfo
 from model import KIMARITE_LABELS, KIMARITE
 import honmei_tags  # noqa: E402
@@ -851,6 +852,54 @@ def _dev_sim_html(tab_id, result):
         return ""
 
 
+def _nk_id(race_data):
+    """Kドリームスの出走表URL・日付・レース番号 -> netkeirin の race_id(YYYYMMDD+場コード+レース番号)"""
+    info = race_data["race_info"]
+    url = race_data.get("url") or info.get("url") or ""
+    m = re.search(r"/racedetail/(\d{2})", url)
+    if not m:
+        return None
+    d = info.get("date") or ""
+    d = d.replace("-", "") if d else None
+    return None if not d else f"{d}{m.group(1)}{int(info['race_no']):02d}"
+
+
+def _live_data_html(race_data, result):
+    """直前オッズで1着率・3着内率を計算し直すための値(オッズ以外の部分)。ページの LIVE_SCRIPT が使う"""
+    s0 = result.get("tri_s0")
+    nkid = _nk_id(race_data)
+    if not s0 or not nkid:
+        return ""
+    import tri_model
+    w = tri_model.weights()
+    data = {"w0": w[0], "w1": w[1], "s0": {f"{a}-{b}-{c}": round(v, 4) for (a, b, c), v in s0.items()}}
+    return f'<script>window.LIVE=window.LIVE||{{}};LIVE["{nkid}"]={json.dumps(data)};</script><span class="live-id" data-nkid="{nkid}"></span>'
+
+
+LIVE_SCRIPT = """
+(function(){
+  if(!window.LIVE) return;
+  function upd(){
+    fetch('../_live_odds.json?t='+Date.now()).then(function(r){return r.json();}).then(function(J){
+      document.querySelectorAll('.live-id').forEach(function(el){
+        var id=el.dataset.nkid, L=LIVE[id], O=J.races&&J.races[id]; if(!L||!O) return;
+        var inv=0,k; for(k in O.tri){ if(O.tri[k]>0) inv+=1/O.tri[k]; }
+        var s={},m=-1e9; for(k in L.s0){ var o=O.tri[k]; if(!o) continue; var lq=Math.log((1/o)/inv); s[k]=L.w0*lq+L.w1*lq*lq+L.s0[k]; if(s[k]>m)m=s[k]; }
+        var z=0; for(k in s){ s[k]=Math.exp(s[k]-m); z+=s[k]; }
+        var p1={},p3={}; for(k in s){ var p=s[k]/z, c=k.split('-'); p1[c[0]]=(p1[c[0]]||0)+p; [0,1,2].forEach(function(i){p3[c[i]]=(p3[c[i]]||0)+p;}); }
+        var panel=el.closest('.race-panel'); if(!panel) return;
+        panel.querySelectorAll('td.lv1').forEach(function(td){ var b=td.querySelector('b'); var v=p1[td.dataset.car]; if(b&&v!=null){ b.textContent=(v*100).toFixed(1)+'%'; b.style.color='#1E5FA8'; }});
+        panel.querySelectorAll('td.lv3').forEach(function(td){ var v=p3[td.dataset.car]; if(v!=null){ td.textContent=Math.round(v*100)+'%'; td.style.color='#1E5FA8'; }});
+        var n=panel.querySelector('.live-note'); if(n){ n.style.display='block';
+          n.innerHTML='🔵 直前オッズを反映 '+O.at+(O.mins!=null?'(締切'+(O.mins>0?O.mins.toFixed(0)+'分前':'後')+')':'')+' ・ 1着率・3着内を計算し直し(青字)'; }
+      });
+    }).catch(function(){});
+  }
+  upd(); setInterval(upd, 60000);
+})();
+"""
+
+
 def render_tag_line(result):
     """◎の一言と推し(JRA版と同じ。honmei_tags.py)。それぞれの過去の実際の勝率も出す"""
     tags = honmei_tags.race_tags(result)
@@ -920,8 +969,8 @@ def render_race_card(race_data, tab_id):
         <tr style="{highlight}">
           <td><span class="aimk">{mks.get(r['car'], '')}</span><span class="car" style="background:{bg};color:{fg}">{r['car']}</span></td>
           <td>{r['name']}{honmei_tags.tag_html(tags.get(r['car']))}<br><span class="dim">{r['rank']}・{line_label}・{KIMARITE_LABELS.get(r['dominant_type'], '-')}</span>{cr_html}{extra_badges_html}</td>
-          <td>{rate_html}</td>
-          <td>{place_pct:.0f}%</td>
+          <td class="lv1" data-car="{r['car']}">{rate_html}</td>
+          <td class="lv3" data-car="{r['car']}">{place_pct:.0f}%</td>
         </tr>"""
 
     banner_html = ""
@@ -992,7 +1041,9 @@ def render_race_card(race_data, tab_id):
     </div>"""
     return f"""
     <div id="{tab_id}" class="race-panel" style="display:none;">
+      {_live_data_html(race_data, result)}
       <div class="race-card" style="--pick-color:{pick_color};">
+        <div class="live-note" style="display:none"></div>
         <div class="race-head">
           <span class="raceno">{info['race_no']}R</span>
           <span class="title">{title}</span>
@@ -1613,6 +1664,7 @@ def render_venue_page(venue, races, date, now=None):
                  ("<br><span class='tab-hon'>本命</span>" if _hon else ""))
         tabs += (f'<button class="tab-btn{" hon" if _hon else ""}" data-deadline="{deadline}" data-race-no="{no}" '
                  f'onclick="showTab(\'{tab_id}\', this)">{label}</button>')
+        r["race_info"].setdefault("date", date.strftime("%Y%m%d"))
         panels += render_race_card(r, tab_id)
 
     return f"""<!DOCTYPE html>
@@ -1637,6 +1689,7 @@ def render_venue_page(venue, races, date, now=None):
 </main>
 <footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
 <script>{TAB_SCRIPT}</script>
+<script>{LIVE_SCRIPT}</script>
 </body>
 </html>"""
 

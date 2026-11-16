@@ -42,8 +42,9 @@ def _lines(line_map, racers):
     return out
 
 
-def joint(odds, racers, line_map, ai_p1):
-    """odds {(a,b,c): 倍率}・racers・line_map・ai_p1 {car: AIの1着率(0〜1)} -> {(a,b,c): 確率}(合計1)"""
+def joint(odds, racers, line_map, ai_p1, parts=None):
+    """odds {(a,b,c): 倍率}・racers・line_map・ai_p1 {car: AIの1着率(0〜1)} -> {(a,b,c): 確率}(合計1)
+    parts に dict を渡すと、オッズ以外の部分(直前オッズでページ側が計算し直すための値)を {(a,b,c): 値} で入れる"""
     w = weights()
     li = _lines(line_map, racers)
     inv = {k: 1 / v for k, v in odds.items() if v and v > 0}
@@ -65,6 +66,8 @@ def joint(odds, racers, line_map, ai_p1):
              A[1] == 0 and A[2] > 1, A[1] == 1, A[1] >= 2, A[2] == 1, A[0] == 0, A[0] == 1, A[0] == 2,
              B[1] == 0 and B[2] > 1, B[1] == 1, C[1] == 1, C[2] == 1]
         s[k] = sum(wi * float(xi) for wi, xi in zip(w, x))
+        if parts is not None:
+            parts[k] = s[k] - w[0] * lq - w[1] * lq * lq
     m = max(s.values()) if s else 0
     e = {k: math.exp(v - m) for k, v in s.items()}
     z = sum(e.values()) or 1

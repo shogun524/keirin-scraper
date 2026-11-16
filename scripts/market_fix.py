@@ -356,7 +356,9 @@ def apply(result, racers, odds=None, minutes_to_close=None):
         try:   # 3連単の出目確率: 市場 + ラインの決まり方(tri_model.py)。失敗したら市場だけ
             import tri_model
             ai_p1 = {r["car"]: (r.get("ai_raw") if r.get("ai_raw") is not None else r["adjusted"]) / 100 for r in result["rows"]}
-            jt = tri_model.joint(odds, racers, result.get("line_map") or {}, ai_p1)
+            s0 = {}
+            jt = tri_model.joint(odds, racers, result.get("line_map") or {}, ai_p1, parts=s0)
+            result["tri_s0"] = s0          # 直前オッズでページ側が計算し直す用
             result["tri_model"] = True
         except Exception as e:  # noqa: BLE001
             print(f"[WARN] tri_model: {e}")

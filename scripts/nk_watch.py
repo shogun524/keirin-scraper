@@ -49,7 +49,8 @@ def push_page(now):
     """drops.html / _drops.json / _drops_results.json だけを push する。
     他の自動更新とぶつかったら、最新の main に合わせ直してから、この3ファイルだけを上書きして作り直す
     (11/15: 以前の作り直し方は古い checkout の他のファイルまで戻してしまったので、必ず最新の main を土台にする)"""
-    files = [f for f in ("docs/drops.html", "docs/_drops.json", "docs/_drops_results.json") if os.path.exists(os.path.join(ROOT, f))]
+    files = [f for f in ("docs/drops.html", "docs/_drops.json", "docs/_drops_results.json", "docs/_live_odds.json")
+             if os.path.exists(os.path.join(ROOT, f))]
     if not files:
         return
     msg = f'chore: 締切直前オッズ {now:%H:%M}'
@@ -74,6 +75,18 @@ def push_page(now):
         print("[WARN] push 失敗:", (r.stderr or r.stdout)[-300:])
         time.sleep(5 + 5 * k)
     print("[WARN] push に失敗")
+
+
+def write_live_odds(latest):
+    """予想ページが直前オッズで1着率を計算し直すための最新3連単オッズ(締切前〜締切10分後のレースだけ)"""
+    now = time.time()
+    races = {}
+    for rid, x in latest.items():
+        if x["close"] and -600 < x["close"] - now < START_MIN * 60 + 600:
+            races[rid] = dict(at=datetime.datetime.fromtimestamp(x["ts"], JST).strftime("%H:%M:%S"),
+                              mins=round((x["close"] - x["ts"]) / 60, 1), tri=x["tri"])
+    with open(os.path.join(ROOT, "docs", "_live_odds.json"), "w", encoding="utf-8") as f:
+        json.dump(dict(updated=datetime.datetime.now(JST).strftime("%H:%M:%S"), races=races), f, ensure_ascii=False, separators=(",", ":"))
 
 
 def upload_live(path):
@@ -105,6 +118,7 @@ def main():
     path = live_path(day)
     races, t_list, t_page, t_up = [], 0, 0, time.time()
     t_daily = 0
+    latest = {}
     last_poll, last_odt, polls, after_done = {}, {}, {}, {}
     print(f"[INFO] {now:%H:%M} 開始 → {end:%H:%M} まで。記録: {path}")
     while datetime.datetime.now(JST) < end:
@@ -158,12 +172,18 @@ def main():
                              start=r["start_ts"], ts=round(ts, 1), mins=round((r["close_ts"] - ts) / 60, 2),
                              odt=o["official_dt"], polls=polls[rid], tri=tri))
             time.sleep(random.uniform(0.3, 0.8))
+        for x in recs:
+            latest[x["rid"]] = x
         if recs:
             with gzip.open(path, "at", encoding="utf-8") as f:
                 for x in recs:
                     f.write(json.dumps(x, ensure_ascii=False, separators=(",", ":")) + "\n")
         if time.time() - t_page > PAGE_EVERY:
             t_page = time.time()
+            try:
+                write_live_odds(latest)
+            except Exception as e:  # noqa: BLE001
+                print("[WARN] 直前オッズの書き出しに失敗:", e)
             r = sh(f'cd scripts && python nk_drops.py --live "{path}"')
             print(r.stdout.strip().splitlines()[-1] if r.stdout.strip() else r.stderr[-300:])
             if a.push:

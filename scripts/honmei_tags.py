@@ -72,6 +72,7 @@ CSS = (".tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6p
        ".ds-svg{width:100%;max-width:520px;display:block;margin:4px auto}.ds-cap{font-size:12px;color:#666}"
        ".ds-btns{display:flex;gap:8px;justify-content:center}.ds-btns button{padding:5px 14px;border:1px solid #ccc;border-radius:16px;background:#fff;font-weight:700}"
        ".ds-res{font-size:13px;text-align:center;margin:6px 0;min-height:1.4em}"
+       ".live-note{font-size:12px;color:#1E5FA8;background:#EEF4FC;border-radius:6px;padding:4px 8px;margin:4px 0}"
        ".kguide{font-size:12px;margin:6px 0;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff}"
        ".kguide summary{cursor:pointer;font-weight:700}.kguide ul{margin:4px 0 0;padding-left:18px;line-height:1.7}")
 GUIDE = ('<details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul>'
