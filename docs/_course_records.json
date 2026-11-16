@@ -24481,7 +24481,7 @@
   "齊藤__beppu": {
     "name": "齊藤",
     "venue": "beppu",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -24767,7 +24767,7 @@
   "井寺__beppu": {
     "name": "井寺",
     "venue": "beppu",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -28212,7 +28212,7 @@
   "小林__beppu": {
     "name": "小林",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -77443,7 +77443,7 @@
   "鈴木__beppu": {
     "name": "鈴木",
     "venue": "beppu",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -102806,7 +102806,7 @@
   "山根__kawasaki": {
     "name": "山根",
     "venue": "kawasaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -103157,7 +103157,7 @@
   "谷口__kawasaki": {
     "name": "谷口",
     "venue": "kawasaki",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -103391,7 +103391,7 @@
   "小島__kawasaki": {
     "name": "小島",
     "venue": "kawasaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -105783,9 +105783,9 @@
   "田中 勝仁__kawasaki": {
     "name": "田中 勝仁",
     "venue": "kawasaki",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -105887,7 +105887,7 @@
   "松坂__kawasaki": {
     "name": "松坂",
     "venue": "kawasaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -106368,9 +106368,9 @@
   "生野 優翔__beppu": {
     "name": "生野 優翔",
     "venue": "beppu",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -106394,9 +106394,9 @@
   "萱島 大介__beppu": {
     "name": "萱島 大介",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -106498,9 +106498,9 @@
   "伊原 克彦__beppu": {
     "name": "伊原 克彦",
     "venue": "beppu",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -106511,9 +106511,9 @@
   "成松 春樹__beppu": {
     "name": "成松 春樹",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -106524,7 +106524,7 @@
   "守谷__beppu": {
     "name": "守谷",
     "venue": "beppu",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -109357,6 +109357,97 @@
   },
   "宇賀神__beppu": {
     "name": "宇賀神",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "水澤 秀哉__kawasaki": {
+    "name": "水澤 秀哉",
+    "venue": "kawasaki",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中村 良二__kawasaki": {
+    "name": "中村 良二",
+    "venue": "kawasaki",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉田 健市__beppu": {
+    "name": "吉田 健市",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "落合 達彦__beppu": {
+    "name": "落合 達彦",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "高谷__beppu": {
+    "name": "高谷",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "谷本__beppu": {
+    "name": "谷本",
+    "venue": "beppu",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "木村__beppu": {
+    "name": "木村",
     "venue": "beppu",
     "races": 1,
     "wins": 0,
