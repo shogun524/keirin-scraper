@@ -1,15 +1,6 @@
 {
- "updated": "2026-11-16 17:15",
+ "updated": "2026-11-16 17:46",
  "failures": [
-  {
-   "race": "2026-11-16 komatsushima 8R",
-   "diag": {
-    "venue": "komatsushima",
-    "race_id": "7320261116010008",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-16 toyama 12R",
    "diag": {
@@ -20,17 +11,17 @@
    }
   },
   {
-   "race": "2026-11-16 kawasaki 4R",
+   "race": "2026-11-16 beppu 6R",
    "diag": {
-    "venue": "kawasaki",
-    "race_id": "3420261114030004",
+    "venue": "beppu",
+    "race_id": "8620261115020006",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3036,
- "with_result": 2430,
+ "with_result": 2433,
  "without_url": 0,
  "pending_eligible": 572
 }
