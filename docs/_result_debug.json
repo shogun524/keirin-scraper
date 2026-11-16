@@ -1,15 +1,6 @@
 {
- "updated": "2026-11-16 14:26",
+ "updated": "2026-11-16 15:15",
  "failures": [
-  {
-   "race": "2026-11-16 toyama 3R",
-   "diag": {
-    "venue": "toyama",
-    "race_id": "4620261115020003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-16 komatsushima 5R",
    "diag": {
@@ -27,10 +18,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-16 toyama 10R",
+   "diag": {
+    "venue": "toyama",
+    "race_id": "4620261115020010",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3036,
- "with_result": 2417,
+ "with_result": 2419,
  "without_url": 0,
- "pending_eligible": 570
+ "pending_eligible": 571
 }
