@@ -117,56 +117,56 @@
     "混戦": {
       "syn1.5": {
         "all": {
-          "races": 160,
-          "hits": 84,
-          "points": 4803,
-          "return": 3805.0,
-          "hit_pct": 52.5,
-          "roi_pct": 79.2
+          "races": 162,
+          "hits": 86,
+          "points": 4856,
+          "return": 3878.3,
+          "hit_pct": 53.1,
+          "roi_pct": 79.9
         },
         "live": {
-          "races": 160,
-          "hits": 84,
-          "points": 4803,
-          "return": 3805.0,
-          "hit_pct": 52.5,
-          "roi_pct": 79.2
+          "races": 162,
+          "hits": 86,
+          "points": 4856,
+          "return": 3878.3,
+          "hit_pct": 53.1,
+          "roi_pct": 79.9
         }
       },
       "top5": {
         "all": {
-          "races": 160,
-          "hits": 33,
-          "points": 800,
-          "return": 744.8,
-          "hit_pct": 20.6,
-          "roi_pct": 93.1
+          "races": 162,
+          "hits": 34,
+          "points": 810,
+          "return": 771.6,
+          "hit_pct": 21.0,
+          "roi_pct": 95.3
         },
         "live": {
-          "races": 160,
-          "hits": 33,
-          "points": 800,
-          "return": 744.8,
-          "hit_pct": 20.6,
-          "roi_pct": 93.1
+          "races": 162,
+          "hits": 34,
+          "points": 810,
+          "return": 771.6,
+          "hit_pct": 21.0,
+          "roi_pct": 95.3
         }
       },
       "top10": {
         "all": {
-          "races": 160,
-          "hits": 50,
-          "points": 1600,
-          "return": 1405.7,
-          "hit_pct": 31.2,
-          "roi_pct": 87.9
+          "races": 162,
+          "hits": 51,
+          "points": 1620,
+          "return": 1432.5,
+          "hit_pct": 31.5,
+          "roi_pct": 88.4
         },
         "live": {
-          "races": 160,
-          "hits": 50,
-          "points": 1600,
-          "return": 1405.7,
-          "hit_pct": 31.2,
-          "roi_pct": 87.9
+          "races": 162,
+          "hits": 51,
+          "points": 1620,
+          "return": 1432.5,
+          "hit_pct": 31.5,
+          "roi_pct": 88.4
         }
       }
     }
