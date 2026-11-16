@@ -1,60 +1,60 @@
 {
   "updated": "2026-11-16",
-  "races": 1419,
+  "races": 1424,
   "summary": {
     "堅い": {
       "syn1.5": {
         "all": {
-          "races": 400,
-          "hits": 236,
-          "points": 4511,
-          "return": 3864.0,
+          "races": 402,
+          "hits": 237,
+          "points": 4528,
+          "return": 3890.4,
           "hit_pct": 59.0,
-          "roi_pct": 85.7
+          "roi_pct": 85.9
         },
         "live": {
-          "races": 400,
-          "hits": 236,
-          "points": 4511,
-          "return": 3864.0,
+          "races": 402,
+          "hits": 237,
+          "points": 4528,
+          "return": 3890.4,
           "hit_pct": 59.0,
-          "roi_pct": 85.7
+          "roi_pct": 85.9
         }
       },
       "top5": {
         "all": {
-          "races": 400,
+          "races": 402,
           "hits": 178,
-          "points": 2000,
+          "points": 2010,
           "return": 1719.9,
-          "hit_pct": 44.5,
-          "roi_pct": 86.0
+          "hit_pct": 44.3,
+          "roi_pct": 85.6
         },
         "live": {
-          "races": 400,
+          "races": 402,
           "hits": 178,
-          "points": 2000,
+          "points": 2010,
           "return": 1719.9,
-          "hit_pct": 44.5,
-          "roi_pct": 86.0
+          "hit_pct": 44.3,
+          "roi_pct": 85.6
         }
       },
       "top10": {
         "all": {
-          "races": 400,
-          "hits": 237,
-          "points": 4000,
-          "return": 3426.2,
+          "races": 402,
+          "hits": 238,
+          "points": 4020,
+          "return": 3452.6,
           "hit_pct": 59.2,
-          "roi_pct": 85.7
+          "roi_pct": 85.9
         },
         "live": {
-          "races": 400,
-          "hits": 237,
-          "points": 4000,
-          "return": 3426.2,
+          "races": 402,
+          "hits": 238,
+          "points": 4020,
+          "return": 3452.6,
           "hit_pct": 59.2,
-          "roi_pct": 85.7
+          "roi_pct": 85.9
         }
       }
     },
