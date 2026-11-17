@@ -4340,12 +4340,6 @@
     "recent": [
       {
         "date": "2026-11-15",
-        "venue": "toyama",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-15",
         "venue": "tachikawa",
         "finish": 7,
         "kimarite": null
@@ -4389,6 +4383,12 @@
       {
         "date": "2026-11-16",
         "venue": "beppu",
+        "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
         "finish": 7,
         "kimarite": null
       },
@@ -13257,6 +13257,12 @@
         "venue": "komatsushima",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -20201,12 +20207,6 @@
     "recent": [
       {
         "date": "2026-11-07",
-        "venue": "yokkaichi",
-        "finish": 9,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-07",
         "venue": "keiokaku",
         "finish": 4,
         "kimarite": null
@@ -20256,6 +20256,12 @@
       {
         "date": "2026-11-17",
         "venue": "matsuyama",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
         "finish": 6,
         "kimarite": null
       }
@@ -46641,6 +46647,12 @@
         "venue": "komatsushima",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -46909,12 +46921,6 @@
     "name": "丸山",
     "recent": [
       {
-        "date": "2026-10-29",
-        "venue": "aomori",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-03",
         "venue": "aomori",
         "finish": 7,
@@ -46965,6 +46971,12 @@
       {
         "date": "2026-11-16",
         "venue": "toyama",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
         "finish": 4,
         "kimarite": null
       }
@@ -86048,6 +86060,28 @@
   },
   "舟山": {
     "name": "舟山",
+    "recent": [
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
+        "finish": 5,
+        "kimarite": null
+      }
+    ]
+  },
+  "岡崎 昭次": {
+    "name": "岡崎 昭次",
+    "recent": [
+      {
+        "date": "2026-11-17",
+        "venue": "komatsushima",
+        "finish": 2,
+        "kimarite": null
+      }
+    ]
+  },
+  "長川": {
+    "name": "長川",
     "recent": [
       {
         "date": "2026-11-17",
