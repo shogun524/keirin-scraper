@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17 20:09",
+ "updated": "2026-11-17 20:38",
  "failures": [
   {
    "race": "2026-11-17 komatsushima 10R",
@@ -23,17 +23,26 @@
    ]
   },
   {
-   "race": "2026-11-17 beppu 11R",
+   "race": "2026-11-17 beppu 12R",
    "diag": {
     "venue": "beppu",
-    "race_id": "8620261115030011",
+    "race_id": "8620261115030012",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-17 kochi 1R",
+   "diag": {
+    "venue": "kochi",
+    "race_id": "7420261117010001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3107,
- "with_result": 2499,
+ "with_result": 2501,
  "without_url": 0,
- "pending_eligible": 588
+ "pending_eligible": 589
 }
