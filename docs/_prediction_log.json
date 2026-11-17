@@ -668539,9 +668539,26 @@
     3.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    1,
+    2,
+    5,
+    4
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-17 18:39"
  },
  "2026-11-17_beppu_8": {
   "date": "2026-11-17",
@@ -668762,7 +668779,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-17_beppu_9": {
@@ -672024,7 +672041,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-11-17_komatsushima_11": {
@@ -675282,9 +675299,30 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    6,
+    1,
+    4,
+    7,
+    3,
+    5,
+    2
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-17 18:39"
  },
  "2026-11-17_shizuoka_7": {
   "date": "2026-11-17",
@@ -675504,9 +675542,24 @@
     76.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    5,
+    7,
+    3
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-17 18:39"
  },
  "2026-11-17_shizuoka_8": {
   "date": "2026-11-17",
