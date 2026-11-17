@@ -664957,9 +664957,24 @@
     71.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    3,
+    4,
+    1
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-17 12:41"
  },
  "2026-11-17_toyama_5": {
   "date": "2026-11-17",
@@ -670263,7 +670278,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-17_komatsushima_5": {
