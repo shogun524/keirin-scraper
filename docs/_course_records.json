@@ -5319,7 +5319,7 @@
   "吉田__kochi": {
     "name": "吉田",
     "venue": "kochi",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -8439,9 +8439,9 @@
   "竹村 達也__kochi": {
     "name": "竹村 達也",
     "venue": "kochi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -60777,9 +60777,9 @@
   "大越 啓介__utsunomiya": {
     "name": "大越 啓介",
     "venue": "utsunomiya",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -112581,6 +112581,240 @@
   },
   "川西__kochi": {
     "name": "川西",
+    "venue": "kochi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐藤 譲士郎__utsunomiya": {
+    "name": "佐藤 譲士郎",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中川 昌久__utsunomiya": {
+    "name": "中川 昌久",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "戸ノ下__utsunomiya": {
+    "name": "戸ノ下",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小出__utsunomiya": {
+    "name": "小出",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "大崎__utsunomiya": {
+    "name": "大崎",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "柳澤__utsunomiya": {
+    "name": "柳澤",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "鈴木 那樹__utsunomiya": {
+    "name": "鈴木 那樹",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "相樂 修__utsunomiya": {
+    "name": "相樂 修",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "田崎 良太郎__utsunomiya": {
+    "name": "田崎 良太郎",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "相澤__utsunomiya": {
+    "name": "相澤",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "服部__utsunomiya": {
+    "name": "服部",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "樋口__utsunomiya": {
+    "name": "樋口",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山元__utsunomiya": {
+    "name": "山元",
+    "venue": "utsunomiya",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "坂井 央雅__kochi": {
+    "name": "坂井 央雅",
+    "venue": "kochi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "川本 恵二__kochi": {
+    "name": "川本 恵二",
+    "venue": "kochi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "照屋__kochi": {
+    "name": "照屋",
+    "venue": "kochi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "徳吉__kochi": {
+    "name": "徳吉",
+    "venue": "kochi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "大久保__kochi": {
+    "name": "大久保",
     "venue": "kochi",
     "races": 1,
     "wins": 0,
