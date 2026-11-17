@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17 23:09",
+ "updated": "2026-11-18 06:59",
  "failures": [
   {
    "race": "2026-11-17 utsunomiya 5R",
@@ -10,28 +10,10 @@
     1,
     2
    ]
-  },
-  {
-   "race": "2026-11-17 kochi 8R",
-   "diag": {
-    "venue": "kochi",
-    "race_id": "7420261117010008",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-17 utsunomiya 8R",
-   "diag": {
-    "venue": "utsunomiya",
-    "race_id": "2420261117010008",
-    "primary": "skipped",
-    "day_parsed": false
-   }
   }
  ],
- "tracked": 3107,
- "with_result": 2515,
+ "tracked": 3186,
+ "with_result": 2519,
  "without_url": 0,
- "pending_eligible": 590
+ "pending_eligible": 588
 }
