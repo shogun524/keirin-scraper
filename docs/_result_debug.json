@@ -1,25 +1,6 @@
 {
- "updated": "2026-11-18 11:42",
+ "updated": "2026-11-18 12:12",
  "failures": [
-  {
-   "race": "2026-11-17 utsunomiya 5R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    5,
-    3,
-    1,
-    2
-   ]
-  },
-  {
-   "race": "2026-11-18 ogaki 3R",
-   "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261118010003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-18 seibuen 3R",
    "diag": {
@@ -28,10 +9,28 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-18 ogaki 4R",
+   "diag": {
+    "venue": "ogaki",
+    "race_id": "4420261118010004",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-18 seibuen 4R",
+   "diag": {
+    "venue": "seibuen",
+    "race_id": "2620261118010004",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3186,
- "with_result": 2532,
+ "with_result": 2534,
  "without_url": 0,
- "pending_eligible": 590
+ "pending_eligible": 591
 }
