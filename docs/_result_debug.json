@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18 21:58",
+ "updated": "2026-11-18 22:09",
  "failures": [
   {
    "race": "2026-11-18 kochi 1R",
@@ -51,16 +51,18 @@
   },
   {
    "race": "2026-11-18 utsunomiya 4R",
-   "diag": {
-    "venue": "utsunomiya",
-    "race_id": "2420261117020004",
-    "primary": "skipped",
-    "day_parsed": false
-   }
+   "error": "着順が壊れて見えるため記録しない",
+   "cars": [
+    6,
+    3,
+    2,
+    7,
+    4
+   ]
   }
  ],
  "tracked": 3186,
  "with_result": 2578,
  "without_url": 0,
- "pending_eligible": 599
+ "pending_eligible": 600
 }
