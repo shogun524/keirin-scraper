@@ -696702,7 +696702,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-18_utsunomiya_5": {
@@ -697652,9 +697652,30 @@
     87.3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    1,
+    6,
+    2,
+    7,
+    4,
+    5
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-18 23:38"
  },
  "2026-11-18_utsunomiya_9": {
   "date": "2026-11-18",
@@ -697875,7 +697896,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-18_kochi_1": {
@@ -698475,7 +698496,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 5
  },
  "2026-11-18_kochi_4": {
@@ -698675,7 +698696,7 @@
    ]
   ],
   "result": null,
-  "attempts": 5,
+  "attempts": 6,
   "parser_v": 5
  },
  "2026-11-18_kochi_5": {
@@ -698875,7 +698896,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-18_kochi_6": {
@@ -699075,7 +699096,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 5
  },
  "2026-11-18_kochi_7": {
@@ -699275,7 +699296,7 @@
    ]
   ],
   "result": null,
-  "attempts": 2,
+  "attempts": 3,
   "parser_v": 5
  },
  "2026-11-18_kochi_8": {
@@ -699475,7 +699496,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-11-18_kochi_9": {
@@ -699675,7 +699696,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  }
 }
