@@ -1382,32 +1382,43 @@
     .then(function(){ return loadJs('jspdf.umd.min.js', function(){ return !!(window.jspdf && window.jspdf.jsPDF); }); })
     .then(function(){
       pdf = new window.jspdf.jsPDF({ orientation: two ? 'portrait' : 'landscape', unit: 'mm', format: 'a4', compress: true });
+      // 1枚の画像をページに収める(はみ出すときは切らずに縮める)
+      function shot(el, prep){
+        return window.html2canvas(el, { scale: 1.6, backgroundColor: '#ffffff', windowWidth: two ? 1150 : 1120, logging: false, useCORS: true,
+          onclone: function(doc){ prep(doc); } })
+        .then(function(cv){ var r = { img: cv.toDataURL('image/jpeg', 0.8), w: cv.width, h: cv.height }; cv.width = cv.height = 0; return r; });
+      }
+      function fit(r, maxW, maxH){ var k = Math.min(maxW / r.w, maxH / r.h); return [r.w * k, r.h * k]; }
+      function unclip(doc, id){  // 横スクロールで隠れている部分も写す
+        var c = doc.getElementById(id); if (!c) return c;
+        var sw = c.scrollWidth; if (sw > c.clientWidth + 2) { c.style.width = sw + 'px'; c.style.maxWidth = 'none'; } c.style.overflow = 'visible';
+        return c;
+      }
       return cards.reduce(function(p, c, i){ return p.then(function(){
-        return window.html2canvas(c, { scale: 1.6, backgroundColor: '#ffffff', windowWidth: two ? 1150 : 1120, logging: false, useCORS: true })
-        .then(function(cv){
-          var img = cv.toDataURL('image/jpeg', 0.78), cw = cv.width, ch = cv.height; cv.width = cv.height = 0;
+        var hasMx = !two && c.querySelector('.pv-mxwrap') && c.querySelector('.pv-mxwrap').style.display !== 'none' &&
+                    parseInt(c.querySelector('.pv-mxwrap').dataset.shown || '0', 10) > 0;
+        // 本体(出目表は別ページにするので外して写す)
+        return shot(c, function(doc){ var cc = unclip(doc, c.id); if (cc){ var m = cc.querySelector('.pv-mxwrap'); if (m) m.style.display = 'none'; } })
+        .then(function(r){
           if (two) {  // 2列: 左右の列に上から詰める(入らなければ次のページ)
-            var colW = (CW - 4) / 2, hh = ch * colW / cw;
-            if (hh > CH) { hh = CH; }
+            var colW = (CW - 4) / 2, d = fit(r, colW, CH);
             var k = ys[0] <= ys[1] ? 0 : 1;
-            if (ys[k] + hh > H - M) { k = 1 - k; if (ys[k] + hh > H - M) { if (!first) pdf.addPage(); ys = [M, M]; k = 0; } }
+            if (ys[k] + d[1] > H - M) { k = 1 - k; if (ys[k] + d[1] > H - M) { if (!first) pdf.addPage(); ys = [M, M]; k = 0; } }
             first = false;
-            var ww = cw * hh / ch;
-            pdf.addImage(img, 'JPEG', M + k * (colW + 4), ys[k], ww, hh, 'c' + i); ys[k] += hh + 4;
-            made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)'; return;
+            pdf.addImage(r.img, 'JPEG', M + k * (colW + 4), ys[k], d[0], d[1]); ys[k] += d[1] + 4;
+            return;
           }
-          var w = CW, h = ch * CW / cw;
-          if (!first) pdf.addPage(); y = M;
-          first = false;
-          if (h <= CH) { pdf.addImage(img, 'JPEG', M, y, w, h, 'c' + i); y += h + 4; }
-          else {  // 1ページに入らない(出目表つき)→ ページをまたいで切って載せる
-            for (var off = 0; off < h; off += CH) { if (off > 0) pdf.addPage();
-              pdf.addImage(img, 'JPEG', M, M - off, w, h, 'c' + i);
-              pdf.setFillColor(255,255,255); pdf.rect(0, 0, W, M, 'F'); pdf.rect(0, H - M, W, M, 'F'); }
-            y = H;  // 次は新しいページ
-          }
-          made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)';
-        }); }); }, Promise.resolve());
+          if (!first) pdf.addPage(); first = false;
+          var d = fit(r, CW, CH); pdf.addImage(r.img, 'JPEG', M + (CW - d[0]) / 2, M, d[0], d[1]);
+          if (!hasMx) return;
+          // 出目確率表(次のページ)
+          return shot(c, function(doc){ var cc = unclip(doc, c.id); if (!cc) return;
+              Array.prototype.forEach.call(cc.children, function(ch){ if (!ch.classList.contains('pv-mxwrap')) ch.style.display = 'none'; });
+              var h = cc.querySelector('.pv-mxhead'); if (h) h.style.display = 'block';
+              var t = cc.querySelector('.pv-mxtitle'); if (t) t.style.display = 'none'; })
+          .then(function(r2){ pdf.addPage(); var d2 = fit(r2, CW, CH); pdf.addImage(r2.img, 'JPEG', M + (CW - d2[0]) / 2, M, d2[0], d2[1]); });
+        }).then(function(){ made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)'; });
+      }); }, Promise.resolve());
     }).then(function(){
       var url = URL.createObjectURL(pdf.output('blob')), n = pdf.getNumberOfPages();
       var fn = 'keirin_' + ((ctl && ctl.dataset.date) || '') + '.pdf';
