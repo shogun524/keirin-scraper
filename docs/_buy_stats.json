@@ -1,116 +1,116 @@
 {
   "updated": "2026-11-18",
-  "races": 1550,
+  "races": 1551,
   "summary": {
     "堅い": {
       "syn1.5": {
         "all": {
-          "races": 454,
-          "hits": 272,
-          "points": 5060,
-          "return": 4476.8,
-          "hit_pct": 59.9,
-          "roi_pct": 88.5
+          "races": 455,
+          "hits": 273,
+          "points": 5080,
+          "return": 4509.5,
+          "hit_pct": 60.0,
+          "roi_pct": 88.8
         },
         "live": {
-          "races": 454,
-          "hits": 272,
-          "points": 5060,
-          "return": 4476.8,
-          "hit_pct": 59.9,
-          "roi_pct": 88.5
+          "races": 455,
+          "hits": 273,
+          "points": 5080,
+          "return": 4509.5,
+          "hit_pct": 60.0,
+          "roi_pct": 88.8
         }
       },
       "top5": {
         "all": {
-          "races": 454,
+          "races": 455,
           "hits": 203,
-          "points": 2270,
+          "points": 2275,
           "return": 1941.2,
-          "hit_pct": 44.7,
-          "roi_pct": 85.5
+          "hit_pct": 44.6,
+          "roi_pct": 85.3
         },
         "live": {
-          "races": 454,
+          "races": 455,
           "hits": 203,
-          "points": 2270,
+          "points": 2275,
           "return": 1941.2,
-          "hit_pct": 44.7,
-          "roi_pct": 85.5
+          "hit_pct": 44.6,
+          "roi_pct": 85.3
         }
       },
       "top10": {
         "all": {
-          "races": 454,
-          "hits": 272,
-          "points": 4540,
-          "return": 3939.2,
-          "hit_pct": 59.9,
-          "roi_pct": 86.8
+          "races": 455,
+          "hits": 273,
+          "points": 4550,
+          "return": 3971.9,
+          "hit_pct": 60.0,
+          "roi_pct": 87.3
         },
         "live": {
-          "races": 454,
-          "hits": 272,
-          "points": 4540,
-          "return": 3939.2,
-          "hit_pct": 59.9,
-          "roi_pct": 86.8
+          "races": 455,
+          "hits": 273,
+          "points": 4550,
+          "return": 3971.9,
+          "hit_pct": 60.0,
+          "roi_pct": 87.3
         }
       }
     },
     "中間": {
       "syn1.5": {
         "all": {
-          "races": 576,
-          "hits": 340,
-          "points": 12601,
-          "return": 10553.1,
-          "hit_pct": 59.0,
-          "roi_pct": 83.7
+          "races": 578,
+          "hits": 342,
+          "points": 12653,
+          "return": 10702.1,
+          "hit_pct": 59.2,
+          "roi_pct": 84.6
         },
         "live": {
-          "races": 576,
-          "hits": 340,
-          "points": 12601,
-          "return": 10553.1,
-          "hit_pct": 59.0,
-          "roi_pct": 83.7
+          "races": 578,
+          "hits": 342,
+          "points": 12653,
+          "return": 10702.1,
+          "hit_pct": 59.2,
+          "roi_pct": 84.6
         }
       },
       "top5": {
         "all": {
-          "races": 576,
+          "races": 578,
           "hits": 180,
-          "points": 2880,
+          "points": 2890,
           "return": 3044.5,
-          "hit_pct": 31.2,
-          "roi_pct": 105.7
+          "hit_pct": 31.1,
+          "roi_pct": 105.3
         },
         "live": {
-          "races": 576,
+          "races": 578,
           "hits": 180,
-          "points": 2880,
+          "points": 2890,
           "return": 3044.5,
-          "hit_pct": 31.2,
-          "roi_pct": 105.7
+          "hit_pct": 31.1,
+          "roi_pct": 105.3
         }
       },
       "top10": {
         "all": {
-          "races": 576,
-          "hits": 254,
-          "points": 5760,
-          "return": 5347.8,
+          "races": 578,
+          "hits": 255,
+          "points": 5780,
+          "return": 5379.3,
           "hit_pct": 44.1,
-          "roi_pct": 92.8
+          "roi_pct": 93.1
         },
         "live": {
-          "races": 576,
-          "hits": 254,
-          "points": 5760,
-          "return": 5347.8,
+          "races": 578,
+          "hits": 255,
+          "points": 5780,
+          "return": 5379.3,
           "hit_pct": 44.1,
-          "roi_pct": 92.8
+          "roi_pct": 93.1
         }
       }
     },
