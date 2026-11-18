@@ -2975,6 +2975,7 @@ _PRINT_STYLE = """
   .pv-vchips{ display:flex; flex-wrap:wrap; gap:6px; }
   .pv-vchips label{ border:1px solid #bbb; border-radius:999px; padding:6px 12px; background:#fff; min-height:34px; }
   .pv-controls select, .pv-controls button{ font:inherit; font-size:14px; padding:8px 12px; border-radius:8px; border:1px solid #999; background:#fff; }
+  .pv-made{ margin:6px 0; font-size:13px; } .pv-open{ display:inline-block; background:#c0392b; color:#fff !important; padding:9px 16px; border-radius:6px; font-weight:700; text-decoration:none; }
   .pv-print-btn{ background:#1f3a5f !important; color:#fff !important; border-color:#1f3a5f !important; font-weight:700; padding:10px 18px !important; }
   .pv-hint{ font-size:12px; color:#666; margin:6px 0 0; line-height:1.6; }
   .pv-venue{ margin:0 0 14px; }
@@ -3119,7 +3120,7 @@ _PRINT_SCRIPT = """
     });
     document.querySelectorAll('.pv-mxwrap').forEach(function(w){ w.style.display = (thr >= 999) ? 'none' : ''; });
     document.getElementById('pvCount').textContent = n + 'レース選択中';
-    document.getElementById('pvPrint').disabled = (n === 0);
+    document.getElementById('pvPrint').disabled = (n === 0); document.getElementById('pvPdf').disabled = (n === 0);
     save();
   }
   document.querySelectorAll('.pv-quick button').forEach(function(btn){ btn.addEventListener('click', function(){
@@ -3135,6 +3136,60 @@ _PRINT_SCRIPT = """
   boxes.forEach(function(b){ b.addEventListener('change', apply); });
   document.querySelectorAll('#pvCols, #pvMx').forEach(function(el){ el.addEventListener('change', apply); });
   document.getElementById('pvPrint').addEventListener('click', function(){ apply(); window.print(); });
+  // 「選んだレースをPDFにする」: スマホ・アプリ内ブラウザでは window.print() が動かないので、
+  // 選んだレースを1枚ずつ画像にしてスマホの中でPDFにする(html2canvas + jsPDF)。
+  var made = document.getElementById('pvMade');
+  function loadJs(src, ok){ return ok() ? Promise.resolve() : new Promise(function(res, rej){
+    var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = function(){ rej('読み込み失敗 ' + src); }; document.head.appendChild(s); }); }
+  document.getElementById('pvPdf').addEventListener('click', function(){
+    apply();
+    var btn = this, two = document.getElementById('pvCols').value === '2';
+    var cards = boxes.filter(function(b){ return b.checked; }).map(card).filter(Boolean);
+    if (!cards.length) return;
+    btn.disabled = true; made.textContent = 'PDFを作っています…(0/' + cards.length + 'レース)';
+    var W = two ? 210 : 297, H = two ? 297 : 210, M = 6, CW = W - 2*M, CH = H - 2*M, y = M, ys = [M, M], first = true;
+    var pdf, parked = [];
+    // 画像にするたびにページ全体が複製されるので、選んでいないレースは一時的に外して軽くする(終わったら戻す)
+    boxes.forEach(function(b){ var c = card(b); if (c && !b.checked && c.parentNode){ var mk = document.createComment('pv'); c.parentNode.replaceChild(mk, c); parked.push([mk, c]); } });
+    function unpark(){ parked.forEach(function(x){ if (x[0].parentNode) x[0].parentNode.replaceChild(x[1], x[0]); }); parked = []; }
+    loadJs('html2canvas.min.js', function(){ return !!window.html2canvas; })
+    .then(function(){ return loadJs('jspdf.umd.min.js', function(){ return !!(window.jspdf && window.jspdf.jsPDF); }); })
+    .then(function(){
+      pdf = new window.jspdf.jsPDF({ orientation: two ? 'portrait' : 'landscape', unit: 'mm', format: 'a4', compress: true });
+      return cards.reduce(function(p, c, i){ return p.then(function(){
+        return window.html2canvas(c, { scale: 1.6, backgroundColor: '#ffffff', windowWidth: two ? 1150 : 1120, logging: false, useCORS: true })
+        .then(function(cv){
+          var img = cv.toDataURL('image/jpeg', 0.78), cw = cv.width, ch = cv.height; cv.width = cv.height = 0;
+          if (two) {  // 2列: 左右の列に上から詰める(入らなければ次のページ)
+            var colW = (CW - 4) / 2, hh = ch * colW / cw;
+            if (hh > CH) { hh = CH; }
+            var k = ys[0] <= ys[1] ? 0 : 1;
+            if (ys[k] + hh > H - M) { k = 1 - k; if (ys[k] + hh > H - M) { if (!first) pdf.addPage(); ys = [M, M]; k = 0; } }
+            first = false;
+            var ww = cw * hh / ch;
+            pdf.addImage(img, 'JPEG', M + k * (colW + 4), ys[k], ww, hh, 'c' + i); ys[k] += hh + 4;
+            made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)'; return;
+          }
+          var w = CW, h = ch * CW / cw;
+          if (!first) pdf.addPage(); y = M;
+          first = false;
+          if (h <= CH) { pdf.addImage(img, 'JPEG', M, y, w, h, 'c' + i); y += h + 4; }
+          else {  // 1ページに入らない(出目表つき)→ ページをまたいで切って載せる
+            for (var off = 0; off < h; off += CH) { if (off > 0) pdf.addPage();
+              pdf.addImage(img, 'JPEG', M, M - off, w, h, 'c' + i);
+              pdf.setFillColor(255,255,255); pdf.rect(0, 0, W, M, 'F'); pdf.rect(0, H - M, W, M, 'F'); }
+            y = H;  // 次は新しいページ
+          }
+          made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)';
+        }); }); }, Promise.resolve());
+    }).then(function(){
+      var url = URL.createObjectURL(pdf.output('blob')), n = pdf.getNumberOfPages();
+      var fn = 'keirin_' + ((ctl && ctl.dataset.date) || '') + '.pdf';
+      made.innerHTML = '<a class="pv-open" href="' + url + '" target="_blank" download="' + fn + '">できたPDFを開く(' + n + '枚)</a>' +
+        '<small> ' + nowHM() + '時点の内容</small>';
+    }).catch(function(e){ made.textContent = 'PDFを作れませんでした(' + e + ')。パソコンなら「ブラウザで印刷」を使ってください。'; })
+      .then(function(){ unpark(); btn.disabled = false; });
+  });
   apply();
 })();
 """
@@ -3530,10 +3585,12 @@ def render_print_page(all_race_data, date=None):
         <select id="pvMx"><option value="10" selected>1着率10%以上の選手</option><option value="0">全選手（網羅）</option><option value="5">1着率5%以上の選手</option><option value="999">出さない</option></select></label>
       <span class="pv-count" id="pvCount"></span>
     </div>
-    <div class="pv-row"><button type="button" class="pv-print-btn" id="pvPrint">選んだレースを印刷 / PDFに保存</button></div>
+    <div class="pv-row"><button type="button" class="pv-print-btn" id="pvPdf">選んだレースをPDFにする</button>
+      <button type="button" id="pvPrint">ブラウザで印刷（パソコン向け）</button></div>
+    <div class="pv-made" id="pvMade"></div>
     <p class="pv-hint">レース番号をタップで 選ぶ／外す（下の数字＝万車率、赤＝荒れそう、灰色の「本命」＝万車率30%未満で見送り。最初は本命以外が選ばれています）。
-    選んだレースだけ下に表示・印刷されます（選択はこのブラウザに覚えておきます）。印刷画面で「PDFとして保存」を選ぶとPDFになります
-    （iPhone/iPadは、共有ボタン → 「プリント」→ プレビューをピンチアウト → 共有でPDF保存）。<br>
+    選んだレースだけ下に表示・印刷されます（選択はこのブラウザに覚えておきます）。「選んだレースをPDFにする」→「できたPDFを開く」で、選んだレースだけのPDFができます
+    （スマホ・LINEなどアプリ内ブラウザでも使えます。そこから印刷・保存）。「ブラウザで印刷」はパソコン向けです。<br>
     表の見方：記者＝記者の印、AI＝予測1着率の上位印（◎○▲△）、AI 1着%（赤い棒）・2着・3着内％はAIの予測。
     今場所・前場所・前々場所＝レース種別と着順（1着は赤地、2〜3着はピンク）。▶はデータから作った一言。
     回収率重視の買い目＝過去の検証で回収率100%を超えた形(推奨一覧のページと同じ判定)。</p>
