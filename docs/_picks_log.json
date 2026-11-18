@@ -8950,7 +8950,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "2-7-5"
+"line": "2-7-5",
+"settled": true,
+"result": "4-7-3",
+"payout": 0,
+"final_odds": 232.6
 },
 {
 "date": "2026-11-18",
@@ -8970,7 +8974,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "2-7-5・232.6倍"
+"line": "2-7-5・232.6倍",
+"settled": true,
+"result": "4-7-3",
+"payout": 0,
+"final_odds": 232.6
 },
 {
 "date": "2026-11-18",
@@ -8990,7 +8998,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "1-6-4-3・9.9倍"
+"line": "1-6-4-3・9.9倍",
+"settled": true,
+"result": "1-2-5",
+"payout": 0,
+"final_odds": 9.9
 },
 {
 "date": "2026-11-18",
@@ -9010,7 +9022,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "9-1-6"
+"line": "9-1-6",
+"settled": true,
+"result": "1-9-5",
+"payout": 0,
+"final_odds": 83.3
 },
 {
 "date": "2026-11-18",
@@ -9030,7 +9046,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "9-1-6・81.2倍"
+"line": "9-1-6・83.3倍",
+"settled": true,
+"result": "1-9-5",
+"payout": 0,
+"final_odds": 83.3
 },
 {
 "date": "2026-11-18",
@@ -9050,7 +9070,35 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "2点・合成37.2倍・万車率39%"
+"line": "2点・合成34.9倍・万車率40%",
+"settled": true,
+"result": "1-9-5",
+"payout": 0,
+"final_odds": null
+},
+{
+"date": "2026-11-18",
+"rule": "D",
+"ticket": "1-5-3",
+"url": "nk:202611183802:shizuoka",
+"venue": "静岡",
+"race_no": 2,
+"region": "3人同地区(南関東)",
+"same3": true,
+"chu": false,
+"chu_star": false,
+"cup": "Ａ級 チャレンジ一般",
+"grade": null,
+"start_at": 1794984780,
+"close_at": 1794984480,
+"cls": "S B",
+"race_type": "S B",
+"bet": "3連単",
+"line": "1-5-3・18.1倍",
+"settled": true,
+"result": "1-4-2",
+"payout": 0,
+"final_odds": 18.1
 },
 {
 "date": "2026-11-18",
@@ -9070,11 +9118,62 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "7-2-4・8.0倍"
+"line": "7-2-4・8.0倍",
+"settled": true,
+"result": "1-4-2",
+"payout": 0,
+"final_odds": 8.0
 },
 {
 "date": "2026-11-18",
-"rule": "K6",
+"rule": "K4",
+"ticket": "1-5-3",
+"tickets": [
+"1-5-3"
+],
+"url": "nk:202611183802:shizuoka",
+"venue": "静岡",
+"race_no": 2,
+"cup": "Ａ級 チャレンジ一般",
+"grade": null,
+"start_at": 1794984780,
+"close_at": 1794984480,
+"cls": "S B",
+"race_type": "S B",
+"bet": "3連単",
+"line": "1点・合成18.1倍",
+"settled": true,
+"result": "1-4-2",
+"payout": 0,
+"final_odds": 18.1
+},
+{
+"date": "2026-11-18",
+"rule": "D",
+"ticket": "1-7-4",
+"url": "nk:202611183803:shizuoka",
+"venue": "静岡",
+"race_no": 3,
+"region": "3人同地区(南関東)",
+"same3": true,
+"chu": false,
+"chu_star": false,
+"cup": "Ａ級 チャレンジ準決勝",
+"grade": null,
+"start_at": 1794986400,
+"close_at": 1794986100,
+"cls": "S B",
+"race_type": "S B",
+"bet": "3連単",
+"line": "1-7-4・11.9倍",
+"settled": true,
+"result": "1-7-4",
+"payout": 1190,
+"final_odds": 11.9
+},
+{
+"date": "2026-11-18",
+"rule": "K4",
 "ticket": "1-7-4",
 "tickets": [
 "1-7-4"
@@ -9089,7 +9188,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "1点・合成38.3倍"
+"line": "1点・合成11.9倍",
+"settled": true,
+"result": "1-7-4",
+"payout": 1190,
+"final_odds": 11.9
 },
 {
 "date": "2026-11-18",
@@ -9108,7 +9211,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "1点・合成45.9倍・万車率64%"
+"line": "1点・合成29.0倍・万車率58%",
+"settled": true,
+"result": "9-3-8",
+"payout": 0,
+"final_odds": 29.0
 },
 {
 "date": "2026-11-18",
@@ -9128,7 +9235,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "3-8-6"
+"line": "3-8-6",
+"settled": true,
+"result": "1-5-4",
+"payout": 0,
+"final_odds": 83.6
 },
 {
 "date": "2026-11-18",
@@ -9148,17 +9259,21 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "3-8-6・115.2倍"
+"line": "3-8-6・83.6倍",
+"settled": true,
+"result": "1-5-4",
+"payout": 0,
+"final_odds": 83.6
 },
 {
 "date": "2026-11-18",
 "rule": "K1",
-"ticket": "3-8-1 / 3-8-6 / 3-8-7 / 8-3-6",
+"ticket": "3-8-6 / 3-8-1 / 8-3-6 / 3-8-7",
 "tickets": [
-"3-8-1",
 "3-8-6",
-"3-8-7",
-"8-3-6"
+"3-8-1",
+"8-3-6",
+"3-8-7"
 ],
 "url": "nk:202611188106:kokura",
 "venue": "小倉",
@@ -9170,7 +9285,11 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "4点・合成30.9倍"
+"line": "4点・合成25.6倍",
+"settled": true,
+"result": "1-5-4",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-18",
@@ -9190,7 +9309,35 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "4-5-6"
+"line": "4-5-6",
+"settled": true,
+"result": "7-6-2",
+"payout": 0,
+"final_odds": 4325.6
+},
+{
+"date": "2026-11-18",
+"rule": "E",
+"ticket": "7-1-3",
+"url": "nk:202611183807:shizuoka",
+"venue": "静岡",
+"race_no": 7,
+"region": "前2人同地区",
+"same3": false,
+"chu": false,
+"chu_star": false,
+"cup": "Ａ級 特一般",
+"grade": null,
+"start_at": 1794993360,
+"close_at": 1794993060,
+"cls": "Ａ級特一般",
+"race_type": "Ａ級特一般",
+"bet": "3連単",
+"line": "7-1-3-6・7.4倍",
+"settled": true,
+"result": "7-2-3",
+"payout": 0,
+"final_odds": 7.4
 },
 {
 "date": "2026-11-18",
@@ -9210,7 +9357,31 @@
 "cls": "Ａ級特一般",
 "race_type": "Ａ級特一般",
 "bet": "3連単",
-"line": "4-3-2・9.8倍"
+"line": "4-3-2・5.2倍",
+"settled": true,
+"result": "4-3-7",
+"payout": 0,
+"final_odds": 5.2
+},
+{
+"date": "2026-11-18",
+"rule": "E",
+"ticket": "1-9-4",
+"url": "nk:202611188111:kokura",
+"venue": "小倉",
+"race_no": 11,
+"region": "地区ばらばら",
+"same3": false,
+"chu": false,
+"chu_star": false,
+"cup": "Ｓ級 一次予選１",
+"grade": null,
+"start_at": 1794999480,
+"close_at": 1794999180,
+"cls": "S B",
+"race_type": "S B",
+"bet": "3連単",
+"line": "1-9-4・9.5倍"
 },
 {
 "date": "2026-11-18",
@@ -9230,7 +9401,7 @@
 "cls": "Ａ級準決勝",
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
-"line": "2-5-6・6.4倍"
+"line": "2-5-6・9.1倍"
 },
 {
 "date": "2026-11-18",
@@ -9270,27 +9441,7 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "4-7-5・144.0倍"
-},
-{
-"date": "2026-11-18",
-"rule": "M1",
-"ticket": "4-7-5 / 7-4-5",
-"tickets": [
-"4-7-5",
-"7-4-5"
-],
-"url": "nk:202611182402:utsunomiya",
-"venue": "宇都宮",
-"race_no": 2,
-"cup": "Ａ級 チャレンジ一般",
-"grade": null,
-"start_at": 1795003800,
-"close_at": 1795003500,
-"cls": "S B",
-"race_type": "S B",
-"bet": "3連単",
-"line": "2点・合成142.0倍・万車率31%"
+"line": "4-7-5・123.6倍"
 },
 {
 "date": "2026-11-18",
@@ -9310,7 +9461,7 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "1-2-4-6・2.8倍"
+"line": "1-2-4-6・3.2倍"
 },
 {
 "date": "2026-11-18",
@@ -9350,7 +9501,27 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "2-6-7・78.9倍"
+"line": "2-6-7・113.2倍"
+},
+{
+"date": "2026-11-18",
+"rule": "M1",
+"ticket": "2-6-7 / 6-2-7",
+"tickets": [
+"2-6-7",
+"6-2-7"
+],
+"url": "nk:202611182403:utsunomiya",
+"venue": "宇都宮",
+"race_no": 3,
+"cup": "Ａ級 チャレンジ準決勝",
+"grade": null,
+"start_at": 1795005000,
+"close_at": 1795004700,
+"cls": "S B",
+"race_type": "S B",
+"bet": "3連単",
+"line": "2点・合成81.5倍・万車率32%"
 },
 {
 "date": "2026-11-18",
@@ -9369,7 +9540,7 @@
 "cls": "S B",
 "race_type": "S B",
 "bet": "3連単",
-"line": "1点・合成53.5倍"
+"line": "1点・合成55.1倍"
 },
 {
 "date": "2026-11-18",
@@ -9409,15 +9580,17 @@
 "cls": "Ａ級特一般",
 "race_type": "Ａ級特一般",
 "bet": "3連単",
-"line": "7-5-6・132.0倍"
+"line": "7-5-6・119.3倍"
 },
 {
 "date": "2026-11-18",
-"rule": "M1",
-"ticket": "7-5-6 / 5-7-6",
+"rule": "K1",
+"ticket": "5-7-2 / 5-7-6 / 7-5-6 / 5-7-1",
 "tickets": [
+"5-7-2",
+"5-7-6",
 "7-5-6",
-"5-7-6"
+"5-7-1"
 ],
 "url": "nk:202611187405:kochi",
 "venue": "高知",
@@ -9429,7 +9602,85 @@
 "cls": "Ａ級特一般",
 "race_type": "Ａ級特一般",
 "bet": "3連単",
-"line": "2点・合成88.0倍・万車率38%"
+"line": "4点・合成21.7倍"
+},
+{
+"date": "2026-11-18",
+"rule": "M2",
+"ticket": "1-2-7",
+"tickets": [
+"1-2-7"
+],
+"url": "nk:202611182405:utsunomiya",
+"venue": "宇都宮",
+"race_no": 5,
+"cup": "Ａ級 特一般",
+"grade": null,
+"start_at": 1795007400,
+"close_at": 1795007100,
+"cls": "Ａ級特一般",
+"race_type": "Ａ級特一般",
+"bet": "3連単",
+"line": "1点・合成34.5倍・万車率52%"
+},
+{
+"date": "2026-11-18",
+"rule": "M3",
+"ticket": "3-5-4 / 5-3-4",
+"tickets": [
+"3-5-4",
+"5-3-4"
+],
+"url": "nk:202611187406:kochi",
+"venue": "高知",
+"race_no": 6,
+"cup": "Ａ級 特一般",
+"grade": null,
+"start_at": 1795008000,
+"close_at": 1795007700,
+"cls": "Ａ級特一般",
+"race_type": "Ａ級特一般",
+"bet": "3連単",
+"line": "2点・合成6.5倍・万車率54%"
+},
+{
+"date": "2026-11-18",
+"rule": "D",
+"ticket": "2-6-1",
+"url": "nk:202611182406:utsunomiya",
+"venue": "宇都宮",
+"race_no": 6,
+"region": "前2人同地区",
+"same3": false,
+"chu": false,
+"chu_star": false,
+"cup": "Ａ級 特一般",
+"grade": null,
+"start_at": 1795008600,
+"close_at": 1795008300,
+"cls": "Ａ級特一般",
+"race_type": "Ａ級特一般",
+"bet": "3連単",
+"line": "2-6-1・24.4倍"
+},
+{
+"date": "2026-11-18",
+"rule": "M2",
+"ticket": "3-7-5",
+"tickets": [
+"3-7-5"
+],
+"url": "nk:202611182406:utsunomiya",
+"venue": "宇都宮",
+"race_no": 6,
+"cup": "Ａ級 特一般",
+"grade": null,
+"start_at": 1795008600,
+"close_at": 1795008300,
+"cls": "Ａ級特一般",
+"race_type": "Ａ級特一般",
+"bet": "3連単",
+"line": "1点・合成38.8倍・万車率64%"
 },
 {
 "date": "2026-11-18",
@@ -9440,8 +9691,8 @@
 "race_no": 7,
 "region": "3人同地区(四国)",
 "same3": true,
-"chu": false,
-"chu_star": false,
+"chu": true,
+"chu_star": true,
 "cup": "Ａ級 準決勝",
 "grade": null,
 "start_at": 1795009200,
@@ -9460,8 +9711,8 @@
 "race_no": 7,
 "region": "3人同地区(四国)",
 "same3": true,
-"chu": false,
-"chu_star": false,
+"chu": true,
+"chu_star": true,
 "cup": "Ａ級 準決勝",
 "grade": null,
 "start_at": 1795009200,
@@ -9469,27 +9720,7 @@
 "cls": "Ａ級準決勝",
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
-"line": "3-5-7・34.2倍"
-},
-{
-"date": "2026-11-18",
-"rule": "M1",
-"ticket": "3-5-7 / 5-3-7",
-"tickets": [
-"3-5-7",
-"5-3-7"
-],
-"url": "nk:202611187407:kochi",
-"venue": "高知",
-"race_no": 7,
-"cup": "Ａ級 準決勝",
-"grade": null,
-"start_at": 1795009200,
-"close_at": 1795008900,
-"cls": "Ａ級準決勝",
-"race_type": "Ａ級準決勝",
-"bet": "3連単",
-"line": "2点・合成17.1倍・万車率36%"
+"line": "3-5-7・62.3倍"
 },
 {
 "date": "2026-11-18",
@@ -9510,26 +9741,6 @@
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
 "line": "3-6-2"
-},
-{
-"date": "2026-11-18",
-"rule": "M1",
-"ticket": "3-6-2 / 6-3-2",
-"tickets": [
-"3-6-2",
-"6-3-2"
-],
-"url": "nk:202611182407:utsunomiya",
-"venue": "宇都宮",
-"race_no": 7,
-"cup": "Ａ級 準決勝",
-"grade": null,
-"start_at": 1795009800,
-"close_at": 1795009500,
-"cls": "Ａ級準決勝",
-"race_type": "Ａ級準決勝",
-"bet": "3連単",
-"line": "2点・合成14.8倍・万車率38%"
 },
 {
 "date": "2026-11-18",
@@ -9569,26 +9780,6 @@
 "cls": "Ａ級準決勝",
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
-"line": "4-5-6・124.1倍"
-},
-{
-"date": "2026-11-18",
-"rule": "M1",
-"ticket": "4-5-6 / 5-4-6",
-"tickets": [
-"4-5-6",
-"5-4-6"
-],
-"url": "nk:202611182409:utsunomiya",
-"venue": "宇都宮",
-"race_no": 9,
-"cup": "Ａ級 準決勝",
-"grade": null,
-"start_at": 1795012200,
-"close_at": 1795011900,
-"cls": "Ａ級準決勝",
-"race_type": "Ａ級準決勝",
-"bet": "3連単",
-"line": "2点・合成67.7倍・万車率35%"
+"line": "4-5-6・118.0倍"
 }
 ]
