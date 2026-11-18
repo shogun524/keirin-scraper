@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18 12:12",
+ "updated": "2026-11-18 12:37",
  "failures": [
   {
    "race": "2026-11-18 seibuen 3R",
@@ -11,26 +11,35 @@
    }
   },
   {
-   "race": "2026-11-18 ogaki 4R",
+   "race": "2026-11-18 komatsushima 4R",
    "diag": {
-    "venue": "ogaki",
-    "race_id": "4420261118010004",
+    "venue": "komatsushima",
+    "race_id": "7320261116030004",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-18 seibuen 4R",
+   "race": "2026-11-18 ogaki 5R",
+   "diag": {
+    "venue": "ogaki",
+    "race_id": "4420261118010005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-18 seibuen 5R",
    "diag": {
     "venue": "seibuen",
-    "race_id": "2620261118010004",
+    "race_id": "2620261118010005",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3186,
- "with_result": 2534,
+ "with_result": 2536,
  "without_url": 0,
- "pending_eligible": 591
+ "pending_eligible": 592
 }
