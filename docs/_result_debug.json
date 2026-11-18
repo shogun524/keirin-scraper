@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18 10:41",
+ "updated": "2026-11-18 11:13",
  "failures": [
   {
    "race": "2026-11-17 utsunomiya 5R",
@@ -12,26 +12,17 @@
    ]
   },
   {
-   "race": "2026-11-18 matsuyama 6R",
-   "diag": {
-    "venue": "matsuyama",
-    "race_id": "7520261117020006",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-18 ogaki 1R",
+   "race": "2026-11-18 ogaki 2R",
    "diag": {
     "venue": "ogaki",
-    "race_id": "4420261118010001",
+    "race_id": "4420261118010002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3186,
- "with_result": 2524,
+ "with_result": 2529,
  "without_url": 0,
- "pending_eligible": 590
+ "pending_eligible": 589
 }
