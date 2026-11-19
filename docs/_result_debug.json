@@ -1,20 +1,11 @@
 {
- "updated": "2026-11-19 20:47",
+ "updated": "2026-11-19 21:18",
  "failures": [
   {
    "race": "2026-11-19 kokura 11R",
    "diag": {
     "venue": "kokura",
     "race_id": "8120261118020011",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-19 kokura 12R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261118020012",
     "primary": "skipped",
     "day_parsed": false
    }
@@ -29,17 +20,39 @@
    }
   },
   {
-   "race": "2026-11-19 utsunomiya 1R",
+   "race": "2026-11-19 kochi 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    7,
+    1,
+    6,
+    3,
+    4,
+    2,
+    5
+   ]
+  },
+  {
+   "race": "2026-11-19 utsunomiya 2R",
    "diag": {
     "venue": "utsunomiya",
-    "race_id": "2420261117030001",
+    "race_id": "2420261117030002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-19 kochi 3R",
+   "diag": {
+    "venue": "kochi",
+    "race_id": "7420261117030003",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3261,
- "with_result": 2634,
+ "with_result": 2636,
  "without_url": 0,
- "pending_eligible": 611
+ "pending_eligible": 612
 }
