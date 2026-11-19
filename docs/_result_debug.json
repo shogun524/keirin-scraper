@@ -1,31 +1,18 @@
 {
- "updated": "2026-11-19 11:42",
+ "updated": "2026-11-19 12:10",
  "failures": [
   {
-   "race": "2026-11-18 kochi 9R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    1,
-    2,
-    6,
-    5,
-    4,
-    3,
-    7
-   ]
-  },
-  {
-   "race": "2026-11-19 ogaki 3R",
+   "race": "2026-11-19 ogaki 4R",
    "diag": {
     "venue": "ogaki",
-    "race_id": "4420261118020003",
+    "race_id": "4420261118020004",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3261,
- "with_result": 2601,
+ "with_result": 2603,
  "without_url": 0,
  "pending_eligible": 604
 }
