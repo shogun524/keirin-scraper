@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19 18:17",
+ "updated": "2026-11-19 18:48",
  "failures": [
   {
    "race": "2026-11-19 seibuen 9R",
@@ -29,26 +29,26 @@
    ]
   },
   {
-   "race": "2026-11-19 kokura 7R",
+   "race": "2026-11-19 kokura 8R",
    "diag": {
     "venue": "kokura",
-    "race_id": "8120261118020007",
+    "race_id": "8120261118020008",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-19 shizuoka 7R",
+   "race": "2026-11-19 shizuoka 8R",
    "diag": {
     "venue": "shizuoka",
-    "race_id": "3820261117030007",
+    "race_id": "3820261117030008",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3261,
- "with_result": 2625,
+ "with_result": 2627,
  "without_url": 0,
  "pending_eligible": 609
 }
