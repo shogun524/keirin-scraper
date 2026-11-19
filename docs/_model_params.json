@@ -1,17 +1,11 @@
 {
- "updated": "2026-11-19",
- "n": 2034,
+ "updated": "2026-11-20",
+ "n": 2095,
  "min_races": 120,
  "default": 1.75,
  "active": false,
  "sharpness_first": 1.75,
  "history": [
-  {
-   "date": "2026-10-20",
-   "gamma": 1.75,
-   "n": 667,
-   "lr": 0.9
-  },
   {
    "date": "2026-10-21",
    "gamma": 1.75,
@@ -191,6 +185,12 @@
    "gamma": 1.75,
    "n": 2034,
    "lr": 0.25
+  },
+  {
+   "date": "2026-11-20",
+   "gamma": 1.75,
+   "n": 2095,
+   "lr": 0.25
   }
  ],
  "fit_raw": 1.725,
@@ -198,194 +198,194 @@
  "ll_per_race_default": -1.5774,
  "ll_per_race_new": -1.5774,
  "buff": {
-  "n": 1870,
+  "n": 1923,
   "min_races": 80,
   "active": true,
   "beta": 0.274,
   "fit_raw": 0.275,
-  "lr": 118.07,
-  "ll_per_race_default": -1.5941,
-  "ll_per_race_new": -1.5626
+  "lr": 122.82,
+  "ll_per_race_default": -1.594,
+  "ll_per_race_new": -1.5621
  },
  "groups": {
   "7": {
-   "n": 1832,
+   "n": 1885,
    "min_races": 100,
    "active": true,
    "sharp23_mult": 0.924,
    "line_follow_bonus": 120.0,
    "default_sharp23": 1.3,
    "default_line_follow_bonus": 45.0,
-   "lr": 373.42,
+   "lr": 382.79,
    "fit_raw": [
     1.2,
     120.0
    ],
-   "ll_per_race_default": -3.0181,
-   "ll_per_race_new": -2.9161
+   "ll_per_race_default": -3.0185,
+   "ll_per_race_new": -2.9169
   },
   "9": {
-   "n": 202,
+   "n": 210,
    "min_races": 100,
    "active": true,
    "sharp23_mult": 1.154,
-   "line_follow_bonus": 77.4,
+   "line_follow_bonus": 78.7,
    "default_sharp23": 1.733,
    "default_line_follow_bonus": 45.0,
-   "lr": 56.3,
+   "lr": 57.75,
    "fit_raw": [
     1.5,
     80.0
    ],
-   "ll_per_race_default": -3.5607,
-   "ll_per_race_new": -3.427
+   "ll_per_race_default": -3.5461,
+   "ll_per_race_new": -3.4114
   }
  },
  "stage_cal": {
   "7": {
    "s1": {
-    "n": 1832,
+    "n": 1885,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 37,
-    "lr": 253.37,
+    "lr": 257.54,
     "fit_raw": [
-     0.983,
-     0.117,
-     -0.965,
-     -1.162,
-     -0.448,
-     0.371
+     0.98,
+     0.114,
+     -0.966,
+     -1.135,
+     -0.419,
+     0.361
     ],
-    "ll_per_race_default": 1.5686,
-    "loo_gain_per_race": 0.0658,
-    "loo_days_better": 33,
-    "loo_days": 35,
+    "ll_per_race_default": 1.5677,
+    "loo_gain_per_race": 0.0651,
+    "loo_days_better": 34,
+    "loo_days": 36,
     "coef": {
-     "a": 0.981,
-     "捲": 0.125,
-     "差": -0.944,
-     "マ": -1.139,
-     "hinge": -0.445,
-     "pos2": 0.363
+     "a": 0.98,
+     "捲": 0.12,
+     "差": -0.955,
+     "マ": -1.137,
+     "hinge": -0.432,
+     "pos2": 0.362
     },
-    "ll_per_race_new": 1.4996
+    "ll_per_race_new": 1.4994
    },
    "s2": {
-    "n": 1832,
+    "n": 1885,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 37,
-    "lr": 314.02,
+    "lr": 320.62,
     "fit_raw": [
-     0.8,
-     0.134,
-     0.913
+     0.804,
+     0.133,
+     0.909
     ],
-    "ll_per_race_default": 1.4993,
-    "loo_gain_per_race": 0.0843,
-    "loo_days_better": 32,
-    "loo_days": 35,
+    "ll_per_race_default": 1.4998,
+    "loo_gain_per_race": 0.0838,
+    "loo_days_better": 33,
+    "loo_days": 36,
     "coef": {
      "slope": 0.803,
-     "same": 0.142,
-     "adj": 0.908
+     "same": 0.137,
+     "adj": 0.909
     },
-    "ll_per_race_new": 1.4136
+    "ll_per_race_new": 1.4148
    },
    "s3": {
-    "n": 1832,
+    "n": 1885,
     "min_races": 200,
     "min_venues": 6,
     "active": true,
     "venues": 37,
-    "lr": 300.01,
+    "lr": 307.3,
     "fit_raw": [
-     0.517,
-     0.497,
-     0.455
+     0.519,
+     0.484,
+     0.466
     ],
     "ll_per_race_default": 1.5187,
-    "loo_gain_per_race": 0.0805,
-    "loo_days_better": 34,
-    "loo_days": 35,
+    "loo_gain_per_race": 0.0802,
+    "loo_days_better": 35,
+    "loo_days": 36,
     "coef": {
      "slope": 0.601,
-     "same": 0.503,
-     "adj": 0.453
+     "same": 0.493,
+     "adj": 0.46
     },
-    "ll_per_race_new": 1.4382
+    "ll_per_race_new": 1.4384
    }
   },
   "9": {
    "s1": {
-    "n": 202,
+    "n": 210,
     "min_races": 150,
     "min_venues": 4,
     "active": false,
     "venues": 6,
-    "lr": 13.7,
+    "lr": 14.98,
     "fit_raw": [
-     1.101,
-     -0.049,
-     -0.467,
-     -0.322,
-     -0.326,
-     -0.098
+     1.094,
+     0.03,
+     -0.497,
+     -0.353,
+     -0.356,
+     -0.023
     ],
-    "ll_per_race_default": 1.6575,
-    "loo_gain_per_race": 0.0128,
-    "loo_days_better": 14,
-    "loo_days": 21,
+    "ll_per_race_default": 1.6642,
+    "loo_gain_per_race": 0.0149,
+    "loo_days_better": 16,
+    "loo_days": 22,
     "reason": "ゲート不通過（偶然の範囲／日ごとに安定しない）"
    },
    "s2": {
-    "n": 202,
+    "n": 210,
     "min_races": 150,
     "min_venues": 4,
     "active": true,
     "venues": 6,
-    "lr": 61.24,
+    "lr": 64.55,
     "fit_raw": [
-     0.667,
-     0.379,
-     0.867
+     0.669,
+     0.381,
+     0.876
     ],
-    "ll_per_race_default": 1.6703,
-    "loo_gain_per_race": 0.1412,
-    "loo_days_better": 16,
-    "loo_days": 21,
+    "ll_per_race_default": 1.665,
+    "loo_gain_per_race": 0.144,
+    "loo_days_better": 17,
+    "loo_days": 22,
     "coef": {
      "slope": 0.668,
-     "same": 0.374,
-     "adj": 0.855
+     "same": 0.378,
+     "adj": 0.865
     },
-    "ll_per_race_new": 1.5189
+    "ll_per_race_new": 1.5115
    },
    "s3": {
-    "n": 202,
+    "n": 210,
     "min_races": 150,
     "min_venues": 4,
     "active": true,
     "venues": 6,
-    "lr": 74.64,
+    "lr": 73.5,
     "fit_raw": [
-     0.449,
-     0.578,
-     0.54
+     0.462,
+     0.558,
+     0.528
     ],
-    "ll_per_race_default": 1.8875,
-    "loo_gain_per_race": 0.1735,
+    "ll_per_race_default": 1.8797,
+    "loo_gain_per_race": 0.1642,
     "loo_days_better": 17,
-    "loo_days": 21,
+    "loo_days": 22,
     "coef": {
      "slope": 0.601,
-     "same": 0.581,
+     "same": 0.57,
      "adj": 0.528
     },
-    "ll_per_race_new": 1.7128
+    "ll_per_race_new": 1.7131
    }
   }
  }
