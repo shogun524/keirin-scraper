@@ -6620,12 +6620,6 @@
     "name": "山田",
     "recent": [
       {
-        "date": "2026-11-16",
-        "venue": "toyama",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-17",
         "venue": "toyama",
         "finish": 4,
@@ -6677,6 +6671,12 @@
         "date": "2026-11-20",
         "venue": "fukui",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-20",
+        "venue": "ogaki",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -47229,6 +47229,12 @@
         "venue": "ogaki",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-20",
+        "venue": "ogaki",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -47370,6 +47376,12 @@
       },
       {
         "date": "2026-11-19",
+        "venue": "ogaki",
+        "finish": 1,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-20",
         "venue": "ogaki",
         "finish": 1,
         "kimarite": null
@@ -57492,6 +57504,12 @@
         "venue": "ogaki",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-20",
+        "venue": "ogaki",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -62396,6 +62414,12 @@
         "date": "2026-11-19",
         "venue": "ogaki",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-20",
+        "venue": "ogaki",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -72176,12 +72200,6 @@
     "name": "長田",
     "recent": [
       {
-        "date": "2026-10-21",
-        "venue": "aomori",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-28",
         "venue": "gifu",
         "finish": 5,
@@ -72233,6 +72251,12 @@
         "date": "2026-11-19",
         "venue": "ogaki",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-20",
+        "venue": "ogaki",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -92117,6 +92141,17 @@
         "date": "2026-11-20",
         "venue": "seibuen",
         "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "奥原": {
+    "name": "奥原",
+    "recent": [
+      {
+        "date": "2026-11-20",
+        "venue": "ogaki",
+        "finish": 5,
         "kimarite": null
       }
     ]
