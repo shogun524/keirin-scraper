@@ -113531,7 +113531,7 @@
   "大泉__seibuen": {
     "name": "大泉",
     "venue": "seibuen",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -113544,7 +113544,7 @@
   "葉狩__seibuen": {
     "name": "葉狩",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -113817,9 +113817,9 @@
   "和田 禎嗣__seibuen": {
     "name": "和田 禎嗣",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -113882,7 +113882,7 @@
   "安藤__seibuen": {
     "name": "安藤",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -114142,7 +114142,7 @@
   "小川__seibuen": {
     "name": "小川",
     "venue": "seibuen",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -114233,7 +114233,7 @@
   "井上__ogaki": {
     "name": "井上",
     "venue": "ogaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -114246,7 +114246,7 @@
   "坂口__ogaki": {
     "name": "坂口",
     "venue": "ogaki",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -118588,9 +118588,9 @@
   "吉川 希望__ogaki": {
     "name": "吉川 希望",
     "venue": "ogaki",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -118601,7 +118601,7 @@
   "山口__ogaki": {
     "name": "山口",
     "venue": "ogaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -118731,7 +118731,7 @@
   "鹿内__ogaki": {
     "name": "鹿内",
     "venue": "ogaki",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -120355,6 +120355,58 @@
   },
   "野間 司__ogaki": {
     "name": "野間 司",
+    "venue": "ogaki",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "今井 希__seibuen": {
+    "name": "今井 希",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "緒方 剛__seibuen": {
+    "name": "緒方 剛",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藏本 徹二__ogaki": {
+    "name": "藏本 徹二",
+    "venue": "ogaki",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "肥後 尚己__ogaki": {
+    "name": "肥後 尚己",
     "venue": "ogaki",
     "races": 1,
     "wins": 0,
