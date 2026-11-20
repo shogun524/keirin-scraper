@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20 23:32",
+ "updated": "2026-11-21 05:08",
  "failures": [
   {
    "race": "2026-11-20 nagoya 4R",
@@ -7,6 +7,18 @@
     "venue": "nagoya",
     "race_id": "4220261120010004",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202611200100/",
+    "day_html_len": 117856,
+    "day_races": [
+     1,
+     2,
+     3,
+     5,
+     6,
+     7,
+     8
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -25,11 +37,24 @@
     "venue": "maebashi",
     "race_id": "2220261120010009",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/maebashi/raceresult/22202611200100/",
+    "day_html_len": 117890,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   }
  ],
- "tracked": 3318,
+ "tracked": 3375,
  "with_result": 2692,
  "without_url": 0,
  "pending_eligible": 626
