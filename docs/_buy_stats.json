@@ -5,56 +5,56 @@
     "堅い": {
       "syn1.5": {
         "all": {
-          "races": 510,
-          "hits": 308,
-          "points": 5739,
-          "return": 5167.6,
-          "hit_pct": 60.4,
-          "roi_pct": 90.0
+          "races": 512,
+          "hits": 310,
+          "points": 5754,
+          "return": 5172.1,
+          "hit_pct": 60.5,
+          "roi_pct": 89.9
         },
         "live": {
-          "races": 510,
-          "hits": 308,
-          "points": 5739,
-          "return": 5167.6,
-          "hit_pct": 60.4,
-          "roi_pct": 90.0
+          "races": 512,
+          "hits": 310,
+          "points": 5754,
+          "return": 5172.1,
+          "hit_pct": 60.5,
+          "roi_pct": 89.9
         }
       },
       "top5": {
         "all": {
-          "races": 510,
-          "hits": 224,
-          "points": 2550,
-          "return": 2179.0,
-          "hit_pct": 43.9,
-          "roi_pct": 85.5
+          "races": 512,
+          "hits": 226,
+          "points": 2560,
+          "return": 2183.5,
+          "hit_pct": 44.1,
+          "roi_pct": 85.3
         },
         "live": {
-          "races": 510,
-          "hits": 224,
-          "points": 2550,
-          "return": 2179.0,
-          "hit_pct": 43.9,
-          "roi_pct": 85.5
+          "races": 512,
+          "hits": 226,
+          "points": 2560,
+          "return": 2183.5,
+          "hit_pct": 44.1,
+          "roi_pct": 85.3
         }
       },
       "top10": {
         "all": {
-          "races": 510,
-          "hits": 307,
-          "points": 5100,
-          "return": 4552.6,
-          "hit_pct": 60.2,
-          "roi_pct": 89.3
+          "races": 512,
+          "hits": 309,
+          "points": 5120,
+          "return": 4557.1,
+          "hit_pct": 60.4,
+          "roi_pct": 89.0
         },
         "live": {
-          "races": 510,
-          "hits": 307,
-          "points": 5100,
-          "return": 4552.6,
-          "hit_pct": 60.2,
-          "roi_pct": 89.3
+          "races": 512,
+          "hits": 309,
+          "points": 5120,
+          "return": 4557.1,
+          "hit_pct": 60.4,
+          "roi_pct": 89.0
         }
       }
     },
