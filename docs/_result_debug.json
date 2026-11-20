@@ -1,33 +1,6 @@
 {
- "updated": "2026-11-20 21:02",
+ "updated": "2026-11-20 21:32",
  "failures": [
-  {
-   "race": "2026-11-20 kokura 4R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261118030004",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-20 kokura 7R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261118030007",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-20 kokura 8R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261118030008",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-20 kokura 10R",
    "diag": {
@@ -38,17 +11,17 @@
    }
   },
   {
-   "race": "2026-11-20 nagoya 2R",
+   "race": "2026-11-20 maebashi 3R",
    "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261120010002",
+    "venue": "maebashi",
+    "race_id": "2220261120010003",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3318,
- "with_result": 2679,
+ "with_result": 2682,
  "without_url": 0,
  "pending_eligible": 624
 }
