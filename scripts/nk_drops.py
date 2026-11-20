@@ -5,11 +5,11 @@
 nk_watch.py が記録した締切前オッズ(live/nk_live_YYYYMMDD.jsonl.gz、公式の更新ごとに1行)から、レースごとに
   選定時 = 締切前の最後の記録、比べる相手 = その45秒以上前で一番近い記録(だいたい1〜2回前の公式更新)
   各組の「支持の割合」 q = (1/オッズ) ÷ 全組の(1/オッズ)の合計
-  q の増え方(選定時 − 比べる相手)が大きい順に、増えた組だけを最大15点
+  q が何倍に増えたか(選定時 ÷ 比べる相手)が大きい順に、増えた組だけを最大5点(11/20〜。旧: 増えた差の順に15点)
 を「締切直前にお金が入った3連単」として出す。締切前は同じ方法で「暫定」を出し、締切後に確定する。
 並べ方は 1着-2着-3着 の候補をまとめた書き方(例: 235-4-35 = 1着2・3・5、2着4、3着3・5 の組のうち選んだもの)。
 合成オッズ = 1 ÷ Σ(1/各組のオッズ)。選定時と、締切後の最終オッズの両方を出す。
-結果は netkeirin の結果ページから3連単の組と払戻を読んで、1レース5,000円を資金配分(オッズに反比例・100円単位)で買った場合の収支を出す。
+結果は netkeirin の結果ページから3連単の組と払戻を読んで、1レース5,000円を均等買い(オッズに反比例・100円単位)で買った場合の収支を出す。
 
 使い方(scripts/ で): python nk_drops.py --live ../live/nk_live_20261115.jsonl.gz
 """
@@ -25,8 +25,14 @@ from zoneinfo import ZoneInfo
 
 JST = ZoneInfo("Asia/Tokyo")
 DOCS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs")
-MAX_PICKS = 15
-GAP_SEC = 45           # 比べる相手は選定時の記録よりこれ以上前
+MAX_PICKS = 5          # 11/20: 15点→5点
+GAP_SEC = 120          # 比べる相手は選定時の記録よりこれ以上前(11/20: 45秒→2分)
+MIN_SHARE = 0.002      # 選ぶのは支持の割合が0.2%以上の組だけ(大穴の数字のぶれを除く)
+# 11/20 見直し(11/15〜11/20 の300レースで検証):
+#   旧: 支持の割合の『増えた差』が大きい順15点・資金配分 → 回収率71〜78%(人気の組を選んでいるだけで、選んだ後もさらに下がる)
+#   新: 支持の割合が『何倍に増えたか』が大きい順5点・均等買い → 回収率120%(的中44/300)。
+#       同じ人気帯からランダムに5点選ぶと平均59%(300回中0回も120%に届かない)ので、たまたまではなさそう。
+#   ただし効くのは締切直前(最後の記録は締切の中央25秒前)の動きだけ。締切2分以上前の記録で選ぶと後半3日で32〜48%に落ちる。
 UPCOMING_MIN = 13      # 締切がこの分数以内のレースは「締切まもなく」に暫定で出す
 RESULT_URL = "https://keirin.netkeiba.com/race/result/?race_id={}"
 
@@ -65,23 +71,14 @@ MIN_SYNTH = 2.0  # 選定時の合成オッズがこれ未満のレースは出�
 
 
 def allocate(tri, combos, budget=BUDGET):
-    """資金配分(どの組が当たっても払戻がほぼ同じになるよう、オッズに反比例して配る)。100円単位・合計 budget 円。
-    -> {組: 金額}。オッズの無い組は 0 円"""
-    inv = {c: 1 / tri[c] for c in combos if tri.get(c)}
-    if not inv:
+    """均等買い(11/20〜。資金配分より均等の方が回収率が高かった): 100円単位で budget 円をなるべく同じ額ずつ -> {組: 金額}"""
+    cs = [c for c in combos if tri.get(c)]
+    if not cs:
         return {}
-    tot = sum(inv.values())
-    st = {c: max(100, int(round(budget * v / tot / 100)) * 100) for c, v in inv.items()}
-    while sum(st.values()) != budget:
-        diff = budget - sum(st.values())
-        # 足りなければ一番オッズの低い組に足し、多ければ一番多い組(100円より上)から引く
-        if diff > 0:
-            st[max(inv, key=inv.get)] += 100
-        else:
-            k = max((c for c in st if st[c] > 100), key=lambda c: st[c], default=None)
-            if k is None:
-                break
-            st[k] -= 100
+    unit = budget // 100 // len(cs)
+    st = {c: unit * 100 for c in cs}
+    for c in cs[: budget // 100 - unit * len(cs)]:
+        st[c] += 100
     return st
 
 
@@ -107,8 +104,8 @@ def select(snaps, upto_ts=None):
     if prev is None:
         prev = pre[-2]
     qc, qp = shares(cur["tri"]), shares(prev["tri"])
-    gain = [(k, prev["tri"][k], cur["tri"][k], qc[k] - qp[k]) for k in qc if k in qp and qc[k] > qp[k]]
-    gain.sort(key=lambda x: -x[3])
+    gain = [(k, prev["tri"][k], cur["tri"][k], qc[k] / qp[k] - 1) for k in qc if k in qp and qp[k] > 0 and qc[k] > qp[k] and qc[k] >= MIN_SHARE]
+    gain.sort(key=lambda x: -x[3])   # 何倍に増えたか
     return dict(picks=gain[:MAX_PICKS], cur=cur, prev=prev)
 
 
@@ -278,13 +275,13 @@ def race_card(rid, snaps, sel, res, now_ts, provisional=False):
     when = f'締切 {hm(s0["close"])}' + (f'(あと{left:.0f}分)' if provisional else "")
     res_html = ""
     stakes = allocate(cur["tri"], combos)
-    alloc_html = ('<details class="gr"><summary>5,000円の資金配分(選定時のオッズで、どれが当たっても払戻がほぼ同じ)</summary><p class="note">'
+    alloc_html = ('<details class="gr"><summary>5,000円の買い方(均等買い)</summary><p class="note">'
                   + " ／ ".join(f'{c} {stakes[c]:,}円' for c in sorted(stakes, key=lambda c: -stakes[c])) + '</p></details>') if stakes else ""
     if not provisional:
         if r:
             pay = payout(stakes, r) or 0
             res_html = (f'<p class="res {"hit" if hit else "miss"}">{"🎯 的中 " + hit if hit else "不的中"} ｜ 確定結果 {r["combo"]}({r["pay"]:,}円) ｜ '
-                        f'5,000円配分 払戻 {pay:,}円・収支 {pay - BUDGET:+,}円</p>')
+                        f'5,000円均等買い 払戻 {pay:,}円・収支 {pay - BUDGET:+,}円</p>')
         else:
             res_html = '<p class="res wait">結果待ち</p>'
     svg = chart_svg(snaps, combos, s0["close"], hit)
@@ -337,7 +334,7 @@ def render(recs, res, now):
             state = f'{"🎯 " if h else ""}{r["combo"]} 払戻{got:,}円(収支{got - BUDGET:+,}円)'
         rows += (f'<tr><td>{hm(close)}</td><td>{html.escape(s0["venue"])}{s0["no"]}R</td><td>{len(combos)}点</td>'
                  f'<td>{synth(sel["cur"]["tri"], combos):.1f}</td><td class="l">{html.escape(" / ".join(formation(combos)))}</td><td>{state}</td></tr>')
-    summary = (f'<p class="sum">今日 {n_r}レース確定(1レース5,000円を資金配分) ・ 的中 {n_hit} ・ 投資 {cost:,}円 ・ 払戻 {ret:,}円 ・ '
+    summary = (f'<p class="sum">今日 {n_r}レース確定(1レース5,000円を均等買い) ・ 的中 {n_hit} ・ 投資 {cost:,}円 ・ 払戻 {ret:,}円 ・ '
                f'<b>収支 {ret - cost:+,}円</b> ・ 回収率 {ret / cost * 100:.0f}%</p>' if cost else '<p class="sum">今日の確定はまだありません</p>')
     up_html = "".join(race_card(rid, snaps, sel, res, now_ts, provisional=True) for _, rid, snaps, sel in up) or \
         '<p class="none">いま締切13分以内のレースはありません</p>'
@@ -378,9 +375,10 @@ details.more {{ background:#fff; border:1px solid var(--line); border-radius:12p
 {done_html}
 <details class="more"><summary>選び方・結果の見方</summary>
 <p>締切の約13分前から、netkeirin のオッズを60秒おき(締切4分前からは30秒おき)に取っています。公式のオッズ更新があったときだけ記録します。</p>
-<p>締切前の最後の記録(選定時)と、その45秒以上前の記録を比べます。各組の「支持の割合」(1/オッズを全組の合計で割ったもの)が増えた組を、増えた量が大きい順に最大15点選びます。つまり、締切直前にお金が多く入った組です。</p>
+<p>締切前の最後の記録(選定時)と、その2分以上前の記録を比べます。各組の「支持の割合」(1/オッズを全組の合計で割ったもの)が<b>何倍に増えたか</b>が大きい順に最大5点選びます(割合0.2%未満の大穴は除く)。つまり、締切直前に普段より目立ってお金が入った組です。</p>
+<p>11/20に選び方を変えました。11/15〜11/20の300レースでは、旧方式(増えた量の順に15点・資金配分)は回収率71〜78%、新方式(何倍に増えたかの順に5点・均等買い)は120%でした。同じ人気帯からランダムに5点選ぶと平均59%なので、たまたまではなさそうです。ただし効くのは締切直前の動きだけで、締切2分以上前の記録で選ぶと大きく落ちます。期間がまだ短いので、記録を続けて確かめます。</p>
 <p>「235-4-35」のような書き方は、1着の候補が2・3・5、2着が4、3着が3・5を表します。この中で同じ車が重なる組を除いたものが、選んだ組です。</p>
-<p>合成オッズは、全点を同じ額ずつ買ったときの払戻倍率(1÷Σ(1/オッズ))です。最終は締切後の確定オッズで計算しています。選定時の合成オッズが2倍未満のレースは出していません(成績にも入れていません)。結果は1レース5,000円を、選定時のオッズに反比例して配った(どの組が当たっても払戻がほぼ同じになる)場合の試算です(100円単位)。</p>
+<p>合成オッズは、全点を同じ額ずつ買ったときの払戻倍率(1÷Σ(1/オッズ))です。最終は締切後の確定オッズで計算しています。選定時の合成オッズが2倍未満のレースは出していません(成績にも入れていません)。結果は1レース5,000円を選んだ組に均等に買った場合の試算です(100円単位)。</p>
 <p>注意: ページの更新は約2分おきで、表示までさらに1分ほどかかります。「締切まもなく」の暫定は、締切までに入れ替わることがあります。直前にお金が入った組は当たりやすい半面、オッズが下がっているので回収率は下がるとも言われます。記録がたまったら回収率を検証します。</p>
 </details>
 <details class="more"><summary>各レースの買い目・結果一覧</summary>
