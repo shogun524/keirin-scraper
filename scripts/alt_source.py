@@ -78,6 +78,8 @@ def to_R(kd, nkr):
         "records": [{"playerId": int(r["car"]), "predictionMark": MARK_INT.get((r.get("mark") or "").strip()),
                      "racePoint": r.get("score"), "comment": r.get("comment") or "", "style": r.get("tactic")} for r in racers],
         "linePrediction": lp,
+        # X1(AI順位を使う試験ルール)用: Kドリームスの選手データと並び予想(model.predict_race にそのまま渡せる形)
+        "_kd": {"racers": racers, "line": kd.get("line_prediction_text") or "", "title": info.get("title") or ""},
     }
 
 

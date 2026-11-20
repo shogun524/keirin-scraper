@@ -209,6 +209,76 @@ REF_POINTS = 4   # 参考の流し・BOXの点数(オッズの低い順)
 #   M1 万車率30〜40%・印3番目のライン 先頭・番手→先頭・番手→3番手(2点)              2025年116%・2026年136%(的中率3%)
 #   (M4 全員→2番目のライン先頭・番手(2・3着) は単独では109〜131%だが、M3・M2と重ならないレースだけにすると88〜98%なので外した)
 #   M3→M2→M1 の順に1つ。合わせて 2025年116%・2026年126%(1日3〜4レース)。大きい配当頼みの面もある(M1は的中率3%)
+# X1(11/20・試験): ボートと同じ考え方(合成オッズ3倍未満は見送り・的中率2割弱)で総当たりした中で、レース数が多く形も安定していたもの
+#   万車率20%未満のレースで AI上位2人 → AI上位3人 → 人気上位4人(約9点)・合成3倍以上
+#   winticket 2025年 1182レース 114%・2026年 985レース 114%(的中率17〜18%)。似た形(2着AI上位4人 等)も111〜129%
+#   ただし総当たり全体では本物と偶然版の数が同じくらいなので、試験として記録して確かめる
+X_RULES = {
+    "X1": ("X1 フォーメーション(試験): 万車率20%未満で AI上位2人 → AI上位3人 → 人気上位4人(合成3倍以上)",
+           "検証 2025年 1182レース 114%・2026年 985レース 114%(的中率17〜18%)"),
+}
+
+
+def _ai_order(c, R):
+    """AIの1着率の高い順の車番(model.predict_race)。作れなければ None"""
+    try:
+        import model
+        kd = R.get("_kd")
+        if kd:
+            racers, line, title = kd["racers"], kd["line"], kd["title"]
+        else:
+            from winticket_page import MARK, rank_of
+            P = {p["id"]: p for p in R.get("players", [])}
+            REC = {r["playerId"]: r for r in R.get("records", [])}
+            racers = []
+            for e in R.get("entries", []):
+                if e.get("absent"):
+                    continue
+                p, r = P[e["playerId"]], REC[e["playerId"]]
+                g = r["modifiedGearRatio"] if r.get("hasModifiedGearRatio") else r["gearRatio"]
+                racers.append(dict(car=e["number"], name=p["name"], mark=MARK.get(r.get("predictionMark"), ""),
+                                   rank=rank_of(e["playerCurrentTermClass"], e["playerCurrentTermGroup"]),
+                                   tactic=r["style"], souhyou=0, waku=e["bracketNumber"], gear=g, score=r["racePoint"],
+                                   age=p["age"], period=p["term"],
+                                   kimarite={"逃": r["frontRunner"], "捲": r["deepCloser"], "差": r["stalker"], "マ": r["marker"]},
+                                   finishes={"f1": r["first"], "f2": r["second"], "f3": r["third"], "fo": r["others"]},
+                                   pref=p["prefecture"], b_count=r["back"], s_count=r["standing"], comment=r.get("comment") or ""))
+            lp = R.get("linePrediction") or {}
+            line = ",".join("-".join(str(n) for en in L["entries"] for n in en["numbers"]) for L in lp.get("lines", []))
+            title = f'{(R.get("race") or {}).get("class", "")}{(R.get("race") or {}).get("raceType3", "")}'
+        slug = {"iwakidaira": "iwakitaira"}.get(c.get("slug"), c.get("slug"))
+        res = model.predict_race(racers, line, venue_slug=slug, race_title=title)
+        return [int(r["car"]) for r in res["rows"]] if res else None
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] X1 のAI計算に失敗 {c.get('venue')}: {e}")
+        return None
+
+
+def x_tickets(c, R, tri):
+    """X1 -> (ルール, [買い目], 合成オッズ) か None"""
+    if not tri:
+        return None
+    man = manshaken_rate(tri)
+    if man is None or man >= 0.2:
+        return None
+    ai = _ai_order(c, R)
+    if not ai or len(ai) < 5:
+        return None
+    head = {}
+    for t, o in tri.items():
+        if o:
+            a = int(t.split("-")[0])
+            head[a] = head.get(a, 0) + 1 / o
+    pop = sorted(head, key=lambda k: -head[k])[:4]
+    tks = [f"{a}-{b}-{x}" for a in ai[:2] for b in ai[:3] for x in pop if len({a, b, x}) == 3]
+    if not tks:
+        return None
+    cp = composite(tri, tks)
+    if not cp or cp < 3:
+        return None
+    return "X1", tks, cp
+
+
 M_RULES = {
     "M3": ("M3 万車率50%以上: 1番目のライン 先頭・番手→先頭・番手→3番手(2点・合成5〜10倍)", "検証 2025年114%・2026年116%(的中率16%)"),
     "M2": ("M2 万車率50%以上: 1番目のライン 番手→先頭→3番手(1点)", "検証 2025年126%・2026年116%(的中率6%)"),
@@ -558,6 +628,13 @@ def collect(today):
             pref_of = {int(e["number"]): (next((p for p in R.get("players", []) if p.get("id") == e.get("playerId")), {}) or {}).get("prefecture")
                        for e in R.get("entries", []) if e.get("number") is not None}
             kt = k_tickets(R, tri) if not race.get("cancel") else None
+            xt = x_tickets(c, R, tri) if not race.get("cancel") else None
+            if xt:
+                key, tks, cp = xt
+                picks.append(dict(date=today.isoformat(), rule=key, ticket=" / ".join(tks), tickets=tks, url=url, venue=c["venue"],
+                                  race_no=n, cup=c["name"], grade=c["grade"], start_at=race.get("startAt") or 0,
+                                  close_at=race.get("closeAt") or 0, cls=race.get("class"), race_type=race.get("raceType3"),
+                                  bet="3連単", line=f"{len(tks)}点・合成{cp:.1f}倍・万車率{manshaken_rate(tri):.0%}"))
             mt = m_tickets(R, tri) if not race.get("cancel") else None
             if mt:
                 key, tks, cp = mt
@@ -615,7 +692,7 @@ def merge(log, picks):
 # 各ルールの検証回収率(2025年・2026年。表示用)。回収率の高い順に並べるのにも使う(下限の値)
 RULE_ROI = {"F": ("136〜140%", 136), "M1": ("116〜136%", 116), "K1": ("103〜127%", 103), "A": ("129〜133%", 129),
             "C": ("122%", 122), "M2": ("116〜126%", 116), "M3": ("114〜116%", 114), "D": ("110〜111%", 110),
-            "B": ("110%", 110), "K6": ("105〜106%", 105), "K4": ("102〜120%", 102)}
+            "B": ("110%", 110), "K6": ("105〜106%", 105), "K4": ("102〜120%", 102), "X1": ("114%・試験", 101)}
 
 
 def race_recommendation(picks, url, tri=None):
@@ -624,10 +701,11 @@ def race_recommendation(picks, url, tri=None):
     ps = [p for p in picks if p["url"] == url]
     out, seen = [], set()
     for p in ps:
-        if (p["rule"] in K_RULES or p["rule"] in M_RULES) and p.get("tickets"):
+        if (p["rule"] in K_RULES or p["rule"] in M_RULES or p["rule"] in X_RULES) and p.get("tickets"):
             seen.update(p["tickets"])
             lab = {"K1": "K1 フォーメーション", "K4": "K4 1点", "K6": "K6 穴1点",
-                   "M3": "M3 万車・ライン2点", "M2": "M2 万車・番手差し", "M1": "M1 万車・3番目ライン"}[p["rule"]]
+                   "M3": "M3 万車・ライン2点", "M2": "M2 万車・番手差し", "M1": "M1 万車・3番目ライン",
+                   "X1": "X1 AI上位フォーメーション(試験)"}[p["rule"]]
             out.append(("win" if p["rule"] != "K6" else "ana", f'{lab}・過去{RULE_ROI[p["rule"]][0]}', list(p["tickets"])))
     for p in ps:
         if p["rule"] == "W" and p["ticket"] not in seen:
@@ -746,6 +824,7 @@ def render(log, now, board=None):
     rule_desc["F"] = (F_RULE[1], F_RULE[2])
     rule_desc.update(K_RULES)
     rule_desc.update(M_RULES)
+    rule_desc.update(X_RULES)
 
     def hm(ts):
         return datetime.datetime.fromtimestamp(ts, JST).strftime("%H:%M") if ts else "--:--"
@@ -840,7 +919,7 @@ def render(log, now, board=None):
     stat = ""
     if done:
         rows = []
-        for key in ["M3", "M2", "M1", "K1", "K4", "K6", "A", "B", "C", "D", "F", "W", "G", "H", "全体", "E"]:
+        for key in ["X1", "M3", "M2", "M1", "K1", "K4", "K6", "A", "B", "C", "D", "F", "W", "G", "H", "全体", "E"]:
             if key == "全体":  # 重賞パックに含まれる買い目・同じ買い目の1点ルールは二重に数えない
                 bu = {p["url"] for p in done if p["rule"] in BIG and p.get("tickets")}
                 s, sk = [], set()
@@ -862,7 +941,7 @@ def render(log, now, board=None):
         stat = ("<h2>このページの通算成績(本番)</h2><table><tr><th>ルール</th><th>点数</th><th>的中</th><th>払戻</th><th>回収率</th></tr>"
                 + "".join(rows) + "</table>")
     notes = "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, _, _, d, b in RULES)
-    notes += "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, (d, b) in {**M_RULES, **K_RULES}.items())
+    notes += "".join(f"<li><b>{k}</b>: {html.escape(d)}。{html.escape(b)}。</li>" for k, (d, b) in {**X_RULES, **M_RULES, **K_RULES}.items())
     notes += f"<li><b>W(ワイド・11/15から表示なし)</b>: {html.escape(W_RULE[1])}。{html.escape(W_RULE[2])}。ワイドのオッズは1時間おきの更新時点の値なので、買う前に3〜12倍か確認。</li>"
     notes += f"<li><b>D</b>: {html.escape(D_RULE[1])}。{html.escape(D_RULE[2])}。オッズは1時間おきの更新時点の値なので、買う前に10〜30倍か確認。</li>"
     notes += f"<li><b>F(穴)</b>: {html.escape(F_RULE[1])}。{html.escape(F_RULE[2])}。上位5本の的中を除くと96%。</li>"
