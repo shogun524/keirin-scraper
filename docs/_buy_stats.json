@@ -5,112 +5,112 @@
     "堅い": {
       "syn1.5": {
         "all": {
-          "races": 513,
-          "hits": 311,
-          "points": 5757,
-          "return": 5174.4,
-          "hit_pct": 60.6,
-          "roi_pct": 89.9
+          "races": 514,
+          "hits": 312,
+          "points": 5767,
+          "return": 5177.0,
+          "hit_pct": 60.7,
+          "roi_pct": 89.8
         },
         "live": {
-          "races": 513,
-          "hits": 311,
-          "points": 5757,
-          "return": 5174.4,
-          "hit_pct": 60.6,
-          "roi_pct": 89.9
+          "races": 514,
+          "hits": 312,
+          "points": 5767,
+          "return": 5177.0,
+          "hit_pct": 60.7,
+          "roi_pct": 89.8
         }
       },
       "top5": {
         "all": {
-          "races": 513,
-          "hits": 227,
-          "points": 2565,
-          "return": 2185.8,
-          "hit_pct": 44.2,
+          "races": 514,
+          "hits": 228,
+          "points": 2570,
+          "return": 2188.4,
+          "hit_pct": 44.4,
           "roi_pct": 85.2
         },
         "live": {
-          "races": 513,
-          "hits": 227,
-          "points": 2565,
-          "return": 2185.8,
-          "hit_pct": 44.2,
+          "races": 514,
+          "hits": 228,
+          "points": 2570,
+          "return": 2188.4,
+          "hit_pct": 44.4,
           "roi_pct": 85.2
         }
       },
       "top10": {
         "all": {
-          "races": 513,
-          "hits": 310,
-          "points": 5130,
-          "return": 4559.4,
-          "hit_pct": 60.4,
-          "roi_pct": 88.9
+          "races": 514,
+          "hits": 311,
+          "points": 5140,
+          "return": 4562.0,
+          "hit_pct": 60.5,
+          "roi_pct": 88.8
         },
         "live": {
-          "races": 513,
-          "hits": 310,
-          "points": 5130,
-          "return": 4559.4,
-          "hit_pct": 60.4,
-          "roi_pct": 88.9
+          "races": 514,
+          "hits": 311,
+          "points": 5140,
+          "return": 4562.0,
+          "hit_pct": 60.5,
+          "roi_pct": 88.8
         }
       }
     },
     "中間": {
       "syn1.5": {
         "all": {
-          "races": 640,
-          "hits": 377,
-          "points": 13938,
-          "return": 11898.9,
+          "races": 642,
+          "hits": 378,
+          "points": 13963,
+          "return": 11928.3,
           "hit_pct": 58.9,
           "roi_pct": 85.4
         },
         "live": {
-          "races": 640,
-          "hits": 377,
-          "points": 13938,
-          "return": 11898.9,
+          "races": 642,
+          "hits": 378,
+          "points": 13963,
+          "return": 11928.3,
           "hit_pct": 58.9,
           "roi_pct": 85.4
         }
       },
       "top5": {
         "all": {
-          "races": 640,
+          "races": 642,
           "hits": 196,
-          "points": 3200,
+          "points": 3210,
           "return": 3289.5,
-          "hit_pct": 30.6,
-          "roi_pct": 102.8
+          "hit_pct": 30.5,
+          "roi_pct": 102.5
         },
         "live": {
-          "races": 640,
+          "races": 642,
           "hits": 196,
-          "points": 3200,
+          "points": 3210,
           "return": 3289.5,
-          "hit_pct": 30.6,
-          "roi_pct": 102.8
+          "hit_pct": 30.5,
+          "roi_pct": 102.5
         }
       },
       "top10": {
         "all": {
-          "races": 640,
-          "hits": 279,
-          "points": 6400,
-          "return": 5881.3,
+          "races": 642,
+          "hits": 280,
+          "points": 6420,
+          "return": 5910.7,
           "hit_pct": 43.6,
-          "roi_pct": 91.9
+          "roi_pct": 92.1
         },
         "live": {
-          "races": 640,
-          "hits": 279,
-          "points": 6400,
-          "return": 5881.3,
+          "races": 642,
+          "hits": 280,
+          "points": 6420,
+          "return": 5910.7,
           "hit_pct": 43.6,
-          "roi_pct": 91.9
+          "roi_pct": 92.1
         }
       }
     },

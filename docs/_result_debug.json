@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20 22:32",
+ "updated": "2026-11-20 23:02",
  "failures": [
   {
    "race": "2026-11-20 nagoya 4R",
@@ -11,17 +11,17 @@
    }
   },
   {
-   "race": "2026-11-20 maebashi 6R",
+   "race": "2026-11-20 nagoya 8R",
    "diag": {
-    "venue": "maebashi",
-    "race_id": "2220261120010006",
+    "venue": "nagoya",
+    "race_id": "4220261120010008",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3318,
- "with_result": 2687,
+ "with_result": 2690,
  "without_url": 0,
  "pending_eligible": 625
 }
