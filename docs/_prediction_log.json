@@ -731547,9 +731547,34 @@
     111.1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    9,
+    2,
+    3,
+    1,
+    4,
+    7,
+    6,
+    8,
+    5
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-21 17:18"
  },
  "2026-11-21_kokura_2": {
   "date": "2026-11-21",
@@ -731813,9 +731838,34 @@
     106.6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    8,
+    4,
+    5,
+    7,
+    3,
+    6,
+    1,
+    2,
+    9
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-21 17:18"
  },
  "2026-11-21_kokura_3": {
   "date": "2026-11-21",
@@ -732079,9 +732129,28 @@
     -1.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    3,
+    5,
+    9,
+    4,
+    7
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-21 17:18"
  },
  "2026-11-21_kokura_4": {
   "date": "2026-11-21",
@@ -732345,9 +732414,34 @@
     99.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    9,
+    5,
+    2,
+    4,
+    7,
+    1,
+    8,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-21 17:18"
  },
  "2026-11-21_kokura_5": {
   "date": "2026-11-21",
@@ -732612,7 +732706,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-21_kokura_6": {
@@ -736866,9 +736960,30 @@
     108.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    5,
+    3,
+    2,
+    4,
+    1,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-21 17:18"
  },
  "2026-11-21_toyohashi_1": {
   "date": "2026-11-21",
@@ -738547,7 +738662,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-21_toyohashi_8": {
@@ -739254,9 +739369,26 @@
     105.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    5,
+    4,
+    2,
+    1
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-21 17:18"
  },
  "2026-11-21_fukui_1": {
   "date": "2026-11-21",
