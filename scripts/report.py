@@ -4033,6 +4033,42 @@ def _value_tag(ratio):
     return '<span class="vt vt-mid">妥当</span>'
 
 
+def _tri_hit_plan(result):
+    """3連単 的中重視: 1着率10%以上の選手を頭に、来る確率の高い順に合成2倍まで(最大20点)。オッズが無いときは None"""
+    jt, od = result.get("tri_joint"), result.get("tri_odds")
+    if not jt or not od:
+        return None
+    p1 = {}
+    for (a, b, c), p in jt.items():
+        p1[a] = p1.get(a, 0) + p
+    base = [c for c, v in p1.items() if v >= 0.10]
+    cand = sorted(((k, p, od.get(k)) for k, p in jt.items() if k[0] in base and od.get(k)), key=lambda x: -x[1])
+    buy, inv = [], 0.0
+    for k, p, o in cand:
+        if 1 / (inv + 1 / o) < 2 or len(buy) >= BUY_MAX:
+            break
+        buy.append((k, p, o))
+        inv += 1 / o
+    if not buy:
+        return None
+    return dict(base=sorted(base, key=lambda c: -p1[c]), buy=buy, p=sum(x[1] for x in buy), comp=1 / inv)
+
+
+def _hit_lines(info, result):
+    """JRAと同じ: 的中率重視(ワイド・2車複・3連複)と3連単の的中重視の行"""
+    out = ""
+    h = info.get("hit") or {}
+    if h.get("items"):
+        parts = " ／ ".join(f'{bt} {t} <span class="hp">{p:.0%}</span>' for bt, t, p in h["items"])
+        out += f'<p class="hitline">的中率重視: {parts}</p>'
+    tp = _tri_hit_plan(result) if result else None
+    if tp:
+        tk = " / ".join("-".join(map(str, k)) for k, _, _ in tp["buy"][:12]) + (" …" if len(tp["buy"]) > 12 else "")
+        out += (f'<p class="trioline">3連単 的中重視({"・".join(map(str, tp["base"]))}が頭・{len(tp["buy"])}点・'
+                f'的中約{tp["p"]:.0%}・合成{tp["comp"]:.1f}倍・過去の回収率76%): <b>{tk}</b></p>')
+    return out
+
+
 def _jra_card(rd, vi):
     import jra_layout as J
     info, result = rd["race_info"], rd["prediction"]
@@ -4103,6 +4139,7 @@ def _jra_card(rd, vi):
     line_txt = rd.get("line_prediction_text") or ""
     sub_html = (f'{VENUE_NAMES.get(info["venue"], info["venue"])} <span class="post-time">締切 {info.get("deadline") or ""}</span>'
                 + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
+    chips += _hit_lines(info, result)
     return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, aib, None, body,
                        extra_html=f'<div class="trioline">{taghtml}</div>' if taghtml else "",
                        link=f'{info["venue"]}/index.html?r={no}')
