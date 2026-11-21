@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21 10:21",
+ "updated": "2026-11-21 10:51",
  "failures": [
   {
    "race": "2026-11-20 nagoya 9R",
@@ -61,10 +61,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-21 toyohashi 1R",
+   "diag": {
+    "venue": "toyohashi",
+    "race_id": "4520261121010001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3375,
- "with_result": 2695,
+ "with_result": 2696,
  "without_url": 0,
- "pending_eligible": 628
+ "pending_eligible": 631
 }
