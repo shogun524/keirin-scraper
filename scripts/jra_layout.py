@@ -404,6 +404,8 @@ def skin_keirin_docs(docs):
     """競輪サイトの index.html 以外のページを、JRAと同じ見た目のヘッダーにそろえる"""
     import os
     for fn, t in KEIRIN_TITLES.items():
+        if fn == "drops.html":   # オッズ急落は nk_watch が1〜2分おきに作り直して push する(ここで触るとぶつかる)
+            continue
         skin_file(os.path.join(docs, fn), f"競輪 {t}", KEIRIN_LINKS)
     sub = [(t, "../" + u) for t, u in KEIRIN_LINKS]
     for d in os.listdir(docs):
