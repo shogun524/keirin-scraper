@@ -71424,7 +71424,7 @@
   "田中__toyohashi": {
     "name": "田中",
     "venue": "toyohashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -72997,7 +72997,7 @@
   "加藤__fukui": {
     "name": "加藤",
     "venue": "fukui",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -117873,9 +117873,9 @@
   "下山 聖斗__fukui": {
     "name": "下山 聖斗",
     "venue": "fukui",
-    "races": 2,
+    "races": 3,
     "wins": 2,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -118042,9 +118042,9 @@
   "近藤 雄太__fukui": {
     "name": "近藤 雄太",
     "venue": "fukui",
-    "races": 2,
+    "races": 3,
     "wins": 1,
-    "top3": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -118263,9 +118263,9 @@
   "西澤 優聖__fukui": {
     "name": "西澤 優聖",
     "venue": "fukui",
-    "races": 2,
-    "wins": 0,
-    "top3": 2,
+    "races": 3,
+    "wins": 1,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -122214,6 +122214,305 @@
   },
   "戸邉__fukui": {
     "name": "戸邉",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "前田 義和__odawara": {
+    "name": "前田 義和",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "寺崎 祐樹__odawara": {
+    "name": "寺崎 祐樹",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中井 勇介__odawara": {
+    "name": "中井 勇介",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "河村__odawara": {
+    "name": "河村",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "野上__odawara": {
+    "name": "野上",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "須永__odawara": {
+    "name": "須永",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "大関__odawara": {
+    "name": "大関",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "野津 宏介__toyohashi": {
+    "name": "野津 宏介",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "池田 浩士__toyohashi": {
+    "name": "池田 浩士",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "井手 健__toyohashi": {
+    "name": "井手 健",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤岡__toyohashi": {
+    "name": "藤岡",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉川__toyohashi": {
+    "name": "吉川",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "柴田__toyohashi": {
+    "name": "柴田",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "須賀 和彦__toyohashi": {
+    "name": "須賀 和彦",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "土岐 幹多__toyohashi": {
+    "name": "土岐 幹多",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "川田 真也__toyohashi": {
+    "name": "川田 真也",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小竹__toyohashi": {
+    "name": "小竹",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "岩城__toyohashi": {
+    "name": "岩城",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松本__toyohashi": {
+    "name": "松本",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "北村__toyohashi": {
+    "name": "北村",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "高佐__fukui": {
+    "name": "高佐",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山村__fukui": {
+    "name": "山村",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中西__fukui": {
+    "name": "中西",
     "venue": "fukui",
     "races": 1,
     "wins": 0,
