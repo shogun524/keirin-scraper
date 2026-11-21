@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21 18:18",
+ "updated": "2026-11-21 18:33",
  "failures": [
   {
    "race": "2026-11-21 kokura 5R",
@@ -18,10 +18,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-21 kokura 8R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261118040008",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3375,
  "with_result": 2721,
  "without_url": 0,
- "pending_eligible": 631
+ "pending_eligible": 632
 }
