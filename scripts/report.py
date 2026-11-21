@@ -1644,6 +1644,26 @@ def _minutes_until_deadline(deadline_str, now):
     return diff if diff >= 0 else 0
 
 
+# 本命・穴の見分け(11/21): 万車率(100倍以上の3連単に入っている支持の割合)を、レースの格と頭数ごとの基準で比べる。
+# 以前は全レース共通で「30%未満=本命・それ以外で買い目があれば穴」だったため、S級9車(重賞)は万車率がもともと
+# 40〜55%あり、ほぼ全レースが「穴」になっていた。winticket 2025〜26年(約5万レース)の分布の下側30%を本命、上側30%を穴とする。
+MAN_TH = {("A", 7): (0.212, 0.310), ("S", 7): (0.260, 0.345), ("A", 9): (0.30, 0.42), ("S", 9): (0.42, 0.55)}
+
+
+def man_level(info, rows=None):
+    """'hon'(本命) / 'ana'(穴) / None(普通)"""
+    mv = (info or {}).get("manshaken") or {}
+    man = mv.get("man")
+    if man is None:
+        return None
+    rows = rows or []
+    n9 = 9 if len(rows) >= 8 else 7
+    s = sum(1 for r in rows if str(r.get("rank", "")).startswith("S"))
+    cls = "S" if rows and s >= len(rows) / 2 else "A"
+    lo, hi = MAN_TH.get((cls, n9), (0.30, 0.45))
+    return "hon" if man < lo else "ana" if man >= hi else None
+
+
 def render_venue_page(venue, races, date, now=None):
     date_str = date.strftime("%Y年%m月%d日")
     venue_name = VENUE_NAMES.get(venue, venue)
@@ -1656,9 +1676,9 @@ def render_venue_page(venue, races, date, now=None):
         no = r["race_info"]["race_no"]
         deadline = r["race_info"].get("deadline") or ""
         tab_id = f"race{no}"
-        _mv = r["race_info"].get("manshaken") or {}
-        _hon = _mv.get("man") is not None and _mv["man"] < 0.30
-        _ana = (not _hon) and any(x[2] for x in (r["race_info"].get("recommend") or []))
+        _lv = man_level(r["race_info"], (r.get("prediction") or {}).get("rows"))
+        _hon = _lv == "hon"
+        _ana = _lv == "ana"
         label = (f"{no}R" + ("<span class='tab-ana'>穴</span>" if _ana else "") +
                  (f"<br><span class='tab-deadline'>{deadline}</span>" if deadline else "") +
                  ("<br><span class='tab-hon'>本命</span>" if _hon else ""))
@@ -1698,8 +1718,7 @@ def _race_flags(rd):
     """レースの特記事項（本命が堅い／拮抗／妙味候補）のキー一覧を返す。"""
     flags = []
     result = rd.get("prediction")
-    mv = rd["race_info"].get("manshaken")
-    if mv and mv.get("man") is not None and mv["man"] < 0.30:
+    if man_level(rd["race_info"], (result or {}).get("rows")) == "hon":
         return ["honmei"]
     if [x for x in (rd["race_info"].get("recommend") or []) if x[2]]:
         flags.append("ana")
@@ -3383,7 +3402,8 @@ def _print_card_html(rd):
 
     flags, flag_html = [], []
     _mv = info.get("manshaken") or {}
-    _hon = _mv.get("man") is not None and _mv["man"] < 0.30
+    _lv = man_level(info, result.get("rows"))
+    _hon = _lv == "hon"
     _keshi = info.get("ai_keshi") or []
     _rec = [(k, lb, list(ts)) for k, lb, ts in (info.get("recommend") or [])]
     _rec = [x for x in _rec if x[2]]
@@ -3391,8 +3411,8 @@ def _print_card_html(rd):
         flags.append("honmei"); flag_html.append("<span>本命(見送り)</span>")
     else:
         flags.append("nothonmei")
-        if _rec:
-            flags.append("ana"); flag_html.append("<span>穴目あり</span>")
+        if _lv == "ana":
+            flags.append("ana"); flag_html.append("<span>穴</span>")
     if result.get("is_close_race"):
         flags.append("close"); flag_html.append("<span>拮抗</span>")
     if info.get("odds_value_alert"):
@@ -3567,8 +3587,9 @@ def render_print_page(all_race_data, date=None):
             info = rd["race_info"]
             mv = info.get("manshaken") or {}
             man = mv.get("man")
-            hon = man is not None and man < 0.30
-            cls = "hon" if hon else ("hi" if man is not None and man >= 0.5 else "")
+            _lv = man_level(info, rd["prediction"]["rows"])
+            hon = _lv == "hon"
+            cls = "hon" if hon else ("hi" if _lv == "ana" else "")
             n_car = len(rd["prediction"]["rows"])
             chips += (f'<label class="rc-chip {cls}"><input type="checkbox" class="pv-r" value="pv-{v}-{info["race_no"]}"'
                       f' data-hon="{1 if hon else 0}"{"" if hon else " checked"}>'
