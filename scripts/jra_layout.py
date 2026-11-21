@@ -338,3 +338,80 @@ document.querySelectorAll('.race-tab-btn').forEach(btn => {{
 </script>
 </body>
 </html>"""
+
+
+# ---------------------------------------------------------------- 既存ページをJRAと同じ見た目にする(11/21)
+SKIN_CSS = r"""
+  body { background: #F6F1E4 !important; color: #2A2118; font-family: "Noto Sans JP", sans-serif; }
+  .jx-top { background: #1F4D3A; color: #fff; padding: 18px 20px 14px; margin: 0 0 12px; }
+  .jx-top .jx-in { max-width: 900px; margin: 0 auto; }
+  .jx-top h1 { margin: 0 0 4px; font: 800 1.45rem/1.3 "Shippori Mincho", serif; letter-spacing: .02em; color: #fff; }
+  .jx-top h1 a { color: #fff; text-decoration: none; }
+  .jx-top .jx-meta { margin: 0 0 8px; font-size: .78rem; color: #CFE3D8; line-height: 1.5; }
+  .jx-top .jx-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .jx-top .jx-links a { color: #fff; font-size: .78rem; text-decoration: none; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.12); }
+  .jx-top .jx-links a.jx-home { background: #F0D896; color: #1F3B2C; font-weight: 700; }
+  h1, h2 { font-family: "Shippori Mincho", serif; }
+"""
+
+
+def skin(html, title, links, home="index.html"):
+    """既存のページの見出し(最初の<header>)を、JRAと同じ緑のヘッダーに置き換え、背景・字体をそろえる。何度かけても同じ"""
+    import re
+    if 'name="jx-skin"' in html:
+        return html
+    head_add = ('<meta name="jx-skin" content="1">'
+                '<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">'
+                f'<style>{SKIN_CSS}</style>')
+    html = html.replace("</head>", head_add + "</head>", 1) if "</head>" in html else head_add + html
+    meta = ""
+    m = re.search(r"<header\b[^>]*>(.*?)</header>", html, re.S)
+    if m:
+        inner = re.sub(r"<h1\b.*?</h1>", "", m.group(1), flags=re.S)
+        inner = re.sub(r"<(nav|script|style|button)\b.*?</\1>", "", inner, flags=re.S)
+        txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", inner)).strip()
+        meta = esc(txt[:180])
+    lk = f'<a class="jx-home" href="{home}">← 今日の予想</a>' + "".join(f'<a href="{u}">{esc(t)}</a>' for t, u in links)
+    hdr = (f'<header class="jx-top"><div class="jx-in"><h1>{esc(title)}</h1>'
+           + (f'<p class="jx-meta">{meta}</p>' if meta else "") + f'<nav class="jx-links">{lk}</nav></div></header>')
+    if m:
+        html = html[:m.start()] + hdr + html[m.end():]
+    else:
+        html = re.sub(r"(<body[^>]*>)", lambda x: x.group(1) + hdr, html, count=1)
+    return html
+
+
+KEIRIN_LINKS = [("買うべきレース", "picks.html"), ("オッズ急落", "drops.html"), ("印刷用", "print.html"),
+                ("成績", "results.html"), ("競輪場", "venues.html"), ("勝利の方程式", "formula.html")]
+KEIRIN_TITLES = {"picks.html": "買うべきレース", "drops.html": "オッズ急落", "print.html": "印刷用", "results.html": "予想成績",
+                 "venues.html": "全競輪場データ", "formula.html": "勝利の方程式", "close_race.html": "拮抗レース",
+                 "today.html": "今日のレース一覧", "high_prob.html": "本命が堅いレース", "edge.html": "回収の分析"}
+
+
+def skin_file(path, title, links, home="index.html"):
+    import os
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as f:
+        h = f.read()
+    h2 = skin(h, title, links, home)
+    if h2 != h:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(h2)
+
+
+def skin_keirin_docs(docs):
+    """競輪サイトの index.html 以外のページを、JRAと同じ見た目のヘッダーにそろえる"""
+    import os
+    for fn, t in KEIRIN_TITLES.items():
+        skin_file(os.path.join(docs, fn), f"競輪 {t}", KEIRIN_LINKS)
+    sub = [(t, "../" + u) for t, u in KEIRIN_LINKS]
+    for d in os.listdir(docs):
+        p = os.path.join(docs, d, "index.html")
+        if os.path.isdir(os.path.join(docs, d)) and os.path.exists(p):
+            try:
+                import report
+                name = report.VENUE_NAMES.get(d, d)
+            except Exception:  # noqa: BLE001
+                name = d
+            skin_file(p, f"{name}競輪", sub, "../index.html")

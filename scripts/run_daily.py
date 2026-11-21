@@ -415,6 +415,11 @@ def main():
     with open(os.path.join(DOCS_DIR, "venues.html"), "w", encoding="utf-8") as f:
         f.write(venues_html)
     print("[INFO] docs/venues.html を書き出しました。")
+    try:   # 11/21: ほかのページもJRAと同じ見た目のヘッダーに
+        import jra_layout
+        jra_layout.skin_keirin_docs(DOCS_DIR)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] ページの見た目をそろえられませんでした: {e}")
 
     # 競輪場ごとのページ（レース一覧・タブ切替）
     for venue, races_for_venue in by_venue.items():

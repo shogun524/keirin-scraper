@@ -1029,6 +1029,11 @@ def main():
     save_log(log)
     with open(os.path.join(DOCS, "picks.html"), "w", encoding="utf-8") as f:
         f.write(render(log, now, board))
+    try:
+        import jra_layout
+        jra_layout.skin_file(os.path.join(DOCS, "picks.html"), "競輪 買うべきレース", jra_layout.KEIRIN_LINKS)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] 見た目をそろえられませんでした: {e}")
     print("[INFO] docs/picks.html を書き出しました。")
 
 

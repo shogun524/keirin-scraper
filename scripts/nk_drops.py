@@ -403,7 +403,13 @@ def main():
             res = fetch_results(need, res)
             save_results(res)
     with open(os.path.join(DOCS, "drops.html"), "w", encoding="utf-8") as f:
-        f.write(render(recs, res, now))
+        _h = render(recs, res, now)
+        try:
+            import jra_layout
+            _h = jra_layout.skin(_h, "競輪 オッズ急落", jra_layout.KEIRIN_LINKS)
+        except Exception:  # noqa: BLE001
+            pass
+        f.write(_h)
     out = {}
     for rid, snaps in recs.items():
         sel = select(snaps)
