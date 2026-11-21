@@ -26574,7 +26574,7 @@
   "橋本__maebashi": {
     "name": "橋本",
     "venue": "maebashi",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -26808,7 +26808,7 @@
   "武田__maebashi": {
     "name": "武田",
     "venue": "maebashi",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -121669,7 +121669,7 @@
   "山口__nagoya": {
     "name": "山口",
     "venue": "nagoya",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -121721,7 +121721,7 @@
   "高橋__nagoya": {
     "name": "高橋",
     "venue": "nagoya",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -121747,7 +121747,7 @@
   "梅田__nagoya": {
     "name": "梅田",
     "venue": "nagoya",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -121799,7 +121799,7 @@
   "河上__maebashi": {
     "name": "河上",
     "venue": "maebashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -121877,7 +121877,7 @@
   "阿久津__maebashi": {
     "name": "阿久津",
     "venue": "maebashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -122007,7 +122007,7 @@
   "甲斐__maebashi": {
     "name": "甲斐",
     "venue": "maebashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -122033,7 +122033,7 @@
   "竹内__maebashi": {
     "name": "竹内",
     "venue": "maebashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -122124,7 +122124,7 @@
   "佐藤__nagoya": {
     "name": "佐藤",
     "venue": "nagoya",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -124502,6 +124502,136 @@
   },
   "大塚 英伸__nagoya": {
     "name": "大塚 英伸",
+    "venue": "nagoya",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "石坂 永伍__maebashi": {
+    "name": "石坂 永伍",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山口 幸太郎__maebashi": {
+    "name": "山口 幸太郎",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小室 貴広__maebashi": {
+    "name": "小室 貴広",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中島 淳__maebashi": {
+    "name": "中島 淳",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "池邉 聖__maebashi": {
+    "name": "池邉 聖",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "阿部 英光__maebashi": {
+    "name": "阿部 英光",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "田中__maebashi": {
+    "name": "田中",
+    "venue": "maebashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉田 夢希斗__nagoya": {
+    "name": "吉田 夢希斗",
+    "venue": "nagoya",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "岩原 健馬__nagoya": {
+    "name": "岩原 健馬",
+    "venue": "nagoya",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "根本 雄紀__nagoya": {
+    "name": "根本 雄紀",
     "venue": "nagoya",
     "races": 1,
     "wins": 0,
