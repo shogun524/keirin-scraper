@@ -1,49 +1,6 @@
 {
- "updated": "2026-11-21 11:21",
+ "updated": "2026-11-21 11:51",
  "failures": [
-  {
-   "race": "2026-11-20 nagoya 9R",
-   "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261120010009",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202611200100/",
-    "day_html_len": 117858,
-    "day_races": [
-     1,
-     2,
-     3,
-     5,
-     6,
-     7,
-     8
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-20 maebashi 9R",
-   "diag": {
-    "venue": "maebashi",
-    "race_id": "2220261120010009",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/maebashi/raceresult/22202611200100/",
-    "day_html_len": 117892,
-    "day_races": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-21 fukui 4R",
    "diag": {
@@ -63,17 +20,26 @@
    }
   },
   {
-   "race": "2026-11-21 odawara 2R",
+   "race": "2026-11-21 odawara 3R",
    "diag": {
     "venue": "odawara",
-    "race_id": "3620261121010002",
+    "race_id": "3620261121010003",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-21 toyohashi 4R",
+   "diag": {
+    "venue": "toyohashi",
+    "race_id": "4520261121010004",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3375,
- "with_result": 2700,
+ "with_result": 2702,
  "without_url": 0,
- "pending_eligible": 629
+ "pending_eligible": 630
 }
