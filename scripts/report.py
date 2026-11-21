@@ -931,7 +931,9 @@ def render_race_card(race_data, tab_id):
     tags = honmei_tags.race_tags(result)
     aip = honmei_tags.ai_probs(result["rows"])
     odds_mode = result.get("fix_mode") == "odds"
-    cw = honmei_tags.calib_win({c: v / 100 for c, v in aip.items()})
+    # 機械学習AIは学習で確率が合っているので、今までのAI用の補正表(calib)は通さない
+    cw = ({c: v / 100 for c, v in aip.items()} if result.get("ml")
+          else honmei_tags.calib_win({c: v / 100 for c, v in aip.items()}))
     rows_html = ""
     for r in sorted(result["rows"], key=lambda r: -aip[r["car"]]):
         bg, fg = car_color(r["car"])
@@ -963,7 +965,8 @@ def render_race_card(race_data, tab_id):
             place_pct = r.get("place_rate", 0)
         else:
             rate_html = f'<b>{cw[r["car"]] * 100:.1f}%</b><br><span class="rt-ai">オッズ前</span>'
-            place_pct = honmei_tags.calib_place(r.get("place_rate", 0) / 100) * 100
+            place_pct = (r.get("place_rate", 0) if result.get("ml")
+                         else honmei_tags.calib_place(r.get("place_rate", 0) / 100) * 100)
 
         rows_html += f"""
         <tr style="{highlight}">

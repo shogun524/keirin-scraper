@@ -813,6 +813,17 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
         boosted = [max(v, 1e-9) ** apow * math.exp(fbuff * z) for v, z in zip(final_rates, formula_z)]
         bsum = sum(boosted) or 1.0
         final_rates = [b / bsum * 100 for b in boosted]
+    # 11/21: 機械学習AI(ml_ai.py。過去約5万レースで学習。JRAと同じ方式)があれば、1着率・3着内率はそちらを使う。
+    #   2026年で確認: 1着の対数損失 1.455(今までのAI 1.580)、本命の勝率 45.5%(今までのAI 42.9%)
+    ml_p1 = ml_p3 = None
+    if s.get("use_ml", True):
+        try:
+            import ml_ai
+            ml_p1, ml_p3 = ml_ai.predict(racers, line_prediction_text, venue_slug)
+        except Exception as _e:  # noqa: BLE001
+            print(f"[WARN] 機械学習AIを使えませんでした: {_e}")
+    if ml_p1:
+        final_rates = [float(ml_p1.get(int(r["car"]), 0.0)) * 100 for r in racers]
 
     rows = []
     for i, r in enumerate(racers):
@@ -854,6 +865,9 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     marginal_place_rates = compute_marginal_place_rates(final_rates, rows, second_place_matrix, third_place_matrix)
     for row in rows:
         row["place_rate"] = marginal_place_rates.get(row["car"], row["adjusted"])
+    if ml_p3:
+        for row in rows:
+            row["place_rate"] = float(min(ml_p3.get(int(row["car"]), 0.0) * 100, 99.5))
 
     trifecta = compute_trifecta_combos(rows, second_place_matrix, full_third_place_data, s["trifecta_max_combos"])
 
@@ -871,6 +885,7 @@ def predict_race(racers, line_prediction_text, settings=None, venue_slug=None,
     hole_candidates = compute_hole_candidates(rows, MODEL["weights"])
 
     return {
+        "ml": bool(ml_p1),
         "rows": rows,
         "top": top,
         "second_candidates": second_candidates[:5],

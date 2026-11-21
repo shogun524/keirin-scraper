@@ -31,7 +31,7 @@ jobs:
           python-version: "3.11"
 
       - name: 依存ライブラリをインストール
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 numpy pandas lightgbm
 
       - name: 締切直前のオッズを記録（失敗しても他は止めない）
         continue-on-error: true
