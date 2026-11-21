@@ -1,27 +1,18 @@
 {
- "updated": "2026-11-21 12:51",
+ "updated": "2026-11-21 13:21",
  "failures": [
   {
-   "race": "2026-11-21 fukui 5R",
-   "diag": {
-    "venue": "fukui",
-    "race_id": "5120261119030005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-21 toyohashi 6R",
+   "race": "2026-11-21 toyohashi 7R",
    "diag": {
     "venue": "toyohashi",
-    "race_id": "4520261121010006",
+    "race_id": "4520261121010007",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3375,
- "with_result": 2707,
+ "with_result": 2709,
  "without_url": 0,
  "pending_eligible": 629
 }
