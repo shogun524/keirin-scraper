@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21 14:21",
+ "updated": "2026-11-21 14:51",
  "failures": [
   {
    "race": "2026-11-21 toyohashi 7R",
@@ -11,17 +11,17 @@
    }
   },
   {
-   "race": "2026-11-21 toyohashi 9R",
+   "race": "2026-11-21 toyohashi 10R",
    "diag": {
     "venue": "toyohashi",
-    "race_id": "4520261121010009",
+    "race_id": "4520261121010010",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3375,
- "with_result": 2712,
+ "with_result": 2714,
  "without_url": 0,
  "pending_eligible": 630
 }
