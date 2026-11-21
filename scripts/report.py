@@ -4005,3 +4005,170 @@ def render_recent_table(stats, limit=100):
             f'<span class="dim">表示 <b id="rcN">{len(stats["recent"][:limit])}</b>件</span></div>'
             '<div class="ov-scroll"><table class="ov" id="rcTbl"><thead><tr><th>レース</th><th>予想時刻</th><th>本命(予測)</th><th>結果</th><th>確定(1-2-3着)</th><th>予想の3連単1位／上位5点</th><th>オッズ</th></tr></thead>'
             f'<tbody>{rows}</tbody></table></div>' + script)
+
+
+# ---------------------------------------------------------------- JRAと同じ形のトップページ(11/21)
+def _mkt_share(result):
+    """3連単オッズから、各車の1着の取り分(=人気の1着率)"""
+    t = result.get("tri_odds") or {}
+    tot = sum(1 / o for o in t.values() if o and o > 1)
+    if not tot:
+        return {}
+    out = {}
+    for k, o in t.items():
+        if o and o > 1:
+            out[k[0]] = out.get(k[0], 0) + 1 / o / tot
+    return out
+
+
+def _value_tag(ratio):
+    if ratio is None:
+        return ""
+    if ratio >= 1.3:
+        return '<span class="vt vt-big">妙味大</span>'
+    if ratio >= 1.15:
+        return '<span class="vt vt-ok">妙味あり</span>'
+    if ratio <= 0.8:
+        return '<span class="vt vt-bad">過剰人気</span>'
+    return '<span class="vt vt-mid">妥当</span>'
+
+
+def _jra_card(rd, vi):
+    import jra_layout as J
+    info, result = rd["race_info"], rd["prediction"]
+    no = info["race_no"]
+    if not result:
+        return J.race_card(no, J.esc(info.get("title", "")), "データを取得できませんでした")
+    rows = result["rows"]
+    odds_mode = result.get("fix_mode") == "odds"
+    aip = honmei_tags.ai_probs(rows)
+    mks = honmei_tags.marks(rows)
+    tags = honmei_tags.race_tags(result)
+    ms = _mkt_share(result)
+    pop = {c: i + 1 for i, c in enumerate(sorted(ms, key=lambda c: -ms[c]))}
+    cw = ({c: v / 100 for c, v in aip.items()} if result.get("ml")
+          else honmei_tags.calib_win({c: v / 100 for c, v in aip.items()}))
+    top = max(aip, key=aip.get) if aip else None
+    body = ""
+    for r in sorted(rows, key=lambda r: -aip[r["car"]]):
+        c = r["car"]
+        bg, fg = car_color(c)
+        mk = mks.get(c, "")
+        mk_cell = f'<span class="mark">{mk}</span>' if mk else f'<span class="rk">{sorted(aip, key=lambda x: -aip[x]).index(c) + 1}</span>'
+        t = tags.get(c)
+        if t:
+            mk_cell += f'<br><span class="htag {t[1]}">{t[0]}</span>'
+        li = r.get("line_info")
+        pos = ("単騎" if not li or li.get("line_size", 1) == 1 else ("先頭" if li["position"] == 1 else f'{li["position"]}番手'))
+        sub = " ・ ".join(x for x in [str(r.get("rank") or ""), str(r.get("tactic") or ""), pos,
+                                      f'{r.get("score"):.1f}点' if isinstance(r.get("score"), (int, float)) else ""] if x)
+        ai = cw.get(c, 0) * 100
+        p3 = r.get("place_rate", 0)
+        if not result.get("ml") and not odds_mode:
+            p3 = honmei_tags.calib_place(p3 / 100) * 100
+        mm = f'<br><small class="mm{" mm-hi" if ms.get(c) and r["adjusted"] / 100 / ms[c] >= 1.15 else ""}">込{r["adjusted"]:.0f}%</small>' if odds_mode else ""
+        odds = (f'{pop[c]}番人気<br><small class="plc">{ms[c] * 100:.0f}%</small>' if c in pop else '<span class="na">オッズ待ち</span>')
+        vt = _value_tag(r["adjusted"] / 100 / ms[c]) if odds_mode and ms.get(c) else ""
+        body += f"""
+        <tr class="{"top-pick" if c == top else ""}">
+          <td class="c">{mk_cell}</td>
+          <td class="c ubc"><span class="carb" style="background:{bg};color:{fg}">{c}</span></td>
+          <td class="horse">{J.esc(r.get("name", ""))}<br><small class="sub">{J.esc(sub)}</small></td>
+          <td class="r od">{odds}</td>
+          <td class="r pct"><b>{ai:.1f}</b><small>%</small><br><small class="sub">3着内{p3:.0f}%</small>{mm}</td>
+          <td class="c">{vt}</td>
+        </tr>"""
+    lv = man_level(info, rows)
+    mv = info.get("manshaken") or {}
+    chips = ""
+    if mv.get("man") is not None:
+        cls = "hi" if lv == "ana" else ("lo" if lv == "hon" else "")
+        chips += (f'<p class="manbaken">万車率 <b class="{cls}">{mv["man"] * 100:.0f}%</b>'
+                  f'<span class="sep">・</span>目安 <b>{mv["q50"]:,.0f}円</b><small>({mv["q25"]:,.0f}〜{mv["q75"]:,.0f})</small>'
+                  + (f'<span class="sep">・</span><b>{"本命" if lv == "hon" else "穴"}</b>' if lv else "") + '</p>')
+    else:
+        chips += '<p class="manbaken muted">万車率 オッズ待ち</p>'
+    rec = [x for x in (info.get("recommend") or []) if x[2]]
+    aib = ""
+    if rec:
+        win = [x for x in rec if x[0] != "ref"]
+        ref = [x for x in rec if x[0] == "ref"]
+        lines = "".join(f'<div class="aibet-body"><span class="aibet-tag">{"推奨" if k != "ref" else "参考"}</span> '
+                        f'<span class="aibet-reason">{J.esc(lb)}</span><br><b>{" ".join(ts)}</b></div>' for k, lb, ts in win)
+        if ref:
+            lines += ('<details class="why"><summary>参考の買い目(過去72〜85%)</summary>' +
+                      "".join(f'<div class="aibet-combos">{J.esc(lb)}: {" ".join(ts)}</div>' for k, lb, ts in ref) + '</details>')
+        aib = f'<div class="aibet">{lines}</div>'
+    taghtml = render_tag_line(result)
+    line_txt = rd.get("line_prediction_text") or ""
+    sub_html = (f'{VENUE_NAMES.get(info["venue"], info["venue"])} <span class="post-time">締切 {info.get("deadline") or ""}</span>'
+                + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
+    return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, aib, None, body,
+                       extra_html=f'<div class="trioline">{taghtml}</div>' if taghtml else "",
+                       link=f'{info["venue"]}/index.html?r={no}')
+
+
+def render_jra_index(all_race_data, date=None, now=None):
+    """JRA週末AI予想と同じ形のトップページ: 会場タブ → レースタブ → 6列の表"""
+    import jra_layout as J
+    date = date or datetime.date.today()
+    now = now or datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
+    hm = now.strftime("%H:%M")
+    wd = "月火水木金土日"[date.weekday()]
+    by = {}
+    for rd in all_race_data:
+        by.setdefault(rd["race_info"]["venue"], []).append(rd)
+    order = sorted(by, key=lambda v: min((rd["race_info"].get("deadline") or "99") for rd in by[v]))
+    venues, n_odds, n_all, upcoming = [], 0, 0, []
+    for vi, v in enumerate(order):
+        rds = sorted(by[v], key=lambda rd: rd["race_info"]["race_no"])
+        races = []
+        nxt = next((rd["race_info"]["race_no"] for rd in rds if (rd["race_info"].get("deadline") or "") > hm), None)
+        for rd in rds:
+            info = rd["race_info"]
+            n_all += 1
+            if rd.get("prediction") and rd["prediction"].get("fix_mode") == "odds":
+                n_odds += 1
+            rec = [x for x in (info.get("recommend") or []) if x[2] and x[0] != "ref"]
+            star = "★" if rec else ""
+            card = _jra_card(rd, vi)
+            races.append((info["race_no"], star, card))
+            if rec and (info.get("deadline") or "") > hm:
+                upcoming.append((info.get("deadline") or "", VENUE_NAMES.get(v, v), info["race_no"], vi, rec))
+        venues.append((VENUE_NAMES.get(v, v), races, nxt))
+    # レースタブの「次のレース」に印(開いたときにそのレースを出す)
+    vlist = []
+    for name, races, nxt in venues:
+        vlist.append((name, [(no, star, card) for no, star, card in races]))
+    upcoming.sort()
+    lis = "".join(f'<li><span class="aibet-tag">推奨</span> <a href="?v={vi}&r={no}"><b>{vn}{no}R</b></a> 締切{dl}<br>'
+                  + "<br>".join(f'<span class="rnm">{J.esc(lb)}</span> <span class="aibet-buy">{" ".join(ts)}</span>' for k, lb, ts in rec)
+                  + '</li>' for dl, vn, no, vi, rec in upcoming[:12])
+    summary = (f'<section class="aibet-summary"><h2>回収率重視の買い目 <small>これからのレース</small></h2>'
+               f'<details class="why"><summary>条件</summary><p class="aibet-note">過去の検証(2025〜2026年 約5万レース)で回収率100%を超えた形に当たったレースだけ。'
+               f'くわしい条件は「買うべきレース」に。</p></details>'
+               + (f'<ul>{lis}</ul>' if lis else '<p class="aibet-none">これからのレースで当たる形はありません</p>') + '</section>')
+    guide = """<details class="guide"><summary>このサイトの見方</summary><ul>
+  <li><b>◎・AI%</b> … 機械学習AI(過去約5万レースで学習。オッズは使わない)が見た1着率。3着内も同じAI。</li>
+  <li><b>込%</b> … AIとオッズを合わせた1着率(オッズが出てから)。一番当たる数字。</li>
+  <li><b>人気</b> … 3連単オッズから見た1着の人気順と、オッズから見た1着率。</li>
+  <li><b>妙味</b> … 込%がオッズの見込みより高い選手=妙味あり(1.15倍以上)、低い選手=過剰人気。</li>
+  <li><b>本命・穴</b> … 万車率(100倍以上の3連単に入っている支持の割合)を、級(S/A)と車立てごとの過去の分布と比べて、下側3割=本命・上側3割=穴。</li>
+  <li><b>★</b> … 回収率重視の買い目(過去の検証で回収率100%超えの形)があるレース。</li>
+  <li>「詳しく」から、3連単の出目確率・フォーメーション・展開シミュレーション・勝利の方程式を見られます。</li>
+</ul></details>"""
+    meta = f'<b>{date.strftime("%Y-%m-%d")}({wd})</b> ・ 更新 {now.strftime("%Y-%m-%d %H:%M")} ・ オッズ取得 {n_odds}/{n_all}レース'
+    links = [("買うべきレース", "picks.html"), ("オッズ急落", "drops.html"), ("印刷用", "print.html"),
+             ("成績", "results.html"), ("競輪場", "venues.html"), ("勝利の方程式", "formula.html")]
+    page = J.page("競輪AI予想", meta, vlist, guide + summary, links,
+                  "https://github.com/shogun524/keirin-scraper/actions/workflows/daily.yml",
+                  footer_html="<p>確率は過去のデータからの推定で、的中や回収を保証するものではありません。車券の最終判断はご自身でお願いします。</p>")
+    # 各会場で「次のレース」を初期表示にする
+    for vi, (name, races, nxt) in enumerate(venues):
+        if nxt is not None:
+            page = page.replace(f'data-race="race-{vi}-', f'data-race="race-{vi}-', 1)
+            page = page.replace(f'class="race-tab-btn " data-race="race-{vi}-{[r[0] for r in races].index(nxt)}"',
+                                f'class="race-tab-btn next" data-race="race-{vi}-{[r[0] for r in races].index(nxt)}"', 1)
+            page = page.replace(f'class="race-tab-btn active" data-race="race-{vi}-{[r[0] for r in races].index(nxt)}"',
+                                f'class="race-tab-btn active next" data-race="race-{vi}-{[r[0] for r in races].index(nxt)}"', 1)
+    return page

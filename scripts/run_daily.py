@@ -343,9 +343,17 @@ def main():
     clean_stale_venue_dirs(set(by_venue.keys()))
 
     # トップページ（競輪場一覧）
-    index_html = render_index(all_race_data, today)
+    # 11/21: トップはJRA週末AI予想と同じ形(会場タブ → レースタブ → 表)。前の競輪場一覧の形は today.html に残す
+    from report import render_jra_index
+    try:
+        index_html = render_jra_index(all_race_data, today)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] JRA形のトップページを作れませんでした({e})。前の形で出します")
+        index_html = render_index(all_race_data, today)
     with open(os.path.join(DOCS_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_html)
+    with open(os.path.join(DOCS_DIR, "today.html"), "w", encoding="utf-8") as f:
+        f.write(render_index(all_race_data, today))
     print("[INFO] docs/index.html を書き出しました。")
 
     # 予想成績：今日の予想を記録し、締切を過ぎたレースの結果と照合する（失敗しても他の処理は続ける）
