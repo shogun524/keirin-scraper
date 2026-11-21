@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-21 09:50",
+ "updated": "2026-11-21 10:21",
  "failures": [
   {
-   "race": "2026-11-20 nagoya 4R",
+   "race": "2026-11-20 nagoya 9R",
    "diag": {
     "venue": "nagoya",
-    "race_id": "4220261120010004",
+    "race_id": "4220261120010009",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/nagoya/raceresult/42202611200100/",
     "day_html_len": 117858,
@@ -19,15 +19,6 @@
      8
     ],
     "day_text_head": "",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-20 nagoya 9R",
-   "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261120010009",
-    "primary": "skipped",
     "day_parsed": false
    }
   },
@@ -61,10 +52,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-21 fukui 5R",
+   "diag": {
+    "venue": "fukui",
+    "race_id": "5120261119030005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3375,
  "with_result": 2695,
  "without_url": 0,
- "pending_eligible": 627
+ "pending_eligible": 628
 }
