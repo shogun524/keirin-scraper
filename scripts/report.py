@@ -3078,17 +3078,18 @@ _PRINT_STYLE = """
   table.pv-t td.memo{ background:#fff; }
   table.pv-t tr.rc td{ border-top:none; }
   col.k-car{ width:34px; } col.k-mk{ width:30px; } col.k-nm{ width:170px; } col.k-sc{ width:46px; } col.k-st{ width:62px; } col.k-sb{ width:96px; }
-  col.k-ai{ width:92px; } col.k-oth{ width:118px; } col.k-memo{ width:70px; }
+  col.k-ai{ width:92px; } col.k-oth{ width:118px; } col.k-memo{ width:70px; } col.k-cm{ width:150px; }
+  table.pv-t td.cmt{ text-align:left; white-space:normal; font-size:10px; line-height:1.25; }
+  .rit .rv{ margin-right:3px; }
   @media print{
     @page{ size:A4 landscape; margin:7mm; }
     html, body{ background:#fff !important; }
     header, footer, nav.tab-strip, .pv-controls, .gate-stripe, .jx-top{ display:none !important; }
     main, main.wide{ max-width:none !important; padding:0 !important; margin:0 !important; }
-    .pv-venue{ break-before:page; page-break-before:always; margin:0; }
-    .pv-venue:first-of-type{ break-before:auto; page-break-before:auto; }
+    .pv-venue{ margin:0; }
     .pv-car, table.pv-m td, table.pv-m th, table.pv-t th, table.pv-t td{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .pv-grid:not(.two) .pv-card + .pv-card{ break-before:page; page-break-before:always; }
-    .pv-grid:not(.two) .pv-card{ break-inside:auto; page-break-inside:auto; }
+    .pv-grid:not(.two){ gap:10px; display:block; }
+    .pv-grid:not(.two) .pv-card{ break-inside:avoid; page-break-inside:avoid; margin:0 0 10px; }
     table.pv-t tr{ break-inside:avoid; }
     .pv-mxwrap{ break-inside:avoid; page-break-inside:avoid; }
   }
@@ -3109,13 +3110,36 @@ table.pv-t td.nm .rn{ font-size:13px; } .pv-pref{ font-size:8.8px; } table.pv-t 
 .ri{ font-size:9px; } .ri b{ font-size:11px; min-width:14px; } .rv{ font-size:8.5px; }
 table.pv-t td.pv-rc{ font-size:9px; line-height:1.15; padding:0 3px; }
 .pv-view{ font-size:10.5px; line-height:1.45; padding:2px 6px; margin-top:3px; }
-.pv-grid.mxon{ gap:0; }
 .pv-mxwrap{ margin-top:3px; }
 .pv-mxtitle{ font-size:10px; margin-bottom:1px; padding-bottom:0; border-bottom-width:1px; }
 .pv-grid .pv-mxgrid{ grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:3px 8px; }
 .pv-mx-h{ font-size:9.5px; margin-bottom:0; } .pv-mx-h .pv-car{ min-width:14px; font-size:9.5px; }
 table.pv-m{ font-size:8.6px; } table.pv-m th{ font-size:8.4px; } table.pv-m th, table.pv-m td{ padding:0; line-height:1.12; }
-.pv-mxnote{ font-size:8.5px; margin-top:1px; }
+.pv-mxnote{ font-size:8px; margin-top:1px; line-height:1.2; }
+.pv-top{ display:block; }
+.pv-topl{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:10px; align-items:start; }
+.pv-topl > .pv-box{ grid-column:1; grid-row:1 / span 8; }
+.pv-topl > :not(.pv-box){ grid-column:2; }
+.pv-topl .pv-view{ margin-top:1px; }
+table.pv-t th, table.pv-t td{ padding:0 3px; }
+.pv-mxnote{ font-weight:400; } .pv-mxtitle{ border-bottom:none; }
+.pv-head b{ font-size:14px; } .pv-head{ margin-bottom:1px; line-height:1.15; } .pv-flags span{ font-size:10px; padding:0 4px; }
+.pv-car.big{ font-size:12px; line-height:1.15; min-width:20px; } table.pv-t td.mkc{ font-size:12px; line-height:1.1; }
+table.pv-t td.nm .rn{ font-size:12px; line-height:1.15; } .pv-pref{ line-height:1.15; }
+table.pv-t td.sc b, table.pv-t td.aiw > b{ font-size:12px; } table.pv-t td.aiw{ line-height:1.1; } table.pv-t td.aiw .sm{ line-height:1.15; }
+.ri b{ font-size:10px; line-height:1.15; } .rit{ line-height:1.15; }
+table.pv-t th{ line-height:1.1; font-size:9px; }
+table.pv-m{ font-size:8px; } table.pv-m th{ font-size:8px; } table.pv-m th, table.pv-m td{ line-height:1.05; }
+.pv-grid .pv-mxgrid{ display:flex; flex-wrap:wrap; gap:2px 10px; }
+.pv-mx{ width:auto; }
+table.pv-m{ width:auto; table-layout:auto; } table.pv-m td, table.pv-m th{ min-width:20px; padding:0 1px; }
+col.k-nm{ width:150px; } col.k-st{ width:76px; } col.k-sb{ width:80px; } col.k-oth{ width:92px; } col.k-cm{ width:116px; }
+table.pv-t th{ white-space:normal; }
+.rit .ri{ white-space:nowrap; }
+.pv-view{ font-size:10px; line-height:1.35; }
+table.pv-t td.rcn{ padding:1px 2px; } .rit{ gap:0 3px; }
+table.pv-t td.cmt{ font-size:9px; line-height:1.2; }
+table.pv-t td.st, table.pv-t td.oth{ line-height:1.2; }
 """
 
 
@@ -3173,24 +3197,25 @@ _PRINT_SCRIPT = """
   }); });
   boxes.forEach(function(b){ b.addEventListener('change', apply); });
   document.querySelectorAll('#pvCols, #pvMx').forEach(function(el){ el.addEventListener('change', apply); });
-  // 詳細(1レース1枚): 印刷の前に各レースの高さを測り、1枚に入らないレースは横に広げてから縮める(zoom)。
-  // 横に広げると前場所などの折り返しが減るので、縮める量は少なくて済む。出目確率表も同じページに入れる。
-  var PW = 1066, PH = 734;   // A4横・余白7mm の印刷範囲(CSSのpx)
+  // 詳細: 印刷の前に各レースの高さを測り、なるべく「1枚に2レース」入る大きさにする。
+  // 入らないレース(9車立てなど)は1枚に1レース。横に広げてから縮める(zoom)と折り返しが減るので、縮める量は少なくて済む。
+  var PW = 1066, PH = 734, GAP = 10;   // A4横・余白7mm の印刷範囲(CSSのpx)
   function fitCards(on){
     var html = document.documentElement, two = document.getElementById('pvCols').value === '2';
     var cs = boxes.filter(function(b){ return b.checked; }).map(card).filter(Boolean);
-    document.querySelectorAll('.pv-card').forEach(function(c){ c.style.zoom = ''; c.style.width = ''; c.style.maxWidth = ''; delete c.dataset.z; });
+    document.querySelectorAll('.pv-card').forEach(function(c){ c.style.zoom = ''; c.style.width = ''; c.style.maxWidth = ''; delete c.dataset.z; delete c.dataset.ph; });
     html.classList.remove('pvp');
     if (!on || two) return;
     html.classList.add('pvp');
+    var HALF = (PH - GAP) / 2;
     cs.forEach(function(c){
-      c.style.maxWidth = 'none'; c.style.boxSizing = 'border-box'; c.style.width = PW + 'px';
-      var z = 1, h = c.offsetHeight;
-      if (h > PH) {
-        var zs = [0.96, 0.92, 0.88, 0.84, 0.8, 0.76, 0.72, 0.68];
-        for (var i = 0; i < zs.length; i++) { z = zs[i]; c.style.width = Math.round(PW / z) + 'px'; h = c.offsetHeight; if (h * z <= PH) break; }
-      }
-      c.dataset.z = z;
+      c.style.maxWidth = 'none'; c.style.boxSizing = 'border-box';
+      function hAt(z){ c.style.width = Math.round(PW / z) + 'px'; return c.offsetHeight * z; }
+      var z = 0, zs = [1, 0.96, 0.92, 0.88, 0.84, 0.8, 0.76];
+      for (var i = 0; i < zs.length; i++) { if (hAt(zs[i]) <= HALF) { z = zs[i]; break; } }
+      if (!z) { var zf = [1, 0.96, 0.92, 0.88, 0.84, 0.8, 0.76, 0.72, 0.68]; for (var j = 0; j < zf.length; j++) { z = zf[j]; if (hAt(z) <= PH) break; } }
+      var h = hAt(z);
+      c.dataset.z = z; c.dataset.ph = Math.ceil(h);
       if (z < 1) c.style.zoom = z; else c.style.width = '';
     });
   }
@@ -3247,8 +3272,10 @@ _PRINT_SCRIPT = """
             pdf.addImage(r.img, 'JPEG', M + k * (colW + 4), ys[k], d[0], d[1]); ys[k] += d[1] + 4;
             return;
           }
-          if (!first) pdf.addPage(); first = false;
-          var d = fit(r, CW, CH); pdf.addImage(r.img, 'JPEG', M + (CW - d[0]) / 2, M, d[0], d[1]);
+          // 上から詰める(1枚に2レース入るなら2レース)
+          var d = fit(r, CW, CH);
+          if (first) { first = false; y = M; } else if (y + d[1] > H - M + 0.5) { pdf.addPage(); y = M; }
+          pdf.addImage(r.img, 'JPEG', M + (CW - d[0]) / 2, y, d[0], d[1]); y += d[1] + 3;
         }).then(function(){ made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)'; });
       }); }, Promise.resolve());
     }).then(function(){
@@ -3502,8 +3529,8 @@ def _print_card_html(rd):
             fin = fin[:-1] if fin.endswith("着") else fin
             fcls = "f1" if fin == "1" else ("f23" if fin in ("2", "3") else "")
             its += f'<span class="ri"><i>{kind}</i><b class="{fcls}">{fin or "-"}</b></span>'
-        head = f'<div class="rv">{venue}</div>' if venue else ""
-        return f'<td class="pv-opt rcn">{head}<div class="rit">{its}</div></td>'
+        head = f'<span class="rv">{venue}</span>' if venue else ""
+        return f'<td class="pv-opt rcn"><div class="rit">{head}{its}</div></td>'
 
     trs = ""
     for r in sorted(rows, key=lambda x: x["car"]):
@@ -3531,25 +3558,25 @@ def _print_card_html(rd):
         kim_txt = " ".join(f'{t}<b>{kim.get(t, 0)}</b>' for t in ("逃", "捲", "差", "マ"))
         jr_tag = '<span class="jr">自力</span>' if says_jiriki(r.get("comment")) else ""
         bar = f'<span class="pv-bar"><span style="width:{min(w1 * 2.5, 100):.0f}%"></span></span>'
+        # 1選手=1行(2段)にまとめる(11/22 印刷枚数を減らすため。展開コメントは右端の列へ)
         trs += (f'<tr class="{"top" if rank == 0 else ""} r1">'
-                f'<td rowspan="2"><span class="pv-car big" style="background:{bg};color:{fg};">{r["car"]}</span></td>'
-                f'<td rowspan="2" class="mkc">{r.get("mark") or ""}</td><td rowspan="2" class="mkc ai">{ai}</td>'
-                f'<td class="nm"><div class="rn">{r["name"]}{jr_tag}</div><div class="pv-pref">{prof}</div>'
-                f'<div class="pv-pref"><b>{r.get("rank") or ""}</b> {r.get("tactic") or ""} ・ {pos} ・ ギア{num(r.get("gear"), "{:.2f}")}</div></td>'
+                f'<td><span class="pv-car big" style="background:{bg};color:{fg};">{r["car"]}</span></td>'
+                f'<td class="mkc">{r.get("mark") or ""}</td><td class="mkc ai">{ai}</td>'
+                f'<td class="nm"><div class="rn">{r["name"]}{jr_tag} <span class="pv-pref"><b>{r.get("rank") or ""}</b> {r.get("tactic") or ""}</span></div>'
+                f'<div class="pv-pref">{prof} ・ {pos} ・ ギア{num(r.get("gear"), "{:.2f}")}</div></td>'
                 f'<td class="sc"><b>{r.get("score", 0):.1f}</b></td>'
-                f'<td class="pv-opt sm st">勝{num(r.get("win_rate"))}<br>2連{num(r.get("rentai2"))}<br>3連{num(r.get("rentai3"))}</td>'
+                f'<td class="pv-opt sm st">勝{num(r.get("win_rate"))} 2連{num(r.get("rentai2"))}<br>3連{num(r.get("rentai3"))}</td>'
                 f'<td class="pv-opt sm st">S<b>{num(r.get("s_count"), "{:.0f}")}</b> B<b>{num(r.get("b_count"), "{:.0f}")}</b><br>{kim_txt}</td>'
                 f'<td class="aiw"><b>{w1:.1f}</b><small>%</small>{bar}<div class="sm">2着{w2:.0f} 3内<b>{r.get("place_rate", 0):.0f}</b></div></td>'
                 f'{recent_cell(rec.get("now"), "今場所")}'
                 f'{recent_cell(rec.get("prev"), "前 " + (rec.get("prev_venue") or ""))}'
                 f'{recent_cell(rec.get("prev2"), "前々 " + (rec.get("prev2_venue") or ""))}'
                 f'<td class="pv-opt sm oth">{"<br>".join(other)}</td>'
-                f'<td rowspan="2" class="pv-opt memo"></td></tr>'
-                f'<tr class="pv-opt rc {"top" if rank == 0 else ""}"><td class="pv-rc" colspan="9"><span class="cm">▶ {comment}</span></td></tr>')
+                f'<td class="pv-opt cmt">{comment}</td></tr>')
     thead = ("<tr><th>番</th><th>記者</th><th>AI</th><th>選手 ／ 府県 年齢 期 ／ 級班 脚質 位置 ギア</th><th>得点</th>"
              "<th class='pv-opt'>成績率%</th><th class='pv-opt'>S・B<br>決まり手(回)</th><th>AI 1着%<br>2着・3着内%</th>"
              "<th class='pv-opt'>今場所</th><th class='pv-opt'>前場所</th><th class='pv-opt'>前々場所</th><th class='pv-opt'>通算・当地・調子</th>"
-             "<th class='pv-opt'>メモ</th></tr>")
+             "<th class='pv-opt'>展開コメント</th></tr>")
 
     # 穴党向け: AIの確率上位の買い目(=消し目)は出さず、穴の買い目・消し目・万車率を出す
     if _mv.get("man") is not None:
@@ -3587,21 +3614,23 @@ def _print_card_html(rd):
     cars = sorted(r["car"] for r in rows)
     mats = "".join(_head_matrix_html(result, r, cars) for r in rows)  # rowsは1着率の高い順
     mx = (f'<div class="pv-mxwrap"><div class="pv-mxhead">{venue_name} {info["race_no"]}R　選手ごとの出目確率（続き）</div>'
-          f'<div class="pv-mxtitle">選手ごとの出目確率（3連単・%）　1着が○番のとき、2着×3着の組み合わせ</div>'
-          f'<div class="pv-mxgrid">{mats}</div>'
-          f'<div class="pv-mxnote">濃いほど出やすい（0.7%以上／1.5%以上／3%以上で段階的に濃く）。"-"は0.05%未満。右端の「2着計」は、その選手が1着で、かつその車が2着になる確率の合計。</div></div>')
+          f'<div class="pv-mxtitle">選手ごとの出目確率（3連単・%）　1着が○番のとき、2着×3着の組み合わせ'
+          f'　<span class="pv-mxnote">濃いほど出やすい（0.7%以上／1.5%以上／3%以上で段階的に濃く）。"-"は0.05%未満。右端の「2着計」は、その選手が1着で、かつその車が2着になる確率の合計。</span></div>'
+          f'<div class="pv-mxgrid">{mats}</div></div>')
     return f"""
     <div class="pv-card" id="pv-{info['venue']}-{info['race_no']}" data-venue="{info['venue']}" data-flags="{' '.join(flags)}" data-deadline="{deadline}">
       <div class="pv-head"><b>{venue_name} {info['race_no']}R</b>
         <span class="pv-t">{info.get('title') or ''} {('締切 ' + deadline) if deadline else ''}</span>
         <span class="pv-flags">{''.join(flag_html)}</span></div>
+      <div class="pv-top"><div class="pv-topl">
       {bank_html}
       {tickets}
       <div class="pv-sub">{sub}</div>
       {dev_html}
-      <table class="pv-t"><colgroup><col class="k-car"><col class="k-mk"><col class="k-mk"><col class="k-nm"><col class="k-sc"><col class="k-st pv-opt"><col class="k-sb pv-opt">
-      <col class="k-ai"><col class="pv-opt"><col class="pv-opt"><col class="pv-opt"><col class="k-oth pv-opt"><col class="k-memo pv-opt"></colgroup>{thead}{trs}</table>
       {view}
+      </div></div>
+      <table class="pv-t"><colgroup><col class="k-car"><col class="k-mk"><col class="k-mk"><col class="k-nm"><col class="k-sc"><col class="k-st pv-opt"><col class="k-sb pv-opt">
+      <col class="k-ai"><col class="pv-opt"><col class="pv-opt"><col class="pv-opt"><col class="k-oth pv-opt"><col class="k-cm pv-opt"></colgroup>{thead}{trs}</table>
       {mx}
     </div>"""
 
@@ -3651,7 +3680,7 @@ def render_print_page(all_race_data, date=None):
     {picker}
     <div class="pv-row">
       <label>レイアウト
-        <select id="pvCols"><option value="1">詳細（1レース1枚・出目表も同じ紙・A4横）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
+        <select id="pvCols"><option value="1">詳細（A4横に2レース・9車立ては1枚・出目表つき）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
       <label>出目確率表
         <select id="pvMx"><option value="10" selected>1着率10%以上の選手</option><option value="0">全選手（網羅）</option><option value="5">1着率5%以上の選手</option><option value="999">出さない</option></select></label>
       <span class="pv-count" id="pvCount"></span>
