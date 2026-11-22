@@ -1054,7 +1054,7 @@ def render_race_card(race_data, tab_id):
           {odds_alert_html}
         </div>
         {banner_html}
-        <div class="sumbox">{render_tag_line(result)}{render_manshaken_box(info)}{('<details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary>' + result["_buy_html"] + '</details>') if result.get("_buy_html") else ""}</div>
+        <div class="sumbox">{render_tag_line(result)}{_role_line(result, "roles")}{render_manshaken_box(info)}{('<details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary>' + result["_buy_html"] + '</details>') if result.get("_buy_html") else ""}</div>
         {line_info_html}
         {odds_trend_html}
         {subtab_bar_html}
@@ -1615,6 +1615,14 @@ window.addEventListener('DOMContentLoaded', function(){
   if(rParam){
     const direct = tabs.find(function(t){ return t.getAttribute('data-race-no') === rParam; });
     if(direct){ direct.click(); return; }
+  }
+  // 見ていたレースを覚えておき、「最新を表示」や再読み込みのあとも同じレースを開く(11/22)
+  const SK = 'sel:' + location.pathname;
+  tabs.forEach(function(t){ t.addEventListener('click', function(e){ if(e.isTrusted){ try{ sessionStorage.setItem(SK, t.getAttribute('data-race-no')); }catch(_){} } }); });
+  let saved = null; try{ saved = sessionStorage.getItem(SK); }catch(_){}
+  if(saved){
+    const back = tabs.find(function(t){ return t.getAttribute('data-race-no') === saved; });
+    if(back){ back.click(); return; }
   }
   const nowJstMinutes = getNowJstMinutes();
   let best = tabs[0], bestMins = Infinity;
@@ -3053,6 +3061,7 @@ _PRINT_STYLE = """
   .pv-form{ font-size:11px; margin-top:3px; border-top:1px dotted #999; padding-top:2px; }
   .pv-memo{ margin-top:7px; border-top:1px dashed #888; min-height:20px; font-size:11px; color:#777; }
   .pv-mxnote{ font-size:10.5px; color:#555; margin-top:3px; }
+  .roles span{ margin-right:10px; } .roles small{ color:#777; }
   .hitline .hp, .hitline-in .hp, span .hp{ color:#0E7C66; font-weight:800; }
   /* 新聞風の出走表 */
   .reg3{ color:#b03024; font-size:.9em; } .reg2{ color:#7a6a4a; font-size:.85em; font-weight:400; }
@@ -3165,22 +3174,17 @@ _PRINT_SCRIPT = """
   try{ var m=JSON.parse(localStorage.getItem(KEY)||'{}'); boxes.forEach(function(b){ if(b.value in m) b.checked=!!m[b.value]; }); }catch(e){}
   function apply(){
     var two = document.getElementById('pvCols').value === '2';
-    var thr = parseFloat(document.getElementById('pvMx').value);
     var n = 0;
     boxes.forEach(function(b){
       var c = card(b); if (!c) return;
       c.style.display = b.checked ? '' : 'none'; if (b.checked) n++;
-      var shown = 0;
-      c.querySelectorAll('.pv-mx').forEach(function(m){ var show = parseFloat(m.dataset.p1) >= thr; m.style.display = show ? '' : 'none'; if (show) shown++; });
-      var wrap = c.querySelector('.pv-mxwrap'); if (wrap) wrap.dataset.shown = shown;
     });
     venues.forEach(function(v){
       var any = Array.prototype.some.call(v.querySelectorAll('.pv-card'), function(c){ return c.style.display !== 'none'; });
       v.style.display = any ? '' : 'none';
       var g = v.querySelector('.pv-grid');
-      if (g){ g.classList.toggle('two', two); g.classList.toggle('mxon', !two && thr < 999); }
+      if (g){ g.classList.toggle('two', two); }
     });
-    document.querySelectorAll('.pv-mxwrap').forEach(function(w){ w.style.display = (thr >= 999) ? 'none' : ''; });
     document.getElementById('pvCount').textContent = n + 'レース選択中';
     document.getElementById('pvPrint').disabled = (n === 0); document.getElementById('pvPdf').disabled = (n === 0);
     save();
@@ -3196,7 +3200,7 @@ _PRINT_SCRIPT = """
     btn.closest('.pv-vrow').querySelectorAll('.pv-r').forEach(function(b){ b.checked = on; }); apply();
   }); });
   boxes.forEach(function(b){ b.addEventListener('change', apply); });
-  document.querySelectorAll('#pvCols, #pvMx').forEach(function(el){ el.addEventListener('change', apply); });
+  document.querySelectorAll('#pvCols').forEach(function(el){ el.addEventListener('change', apply); });
   // 詳細: 印刷の前に各レースの高さを測り、なるべく「1枚に2レース」入る大きさにする。
   // 入らないレース(9車立てなど)は1枚に1レース。横に広げてから縮める(zoom)と折り返しが減るので、縮める量は少なくて済む。
   var PW = 1066, PH = 734, GAP = 10;   // A4横・余白7mm の印刷範囲(CSSのpx)
@@ -3455,6 +3459,50 @@ def _view_text(result, rows, flags):
     return " ".join(parts)
 
 
+# ---- 軸向き・頭向き・2・3着向き(11/22)。AIの1着率・3着内率から。
+# 2026年(学習に使っていない年)の約17万人で確かめた実際の数字:
+#   3着内率60%以上 → 実際に3着内 63〜89%(軸向き)
+#   3着内率50%以上で、1着率÷3着内率が0.45以上 → 1着43%・3着内78%(頭向き)
+#   3着内率50%以上で、1着率÷3着内率が0.25未満 → 3着内64%だが1着は13%(来ても2・3着が多い=2・3着向き)
+ROLE_DEF = ("軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　"
+            "2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上")
+
+
+def race_roles(result):
+    """[(役割, [(車番, 1着率%, 3着内率%), ...]), ...]"""
+    rows = (result or {}).get("rows") or []
+    if not rows:
+        return []
+    aip = honmei_tags.ai_probs(rows)
+    p3 = {r["car"]: float(r.get("place_rate") or 0) for r in rows}
+    jiku, atama, himo, aite = [], [], [], []
+    for c in sorted(p3, key=lambda c: -p3[c]):
+        w, q = aip.get(c, 0.0), p3[c]
+        x = (c, w, q)
+        if q >= 50 and q > 0 and w / q >= 0.45:
+            atama.append(x)
+        if q >= 60:
+            jiku.append(x)
+        elif q >= 50 and q > 0 and w / q < 0.25:
+            himo.append(x)
+        elif q >= 40 and not (q >= 50 and w / q >= 0.45):
+            aite.append(x)
+    out = [("軸向き", jiku), ("頭向き", atama), ("2・3着向き", himo), ("相手", aite)]
+    return [(k, v) for k, v in out if v]
+
+
+def _role_line(result, cls="roles"):
+    rr = race_roles(result)
+    if not rr:
+        return ""
+    def one(k, v):
+        if k == "相手":
+            return " ".join(f"{c}" for c, w, q in v)
+        return " ".join(f"<b>{c}</b>({q:.0f}%)" for c, w, q in v)
+    txt = "　".join(f'<span class="role-{i}">{k}：{one(k, v)}</span>' for i, (k, v) in enumerate(rr))
+    return f'<div class="{cls}" title="{ROLE_DEF}">{txt}<small>（）は3着内率</small></div>'
+
+
 def _print_card_html(rd):
     result = rd.get("prediction")
     if not result:
@@ -3611,12 +3659,8 @@ def _print_card_html(rd):
         view += ('<div class="pv-sub">勝利の方程式（能力値+L+M）：' + "　".join(
             f'{i + 1}位 {x["car"]}番 {x["total"]:.0f}' for i, x in enumerate(_kf[:4])) + '</div>')
 
-    cars = sorted(r["car"] for r in rows)
-    mats = "".join(_head_matrix_html(result, r, cars) for r in rows)  # rowsは1着率の高い順
-    mx = (f'<div class="pv-mxwrap"><div class="pv-mxhead">{venue_name} {info["race_no"]}R　選手ごとの出目確率（続き）</div>'
-          f'<div class="pv-mxtitle">選手ごとの出目確率（3連単・%）　1着が○番のとき、2着×3着の組み合わせ'
-          f'　<span class="pv-mxnote">濃いほど出やすい（0.7%以上／1.5%以上／3%以上で段階的に濃く）。"-"は0.05%未満。右端の「2着計」は、その選手が1着で、かつその車が2着になる確率の合計。</span></div>'
-          f'<div class="pv-mxgrid">{mats}</div></div>')
+    # 3連単の出目確率表は11/22にやめた(代わりに上の段に「軸向き・頭向き…」)
+    view = _role_line(result, "pv-sub roles") + view
     return f"""
     <div class="pv-card" id="pv-{info['venue']}-{info['race_no']}" data-venue="{info['venue']}" data-flags="{' '.join(flags)}" data-deadline="{deadline}">
       <div class="pv-head"><b>{venue_name} {info['race_no']}R</b>
@@ -3631,7 +3675,6 @@ def _print_card_html(rd):
       </div></div>
       <table class="pv-t"><colgroup><col class="k-car"><col class="k-mk"><col class="k-mk"><col class="k-nm"><col class="k-sc"><col class="k-st pv-opt"><col class="k-sb pv-opt">
       <col class="k-ai"><col class="pv-opt"><col class="pv-opt"><col class="pv-opt"><col class="k-oth pv-opt"><col class="k-cm pv-opt"></colgroup>{thead}{trs}</table>
-      {mx}
     </div>"""
 
 
@@ -3680,9 +3723,7 @@ def render_print_page(all_race_data, date=None):
     {picker}
     <div class="pv-row">
       <label>レイアウト
-        <select id="pvCols"><option value="1">詳細（A4横に2レース・9車立ては1枚・出目表つき）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
-      <label>出目確率表
-        <select id="pvMx"><option value="10" selected>1着率10%以上の選手</option><option value="0">全選手（網羅）</option><option value="5">1着率5%以上の選手</option><option value="999">出さない</option></select></label>
+        <select id="pvCols"><option value="1">詳細（A4横に2レース・9車立ては1枚）</option><option value="2">簡易（2列）</option></select></label>
       <span class="pv-count" id="pvCount"></span>
     </div>
     <div class="pv-row"><button type="button" class="pv-print-btn" id="pvPdf">選んだレースをPDFにする</button>
@@ -4205,6 +4246,7 @@ def _jra_card(rd, vi):
     sub_html = (f'{VENUE_NAMES.get(info["venue"], info["venue"])} <span class="post-time">締切 {info.get("deadline") or ""}</span>'
                 + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
     chips += _hit_lines(info, result)
+    chips += _role_line(result, "roles")
     return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, aib, None, body,
                        extra_html=f'<div class="trioline">{taghtml}</div>' if taghtml else "",
                        link=f'{info["venue"]}/index.html?r={no}')
@@ -4257,7 +4299,8 @@ def render_jra_index(all_race_data, date=None, now=None):
   <li><b>妙味</b> … 込%がオッズの見込みより高い選手=妙味あり(1.15倍以上)、低い選手=過剰人気。</li>
   <li><b>本命・穴</b> … 万車率(100倍以上の3連単に入っている支持の割合)を、級(S/A)と車立てごとの過去の分布と比べて、下側3割=本命・上側3割=穴。</li>
   <li><b>★</b> … 回収率重視の買い目(過去の検証で回収率100%超えの形)があるレース。</li>
-  <li>「詳しく」から、3連単の出目確率・フォーメーション・展開シミュレーション・勝利の方程式を見られます。</li>
+  <li><b>軸向き・頭向き・2・3着向き・相手</b> … AIの1着率と3着内率から。軸向き=3着内率60%以上(過去 実際に3着内63〜89%)。頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%・3着内78%)。2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%。3連単の2・3着に)。相手=3着内率40%以上。（）は3着内率。</li>
+  <li>「詳しく」から、3連単のフォーメーション・展開シミュレーション・勝利の方程式を見られます。</li>
 </ul></details>"""
     meta = f'<b>{date.strftime("%Y-%m-%d")}({wd})</b> ・ 更新 {now.strftime("%Y-%m-%d %H:%M")} ・ オッズ取得 {n_odds}/{n_all}レース'
     links = [("買うべきレース", "picks.html"), ("オッズ急落", "drops.html"), ("印刷用", "print.html"),

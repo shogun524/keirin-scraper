@@ -6,7 +6,11 @@ JRA側の見た目を変えたら、ここの CSS も合わせる。
 """
 import html as _h
 
-CSS = r"""  :root {
+CSS = r"""  .roles { font-size: .8rem; margin: 6px 0 2px; line-height: 1.7; color: #2A2118; }
+  .roles span { margin-right: 8px; white-space: nowrap; display: inline-block; }
+  .roles .role-0 { color: #1F4D3A; } .roles b { font-size: .92rem; }
+  .roles small { color: #8A7F6E; font-size: .7rem; }
+  :root {
     --turf: #1F4D3A; --turf-dark: #163A2B; --paper: #F6F1E4; --paper-line: #E4DAC0;
     --ink: #2A2118; --ink-soft: #6B5F4D; --gold: #B8862B; --gold-soft: #F0D896;
     --good: #2E7D46; --mid: #B8862B; --low: #B0433A;
@@ -323,6 +327,37 @@ document.querySelectorAll('.race-tab-btn').forEach(btn => {{
     document.getElementById(btn.dataset.race).classList.add('active');
   }});
 }});
+// 見ていた会場・レースを覚えておき、「最新を表示」や再読み込みのあとも同じレースを開く(11/22)
+(function(){{
+  var K = 'sel:' + location.pathname;
+  function vname(b){{ return b ? (b.childNodes[0] ? b.childNodes[0].textContent : b.textContent).trim() : null; }}
+  function rname(b){{ var m = b ? b.textContent.match(/(\\d+)R/) : null; return m ? m[1] : null; }}
+  function save(){{
+    try {{
+      var t = document.querySelector('.tab-btn.active');
+      var p = t ? document.getElementById(t.dataset.tab) : document;
+      var r = p ? p.querySelector('.race-tab-btn.active') : null;
+      sessionStorage.setItem(K, JSON.stringify({{ v: vname(t), r: rname(r) }}));
+    }} catch (e) {{}}
+  }}
+  document.querySelectorAll('.tab-btn, .race-tab-btn').forEach(function(b){{
+    b.addEventListener('click', function(e){{ if (e.isTrusted) save(); }});
+  }});
+  window.restoreSel = function(){{
+    try {{
+      var s = JSON.parse(sessionStorage.getItem(K) || 'null');
+      if (!s) return false;
+      var t = null;
+      document.querySelectorAll('.tab-btn').forEach(function(b){{ if (vname(b) === s.v) t = b; }});
+      if (t) t.click();
+      var p = t ? document.getElementById(t.dataset.tab) : document;
+      var r = null;
+      if (p && s.r) p.querySelectorAll('.race-tab-btn').forEach(function(b){{ if (rname(b) === s.r) r = b; }});
+      if (r) r.click();
+      return !!(t || r);
+    }} catch (e) {{ return false; }}
+  }};
+}})();
 // ?v=会場番号&r=レース番号 で開く。指定が無ければ、各会場でこれから一番近いレースを開く
 (function(){{
   const q = new URLSearchParams(location.search);
@@ -334,6 +369,7 @@ document.querySelectorAll('.race-tab-btn').forEach(btn => {{
     if (!pick) pick = p.querySelector('.race-tab-btn.next');
     if (pick) pick.click();
   }});
+  if (v === null && r === null) restoreSel();
 }})();
 </script>
 </body>
