@@ -235,13 +235,20 @@
   .carb { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; font-weight:800; font-size:.85rem; border:1px solid rgba(0,0,0,.15); }
   .ln { font-size:.68rem; color:var(--ink-soft); }
   .aibet-summary a { color: var(--turf); }
+
+  details.fold > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px; }
+  details.fold > summary::-webkit-details-marker { display: none; }
+  details.fold > summary::before { content: "▶"; font-size: .7em; color: #8A7F6E; transition: transform .15s; }
+  details.fold[open] > summary::before { transform: rotate(90deg); }
+  details.fold > summary h2 { display: inline; margin: 0; }
+  details.fold:not([open]) { padding-bottom: 10px; }
 </style>
 </head>
 <body>
 <header class="top">
   <div class="inner">
     <h1>競輪AI予想</h1>
-    <p class="meta"><b>2026-11-22(日)</b> ・ 更新 2026-11-22 16:12 ・ オッズ取得 24/68レース</p>
+    <p class="meta"><b>2026-11-22(日)</b> ・ 更新 2026-11-22 16:27 ・ オッズ取得 25/68レース</p>
     <div class="actions">
       <button type="button" class="btn" onclick="location.href=location.pathname+'?t='+Date.now()">↻ 最新を表示</button>
       <a class="btn btn-sub" href="https://github.com/shogun524/keirin-scraper/actions/workflows/daily.yml" target="_blank" rel="noopener">オッズを今すぐ取り直す</a>
@@ -259,7 +266,7 @@
   <li><b>★</b> … 回収率重視の買い目(過去の検証で回収率100%超えの形)があるレース。</li>
   <li><b>軸向き・頭向き・2・3着向き・相手</b> … AIの1着率と3着内率から。軸向き=3着内率60%以上(過去 実際に3着内63〜89%)。頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%・3着内78%)。2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%。3連単の2・3着に)。相手=3着内率40%以上。（）は3着内率。</li>
   <li>「詳しく」から、3連単のフォーメーション・展開シミュレーション・勝利の方程式を見られます。</li>
-</ul></details><section class="aibet-summary"><h2>回収率重視の買い目 <small>これからのレース</small></h2><details class="why"><summary>条件</summary><p class="aibet-note">過去の検証(2025〜2026年 約5万レース)で回収率100%を超えた形に当たったレースだけ。くわしい条件は「買うべきレース」に。</p></details><ul><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=6"><b>小倉6R</b></a> 締切17:18<br><span class="rnm">M2 万車・番手差し・過去116〜126%</span> <span class="aibet-buy">5-2-6</span><br><span class="rnm">A 並び1点・過去129〜133%</span> <span class="aibet-buy">7-3-8</span><br><span class="rnm">F・B 並び1点・過去136〜140%</span> <span class="aibet-buy">9-1-4</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=7"><b>小倉7R</b></a> 締切17:46<br><span class="rnm">M2 万車・番手差し・過去116〜126%</span> <span class="aibet-buy">5-2-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=8"><b>小倉8R</b></a> 締切18:14<br><span class="rnm">A 並び1点・過去129〜133%</span> <span class="aibet-buy">8-2-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=9"><b>小倉9R</b></a> 締切18:42<br><span class="rnm">F・B 並び1点・過去136〜140%</span> <span class="aibet-buy">1-8-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=12"><b>小倉12R</b></a> 締切20:25<br><span class="rnm">K1 フォーメーション・過去103〜127%</span> <span class="aibet-buy">5-3-7 5-3-6 3-5-7 5-3-2</span><br><span class="rnm">F・B 並び1点・過去136〜140%</span> <span class="aibet-buy">3-5-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=6&r=1"><b>前橋1R</b></a> 締切20:45<br><span class="rnm">K1 フォーメーション・過去103〜127%</span> <span class="aibet-buy">5-3-1 3-5-1 3-5-2 5-3-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=2"><b>名古屋2R</b></a> 締切20:55<br><span class="rnm">D 並び1点・過去110〜111%</span> <span class="aibet-buy">1-5-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=3"><b>名古屋3R</b></a> 締切21:15<br><span class="rnm">F・C 並び1点・過去136〜140%</span> <span class="aibet-buy">3-7-5</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=6&r=4"><b>前橋4R</b></a> 締切21:45<br><span class="rnm">D 並び1点・過去110〜111%</span> <span class="aibet-buy">6-5-3</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=6"><b>名古屋6R</b></a> 締切22:15<br><span class="rnm">K1 フォーメーション・過去103〜127%</span> <span class="aibet-buy">5-3-7 5-3-2 5-3-1 3-5-7</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=7"><b>名古屋7R</b></a> 締切22:35<br><span class="rnm">F・C 並び1点・過去136〜140%</span> <span class="aibet-buy">5-3-4</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=6&r=7"><b>前橋7R</b></a> 締切22:45<br><span class="rnm">F・C 並び1点・過去136〜140%</span> <span class="aibet-buy">4-7-5</span></li></ul></section><section class="tab-panel active" id="tab-0"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-0-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-0-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-0-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-0-3" data-no="4">★4R</button><button class="race-tab-btn " data-race="race-0-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-0-5" data-no="6">★6R</button><button class="race-tab-btn " data-race="race-0-6" data-no="7">7R</button></nav><div class="race-panel active" id="race-0-0">
+</ul></details><details class="aibet-summary fold"><summary><h2>回収率重視の買い目 <small>これからのレース</small></h2></summary><details class="why"><summary>条件</summary><p class="aibet-note">過去の検証(2025〜2026年 約5万レース)で回収率100%を超えた形に当たったレースだけ。くわしい条件は「買うべきレース」に。</p></details><ul><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=6"><b>小倉6R</b></a> 締切17:18<br><span class="rnm">M2 万車・番手差し・過去116〜126%</span> <span class="aibet-buy">5-2-6</span><br><span class="rnm">A 並び1点・過去129〜133%</span> <span class="aibet-buy">7-3-8</span><br><span class="rnm">F・B 並び1点・過去136〜140%</span> <span class="aibet-buy">9-1-4</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=7"><b>小倉7R</b></a> 締切17:46<br><span class="rnm">M2 万車・番手差し・過去116〜126%</span> <span class="aibet-buy">5-2-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=8"><b>小倉8R</b></a> 締切18:14<br><span class="rnm">A 並び1点・過去129〜133%</span> <span class="aibet-buy">8-2-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=9"><b>小倉9R</b></a> 締切18:42<br><span class="rnm">F・B 並び1点・過去136〜140%</span> <span class="aibet-buy">1-8-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=4&r=12"><b>小倉12R</b></a> 締切20:25<br><span class="rnm">K1 フォーメーション・過去103〜127%</span> <span class="aibet-buy">5-3-7 5-3-6 3-5-7 5-3-2</span><br><span class="rnm">F・B 並び1点・過去136〜140%</span> <span class="aibet-buy">3-5-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=6&r=1"><b>前橋1R</b></a> 締切20:45<br><span class="rnm">K1 フォーメーション・過去103〜127%</span> <span class="aibet-buy">5-3-1 3-5-1 3-5-2 5-3-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=2"><b>名古屋2R</b></a> 締切20:55<br><span class="rnm">D 並び1点・過去110〜111%</span> <span class="aibet-buy">1-5-6</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=3"><b>名古屋3R</b></a> 締切21:15<br><span class="rnm">F・C 並び1点・過去136〜140%</span> <span class="aibet-buy">3-7-5</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=6&r=4"><b>前橋4R</b></a> 締切21:45<br><span class="rnm">D 並び1点・過去110〜111%</span> <span class="aibet-buy">6-5-3</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=6"><b>名古屋6R</b></a> 締切22:15<br><span class="rnm">F・C 並び1点・過去136〜140%</span> <span class="aibet-buy">5-3-7</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=5&r=7"><b>名古屋7R</b></a> 締切22:35<br><span class="rnm">F・C 並び1点・過去136〜140%</span> <span class="aibet-buy">5-3-4</span></li><li><span class="aibet-tag">推奨</span> <a href="?v=6&r=7"><b>前橋7R</b></a> 締切22:45<br><span class="rnm">M1 万車・3番目ライン・過去116〜136%</span> <span class="aibet-buy">4-7-5 7-4-5</span></li></ul></details><section class="tab-panel active" id="tab-0"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-0-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-0-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-0-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-0-3" data-no="4">★4R</button><button class="race-tab-btn " data-race="race-0-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-0-5" data-no="6">★6R</button><button class="race-tab-btn " data-race="race-0-6" data-no="7">7R</button></nav><div class="race-panel active" id="race-0-0">
     <article class="race-card">
       <header class="race-card-head">
         <span class="race-num">1<small>R</small></span>
@@ -3033,7 +3040,7 @@
         <div class="race-title">
           <h2>Ａ級</h2>
           <p class="race-sub">奈良 <span class="post-time">締切 15:54</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">40%</b><span class="sep">・</span>目安 <b>6,860円</b><small>(3,570〜12,590)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 1・3・4(3点) <span class="hp">67%</span> ／ 2車複 5 → 1・3・4(3点) <span class="hp">43%</span> ／ 3連複 5軸 → 1・3・4・2(6点) <span class="hp">46%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(82%) <b>3</b>(66%)</span>　<span class="role-1">頭向き：<b>5</b>(82%)</span>　<span class="role-2">相手：4</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">33%</b><span class="sep">・</span>目安 <b>6,860円</b><small>(3,380〜9,980)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 1・3・4(3点) <span class="hp">67%</span> ／ 2車複 5 → 1・3・4(3点) <span class="hp">43%</span> ／ 3連複 5軸 → 1・3・4・2(6点) <span class="hp">46%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(82%) <b>3</b>(66%)</span>　<span class="role-1">頭向き：<b>5</b>(82%)</span>　<span class="role-2">相手：4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン 先頭→番手→全(過去80%): 5-3-1 5-3-2 5-3-4 5-3-7</div></details></div>
@@ -3101,7 +3108,7 @@
       </div>
       <div class="card-extra"><div class="trioline"><div>◎ <b>5番 半田 誠</b> <span class="st">(◎の過去 勝率43%・3着内77%。一言はオッズが出てから)</span></div></div></div>
       <a class="detail-link" href="nara/index.html?r=11">詳しく(3連単・展開など) →</a>
-    </article></div></section><section class="tab-panel " id="tab-4"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-4-0" data-no="1">★1R</button><button class="race-tab-btn " data-race="race-4-1" data-no="2">★2R</button><button class="race-tab-btn " data-race="race-4-2" data-no="3">★3R</button><button class="race-tab-btn next" data-race="race-4-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-4-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-4-5" data-no="6">★6R</button><button class="race-tab-btn " data-race="race-4-6" data-no="7">★7R</button><button class="race-tab-btn " data-race="race-4-7" data-no="8">★8R</button><button class="race-tab-btn " data-race="race-4-8" data-no="9">★9R</button><button class="race-tab-btn " data-race="race-4-9" data-no="10">10R</button><button class="race-tab-btn " data-race="race-4-10" data-no="11">11R</button><button class="race-tab-btn " data-race="race-4-11" data-no="12">★12R</button></nav><div class="race-panel active" id="race-4-0">
+    </article></div></section><section class="tab-panel " id="tab-4"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-4-0" data-no="1">★1R</button><button class="race-tab-btn " data-race="race-4-1" data-no="2">★2R</button><button class="race-tab-btn " data-race="race-4-2" data-no="3">★3R</button><button class="race-tab-btn " data-race="race-4-3" data-no="4">4R</button><button class="race-tab-btn next" data-race="race-4-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-4-5" data-no="6">★6R</button><button class="race-tab-btn " data-race="race-4-6" data-no="7">★7R</button><button class="race-tab-btn " data-race="race-4-7" data-no="8">★8R</button><button class="race-tab-btn " data-race="race-4-8" data-no="9">★9R</button><button class="race-tab-btn " data-race="race-4-9" data-no="10">10R</button><button class="race-tab-btn " data-race="race-4-10" data-no="11">11R</button><button class="race-tab-btn " data-race="race-4-11" data-no="12">★12R</button></nav><div class="race-panel active" id="race-4-0">
     <article class="race-card">
       <header class="race-card-head">
         <span class="race-num">1<small>R</small></span>
@@ -3290,7 +3297,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 16:00</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">77%</b><span class="sep">・</span>目安 <b>20,680円</b><small>(13,500〜30,460)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 9 → 3・2・1(3点) <span class="hp">52%</span> ／ 2車複 9 → 3・2・1(3点) <span class="hp">27%</span> ／ 3連複 9軸 → 3・2・1・7(6点) <span class="hp">26%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(62%)</span>　<span class="role-1">相手：9</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">65%</b><span class="sep">・</span>目安 <b>15,410円</b><small>(9,430〜24,490)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 9 → 3・2・1(3点) <span class="hp">52%</span> ／ 2車複 9 → 3・2・1(3点) <span class="hp">27%</span> ／ 3連複 9軸 → 3・2・1・7(6点) <span class="hp">26%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(62%)</span>　<span class="role-1">相手：9</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">M2 万車・番手差し・過去116〜126%</span><br><b>8-3-6</b></div></div>
@@ -3381,7 +3388,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 16:26</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">76%</b><span class="sep">・</span>目安 <b>19,760円</b><small>(11,800〜33,340)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 7 → 9・5・3(3点) <span class="hp">52%</span> ／ 2車複 7 → 9・5・3(3点) <span class="hp">27%</span> ／ 3連複 7軸 → 9・5・3・2(6点) <span class="hp">26%</span></p><p class="trioline">3連単 的中重視(7・9・5が頭・20点・的中約26%・合成3.1倍・過去の回収率76%): <b>9-1-7 / 7-2-9 / 9-1-5 / 9-1-3 / 9-7-1 / 7-9-1 / 7-2-5 / 5-6-7 / 7-9-2 / 7-2-3 / 7-2-1 / 5-6-9 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">2・3着向き：<b>7</b>(55%)</span>　<span class="role-1">相手：9 5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">76%</b><span class="sep">・</span>目安 <b>19,480円</b><small>(11,800〜32,220)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 7 → 9・5・3(3点) <span class="hp">52%</span> ／ 2車複 7 → 9・5・3(3点) <span class="hp">27%</span> ／ 3連複 7軸 → 9・5・3・1(6点) <span class="hp">26%</span></p><p class="trioline">3連単 的中重視(7・9・5が頭・20点・的中約29%・合成2.8倍・過去の回収率76%): <b>9-1-7 / 7-2-9 / 9-1-5 / 9-7-1 / 9-1-3 / 7-9-1 / 7-9-2 / 5-6-7 / 7-2-5 / 5-6-9 / 7-2-3 / 7-2-1 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">2・3着向き：<b>7</b>(57%)</span>　<span class="role-1">相手：9</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン 先頭→番手→全(過去80%): 9-1-7 9-1-5 9-1-3 9-1-2</div></details></div>
@@ -3393,32 +3400,32 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ng">危険！</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">大石 剣士<br><small class="sub">S2 ・ 逃 ・ 2番手 ・ 104.6点</small></td>
-          <td class="r od">7番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>23.9</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込6%</small></td>
+          <td class="r od">8番人気<br><small class="plc">6%</small></td>
+          <td class="r pct"><b>23.9</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#8a5fb0;color:#ffffff">9</span></td>
           <td class="horse">鈴木 竜士<br><small class="sub">S1 ・ 両 ・ 先頭 ・ 111.6点</small></td>
-          <td class="r od">2番人気<br><small class="plc">21%</small></td>
-          <td class="r pct"><b>20.1</b><small>%</small><br><small class="sub">3着内53%</small><br><small class="mm">込22%</small></td>
+          <td class="r od">2番人気<br><small class="plc">22%</small></td>
+          <td class="r pct"><b>20.1</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm">込23%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span><br><span class="htag tg-push">推し</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">守澤 太志<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 114.9点</small></td>
-          <td class="r od">1番人気<br><small class="plc">23%</small></td>
-          <td class="r pct"><b>11.6</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm">込22%</small></td>
+          <td class="r od">1番人気<br><small class="plc">24%</small></td>
+          <td class="r pct"><b>11.6</b><small>%</small><br><small class="sub">3着内57%</small><br><small class="mm">込24%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">山崎 歩夢<br><small class="sub">S2 ・ 逃 ・ 先頭 ・ 109.0点</small></td>
-          <td class="r od">6番人気<br><small class="plc">9%</small></td>
-          <td class="r pct"><b>10.6</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込9%</small></td>
+          <td class="r od">6番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>10.6</b><small>%</small><br><small class="sub">3着内29%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3426,7 +3433,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">長島 大介<br><small class="sub">S1 ・ 両 ・ 2番手 ・ 108.9点</small></td>
           <td class="r od">5番人気<br><small class="plc">9%</small></td>
-          <td class="r pct"><b>10.0</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込8%</small></td>
+          <td class="r pct"><b>10.0</b><small>%</small><br><small class="sub">3着内36%</small><br><small class="mm">込8%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3434,7 +3441,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">三谷 将太<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 109.9点</small></td>
           <td class="r od">4番人気<br><small class="plc">9%</small></td>
-          <td class="r pct"><b>8.5</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込10%</small></td>
+          <td class="r pct"><b>8.5</b><small>%</small><br><small class="sub">3着内33%</small><br><small class="mm">込10%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3442,23 +3449,23 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">渡邉 雅也<br><small class="sub">S1 ・ 両 ・ 先頭 ・ 110.3点</small></td>
           <td class="r od">3番人気<br><small class="plc">14%</small></td>
-          <td class="r pct"><b>7.9</b><small>%</small><br><small class="sub">3着内40%</small><br><small class="mm">込15%</small></td>
+          <td class="r pct"><b>7.9</b><small>%</small><br><small class="sub">3着内39%</small><br><small class="mm">込14%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">8</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">脇本 勇希<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 108.6点</small></td>
-          <td class="r od">8番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>6.5</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込7%</small></td>
+          <td class="r od">7番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>6.5</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">9</span></td>
           <td class="c ubc"><span class="carb" style="background:#e2699a;color:#ffffff">8</span></td>
           <td class="horse">志智 俊夫<br><small class="sub">S1 ・ 追 ・ 3番手 ・ 106.0点</small></td>
-          <td class="r od">9番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>0.8</b><small>%</small><br><small class="sub">3着内10%</small><br><small class="mm">込1%</small></td>
+          <td class="r od">9番人気<br><small class="plc">1%</small></td>
+          <td class="r pct"><b>0.8</b><small>%</small><br><small class="sub">3着内9%</small><br><small class="mm">込1%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
       </table>
@@ -3472,7 +3479,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 16:52</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">66%</b><span class="sep">・</span>目安 <b>17,760円</b><small>(9,430〜32,600)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 9・2・3(3点) <span class="hp">62%</span> ／ 2車複 5 → 9・2・3(3点) <span class="hp">40%</span> ／ 3連複 5軸 → 9・2・3・1(6点) <span class="hp">32%</span></p><p class="trioline">3連単 的中重視(5・9・2が頭・20点・的中約34%・合成2.3倍・過去の回収率76%): <b>5-2-9 / 5-2-7 / 5-2-3 / 2-5-9 / 9-5-2 / 5-2-1 / 9-2-5 / 5-9-2 / 2-5-7 / 2-5-3 / 2-5-1 / 5-7-2 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(63%)</span>　<span class="role-1">頭向き：<b>5</b>(63%) <b>2</b>(53%)</span>　<span class="role-2">相手：9</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">66%</b><span class="sep">・</span>目安 <b>16,900円</b><small>(9,350〜31,440)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 9・2・3(3点) <span class="hp">62%</span> ／ 2車複 5 → 9・2・3(3点) <span class="hp">40%</span> ／ 3連複 5軸 → 9・2・3・1(6点) <span class="hp">32%</span></p><p class="trioline">3連単 的中重視(5・9・2が頭・20点・的中約34%・合成2.3倍・過去の回収率76%): <b>5-2-9 / 5-2-7 / 5-2-3 / 2-5-9 / 9-5-2 / 5-2-1 / 9-2-5 / 5-9-2 / 2-5-7 / 2-5-3 / 2-5-1 / 5-7-2 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(63%)</span>　<span class="role-1">頭向き：<b>5</b>(63%) <b>2</b>(53%)</span>　<span class="role-2">相手：9</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン 先頭→番手→全(過去80%): 2-5-9 2-5-7 2-5-3 2-5-1</div></details></div>
@@ -3517,7 +3524,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">園田 匠<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 108.0点</small></td>
           <td class="r od">5番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>5.2</b><small>%</small><br><small class="sub">3着内27%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>5.2</b><small>%</small><br><small class="sub">3着内26%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3525,7 +3532,7 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">柏野 智典<br><small class="sub">S1 ・ 追 ・ 単騎 ・ 108.8点</small></td>
           <td class="r od">6番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>5.0</b><small>%</small><br><small class="sub">3着内30%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>5.0</b><small>%</small><br><small class="sub">3着内31%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3540,7 +3547,7 @@
           <td class="c"><span class="rk">8</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">菅原 大也<br><small class="sub">S1 ・ 両 ・ 先頭 ・ 104.1点</small></td>
-          <td class="r od">8番人気<br><small class="plc">2%</small></td>
+          <td class="r od">9番人気<br><small class="plc">2%</small></td>
           <td class="r pct"><b>2.2</b><small>%</small><br><small class="sub">3着内12%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
@@ -3548,7 +3555,7 @@
           <td class="c"><span class="rk">9</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">笠松 信幸<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 106.9点</small></td>
-          <td class="r od">9番人気<br><small class="plc">2%</small></td>
+          <td class="r od">8番人気<br><small class="plc">2%</small></td>
           <td class="r pct"><b>1.6</b><small>%</small><br><small class="sub">3着内14%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
@@ -3563,7 +3570,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 17:18</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">60%</b><span class="sep">・</span>目安 <b>12,680円</b><small>(7,130〜23,470)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 3 → 5・2・1(3点) <span class="hp">52%</span> ／ 2車複 3 → 5・2・1(3点) <span class="hp">27%</span> ／ 3連複 3軸 → 5・2・1・7(6点) <span class="hp">26%</span></p><p class="trioline">3連単 的中重視(3・5・2・1が頭・20点・的中約37%・合成2.2倍・過去の回収率76%): <b>5-2-6 / 5-2-3 / 3-7-5 / 3-7-8 / 2-5-3 / 5-2-1 / 2-5-6 / 3-7-1 / 2-5-1 / 3-5-2 / 3-2-5 / 5-3-2 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">2・3着向き：<b>5</b>(58%)</span>　<span class="role-1">相手：3 2</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">60%</b><span class="sep">・</span>目安 <b>12,620円</b><small>(6,990〜23,470)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 3 → 5・2・1(3点) <span class="hp">52%</span> ／ 2車複 3 → 5・2・1(3点) <span class="hp">27%</span> ／ 3連複 3軸 → 5・2・1・7(6点) <span class="hp">26%</span></p><p class="trioline">3連単 的中重視(3・5・2・1が頭・20点・的中約37%・合成2.2倍・過去の回収率76%): <b>5-2-6 / 5-2-3 / 3-7-5 / 3-7-8 / 2-5-3 / 5-2-1 / 3-7-1 / 2-5-6 / 2-5-1 / 3-5-2 / 5-3-2 / 3-2-5 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">2・3着向き：<b>5</b>(59%)</span>　<span class="role-1">相手：3 2</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">M2 万車・番手差し・過去116〜126%</span><br><b>5-2-6</b></div><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">A 並び1点・過去129〜133%</span><br><b>7-3-8</b></div><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・B 並び1点・過去136〜140%</span><br><b>9-1-4</b></div></div>
@@ -3584,7 +3591,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">浅井 康太<br><small class="sub">S1 ・ 両 ・ 2番手 ・ 116.7点</small></td>
           <td class="r od">1番人気<br><small class="plc">28%</small></td>
-          <td class="r pct"><b>15.7</b><small>%</small><br><small class="sub">3着内58%</small><br><small class="mm">込29%</small></td>
+          <td class="r pct"><b>15.7</b><small>%</small><br><small class="sub">3着内59%</small><br><small class="mm">込29%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3592,7 +3599,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">松谷 秀幸<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 111.7点</small></td>
           <td class="r od">2番人気<br><small class="plc">24%</small></td>
-          <td class="r pct"><b>13.4</b><small>%</small><br><small class="sub">3着内58%</small><br><small class="mm">込24%</small></td>
+          <td class="r pct"><b>13.4</b><small>%</small><br><small class="sub">3着内59%</small><br><small class="mm">込24%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3624,7 +3631,7 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">塚本 大樹<br><small class="sub">S1 ・ 追 ・ 3番手 ・ 109.3点</small></td>
           <td class="r od">8番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>1.6</b><small>%</small><br><small class="sub">3着内13%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>1.6</b><small>%</small><br><small class="sub">3着内12%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3633,7 +3640,7 @@
           <td class="horse">上田 国広<br><small class="sub">S1 ・ 追 ・ 3番手 ・ 106.8点</small></td>
           <td class="r od">9番人気<br><small class="plc">1%</small></td>
           <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内14%</small><br><small class="mm">込1%</small></td>
-          <td class="c"><span class="vt vt-bad">過剰人気</span></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">9</span></td>
@@ -3654,7 +3661,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 17:46</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">59%</b><span class="sep">・</span>目安 <b>15,780円</b><small>(7,530〜30,770)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 7・1・2(3点) <span class="hp">52%</span> ／ 2車複 5 → 7・1・2(3点) <span class="hp">27%</span> ／ 3連複 5軸 → 7・1・2・3(6点) <span class="hp">26%</span></p><p class="trioline">3連単 的中重視(5・1・7・2が頭・20点・的中約37%・合成2.4倍・過去の回収率76%): <b>5-2-6 / 1-7-5 / 7-1-5 / 5-2-7 / 5-2-1 / 2-5-6 / 5-2-3 / 1-7-2 / 2-5-7 / 1-7-3 / 1-7-9 / 7-1-2 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(61%)</span>　<span class="role-1">相手：7 2 1</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">59%</b><span class="sep">・</span>目安 <b>15,840円</b><small>(7,450〜30,730)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 7・1・2(3点) <span class="hp">52%</span> ／ 2車複 5 → 7・1・2(3点) <span class="hp">27%</span> ／ 3連複 5軸 → 7・1・2・3(6点) <span class="hp">26%</span></p><p class="trioline">3連単 的中重視(5・1・7・2が頭・20点・的中約36%・合成2.4倍・過去の回収率76%): <b>5-2-6 / 1-7-5 / 7-1-5 / 5-2-7 / 5-2-1 / 2-5-6 / 5-2-3 / 1-7-2 / 1-7-3 / 2-5-7 / 1-7-9 / 7-1-2 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(60%)</span>　<span class="role-1">相手：7 2 1</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">M2 万車・番手差し・過去116〜126%</span><br><b>5-2-6</b></div></div>
@@ -3675,7 +3682,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">鈴木 玄人<br><small class="sub">S1 ・ 両 ・ 2番手 ・ 114.4点</small></td>
           <td class="r od">1番人気<br><small class="plc">28%</small></td>
-          <td class="r pct"><b>20.1</b><small>%</small><br><small class="sub">3着内61%</small><br><small class="mm">込28%</small></td>
+          <td class="r pct"><b>20.1</b><small>%</small><br><small class="sub">3着内60%</small><br><small class="mm">込28%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3699,7 +3706,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">和田 健太郎<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 113.0点</small></td>
           <td class="r od">5番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>5.8</b><small>%</small><br><small class="sub">3着内27%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>5.8</b><small>%</small><br><small class="sub">3着内28%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3722,7 +3729,7 @@
           <td class="c"><span class="rk">8</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">村田 雅一<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 108.5点</small></td>
-          <td class="r od">8番人気<br><small class="plc">3%</small></td>
+          <td class="r od">8番人気<br><small class="plc">2%</small></td>
           <td class="r pct"><b>1.8</b><small>%</small><br><small class="sub">3着内13%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
@@ -3745,7 +3752,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 18:14</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">75%</b><span class="sep">・</span>目安 <b>19,860円</b><small>(12,470〜33,350)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 9・8・2(3点) <span class="hp">62%</span> ／ 2車複 5 → 9・8・2(3点) <span class="hp">40%</span> ／ 3連複 5軸 → 9・8・2・7(6点) <span class="hp">32%</span></p><p class="trioline">3連単 的中重視(5・9・8・2が頭・20点・的中約30%・合成3.0倍・過去の回収率76%): <b>5-1-9 / 5-1-2 / 8-2-6 / 5-1-4 / 5-1-3 / 2-8-6 / 5-1-7 / 5-9-4 / 5-1-8 / 9-4-2 / 5-9-1 / 9-4-5 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">頭向き：<b>5</b>(53%)</span>　<span class="role-1">相手：9 2</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">74%</b><span class="sep">・</span>目安 <b>19,720円</b><small>(12,100〜33,330)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 9・8・2(3点) <span class="hp">62%</span> ／ 2車複 5 → 9・8・2(3点) <span class="hp">40%</span> ／ 3連複 5軸 → 9・8・2・7(6点) <span class="hp">32%</span></p><p class="trioline">3連単 的中重視(5・9・8・2が頭・20点・的中約30%・合成3.0倍・過去の回収率76%): <b>5-1-9 / 5-1-2 / 8-2-6 / 5-1-4 / 5-1-3 / 2-8-6 / 5-1-7 / 5-9-4 / 5-1-8 / 9-4-2 / 5-9-1 / 9-4-5 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">頭向き：<b>5</b>(53%)</span>　<span class="role-1">相手：9 2</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">A 並び1点・過去129〜133%</span><br><b>8-2-6</b></div></div>
@@ -3757,7 +3764,7 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">脇本 雄太<br><small class="sub">SS ・ 逃 ・ 先頭 ・ 112.8点</small></td>
-          <td class="r od">1番人気<br><small class="plc">32%</small></td>
+          <td class="r od">1番人気<br><small class="plc">33%</small></td>
           <td class="r pct"><b>29.1</b><small>%</small><br><small class="sub">3着内53%</small><br><small class="mm">込34%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
@@ -3766,7 +3773,7 @@
           <td class="c ubc"><span class="carb" style="background:#8a5fb0;color:#ffffff">9</span></td>
           <td class="horse">取鳥 雄吾<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 113.0点</small></td>
           <td class="r od">2番人気<br><small class="plc">19%</small></td>
-          <td class="r pct"><b>17.6</b><small>%</small><br><small class="sub">3着内45%</small><br><small class="mm">込20%</small></td>
+          <td class="r pct"><b>17.6</b><small>%</small><br><small class="sub">3着内44%</small><br><small class="mm">込20%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3798,7 +3805,7 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">簗田 一輝<br><small class="sub">S1 ・ 両 ・ 2番手 ・ 112.7点</small></td>
           <td class="r od">5番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>6.3</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>6.3</b><small>%</small><br><small class="sub">3着内26%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3821,7 +3828,7 @@
           <td class="c"><span class="rk">9</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">上野 優太<br><small class="sub">S1 ・ 追 ・ 3番手 ・ 108.4点</small></td>
-          <td class="r od">9番人気<br><small class="plc">3%</small></td>
+          <td class="r od">9番人気<br><small class="plc">2%</small></td>
           <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内17%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
@@ -3836,7 +3843,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 18:42</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">62%</b><span class="sep">・</span>目安 <b>13,130円</b><small>(7,720〜30,090)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 3・2・1(3点) <span class="hp">73%</span> ／ 2車複 5 → 3・2・1(3点) <span class="hp">50%</span> ／ 3連複 5軸 → 3・2・1・7(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(5・3が頭・20点・的中約40%・合成2.2倍・過去の回収率76%): <b>5-2-7 / 5-2-3 / 5-2-9 / 5-2-4 / 5-2-8 / 5-3-4 / 5-3-2 / 5-2-1 / 5-7-2 / 3-4-5 / 5-3-7 / 3-4-7 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(71%)</span>　<span class="role-1">頭向き：<b>5</b>(71%)</span>　<span class="role-2">相手：2 3</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">62%</b><span class="sep">・</span>目安 <b>12,790円</b><small>(7,860〜30,090)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 5 → 3・2・1(3点) <span class="hp">73%</span> ／ 2車複 5 → 3・2・1(3点) <span class="hp">50%</span> ／ 3連複 5軸 → 3・2・1・7(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(5・3が頭・20点・的中約39%・合成2.2倍・過去の回収率76%): <b>5-2-7 / 5-2-3 / 5-2-9 / 5-2-4 / 5-2-8 / 5-3-4 / 5-3-2 / 5-2-1 / 5-7-2 / 3-4-5 / 5-3-7 / 3-4-7 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>5</b>(70%)</span>　<span class="role-1">頭向き：<b>5</b>(70%)</span>　<span class="role-2">相手：2 3</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・B 並び1点・過去136〜140%</span><br><b>1-8-6</b></div></div>
@@ -3849,7 +3856,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">寺崎 浩平<br><small class="sub">SS ・ 逃 ・ 先頭 ・ 116.8点</small></td>
           <td class="r od">1番人気<br><small class="plc">45%</small></td>
-          <td class="r pct"><b>56.8</b><small>%</small><br><small class="sub">3着内71%</small><br><small class="mm">込49%</small></td>
+          <td class="r pct"><b>56.8</b><small>%</small><br><small class="sub">3着内70%</small><br><small class="mm">込48%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3857,7 +3864,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">中野 慎詞<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 112.4点</small></td>
           <td class="r od">2番人気<br><small class="plc">14%</small></td>
-          <td class="r pct"><b>11.6</b><small>%</small><br><small class="sub">3着内43%</small><br><small class="mm mm-hi">込16%</small></td>
+          <td class="r pct"><b>11.6</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm mm-hi">込16%</small></td>
           <td class="c"><span class="vt vt-ok">妙味あり</span></td>
         </tr>
         <tr class="">
@@ -3889,7 +3896,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">松崎 広太<br><small class="sub">S2 ・ 逃 ・ 先頭 ・ 108.4点</small></td>
           <td class="r od">4番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>4.5</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込7%</small></td>
+          <td class="r pct"><b>4.5</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3904,9 +3911,9 @@
           <td class="c"><span class="rk">8</span></td>
           <td class="c ubc"><span class="carb" style="background:#8a5fb0;color:#ffffff">9</span></td>
           <td class="horse">橋本 強<br><small class="sub">S1 ・ 追 ・ 単騎 ・ 109.6点</small></td>
-          <td class="r od">8番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>2.1</b><small>%</small><br><small class="sub">3着内19%</small><br><small class="mm">込2%</small></td>
-          <td class="c"><span class="vt vt-bad">過剰人気</span></td>
+          <td class="r od">8番人気<br><small class="plc">4%</small></td>
+          <td class="r pct"><b>2.1</b><small>%</small><br><small class="sub">3着内19%</small><br><small class="mm">込3%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">9</span></td>
@@ -3927,7 +3934,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 19:16</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="">48%</b><span class="sep">・</span>目安 <b>8,950円</b><small>(3,720〜19,320)</small></p><p class="hitline">的中率重視: ワイド 3 → 7・1・8(3点) <span class="hp">73%</span> ／ 2車複 3 → 7・1・8(3点) <span class="hp">50%</span> ／ 3連複 3軸 → 7・1・8・5(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(3・7・1が頭・13点・的中約44%・合成2.0倍・過去の回収率76%): <b>3-7-1 / 3-7-2 / 3-7-5 / 7-3-1 / 3-7-8 / 3-1-7 / 7-3-2 / 7-3-5 / 3-7-9 / 3-7-4 / 3-5-7 / 7-3-8 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(76%) <b>7</b>(68%)</span>　<span class="role-1">相手：1</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="">47%</b><span class="sep">・</span>目安 <b>8,950円</b><small>(3,740〜19,060)</small></p><p class="hitline">的中率重視: ワイド 3 → 7・1・8(3点) <span class="hp">73%</span> ／ 2車複 3 → 7・1・8(3点) <span class="hp">50%</span> ／ 3連複 3軸 → 7・1・8・5(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(3・7・1が頭・13点・的中約44%・合成2.0倍・過去の回収率76%): <b>3-7-1 / 3-7-2 / 3-7-5 / 7-3-1 / 3-7-8 / 3-1-7 / 7-3-2 / 7-3-5 / 3-7-9 / 3-7-4 / 3-5-7 / 7-3-8 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(76%) <b>7</b>(68%)</span>　<span class="role-1">相手：1</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン 先頭→番手→全(過去80%): 7-3-1 7-3-2 7-3-5 7-3-8</div></details></div>
@@ -3955,8 +3962,8 @@
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e2699a;color:#ffffff">8</span></td>
           <td class="horse">山崎 賢人<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 112.9点</small></td>
-          <td class="r od">5番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>11.5</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込6%</small></td>
+          <td class="r od">4番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>11.5</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -3979,7 +3986,7 @@
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">坂井 洋<br><small class="sub">S1 ・ 両 ・ 先頭 ・ 113.3点</small></td>
-          <td class="r od">4番人気<br><small class="plc">7%</small></td>
+          <td class="r od">5番人気<br><small class="plc">6%</small></td>
           <td class="r pct"><b>7.6</b><small>%</small><br><small class="sub">3着内27%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
@@ -4018,7 +4025,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 19:50</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">57%</b><span class="sep">・</span>目安 <b>12,280円</b><small>(7,250〜21,610)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・9・4(3点) <span class="hp">73%</span> ／ 2車複 1 → 2・9・4(3点) <span class="hp">50%</span> ／ 3連複 1軸 → 2・9・4・7(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(1・2・9・4・7が頭・20点・的中約41%・合成2.2倍・過去の回収率76%): <b>1-7-9 / 1-7-2 / 1-7-4 / 1-7-5 / 1-4-7 / 1-9-7 / 1-7-3 / 1-2-7 / 7-1-9 / 1-5-7 / 7-1-2 / 7-1-4 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(75%)</span>　<span class="role-1">頭向き：<b>1</b>(75%)</span>　<span class="role-2">相手：7 2</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">57%</b><span class="sep">・</span>目安 <b>12,220円</b><small>(7,220〜21,510)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・9・7(3点) <span class="hp">73%</span> ／ 2車複 1 → 2・9・7(3点) <span class="hp">50%</span> ／ 3連複 1軸 → 2・9・7・4(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(1・2・9・4・7が頭・20点・的中約41%・合成2.2倍・過去の回収率76%): <b>1-7-9 / 1-7-2 / 1-7-4 / 1-7-5 / 1-4-7 / 1-9-7 / 1-7-3 / 1-2-7 / 7-1-9 / 1-5-7 / 7-1-4 / 7-1-2 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(74%)</span>　<span class="role-1">頭向き：<b>1</b>(74%)</span>　<span class="role-2">相手：7 2</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン 先頭→番手→全(過去80%): 7-1-9 7-1-4 7-1-2 7-1-5</div></details></div>
@@ -4030,8 +4037,8 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">郡司 浩平<br><small class="sub">SS ・ 両 ・ 2番手 ・ 116.0点</small></td>
-          <td class="r od">1番人気<br><small class="plc">41%</small></td>
-          <td class="r pct"><b>40.3</b><small>%</small><br><small class="sub">3着内75%</small><br><small class="mm">込45%</small></td>
+          <td class="r od">1番人気<br><small class="plc">42%</small></td>
+          <td class="r pct"><b>40.3</b><small>%</small><br><small class="sub">3着内74%</small><br><small class="mm">込44%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4087,7 +4094,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">菅田 壱道<br><small class="sub">S1 ・ 両 ・ 先頭 ・ 115.6点</small></td>
           <td class="r od">7番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>3.8</b><small>%</small><br><small class="sub">3着内14%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>3.8</b><small>%</small><br><small class="sub">3着内15%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4109,7 +4116,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">小倉 <span class="post-time">締切 20:25</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="">50%</b><span class="sep">・</span>目安 <b>10,020円</b><small>(5,570〜19,410)</small></p><p class="hitline">的中率重視: ワイド 2 → 7・9・5(3点) <span class="hp">73%</span> ／ 2車複 2 → 7・9・5(3点) <span class="hp">50%</span> ／ 3連複 2軸 → 7・9・5・3(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(2・7が頭・18点・的中約46%・合成2.0倍・過去の回収率76%): <b>2-9-7 / 2-7-9 / 2-7-1 / 7-1-2 / 7-2-1 / 7-2-9 / 2-9-5 / 2-7-5 / 2-9-3 / 2-7-3 / 2-9-1 / 7-1-5 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>2</b>(76%) <b>7</b>(67%)</span>　<span class="role-1">相手：9</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="">51%</b><span class="sep">・</span>目安 <b>10,130円</b><small>(5,490〜19,440)</small></p><p class="hitline">的中率重視: ワイド 2 → 7・9・5(3点) <span class="hp">73%</span> ／ 2車複 2 → 7・9・5(3点) <span class="hp">50%</span> ／ 3連複 2軸 → 7・9・5・3(6点) <span class="hp">37%</span></p><p class="trioline">3連単 的中重視(2・7が頭・18点・的中約45%・合成2.0倍・過去の回収率76%): <b>2-9-7 / 2-7-9 / 2-7-1 / 7-1-2 / 7-2-1 / 7-2-9 / 2-9-5 / 2-7-5 / 2-9-3 / 2-7-3 / 2-9-1 / 7-1-5 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>2</b>(75%) <b>7</b>(67%)</span>　<span class="role-1">相手：9</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">K1 フォーメーション・過去103〜127%</span><br><b>5-3-7 5-3-6 3-5-7 5-3-2</b></div><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・B 並び1点・過去136〜140%</span><br><b>3-5-6</b></div></div>
@@ -4130,7 +4137,7 @@
           <td class="c ubc"><span class="carb" style="background:#8a5fb0;color:#ffffff">9</span></td>
           <td class="horse">石原 颯<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 116.8点</small></td>
           <td class="r od">3番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>17.3</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm">込8%</small></td>
+          <td class="r pct"><b>17.3</b><small>%</small><br><small class="sub">3着内41%</small><br><small class="mm">込8%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4138,7 +4145,7 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">松本 貴治<br><small class="sub">S1 ・ 両 ・ 2番手 ・ 118.4点</small></td>
           <td class="r od">1番人気<br><small class="plc">41%</small></td>
-          <td class="r pct"><b>14.2</b><small>%</small><br><small class="sub">3着内76%</small><br><small class="mm">込46%</small></td>
+          <td class="r pct"><b>14.2</b><small>%</small><br><small class="sub">3着内75%</small><br><small class="mm">込46%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4146,7 +4153,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">新山 響平<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 114.9点</small></td>
           <td class="r od">5番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>13.1</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>13.1</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4169,7 +4176,7 @@
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">菊池 岳仁<br><small class="sub">S1 ・ 逃 ・ 先頭 ・ 114.3点</small></td>
-          <td class="r od">7番人気<br><small class="plc">4%</small></td>
+          <td class="r od">7番人気<br><small class="plc">5%</small></td>
           <td class="r pct"><b>8.6</b><small>%</small><br><small class="sub">3着内15%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
@@ -4200,7 +4207,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 20:35</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">32%</b><span class="sep">・</span>目安 <b>3,460円</b><small>(550〜9,520)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 3・2・5(3点) <span class="hp">77%</span> ／ 2車複 1 → 3・2・5(3点) <span class="hp">56%</span> ／ 3連複 1軸 → 3・2・5・4(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(3・1が頭・2点・的中約49%・合成2.0倍・過去の回収率76%): <b>3-1-2 / 1-3-2</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(87%) <b>3</b>(86%) <b>2</b>(74%)</span>　<span class="role-1">頭向き：<b>3</b>(86%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="">27%</b><span class="sep">・</span>目安 <b>2,200円</b><small>(460〜6,720)</small></p><p class="hitline">的中率重視: ワイド 3 → 1・2・5(3点) <span class="hp">77%</span> ／ 2車複 3 → 1・2・5(3点) <span class="hp">56%</span> ／ 3連複 3軸 → 1・2・5・4(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(3・1が頭・1点・的中約33%・合成3.1倍・過去の回収率76%): <b>3-1-2</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(88%) <b>3</b>(86%) <b>2</b>(76%)</span>　<span class="role-1">頭向き：<b>3</b>(86%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 3-1-2</div></details></div>
@@ -4212,32 +4219,32 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">山崎 寛巳<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 68.8点</small></td>
-          <td class="r od">2番人気<br><small class="plc">36%</small></td>
-          <td class="r pct"><b>55.9</b><small>%</small><br><small class="sub">3着内86%</small><br><small class="mm">込42%</small></td>
-          <td class="c"><span class="vt vt-mid">妥当</span></td>
+          <td class="r od">1番人気<br><small class="plc">39%</small></td>
+          <td class="r pct"><b>55.9</b><small>%</small><br><small class="sub">3着内86%</small><br><small class="mm mm-hi">込46%</small></td>
+          <td class="c"><span class="vt vt-ok">妙味あり</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">眞原 健一<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 70.0点</small></td>
-          <td class="r od">1番人気<br><small class="plc">40%</small></td>
-          <td class="r pct"><b>25.3</b><small>%</small><br><small class="sub">3着内87%</small><br><small class="mm">込41%</small></td>
+          <td class="r od">2番人気<br><small class="plc">38%</small></td>
+          <td class="r pct"><b>25.3</b><small>%</small><br><small class="sub">3着内88%</small><br><small class="mm">込38%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">齋藤 和也<br><small class="sub">A3 ・ 追 ・ 単騎 ・ 67.7点</small></td>
-          <td class="r od">4番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>6.2</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込5%</small></td>
+          <td class="r od">4番人気<br><small class="plc">8%</small></td>
+          <td class="r pct"><b>6.2</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">岡田 大門<br><small class="sub">A3 ・ 両 ・ 先頭 ・ 68.6点</small></td>
-          <td class="r od">5番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>5.3</b><small>%</small><br><small class="sub">3着内14%</small><br><small class="mm">込4%</small></td>
+          <td class="r od">5番人気<br><small class="plc">4%</small></td>
+          <td class="r pct"><b>5.3</b><small>%</small><br><small class="sub">3着内13%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4245,23 +4252,23 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">水野 悟志<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 69.2点</small></td>
           <td class="r od">3番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>3.9</b><small>%</small><br><small class="sub">3着内74%</small><br><small class="mm">込7%</small></td>
+          <td class="r pct"><b>3.9</b><small>%</small><br><small class="sub">3着内76%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">中野 彰人<br><small class="sub">A3 ・ 追 ・ 単騎 ・ 64.4点</small></td>
-          <td class="r od">6番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>2.7</b><small>%</small><br><small class="sub">3着内7%</small><br><small class="mm">込1%</small></td>
+          <td class="r od">7番人気<br><small class="plc">2%</small></td>
+          <td class="r pct"><b>2.7</b><small>%</small><br><small class="sub">3着内6%</small><br><small class="mm">込1%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">清水 広幸<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 62.6点</small></td>
-          <td class="r od">7番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>0.7</b><small>%</small><br><small class="sub">3着内7%</small><br><small class="mm">込1%</small></td>
+          <td class="r od">6番人気<br><small class="plc">2%</small></td>
+          <td class="r pct"><b>0.7</b><small>%</small><br><small class="sub">3着内6%</small><br><small class="mm">込1%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr></tbody>
       </table>
@@ -4275,7 +4282,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 20:55</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">36%</b><span class="sep">・</span>目安 <b>4,700円</b><small>(3,130〜11,750)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 1・4・3(3点) <span class="hp">67%</span> ／ 2車複 2 → 1・4・3(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 1・4・3・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・1が頭・10点・的中約44%・合成2.1倍・過去の回収率76%): <b>2-1-5 / 1-5-6 / 1-2-5 / 2-1-4 / 2-4-3 / 2-1-3 / 1-2-3 / 2-4-1 / 1-5-3 / 1-2-4</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(75%) <b>2</b>(67%)</span>　<span class="role-1">頭向き：<b>2</b>(67%)</span>　<span class="role-2">相手：5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">34%</b><span class="sep">・</span>目安 <b>4,630円</b><small>(2,920〜11,130)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 1・5・4(3点) <span class="hp">67%</span> ／ 2車複 2 → 1・5・4(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 1・5・4・3(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・1が頭・9点・的中約43%・合成2.1倍・過去の回収率76%): <b>2-1-5 / 2-4-3 / 1-5-2 / 1-5-6 / 1-5-4 / 1-2-5 / 2-1-4 / 1-4-5 / 2-1-3</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(75%) <b>2</b>(66%)</span>　<span class="role-1">頭向き：<b>2</b>(66%)</span>　<span class="role-2">2・3着向き：<b>5</b>(53%)</span>　<span class="role-3">相手：4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">D 並び1点・過去110〜111%</span><br><b>1-5-6</b></div></div>
@@ -4287,40 +4294,40 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">井坂 泰誓<br><small class="sub">A3 ・ 両 ・ 先頭 ・ 71.3点</small></td>
-          <td class="r od">1番人気<br><small class="plc">37%</small></td>
-          <td class="r pct"><b>63.4</b><small>%</small><br><small class="sub">3着内67%</small><br><small class="mm">込39%</small></td>
+          <td class="r od">1番人気<br><small class="plc">38%</small></td>
+          <td class="r pct"><b>63.4</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm">込39%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">池上 孝之<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 67.8点</small></td>
-          <td class="r od">3番人気<br><small class="plc">12%</small></td>
-          <td class="r pct"><b>16.7</b><small>%</small><br><small class="sub">3着内39%</small><br><small class="mm">込9%</small></td>
+          <td class="r od">4番人気<br><small class="plc">9%</small></td>
+          <td class="r pct"><b>16.7</b><small>%</small><br><small class="sub">3着内43%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">加美山 隆行<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 67.6点</small></td>
-          <td class="r od">5番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>9.4</b><small>%</small><br><small class="sub">3着内48%</small><br><small class="mm">込6%</small></td>
+          <td class="r od">3番人気<br><small class="plc">10%</small></td>
+          <td class="r pct"><b>9.4</b><small>%</small><br><small class="sub">3着内53%</small><br><small class="mm">込10%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">邊見 斎<br><small class="sub">A3 ・ 追 ・ 先頭 ・ 72.3点</small></td>
-          <td class="r od">2番人気<br><small class="plc">30%</small></td>
-          <td class="r pct"><b>6.1</b><small>%</small><br><small class="sub">3着内75%</small><br><small class="mm mm-hi">込35%</small></td>
-          <td class="c"><span class="vt vt-ok">妙味あり</span></td>
+          <td class="r od">2番人気<br><small class="plc">31%</small></td>
+          <td class="r pct"><b>6.1</b><small>%</small><br><small class="sub">3着内75%</small><br><small class="mm">込35%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">柴田 昌樹<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 68.7点</small></td>
-          <td class="r od">4番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>3.0</b><small>%</small><br><small class="sub">3着内38%</small><br><small class="mm">込7%</small></td>
+          <td class="r od">5番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>3.0</b><small>%</small><br><small class="sub">3着内36%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4328,15 +4335,15 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">長谷川 辰徳<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 66.2点</small></td>
           <td class="r od">6番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内19%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">梶山 大輔<br><small class="sub">A3 ・ 追 ・ 単騎 ・ 63.5点</small></td>
-          <td class="r od">7番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>0.3</b><small>%</small><br><small class="sub">3着内11%</small><br><small class="mm">込2%</small></td>
+          <td class="r od">7番人気<br><small class="plc">2%</small></td>
+          <td class="r pct"><b>0.3</b><small>%</small><br><small class="sub">3着内8%</small><br><small class="mm">込1%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr></tbody>
       </table>
@@ -4350,7 +4357,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 21:15</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">44%</b><span class="sep">・</span>目安 <b>4,190円</b><small>(2,530〜11,810)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">77%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">56%</span> ／ 3連複 1軸 → 2・3・4・7(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(1・2・3が頭・8点・的中約44%・合成2.1倍・過去の回収率76%): <b>1-2-3 / 2-1-3 / 1-3-2 / 1-2-4 / 1-2-6 / 1-3-7 / 2-1-6 / 2-1-4</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(81%) <b>2</b>(71%)</span>　<span class="role-1">頭向き：<b>1</b>(81%)</span>　<span class="role-2">2・3着向き：<b>3</b>(56%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">42%</b><span class="sep">・</span>目安 <b>3,730円</b><small>(2,530〜11,810)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">77%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">56%</span> ／ 3連複 1軸 → 2・3・4・7(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(1・2・3が頭・7点・的中約44%・合成2.0倍・過去の回収率76%): <b>1-2-3 / 2-1-3 / 1-3-2 / 1-2-4 / 1-2-6 / 2-1-6 / 3-2-1</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(83%) <b>2</b>(74%)</span>　<span class="role-1">頭向き：<b>1</b>(83%)</span>　<span class="role-2">2・3着向き：<b>3</b>(59%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・C 並び1点・過去136〜140%</span><br><b>3-7-5</b></div></div>
@@ -4362,8 +4369,8 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">北村 翔太<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 78.4点</small></td>
-          <td class="r od">1番人気<br><small class="plc">41%</small></td>
-          <td class="r pct"><b>67.1</b><small>%</small><br><small class="sub">3着内81%</small><br><small class="mm">込47%</small></td>
+          <td class="r od">1番人気<br><small class="plc">42%</small></td>
+          <td class="r pct"><b>67.1</b><small>%</small><br><small class="sub">3着内83%</small><br><small class="mm">込47%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4371,7 +4378,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">大本 隆也<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 75.1点</small></td>
           <td class="r od">3番人気<br><small class="plc">13%</small></td>
-          <td class="r pct"><b>12.9</b><small>%</small><br><small class="sub">3着内56%</small><br><small class="mm">込12%</small></td>
+          <td class="r pct"><b>12.9</b><small>%</small><br><small class="sub">3着内59%</small><br><small class="mm">込13%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4379,15 +4386,15 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">小川 大地<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 76.0点</small></td>
           <td class="r od">2番人気<br><small class="plc">24%</small></td>
-          <td class="r pct"><b>8.4</b><small>%</small><br><small class="sub">3着内71%</small><br><small class="mm">込24%</small></td>
+          <td class="r pct"><b>8.4</b><small>%</small><br><small class="sub">3着内74%</small><br><small class="mm">込24%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">三浦 綾<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 69.5点</small></td>
-          <td class="r od">6番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>5.4</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込4%</small></td>
+          <td class="r od">6番人気<br><small class="plc">4%</small></td>
+          <td class="r pct"><b>5.4</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4395,7 +4402,7 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">志村 正洋<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 68.5点</small></td>
           <td class="r od">5番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>3.2</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>3.2</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4403,7 +4410,7 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">及川 裕奨<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 73.1点</small></td>
           <td class="r od">4番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>2.4</b><small>%</small><br><small class="sub">3着内27%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>2.4</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4411,7 +4418,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">藤田 晃英<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 70.0点</small></td>
           <td class="r od">7番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>0.6</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>0.6</b><small>%</small><br><small class="sub">3着内18%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
       </table>
@@ -4425,7 +4432,7 @@
         <div class="race-title">
           <h2>Ａ級特一般</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 21:35</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="lo">19%</b><span class="sep">・</span>目安 <b>2,550円</b><small>(1,370〜5,290)</small><span class="sep">・</span><b>本命</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">78%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">60%</span> ／ 3連複 1軸 → 2・3・4・5(6点) <span class="hp">64%</span></p><p class="trioline">3連単 的中重視(1・2が頭・4点・的中約44%・合成2.2倍・過去の回収率76%): <b>1-2-5 / 1-2-3 / 2-1-5 / 2-1-3</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(90%) <b>2</b>(81%)</span>　<span class="role-1">頭向き：<b>1</b>(90%)</span>　<span class="role-2">相手：3 5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="lo">20%</b><span class="sep">・</span>目安 <b>2,270円</b><small>(1,310〜5,260)</small><span class="sep">・</span><b>本命</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">87%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">68%</span> ／ 3連複 1軸 → 2・3・4・5(6点) <span class="hp">75%</span></p><p class="trioline">3連単 的中重視(1・2が頭・3点・的中約41%・合成2.4倍・過去の回収率76%): <b>1-2-5 / 1-2-3 / 2-1-5</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(91%) <b>2</b>(83%)</span>　<span class="role-1">頭向き：<b>1</b>(91%)</span>　<span class="role-2">相手：3 5</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 1-2-5</div></details></div>
@@ -4437,16 +4444,16 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">森田 康嗣<br><small class="sub">A2 ・ 両 ・ 先頭 ・ 89.8点</small></td>
-          <td class="r od">1番人気<br><small class="plc">48%</small></td>
-          <td class="r pct"><b>55.3</b><small>%</small><br><small class="sub">3着内90%</small><br><small class="mm">込55%</small></td>
+          <td class="r od">1番人気<br><small class="plc">51%</small></td>
+          <td class="r pct"><b>55.3</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込58%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">高橋 陽介<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 89.2点</small></td>
-          <td class="r od">2番人気<br><small class="plc">25%</small></td>
-          <td class="r pct"><b>28.0</b><small>%</small><br><small class="sub">3着内81%</small><br><small class="mm">込24%</small></td>
+          <td class="r od">2番人気<br><small class="plc">24%</small></td>
+          <td class="r pct"><b>28.0</b><small>%</small><br><small class="sub">3着内83%</small><br><small class="mm">込22%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4454,23 +4461,23 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">善利 裕生<br><small class="sub">A2 ・ 両 ・ 先頭 ・ 83.0点</small></td>
           <td class="r od">4番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>7.0</b><small>%</small><br><small class="sub">3着内28%</small><br><small class="mm">込7%</small></td>
+          <td class="r pct"><b>7.0</b><small>%</small><br><small class="sub">3着内26%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">根本 雄紀<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 87.2点</small></td>
-          <td class="r od">3番人気<br><small class="plc">11%</small></td>
-          <td class="r pct"><b>6.7</b><small>%</small><br><small class="sub">3着内49%</small><br><small class="mm">込9%</small></td>
-          <td class="c"><span class="vt vt-mid">妥当</span></td>
+          <td class="r od">3番人気<br><small class="plc">10%</small></td>
+          <td class="r pct"><b>6.7</b><small>%</small><br><small class="sub">3着内45%</small><br><small class="mm">込8%</small></td>
+          <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">亀谷 隆一<br><small class="sub">A2 ・ 追 ・ 単騎 ・ 78.8点</small></td>
           <td class="r od">6番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>1.9</b><small>%</small><br><small class="sub">3着内11%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>1.9</b><small>%</small><br><small class="sub">3着内10%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4478,7 +4485,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">山口 茂<br><small class="sub">A2 ・ 追 ・ 3番手 ・ 80.5点</small></td>
           <td class="r od">5番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>1.2</b><small>%</small><br><small class="sub">3着内41%</small><br><small class="mm">込4%</small></td>
+          <td class="r pct"><b>1.2</b><small>%</small><br><small class="sub">3着内45%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr></tbody>
       </table>
@@ -4492,7 +4499,7 @@
         <div class="race-title">
           <h2>Ａ級特一般</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 21:55</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">32%</b><span class="sep">・</span>目安 <b>4,250円</b><small>(1,870〜9,110)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 3・1・4(3点) <span class="hp">67%</span> ／ 2車複 2 → 3・1・4(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 3・1・4・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・3・1が頭・6点・的中約44%・合成2.2倍・過去の回収率76%): <b>2-3-4 / 2-3-1 / 3-2-4 / 3-2-1 / 3-1-6 / 2-3-5</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(76%) <b>2</b>(68%)</span>　<span class="role-1">頭向き：<b>3</b>(76%)</span>　<span class="role-2">2・3着向き：<b>1</b>(58%)</span>　<span class="role-3">相手：4</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">32%</b><span class="sep">・</span>目安 <b>4,250円</b><small>(1,870〜8,520)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 3・1・4(3点) <span class="hp">67%</span> ／ 2車複 2 → 3・1・4(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 3・1・4・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・3・1が頭・7点・的中約46%・合成2.0倍・過去の回収率76%): <b>2-3-4 / 2-3-1 / 3-2-4 / 3-2-1 / 3-1-6 / 2-3-5 / 2-4-3</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(78%) <b>2</b>(69%)</span>　<span class="role-1">頭向き：<b>3</b>(78%)</span>　<span class="role-2">2・3着向き：<b>1</b>(56%)</span>　<span class="role-3">相手：4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 3-2-4</div></details></div>
@@ -4504,8 +4511,8 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">岩原 健馬<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 82.1点</small></td>
-          <td class="r od">2番人気<br><small class="plc">29%</small></td>
-          <td class="r pct"><b>63.9</b><small>%</small><br><small class="sub">3着内76%</small><br><small class="mm">込31%</small></td>
+          <td class="r od">2番人気<br><small class="plc">30%</small></td>
+          <td class="r pct"><b>63.9</b><small>%</small><br><small class="sub">3着内78%</small><br><small class="mm">込32%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4513,23 +4520,23 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">伊藤 温希<br><small class="sub">A2 ・ 追 ・ 2番手 ・ 86.4点</small></td>
           <td class="r od">1番人気<br><small class="plc">32%</small></td>
-          <td class="r pct"><b>19.8</b><small>%</small><br><small class="sub">3着内68%</small><br><small class="mm">込35%</small></td>
+          <td class="r pct"><b>19.8</b><small>%</small><br><small class="sub">3着内69%</small><br><small class="mm">込34%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">大塚 英伸<br><small class="sub">A1 ・ 追 ・ 先頭 ・ 88.8点</small></td>
-          <td class="r od">3番人気<br><small class="plc">22%</small></td>
-          <td class="r pct"><b>8.2</b><small>%</small><br><small class="sub">3着内58%</small><br><small class="mm">込22%</small></td>
+          <td class="r od">3番人気<br><small class="plc">21%</small></td>
+          <td class="r pct"><b>8.2</b><small>%</small><br><small class="sub">3着内56%</small><br><small class="mm">込21%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">佐藤 明<br><small class="sub">A2 ・ 追 ・ 2番手 ・ 81.6点</small></td>
-          <td class="r od">6番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>3.6</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込2%</small></td>
+          <td class="r od">6番人気<br><small class="plc">3%</small></td>
+          <td class="r pct"><b>3.6</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4537,16 +4544,16 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">松根 真<br><small class="sub">A2 ・ 追 ・ 単騎 ・ 81.9点</small></td>
           <td class="r od">5番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>2.8</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>2.8</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">有賀 高士<br><small class="sub">A2 ・ 追 ・ 3番手 ・ 81.9点</small></td>
-          <td class="r od">4番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内40%</small><br><small class="mm">込4%</small></td>
-          <td class="c"><span class="vt vt-bad">過剰人気</span></td>
+          <td class="r od">4番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内44%</small><br><small class="mm">込5%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
@@ -4567,10 +4574,10 @@
         <div class="race-title">
           <h2>Ａ級特選</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 22:15</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">45%</b><span class="sep">・</span>目安 <b>8,010円</b><small>(4,590〜12,520)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 6・2・5(3点) <span class="hp">67%</span> ／ 2車複 1 → 6・2・5(3点) <span class="hp">43%</span> ／ 3連複 1軸 → 6・2・5・3(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(1・6・2・5が頭・17点・的中約47%・合成2.0倍・過去の回収率76%): <b>1-2-4 / 2-1-4 / 1-5-3 / 6-2-4 / 5-3-7 / 1-5-6 / 6-2-1 / 1-6-5 / 1-2-5 / 2-1-3 / 1-2-6 / 2-4-1 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(67%)</span>　<span class="role-1">頭向き：<b>1</b>(67%)</span>　<span class="role-2">相手：2 4 5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">45%</b><span class="sep">・</span>目安 <b>8,350円</b><small>(4,840〜12,520)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 6・2・5(3点) <span class="hp">67%</span> ／ 2車複 1 → 6・2・5(3点) <span class="hp">43%</span> ／ 3連複 1軸 → 6・2・5・3(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(1・6・2・5が頭・17点・的中約45%・合成2.1倍・過去の回収率76%): <b>1-2-4 / 2-1-4 / 1-5-3 / 6-2-4 / 5-3-7 / 6-2-1 / 1-2-5 / 1-5-6 / 1-6-5 / 1-2-3 / 2-1-3 / 1-2-6 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(66%)</span>　<span class="role-1">頭向き：<b>1</b>(66%)</span>　<span class="role-2">相手：2 4 5</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">K1 フォーメーション・過去103〜127%</span><br><b>5-3-7 5-3-2 5-3-1 3-5-7</b></div></div>
+      <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・C 並び1点・過去136〜140%</span><br><b>5-3-7</b></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:58px"><col style="width:50px"><col style="width:54px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI<br><small>込</small></th><th>妙味</th></tr></thead>
@@ -4580,31 +4587,31 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">丹波 孝佑<br><small class="sub">A1 ・ 逃 ・ 先頭 ・ 86.6点</small></td>
           <td class="r od">1番人気<br><small class="plc">30%</small></td>
-          <td class="r pct"><b>40.7</b><small>%</small><br><small class="sub">3着内67%</small><br><small class="mm mm-hi">込36%</small></td>
+          <td class="r pct"><b>40.7</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm mm-hi">込35%</small></td>
           <td class="c"><span class="vt vt-ok">妙味あり</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">篠塚 光一<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 86.3点</small></td>
-          <td class="r od">3番人気<br><small class="plc">16%</small></td>
-          <td class="r pct"><b>24.4</b><small>%</small><br><small class="sub">3着内58%</small><br><small class="mm">込15%</small></td>
+          <td class="r od">3番人気<br><small class="plc">15%</small></td>
+          <td class="r pct"><b>24.4</b><small>%</small><br><small class="sub">3着内57%</small><br><small class="mm">込14%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">根藤 浩二<br><small class="sub">A2 ・ 両 ・ 単騎 ・ 84.6点</small></td>
-          <td class="r od">2番人気<br><small class="plc">18%</small></td>
-          <td class="r pct"><b>14.5</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込16%</small></td>
+          <td class="r od">2番人気<br><small class="plc">19%</small></td>
+          <td class="r pct"><b>14.5</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込18%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">小浦 凪<br><small class="sub">A2 ・ 両 ・ 先頭 ・ 85.4点</small></td>
-          <td class="r od">4番人気<br><small class="plc">12%</small></td>
-          <td class="r pct"><b>8.8</b><small>%</small><br><small class="sub">3着内41%</small><br><small class="mm">込13%</small></td>
+          <td class="r od">4番人気<br><small class="plc">13%</small></td>
+          <td class="r pct"><b>8.8</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm">込13%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4628,7 +4635,7 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">小川 将人<br><small class="sub">A2 ・ 追 ・ 3番手 ・ 82.7点</small></td>
           <td class="r od">7番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>1.3</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>1.3</b><small>%</small><br><small class="sub">3着内19%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr></tbody>
       </table>
@@ -4642,7 +4649,7 @@
         <div class="race-title">
           <h2>Ａ級特選</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 22:35</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">46%</b><span class="sep">・</span>目安 <b>8,580円</b><small>(5,780〜13,010)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 3・1・5(3点) <span class="hp">57%</span> ／ 2車複 2 → 3・1・5(3点) <span class="hp">34%</span> ／ 3連複 2軸 → 3・1・5・7(6点) <span class="hp">38%</span></p><p class="trioline">3連単 的中重視(2・1・3・7・5が頭・20点・的中約44%・合成2.1倍・過去の回収率76%): <b>7-2-6 / 2-1-6 / 2-6-1 / 1-5-3 / 5-6-7 / 3-5-4 / 2-1-3 / 3-1-5 / 5-2-6 / 2-5-3 / 2-1-7 / 3-5-1 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>2</b>(61%)</span>　<span class="role-1">頭向き：<b>2</b>(61%)</span>　<span class="role-2">2・3着向き：<b>1</b>(51%)</span>　<span class="role-3">相手：3 6 5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">44%</b><span class="sep">・</span>目安 <b>8,670円</b><small>(6,110〜13,010)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 1・3・5(3点) <span class="hp">57%</span> ／ 2車複 2 → 1・3・5(3点) <span class="hp">34%</span> ／ 3連複 2軸 → 1・3・5・7(6点) <span class="hp">38%</span></p><p class="trioline">3連単 的中重視(2・1・3・7・5が頭・20点・的中約44%・合成2.1倍・過去の回収率76%): <b>7-2-6 / 2-1-6 / 2-6-1 / 1-5-3 / 3-5-4 / 5-6-7 / 2-5-3 / 2-1-3 / 3-1-5 / 5-2-6 / 2-1-7 / 3-5-1 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>2</b>(60%)</span>　<span class="role-1">頭向き：<b>2</b>(60%)</span>　<span class="role-2">2・3着向き：<b>1</b>(51%)</span>　<span class="role-3">相手：3 6 5</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・C 並び1点・過去136〜140%</span><br><b>5-3-4</b></div></div>
@@ -4655,7 +4662,7 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">長谷川 飛向<br><small class="sub">A1 ・ 逃 ・ 2番手 ・ 89.0点</small></td>
           <td class="r od">1番人気<br><small class="plc">27%</small></td>
-          <td class="r pct"><b>56.6</b><small>%</small><br><small class="sub">3着内61%</small><br><small class="mm">込26%</small></td>
+          <td class="r pct"><b>56.6</b><small>%</small><br><small class="sub">3着内60%</small><br><small class="mm">込26%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4663,22 +4670,22 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">保科 千春<br><small class="sub">A1 ・ 追 ・ 単騎 ・ 89.3点</small></td>
           <td class="r od">2番人気<br><small class="plc">18%</small></td>
-          <td class="r pct"><b>9.9</b><small>%</small><br><small class="sub">3着内51%</small><br><small class="mm">込18%</small></td>
+          <td class="r pct"><b>9.9</b><small>%</small><br><small class="sub">3着内51%</small><br><small class="mm">込17%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">伊藤 歩登<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 85.2点</small></td>
-          <td class="r od">5番人気<br><small class="plc">12%</small></td>
-          <td class="r pct"><b>9.5</b><small>%</small><br><small class="sub">3着内41%</small><br><small class="mm">込12%</small></td>
+          <td class="r od">4番人気<br><small class="plc">12%</small></td>
+          <td class="r pct"><b>9.5</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm">込13%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">吉田 夢希斗<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 80.7点</small></td>
-          <td class="r od">4番人気<br><small class="plc">12%</small></td>
+          <td class="r od">5番人気<br><small class="plc">12%</small></td>
           <td class="r pct"><b>9.2</b><small>%</small><br><small class="sub">3着内34%</small><br><small class="mm mm-hi">込14%</small></td>
           <td class="c"><span class="vt vt-ok">妙味あり</span></td>
         </tr>
@@ -4695,7 +4702,7 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">北野 良栄<br><small class="sub">A2 ・ 両 ・ 3番手 ・ 82.7点</small></td>
           <td class="r od">6番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>3.8</b><small>%</small><br><small class="sub">3着内45%</small><br><small class="mm">込8%</small></td>
+          <td class="r pct"><b>3.8</b><small>%</small><br><small class="sub">3着内44%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4703,7 +4710,7 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">大川 栄二<br><small class="sub">A2 ・ 追 ・ 3番手 ・ 85.5点</small></td>
           <td class="r od">7番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>2.1</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>2.1</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
       </table>
@@ -4717,7 +4724,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 22:55</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="">23%</b><span class="sep">・</span>目安 <b>4,520円</b><small>(2,110〜6,500)</small></p><p class="hitline">的中率重視: ワイド 1 → 5・6・2(3点) <span class="hp">92%</span> ／ 2車複 1 → 5・6・2(3点) <span class="hp">78%</span> ／ 3連複 1軸 → 5・6・2・7(6点) <span class="hp">70%</span></p><p class="trioline">3連単 的中重視(1が頭・8点・的中約42%・合成2.2倍・過去の回収率76%): <b>1-2-6 / 1-6-2 / 1-2-4 / 1-5-6 / 1-6-5 / 1-2-3 / 1-7-2 / 1-2-5</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(91%)</span>　<span class="role-1">頭向き：<b>1</b>(91%)</span>　<span class="role-2">2・3着向き：<b>2</b>(55%)</span>　<span class="role-3">相手：6</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="">23%</b><span class="sep">・</span>目安 <b>4,520円</b><small>(2,150〜6,270)</small></p><p class="hitline">的中率重視: ワイド 1 → 6・5・2(3点) <span class="hp">92%</span> ／ 2車複 1 → 6・5・2(3点) <span class="hp">78%</span> ／ 3連複 1軸 → 6・5・2・7(6点) <span class="hp">70%</span></p><p class="trioline">3連単 的中重視(1が頭・8点・的中約42%・合成2.2倍・過去の回収率76%): <b>1-2-6 / 1-6-2 / 1-2-4 / 1-5-6 / 1-6-5 / 1-2-3 / 1-7-2 / 1-2-5</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(91%)</span>　<span class="role-1">頭向き：<b>1</b>(91%)</span>　<span class="role-2">2・3着向き：<b>2</b>(55%)</span>　<span class="role-3">相手：6</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・C 並び1点・過去136〜140%</span><br><b>2-4-3</b></div></div>
@@ -4746,7 +4753,7 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">織茂 雄一郎<br><small class="sub">A3 ・ 両 ・ 先頭 ・ 77.4点</small></td>
           <td class="r od">4番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>4.2</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>4.2</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4754,14 +4761,14 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">花田 雄飛<br><small class="sub">A3 ・ 逃 ・ 2番手 ・ 72.9点</small></td>
           <td class="r od">3番人気<br><small class="plc">9%</small></td>
-          <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内46%</small><br><small class="mm">込7%</small></td>
+          <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内47%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">吉川<br><small class="sub">A3 ・ 両 ・ 2番手 ・ 72.1点</small></td>
-          <td class="r od">5番人気<br><small class="plc">3%</small></td>
+          <td class="r od">5番人気<br><small class="plc">4%</small></td>
           <td class="r pct"><b>2.3</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
@@ -4792,7 +4799,7 @@
         <div class="race-title">
           <h2>Ａ級決勝</h2>
           <p class="race-sub">名古屋 <span class="post-time">締切 23:15</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">37%</b><span class="sep">・</span>目安 <b>6,160円</b><small>(3,250〜13,140)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 6 → 1・2・7(3点) <span class="hp">77%</span> ／ 2車複 6 → 1・2・7(3点) <span class="hp">56%</span> ／ 3連複 6軸 → 1・2・7・4(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(6・1が頭・10点・的中約47%・合成2.1倍・過去の回収率76%): <b>6-1-3 / 1-6-3 / 6-7-1 / 6-1-7 / 6-1-2 / 6-7-5 / 1-6-7 / 1-3-6 / 1-6-2 / 1-3-2</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>6</b>(78%) <b>1</b>(77%)</span>　<span class="role-1">頭向き：<b>6</b>(78%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">35%</b><span class="sep">・</span>目安 <b>5,630円</b><small>(2,850〜11,870)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 6 → 1・7・2(3点) <span class="hp">77%</span> ／ 2車複 6 → 1・7・2(3点) <span class="hp">56%</span> ／ 3連複 6軸 → 1・7・2・4(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(6・1が頭・10点・的中約47%・合成2.1倍・過去の回収率76%): <b>6-1-3 / 1-6-3 / 6-7-1 / 6-1-7 / 6-1-2 / 6-7-5 / 1-6-7 / 1-3-6 / 1-6-2 / 1-3-2</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>6</b>(79%) <b>1</b>(76%)</span>　<span class="role-1">頭向き：<b>6</b>(79%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 6-7-5</div></details></div>
@@ -4804,23 +4811,23 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">伊藤 京介<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 90.8点</small></td>
-          <td class="r od">1番人気<br><small class="plc">41%</small></td>
-          <td class="r pct"><b>71.2</b><small>%</small><br><small class="sub">3着内78%</small><br><small class="mm">込43%</small></td>
+          <td class="r od">1番人気<br><small class="plc">42%</small></td>
+          <td class="r pct"><b>71.2</b><small>%</small><br><small class="sub">3着内79%</small><br><small class="mm">込45%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">内山 雅貴<br><small class="sub">A1 ・ 逃 ・ 先頭 ・ 96.1点</small></td>
-          <td class="r od">2番人気<br><small class="plc">34%</small></td>
-          <td class="r pct"><b>7.6</b><small>%</small><br><small class="sub">3着内77%</small><br><small class="mm mm-hi">込39%</small></td>
+          <td class="r od">2番人気<br><small class="plc">33%</small></td>
+          <td class="r pct"><b>7.6</b><small>%</small><br><small class="sub">3着内76%</small><br><small class="mm mm-hi">込38%</small></td>
           <td class="c"><span class="vt vt-ok">妙味あり</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">片桐 善也<br><small class="sub">A1 ・ 逃 ・ 単騎 ・ 92.4点</small></td>
-          <td class="r od">4番人気<br><small class="plc">7%</small></td>
+          <td class="r od">4番人気<br><small class="plc">6%</small></td>
           <td class="r pct"><b>7.2</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
@@ -4845,7 +4852,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">川口 直人<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 92.3点</small></td>
           <td class="r od">6番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>2.6</b><small>%</small><br><small class="sub">3着内37%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>2.6</b><small>%</small><br><small class="sub">3着内37%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4867,7 +4874,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 20:45</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">45%</b><span class="sep">・</span>目安 <b>6,890円</b><small>(3,440〜15,350)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 3・1・5(3点) <span class="hp">67%</span> ／ 2車複 2 → 3・1・5(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 3・1・5・4(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・3・1・5が頭・13点・的中約44%・合成2.0倍・過去の回収率76%): <b>3-1-5 / 5-3-1 / 2-3-1 / 2-3-5 / 3-1-2 / 3-5-1 / 2-1-3 / 1-5-3 / 2-4-5 / 2-4-3 / 2-5-3 / 2-3-4 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>3</b>(66%) <b>1</b>(66%)</span>　<span class="role-1">頭向き：<b>2</b>(54%)</span>　<span class="role-2">2・3着向き：<b>5</b>(54%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">41%</b><span class="sep">・</span>目安 <b>6,120円</b><small>(3,280〜13,460)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 3・1・5(3点) <span class="hp">67%</span> ／ 2車複 2 → 3・1・5(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 3・1・5・4(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・3・1・5が頭・12点・的中約43%・合成2.1倍・過去の回収率76%): <b>3-1-5 / 2-3-1 / 5-3-1 / 2-4-5 / 3-5-1 / 3-1-2 / 2-3-5 / 2-4-3 / 2-1-3 / 1-5-3 / 2-3-4 / 1-3-5</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(66%) <b>3</b>(65%)</span>　<span class="role-1">頭向き：<b>2</b>(55%)</span>　<span class="role-2">2・3着向き：<b>5</b>(53%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">K1 フォーメーション・過去103〜127%</span><br><b>5-3-1 3-5-1 3-5-2 5-3-6</b></div></div>
@@ -4879,8 +4886,8 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">鶴 健志<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 73.5点</small></td>
-          <td class="r od">1番人気<br><small class="plc">31%</small></td>
-          <td class="r pct"><b>74.2</b><small>%</small><br><small class="sub">3着内54%</small><br><small class="mm">込30%</small></td>
+          <td class="r od">1番人気<br><small class="plc">33%</small></td>
+          <td class="r pct"><b>74.2</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm">込32%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4888,15 +4895,15 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">中野<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 73.0点</small></td>
           <td class="r od">2番人気<br><small class="plc">22%</small></td>
-          <td class="r pct"><b>8.5</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm">込24%</small></td>
+          <td class="r pct"><b>8.5</b><small>%</small><br><small class="sub">3着内65%</small><br><small class="mm">込23%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">菅原 洋輔<br><small class="sub">A3 ・ 両 ・ 先頭 ・ 68.9点</small></td>
-          <td class="r od">4番人気<br><small class="plc">13%</small></td>
-          <td class="r pct"><b>6.6</b><small>%</small><br><small class="sub">3着内54%</small><br><small class="mm">込14%</small></td>
+          <td class="r od">4番人気<br><small class="plc">12%</small></td>
+          <td class="r pct"><b>6.6</b><small>%</small><br><small class="sub">3着内53%</small><br><small class="mm">込14%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4904,14 +4911,14 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">齋藤 仁<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 70.0点</small></td>
           <td class="r od">5番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>5.8</b><small>%</small><br><small class="sub">3着内29%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>5.8</b><small>%</small><br><small class="sub">3着内30%</small><br><small class="mm">込6%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">坂本 英一<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 75.0点</small></td>
-          <td class="r od">3番人気<br><small class="plc">17%</small></td>
+          <td class="r od">3番人気<br><small class="plc">16%</small></td>
           <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm">込18%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
@@ -4919,8 +4926,8 @@
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">山内 大作<br><small class="sub">A3 ・ 追 ・ 単騎 ・ 65.0点</small></td>
-          <td class="r od">6番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内13%</small><br><small class="mm">込4%</small></td>
+          <td class="r od">6番人気<br><small class="plc">4%</small></td>
+          <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内12%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -4928,7 +4935,7 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">長崎 達也<br><small class="sub">A3 ・ 両 ・ 4番手 ・ 67.4点</small></td>
           <td class="r od">7番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>0.8</b><small>%</small><br><small class="sub">3着内18%</small><br><small class="mm">込4%</small></td>
+          <td class="r pct"><b>0.8</b><small>%</small><br><small class="sub">3着内18%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
       </table>
@@ -4942,7 +4949,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 21:05</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">37%</b><span class="sep">・</span>目安 <b>9,450円</b><small>(4,770〜12,720)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 1・3・4(3点) <span class="hp">67%</span> ／ 2車複 2 → 1・3・4(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 1・3・4・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・1・3が頭・15点・的中約42%・合成2.1倍・過去の回収率76%): <b>2-1-4 / 2-1-6 / 1-3-2 / 1-4-2 / 3-1-2 / 2-4-1 / 2-1-3 / 1-2-4 / 1-5-3 / 2-4-6 / 1-2-5 / 2-4-3 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(70%) <b>2</b>(65%)</span>　<span class="role-1">頭向き：<b>2</b>(65%)</span>　<span class="role-2">相手：4 3</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">42%</b><span class="sep">・</span>目安 <b>9,130円</b><small>(4,560〜12,460)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 2 → 1・3・4(3点) <span class="hp">67%</span> ／ 2車複 2 → 1・3・4(3点) <span class="hp">43%</span> ／ 3連複 2軸 → 1・3・4・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(2・1・3が頭・14点・的中約42%・合成2.0倍・過去の回収率76%): <b>2-1-4 / 2-1-6 / 1-3-2 / 1-4-2 / 2-4-1 / 3-1-2 / 1-2-4 / 2-1-3 / 2-4-6 / 1-5-3 / 1-2-5 / 2-4-3 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(69%) <b>2</b>(66%)</span>　<span class="role-1">頭向き：<b>2</b>(66%)</span>　<span class="role-2">相手：3 4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 4-2-6</div></details></div>
@@ -4954,24 +4961,24 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">秋永 昂人<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 72.0点</small></td>
-          <td class="r od">1番人気<br><small class="plc">29%</small></td>
-          <td class="r pct"><b>34.1</b><small>%</small><br><small class="sub">3着内65%</small><br><small class="mm">込31%</small></td>
+          <td class="r od">1番人気<br><small class="plc">30%</small></td>
+          <td class="r pct"><b>34.1</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm">込31%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">楠本 政明<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 69.7点</small></td>
-          <td class="r od">4番人気<br><small class="plc">11%</small></td>
-          <td class="r pct"><b>24.1</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm">込10%</small></td>
+          <td class="r od">4番人気<br><small class="plc">10%</small></td>
+          <td class="r pct"><b>24.1</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm">込9%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">森 佑樹<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 69.2点</small></td>
-          <td class="r od">5番人気<br><small class="plc">9%</small></td>
-          <td class="r pct"><b>19.2</b><small>%</small><br><small class="sub">3着内30%</small><br><small class="mm">込9%</small></td>
+          <td class="r od">5番人気<br><small class="plc">8%</small></td>
+          <td class="r pct"><b>19.2</b><small>%</small><br><small class="sub">3着内30%</small><br><small class="mm">込8%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -4979,7 +4986,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">山本 恵太郎<br><small class="sub">A3 ・ 追 ・ 単騎 ・ 77.5点</small></td>
           <td class="r od">2番人気<br><small class="plc">27%</small></td>
-          <td class="r pct"><b>12.0</b><small>%</small><br><small class="sub">3着内70%</small><br><small class="mm">込28%</small></td>
+          <td class="r pct"><b>12.0</b><small>%</small><br><small class="sub">3着内69%</small><br><small class="mm">込28%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -5002,8 +5009,8 @@
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">井山 和裕<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 67.0点</small></td>
-          <td class="r od">7番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>2.1</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込4%</small></td>
+          <td class="r od">7番人気<br><small class="plc">6%</small></td>
+          <td class="r pct"><b>2.1</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
       </table>
@@ -5017,7 +5024,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 21:25</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="">29%</b><span class="sep">・</span>目安 <b>3,840円</b><small>(2,010〜9,770)</small></p><p class="hitline">的中率重視: ワイド 1 → 2・4・3(3点) <span class="hp">92%</span> ／ 2車複 1 → 2・4・3(3点) <span class="hp">78%</span> ／ 3連複 1軸 → 2・4・3・6(6点) <span class="hp">70%</span></p><p class="trioline">3連単 的中重視(1が頭・3点・的中約47%・合成2.1倍・過去の回収率76%): <b>1-4-3 / 1-2-6 / 1-6-2</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(91%) <b>4</b>(64%)</span>　<span class="role-1">頭向き：<b>1</b>(91%)</span>　<span class="role-2">2・3着向き：<b>3</b>(55%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="">28%</b><span class="sep">・</span>目安 <b>2,150円</b><small>(1,550〜7,310)</small></p><p class="hitline">的中率重視: ワイド 1 → 4・2・3(3点) <span class="hp">92%</span> ／ 2車複 1 → 4・2・3(3点) <span class="hp">78%</span> ／ 3連複 1軸 → 4・2・3・6(6点) <span class="hp">70%</span></p><p class="trioline">3連単 的中重視(1が頭・1点・的中約47%・合成2.2倍・過去の回収率76%): <b>1-4-3</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(92%) <b>4</b>(70%) <b>3</b>(61%)</span>　<span class="role-1">頭向き：<b>1</b>(92%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 1-4-3</div></details></div>
@@ -5029,24 +5036,24 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">勝沼 遼<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 78.0点</small></td>
-          <td class="r od">1番人気<br><small class="plc">72%</small></td>
-          <td class="r pct"><b>86.1</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込79%</small></td>
+          <td class="r od">1番人気<br><small class="plc">74%</small></td>
+          <td class="r pct"><b>86.1</b><small>%</small><br><small class="sub">3着内92%</small><br><small class="mm">込82%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">吉田 昌弘<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 72.4点</small></td>
-          <td class="r od">3番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>6.3</b><small>%</small><br><small class="sub">3着内64%</small><br><small class="mm">込5%</small></td>
+          <td class="r od">2番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>6.3</b><small>%</small><br><small class="sub">3着内70%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">作田 悦章<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 76.0点</small></td>
-          <td class="r od">2番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内36%</small><br><small class="mm">込5%</small></td>
+          <td class="r od">3番人気<br><small class="plc">6%</small></td>
+          <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内30%</small><br><small class="mm">込5%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -5054,7 +5061,7 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">右近 陸人<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 67.6点</small></td>
           <td class="r od">5番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>2.2</b><small>%</small><br><small class="sub">3着内26%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>2.2</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -5062,7 +5069,7 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">山崎 功也<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 74.3点</small></td>
           <td class="r od">4番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>1.5</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>1.5</b><small>%</small><br><small class="sub">3着内61%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -5070,15 +5077,15 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">倉岡 慎太郎<br><small class="sub">A3 ・ 追 ・ 3番手 ・ 69.2点</small></td>
           <td class="r od">6番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>0.6</b><small>%</small><br><small class="sub">3着内17%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>0.6</b><small>%</small><br><small class="sub">3着内15%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">和泉田 喜一<br><small class="sub">A3 ・ 追 ・ 4番手 ・ 67.5点</small></td>
-          <td class="r od">7番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>0.1</b><small>%</small><br><small class="sub">3着内11%</small><br><small class="mm">込2%</small></td>
+          <td class="r od">7番人気<br><small class="plc">2%</small></td>
+          <td class="r pct"><b>0.1</b><small>%</small><br><small class="sub">3着内9%</small><br><small class="mm">込2%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr></tbody>
       </table>
@@ -5092,7 +5099,7 @@
         <div class="race-title">
           <h2>Ａ級特一般</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 21:45</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">43%</b><span class="sep">・</span>目安 <b>7,990円</b><small>(5,710〜13,320)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 6・5・4(3点) <span class="hp">67%</span> ／ 2車複 1 → 6・5・4(3点) <span class="hp">43%</span> ／ 3連複 1軸 → 6・5・4・2(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(1・6・5が頭・17点・的中約46%・合成2.0倍・過去の回収率76%): <b>5-6-3 / 6-1-2 / 6-5-3 / 1-6-5 / 6-2-1 / 1-6-2 / 1-5-3 / 6-5-1 / 1-2-4 / 1-2-5 / 6-3-1 / 1-2-7 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(63%)</span>　<span class="role-1">頭向き：<b>1</b>(63%)</span>　<span class="role-2">相手：6 5 2 3</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">43%</b><span class="sep">・</span>目安 <b>8,410円</b><small>(5,710〜13,320)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 6・5・4(3点) <span class="hp">67%</span> ／ 2車複 1 → 6・5・4(3点) <span class="hp">43%</span> ／ 3連複 1軸 → 6・5・4・2(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(1・6・5が頭・18点・的中約45%・合成2.0倍・過去の回収率76%): <b>5-6-3 / 6-1-2 / 6-5-3 / 1-6-5 / 6-2-1 / 1-6-2 / 1-2-5 / 1-5-3 / 1-2-4 / 6-3-1 / 1-2-7 / 5-3-6 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(63%)</span>　<span class="role-1">頭向き：<b>1</b>(63%)</span>　<span class="role-2">相手：6 5 2 3</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">D 並び1点・過去110〜111%</span><br><b>6-5-3</b></div></div>
@@ -5105,7 +5112,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">甲斐 康昭<br><small class="sub">A2 ・ 追 ・ 2番手 ・ 84.7点</small></td>
           <td class="r od">1番人気<br><small class="plc">32%</small></td>
-          <td class="r pct"><b>35.8</b><small>%</small><br><small class="sub">3着内63%</small><br><small class="mm">込30%</small></td>
+          <td class="r pct"><b>35.8</b><small>%</small><br><small class="sub">3着内63%</small><br><small class="mm">込31%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -5113,47 +5120,47 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">池邉<br><small class="sub">A1 ・ 逃 ・ 先頭 ・ 81.3点</small></td>
           <td class="r od">2番人気<br><small class="plc">23%</small></td>
-          <td class="r pct"><b>20.9</b><small>%</small><br><small class="sub">3着内57%</small><br><small class="mm mm-hi">込28%</small></td>
+          <td class="r pct"><b>20.9</b><small>%</small><br><small class="sub">3着内58%</small><br><small class="mm mm-hi">込27%</small></td>
           <td class="c"><span class="vt vt-ok">妙味あり</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">竹内 優也<br><small class="sub">A2 ・ 両 ・ 先頭 ・ 82.5点</small></td>
-          <td class="r od">5番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>18.8</b><small>%</small><br><small class="sub">3着内43%</small><br><small class="mm">込7%</small></td>
+          <td class="r od">4番人気<br><small class="plc">9%</small></td>
+          <td class="r pct"><b>18.8</b><small>%</small><br><small class="sub">3着内44%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">河上 陽一<br><small class="sub">A2 ・ 両 ・ 2番手 ・ 81.7点</small></td>
-          <td class="r od">3番人気<br><small class="plc">16%</small></td>
-          <td class="r pct"><b>13.7</b><small>%</small><br><small class="sub">3着内51%</small><br><small class="mm">込17%</small></td>
+          <td class="r od">3番人気<br><small class="plc">15%</small></td>
+          <td class="r pct"><b>13.7</b><small>%</small><br><small class="sub">3着内49%</small><br><small class="mm">込16%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">隅 直幸<br><small class="sub">A1 ・ 追 ・ 3番手 ・ 82.5点</small></td>
-          <td class="r od">6番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>4.9</b><small>%</small><br><small class="sub">3着内41%</small><br><small class="mm">込7%</small></td>
+          <td class="r od">6番人気<br><small class="plc">8%</small></td>
+          <td class="r pct"><b>4.9</b><small>%</small><br><small class="sub">3着内42%</small><br><small class="mm">込8%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">武田 良太<br><small class="sub">A2 ・ 追 ・ 単騎 ・ 82.3点</small></td>
-          <td class="r od">4番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>4.0</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込7%</small></td>
+          <td class="r od">5番人気<br><small class="plc">8%</small></td>
+          <td class="r pct"><b>4.0</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込7%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">小室 貴広<br><small class="sub">A2 ・ 追 ・ 3番手 ・ 79.8点</small></td>
-          <td class="r od">7番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>1.9</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込4%</small></td>
+          <td class="r od">7番人気<br><small class="plc">4%</small></td>
+          <td class="r pct"><b>1.9</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr></tbody>
       </table>
@@ -5167,7 +5174,7 @@
         <div class="race-title">
           <h2>Ａ級特一般</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 22:05</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">38%</b><span class="sep">・</span>目安 <b>5,890円</b><small>(1,960〜11,660)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 3・5・4(3点) <span class="hp">83%</span> ／ 2車複 1 → 3・5・4(3点) <span class="hp">65%</span> ／ 3連複 1軸 → 3・5・4・2(6点) <span class="hp">60%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(94%) <b>5</b>(71%)</span>　<span class="role-1">頭向き：<b>1</b>(94%)</span>　<span class="role-2">相手：7</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">38%</b><span class="sep">・</span>目安 <b>5,280円</b><small>(1,960〜10,550)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 3・5・4(3点) <span class="hp">83%</span> ／ 2車複 1 → 3・5・4(3点) <span class="hp">65%</span> ／ 3連複 1軸 → 3・5・4・2(6点) <span class="hp">60%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(94%) <b>5</b>(71%)</span>　<span class="role-1">頭向き：<b>1</b>(94%)</span>　<span class="role-2">相手：7</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 7-1-5</div></details></div>
@@ -5242,7 +5249,7 @@
         <div class="race-title">
           <h2>Ａ級特選</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 22:25</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">38%</b><span class="sep">・</span>目安 <b>6,930円</b><small>(4,380〜10,670)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">77%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">56%</span> ／ 3連複 1軸 → 2・3・4・5(6点) <span class="hp">54%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(77%) <b>3</b>(66%)</span>　<span class="role-1">頭向き：<b>1</b>(77%)</span>　<span class="role-2">相手：2</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">37%</b><span class="sep">・</span>目安 <b>6,750円</b><small>(4,570〜10,670)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">77%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">56%</span> ／ 3連複 1軸 → 2・3・4・5(6点) <span class="hp">54%</span></p><p class="trioline">3連単 的中重視(1・2・3が頭・14点・的中約45%・合成2.1倍・過去の回収率76%): <b>1-3-5 / 1-3-2 / 1-5-3 / 3-1-5 / 1-2-3 / 1-2-5 / 1-2-4 / 1-3-4 / 1-2-6 / 3-1-2 / 2-1-3 / 1-6-5 …</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(79%)</span>　<span class="role-1">頭向き：<b>1</b>(79%)</span>　<span class="role-2">相手：3 5 2</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 1-3-5</div></details></div>
@@ -5251,64 +5258,64 @@
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI<br><small>込</small></th><th>妙味</th></tr></thead>
         <tbody>
         <tr class="top-pick">
-          <td class="c"><span class="mark">◎</span></td>
+          <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">中島 淳<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 89.6点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>48.6</b><small>%</small><br><small class="sub">3着内77%</small></td>
-          <td class="c"></td>
+          <td class="r od">1番人気<br><small class="plc">43%</small></td>
+          <td class="r pct"><b>48.6</b><small>%</small><br><small class="sub">3着内79%</small><br><small class="mm">込49%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">小沼 良<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 89.1点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>19.3</b><small>%</small><br><small class="sub">3着内66%</small></td>
-          <td class="c"></td>
+          <td class="r od">3番人気<br><small class="plc">13%</small></td>
+          <td class="r pct"><b>19.3</b><small>%</small><br><small class="sub">3着内51%</small><br><small class="mm">込12%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">中田 拓也<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 89.5点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>15.1</b><small>%</small><br><small class="sub">3着内51%</small></td>
-          <td class="c"></td>
+          <td class="r od">2番人気<br><small class="plc">14%</small></td>
+          <td class="r pct"><b>15.1</b><small>%</small><br><small class="sub">3着内47%</small><br><small class="mm">込13%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">石坂 永伍<br><small class="sub">A1 ・ 両 ・ 2番手 ・ 86.1点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>6.4</b><small>%</small><br><small class="sub">3着内33%</small></td>
-          <td class="c"></td>
+          <td class="r od">6番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>6.4</b><small>%</small><br><small class="sub">3着内25%</small><br><small class="mm">込5%</small></td>
+          <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">阿部 兼士<br><small class="sub">A1 ・ 追 ・ 先頭 ・ 88.0点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>6.2</b><small>%</small><br><small class="sub">3着内24%</small></td>
-          <td class="c"></td>
+          <td class="r od">4番人気<br><small class="plc">10%</small></td>
+          <td class="r pct"><b>6.2</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込9%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">田村 真広<br><small class="sub">A1 ・ 追 ・ 3番手 ・ 86.6点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>3.0</b><small>%</small><br><small class="sub">3着内35%</small></td>
-          <td class="c"></td>
+          <td class="r od">5番人気<br><small class="plc">8%</small></td>
+          <td class="r pct"><b>3.0</b><small>%</small><br><small class="sub">3着内49%</small><br><small class="mm">込7%</small></td>
+          <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">梶山 裕次郎<br><small class="sub">A2 ・ 追 ・ 2番手 ・ 82.3点</small></td>
-          <td class="r od"><span class="na">オッズ待ち</span></td>
-          <td class="r pct"><b>1.5</b><small>%</small><br><small class="sub">3着内14%</small></td>
-          <td class="c"></td>
+          <td class="r od">7番人気<br><small class="plc">6%</small></td>
+          <td class="r pct"><b>1.5</b><small>%</small><br><small class="sub">3着内18%</small><br><small class="mm">込4%</small></td>
+          <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr></tbody>
       </table>
       </div>
-      <div class="card-extra"><div class="trioline"><div>◎ <b>1番 中島 淳</b> <span class="st">(◎の過去 勝率43%・3着内77%。一言はオッズが出てから)</span></div></div></div>
+      <div class="card-extra"><div class="trioline"><div>◎ <b>1番 中島 淳</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div></div></div>
       <a class="detail-link" href="maebashi/index.html?r=6">詳しく(3連単・展開など) →</a>
     </article></div><div class="race-panel " id="race-6-6">
     <article class="race-card">
@@ -5317,10 +5324,10 @@
         <div class="race-title">
           <h2>Ａ級特選</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 22:45</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">39%</b><span class="sep">・</span>目安 <b>6,220円</b><small>(5,150〜11,120)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・4・3(3点) <span class="hp">77%</span> ／ 2車複 1 → 2・4・3(3点) <span class="hp">56%</span> ／ 3連複 1軸 → 2・4・3・5(6点) <span class="hp">54%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(80%) <b>3</b>(66%)</span>　<span class="role-1">頭向き：<b>1</b>(80%)</span>　<span class="role-2">2・3着向き：<b>2</b>(51%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">39%</b><span class="sep">・</span>目安 <b>6,180円</b><small>(5,150〜10,890)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 2・3・4(3点) <span class="hp">83%</span> ／ 2車複 1 → 2・3・4(3点) <span class="hp">65%</span> ／ 3連複 1軸 → 2・3・4・5(6点) <span class="hp">60%</span></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(80%) <b>3</b>(66%)</span>　<span class="role-1">頭向き：<b>1</b>(80%)</span>　<span class="role-2">2・3着向き：<b>2</b>(51%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">F・C 並び1点・過去136〜140%</span><br><b>4-7-5</b></div></div>
+      <div class="aibet"><div class="aibet-body"><span class="aibet-tag">推奨</span> <span class="aibet-reason">M1 万車・3番目ライン・過去116〜136%</span><br><b>4-7-5 7-4-5</b></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:58px"><col style="width:50px"><col style="width:54px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI<br><small>込</small></th><th>妙味</th></tr></thead>
@@ -5392,7 +5399,7 @@
         <div class="race-title">
           <h2>S B</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 23:05</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="">23%</b><span class="sep">・</span>目安 <b>2,400円</b><small>(2,070〜7,260)</small></p><p class="hitline">的中率重視: ワイド 1 → 3・4・5(3点) <span class="hp">92%</span> ／ 2車複 1 → 3・4・5(3点) <span class="hp">78%</span> ／ 3連複 1軸 → 3・4・5・2(6点) <span class="hp">70%</span></p><p class="trioline">3連単 的中重視(1・3が頭・8点・的中約44%・合成2.1倍・過去の回収率76%): <b>1-5-3 / 1-3-4 / 1-5-4 / 1-3-5 / 1-5-7 / 3-1-5 / 1-3-2 / 1-4-5</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(91%)</span>　<span class="role-1">頭向き：<b>1</b>(91%)</span>　<span class="role-2">2・3着向き：<b>3</b>(57%) <b>5</b>(51%)</span>　<span class="role-3">相手：4</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="lo">21%</b><span class="sep">・</span>目安 <b>2,350円</b><small>(2,120〜6,960)</small><span class="sep">・</span><b>本命</b></p><p class="hitline">的中率重視: ワイド 1 → 3・4・5(3点) <span class="hp">92%</span> ／ 2車複 1 → 3・4・5(3点) <span class="hp">78%</span> ／ 3連複 1軸 → 3・4・5・2(6点) <span class="hp">70%</span></p><p class="trioline">3連単 的中重視(1・3が頭・8点・的中約43%・合成2.1倍・過去の回収率76%): <b>1-5-3 / 1-3-4 / 1-5-4 / 1-3-5 / 1-5-7 / 3-1-5 / 1-3-2 / 1-2-4</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(91%)</span>　<span class="role-1">頭向き：<b>1</b>(91%)</span>　<span class="role-2">2・3着向き：<b>3</b>(57%)</span>　<span class="role-3">相手：5 4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン並び通り(過去84%): 1-5-7</div></details></div>
@@ -5405,7 +5412,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">滿田 光紀<br><small class="sub">A3 ・ 逃 ・ 先頭 ・ 79.6点</small></td>
           <td class="r od">1番人気<br><small class="plc">59%</small></td>
-          <td class="r pct"><b>74.3</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込66%</small></td>
+          <td class="r pct"><b>74.3</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込65%</small></td>
           <td class="c"><span class="vt vt-mid">妥当</span></td>
         </tr>
         <tr class="">
@@ -5428,16 +5435,16 @@
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">田中 弘章<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 74.6点</small></td>
-          <td class="r od">4番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>4.5</b><small>%</small><br><small class="sub">3着内51%</small><br><small class="mm">込5%</small></td>
+          <td class="r od">4番人気<br><small class="plc">6%</small></td>
+          <td class="r pct"><b>4.5</b><small>%</small><br><small class="sub">3着内50%</small><br><small class="mm">込4%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">佐藤 和典<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 77.0点</small></td>
-          <td class="r od">5番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>3.5</b><small>%</small><br><small class="sub">3着内31%</small><br><small class="mm">込3%</small></td>
+          <td class="r od">5番人気<br><small class="plc">5%</small></td>
+          <td class="r pct"><b>3.5</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込3%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -5445,7 +5452,7 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">黒崎 直行<br><small class="sub">A3 ・ 追 ・ 2番手 ・ 71.2点</small></td>
           <td class="r od">7番人気<br><small class="plc">1%</small></td>
-          <td class="r pct"><b>0.5</b><small>%</small><br><small class="sub">3着内10%</small><br><small class="mm">込1%</small></td>
+          <td class="r pct"><b>0.5</b><small>%</small><br><small class="sub">3着内9%</small><br><small class="mm">込1%</small></td>
           <td class="c"><span class="vt vt-bad">過剰人気</span></td>
         </tr>
         <tr class="">
@@ -5467,7 +5474,7 @@
         <div class="race-title">
           <h2>Ａ級決勝</h2>
           <p class="race-sub">前橋 <span class="post-time">締切 23:25</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">33%</b><span class="sep">・</span>目安 <b>5,280円</b><small>(3,700〜9,880)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 3・2・4(3点) <span class="hp">67%</span> ／ 2車複 1 → 3・2・4(3点) <span class="hp">43%</span> ／ 3連複 1軸 → 3・2・4・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(1・3・2が頭・11点・的中約45%・合成2.1倍・過去の回収率76%): <b>1-3-2 / 3-1-2 / 1-2-3 / 1-3-4 / 3-1-4 / 1-3-7 / 3-2-1 / 1-2-5 / 3-1-5 / 1-3-5 / 2-1-3</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(78%) <b>3</b>(67%) <b>2</b>(62%)</span>　<span class="role-1">頭向き：<b>1</b>(78%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">33%</b><span class="sep">・</span>目安 <b>5,400円</b><small>(3,630〜9,680)</small><span class="sep">・</span><b>穴</b></p><p class="hitline">的中率重視: ワイド 1 → 3・2・4(3点) <span class="hp">67%</span> ／ 2車複 1 → 3・2・4(3点) <span class="hp">43%</span> ／ 3連複 1軸 → 3・2・4・5(6点) <span class="hp">46%</span></p><p class="trioline">3連単 的中重視(1・3・2が頭・11点・的中約45%・合成2.1倍・過去の回収率76%): <b>1-3-2 / 3-1-2 / 1-2-3 / 1-3-4 / 3-1-4 / 1-3-7 / 3-2-1 / 1-2-5 / 3-1-5 / 1-3-5 / 2-1-3</b></p><div class="roles" title="軸向き=3着内率60%以上(過去 実際に3着内63〜89%)　頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%)　2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%)　相手=3着内率40%以上"><span class="role-0">軸向き：<b>1</b>(78%) <b>3</b>(67%) <b>2</b>(62%)</span>　<span class="role-1">頭向き：<b>1</b>(78%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="aibet"><details class="why"><summary>参考の買い目(過去72〜85%)</summary><div class="aibet-combos">参考 1番目のライン 先頭→番手→全(過去80%): 1-3-2 1-3-4 1-3-7 1-3-5</div></details></div>
