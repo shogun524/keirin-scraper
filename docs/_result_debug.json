@@ -1,27 +1,18 @@
 {
- "updated": "2026-11-22 15:16",
+ "updated": "2026-11-22 15:46",
  "failures": [
   {
-   "race": "2026-11-22 odawara 5R",
-   "diag": {
-    "venue": "odawara",
-    "race_id": "3620261121020005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-22 kokura 1R",
+   "race": "2026-11-22 kokura 2R",
    "diag": {
     "venue": "kokura",
-    "race_id": "8120261118050001",
+    "race_id": "8120261118050002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3443,
- "with_result": 2759,
+ "with_result": 2761,
  "without_url": 0,
  "pending_eligible": 653
 }
