@@ -324,12 +324,6 @@
     "recent": [
       {
         "date": "2026-11-19",
-        "venue": "shizuoka",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-19",
         "venue": "kokura",
         "finish": 6,
         "kimarite": null
@@ -380,6 +374,12 @@
         "date": "2026-11-21",
         "venue": "nagoya",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -6928,12 +6928,6 @@
     "recent": [
       {
         "date": "2026-11-16",
-        "venue": "beppu",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-16",
         "venue": "kawasaki",
         "finish": 6,
         "kimarite": null
@@ -6984,6 +6978,12 @@
         "date": "2026-11-20",
         "venue": "kokura",
         "finish": 9,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -11824,12 +11824,6 @@
     "recent": [
       {
         "date": "2026-11-18",
-        "venue": "seibuen",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-18",
         "venue": "ogaki",
         "finish": 4,
         "kimarite": null
@@ -11880,6 +11874,12 @@
         "date": "2026-11-22",
         "venue": "hiroshima",
         "finish": 5,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 6,
         "kimarite": null
       }
     ]
@@ -25612,6 +25612,12 @@
         "venue": "aomori",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -38914,6 +38920,12 @@
         "date": "2026-11-12",
         "venue": "yokkaichi",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -54745,6 +54757,12 @@
         "date": "2026-11-07",
         "venue": "kumamoto",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -94894,6 +94912,17 @@
         "date": "2026-11-22",
         "venue": "hiroshima",
         "finish": 2,
+        "kimarite": null
+      }
+    ]
+  },
+  "行成": {
+    "name": "行成",
+    "recent": [
+      {
+        "date": "2026-11-22",
+        "venue": "hiroshima",
+        "finish": 4,
         "kimarite": null
       }
     ]

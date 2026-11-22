@@ -1,8 +1,18 @@
 {
- "updated": "2026-11-22 09:46",
- "failures": [],
+ "updated": "2026-11-22 10:16",
+ "failures": [
+  {
+   "race": "2026-11-22 hiroshima 5R",
+   "diag": {
+    "venue": "hiroshima",
+    "race_id": "6220261122010005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  }
+ ],
  "tracked": 3443,
- "with_result": 2730,
+ "with_result": 2731,
  "without_url": 0,
- "pending_eligible": 648
+ "pending_eligible": 649
 }
