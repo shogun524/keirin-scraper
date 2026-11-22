@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22 20:41",
+ "updated": "2026-11-22 21:10",
  "failures": [
   {
    "race": "2026-11-22 kokura 8R",
@@ -21,16 +21,42 @@
   },
   {
    "race": "2026-11-22 nagoya 1R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    3,
+    1,
+    2,
+    6,
+    5,
+    4,
+    7
+   ]
+  },
+  {
+   "race": "2026-11-22 nagoya 2R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    5,
+    6,
+    3,
+    2,
+    4,
+    7
+   ]
+  },
+  {
+   "race": "2026-11-22 maebashi 2R",
    "diag": {
-    "venue": "nagoya",
-    "race_id": "4220261120030001",
+    "venue": "maebashi",
+    "race_id": "2220261120030002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3443,
- "with_result": 2770,
+ "with_result": 2771,
  "without_url": 0,
- "pending_eligible": 656
+ "pending_eligible": 658
 }
