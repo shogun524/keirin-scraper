@@ -13,6 +13,11 @@ permissions:
   contents: write
   actions: write
 
+# 2つ同時に動くと、後から push する方がぶつかって失敗する(11/22)。同時には1つだけ、待っている分は最新の1つにまとめる
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -70,4 +75,4 @@ jobs:
           git add docs/
           git diff --staged --quiet || git commit -m "chore: 本日の予想を自動更新 ($(date +'%Y-%m-%d'))"
           # 締切直前オッズの記録（closing.yml）が同時に push していても取り込んでから push する
-          for i in 1 2 3; do git pull --rebase --autostash && git push && break || sleep 5; done
+          for i in 1 2 3; do git pull --rebase --autostash -X theirs && git push && break || { git rebase --abort 2>/dev/null; sleep 5; }; done
