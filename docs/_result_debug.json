@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22 12:46",
+ "updated": "2026-11-22 13:16",
  "failures": [
   {
    "race": "2026-11-22 odawara 3R",
@@ -31,17 +31,26 @@
    }
   },
   {
-   "race": "2026-11-22 nara 5R",
+   "race": "2026-11-22 toyohashi 6R",
    "diag": {
-    "venue": "nara",
-    "race_id": "5320261122010005",
+    "venue": "toyohashi",
+    "race_id": "4520261121020006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-22 odawara 6R",
+   "diag": {
+    "venue": "odawara",
+    "race_id": "3620261121020006",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3443,
- "with_result": 2744,
+ "with_result": 2745,
  "without_url": 0,
- "pending_eligible": 653
+ "pending_eligible": 655
 }
