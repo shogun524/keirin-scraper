@@ -270,6 +270,27 @@ def race_card(num, title, sub_html="", chips_html="", aibet_html="", cols=None, 
     </article>"""
 
 
+
+FOLD_CSS = """
+  details.fold > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px; }
+  details.fold > summary::-webkit-details-marker { display: none; }
+  details.fold > summary::before { content: "▶"; font-size: .7em; color: #8A7F6E; transition: transform .15s; }
+  details.fold[open] > summary::before { transform: rotate(90deg); }
+  details.fold > summary h2 { display: inline; margin: 0; }
+  details.fold:not([open]) { padding-bottom: 10px; }
+"""
+
+
+def fold(html):
+    """<section class="..."><h2>見出し</h2>…</section> を、見出しを押すと開く <details>(最初は閉じた状態)にする。
+    「このサイトの見方」も閉じた状態にする(11/22)"""
+    import re
+    html = re.sub(r'<section class="([^"]*)">\s*<h2>(.*?)</h2>',
+                  lambda m: f'<details class="{m.group(1)} fold"><summary><h2>{m.group(2)}</h2></summary>', html, flags=re.S)
+    html = re.sub(r'</section>', '</details>', html)
+    html = html.replace('<details class="guide" open>', '<details class="guide">')
+    return html
+
 def page(title, meta_html, venues, top_html="", links=(), refetch_url=None, footer_html=""):
     """venues: [(会場名, [(レース番号, 星などの印, カードHTML), ...]), ...]"""
     tab_buttons, tab_panels = "", ""
@@ -292,7 +313,7 @@ def page(title, meta_html, venues, top_html="", links=(), refetch_url=None, foot
 <title>{esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<style>{CSS}</style>
+<style>{CSS}{FOLD_CSS}</style>
 </head>
 <body>
 <header class="top">
@@ -307,7 +328,7 @@ def page(title, meta_html, venues, top_html="", links=(), refetch_url=None, foot
   </div>
   <nav class="tabs">{tab_buttons}</nav>
 </header>
-<main>{top_html}{tab_panels}</main>
+<main>{fold(top_html)}{tab_panels}</main>
 <footer>{footer_html}</footer>
 <script>
 document.querySelectorAll('.tab-btn').forEach(btn => {{
