@@ -3081,37 +3081,53 @@ _PRINT_STYLE = """
   col.k-ai{ width:92px; } col.k-oth{ width:118px; } col.k-memo{ width:70px; }
   @media print{
     @page{ size:A4 landscape; margin:7mm; }
-    .pv-card{ overflow:visible; } table.pv-t{ min-width:0; }
-    .pv-mxgrid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
-    .pv-grid.mxon .pv-card, .pv-grid:not(.two) .pv-card{ break-inside:auto; page-break-inside:auto; padding:3px 6px; }
-    .pv-venue:has(.pv-grid:not(.two)) > h2{ display:none; }
-    .pv-grid:not(.two) .pv-card + .pv-card{ break-before:page; page-break-before:always; }
-    table.pv-t tr{ break-inside:avoid; }
-    .pv-head{ padding-bottom:1px; margin-bottom:2px; } .pv-head b{ font-size:16px; }
-    .pv-sub{ font-size:10.5px; margin:1px 0; line-height:1.35; } .pv-box{ padding:1px 6px; } .pv-box-t{ font-size:10.5px; margin-bottom:0; }
-    table.pv-t{ margin-top:3px; } table.pv-t th{ font-size:9.5px; padding:1px 2px; }
-    table.pv-t th, table.pv-t td{ padding:1px 3px; line-height:1.18; }
-    table.pv-t td.nm .rn{ font-size:13px; } .pv-pref{ font-size:8.8px; } table.pv-t td.sm{ font-size:9.5px; }
-    .pv-car.big{ font-size:14px; } table.pv-t td.mkc{ font-size:14px; } table.pv-t td.sc b, table.pv-t td.aiw > b{ font-size:13px; }
-    .ri{ font-size:9px; } .ri b{ font-size:11px; min-width:14px; } .rv{ font-size:8.5px; }
-    table.pv-t td.pv-rc{ font-size:9px; line-height:1.15; padding:0 3px; }
-    .pv-view{ font-size:10.5px; line-height:1.45; padding:2px 6px; margin-top:3px; }
     html, body{ background:#fff !important; }
-    header, footer, nav.tab-strip, .pv-controls, .gate-stripe{ display:none !important; }
+    header, footer, nav.tab-strip, .pv-controls, .gate-stripe, .jx-top{ display:none !important; }
     main, main.wide{ max-width:none !important; padding:0 !important; margin:0 !important; }
     .pv-venue{ break-before:page; page-break-before:always; margin:0; }
     .pv-venue:first-of-type{ break-before:auto; page-break-before:auto; }
-    .pv-venue > h2{ margin-top:0; }
     .pv-car, table.pv-m td, table.pv-m th, table.pv-t th, table.pv-t td{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    .pv-grid.mxon .pv-card + .pv-card{ break-before:page; page-break-before:always; }
-    .pv-grid.mxon .pv-mxwrap{ break-before:page; page-break-before:always; }
-    .pv-grid.mxon .pv-mxhead{ display:block !important; }
-    .pv-grid.mxon .pv-mxtitle{ display:none; }
-    .pv-grid.mxon{ gap:0; }
-    .pv-card{ margin:0; }
-    .pv-card{ border-color:#000; }
+    .pv-grid:not(.two) .pv-card + .pv-card{ break-before:page; page-break-before:always; }
+    .pv-grid:not(.two) .pv-card{ break-inside:auto; page-break-inside:auto; }
+    table.pv-t tr{ break-inside:avoid; }
+    .pv-mxwrap{ break-inside:avoid; page-break-inside:avoid; }
   }
 """
+
+# 印刷用の詰めた見た目。印刷時(@media print)と、印刷前に1レースが1枚に入るか測るとき(html.pvp)の両方で使う
+_PRINT_COMPACT = """
+.pv-card{ overflow:visible; border-color:#000; margin:0; } table.pv-t{ min-width:0; }
+.pv-grid:not(.two) .pv-card{ padding:3px 6px; }
+.pv-venue:has(.pv-grid:not(.two)) > h2{ display:none; }
+.pv-venue > h2{ margin-top:0; }
+.pv-head{ padding-bottom:1px; margin-bottom:2px; } .pv-head b{ font-size:16px; }
+.pv-sub{ font-size:10.5px; margin:1px 0; line-height:1.35; } .pv-box{ padding:1px 6px; } .pv-box-t{ font-size:10.5px; margin-bottom:0; }
+table.pv-t{ margin-top:3px; } table.pv-t th{ font-size:9.5px; padding:1px 2px; }
+table.pv-t th, table.pv-t td{ padding:1px 3px; line-height:1.18; }
+table.pv-t td.nm .rn{ font-size:13px; } .pv-pref{ font-size:8.8px; } table.pv-t td.sm{ font-size:9.5px; }
+.pv-car.big{ font-size:14px; } table.pv-t td.mkc{ font-size:14px; } table.pv-t td.sc b, table.pv-t td.aiw > b{ font-size:13px; }
+.ri{ font-size:9px; } .ri b{ font-size:11px; min-width:14px; } .rv{ font-size:8.5px; }
+table.pv-t td.pv-rc{ font-size:9px; line-height:1.15; padding:0 3px; }
+.pv-view{ font-size:10.5px; line-height:1.45; padding:2px 6px; margin-top:3px; }
+.pv-grid.mxon{ gap:0; }
+.pv-mxwrap{ margin-top:3px; }
+.pv-mxtitle{ font-size:10px; margin-bottom:1px; padding-bottom:0; border-bottom-width:1px; }
+.pv-grid .pv-mxgrid{ grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:3px 8px; }
+.pv-mx-h{ font-size:9.5px; margin-bottom:0; } .pv-mx-h .pv-car{ min-width:14px; font-size:9.5px; }
+table.pv-m{ font-size:8.6px; } table.pv-m th{ font-size:8.4px; } table.pv-m th, table.pv-m td{ padding:0; line-height:1.12; }
+.pv-mxnote{ font-size:8.5px; margin-top:1px; }
+"""
+
+
+def _scoped_css(css, scope):
+    out = []
+    for sel, body in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        sels = [x.strip() for x in sel.split(",") if x.strip()]
+        out.append(", ".join(f"{scope} {x}" for x in sels) + "{" + body + "}")
+    return "\n".join(out)
+
+
+_PRINT_STYLE += "\n@media print{\n" + _PRINT_COMPACT + "\n}\n" + _scoped_css(_PRINT_COMPACT, "html.pvp")
 
 _PRINT_SCRIPT = """
 (function(){
@@ -3157,7 +3173,31 @@ _PRINT_SCRIPT = """
   }); });
   boxes.forEach(function(b){ b.addEventListener('change', apply); });
   document.querySelectorAll('#pvCols, #pvMx').forEach(function(el){ el.addEventListener('change', apply); });
-  document.getElementById('pvPrint').addEventListener('click', function(){ apply(); window.print(); });
+  // 詳細(1レース1枚): 印刷の前に各レースの高さを測り、1枚に入らないレースは横に広げてから縮める(zoom)。
+  // 横に広げると前場所などの折り返しが減るので、縮める量は少なくて済む。出目確率表も同じページに入れる。
+  var PW = 1066, PH = 734;   // A4横・余白7mm の印刷範囲(CSSのpx)
+  function fitCards(on){
+    var html = document.documentElement, two = document.getElementById('pvCols').value === '2';
+    var cs = boxes.filter(function(b){ return b.checked; }).map(card).filter(Boolean);
+    document.querySelectorAll('.pv-card').forEach(function(c){ c.style.zoom = ''; c.style.width = ''; c.style.maxWidth = ''; delete c.dataset.z; });
+    html.classList.remove('pvp');
+    if (!on || two) return;
+    html.classList.add('pvp');
+    cs.forEach(function(c){
+      c.style.maxWidth = 'none'; c.style.boxSizing = 'border-box'; c.style.width = PW + 'px';
+      var z = 1, h = c.offsetHeight;
+      if (h > PH) {
+        var zs = [0.96, 0.92, 0.88, 0.84, 0.8, 0.76, 0.72, 0.68];
+        for (var i = 0; i < zs.length; i++) { z = zs[i]; c.style.width = Math.round(PW / z) + 'px'; h = c.offsetHeight; if (h * z <= PH) break; }
+      }
+      c.dataset.z = z;
+      if (z < 1) c.style.zoom = z; else c.style.width = '';
+    });
+  }
+  window.addEventListener('beforeprint', function(){ apply(); fitCards(true); });
+  window.addEventListener('afterprint', function(){ fitCards(false); });
+  window.pvFit = fitCards;
+  document.getElementById('pvPrint').addEventListener('click', function(){ apply(); fitCards(true); window.print(); });
   // 「選んだレースをPDFにする」: スマホ・アプリ内ブラウザでは window.print() が動かないので、
   // 選んだレースを1枚ずつ画像にしてスマホの中でPDFにする(html2canvas + jsPDF)。
   var made = document.getElementById('pvMade');
@@ -3179,8 +3219,8 @@ _PRINT_SCRIPT = """
     .then(function(){
       pdf = new window.jspdf.jsPDF({ orientation: two ? 'portrait' : 'landscape', unit: 'mm', format: 'a4', compress: true });
       // 1枚の画像をページに収める(はみ出すときは切らずに縮める)
-      function shot(el, prep){
-        return window.html2canvas(el, { scale: 1.6, backgroundColor: '#ffffff', windowWidth: two ? 1150 : 1120, logging: false, useCORS: true,
+      function shot(el, prep, ww){
+        return window.html2canvas(el, { scale: 1.6, backgroundColor: '#ffffff', windowWidth: ww || 1150, logging: false, useCORS: true,
           onclone: function(doc){ prep(doc); } })
         .then(function(cv){ var r = { img: cv.toDataURL('image/jpeg', 0.8), w: cv.width, h: cv.height }; cv.width = cv.height = 0; return r; });
       }
@@ -3190,11 +3230,14 @@ _PRINT_SCRIPT = """
         var sw = c.scrollWidth; if (sw > c.clientWidth + 2) { c.style.width = sw + 'px'; c.style.maxWidth = 'none'; } c.style.overflow = 'visible';
         return c;
       }
+      if (!two) fitCards(true);   // 印刷と同じく、1レースが1枚に入る幅と大きさを決める
       return cards.reduce(function(p, c, i){ return p.then(function(){
-        var hasMx = !two && c.querySelector('.pv-mxwrap') && c.querySelector('.pv-mxwrap').style.display !== 'none' &&
-                    parseInt(c.querySelector('.pv-mxwrap').dataset.shown || '0', 10) > 0;
-        // 本体(出目表は別ページにするので外して写す)
-        return shot(c, function(doc){ var cc = unclip(doc, c.id); if (cc){ var m = cc.querySelector('.pv-mxwrap'); if (m) m.style.display = 'none'; } })
+        var z = parseFloat(c.dataset.z || '1'), cw = Math.round(PW / z);
+        return shot(c, function(doc){
+          if (two) { unclip(doc, c.id); return; }
+          var cc = doc.getElementById(c.id); if (!cc) return;
+          cc.style.zoom = ''; cc.style.width = cw + 'px'; cc.style.maxWidth = 'none'; cc.style.overflow = 'visible';
+        }, two ? 1150 : cw + 40)
         .then(function(r){
           if (two) {  // 2列: 左右の列に上から詰める(入らなければ次のページ)
             var colW = (CW - 4) / 2, d = fit(r, colW, CH);
@@ -3206,13 +3249,6 @@ _PRINT_SCRIPT = """
           }
           if (!first) pdf.addPage(); first = false;
           var d = fit(r, CW, CH); pdf.addImage(r.img, 'JPEG', M + (CW - d[0]) / 2, M, d[0], d[1]);
-          if (!hasMx) return;
-          // 出目確率表(次のページ)
-          return shot(c, function(doc){ var cc = unclip(doc, c.id); if (!cc) return;
-              Array.prototype.forEach.call(cc.children, function(ch){ if (!ch.classList.contains('pv-mxwrap')) ch.style.display = 'none'; });
-              var h = cc.querySelector('.pv-mxhead'); if (h) h.style.display = 'block';
-              var t = cc.querySelector('.pv-mxtitle'); if (t) t.style.display = 'none'; })
-          .then(function(r2){ pdf.addPage(); var d2 = fit(r2, CW, CH); pdf.addImage(r2.img, 'JPEG', M + (CW - d2[0]) / 2, M, d2[0], d2[1]); });
         }).then(function(){ made.textContent = 'PDFを作っています…(' + (i+1) + '/' + cards.length + 'レース)'; });
       }); }, Promise.resolve());
     }).then(function(){
@@ -3221,7 +3257,7 @@ _PRINT_SCRIPT = """
       made.innerHTML = '<a class="pv-open" href="' + url + '" target="_blank" download="' + fn + '">できたPDFを開く(' + n + '枚)</a>' +
         '<small> ' + nowHM() + '時点の内容</small>';
     }).catch(function(e){ made.textContent = 'PDFを作れませんでした(' + e + ')。パソコンなら「ブラウザで印刷」を使ってください。'; })
-      .then(function(){ unpark(); btn.disabled = false; });
+      .then(function(){ fitCards(false); unpark(); btn.disabled = false; });
   });
   apply();
 })();
@@ -3615,7 +3651,7 @@ def render_print_page(all_race_data, date=None):
     {picker}
     <div class="pv-row">
       <label>レイアウト
-        <select id="pvCols"><option value="1">詳細（1ページ1レース・A4横）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
+        <select id="pvCols"><option value="1">詳細（1レース1枚・出目表も同じ紙・A4横）</option><option value="2">簡易（2列・出目表なし）</option></select></label>
       <label>出目確率表
         <select id="pvMx"><option value="10" selected>1着率10%以上の選手</option><option value="0">全選手（網羅）</option><option value="5">1着率5%以上の選手</option><option value="999">出さない</option></select></label>
       <span class="pv-count" id="pvCount"></span>
