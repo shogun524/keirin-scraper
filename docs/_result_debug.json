@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22 20:18",
+ "updated": "2026-11-22 20:41",
  "failures": [
   {
    "race": "2026-11-22 kokura 8R",
@@ -11,17 +11,26 @@
    }
   },
   {
-   "race": "2026-11-22 kokura 11R",
+   "race": "2026-11-22 kokura 12R",
    "diag": {
     "venue": "kokura",
-    "race_id": "8120261118050011",
+    "race_id": "8120261118050012",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-22 nagoya 1R",
+   "diag": {
+    "venue": "nagoya",
+    "race_id": "4220261120030001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3443,
- "with_result": 2769,
+ "with_result": 2770,
  "without_url": 0,
- "pending_eligible": 655
+ "pending_eligible": 656
 }

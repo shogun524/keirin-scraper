@@ -747015,7 +747015,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-11-22_kokura_9": {
@@ -747858,9 +747858,34 @@
     122.6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    4,
+    9,
+    3,
+    8,
+    1,
+    6,
+    7,
+    2,
+    5
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-22 20:41"
  },
  "2026-11-22_kokura_12": {
   "date": "2026-11-22",
@@ -748125,7 +748150,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-22_odawara_1": {
@@ -754920,7 +754945,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-22_nagoya_2": {
