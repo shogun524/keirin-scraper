@@ -745296,7 +745296,7 @@
    ]
   ],
   "result": null,
-  "attempts": 4,
+  "attempts": 5,
   "parser_v": 5
  },
  "2026-11-22_kokura_3": {
@@ -746141,9 +746141,34 @@
     106.8
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    9,
+    7,
+    8,
+    3,
+    5,
+    1,
+    4,
+    2,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-22 17:16"
  },
  "2026-11-22_kokura_6": {
   "date": "2026-11-22",
