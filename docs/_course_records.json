@@ -1445,7 +1445,7 @@
   "伊藤__nara": {
     "name": "伊藤",
     "venue": "nara",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -1692,7 +1692,7 @@
   "佐藤__nara": {
     "name": "佐藤",
     "venue": "nara",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -51729,7 +51729,7 @@
   "小川__odawara": {
     "name": "小川",
     "venue": "odawara",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -61934,7 +61934,7 @@
   "山本__odawara": {
     "name": "山本",
     "venue": "odawara",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -66068,7 +66068,7 @@
   "高橋__toyohashi": {
     "name": "高橋",
     "venue": "toyohashi",
-    "races": 5,
+    "races": 6,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -123112,9 +123112,9 @@
   "阪本 和也__odawara": {
     "name": "阪本 和也",
     "venue": "odawara",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -123203,7 +123203,7 @@
   "窓場__toyohashi": {
     "name": "窓場",
     "venue": "toyohashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -123801,9 +123801,9 @@
   "小原 佑太__odawara": {
     "name": "小原 佑太",
     "venue": "odawara",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -126218,6 +126218,175 @@
   },
   "小泉__nara": {
     "name": "小泉",
+    "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐藤 和也__odawara": {
+    "name": "佐藤 和也",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "田村__odawara": {
+    "name": "田村",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "荒川__odawara": {
+    "name": "荒川",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "松岡 貴久__toyohashi": {
+    "name": "松岡 貴久",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "立部 楓真__toyohashi": {
+    "name": "立部 楓真",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "椎木尾 拓哉__toyohashi": {
+    "name": "椎木尾 拓哉",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "野中__toyohashi": {
+    "name": "野中",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐川__toyohashi": {
+    "name": "佐川",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山口 智弘__nara": {
+    "name": "山口 智弘",
+    "venue": "nara",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "緒方 慎太朗__nara": {
+    "name": "緒方 慎太朗",
+    "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "川又 裕樹__nara": {
+    "name": "川又 裕樹",
+    "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "水森__nara": {
+    "name": "水森",
+    "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉永__nara": {
+    "name": "吉永",
     "venue": "nara",
     "races": 1,
     "wins": 0,

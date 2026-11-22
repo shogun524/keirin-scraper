@@ -1,17 +1,6 @@
 {
- "updated": "2026-11-22 13:46",
+ "updated": "2026-11-22 14:16",
  "failures": [
-  {
-   "race": "2026-11-22 odawara 3R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    6,
-    2,
-    4,
-    1,
-    5
-   ]
-  },
   {
    "race": "2026-11-22 odawara 4R",
    "diag": {
@@ -31,17 +20,26 @@
    }
   },
   {
-   "race": "2026-11-22 nara 7R",
+   "race": "2026-11-22 nara 8R",
    "diag": {
     "venue": "nara",
-    "race_id": "5320261122010007",
+    "race_id": "5320261122010008",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-22 toyohashi 9R",
+   "diag": {
+    "venue": "toyohashi",
+    "race_id": "4520261121020009",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3443,
- "with_result": 2750,
+ "with_result": 2753,
  "without_url": 0,
- "pending_eligible": 653
+ "pending_eligible": 654
 }
