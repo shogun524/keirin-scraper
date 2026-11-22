@@ -439,7 +439,7 @@ def skin(html, title, links, home="index.html"):
 
 
 KEIRIN_LINKS = [("買うべきレース", "picks.html"), ("オッズ急落", "drops.html"), ("印刷用", "print.html"),
-                ("成績", "results.html"), ("競輪場", "venues.html"), ("勝利の方程式", "formula.html")]
+                ("成績", "results.html"), ("競輪場", "venues.html")]
 KEIRIN_TITLES = {"picks.html": "買うべきレース", "drops.html": "オッズ急落", "print.html": "印刷用", "results.html": "予想成績",
                  "venues.html": "全競輪場データ", "formula.html": "勝利の方程式", "close_race.html": "拮抗レース",
                  "today.html": "今日のレース一覧", "high_prob.html": "本命が堅いレース", "edge.html": "回収の分析"}

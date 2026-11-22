@@ -400,7 +400,6 @@ def main():
         ("close_race.html", render_close_race_page),
         ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params, eval_report)),
         ("print.html", render_print_page),
-        ("formula.html", render_formula_page),
     ):
         try:
             page_html = render_fn(all_race_data, today)

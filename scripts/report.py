@@ -1000,11 +1000,13 @@ def render_race_card(race_data, tab_id):
     pick_color = car_color(top["car"])[0]
     has_trifecta = bool(trifecta_payload)
     has_dev = bool(dev_payload) or bool(hole_html) or bool(result.get("trifecta"))
-    formula_html = render_formula_block(race_data, tab_id)
+    formula_html = ""   # 勝利の方程式は計算(ログ)だけ使い、表示はしない(11/22)
     _ai_boxes = render_auto_box((result.get("trifecta") or {}).get("auto")) + render_ana_box((result.get("trifecta") or {}).get("ana"))
     auto_html = ""
     # AIの出目による買い方・穴目は当たらないので出さない(組は「消し目」として買い目の帯に出す)
     subtab_bar_html = ""
+    # 3連単・展開・方程式のタブは使わないので出さない(11/22 画面をシンプルに)。予想の表だけ
+    has_trifecta = has_dev = False
     if has_trifecta or has_dev or formula_html:
         buttons = ['<button class="subtab-btn active" id="' + tab_id + '_subbtn_main" '
                    'onclick="showSubTab(\'' + tab_id + '\',\'main\',this)">予想</button>']
@@ -2034,7 +2036,6 @@ AGG_GROUPS = [
         ("picks.html", "今日の推奨一覧・成績"),
         ("drops.html", "オッズ急落"),
         ("close_race.html", "拮抗レース"),
-        ("formula.html", "勝利の方程式"),
     ]),
     ("選手・開催場・成績", [
         ("results.html", "予想成績"),
@@ -2863,7 +2864,7 @@ def render_results_page(log, date=None, model_params=None, eval_report=None):
     return _page_shell(
         title="予想成績", heading="予想成績", date_str=_fmt_date_jp(date),
         tagline="AIの予想は実際どれくらい当たったか。毎時自動で記録して答え合わせしています。",
-        body=render_results_header(stats, eval_report) + summary + render_eval_section(eval_report) + formula_html + seg_html + ("" if (eval_report and eval_report.get("n_races")) else cal_html) + day_html + render_recent_table(stats),
+        body=render_results_header(stats, eval_report) + summary + render_eval_section(eval_report) + seg_html + ("" if (eval_report and eval_report.get("n_races")) else cal_html) + day_html + render_recent_table(stats),
         current="results.html", extra_style=style)
 
 
@@ -3654,10 +3655,6 @@ def _print_card_html(rd):
     dev_html = f'<div class="pv-sub pv-opt">展開の見通し：{dev_rows}</div>' if dev_rows else ""
 
     view = f'<div class="pv-view"><b class="t">AIの見立て</b>{_view_text(result, rows, flags)}{form_html}</div>'
-    _kf = _formula_for(rd)
-    if _kf:
-        view += ('<div class="pv-sub">勝利の方程式（能力値+L+M）：' + "　".join(
-            f'{i + 1}位 {x["car"]}番 {x["total"]:.0f}' for i, x in enumerate(_kf[:4])) + '</div>')
 
     # 3連単の出目確率表は11/22にやめた(代わりに上の段に「軸向き・頭向き…」)
     view = _role_line(result, "pv-sub roles") + view
@@ -4300,11 +4297,11 @@ def render_jra_index(all_race_data, date=None, now=None):
   <li><b>本命・穴</b> … 万車率(100倍以上の3連単に入っている支持の割合)を、級(S/A)と車立てごとの過去の分布と比べて、下側3割=本命・上側3割=穴。</li>
   <li><b>★</b> … 回収率重視の買い目(過去の検証で回収率100%超えの形)があるレース。</li>
   <li><b>軸向き・頭向き・2・3着向き・相手</b> … AIの1着率と3着内率から。軸向き=3着内率60%以上(過去 実際に3着内63〜89%)。頭向き=3着内率50%以上で1着まで来やすい(過去 1着43%・3着内78%)。2・3着向き=3着内率50%以上だが1着は少ない(過去 3着内64%・1着13%。3連単の2・3着に)。相手=3着内率40%以上。（）は3着内率。</li>
-  <li>「詳しく」から、3連単のフォーメーション・展開シミュレーション・勝利の方程式を見られます。</li>
+  <li>「詳しく」から、その会場の全レースの表・並び・オッズの動きを見られます。</li>
 </ul></details>"""
     meta = f'<b>{date.strftime("%Y-%m-%d")}({wd})</b> ・ 更新 {now.strftime("%Y-%m-%d %H:%M")} ・ オッズ取得 {n_odds}/{n_all}レース'
     links = [("買うべきレース", "picks.html"), ("オッズ急落", "drops.html"), ("印刷用", "print.html"),
-             ("成績", "results.html"), ("競輪場", "venues.html"), ("勝利の方程式", "formula.html")]
+             ("成績", "results.html"), ("競輪場", "venues.html")]
     page = J.page("競輪AI予想", meta, vlist, guide + summary, links,
                   "https://github.com/shogun524/keirin-scraper/actions/workflows/daily.yml",
                   footer_html="<p>確率は過去のデータからの推定で、的中や回収を保証するものではありません。車券の最終判断はご自身でお願いします。</p>")

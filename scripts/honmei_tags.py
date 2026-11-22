@@ -77,7 +77,7 @@ CSS = (".tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6p
        ".kguide summary{cursor:pointer;font-weight:700}.kguide ul{margin:4px 0 0;padding-left:18px;line-height:1.7}")
 GUIDE = ('<details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul>'
          '<li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。'
-         'どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率(勝利の方程式も混ぜてある)。</li>'
+         'どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li>'
          '<li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li>'
          '<li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / '
          '危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li>'
