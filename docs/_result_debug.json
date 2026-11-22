@@ -1,15 +1,6 @@
 {
- "updated": "2026-11-22 22:41",
+ "updated": "2026-11-22 23:10",
  "failures": [
-  {
-   "race": "2026-11-22 kokura 8R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261118050008",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-22 kokura 12R",
    "diag": {
@@ -56,10 +47,23 @@
     7,
     4
    ]
+  },
+  {
+   "race": "2026-11-22 nagoya 3R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    1,
+    5,
+    2,
+    3,
+    6,
+    7,
+    4
+   ]
   }
  ],
  "tracked": 3443,
  "with_result": 2772,
  "without_url": 0,
- "pending_eligible": 666
+ "pending_eligible": 669
 }
