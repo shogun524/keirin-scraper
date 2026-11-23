@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23 17:56",
+ "updated": "2026-11-23 18:06",
  "failures": [
   {
    "race": "2026-11-23 toyohashi 9R",
@@ -18,10 +18,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-23 seibuen 7R",
+   "diag": {
+    "venue": "seibuen",
+    "race_id": "2620261123010007",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3532,
  "with_result": 2825,
  "without_url": 0,
- "pending_eligible": 676
+ "pending_eligible": 677
 }
