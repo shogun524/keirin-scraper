@@ -10792,7 +10792,7 @@
   "清水__takeo": {
     "name": "清水",
     "venue": "takeo",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -122462,7 +122462,7 @@
   "松本__toyohashi": {
     "name": "松本",
     "venue": "toyohashi",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -122683,7 +122683,7 @@
   "内村__toyohashi": {
     "name": "内村",
     "venue": "toyohashi",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -122891,7 +122891,7 @@
   "三浦__toyohashi": {
     "name": "三浦",
     "venue": "toyohashi",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -125049,9 +125049,9 @@
   "平石 浩之__hiroshima": {
     "name": "平石 浩之",
     "venue": "hiroshima",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -125361,9 +125361,9 @@
   "柴田 功一郎__toyohashi": {
     "name": "柴田 功一郎",
     "venue": "toyohashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -125517,7 +125517,7 @@
   "岡嵜__nara": {
     "name": "岡嵜",
     "venue": "nara",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -125686,7 +125686,7 @@
   "千澤__nara": {
     "name": "千澤",
     "venue": "nara",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -125751,7 +125751,7 @@
   "弓矢__toyohashi": {
     "name": "弓矢",
     "venue": "toyohashi",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -125907,7 +125907,7 @@
   "木下__nara": {
     "name": "木下",
     "venue": "nara",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -127934,6 +127934,344 @@
   },
   "奥山__takeo": {
     "name": "奥山",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "奥出 良__odawara": {
+    "name": "奥出 良",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "大西 健士__odawara": {
+    "name": "大西 健士",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "渡邉 直弥__odawara": {
+    "name": "渡邉 直弥",
+    "venue": "odawara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐々木 孝司__toyohashi": {
+    "name": "佐々木 孝司",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "岩城 佑典__toyohashi": {
+    "name": "岩城 佑典",
+    "venue": "toyohashi",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "飯田 辰哉__hiroshima": {
+    "name": "飯田 辰哉",
+    "venue": "hiroshima",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "曽我 圭佑__hiroshima": {
+    "name": "曽我 圭佑",
+    "venue": "hiroshima",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "矢部__hiroshima": {
+    "name": "矢部",
+    "venue": "hiroshima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "加賀美__hiroshima": {
+    "name": "加賀美",
+    "venue": "hiroshima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "市本__hiroshima": {
+    "name": "市本",
+    "venue": "hiroshima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐竹__hiroshima": {
+    "name": "佐竹",
+    "venue": "hiroshima",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "駒壽 直人__nara": {
+    "name": "駒壽 直人",
+    "venue": "nara",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "富永 昌久__nara": {
+    "name": "富永 昌久",
+    "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "伊藤 之人__nara": {
+    "name": "伊藤 之人",
+    "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "布居 光__takeo": {
+    "name": "布居 光",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "西島 叶子__takeo": {
+    "name": "西島 叶子",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山本 知佳__takeo": {
+    "name": "山本 知佳",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "平子__takeo": {
+    "name": "平子",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "青木__takeo": {
+    "name": "青木",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "緒方 詩央里__takeo": {
+    "name": "緒方 詩央里",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "谷元 音羽__takeo": {
+    "name": "谷元 音羽",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "高橋 美沙紀__takeo": {
+    "name": "高橋 美沙紀",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "牧田__takeo": {
+    "name": "牧田",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "普久原__takeo": {
+    "name": "普久原",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中村__takeo": {
+    "name": "中村",
+    "venue": "takeo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "枝光__takeo": {
+    "name": "枝光",
     "venue": "takeo",
     "races": 1,
     "wins": 0,
