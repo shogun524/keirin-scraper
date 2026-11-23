@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23 22:03",
+ "updated": "2026-11-23 22:32",
  "failures": [
   {
    "race": "2026-11-23 yokkaichi 4R",
@@ -11,17 +11,26 @@
    }
   },
   {
-   "race": "2026-11-23 kawasaki 4R",
+   "race": "2026-11-23 kawasaki 5R",
    "diag": {
     "venue": "kawasaki",
-    "race_id": "3420261123010004",
+    "race_id": "3420261123010005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-23 tamano 5R",
+   "diag": {
+    "venue": "tamano",
+    "race_id": "6120261123010005",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3532,
- "with_result": 2844,
+ "with_result": 2847,
  "without_url": 0,
- "pending_eligible": 678
+ "pending_eligible": 679
 }
