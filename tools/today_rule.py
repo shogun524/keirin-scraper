@@ -34,7 +34,11 @@ for rid, slug in sorted(slug_of.items()):
     p3 = {int(c): b / 100 for c, a, b in L["probs"]}
     H = [c for c in p1 if p1[c] >= .10]
     A = max(p3, key=p3.get)
-    K = [c for c in p3 if p3[c] >= .20]
+    if A in H:   # 軸が頭と被ったら、頭でない選手のうち3着内率が一番高い選手を軸にする(11/23)
+        rest = [c for c in p3 if c not in H]
+        if rest:
+            A = max(rest, key=p3.get)
+    K = [c for c in p3 if p3[c] >= .20 or c == A]
     tk = [(a, b, c) for a in H for b in K for c in K if len({a, b, c}) == 3 and A in (a, b, c) and f"{a}-{b}-{c}" in o]
 
     def hv(k):
@@ -49,7 +53,7 @@ for rid, slug in sorted(slug_of.items()):
         sel.append(k); inv += x
     win, wpay = pay["3連単"][0]
     hit = any(f"{a}-{b}-{c}" == win for a, b, c in sel)
-    out.append(dict(rid=rid, venue=slug, race_no=rno, heads=H, axis=A, cut=[c for c in p3 if p3[c] < .2],
+    out.append(dict(rid=rid, venue=slug, race_no=rno, heads=H, axis=A, axis_p3=round(p3[A], 3), cut=[c for c in p3 if p3[c] < .2],
                     n=len(sel), comp=round(1 / inv, 2) if inv else None, tickets=["-".join(map(str, k)) for k in sel],
                     win=win, pay=wpay, hit=hit))
 json.dump(out, open("/tmp/today_rule.json", "w"), ensure_ascii=False)
