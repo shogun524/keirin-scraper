@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23 20:02",
+ "updated": "2026-11-23 20:32",
  "failures": [
   {
    "race": "2026-11-23 toyohashi 9R",
@@ -20,17 +20,17 @@
    }
   },
   {
-   "race": "2026-11-23 kokura 11R",
+   "race": "2026-11-23 kokura 12R",
    "diag": {
     "venue": "kokura",
-    "race_id": "8120261118060011",
+    "race_id": "8120261118060012",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3532,
- "with_result": 2832,
+ "with_result": 2834,
  "without_url": 0,
  "pending_eligible": 677
 }
