@@ -1,24 +1,6 @@
 {
- "updated": "2026-11-23 11:50",
+ "updated": "2026-11-23 12:20",
  "failures": [
-  {
-   "race": "2026-11-23 takeo 1R",
-   "diag": {
-    "venue": "takeo",
-    "race_id": "8420261123010001",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-23 takeo 2R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    4,
-    1,
-    6
-   ]
-  },
   {
    "race": "2026-11-23 takeo 3R",
    "diag": {
@@ -29,26 +11,17 @@
    }
   },
   {
-   "race": "2026-11-23 toyohashi 3R",
-   "diag": {
-    "venue": "toyohashi",
-    "race_id": "4520261121030003",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-23 odawara 3R",
+   "race": "2026-11-23 odawara 4R",
    "diag": {
     "venue": "odawara",
-    "race_id": "3620261121030003",
+    "race_id": "3620261121030004",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3532,
- "with_result": 2789,
+ "with_result": 2793,
  "without_url": 0,
- "pending_eligible": 676
+ "pending_eligible": 675
 }
