@@ -3632,26 +3632,11 @@ def _print_card_html(rd):
                    + (f'　中穴率(5,000円以上) <b>{_mv["chu"]:.0%}</b>' if _mv.get("chu") is not None else ""))
     else:
         man_txt = "万車率：オッズ待ち"
-    if _hon:
-        buy_txt = "<b>本命レース（万車率30%未満）— 見送り</b>"
-    elif _rec:
-        lab = {"win": "勝ち筋", "big": "重賞", "ana": "穴目", "ref": "参考"}
-        buy_txt = "　".join(f'<b>[{lab.get(k, k)}{"" if lb in ("穴", "重賞") else " " + lb}]</b> {" ".join(ts)}' for k, lb, ts in _rec)
-    else:
-        buy_txt = "穴の買い目なし（見送り）"
-    keshi_txt = (f'<div class="pv-sub">消し目（AI推奨・買わない）：<s>{" ".join(_keshi[:12])}</s></div>' if _keshi else "")
-    tickets = (f'<div class="pv-box"><div class="pv-box-t">穴党の買い目（3連単）</div>'
-               f'<div class="pv-sub">{man_txt}</div><div class="pv-sub">{buy_txt}</div>{keshi_txt}'
-               f'{_hit_line(info, "pv-sub hitline")}</div>')
+    # 11/24 シンプルに: 買い目はAIの買い目(回収率重視・的中重視)だけ。展開・消し目・穴党の買い目はやめる
+    tickets = (f'<div class="pv-box"><div class="pv-box-t">AIの買い目（3連単・1着は全員）</div>'
+               f'{_bets_html(new_bets(info, result), "nbets pv-nb")}<div class="pv-sub">{man_txt}</div></div>')
     form_html = ""
-
-    dev = result.get("development_simulation") or {}
-    dev_rows = ""
-    for sc in (dev.get("scenarios") or [])[:2]:
-        picks = " ".join(f'{c["car"]}番{c["win_pct"]:.0f}%' for c in sc.get("conditional_win_rates", [])[:3])
-        dev_rows += f'<span style="margin-right:14px;"><b>{sc["label"]}</b>（{sc["share"]:.0f}%）→ 1着 {picks}</span>'
-    dev_html = f'<div class="pv-sub pv-opt">展開の見通し：{dev_rows}</div>' if dev_rows else ""
-
+    dev_html = ""
     view = f'<div class="pv-view"><b class="t">AIの見立て</b>{_view_text(result, rows, flags)}{form_html}</div>'
 
     # 3連単の出目確率表は11/22にやめた(代わりに上の段に「軸向き・頭向き…」)
@@ -4134,6 +4119,82 @@ def _value_tag(ratio):
     return '<span class="vt vt-mid">妥当</span>'
 
 
+# ---- AIの買い目(11/24)。3連単「1着は全員、2・3着を固める」。
+# 2025・2026年の7車立て(F1・F2・ガールズ以外)約2万5千レースで、AIは採点する年を学習していない数字:
+#   回収率重視 = 全員 → AI1〜2位 → 3着内率1〜4位(30点)・合成4倍以上のときだけ → 的中17〜19%・回収率115%/104%
+#   的中重視   = 全員 → AI1〜2位 → 人気1〜5位(40点)・合成3倍以上のときだけ   → 的中22〜23%・回収率96%/94%
+NEW_BETS = [
+    dict(key="kai", name="回収率重視", second="ai2", third="q4", cmin=4.0, note="過去 的中17〜19%・回収率104〜115%"),
+    dict(key="teki", name="的中重視", second="ai2", third="pop5", cmin=3.0, note="過去 的中22〜23%・回収率94〜96%"),
+]
+
+
+def new_bets(info, result):
+    """[{name, second, third, tickets, n, comp, buy, note, verified}]。オッズが無いときは comp=None"""
+    if not result or not result.get("rows"):
+        return []
+    rows = result["rows"]
+    aip = honmei_tags.ai_probs(rows)
+    cars = [r["car"] for r in rows]
+    A = sorted(cars, key=lambda c: -aip.get(c, 0))
+    Q = sorted(cars, key=lambda c: -float(next(r.get("place_rate") or 0 for r in rows if r["car"] == c)))
+    ms = _mkt_share(result)
+    M = sorted(ms, key=lambda c: -ms[c]) if ms else []
+    od = result.get("tri_odds") or {}
+    verified = len(rows) == 7 and not _is_girls(rows, info.get("title") or "")
+    out = []
+    for b in NEW_BETS:
+        sec = A[:2]
+        thd = Q[:4] if b["third"] == "q4" else M[:5]
+        if not thd:
+            out.append(dict(b, sec=sec, thd=[], tickets=[], n=0, comp=None, buy=False, verified=verified))
+            continue
+        tk = [(a, x, y) for a in cars for x in sec for y in thd if len({a, x, y}) == 3]
+        inv = sum(1 / od[k] for k in tk if od.get(k) and od[k] > 1)
+        comp = (1 / inv) if inv else None
+        out.append(dict(b, sec=sec, thd=thd, tickets=tk, n=len(tk), comp=comp, buy=bool(comp and comp >= b["cmin"]), verified=verified))
+    return out
+
+
+def _bets_html(bets, cls="nbets"):
+    if not bets:
+        return ""
+    lis = ""
+    for b in bets:
+        form = f'全員 → <b>{"・".join(map(str, b["sec"]))}</b> → <b>{"・".join(map(str, b["thd"]))}</b>' if b["thd"] else "全員 → … (オッズ待ち)"
+        if b["comp"] is None:
+            st = '<span class="nb-st wait">オッズ待ち</span>'
+        elif b["buy"]:
+            st = f'<span class="nb-st buy">買い</span> 合成{b["comp"]:.1f}倍'
+        else:
+            st = f'<span class="nb-st skip">見送り</span> 合成{b["comp"]:.1f}倍<small>(条件{b["cmin"]:.0f}倍以上)</small>'
+        lis += (f'<div class="nb nb-{b["key"]}"><span class="nb-name">{b["name"]}</span> 3連単 {form} '
+                f'<small>{b["n"]}点</small>　{st}</div>')
+    note = "" if bets[0]["verified"] else '<div class="nb-note">※検証は7車立て(ガールズ以外)だけ。このレースは参考</div>'
+    return f'<div class="{cls}">{lis}{note}</div>'
+
+
+NB_CSS = """
+  .nbets { margin: 6px 14px 4px; font-size: .82rem; line-height: 1.6; }
+  .nbets .nb { padding: 3px 0; border-top: 1px dashed #E2D8C3; }
+  .nbets .nb:first-child { border-top: none; }
+  .nbets .nb-name { display: inline-block; font-weight: 700; color: #1F4D3A; margin-right: 4px; }
+  .nbets .nb-teki .nb-name { color: #8A5A00; }
+  .nb-st { display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 700; font-size: .78rem; }
+  .nb-st.buy { background: #C0392B; color: #fff; }
+  .nb-st.skip { background: #EEE8DA; color: #7A6F5E; }
+  .nb-st.wait { background: #EEE8DA; color: #7A6F5E; }
+  .nbets small { color: #8A7F6E; }
+  .nb-note { font-size: .72rem; color: #8A7F6E; }
+"""
+
+
+_PRINT_STYLE += NB_CSS.replace("  .nbets {", "  .pv-card .nbets {") + """
+  .pv-nb { font-size:11px; margin:1px 0; line-height:1.45; } .pv-nb .nb { padding:0; }
+  .pv-nb .nb-st { font-size:10px; } .pv-nb .nb-note { font-size:9.5px; }
+"""
+
+
 def _tri_hit_plan(result):
     """3連単 的中重視: 1着率10%以上の選手を頭に、来る確率の高い順に合成2倍まで(最大20点)。オッズが無いときは None"""
     jt, od = result.get("tri_joint"), result.get("tri_odds")
@@ -4213,7 +4274,6 @@ def _jra_card(rd, vi):
           <td class="horse">{J.esc(r.get("name", ""))}<br><small class="sub">{J.esc(sub)}</small></td>
           <td class="r od">{odds}</td>
           <td class="r pct"><b>{ai:.1f}</b><small>%</small><br><small class="sub">3着内{p3:.0f}%</small>{mm}</td>
-          <td class="c">{vt}</td>
         </tr>"""
     lv = man_level(info, rows)
     mv = info.get("manshaken") or {}
@@ -4221,30 +4281,17 @@ def _jra_card(rd, vi):
     if mv.get("man") is not None:
         cls = "hi" if lv == "ana" else ("lo" if lv == "hon" else "")
         chips += (f'<p class="manbaken">万車率 <b class="{cls}">{mv["man"] * 100:.0f}%</b>'
-                  f'<span class="sep">・</span>目安 <b>{mv["q50"]:,.0f}円</b><small>({mv["q25"]:,.0f}〜{mv["q75"]:,.0f})</small>'
+                  f'<span class="sep">・</span>目安 <b>{mv["q50"]:,.0f}円</b>'
                   + (f'<span class="sep">・</span><b>{"本命" if lv == "hon" else "穴"}</b>' if lv else "") + '</p>')
     else:
         chips += '<p class="manbaken muted">万車率 オッズ待ち</p>'
-    rec = [x for x in (info.get("recommend") or []) if x[2]]
-    aib = ""
-    if rec:
-        win = [x for x in rec if x[0] != "ref"]
-        ref = [x for x in rec if x[0] == "ref"]
-        lines = "".join(f'<div class="aibet-body"><span class="aibet-tag">{"推奨" if k != "ref" else "参考"}</span> '
-                        f'<span class="aibet-reason">{J.esc(lb)}</span><br><b>{" ".join(ts)}</b></div>' for k, lb, ts in win)
-        if ref:
-            lines += ('<details class="why"><summary>参考の買い目(過去72〜85%)</summary>' +
-                      "".join(f'<div class="aibet-combos">{J.esc(lb)}: {" ".join(ts)}</div>' for k, lb, ts in ref) + '</details>')
-        aib = f'<div class="aibet">{lines}</div>'
-    taghtml = render_tag_line(result)
+    chips += _role_line(result, "roles")
     line_txt = rd.get("line_prediction_text") or ""
     sub_html = (f'{VENUE_NAMES.get(info["venue"], info["venue"])} <span class="post-time">締切 {info.get("deadline") or ""}</span>'
                 + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
-    chips += _hit_lines(info, result)
-    chips += _role_line(result, "roles")
-    return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, aib, None, body,
-                       extra_html=f'<div class="trioline">{taghtml}</div>' if taghtml else "",
-                       link=f'{info["venue"]}/index.html?r={no}')
+    # 11/24 シンプルに: 買い目はAIの買い目(回収率重視・的中重視)だけ、詳しいページへのリンクと妙味の列はやめる
+    cols = [("印", 26), ("番", 50), ("名前", None), ("人気", 62), ("AI", 64)]
+    return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, _bets_html(new_bets(info, result)), cols, body)
 
 
 def render_jra_index(all_race_data, date=None, now=None):
@@ -4268,39 +4315,36 @@ def render_jra_index(all_race_data, date=None, now=None):
             n_all += 1
             if rd.get("prediction") and rd["prediction"].get("fix_mode") == "odds":
                 n_odds += 1
-            rec = [x for x in (info.get("recommend") or []) if x[2] and x[0] != "ref"]
-            star = "★" if rec else ""
+            nb = new_bets(info, rd.get("prediction"))
+            buys = [x for x in nb if x["buy"]]
+            star = "★" if buys else ""
             card = _jra_card(rd, vi)
             races.append((info["race_no"], star, card))
-            if rec and (info.get("deadline") or "") > hm:
-                upcoming.append((info.get("deadline") or "", VENUE_NAMES.get(v, v), info["race_no"], vi, rec))
+            if buys and (info.get("deadline") or "") > hm:
+                upcoming.append((info.get("deadline") or "", VENUE_NAMES.get(v, v), info["race_no"], vi, buys))
         venues.append((VENUE_NAMES.get(v, v), races, nxt))
-    # レースタブの「次のレース」に印(開いたときにそのレースを出す)
-    vlist = []
-    for name, races, nxt in venues:
-        vlist.append((name, [(no, star, card) for no, star, card in races]))
+    vlist = [(name, races) for name, races, nxt in venues]
     upcoming.sort()
-    lis = "".join(f'<li><span class="aibet-tag">推奨</span> <a href="?v={vi}&r={no}"><b>{vn}{no}R</b></a> 締切{dl}<br>'
-                  + "<br>".join(f'<span class="rnm">{J.esc(lb)}</span> <span class="aibet-buy">{" ".join(ts)}</span>' for k, lb, ts in rec)
-                  + '</li>' for dl, vn, no, vi, rec in upcoming[:12])
-    summary = (f'<section class="aibet-summary"><h2>回収率重視の買い目 <small>これからのレース</small></h2>'
-               f'<details class="why"><summary>条件</summary><p class="aibet-note">過去の検証(2025〜2026年 約5万レース)で回収率100%を超えた形に当たったレースだけ。'
-               f'くわしい条件は「買うべきレース」に。</p></details>'
-               + (f'<ul>{lis}</ul>' if lis else '<p class="aibet-none">これからのレースで当たる形はありません</p>') + '</section>')
+    lis = "".join(f'<li><a href="?v={vi}&r={no}"><b>{vn}{no}R</b></a> 締切{dl}　'
+                  + "　".join(f'<span class="nb-st buy">{x["name"]}</span> 全員→{"・".join(map(str, x["sec"]))}→{"・".join(map(str, x["thd"]))}'
+                              f'（{x["n"]}点・合成{x["comp"]:.1f}倍）' for x in buys)
+                  + '</li>' for dl, vn, no, vi, buys in upcoming[:15])
+    summary = (f'<section class="aibet-summary"><h2>今日の買い目 <small>これからのレース・条件に合うもの</small></h2>'
+               + (f'<ul>{lis}</ul>' if lis else '<p class="aibet-none">これからのレースで条件に合うものはありません</p>') + '</section>')
     guide = """<details class="guide"><summary>このサイトの見方</summary><ul>
-  <li><b>◎・AI%</b> … 機械学習AI(過去約5万レースで学習。オッズは使わない)が見た1着率。3着内も同じAI。</li>
-  <li><b>込%</b> … AIとオッズを合わせた1着率(オッズが出てから)。一番当たる数字。</li>
+  <li><b>AIの買い目</b> … 3連単「1着は全員、2・3着を固める」。人気薄が1着で人気の選手が2・3着の目は売れにくく、オッズが甘くなりやすい。
+    <br>回収率重視 = 全員 → AI1〜2位 → 3着内率1〜4位(30点)。合成4倍以上のときだけ買う(過去 的中17〜19%・回収率104〜115%)。
+    <br>的中重視 = 全員 → AI1〜2位 → 人気1〜5位(40点)。合成3倍以上のときだけ買う(過去 的中22〜23%・回収率94〜96%)。
+    <br>数字は2025・2026年の7車立て(F1・F2・ガールズ以外)約2万5千レースで、AIが学習していない年で採点したもの。重賞・ガールズ・9車立ては未検証。</li>
+  <li><b>AI% ・ 3着内</b> … 機械学習AI(オッズは使わない)が見た1着率・3着内率。込% はAIとオッズを合わせた1着率。</li>
   <li><b>人気</b> … 3連単オッズから見た1着の人気順と、オッズから見た1着率。</li>
-  <li><b>妙味</b> … 込%がオッズの見込みより高い選手=妙味あり(1.15倍以上)、低い選手=過剰人気。</li>
-  <li><b>本命・穴</b> … 万車率(100倍以上の3連単に入っている支持の割合)を、級(S/A)と車立てごとの過去の分布と比べて、下側3割=本命・上側3割=穴。</li>
-  <li><b>★</b> … 回収率重視の買い目(過去の検証で回収率100%超えの形)があるレース。</li>
-  <li><b>頭向き・軸向き・相手</b> … AIの1着率と3着内率から(1人は1つだけ)。頭向き=1着まで来やすい(過去 1着45%・3着内78%。軸にもなる)。軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着、3連複・ワイドの軸に)。相手=3着内率35〜55%(過去 3着内44%)。（）は3着内率。</li>
-  <li>「詳しく」から、その会場の全レースの表・並び・オッズの動きを見られます。</li>
+  <li><b>万車率・本命/穴</b> … 100倍以上の3連単に入っている支持の割合。級と車立てごとの過去と比べて、下側3割=本命・上側3割=穴。</li>
+  <li><b>頭向き・軸向き・相手</b> … 頭向き=1着まで来やすい(過去 1着45%)。軸向き=崩れにくいが1着は少ない(過去 3着内67%)。相手=3着内率35〜55%。</li>
+  <li><b>★</b> … AIの買い目が「買い」になっているレース。</li>
 </ul></details>"""
     meta = f'<b>{date.strftime("%Y-%m-%d")}({wd})</b> ・ 更新 {now.strftime("%Y-%m-%d %H:%M")} ・ オッズ取得 {n_odds}/{n_all}レース'
-    links = [("買うべきレース", "picks.html"), ("オッズ急落", "drops.html"), ("印刷用", "print.html"),
-             ("成績", "results.html"), ("競輪場", "venues.html")]
-    page = J.page("競輪AI予想", meta, vlist, guide + summary, links,
+    links = [("印刷用", "print.html"), ("成績", "results.html"), ("オッズ急落", "drops.html")]
+    page = J.page("競輪AI予想", meta, vlist, f"<style>{NB_CSS}</style>" + guide + summary, links,
                   "https://github.com/shogun524/keirin-scraper/actions/workflows/daily.yml",
                   footer_html="<p>確率は過去のデータからの推定で、的中や回収を保証するものではありません。車券の最終判断はご自身でお願いします。</p>")
     # 各会場で「次のレース」を初期表示にする
