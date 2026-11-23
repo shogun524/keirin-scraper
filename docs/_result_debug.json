@@ -1,36 +1,18 @@
 {
- "updated": "2026-11-23 12:50",
+ "updated": "2026-11-23 13:50",
  "failures": [
   {
-   "race": "2026-11-23 toyohashi 5R",
-   "diag": {
-    "venue": "toyohashi",
-    "race_id": "4520261121030005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-23 odawara 5R",
-   "diag": {
-    "venue": "odawara",
-    "race_id": "3620261121030005",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-23 nara 5R",
+   "race": "2026-11-23 nara 7R",
    "diag": {
     "venue": "nara",
-    "race_id": "5320261122020005",
+    "race_id": "5320261122020007",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3532,
- "with_result": 2795,
+ "with_result": 2803,
  "without_url": 0,
- "pending_eligible": 677
+ "pending_eligible": 675
 }
