@@ -1,20 +1,11 @@
 {
- "updated": "2026-11-23 18:06",
+ "updated": "2026-11-23 18:33",
  "failures": [
   {
    "race": "2026-11-23 toyohashi 9R",
    "diag": {
     "venue": "toyohashi",
     "race_id": "4520261121030009",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-23 kokura 7R",
-   "diag": {
-    "venue": "kokura",
-    "race_id": "8120261118060007",
     "primary": "skipped",
     "day_parsed": false
    }
@@ -27,10 +18,28 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-23 kokura 8R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261118060008",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-23 seibuen 8R",
+   "diag": {
+    "venue": "seibuen",
+    "race_id": "2620261123010008",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3532,
- "with_result": 2825,
+ "with_result": 2826,
  "without_url": 0,
- "pending_eligible": 677
+ "pending_eligible": 678
 }

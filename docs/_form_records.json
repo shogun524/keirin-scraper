@@ -354,12 +354,6 @@
       },
       {
         "date": "2026-11-22",
-        "venue": "kokura",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-22",
         "venue": "maebashi",
         "finish": 5,
         "kimarite": null
@@ -404,6 +398,12 @@
         "date": "2026-11-23",
         "venue": "seibuen",
         "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -5478,12 +5478,6 @@
     "name": "松本",
     "recent": [
       {
-        "date": "2026-11-17",
-        "venue": "utsunomiya",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-18",
         "venue": "matsuyama",
         "finish": 6,
@@ -5535,6 +5529,12 @@
         "date": "2026-11-23",
         "venue": "toyohashi",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 4,
         "kimarite": null
       }
     ]
@@ -30176,12 +30176,6 @@
     "name": "柏野",
     "recent": [
       {
-        "date": "2026-10-11",
-        "venue": "yahiko",
-        "finish": 7,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-28",
         "venue": "gifu",
         "finish": 7,
@@ -30233,6 +30227,12 @@
         "date": "2026-11-20",
         "venue": "kokura",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -30773,6 +30773,12 @@
         "venue": "kokura",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 6,
+        "kimarite": null
       }
     ]
   },
@@ -30866,6 +30872,12 @@
         "date": "2026-11-21",
         "venue": "kokura",
         "finish": 3,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 2,
         "kimarite": null
       }
     ]
@@ -68498,12 +68510,6 @@
     "name": "岩本",
     "recent": [
       {
-        "date": "2026-10-20",
-        "venue": "odawara",
-        "finish": 6,
-        "kimarite": null
-      },
-      {
         "date": "2026-10-21",
         "venue": "odawara",
         "finish": 7,
@@ -68555,6 +68561,12 @@
         "date": "2026-11-18",
         "venue": "kokura",
         "finish": 7,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 9,
         "kimarite": null
       }
     ]
@@ -89407,6 +89419,12 @@
         "venue": "kokura",
         "finish": 2,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 3,
+        "kimarite": null
       }
     ]
   },
@@ -94368,6 +94386,12 @@
         "venue": "kokura",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
+        "finish": 8,
+        "kimarite": null
       }
     ]
   },
@@ -98165,6 +98189,17 @@
       {
         "date": "2026-11-23",
         "venue": "nara",
+        "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "嘉永 泰斗": {
+    "name": "嘉永 泰斗",
+    "recent": [
+      {
+        "date": "2026-11-23",
+        "venue": "kokura",
         "finish": 1,
         "kimarite": null
       }
