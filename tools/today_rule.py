@@ -44,16 +44,14 @@ for rid, slug in sorted(slug_of.items()):
         a, b, c = k
         return p1[a] * p1[b] / max(1e-9, 1 - p1[a]) * p1[c] / max(1e-9, 1 - p1[a] - p1[b])
     tk.sort(key=lambda k: -hv(k))
-    sel, inv = [], 0.0
-    for k in tk:
-        x = 1 / o[f"{k[0]}-{k[1]}-{k[2]}"]
-        if 1 / (inv + x) < 2:
-            break
-        sel.append(k); inv += x
+    # 全部買う。全部の合成が2倍を切るなら見送り(11/23)
+    inv = sum(1 / o[f"{a}-{b}-{c}"] for a, b, c in tk)
+    sel = tk if inv and 1 / inv >= 2 else []
+    allcomp = round(1 / inv, 2) if inv else None
     win, wpay = pay["3連単"][0]
     hit = any(f"{a}-{b}-{c}" == win for a, b, c in sel)
     out.append(dict(rid=rid, venue=slug, race_no=rno, heads=H, axis={str(a): AX[a] for a in H}, cut=[c for c in p3 if p3[c] < .2],
-                    n=len(sel), comp=round(1 / inv, 2) if inv else None, tickets=["-".join(map(str, k)) for k in sel],
+                    n=len(sel), comp=allcomp, ntk=len(tk), tickets=["-".join(map(str, k)) for k in sel],
                     win=win, pay=wpay, hit=hit))
 json.dump(out, open("/tmp/today_rule.json", "w"), ensure_ascii=False)
 b = [r for r in out if r["n"]]
