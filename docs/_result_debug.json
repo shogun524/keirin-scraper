@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24 21:12",
+ "updated": "2026-11-25 02:39",
  "failures": [
   {
    "race": "2026-11-24 matsuyama 8R",
@@ -7,6 +7,22 @@
     "venue": "matsuyama",
     "race_id": "7520261124010008",
     "primary": "skipped",
+    "day_url": "https://keirin.kdreams.jp/matsuyama/raceresult/75202611240100/",
+    "day_html_len": 136808,
+    "day_races": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     9,
+     10,
+     11,
+     12
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -21,26 +37,26 @@
    ]
   },
   {
-   "race": "2026-11-24 yokkaichi 2R",
+   "race": "2026-11-24 yokkaichi 4R",
    "diag": {
     "venue": "yokkaichi",
-    "race_id": "4820261123020002",
+    "race_id": "4820261123020004",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-24 kawasaki 2R",
+   "race": "2026-11-24 tamano 5R",
    "diag": {
-    "venue": "kawasaki",
-    "race_id": "3420261123020002",
+    "venue": "tamano",
+    "race_id": "6120261123020005",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
- "tracked": 3613,
- "with_result": 2911,
+ "tracked": 3688,
+ "with_result": 2927,
  "without_url": 0,
  "pending_eligible": 686
 }
