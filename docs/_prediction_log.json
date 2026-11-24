@@ -784934,7 +784934,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-11-24_shizuoka_12": {
@@ -785155,9 +785155,30 @@
     112.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    2,
+    4,
+    7,
+    1,
+    6,
+    3
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 16:33"
  },
  "2026-11-24_matsuyama_1": {
   "date": "2026-11-24",
@@ -785612,9 +785633,30 @@
     77.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    5,
+    3,
+    7,
+    1,
+    6,
+    4
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 16:33"
  },
  "2026-11-24_matsuyama_3": {
   "date": "2026-11-24",
@@ -785835,7 +785877,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-24_matsuyama_4": {
@@ -789258,7 +789300,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-24_hiroshima_7": {
@@ -791998,9 +792040,30 @@
     83.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    6,
+    5,
+    4,
+    2,
+    7,
+    1,
+    3
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 16:33"
  },
  "2026-11-24_takeo_1": {
   "date": "2026-11-24",
@@ -792177,7 +792240,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-24_takeo_2": {
@@ -793755,7 +793818,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-11-24_seibuen_2": {
@@ -793977,7 +794040,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-24_seibuen_3": {

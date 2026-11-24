@@ -1,6 +1,6 @@
 {
   "updated": "2026-11-24",
-  "races": 1926,
+  "races": 1927,
   "summary": {
     "堅い": {
       "syn1.5": {
@@ -61,112 +61,112 @@
     "中間": {
       "syn1.5": {
         "all": {
-          "races": 719,
-          "hits": 416,
-          "points": 15600,
-          "return": 12831.1,
-          "hit_pct": 57.9,
-          "roi_pct": 82.3
+          "races": 721,
+          "hits": 417,
+          "points": 15643,
+          "return": 12866.1,
+          "hit_pct": 57.8,
+          "roi_pct": 82.2
         },
         "live": {
-          "races": 719,
-          "hits": 416,
-          "points": 15600,
-          "return": 12831.1,
-          "hit_pct": 57.9,
-          "roi_pct": 82.3
+          "races": 721,
+          "hits": 417,
+          "points": 15643,
+          "return": 12866.1,
+          "hit_pct": 57.8,
+          "roi_pct": 82.2
         }
       },
       "top5": {
         "all": {
-          "races": 719,
+          "races": 721,
           "hits": 222,
-          "points": 3595,
+          "points": 3605,
           "return": 3621.5,
-          "hit_pct": 30.9,
-          "roi_pct": 100.7
+          "hit_pct": 30.8,
+          "roi_pct": 100.5
         },
         "live": {
-          "races": 719,
+          "races": 721,
           "hits": 222,
-          "points": 3595,
+          "points": 3605,
           "return": 3621.5,
-          "hit_pct": 30.9,
-          "roi_pct": 100.7
+          "hit_pct": 30.8,
+          "roi_pct": 100.5
         }
       },
       "top10": {
         "all": {
-          "races": 719,
-          "hits": 313,
-          "points": 7190,
-          "return": 6470.0,
-          "hit_pct": 43.5,
-          "roi_pct": 90.0
+          "races": 721,
+          "hits": 314,
+          "points": 7210,
+          "return": 6505.0,
+          "hit_pct": 43.6,
+          "roi_pct": 90.2
         },
         "live": {
-          "races": 719,
-          "hits": 313,
-          "points": 7190,
-          "return": 6470.0,
-          "hit_pct": 43.5,
-          "roi_pct": 90.0
+          "races": 721,
+          "hits": 314,
+          "points": 7210,
+          "return": 6505.0,
+          "hit_pct": 43.6,
+          "roi_pct": 90.2
         }
       }
     },
     "混戦": {
       "syn1.5": {
         "all": {
-          "races": 206,
+          "races": 207,
           "hits": 111,
-          "points": 6130,
+          "points": 6158,
           "return": 4815.7,
-          "hit_pct": 53.9,
-          "roi_pct": 78.6
+          "hit_pct": 53.6,
+          "roi_pct": 78.2
         },
         "live": {
-          "races": 206,
+          "races": 207,
           "hits": 111,
-          "points": 6130,
+          "points": 6158,
           "return": 4815.7,
-          "hit_pct": 53.9,
-          "roi_pct": 78.6
+          "hit_pct": 53.6,
+          "roi_pct": 78.2
         }
       },
       "top5": {
         "all": {
-          "races": 206,
+          "races": 207,
           "hits": 47,
-          "points": 1030,
+          "points": 1035,
           "return": 1043.9,
-          "hit_pct": 22.8,
-          "roi_pct": 101.3
+          "hit_pct": 22.7,
+          "roi_pct": 100.9
         },
         "live": {
-          "races": 206,
+          "races": 207,
           "hits": 47,
-          "points": 1030,
+          "points": 1035,
           "return": 1043.9,
-          "hit_pct": 22.8,
-          "roi_pct": 101.3
+          "hit_pct": 22.7,
+          "roi_pct": 100.9
         }
       },
       "top10": {
         "all": {
-          "races": 206,
+          "races": 207,
           "hits": 70,
-          "points": 2060,
+          "points": 2070,
           "return": 1994.2,
-          "hit_pct": 34.0,
-          "roi_pct": 96.8
+          "hit_pct": 33.8,
+          "roi_pct": 96.3
         },
         "live": {
-          "races": 206,
+          "races": 207,
           "hits": 70,
-          "points": 2060,
+          "points": 2070,
           "return": 1994.2,
-          "hit_pct": 34.0,
-          "roi_pct": 96.8
+          "hit_pct": 33.8,
+          "roi_pct": 96.3
         }
       }
     }

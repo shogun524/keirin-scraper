@@ -1,25 +1,6 @@
 {
- "updated": "2026-11-24 16:03",
+ "updated": "2026-11-24 16:33",
  "failures": [
-  {
-   "race": "2026-11-23 yokkaichi 6R",
-   "diag": {
-    "venue": "yokkaichi",
-    "race_id": "4820261123010006",
-    "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202611230100/",
-    "day_html_len": 105294,
-    "day_races": [
-     1,
-     2,
-     3,
-     5,
-     7
-    ],
-    "day_text_head": "",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-24 takeo 1R",
    "diag": {
@@ -48,17 +29,26 @@
    }
   },
   {
-   "race": "2026-11-24 nara 11R",
+   "race": "2026-11-24 seibuen 1R",
    "diag": {
-    "venue": "nara",
-    "race_id": "5320261122030011",
+    "venue": "seibuen",
+    "race_id": "2620261123020001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-24 seibuen 2R",
+   "diag": {
+    "venue": "seibuen",
+    "race_id": "2620261123020002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3613,
- "with_result": 2887,
+ "with_result": 2890,
  "without_url": 0,
- "pending_eligible": 683
+ "pending_eligible": 684
 }
