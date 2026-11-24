@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24 20:03",
+ "updated": "2026-11-24 21:12",
  "failures": [
   {
    "race": "2026-11-24 matsuyama 8R",
@@ -11,17 +11,36 @@
    }
   },
   {
-   "race": "2026-11-24 matsuyama 11R",
+   "race": "2026-11-24 seibuen 11R",
+   "error": "着順が壊れて見えるため記録しない",
+   "cars": [
+    5,
+    1,
+    2,
+    4
+   ]
+  },
+  {
+   "race": "2026-11-24 yokkaichi 2R",
    "diag": {
-    "venue": "matsuyama",
-    "race_id": "7520261124010011",
+    "venue": "yokkaichi",
+    "race_id": "4820261123020002",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-24 kawasaki 2R",
+   "diag": {
+    "venue": "kawasaki",
+    "race_id": "3420261123020002",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3613,
- "with_result": 2906,
+ "with_result": 2911,
  "without_url": 0,
- "pending_eligible": 684
+ "pending_eligible": 686
 }

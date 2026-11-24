@@ -787092,7 +787092,7 @@
    ]
   ],
   "result": null,
-  "attempts": 3,
+  "attempts": 4,
   "parser_v": 5
  },
  "2026-11-24_matsuyama_9": {
@@ -787787,9 +787787,22 @@
     92.3
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    3,
+    7,
+    2
+   ],
+   "ranks": [
+    1,
+    2,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 21:12"
  },
  "2026-11-24_matsuyama_12": {
   "date": "2026-11-24",
@@ -788009,9 +788022,30 @@
     108.1
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    6,
+    5,
+    7,
+    2,
+    4,
+    3,
+    1
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 21:12"
  },
  "2026-11-24_hiroshima_1": {
   "date": "2026-11-24",
@@ -796374,7 +796408,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-24_kawasaki_1": {
@@ -796566,9 +796600,22 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    3,
+    1
+   ],
+   "ranks": [
+    1,
+    2,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 21:12"
  },
  "2026-11-24_kawasaki_2": {
   "date": "2026-11-24",
@@ -796760,7 +796807,7 @@
   },
   "ev": null,
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-24_kawasaki_3": {
@@ -798062,9 +798109,30 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    2,
+    3,
+    5,
+    4,
+    7,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 21:12"
  },
  "2026-11-24_yokkaichi_2": {
   "date": "2026-11-24",
@@ -798256,7 +798324,7 @@
   },
   "ev": null,
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-24_yokkaichi_3": {
@@ -799470,9 +799538,30 @@
    "sharp23": 1.3
   },
   "ev": null,
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    5,
+    4,
+    3,
+    1,
+    7,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-24 21:12"
  },
  "2026-11-24_tamano_2": {
   "date": "2026-11-24",
