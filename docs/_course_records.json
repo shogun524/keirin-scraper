@@ -129027,7 +129027,7 @@
   "市川__seibuen": {
     "name": "市川",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -129066,7 +129066,7 @@
   "落合__seibuen": {
     "name": "落合",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -129079,9 +129079,9 @@
   "藤岡 祐馬__seibuen": {
     "name": "藤岡 祐馬",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -129144,7 +129144,7 @@
   "齋藤__seibuen": {
     "name": "齋藤",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -129157,7 +129157,7 @@
   "畠山__seibuen": {
     "name": "畠山",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -129196,9 +129196,9 @@
   "舟山 佑京__seibuen": {
     "name": "舟山 佑京",
     "venue": "seibuen",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -129300,7 +129300,7 @@
   "小塚__seibuen": {
     "name": "小塚",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -129378,7 +129378,7 @@
   "瀧本__seibuen": {
     "name": "瀧本",
     "venue": "seibuen",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -132264,6 +132264,175 @@
   "大木__nara": {
     "name": "大木",
     "venue": "nara",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "尾崎 悠生__matsuyama": {
+    "name": "尾崎 悠生",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "新垣 慶晃__matsuyama": {
+    "name": "新垣 慶晃",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "栗林 巧__matsuyama": {
+    "name": "栗林 巧",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小坂__matsuyama": {
+    "name": "小坂",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "良永__matsuyama": {
+    "name": "良永",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "園田__matsuyama": {
+    "name": "園田",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "日浦__matsuyama": {
+    "name": "日浦",
+    "venue": "matsuyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "今村 俊雄__seibuen": {
+    "name": "今村 俊雄",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "阿部 利光__seibuen": {
+    "name": "阿部 利光",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "石田 宏樹__seibuen": {
+    "name": "石田 宏樹",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "菅藤 智__seibuen": {
+    "name": "菅藤 智",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤縄__seibuen": {
+    "name": "藤縄",
+    "venue": "seibuen",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉橋__seibuen": {
+    "name": "吉橋",
+    "venue": "seibuen",
     "races": 1,
     "wins": 0,
     "top3": 0,
