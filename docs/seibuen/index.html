@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西武園競輪 AI予想 2026年11月24日</title>
+<style>
+  :root{
+    --board:#0f2018; --board2:#1a3226; --paper:#faf6ec; --paper2:#f1ead4;
+    --ink:#182420; --ink-soft:#5c6b60; --line:#ddd2ae; --gold:#c69a4e;
+    --pine:#2f6b4f; --brick:#a8402f; --slate:#3a6486;
+    /* 旧変数名のエイリアス（既存CSSルールとの互換性維持のため） */
+    --navy:var(--board); --navy2:var(--board2); --border:var(--line);
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
+  .num{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  header{ background:linear-gradient(155deg,var(--board),var(--board2)); color:#fff; padding:20px 18px 0; }
+  header .top-row{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  header h1{ margin:0; font-size:20px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; letter-spacing:.02em; }
+  header h1 a{ border-bottom:1px solid rgba(255,255,255,.35); padding-bottom:1px; }
+  header .date{ color:var(--gold); font-size:12.5px; font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; }
+  header p{ margin:7px 0 0; color:#bcc9bf; font-size:12.5px; }
+  header p.tagline{ color:#a9bcae; }
+  header nav.top-nav{ margin-top:8px; display:flex; flex-wrap:wrap; gap:4px 14px; }
+  header nav.top-nav a{ font-size:12px; color:#cdd9ce; border-bottom:1px solid rgba(255,255,255,.3); }
+  .gate-stripe{ display:flex; height:5px; margin-top:16px; }
+  .gate-stripe span{ flex:1; }
+  a{ color:inherit; text-decoration:none; }
+  footer{ text-align:center; color:var(--ink-soft); font-size:11px; padding:26px 14px 30px; line-height:1.7; }
+.tg{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:9px;margin-left:3px;white-space:nowrap}.tg-ok{background:#E3F1E6;color:#2E7D46}.tg-warn{background:#FFF1D6;color:#9A6400}.tg-ng{background:#FBE3E1;color:#B0433A}.tg-push{background:#E3ECFB;color:#1E5FA8}.aimk{font-weight:900;color:#C8402A;margin-right:2px}.mmv{font-size:11px;color:#777;white-space:nowrap}.fb{margin:8px 0;padding:8px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;font-size:13px}.fb-buy{margin:6px 0;padding:6px 8px;background:#F4FAF5;border:1px solid #CFE6D5;border-radius:6px;line-height:1.7}.fm{margin:4px 0}.fm-head{display:grid;grid-template-columns:1fr 18px 1fr 18px 1fr 40px;font-size:11px;color:#777}.fm-row{display:grid;grid-template-columns:1fr 18px 1fr 18px 1fr 40px;align-items:center;padding:3px 0;border-bottom:1px dashed #ddd}.fm-c{display:flex;flex-wrap:wrap;gap:2px}.fm-c .car{width:22px;height:22px;line-height:22px;font-size:12px}.fm-a{color:#999;text-align:center}.fm-n{font-size:11px;color:#555;text-align:right}.fb-h{font-weight:800;font-size:13px}.fb-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:3px 0}.fb-row span{width:30px;font-size:12px;color:#555}.fb-b{width:32px;height:32px;border-radius:50%;border:2px solid #ccc;background:#fff;font-weight:800;cursor:pointer}.fb-b.on{background:var(--bg);color:var(--fg);border-color:#333}.fb-out{margin:6px 0;line-height:1.7}.fb-list span{display:inline-block;margin:1px 4px 1px 0;font-size:11.5px;color:#555}.fb-list .good{color:#2E7D46;font-weight:700}.fb-t{font-size:12px;border-collapse:collapse}.fb-t td,.fb-t th{padding:2px 6px;border-bottom:1px solid #eee}.fb-two{display:flex;gap:12px;flex-wrap:wrap;font-size:12px}.fb-two ol{margin:2px 0;padding-left:18px}.sumbox{margin:6px 0;padding:8px 10px;border:2px solid #C8402A33;border-radius:8px;background:#fff;font-size:13px;line-height:1.8}.sumbox .st{font-size:11px;color:#777}.rt-ai{font-size:10.5px;color:#999;white-space:nowrap}.ds-svg{width:100%;max-width:520px;display:block;margin:4px auto}.ds-cap{font-size:12px;color:#666}.ds-btns{display:flex;gap:8px;justify-content:center}.ds-btns button{padding:5px 14px;border:1px solid #ccc;border-radius:16px;background:#fff;font-weight:700}.ds-res{font-size:13px;text-align:center;margin:6px 0;min-height:1.4em}.live-note{font-size:12px;color:#1E5FA8;background:#EEF4FC;border-radius:6px;padding:4px 8px;margin:4px 0}.kguide{font-size:12px;margin:6px 0;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff}.kguide summary{cursor:pointer;font-weight:700}.kguide ul{margin:4px 0 0;padding-left:18px;line-height:1.7}
+  main{ max-width:720px; margin:0 auto; padding:16px 10px 60px; }
+  .tab-bar{ display:flex; gap:6px; overflow-x:auto; padding:14px 2px 14px; -webkit-overflow-scrolling:touch; }
+  .tab-btn{ flex:0 0 auto; background:var(--paper); border:1px solid var(--line); border-radius:3px; padding:7px 13px;
+            font-size:13px; font-weight:600; cursor:pointer; color:var(--ink); text-align:center; }
+  .tab-btn .tab-deadline{ font-size:10px; font-weight:400; color:var(--ink-soft); }
+  .tab-btn.active .tab-deadline{ color:#cfe0d5; }
+  .tab-btn.active{ background:var(--board); color:#fff; border-color:var(--board); }
+  .race-card{ background:var(--paper); border:1px solid var(--line); border-top:3px solid var(--pick-color,var(--board));
+              border-radius:2px; padding:16px; }
+  .race-head{ display:flex; gap:10px; align-items:baseline; margin-bottom:10px; flex-wrap:wrap; }
+  .race-head .raceno{ font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; font-weight:700; font-size:17px; color:var(--board); }
+  .race-head .title{ color:var(--ink-soft); font-size:12.5px; }
+  .race-head .deadline{ margin-left:auto; background:var(--paper2); border-radius:3px; padding:2px 9px; font-size:12px; color:var(--ink); font-weight:600; }
+  .banner-high{ background:linear-gradient(120deg,#fbf1de,#f5e5c2); border:1px solid var(--gold); border-radius:3px;
+                padding:9px 11px; font-size:13.5px; margin-bottom:10px; }
+  .banner-normal{ background:var(--paper2); border-radius:3px; padding:9px 11px; font-size:13.5px; margin-bottom:10px; color:var(--ink-soft); }
+  .note{ font-size:12px; color:var(--brick); margin:4px 0; }
+  table.main{ width:100%; border-collapse:collapse; font-size:12px; }
+  table.main th{ background:var(--board); color:#e9ecea; font-weight:500; padding:6px 4px; border-bottom:2px solid var(--gold); }
+  table.main td{ padding:6px 4px; text-align:center; border-bottom:1px solid var(--line); }
+  table.main tbody tr:nth-child(even){ background:rgba(198,154,78,.06); }
+  .dim{ color:var(--ink-soft); font-size:10px; }
+  .car{ display:inline-flex; align-items:center; justify-content:center; width:21px; height:21px; border-radius:50%;
+        font-size:11px; font-weight:700; border:1px solid rgba(0,0,0,.18); }
+  .sub-wrap{ display:flex; gap:16px; margin-top:10px; flex-wrap:wrap; }
+  .sub-wrap h4{ font-size:12px; margin:0 0 4px; color:var(--ink-soft); font-weight:600; }
+  table.sub{ font-size:12px; border-collapse:collapse; }
+  table.sub td{ padding:2px 8px 2px 0; }
+  .chart-block{ margin-top:18px; border-top:1px solid var(--line); padding-top:14px; }
+  .chart-block h4{ font-size:12.5px; color:var(--ink-soft); margin:0 0 10px; text-align:center; font-weight:600; }
+  .kimarite-table th, .kimarite-table td{ text-align:center; }
+  .kimarite-table td{ font-family:ui-monospace,"SF Mono",Menlo,monospace; }
+  .delta-up{ color:var(--brick); font-size:11px; font-weight:700; }
+  .delta-down{ color:var(--slate); font-size:11px; font-weight:700; }
+  .mw-label{ font-size:12px; color:var(--ink-soft); margin:14px 0 8px; font-weight:600; }
+  .mw-label:first-child{ margin-top:0; }
+  .mw-chips{ display:flex; gap:6px; flex-wrap:wrap; }
+  .mw-chip{ width:34px; height:34px; border-radius:50%; border:2px solid var(--line); background:var(--paper);
+            font-size:14px; font-weight:700; color:var(--ink); cursor:pointer; }
+  .mw-chip.active{ border-color:transparent; box-shadow:0 0 0 2px var(--board); }
+  .tf-chip{ min-width:44px; height:auto; border-radius:8px; border:2px solid var(--line); background:var(--paper);
+            font-size:13px; font-weight:700; color:var(--ink); cursor:pointer; padding:5px 8px; line-height:1.3; }
+  .tf-chip .mw-chip-sub{ display:block; font-size:9px; font-weight:600; opacity:.85; }
+  .mw-bar-row{ display:flex; align-items:center; gap:8px; padding:5px 0; }
+  .mw-bar-row-tap{ cursor:pointer; border-radius:4px; padding:5px 4px; margin:0 -4px; }
+  .mw-bar-row-tap.active{ background:rgba(198,154,78,.16); }
+  .mw-bar-row-tap:not(.active) .mw-bar-fill{ opacity:.55; }
+  .mw-bar-name{ font-size:12px; color:var(--ink); flex:0 0 auto; width:64px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .mw-bar-track{ flex:1; height:9px; background:var(--paper2); border-radius:5px; overflow:hidden; }
+  .mw-bar-fill{ display:block; height:100%; background:linear-gradient(90deg,var(--pine),#4c8a68); border-radius:5px; }
+  .mw-bar-val{ flex:0 0 auto; width:30px; text-align:right; font-size:13px; font-weight:700; color:var(--pine); }
+  .line-info-block{ font-size:12px; border-radius:3px; padding:10px 11px; margin:10px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .line-info-block.ok{ background:#eef4ec; border:1px solid #c7dcc0; }
+  .line-info-block.warn{ background:var(--paper2); color:#8a5a12; border:1px solid #e0cfa0; }
+  .line-group{ display:inline-flex; align-items:center; gap:3px; }
+  .line-arrow{ color:var(--ink-soft); font-size:11px; }
+  .tf-be{ margin-left:8px; font-size:11px; color:#2f6b3a; white-space:nowrap; }
+  .tf-badge{ display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; margin-left:4px; white-space:nowrap; }
+  .b-hon{ background:#b8322a; color:#fff; } .b-osa{ background:#e8d9b5; color:#5a4310; } .b-ai{ background:#1f4e8c; color:#fff; }
+  .tf-odds{ margin-left:6px; font-size:11px; color:var(--ink-soft); white-space:nowrap; }
+  .buy-box{ border:1px solid var(--line); border-radius:6px; padding:8px 10px; margin:6px 0 10px; background:rgba(198,154,78,.06); }
+  .buy-title{ font-weight:700; font-size:13px; margin-bottom:4px; } .buy-src{ font-weight:400; font-size:11px; color:var(--ink-soft); }
+  .buy-line{ display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:3px 0; font-size:12px; }
+  .buy-line .tf-badge{ margin-left:0; margin-right:4px; }
+  .buy-k{ font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:4px; padding:0 5px; background:var(--paper); }
+  .b-rec{ background:#2f6b3a; color:#fff; }
+  .tab-btn.hon{ opacity:.45; }
+  .tab-ana{ display:inline-block; margin-left:2px; background:#6A4FA0; color:#fff; font-size:9px; font-weight:700; padding:0 4px; border-radius:999px; vertical-align:middle; }
+  .tab-hon{ font-size:9px; color:#888; }
+  details.ai-ref{ margin:8px 0; border:1px solid #ddd; border-radius:8px; padding:6px 10px; background:#fff; }
+  details.ai-ref summary{ cursor:pointer; font-size:13px; font-weight:700; color:#666; }
+  .auto-box{ border:2px solid #2f6b3a; border-radius:8px; padding:10px 12px; margin:8px 0 12px; background:rgba(47,107,58,.06); }
+  .auto-title{ font-size:14px; margin-bottom:4px; } .auto-type{ display:inline-block; background:#2f6b3a; color:#fff; font-size:11px; font-weight:700; border-radius:4px; padding:1px 7px; margin-right:6px; }
+  .auto-sum{ font-size:13px; margin-bottom:4px; }
+  .auto-row{ display:flex; align-items:center; gap:10px; padding:4px 2px; border-bottom:1px solid var(--line); }
+  .auto-k{ flex:1; display:flex; gap:4px; }
+  .bd-wrap{ border-top:2px solid var(--line); margin-top:14px; padding-top:10px; }
+  .bd-row{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:6px 0; font-size:12px; }
+  .bd-row select, .bd-row input{ font:inherit; font-size:13px; padding:3px 4px; border:1px solid var(--line); border-radius:4px; background:var(--paper); color:inherit; }
+  .bd-row input[type=number]{ width:58px; }
+  .bd-head{ min-width:30px; height:28px; border:2px solid var(--line); border-radius:6px; background:transparent; font-weight:700; cursor:pointer; color:inherit; }
+  .bd-hint{ color:var(--ink-soft); font-size:11px; }
+  .bd-sum{ font-size:13px; margin:8px 0 4px; line-height:1.6; }
+  .bd-good{ color:#2f6b3a; }
+  .bd-hist{ font-size:11px; color:var(--ink-soft); }
+  .bd-copy{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:6px; font-size:12px; }
+  .bd-copy button{ font:inherit; font-size:12px; padding:4px 10px; border:1px solid var(--line); border-radius:4px; background:var(--paper); cursor:pointer; color:inherit; }
+  .bd-keys{ color:var(--ink-soft); word-break:break-all; }
+  .buy-note{ font-size:11px; color:var(--ink-soft); margin-top:4px; line-height:1.5; }
+  .tf-list{ display:flex; flex-direction:column; gap:2px; }
+  .tf-row{ display:flex; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); }
+  .tf-row:first-child{ background:rgba(198,154,78,.10); border-radius:3px; }
+  .tf-rank{ flex:0 0 auto; width:18px; text-align:center; font-size:12px; font-weight:700; color:var(--ink-soft); }
+  .tf-combo{ flex:1; display:flex; align-items:center; gap:5px; }
+  .tf-arrow{ color:var(--ink-soft); font-size:12px; }
+  .tf-prob{ flex:0 0 auto; font-size:13px; font-weight:700; color:var(--brick); min-width:52px; text-align:right; }
+  .subtab-bar{ display:flex; gap:6px; margin:12px 0 10px; border-bottom:1px solid var(--line); }
+  .subtab-btn{ background:none; border:none; border-bottom:2px solid transparent; padding:7px 4px; margin-bottom:-1px;
+               font-size:13px; font-weight:600; color:var(--ink-soft); cursor:pointer; }
+  .subtab-btn.active{ color:var(--board); border-bottom-color:var(--gold); }
+  .subtab-panel{ }
+  .value-alert-badge{ background:#fdecc8; border:1px solid var(--gold); color:#8a5a12; border-radius:3px;
+                       padding:2px 8px; font-size:11px; font-weight:700; }
+  .dev-scenarios{ display:flex; flex-direction:column; gap:8px; }
+  .dev-scenario-block{ background:var(--paper2); border-radius:4px; padding:7px 10px; }
+  .dev-scenario-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .dev-scenario-label{ font-size:12px; color:var(--ink); font-weight:600; }
+  .dev-scenario-pct{ font-size:13px; font-weight:700; color:#b8763f; }
+  .dev-picks{ margin-top:5px; font-size:11.5px; color:var(--ink-soft); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .dev-pick{ display:inline-flex; align-items:center; gap:3px; font-weight:700; color:var(--ink); }
+  .hole-line{ font-size:13px; font-weight:600; color:var(--ink); display:flex; align-items:center; gap:6px; margin-bottom:10px; }
+  .hole-tag{ font-size:10px; font-weight:700; color:#8a5a12; background:#fdecc8; border-radius:3px; padding:1px 6px; }
+  .dev-anim-note{ font-size:10.5px; color:var(--ink-soft); line-height:1.5; margin:-4px 0 9px; }
+  .dev-play-btn{ background:var(--board); color:#fff; border:none; border-radius:4px; padding:7px 16px;
+                 font-size:12.5px; font-weight:700; cursor:pointer; margin-bottom:10px; }
+  .dev-track-wrap{ background:#cfd6c6; border-radius:8px; padding:6px; margin-bottom:14px; }
+  .dev-track-svg{ width:100%; height:auto; display:block; }
+  .dev-track-road{ fill:#9a9d97; stroke:#7d8077; stroke-width:1; }
+  .dev-track-field{ fill:url(#devGrassStripes); }
+  .dev-lane-guide{ fill:none; stroke-width:1.1; opacity:.55; }
+  .dev-lane-guide-inner{ stroke:#c0392b; }
+  .dev-lane-guide-outer{ stroke:#2d5fa8; }
+  .dev-finish-line-svg{ stroke:#fff; stroke-width:3; }
+  .dev-track-caption{ font-size:10px; font-weight:700; text-anchor:middle; fill:var(--ink-soft); }
+  .dev-track-caption-goal{ fill:#8a5a12; }
+  .dev-track-corner-label{ font-size:7px; font-weight:700; text-anchor:middle; fill:#5c6b60; opacity:.75; }
+  .dev-track-field-label{ font-size:8px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.55); letter-spacing:1px; }
+  .dev-track-arrow{ font-size:11px; font-weight:700; text-anchor:middle; fill:rgba(255,255,255,.6); }
+  .dev-car-icon{ transition:none; }
+  .dev-bike-wheel{ fill:#2a2a2a; }
+  .dev-bike-frame{ stroke:#2a2a2a; stroke-width:1.4; stroke-linecap:round; }
+  .dev-bike-rider{ stroke:rgba(0,0,0,.3); stroke-width:.6; }
+  .dev-car-label{ font-size:7.5px; font-weight:800; text-anchor:middle; pointer-events:none; dominant-baseline:central; }
+  .dev-line-connector{ fill:none; stroke:#fff; stroke-width:2.5; stroke-linecap:round; opacity:.5; }
+  @media (max-width:420px){
+    table.main{ font-size:10.5px; }
+    table.main th, table.main td{ padding:4px 3px; }
+  }
+</style>
+<meta name="jx-skin" content="1"><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"><style>
+  body { background: #F6F1E4 !important; color: #2A2118; font-family: "Noto Sans JP", sans-serif; }
+  .jx-top { background: #1F4D3A; color: #fff; padding: 18px 20px 14px; margin: 0 0 12px; }
+  .jx-top .jx-in { max-width: 900px; margin: 0 auto; }
+  .jx-top h1 { margin: 0 0 4px; font: 800 1.45rem/1.3 "Shippori Mincho", serif; letter-spacing: .02em; color: #fff; }
+  .jx-top h1 a { color: #fff; text-decoration: none; }
+  .jx-top .jx-meta { margin: 0 0 8px; font-size: .78rem; color: #CFE3D8; line-height: 1.5; }
+  .jx-top .jx-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .jx-top .jx-links a { color: #fff; font-size: .78rem; text-decoration: none; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.12); }
+  .jx-top .jx-links a.jx-home { background: #F0D896; color: #1F3B2C; font-weight: 700; }
+  h1, h2 { font-family: "Shippori Mincho", serif; }
+</style></head>
+<body>
+<header class="jx-top"><div class="jx-in"><h1>西武園競輪</h1><p class="jx-meta">2026年11月24日</p><nav class="jx-links"><a class="jx-home" href="../index.html">← 今日の予想</a><a href="../print.html">印刷用</a><a href="../results.html">成績</a><a href="../drops.html">オッズ急落</a></nav></div></header>
+<main>
+  <div class="tab-bar"><button class="tab-btn" data-deadline="15:54" data-race-no="1" onclick="showTab('race1', this)">1R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>15:54</span></button><button class="tab-btn" data-deadline="16:17" data-race-no="2" onclick="showTab('race2', this)">2R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>16:17</span></button><button class="tab-btn" data-deadline="16:40" data-race-no="3" onclick="showTab('race3', this)">3R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>16:40</span></button><button class="tab-btn" data-deadline="17:06" data-race-no="4" onclick="showTab('race4', this)">4R<br><span class='tab-deadline'>17:06</span></button><button class="tab-btn hon" data-deadline="17:32" data-race-no="5" onclick="showTab('race5', this)">5R<br><span class='tab-deadline'>17:32</span><br><span class='tab-hon'>本命</span></button><button class="tab-btn" data-deadline="17:58" data-race-no="6" onclick="showTab('race6', this)">6R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>17:58</span></button><button class="tab-btn" data-deadline="18:24" data-race-no="7" onclick="showTab('race7', this)">7R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>18:24</span></button><button class="tab-btn" data-deadline="18:50" data-race-no="8" onclick="showTab('race8', this)">8R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>18:50</span></button><button class="tab-btn" data-deadline="19:16" data-race-no="9" onclick="showTab('race9', this)">9R<span class='tab-ana'>穴</span><br><span class='tab-deadline'>19:16</span></button><button class="tab-btn" data-deadline="19:42" data-race-no="10" onclick="showTab('race10', this)">10R<br><span class='tab-deadline'>19:42</span></button><button class="tab-btn" data-deadline="20:10" data-race-no="11" onclick="showTab('race11', this)">11R<br><span class='tab-deadline'>20:10</span></button></div>
+  
+    <div id="race1" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242601"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": -0.0225, "1-2-4": -0.04, "1-2-5": -0.0971, "1-2-6": -0.1191, "1-2-7": -0.0788, "1-3-2": -0.0605, "1-3-4": -0.0075, "1-3-5": 0.0365, "1-3-6": -0.0361, "1-3-7": -0.0463, "1-4-2": -0.001, "1-4-3": 0.0695, "1-4-5": -0.0051, "1-4-6": -0.0271, "1-4-7": 0.0132, "1-5-2": -0.0656, "1-5-3": 0.106, "1-5-4": -0.0126, "1-5-6": -0.0412, "1-5-7": -0.0514, "1-6-2": -0.0121, "1-6-3": 0.109, "1-6-4": 0.041, "1-6-5": 0.0344, "1-6-7": 0.0021, "1-7-2": -0.0161, "1-7-3": 0.0545, "1-7-4": 0.037, "1-7-5": -0.0202, "1-7-6": -0.0422, "2-1-3": 0.0135, "2-1-4": 0.0152, "2-1-5": -0.0611, "2-1-6": -0.0735, "2-1-7": -0.0236, "2-3-1": 0.0591, "2-3-4": 0.1512, "2-3-5": 0.0749, "2-3-6": 0.0625, "2-3-7": 0.1124, "2-4-1": -0.0172, "2-4-3": 0.0733, "2-4-5": -0.0014, "2-4-6": 0.0368, "2-4-7": 0.1373, "2-5-1": -0.0028, "2-5-3": 0.0877, "2-5-4": 0.0894, "2-5-6": 0.0007, "2-5-7": 0.0506, "2-6-1": 0.0394, "2-6-3": 0.1299, "2-6-4": 0.1821, "2-6-5": 0.0552, "2-6-7": 0.1433, "2-7-1": 0.0302, "2-7-3": 0.1207, "2-7-4": 0.2235, "2-7-5": 0.046, "2-7-6": 0.0842, "3-1-2": 0.0229, "3-1-4": 0.076, "3-1-5": 0.12, "3-1-6": 0.0474, "3-1-7": 0.0372, "3-2-1": 0.1065, "3-2-4": 0.1795, "3-2-5": 0.1224, "3-2-6": 0.1004, "3-2-7": 0.1407, "3-4-1": 0.1979, "3-4-2": 0.2179, "3-4-5": 0.2138, "3-4-6": 0.1918, "3-4-7": 0.2321, "3-5-1": 0.179, "3-5-2": 0.0979, "3-5-4": 0.1509, "3-5-6": 0.1223, "3-5-7": 0.1121, "3-6-1": 0.2371, "3-6-2": 0.2065, "3-6-4": 0.2595, "3-6-5": 0.2529, "3-6-7": 0.2207, "3-7-1": 0.1843, "3-7-2": 0.2042, "3-7-4": 0.2573, "3-7-5": 0.2001, "3-7-6": 0.1782, "4-1-2": 0.1314, "4-1-3": 0.1827, "4-1-5": 0.1081, "4-1-6": 0.0957, "4-1-7": 0.1456, "4-2-1": 0.0601, "4-2-3": 0.1506, "4-2-5": 0.0759, "4-2-6": 0.1141, "4-2-7": 0.2145, "4-3-1": 0.2277, "4-3-2": 0.2668, "4-3-5": 0.2436, "4-3-6": 0.2312, "4-3-7": 0.2811, "4-5-1": 0.1671, "4-5-2": 0.2062, "4-5-3": 0.2575, "4-5-6": 0.1705, "4-5-7": 0.2204, "4-6-1": 0.208, "4-6-2": 0.2977, "4-6-3": 0.2985, "4-6-5": 0.2239, "4-6-7": 0.3119, "4-7-1": 0.1378, "4-7-2": 0.278, "4-7-3": 0.2283, "4-7-5": 0.1536, "4-7-6": 0.1918, "5-1-2": 0.0319, "5-1-3": 0.2098, "5-1-4": 0.0849, "5-1-6": 0.0563, "5-1-7": 0.0461, "5-2-1": -0.0472, "5-2-3": 0.0433, "5-2-4": 0.0258, "5-2-6": -0.0534, "5-2-7": -0.013, "5-3-1": 0.0871, "5-3-2": 0.0059, "5-3-4": 0.059, "5-3-6": 0.0304, "5-3-7": 0.0202, "5-4-1": 0.0454, "5-4-2": 0.0653, "5-4-3": 0.1358, "5-4-6": 0.0392, "5-4-7": 0.0795, "5-6-1": 0.0853, "5-6-2": 0.0546, "5-6-3": 0.1757, "5-6-4": 0.1077, "5-6-7": 0.0689, "5-7-1": 0.0287, "5-7-2": 0.0487, "5-7-3": 0.1192, "5-7-4": 0.1017, "5-7-6": 0.0226, "6-1-2": -0.0065, "6-1-3": 0.105, "6-1-4": 0.0465, "6-1-5": 0.0303, "6-1-7": 0.0077, "6-2-3": 0.0899, "6-2-4": 0.1325, "6-2-5": 0.0152, "6-2-7": 0.0937, "6-3-1": 0.1496, "6-3-2": 0.1286, "6-3-4": 0.1816, "6-3-5": 0.1654, "6-3-7": 0.1428, "6-4-1": 0.0907, "6-4-2": 0.1708, "6-4-3": 0.1812, "6-4-5": 0.1066, "6-4-7": 0.1851, "6-5-1": 0.0897, "6-5-2": 0.0687, "6-5-3": 0.1802, "6-5-4": 0.1217, "6-5-7": 0.0829, "6-7-1": 0.0772, "6-7-2": 0.1573, "6-7-3": 0.1677, "6-7-4": 0.2104, "6-7-5": 0.0931, "7-1-2": 0.0348, "7-1-3": 0.0861, "7-1-4": 0.0878, "7-1-5": 0.0115, "7-1-6": -0.0009, "7-2-1": 0.1319, "7-2-3": 0.2224, "7-2-4": 0.3314, "7-2-5": 0.1477, "7-2-6": 0.1859, "7-3-1": 0.1325, "7-3-2": 0.1716, "7-3-4": 0.2247, "7-3-5": 0.1484, "7-3-6": 0.136, "7-4-1": 0.0562, "7-4-2": 0.1965, "7-4-3": 0.1467, "7-4-5": 0.0721, "7-4-6": 0.1102, "7-5-1": 0.0689, "7-5-2": 0.108, "7-5-3": 0.1594, "7-5-4": 0.161, "7-5-6": 0.0723, "7-6-1": 0.1129, "7-6-2": 0.2026, "7-6-3": 0.2034, "7-6-4": 0.2557, "7-6-5": 0.1288}};</script><span class="live-id" data-nkid="202611242601"></span>
+      <div class="race-card" style="--pick-color:#ffffff;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">1R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 15:54</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>5番 浜田 翔平</b><span class="tg tg-warn">注意</span> <span class="st">過去 ◎の勝率15%・3着内56%</span></div><div>推し <b>1番 木本 賢二</b><span class="tg tg-push">推し</span> <span class="st">過去 勝率38%・3着内73%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>5</b>(56%)</span>　<span class="role-1">軸向き：<b>1</b>(69%) <b>7</b>(57%)</span>　<span class="role-2">相手：3 4</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>5-1-3</b></details><br><span class="dim">万車率 <b style="color:inherit">36%</b> ・ 配当の目安 6,820円(3,260〜11,120円) ・ 中穴率 61%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-5-3</s> <s>5-1-3</s> <s>7-2-4</s> <s>7-1-5</s> <s>1-3-5</s> <s>1-7-5</s> <s>7-1-4</s> <s>7-1-3</s> <s>1-5-4</s> <s>1-5-7</s> <s>5-7-1</s> <s>5-1-7</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・5・7を頭に、来る確率の高い順に合成2倍まで(最大20点)・13点・当たる確率39.4%・合成2.0倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-n">1点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-5-3</b> 11.5倍 <span class="dim">(7.1%)</span> ／ <b>5-1-3</b> 17.2倍 <span class="dim">(5.3%)</span> ／ <b>7-2-4</b> 31.9倍 <span class="dim">(3.2%)</span> ／ <b>7-1-5</b> 24.2倍 <span class="dim">(3.1%)</span> ／ <b>1-3-5</b> 27.5倍 <span class="dim">(2.8%)</span> ／ <b>1-7-5</b> 26.8倍 <span class="dim">(2.7%)</span> ／ <b>7-1-4</b> 31.2倍 <span class="dim">(2.6%)</span> ／ <b>7-1-3</b> 32.6倍 <span class="dim">(2.4%)</span> ／ <b>1-5-4</b> 30.9倍 <span class="dim">(2.3%)</span> ／ <b>1-5-7</b> 30.6倍 <span class="dim">(2.3%)</span> ／ <b>1-7-3</b> 38.0倍 <span class="dim">(2.0%)</span> ／ <b>7-5-1</b> 41.7倍 <span class="dim">(1.9%)</span> ／ <b>5-1-4</b> 42.9倍 <span class="dim">(1.8%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
+        
+        
+    <div id="race1_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>浜田 翔平<span class="tg tg-warn">注意</span><br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="5"><b>18.5%</b><br><span class="rt-ai">AI 38%</span></td>
+          <td class="lv3" data-car="5">56%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>木本 賢二<span class="tg tg-push">推し</span><br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="1"><b>31.9%</b><br><span class="rt-ai">AI 24%</span></td>
+          <td class="lv3" data-car="1">69%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>等々力 久就<br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="7"><b>26.1%</b><br><span class="rt-ai">AI 17%</span></td>
+          <td class="lv3" data-car="7">57%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>高瀬 卓<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="2"><b>5.9%</b><br><span class="rt-ai">AI 10%</span></td>
+          <td class="lv3" data-car="2">28%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>柴田<br><span class="dim">A3・3番手・マーク</span></td>
+          <td class="lv1" data-car="4"><b>8.8%</b><br><span class="rt-ai">AI 5%</span></td>
+          <td class="lv3" data-car="4">38%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>佐川 拓也<br><span class="dim">A3・3番手・マーク</span></td>
+          <td class="lv1" data-car="3"><b>6.6%</b><br><span class="rt-ai">AI 4%</span></td>
+          <td class="lv3" data-car="3">42%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>佐藤 裕輝<br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="6"><b>2.1%</b><br><span class="rt-ai">AI 2%</span></td>
+          <td class="lv3" data-car="6">10%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race2" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242602"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": 0.0678, "1-2-4": 0.1614, "1-2-5": 0.0797, "1-2-6": 0.2625, "1-2-7": 0.0823, "1-3-2": -0.0062, "1-3-4": 0.1024, "1-3-5": -0.0298, "1-3-6": 0.2035, "1-3-7": 0.0234, "1-4-2": 0.0946, "1-4-3": 0.1096, "1-4-5": 0.071, "1-4-6": 0.3043, "1-4-7": 0.1242, "1-5-2": 0.0785, "1-5-3": 0.043, "1-5-4": 0.1366, "1-5-6": 0.2377, "1-5-7": 0.0575, "1-6-2": 0.1971, "1-6-3": 0.2121, "1-6-4": 0.3057, "1-6-5": 0.1735, "1-6-7": 0.2267, "1-7-2": -0.026, "1-7-3": -0.011, "1-7-4": 0.0826, "1-7-5": -0.0496, "1-7-6": 0.1837, "2-1-3": 0.1954, "2-1-4": 0.289, "2-1-5": 0.2073, "2-1-6": 0.3901, "2-1-7": 0.21, "2-3-1": 0.1235, "2-3-4": 0.2482, "2-3-5": 0.116, "2-3-7": 0.1692, "2-4-1": 0.2229, "2-4-3": 0.254, "2-4-5": 0.2154, "2-4-6": 0.4488, "2-4-7": 0.2686, "2-5-1": 0.2069, "2-5-3": 0.1874, "2-5-4": 0.281, "2-5-6": 0.3822, "2-5-7": 0.202, "2-6-3": 0.3565, "2-6-5": 0.3179, "2-6-7": 0.3711, "2-7-1": 0.1024, "2-7-3": 0.1335, "2-7-4": 0.2272, "2-7-5": 0.0949, "3-1-2": -0.0379, "3-1-4": 0.0803, "3-1-5": -0.0616, "3-1-6": 0.1814, "3-1-7": 0.0012, "3-2-1": -0.0359, "3-2-4": 0.0984, "3-2-5": -0.0434, "3-2-6": 0.1996, "3-2-7": 0.0194, "3-4-1": -0.0626, "3-4-2": -0.0464, "3-4-5": -0.0701, "3-4-6": 0.2234, "3-4-7": 0.0433, "3-5-1": -0.063, "3-5-2": -0.0468, "3-5-4": 0.0714, "3-5-6": 0.1725, "3-5-7": -0.0077, "3-6-1": 0.0424, "3-6-2": 0.0585, "3-6-4": 0.2273, "3-6-5": 0.0349, "3-6-7": 0.1482, "3-7-1": -0.0283, "3-7-2": -0.0122, "3-7-4": 0.1628, "3-7-5": -0.0358, "3-7-6": 0.2577, "4-1-2": 0.1737, "4-1-3": 0.1983, "4-1-5": 0.1501, "4-1-6": 0.393, "4-1-7": 0.2129, "4-2-1": 0.1744, "4-2-3": 0.2151, "4-2-5": 0.1669, "4-2-6": 0.4099, "4-2-7": 0.2297, "4-3-1": 0.0483, "4-3-2": 0.0644, "4-3-5": 0.0408, "4-3-6": 0.3343, "4-3-7": 0.1541, "4-5-1": 0.1496, "4-5-2": 0.1657, "4-5-3": 0.1903, "4-5-6": 0.3851, "4-5-7": 0.2049, "4-6-1": 0.2508, "4-6-2": 0.2669, "4-6-3": 0.3421, "4-6-5": 0.2433, "4-6-7": 0.3567, "4-7-1": 0.0278, "4-7-2": 0.0439, "4-7-3": 0.119, "4-7-5": 0.0203, "4-7-6": 0.3138, "5-1-2": 0.0893, "5-1-3": 0.0537, "5-1-4": 0.1474, "5-1-6": 0.2485, "5-1-7": 0.0683, "5-2-1": 0.09, "5-2-3": 0.0706, "5-2-4": 0.1642, "5-2-6": 0.2653, "5-2-7": 0.0852, "5-3-1": -0.0205, "5-3-2": -0.0043, "5-3-4": 0.1043, "5-3-6": 0.2054, "5-3-7": 0.0252, "5-4-1": 0.0813, "5-4-2": 0.0974, "5-4-3": 0.1124, "5-4-6": 0.3072, "5-4-7": 0.127, "5-6-1": 0.1838, "5-6-2": 0.1999, "5-6-3": 0.2149, "5-6-4": 0.3086, "5-7-1": -0.0394, "5-7-2": -0.0233, "5-7-3": -0.0083, "5-7-4": 0.0853, "6-1-2": 0.2775, "6-1-3": 0.3021, "6-1-4": 0.3957, "6-1-5": 0.2539, "6-1-7": 0.3167, "6-2-1": 0.2782, "6-2-3": 0.3189, "6-2-4": 0.4125, "6-2-7": 0.3335, "6-3-1": 0.1545, "6-3-2": 0.1707, "6-3-4": 0.3394, "6-3-5": 0.147, "6-3-7": 0.2604, "6-4-1": 0.2521, "6-4-2": 0.2683, "6-4-3": 0.3434, "6-4-5": 0.2446, "6-4-7": 0.358, "6-5-1": 0.2534, "6-5-2": 0.2696, "6-5-3": 0.2942, "6-5-7": 0.3087, "6-7-1": 0.1318, "6-7-2": 0.1479, "6-7-4": 0.3167, "6-7-5": 0.1243, "7-1-2": -0.0272, "7-1-3": -0.0026, "7-1-4": 0.091, "7-1-5": -0.0508, "7-1-6": 0.1921, "7-2-1": -0.0264, "7-2-3": 0.0143, "7-2-4": 0.1079, "7-2-5": -0.0339, "7-2-6": 0.209, "7-3-1": -0.1038, "7-3-2": -0.0877, "7-3-4": 0.0811, "7-3-5": -0.1113, "7-3-6": 0.1822, "7-4-1": -0.0525, "7-4-2": -0.0364, "7-4-3": 0.0387, "7-4-5": -0.06, "7-4-6": 0.2335, "7-5-1": -0.0514, "7-5-2": -0.0353, "7-5-3": -0.0107, "7-5-4": 0.0829, "7-5-6": 0.1841, "7-6-1": 0.0502, "7-6-2": 0.0663, "7-6-3": 0.1414, "7-6-4": 0.2351}};</script><span class="live-id" data-nkid="202611242602"></span>
+      <div class="race-card" style="--pick-color:#d8322a;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">2R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 16:17</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>3番 石田 宏樹</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>3</b>(77%)</span>　<span class="role-1">軸向き：<b>7</b>(65%) <b>4</b>(62%)</span>　<span class="role-2">相手：1</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>3-7-4</b></details><br><span class="dim">万車率 <b style="color:inherit">36%</b> ・ 配当の目安 4,640円(2,470〜11,190円) ・ 中穴率 50%</span><br><details style="display:inline"><summary class="dim">消し目 17組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>3-7-4</s> <s>7-3-4</s> <s>3-7-1</s> <s>3-4-7</s> <s>3-1-4</s> <s>3-2-4</s> <s>3-7-2</s> <s>3-1-2</s> <s>3-1-7</s> <s>3-7-5</s> <s>7-4-3</s> <s>3-2-1</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の3・7を頭に、来る確率の高い順に合成2倍まで(最大20点)・6点・当たる確率39.2%・合成2.1倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">1点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>3-7-4</b> 4.3倍 <span class="dim">(19.8%)</span> ／ <b>7-3-4</b> 9.7倍 <span class="dim">(8.4%)</span> ／ <b>3-7-1</b> 20.6倍 <span class="dim">(3.5%)</span> ／ <b>3-4-7</b> 24.7倍 <span class="dim">(3.2%)</span> ／ <b>3-1-4</b> 33.3倍 <span class="dim">(2.4%)</span> ／ <b>3-2-4</b> 41.3倍 <span class="dim">(2.0%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span></div>
+        
+        
+    <div id="race2_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>石田 宏樹<span class="tg tg-ok">普通</span><br><span class="dim">A3・先頭・差し</span></td>
+          <td class="lv1" data-car="3"><b>52.0%</b><br><span class="rt-ai">AI 65%</span></td>
+          <td class="lv3" data-car="3">77%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>阿部 利光<br><span class="dim">A3・2番手・マーク</span></td>
+          <td class="lv1" data-car="7"><b>17.9%</b><br><span class="rt-ai">AI 17%</span></td>
+          <td class="lv3" data-car="7">65%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>畠山 裕行<br><span class="dim">A3・先頭・差し</span></td>
+          <td class="lv1" data-car="5"><b>5.1%</b><br><span class="rt-ai">AI 6%</span></td>
+          <td class="lv3" data-car="5">22%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>齋藤 輝彦<br><span class="dim">A3・先頭・差し</span></td>
+          <td class="lv1" data-car="1"><b>8.8%</b><br><span class="rt-ai">AI 5%</span></td>
+          <td class="lv3" data-car="1">36%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>今村 俊雄<br><span class="dim">A3・3番手・マーク</span></td>
+          <td class="lv1" data-car="4"><b>9.0%</b><br><span class="rt-ai">AI 4%</span></td>
+          <td class="lv3" data-car="4">62%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>小塚 潤<br><span class="dim">A3・先頭・差し</span></td>
+          <td class="lv1" data-car="2"><b>4.3%</b><br><span class="rt-ai">AI 3%</span></td>
+          <td class="lv3" data-car="2">26%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>落合 豊<br><span class="dim">A3・4番手・マーク</span></td>
+          <td class="lv1" data-car="6"><b>2.9%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="6">11%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race3" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242603"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": -0.019, "1-2-4": 0.0108, "1-2-5": 0.0067, "1-2-6": 0.0463, "1-2-7": 0.124, "1-3-2": -0.0155, "1-3-4": 0.0868, "1-3-5": -0.0184, "1-3-6": 0.0717, "1-3-7": 0.0989, "1-4-2": 0.0804, "1-4-3": 0.1529, "1-4-5": 0.0775, "1-4-6": 0.1676, "1-4-7": 0.1948, "1-5-2": 0.0557, "1-5-3": 0.0271, "1-5-4": 0.0569, "1-5-6": 0.0924, "1-5-7": 0.1701, "1-6-2": 0.1402, "1-6-3": 0.1621, "1-6-4": 0.1919, "1-6-5": 0.1373, "1-6-7": 0.2546, "1-7-2": 0.167, "1-7-3": 0.1383, "1-7-4": 0.1682, "1-7-5": 0.1641, "1-7-6": 0.2036, "2-1-3": -0.043, "2-1-4": -0.0131, "2-1-5": -0.0076, "2-1-6": 0.0127, "2-1-7": 0.1097, "2-3-1": -0.1025, "2-3-4": -0.0184, "2-3-5": -0.0635, "2-3-7": 0.0539, "2-4-1": -0.0066, "2-4-3": 0.0477, "2-4-5": 0.0325, "2-4-6": 0.0023, "2-4-7": 0.1498, "2-5-1": -0.0355, "2-5-3": -0.0317, "2-5-4": -0.0019, "2-5-6": -0.0266, "2-5-7": 0.1715, "2-6-1": -0.0463, "2-6-3": -0.0932, "2-6-4": -0.0633, "2-6-5": -0.0578, "2-6-7": 0.0595, "2-7-1": 0.0118, "2-7-3": 0.0155, "2-7-4": 0.0454, "2-7-5": 0.1014, "3-1-2": 0.003, "3-1-4": 0.1149, "3-1-5": 0.0001, "3-1-6": 0.0806, "3-1-7": 0.1174, "3-2-1": -0.0601, "3-2-4": 0.0337, "3-2-5": -0.0306, "3-2-7": 0.0867, "3-4-1": 0.1047, "3-4-2": 0.0866, "3-4-5": 0.0836, "3-4-6": 0.1136, "3-4-7": 0.2009, "3-5-1": -0.0103, "3-5-2": 0.0222, "3-5-4": 0.0835, "3-5-6": -0.0014, "3-5-7": 0.1365, "3-6-1": 0.0209, "3-6-4": 0.0641, "3-6-5": -0.0508, "3-7-1": 0.0962, "3-7-2": 0.1286, "3-7-4": 0.1899, "3-7-5": 0.1257, "3-7-6": 0.1051, "4-1-2": 0.097, "4-1-3": 0.1791, "4-1-5": 0.0941, "4-1-6": 0.1746, "4-1-7": 0.2114, "4-2-1": 0.034, "4-2-3": 0.0979, "4-2-5": 0.0634, "4-2-6": 0.0429, "4-2-7": 0.1808, "4-3-1": 0.2088, "4-3-2": 0.1907, "4-3-5": 0.1877, "4-3-6": 0.2177, "4-3-7": 0.305, "4-5-1": 0.0838, "4-5-2": 0.1162, "4-5-3": 0.1476, "4-5-6": 0.0927, "4-5-7": 0.2305, "4-6-1": 0.1149, "4-6-3": 0.1283, "4-6-5": 0.0433, "4-6-7": 0.1606, "4-7-1": 0.1902, "4-7-2": 0.2227, "4-7-3": 0.2541, "4-7-5": 0.2197, "5-1-2": 0.0276, "5-1-3": -0.0106, "5-1-4": 0.0192, "5-1-6": 0.0451, "5-1-7": 0.142, "5-2-1": 0.0568, "5-2-3": 0.0605, "5-2-4": 0.0904, "5-2-6": 0.0657, "5-2-7": 0.27, "5-3-1": -0.0664, "5-3-2": -0.0244, "5-3-4": 0.0177, "5-3-6": -0.0575, "5-3-7": 0.09, "5-4-1": 0.0295, "5-4-2": 0.0715, "5-4-3": 0.0838, "5-4-6": 0.0384, "5-4-7": 0.1858, "5-6-1": -0.01, "5-6-2": -0.0186, "5-6-3": -0.0568, "5-6-4": -0.027, "5-7-1": 0.0491, "5-7-2": 0.1417, "5-7-3": 0.0529, "5-7-4": 0.0828, "6-1-2": 0.0419, "6-1-3": 0.0637, "6-1-4": 0.0936, "6-1-5": 0.0389, "6-1-7": 0.1562, "6-2-1": -0.0051, "6-2-3": -0.0615, "6-2-4": -0.0317, "6-3-1": 0.0196, "6-3-2": -0.0586, "6-3-4": 0.0437, "6-3-7": 0.0557, "6-4-1": 0.1156, "6-4-3": 0.1097, "6-4-5": 0.0344, "6-5-1": 0.0449, "6-5-2": 0.0172, "6-5-3": -0.0115, "6-5-4": 0.0184, "6-7-1": 0.1511, "6-7-4": 0.1245, "6-7-5": 0.1204, "7-1-2": 0.2331, "7-1-3": 0.1948, "7-1-4": 0.2247, "7-1-5": 0.2301, "7-1-6": 0.2505, "7-2-1": 0.0922, "7-2-3": 0.096, "7-2-4": 0.1259, "7-2-5": 0.1819, "7-2-6": 0.1011, "7-3-1": 0.1342, "7-3-2": 0.1762, "7-3-4": 0.2184, "7-3-5": 0.1733, "7-3-6": 0.1431, "7-4-1": 0.2301, "7-4-2": 0.2722, "7-4-3": 0.2844, "7-4-5": 0.2692, "7-4-6": 0.239, "7-5-2": 0.2359, "7-5-3": 0.1471, "7-5-4": 0.1769, "7-5-6": 0.1522, "7-6-1": 0.1903, "7-6-2": 0.1818, "7-6-3": 0.1435, "7-6-4": 0.1734, "7-6-5": 0.1788}};</script><span class="live-id" data-nkid="202611242603"></span>
+      <div class="race-card" style="--pick-color:#ffffff;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">3R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 16:40</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>5番 舟山 佑京</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>5</b>(69%)</span>　<span class="role-1">軸向き：<b>1</b>(71%)</span>　<span class="role-2">相手：2 4</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>5-2-7</b></details><br><span class="dim">万車率 <b style="color:inherit">40%</b> ・ 配当の目安 5,180円(2,940〜11,550円) ・ 中穴率 52%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-5-2</s> <s>5-2-7</s> <s>1-6-5</s> <s>5-1-2</s> <s>5-2-1</s> <s>1-2-5</s> <s>1-5-4</s> <s>1-5-6</s> <s>1-6-4</s> <s>1-6-2</s> <s>1-4-5</s> <s>1-5-7</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・5を頭に、来る確率の高い順に合成2倍まで(最大20点)・9点・当たる確率39.3%・合成2.1倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">2点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-5-2</b> 10.8倍 <span class="dim">(7.4%)</span> ／ <b>5-2-7</b> 15.6倍 <span class="dim">(6.3%)</span> ／ <b>1-6-5</b> 14.4倍 <span class="dim">(6.0%)</span> ／ <b>5-1-2</b> 16.6倍 <span class="dim">(4.6%)</span> ／ <b>5-2-1</b> 22.4倍 <span class="dim">(3.5%)</span> ／ <b>1-2-5</b> 22.7倍 <span class="dim">(3.3%)</span> ／ <b>1-5-4</b> 26.3倍 <span class="dim">(3.0%)</span> ／ <b>1-5-6</b> 29.4倍 <span class="dim">(2.7%)</span> ／ <b>1-6-4</b> 36.6倍 <span class="dim">(2.4%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
+        
+        
+    <div id="race3_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>舟山 佑京<span class="tg tg-ok">普通</span><br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="5"><b>29.1%</b><br><span class="rt-ai">AI 40%</span></td>
+          <td class="lv3" data-car="5">69%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>藤岡 祐馬<br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="1"><b>42.0%</b><br><span class="rt-ai">AI 22%</span></td>
+          <td class="lv3" data-car="1">71%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>菅藤 智<br><span class="dim">A3・2番手・マーク</span></td>
+          <td class="lv1" data-car="2"><b>6.9%</b><br><span class="rt-ai">AI 15%</span></td>
+          <td class="lv3" data-car="2">49%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>瀧本 匡平<br><span class="dim">A3・先頭・捲り</span></td>
+          <td class="lv1" data-car="4"><b>9.8%</b><br><span class="rt-ai">AI 8%</span></td>
+          <td class="lv3" data-car="4">37%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>藤縄 洋介<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="3"><b>5.5%</b><br><span class="rt-ai">AI 8%</span></td>
+          <td class="lv3" data-car="3">22%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>市川 博章<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="6"><b>3.0%</b><br><span class="rt-ai">AI 7%</span></td>
+          <td class="lv3" data-car="6">28%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>吉橋 秀城<br><span class="dim">A3・3番手・マーク</span></td>
+          <td class="lv1" data-car="7"><b>3.7%</b><br><span class="rt-ai">AI 1%</span></td>
+          <td class="lv3" data-car="7">23%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race4" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242604"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-4": 0.3802, "1-2-5": 0.3046, "1-2-6": 0.3557, "1-2-7": 0.3779, "1-3-2": 0.3438, "1-3-5": 0.3128, "1-3-6": 0.4146, "1-3-7": 0.3356, "1-4-2": 0.2373, "1-4-5": 0.2568, "1-4-6": 0.2574, "1-4-7": 0.229, "1-5-2": 0.1702, "1-5-3": 0.178, "1-5-4": 0.2654, "1-5-6": 0.1903, "1-5-7": 0.1619, "1-6-2": 0.2911, "1-6-3": 0.3495, "1-6-4": 0.3357, "1-6-5": 0.2601, "1-7-2": 0.3127, "1-7-4": 0.3067, "1-7-5": 0.2311, "1-7-6": 0.2823, "2-1-3": 0.2929, "2-1-4": 0.3201, "2-1-5": 0.2444, "2-1-6": 0.3052, "2-1-7": 0.3369, "2-3-1": 0.3211, "2-3-4": 0.2096, "2-3-5": 0.134, "2-3-6": 0.2959, "2-3-7": 0.277, "2-4-1": 0.2824, "2-4-3": 0.1438, "2-4-5": 0.0953, "2-4-6": 0.1561, "2-4-7": 0.1878, "2-5-1": 0.2053, "2-5-3": 0.0666, "2-5-4": 0.0938, "2-5-6": 0.0789, "2-5-7": 0.1106, "2-6-1": 0.2684, "2-6-3": 0.2309, "2-6-4": 0.1569, "2-6-5": 0.0813, "2-6-7": 0.2243, "2-7-1": 0.3894, "2-7-3": 0.3013, "2-7-4": 0.2779, "2-7-5": 0.2023, "2-7-6": 0.3136, "3-1-4": 0.34, "3-1-5": 0.2643, "3-1-6": 0.3853, "3-1-7": 0.2967, "3-2-1": 0.3327, "3-2-4": 0.2212, "3-2-5": 0.1456, "3-2-6": 0.3171, "3-2-7": 0.2791, "3-4-1": 0.3024, "3-4-2": 0.1558, "3-4-5": 0.1152, "3-4-6": 0.2362, "3-4-7": 0.1476, "3-5-1": 0.2278, "3-5-2": 0.0813, "3-5-4": 0.1163, "3-5-6": 0.1616, "3-5-7": 0.073, "3-6-1": 0.4383, "3-6-2": 0.3423, "3-6-4": 0.3268, "3-6-5": 0.2512, "3-6-7": 0.3341, "3-7-1": 0.2593, "3-7-2": 0.2139, "3-7-4": 0.1478, "3-7-5": 0.0722, "3-7-6": 0.2437, "4-1-2": 0.1607, "4-1-3": 0.1686, "4-1-5": 0.1803, "4-1-6": 0.1809, "4-1-7": 0.1524, "4-2-1": 0.266, "4-2-3": 0.1178, "4-2-5": 0.0789, "4-2-6": 0.1301, "4-2-7": 0.1522, "4-3-1": 0.2743, "4-3-5": 0.0872, "4-3-6": 0.1889, "4-3-7": 0.1099, "4-5-1": 0.2069, "4-5-2": 0.0002, "4-5-3": 0.0081, "4-5-6": 0.0204, "4-5-7": -0.008, "4-6-1": 0.2216, "4-6-3": 0.1239, "4-6-5": 0.0345, "4-7-1": 0.1926, "4-7-2": 0.087, "4-7-3": 0.0443, "4-7-5": 0.0055, "5-1-2": 0.0347, "5-1-3": 0.0425, "5-1-4": 0.1299, "5-1-6": 0.0548, "5-1-7": 0.0264, "5-2-1": 0.1299, "5-2-3": -0.0183, "5-2-4": 0.0184, "5-2-6": -0.006, "5-2-7": 0.0161, "5-3-1": 0.1408, "5-3-2": -0.0153, "5-3-4": 0.0293, "5-3-6": 0.0554, "5-3-7": -0.0235, "5-4-1": 0.2602, "5-4-2": 0.0473, "5-4-3": 0.0551, "5-4-6": 0.0674, "5-4-7": 0.039, "5-6-1": 0.0941, "5-6-2": -0.062, "5-6-3": -0.0036, "5-6-4": -0.0174, "5-6-7": -0.0703, "5-7-1": 0.0622, "5-7-2": -0.0434, "5-7-3": -0.086, "5-7-4": -0.0493, "5-7-6": -0.0737, "6-1-3": 0.3231, "6-1-4": 0.2901, "6-1-5": 0.2145, "6-1-7": 0.2468, "6-3-1": 0.3352, "6-3-4": 0.2238, "6-3-5": 0.1481, "6-3-7": 0.231, "6-4-1": 0.2525, "6-4-3": 0.174, "6-4-5": 0.0654, "6-5-1": 0.184, "6-5-2": 0.0375, "6-5-3": 0.1055, "6-7-1": 0.2095, "6-7-3": 0.1815, "6-7-4": 0.098, "6-7-5": 0.0224, "7-1-2": 0.2744, "7-1-4": 0.2493, "7-1-5": 0.1737, "7-1-6": 0.2345, "7-2-1": 0.2861, "7-2-3": 0.198, "7-2-4": 0.1747, "7-2-5": 0.099, "7-3-1": 0.2504, "7-3-2": 0.2146, "7-3-4": 0.1389, "7-4-1": 0.2118, "7-4-2": 0.1254, "7-4-3": 0.0731, "7-4-5": 0.0246, "7-4-6": 0.0854, "7-5-1": 0.1403, "7-5-2": 0.0539, "7-5-3": 0.0016, "7-5-4": 0.0288, "7-5-6": 0.014, "7-6-1": 0.1977, "7-6-2": 0.1619}};</script><span class="live-id" data-nkid="202611242604"></span>
+      <div class="race-card" style="--pick-color:#e8c221;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">4R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 17:06</span>
+          
+        </div>
+        <div class="banner-high">5号車 田沼 龍弥 が本命（予測1着率 73.9%）</div>
+        <div class="sumbox"><div>◎ <b>5番 田沼 龍弥</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>5</b>(90%)</span>　<span class="role-1">軸向き：<b>4</b>(64%)</span>　<span class="role-2">相手：2 1</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>5-4-1</b></details><br><span class="dim">万車率 <b style="color:inherit">24%</b> ・ 配当の目安 1,750円(1,250〜5,220円) ・ 中穴率 38%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>5-4-1</s> <s>5-2-7</s> <s>5-4-2</s> <s>5-2-4</s> <s>5-2-3</s> <s>5-4-3</s> <s>5-3-2</s> <s>5-4-7</s> <s>5-3-4</s> <s>4-5-1</s> <s>5-1-4</s> <s>5-2-6</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の5を頭に、来る確率の高い順に合成2倍まで(最大20点)・3点・当たる確率38.8%・合成2.2倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">2点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>5-4-1</b> 3.7倍 <span class="dim">(25.5%)</span> ／ <b>5-2-7</b> 10.3倍 <span class="dim">(7.2%)</span> ／ <b>5-4-2</b> 12.4倍 <span class="dim">(6.2%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
+        
+        
+    <div id="race4_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="background:#fff4de;">
+          <td><span class="aimk">◎</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>田沼 龍弥<span class="tg tg-ok">普通</span><br><span class="dim">A3・先頭・捲り</span></td>
+          <td class="lv1" data-car="5"><b>73.9%</b><br><span class="rt-ai">AI 82%</span></td>
+          <td class="lv3" data-car="5">90%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>森川 康輔<br><span class="dim">A3・先頭・捲り</span></td>
+          <td class="lv1" data-car="2"><b>8.9%</b><br><span class="rt-ai">AI 6%</span></td>
+          <td class="lv3" data-car="2">46%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>國井 裕樹<br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="3"><b>3.4%</b><br><span class="rt-ai">AI 4%</span></td>
+          <td class="lv3" data-car="3">26%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>天沼 雅貴<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="4"><b>7.6%</b><br><span class="rt-ai">AI 4%</span></td>
+          <td class="lv3" data-car="4">64%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>永橋 武司<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="7"><b>2.1%</b><br><span class="rt-ai">AI 3%</span></td>
+          <td class="lv3" data-car="7">23%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>浦崎 貴史<br><span class="dim">A3・2番手・マーク</span></td>
+          <td class="lv1" data-car="6"><b>0.9%</b><br><span class="rt-ai">AI 1%</span></td>
+          <td class="lv3" data-car="6">10%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>吉田 英二<br><span class="dim">A3・3番手・差し</span></td>
+          <td class="lv1" data-car="1"><b>3.2%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="1">41%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race5" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242605"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": 0.0864, "1-2-4": 0.1136, "1-2-5": 0.0995, "1-2-6": 0.248, "1-2-7": 0.1758, "1-3-2": 0.1498, "1-3-4": 0.3877, "1-3-5": 0.2725, "1-3-6": 0.421, "1-3-7": 0.3994, "1-4-2": 0.2431, "1-4-5": 0.3658, "1-4-6": 0.5143, "1-4-7": 0.4927, "1-5-2": 0.1627, "1-5-3": 0.2723, "1-5-4": 0.2994, "1-5-6": 0.4339, "1-5-7": 0.3617, "1-6-2": 0.348, "1-6-3": 0.4576, "1-6-4": 0.4848, "1-6-5": 0.4707, "1-7-2": 0.2893, "1-7-4": 0.4766, "1-7-5": 0.412, "1-7-6": 0.5605, "2-1-3": -0.0817, "2-1-4": -0.0546, "2-1-5": -0.059, "2-1-6": 0.0895, "2-1-7": -0.0019, "2-3-1": -0.084, "2-3-4": -0.0234, "2-3-5": -0.0784, "2-3-6": 0.0701, "2-3-7": -0.0718, "2-4-1": 0.0087, "2-4-3": 0.0421, "2-4-5": 0.0143, "2-4-6": 0.1628, "2-4-7": 0.0209, "2-5-1": 0.0143, "2-5-3": -0.0029, "2-5-4": 0.0243, "2-5-6": 0.2252, "2-5-7": 0.0264, "2-6-1": 0.0511, "2-6-3": 0.0339, "2-6-4": 0.0611, "2-6-5": 0.1072, "2-6-7": 0.0632, "2-7-1": 0.0618, "2-7-3": -0.0059, "2-7-4": 0.0212, "2-7-5": 0.0168, "2-7-6": 0.1653, "3-1-2": 0.1385, "3-1-4": 0.386, "3-1-5": 0.2612, "3-1-6": 0.4098, "3-1-7": 0.3785, "3-2-1": 0.0729, "3-2-4": 0.1431, "3-2-5": 0.0689, "3-2-6": 0.2174, "3-2-7": 0.0851, "3-4-1": 0.436, "3-4-2": 0.2587, "3-4-5": 0.3814, "3-4-6": 0.5299, "3-4-7": 0.4481, "3-5-1": 0.261, "3-5-2": 0.1342, "3-5-4": 0.3311, "3-5-6": 0.4055, "3-5-7": 0.2731, "3-6-1": 0.4463, "3-6-4": 0.5165, "3-6-5": 0.4423, "3-7-1": 0.4446, "3-7-2": 0.2168, "3-7-4": 0.4642, "3-7-5": 0.3395, "4-1-2": 0.23, "4-1-3": 0.4503, "4-1-5": 0.3527, "4-1-6": 0.5012, "4-1-7": 0.47, "4-2-1": 0.1638, "4-2-3": 0.2068, "4-2-5": 0.1597, "4-2-6": 0.3083, "4-2-7": 0.1759, "4-3-1": 0.5401, "4-3-2": 0.3628, "4-3-5": 0.4855, "4-3-6": 0.6341, "4-3-7": 0.5523, "4-5-1": 0.3524, "4-5-2": 0.2257, "4-5-3": 0.3954, "4-5-7": 0.3646, "4-6-1": 0.5378, "4-6-2": 0.411, "4-6-3": 0.5808, "4-6-5": 0.5337, "4-7-1": 0.5361, "4-7-2": 0.3083, "4-7-3": 0.5286, "4-7-6": 0.5795, "5-1-2": 0.1322, "5-1-4": 0.2594, "5-1-6": 0.4035, "5-1-7": 0.3121, "5-2-1": 0.0364, "5-2-3": 0.0193, "5-2-4": 0.0464, "5-2-6": 0.2411, "5-2-7": 0.0486, "5-3-1": 0.2322, "5-3-2": 0.1151, "5-3-4": 0.2928, "5-3-6": 0.3863, "5-3-7": 0.2443, "5-4-1": 0.3255, "5-4-2": 0.2084, "5-4-3": 0.3589, "5-4-6": 0.4796, "5-4-7": 0.3376, "5-6-1": 0.3625, "5-6-2": 0.2959, "5-6-3": 0.3454, "5-6-4": 0.3725, "5-6-7": 0.3746, "5-7-1": 0.3782, "5-7-2": 0.2105, "5-7-3": 0.3105, "5-7-4": 0.3376, "5-7-6": 0.4817, "6-1-3": 0.4934, "6-1-4": 0.5205, "6-1-5": 0.5161, "6-1-7": 0.5732, "6-2-4": 0.265, "6-2-5": 0.3111, "6-2-7": 0.2672, "6-3-1": 0.4933, "6-3-4": 0.5539, "6-4-1": 0.5866, "6-4-2": 0.4695, "6-4-3": 0.6201, "6-4-5": 0.5922, "6-5-1": 0.4383, "6-5-2": 0.3717, "6-5-3": 0.4212, "6-5-4": 0.4483, "6-5-7": 0.4505, "6-7-2": 0.4716, "6-7-4": 0.5988, "6-7-5": 0.5943, "7-1-2": 0.3934, "7-1-3": 0.5535, "7-1-4": 0.5807, "7-1-5": 0.5161, "7-1-6": 0.6646, "7-2-1": 0.2377, "7-2-3": 0.1604, "7-2-4": 0.1875, "7-2-5": 0.1735, "7-2-6": 0.322, "7-3-1": 0.4636, "7-3-2": 0.2262, "7-3-4": 0.4641, "7-4-1": 0.5569, "7-4-2": 0.3195, "7-4-3": 0.5302, "7-4-5": 0.4422, "7-4-6": 0.5907, "7-5-1": 0.4259, "7-5-2": 0.2391, "7-5-3": 0.3487, "7-5-4": 0.3758, "7-5-6": 0.5103, "7-6-1": 0.6113, "7-6-2": 0.4244, "7-6-5": 0.5471}};</script><span class="live-id" data-nkid="202611242605"></span>
+      <div class="race-card" style="--pick-color:#1b1b1b;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">5R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 17:32</span>
+          
+        </div>
+        <div class="banner-high">2号車 中野 楚樂 が本命（予測1着率 85.8%）</div>
+        <div class="sumbox"><div>◎ <b>2番 中野 楚樂</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>2</b>(93%)</span>　<span class="role-1">軸向き：<b>5</b>(83%)</span>　<span class="role-2">相手：7</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>2-5-6</b></details><br><span class="dim">万車率 <b style="color:#2F6B4F">17%</b> ・ 配当の目安 550円(510〜790円) ・ 中穴率 22%</span><br><details style="display:inline"><summary class="dim">消し目 14組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>2-5-7</s> <s>2-5-6</s> <s>2-5-3</s> <s>2-5-4</s> <s>2-7-5</s> <s>2-5-1</s> <s>2-7-1</s> <s>2-7-3</s> <s>2-3-5</s> <s>2-3-7</s> <s>2-4-3</s> <s>2-7-4</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の2を頭に、来る確率の高い順に合成2倍まで(最大20点)・1点・当たる確率26.0%・合成2.9倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>2-5-7</b> 2.9倍 <span class="dim">(26.0%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
+        
+        
+    <div id="race5_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="background:#fff4de;">
+          <td><span class="aimk">◎</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>中野 楚樂<span class="tg tg-ok">普通</span><br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="2"><b>85.8%</b><br><span class="rt-ai">AI 98%</span></td>
+          <td class="lv3" data-car="2">93%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>大内 達也<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="5"><b>4.1%</b><br><span class="rt-ai">AI 1%</span></td>
+          <td class="lv3" data-car="5">83%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>平川 雅晃<br><span class="dim">A3・先頭・逃げ</span></td>
+          <td class="lv1" data-car="4"><b>2.8%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="4">20%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>山崎 光展<br><span class="dim">A3・先頭・差し</span></td>
+          <td class="lv1" data-car="7"><b>3.1%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="7">44%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>川村 昭弘<br><span class="dim">A3・2番手・差し</span><br><span class="delta-up" style="font-size:10px;">調子↑</span></td>
+          <td class="lv1" data-car="3"><b>1.6%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="3">25%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>中川 博文<br><span class="dim">A3・2番手・差し</span></td>
+          <td class="lv1" data-car="1"><b>1.8%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="1">13%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>小林 大能<br><span class="dim">A3・3番手・差し</span></td>
+          <td class="lv1" data-car="6"><b>0.9%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="6">23%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race6" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242606"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": 0.2736, "1-2-4": 0.2924, "1-2-5": 0.2956, "1-2-6": 0.2583, "1-2-7": 0.2597, "1-3-2": 0.2339, "1-3-6": 0.149, "1-3-7": 0.1504, "1-4-2": 0.2366, "1-4-3": 0.167, "1-4-5": 0.2901, "1-4-6": 0.2022, "1-4-7": 0.1531, "1-5-2": 0.1799, "1-5-3": 0.1103, "1-5-4": 0.2302, "1-5-6": 0.1455, "1-5-7": 0.0964, "1-6-2": 0.3256, "1-6-3": 0.256, "1-6-4": 0.3253, "1-6-5": 0.3285, "1-7-2": 0.2685, "1-7-3": 0.1989, "1-7-4": 0.2177, "1-7-5": 0.2209, "1-7-6": 0.1836, "2-1-3": 0.2431, "2-1-4": 0.2427, "2-1-5": 0.2459, "2-1-6": 0.2181, "2-1-7": 0.2292, "2-3-1": 0.1254, "2-3-4": 0.0547, "2-3-5": 0.0579, "2-3-6": 0.0807, "2-3-7": 0.1423, "2-4-1": 0.2639, "2-4-3": 0.1935, "2-4-5": 0.1963, "2-4-6": 0.1686, "2-4-7": 0.1796, "2-5-1": 0.2072, "2-5-3": 0.1369, "2-5-4": 0.1365, "2-5-6": 0.112, "2-5-7": 0.123, "2-6-1": 0.2851, "2-6-3": 0.2653, "2-6-5": 0.2175, "2-6-7": 0.2514, "2-7-1": 0.1598, "2-7-3": 0.1906, "2-7-4": 0.0891, "2-7-5": 0.0922, "2-7-6": 0.1151, "3-1-2": 0.1247, "3-1-4": 0.0548, "3-1-5": 0.0579, "3-1-6": 0.0302, "3-1-7": 0.0412, "3-2-1": 0.0468, "3-2-4": -0.0239, "3-2-5": -0.0207, "3-2-6": 0.0021, "3-2-7": 0.0637, "3-4-1": 0.075, "3-4-2": 0.0742, "3-4-5": 0.0074, "3-4-6": -0.0203, "3-4-7": -0.0093, "3-5-1": 0.0191, "3-5-2": 0.0183, "3-5-4": -0.0516, "3-5-6": -0.0762, "3-5-7": -0.0652, "3-6-1": 0.0972, "3-6-2": 0.147, "3-6-4": 0.0265, "3-6-5": 0.0296, "3-6-7": 0.0635, "3-7-1": 0.0301, "3-7-2": 0.1304, "3-7-4": -0.0407, "3-7-5": -0.0375, "3-7-6": -0.0147, "4-1-2": 0.1512, "4-1-3": 0.0816, "4-1-5": 0.2047, "4-1-6": 0.1168, "4-1-7": 0.0677, "4-2-1": 0.2282, "4-2-3": 0.1387, "4-2-5": 0.1606, "4-2-6": 0.1233, "4-2-7": 0.1248, "4-3-1": 0.1179, "4-3-2": 0.098, "4-3-5": 0.0504, "4-3-6": 0.013, "4-3-7": 0.0145, "4-5-1": 0.3391, "4-5-2": 0.2118, "4-5-3": 0.1422, "4-5-6": 0.1774, "4-5-7": 0.1283, "4-6-1": 0.2614, "4-6-2": 0.1909, "4-6-3": 0.1213, "4-6-5": 0.1938, "4-6-7": 0.1074, "4-7-1": 0.1441, "4-7-2": 0.1241, "4-7-3": 0.0545, "4-7-5": 0.0765, "4-7-6": 0.0392, "5-1-2": 0.1023, "5-1-4": 0.1526, "5-1-6": 0.068, "5-1-7": 0.0188, "5-2-1": 0.1794, "5-2-3": 0.0899, "5-2-4": 0.1087, "5-2-6": 0.0746, "5-2-7": 0.076, "5-3-1": 0.0699, "5-3-2": 0.05, "5-3-4": -0.0008, "5-3-6": -0.035, "5-3-7": -0.0335, "5-4-1": 0.2347, "5-4-2": 0.1136, "5-4-3": 0.044, "5-4-6": 0.0793, "5-4-7": 0.0301, "5-6-1": 0.2124, "5-6-2": 0.1419, "5-6-3": 0.0723, "5-6-4": 0.1417, "5-7-1": 0.1028, "5-7-2": 0.0829, "5-7-3": 0.0133, "5-7-4": 0.0321, "5-7-6": -0.0021, "6-1-3": 0.1379, "6-1-4": 0.1977, "6-1-5": 0.2009, "6-1-7": 0.1241, "6-2-3": 0.1778, "6-2-4": 0.1364, "6-2-7": 0.1639, "6-3-1": 0.0979, "6-3-4": 0.0272, "6-3-7": 0.0546, "6-4-3": 0.0886, "6-4-5": 0.1516, "6-5-1": 0.1623, "6-5-2": 0.1014, "6-5-3": 0.0318, "6-7-4": 0.0622, "6-7-5": 0.0654, "7-1-2": 0.1407, "7-1-3": 0.0711, "7-1-4": 0.0708, "7-1-5": 0.0739, "7-1-6": 0.0462, "7-2-1": 0.0625, "7-2-3": 0.0933, "7-2-4": -0.0082, "7-2-5": -0.005, "7-2-6": 0.0178, "7-3-1": 0.1174, "7-3-2": 0.224, "7-3-4": 0.0466, "7-3-5": 0.0498, "7-3-6": 0.0727, "7-4-1": 0.0825, "7-4-2": 0.0817, "7-4-3": 0.0121, "7-4-5": 0.0149, "7-4-6": -0.0128, "7-5-1": 0.0334, "7-5-2": 0.0326, "7-5-3": -0.037, "7-5-4": -0.0374, "7-5-6": -0.0619, "7-6-1": 0.1136, "7-6-3": 0.0938, "7-6-4": 0.0428}};</script><span class="live-id" data-nkid="202611242606"></span>
+      <div class="race-card" style="--pick-color:#1f5fc4;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">6R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 17:58</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>7番 西本 直大</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>7</b>(54%)</span>　<span class="role-1">軸向き：<b>4</b>(67%) <b>5</b>(58%)</span>　<span class="role-2">相手：3 1</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span style="background:#C8402A;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">K4 1点・過去102〜120%</span> <b>4-5-1</b><br><span class="dim">万車率 <b style="color:#C8402A">42%</b> ・ 配当の目安 8,050円(4,390〜12,080円) ・ 中穴率 61%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>4-5-1</s> <s>4-5-3</s> <s>4-5-7</s> <s>7-3-2</s> <s>7-3-5</s> <s>7-4-5</s> <s>5-4-1</s> <s>4-7-3</s> <s>7-3-4</s> <s>3-7-2</s> <s>4-7-2</s> <s>4-7-1</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の4・5・7を頭に、来る確率の高い順に合成2倍まで(最大20点)・14点・当たる確率44.3%・合成2.0倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">1点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>4-5-1</b> 9.4倍 <span class="dim">(12.2%)</span> ／ <b>4-5-3</b> 21.0倍 <span class="dim">(4.2%)</span> ／ <b>4-5-7</b> 21.9倍 <span class="dim">(4.0%)</span> ／ <b>7-3-2</b> 26.4倍 <span class="dim">(3.6%)</span> ／ <b>7-3-5</b> 27.8倍 <span class="dim">(2.8%)</span> ／ <b>7-4-5</b> 27.0倍 <span class="dim">(2.8%)</span> ／ <b>5-4-1</b> 39.6倍 <span class="dim">(2.3%)</span> ／ <b>4-7-3</b> 35.5倍 <span class="dim">(2.2%)</span> ／ <b>7-3-4</b> 38.1倍 <span class="dim">(2.0%)</span> ／ <b>4-7-5</b> 42.9倍 <span class="dim">(1.8%)</span> ／ <b>4-2-7</b> 46.8倍 <span class="dim">(1.7%)</span> ／ <b>7-4-1</b> 49.0倍 <span class="dim">(1.6%)</span> ／ <b>7-4-3</b> 49.0倍 <span class="dim">(1.5%)</span> ／ <b>7-5-4</b> 46.8倍 <span class="dim">(1.5%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></span></div>
+        
+        
+    <div id="race6_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>西本 直大<span class="tg tg-ok">普通</span><br><span class="dim">A2・先頭・捲り</span></td>
+          <td class="lv1" data-car="7"><b>24.6%</b><br><span class="rt-ai">AI 47%</span></td>
+          <td class="lv3" data-car="7">54%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>伊早坂 駿一<br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="4"><b>37.5%</b><br><span class="rt-ai">AI 24%</span></td>
+          <td class="lv3" data-car="4">67%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>奥谷 広巳<br><span class="dim">A2・2番手・マーク</span></td>
+          <td class="lv1" data-car="3"><b>8.5%</b><br><span class="rt-ai">AI 12%</span></td>
+          <td class="lv3" data-car="3">40%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>佐藤 政利<br><span class="dim">A2・2番手・マーク</span></td>
+          <td class="lv1" data-car="5"><b>13.2%</b><br><span class="rt-ai">AI 9%</span></td>
+          <td class="lv3" data-car="5">58%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>奥出 健士郎<br><span class="dim">A2・3番手・捲り</span></td>
+          <td class="lv1" data-car="2"><b>7.1%</b><br><span class="rt-ai">AI 4%</span></td>
+          <td class="lv3" data-car="2">30%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>齋藤 昌弘<br><span class="dim">A2・3番手・マーク</span></td>
+          <td class="lv1" data-car="1"><b>7.5%</b><br><span class="rt-ai">AI 3%</span></td>
+          <td class="lv3" data-car="1">39%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>鈴木 裕斗<br><span class="dim">A2・先頭・マーク</span></td>
+          <td class="lv1" data-car="6"><b>1.7%</b><br><span class="rt-ai">AI 2%</span></td>
+          <td class="lv3" data-car="6">12%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race7" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242607"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": 0.0297, "1-2-4": 0.0947, "1-2-5": 0.0342, "1-2-6": 0.1589, "1-2-7": 0.1065, "1-3-2": 0.0822, "1-3-4": 0.1338, "1-3-5": 0.1239, "1-3-6": 0.2486, "1-3-7": 0.095, "1-4-2": 0.1833, "1-4-3": 0.17, "1-4-5": 0.1745, "1-4-6": 0.2992, "1-4-7": 0.1962, "1-5-2": 0.0329, "1-5-3": 0.0701, "1-5-4": 0.0846, "1-5-6": 0.1994, "1-5-7": 0.0458, "1-6-2": 0.1991, "1-6-3": 0.2363, "1-6-4": 0.2507, "1-6-5": 0.2407, "1-7-2": 0.1696, "1-7-3": 0.1057, "1-7-4": 0.1707, "1-7-5": 0.1102, "1-7-6": 0.2349, "2-1-3": 0.0195, "2-1-4": 0.0749, "2-1-5": 0.0239, "2-1-6": 0.1487, "2-1-7": 0.1058, "2-3-1": 0.0044, "2-3-4": -0.0431, "2-3-5": 0.007, "2-3-6": 0.1318, "2-3-7": 0.0384, "2-4-1": 0.0066, "2-4-3": -0.0964, "2-4-5": -0.0919, "2-4-6": 0.0329, "2-4-7": -0.01, "2-5-1": -0.0444, "2-5-3": -0.0462, "2-5-4": -0.092, "2-5-6": 0.083, "2-5-7": -0.0104, "2-6-1": 0.1218, "2-6-3": 0.12, "2-6-5": 0.1245, "2-6-7": 0.1558, "2-7-1": 0.0856, "2-7-3": 0.0333, "2-7-4": 0.0381, "2-7-5": 0.0378, "2-7-6": 0.1625, "3-1-2": 0.0293, "3-1-4": 0.0714, "3-1-5": 0.0806, "3-1-6": 0.2054, "3-1-7": 0.0422, "3-2-1": -0.0382, "3-2-4": -0.0857, "3-2-5": -0.026, "3-2-6": 0.0988, "3-2-7": -0.0138, "3-4-1": 0.0019, "3-4-2": -0.0877, "3-4-5": -0.0364, "3-4-6": 0.0884, "3-4-7": -0.0748, "3-5-1": 0.1009, "3-5-2": 0.0619, "3-5-4": 0.0534, "3-5-6": 0.2947, "3-5-7": 0.0747, "3-6-1": 0.1023, "3-6-2": 0.0633, "3-6-4": 0.0548, "3-6-5": 0.1651, "3-6-7": 0.0762, "3-7-1": 0.0359, "3-7-2": 0.0474, "3-7-4": -0.0116, "3-7-5": 0.0482, "3-7-6": 0.1729, "4-1-2": 0.0772, "4-1-3": 0.0639, "4-1-5": 0.0684, "4-1-6": 0.1931, "4-1-7": 0.0901, "4-2-1": 0.0263, "4-2-3": -0.0862, "4-2-5": -0.0818, "4-2-6": 0.043, "4-2-7": -0.0095, "4-3-1": 0.0642, "4-3-5": 0.0067, "4-3-6": 0.1315, "4-3-7": -0.0221, "4-5-1": 0.016, "4-5-2": -0.0832, "4-5-3": -0.0459, "4-5-7": -0.0703, "4-6-1": 0.1825, "4-6-3": 0.1206, "4-6-5": 0.125, "4-7-1": 0.102, "4-7-2": 0.0534, "4-7-3": -0.0105, "4-7-5": -0.006, "5-1-2": -0.007, "5-1-4": 0.035, "5-1-6": 0.169, "5-1-7": 0.0058, "5-2-1": -0.0741, "5-2-3": -0.0663, "5-2-4": -0.1217, "5-2-6": 0.0629, "5-2-7": -0.0497, "5-3-1": 0.0078, "5-3-2": -0.0312, "5-3-4": -0.0397, "5-3-6": 0.1954, "5-3-7": -0.0183, "5-4-1": -0.0334, "5-4-2": -0.123, "5-4-3": -0.0761, "5-4-6": 0.0531, "5-4-7": -0.1101, "5-6-1": 0.0647, "5-6-2": 0.0257, "5-6-3": 0.1231, "5-6-4": 0.0172, "5-7-1": 0.0016, "5-7-2": 0.0131, "5-7-3": 0.0094, "5-7-4": -0.0459, "5-7-6": 0.1386, "6-1-2": 0.2391, "6-1-3": 0.2859, "6-1-4": 0.2812, "6-1-5": 0.2904, "6-1-7": 0.252, "6-2-1": 0.1721, "6-2-3": 0.1799, "6-3-1": 0.1952, "6-3-2": 0.1562, "6-3-4": 0.1477, "6-3-5": 0.258, "6-3-7": 0.1691, "6-4-2": 0.1235, "6-4-3": 0.1703, "6-4-5": 0.1748, "6-4-7": 0.1364, "6-5-1": 0.1447, "6-5-2": 0.1057, "6-5-3": 0.2031, "6-7-3": 0.2562, "6-7-4": 0.2008, "6-7-5": 0.2606, "7-1-2": 0.1644, "7-1-3": 0.0909, "7-1-4": 0.1463, "7-1-5": 0.0953, "7-1-6": 0.2201, "7-2-1": 0.187, "7-2-3": 0.1347, "7-2-4": 0.1395, "7-2-5": 0.1391, "7-2-6": 0.2639, "7-3-1": 0.0739, "7-3-2": 0.095, "7-3-4": 0.0264, "7-3-5": 0.0766, "7-3-6": 0.2013, "7-4-1": 0.0777, "7-4-2": 0.0483, "7-4-3": -0.0252, "7-4-5": -0.0207, "7-4-6": 0.104, "7-5-1": 0.0267, "7-5-2": 0.0478, "7-5-3": 0.0249, "7-5-4": -0.0208, "7-5-6": 0.1541, "7-6-1": 0.1935, "7-6-2": 0.2146, "7-6-5": 0.1961}};</script><span class="live-id" data-nkid="202611242607"></span>
+      <div class="race-card" style="--pick-color:#d8322a;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">7R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 18:24</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>3番 桜井 大地</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>3</b>(57%)</span>　<span class="role-1">相手：1 2 7 5</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>3-5-6</b></details><br><span class="dim">万車率 <b style="color:inherit">40%</b> ・ 配当の目安 8,400円(6,070〜12,140円) ・ 中穴率 75%</span><br><details style="display:inline"><summary class="dim">消し目 16組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-4-3</s> <s>3-5-2</s> <s>7-2-3</s> <s>2-7-3</s> <s>2-7-5</s> <s>3-7-2</s> <s>1-4-5</s> <s>1-4-7</s> <s>3-2-7</s> <s>2-7-1</s> <s>3-5-6</s> <s>3-5-7</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・2・3・7を頭に、来る確率の高い順に合成2倍まで(最大20点)・20点・当たる確率39.4%・合成2.2倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">4点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">1点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-4-3</b> 25.8倍 <span class="dim">(3.8%)</span> ／ <b>3-5-2</b> 29.1倍 <span class="dim">(3.0%)</span> ／ <b>7-2-3</b> 33.4倍 <span class="dim">(2.8%)</span> ／ <b>2-7-3</b> 34.4倍 <span class="dim">(2.4%)</span> ／ <b>2-7-5</b> 35.5倍 <span class="dim">(2.3%)</span> ／ <b>3-7-2</b> 36.6倍 <span class="dim">(2.3%)</span> ／ <b>1-4-5</b> 45.4倍 <span class="dim">(2.1%)</span> ／ <b>1-4-7</b> 49.4倍 <span class="dim">(1.9%)</span> ／ <b>3-2-7</b> 40.6倍 <span class="dim">(1.9%)</span> ／ <b>2-7-1</b> 45.4倍 <span class="dim">(1.9%)</span> ／ <b>7-3-2</b> 47.3倍 <span class="dim">(1.8%)</span> ／ <b>7-2-5</b> 54.1倍 <span class="dim">(1.6%)</span> ／ <b>7-2-1</b> 56.8倍 <span class="dim">(1.6%)</span> ／ <b>3-5-7</b> 51.6倍 <span class="dim">(1.6%)</span> ／ <b>3-5-6</b> 66.8倍 <span class="dim">(1.5%)</span> ／ <b>3-5-1</b> 56.8倍 <span class="dim">(1.5%)</span> ／ <b>2-3-7</b> 54.1倍 <span class="dim">(1.5%)</span> ／ <b>1-3-4</b> 59.8倍 <span class="dim">(1.4%)</span> ／ <b>1-7-2</b> 66.8倍 <span class="dim">(1.3%)</span> ／ <b>3-1-4</b> 63.1倍 <span class="dim">(1.3%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
+        
+        
+    <div id="race7_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>桜井 大地<span class="tg tg-ok">普通</span><br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="3"><b>24.1%</b><br><span class="rt-ai">AI 38%</span></td>
+          <td class="lv3" data-car="3">57%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>佐々木 祐太<br><span class="dim">A1・先頭・逃げ</span></td>
+          <td class="lv1" data-car="7"><b>17.1%</b><br><span class="rt-ai">AI 17%</span></td>
+          <td class="lv3" data-car="7">48%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>宮澤 晃<br><span class="dim">A2・2番手・マーク</span></td>
+          <td class="lv1" data-car="5"><b>8.1%</b><br><span class="rt-ai">AI 13%</span></td>
+          <td class="lv3" data-car="5">42%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>加藤 正法<br><span class="dim">A2・2番手・差し</span></td>
+          <td class="lv1" data-car="4"><b>7.4%</b><br><span class="rt-ai">AI 13%</span></td>
+          <td class="lv3" data-car="4">34%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>小谷田 公則<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="2"><b>17.2%</b><br><span class="rt-ai">AI 10%</span></td>
+          <td class="lv3" data-car="2">52%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>野崎 翼<br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="1"><b>23.6%</b><br><span class="rt-ai">AI 8%</span></td>
+          <td class="lv3" data-car="1">52%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>篠崎 高志<br><span class="dim">A2・3番手・マーク</span></td>
+          <td class="lv1" data-car="6"><b>2.5%</b><br><span class="rt-ai">AI 1%</span></td>
+          <td class="lv3" data-car="6">14%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race8" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242608"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": 0.0311, "1-2-4": 0.0299, "1-2-5": 0.0529, "1-2-6": 0.1826, "1-2-7": 0.0198, "1-3-2": 0.031, "1-3-4": 0.0295, "1-3-5": 0.002, "1-3-6": 0.1822, "1-3-7": 0.07, "1-4-2": 0.0418, "1-4-3": 0.0415, "1-4-5": 0.0128, "1-4-6": 0.2498, "1-4-7": 0.0302, "1-5-2": -0.0129, "1-5-3": -0.0638, "1-5-4": -0.065, "1-5-6": 0.0877, "1-5-7": -0.075, "1-6-2": 0.0811, "1-6-3": 0.0808, "1-6-4": 0.1301, "1-6-5": 0.0521, "1-6-7": 0.0695, "1-7-2": -0.0436, "1-7-3": 0.0067, "1-7-4": -0.0451, "1-7-5": -0.0726, "1-7-6": 0.1076, "2-1-3": 0.0928, "2-1-4": 0.082, "2-1-5": 0.1242, "2-1-6": 0.2347, "2-1-7": 0.0815, "2-3-4": 0.1495, "2-3-5": 0.2423, "2-3-7": 0.2502, "2-4-1": 0.0494, "2-4-3": 0.0799, "2-4-5": 0.1113, "2-4-6": 0.2219, "2-4-7": 0.0687, "2-5-1": 0.185, "2-5-3": 0.2661, "2-5-4": 0.2048, "2-5-6": 0.3575, "2-5-7": 0.2549, "2-6-1": 0.244, "2-6-3": 0.2746, "2-6-4": 0.2638, "2-6-5": 0.306, "2-6-7": 0.2633, "2-7-1": 0.0533, "2-7-3": 0.185, "2-7-4": 0.0731, "2-7-5": 0.1659, "3-1-2": 0.1039, "3-1-4": 0.0928, "3-1-5": 0.0749, "3-1-6": 0.2455, "3-1-7": 0.1525, "3-2-1": 0.141, "3-2-4": 0.1608, "3-2-5": 0.2439, "3-4-1": 0.0603, "3-4-5": 0.0621, "3-4-6": 0.2327, "3-4-7": 0.1397, "3-5-1": 0.0459, "3-5-2": 0.1779, "3-5-4": 0.0657, "3-5-6": 0.2184, "3-5-7": 0.1759, "3-6-1": 0.2549, "3-6-2": 0.2858, "3-6-4": 0.2747, "3-6-5": 0.2568, "3-6-7": 0.3344, "3-7-1": 0.2142, "3-7-2": 0.2956, "3-7-4": 0.234, "3-7-5": 0.2666, "4-1-2": -0.0325, "4-1-3": -0.0328, "4-1-5": -0.0615, "4-1-6": 0.1693, "4-1-7": -0.0441, "4-2-1": 0.029, "4-2-3": 0.0499, "4-2-5": 0.0718, "4-2-6": 0.2015, "4-2-7": 0.0387, "4-3-1": 0.0287, "4-3-2": 0.0499, "4-3-5": 0.0209, "4-3-6": 0.2011, "4-3-7": 0.0889, "4-5-1": -0.0661, "4-5-2": 0.0057, "4-5-3": -0.0451, "4-5-7": -0.0564, "4-6-1": 0.1258, "4-6-2": 0.0965, "4-6-3": 0.0962, "4-6-5": 0.0675, "4-6-7": 0.0849, "4-7-1": -0.0477, "4-7-2": -0.0264, "4-7-3": 0.0238, "4-7-6": 0.1248, "5-1-2": 0.0603, "5-1-3": -0.0002, "5-1-4": -0.011, "5-1-6": 0.1417, "5-1-7": -0.0115, "5-2-1": 0.081, "5-2-3": 0.1621, "5-2-4": 0.1007, "5-2-6": 0.2534, "5-2-7": 0.1508, "5-3-2": 0.1782, "5-3-4": 0.0564, "5-3-7": 0.157, "5-4-1": -0.0438, "5-4-2": 0.0472, "5-4-3": -0.0132, "5-4-6": 0.1287, "5-4-7": -0.0245, "5-6-1": 0.1509, "5-6-2": 0.2419, "5-6-3": 0.1814, "5-6-4": 0.1706, "5-6-7": 0.1702, "5-7-1": -0.0398, "5-7-2": 0.1017, "5-7-3": 0.0918, "5-7-4": -0.0201, "6-1-3": 0.1931, "6-1-4": 0.2424, "6-1-5": 0.1644, "6-1-7": 0.1818, "6-3-1": 0.3039, "6-3-4": 0.3237, "6-3-5": 0.2962, "6-3-7": 0.3642, "6-4-1": 0.2064, "6-4-3": 0.1768, "6-4-5": 0.1481, "6-4-7": 0.1655, "6-5-1": 0.2092, "6-5-2": 0.281, "6-5-3": 0.2301, "6-7-4": 0.2472, "6-7-5": 0.2197, "7-1-2": 0.032, "7-1-3": 0.0919, "7-1-4": 0.0209, "7-1-5": 0.003, "7-1-6": 0.1736, "7-2-1": 0.0673, "7-2-3": 0.2085, "7-2-4": 0.087, "7-2-5": 0.1702, "7-3-1": 0.1109, "7-3-4": 0.1307, "7-3-5": 0.1633, "7-3-6": 0.2834, "7-4-1": -0.0134, "7-4-2": 0.0175, "7-4-3": 0.0773, "7-4-5": -0.0116, "7-4-6": 0.1591, "7-5-1": -0.0278, "7-5-2": 0.1042, "7-5-3": 0.1134, "7-5-4": -0.0081, "7-5-6": 0.1447, "7-6-1": 0.1811}};</script><span class="live-id" data-nkid="202611242608"></span>
+      <div class="race-card" style="--pick-color:#ffffff;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">8R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 18:50</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>1番 吉田 優斗</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(77%)</span>　<span class="role-1">軸向き：<b>4</b>(63%)</span>　<span class="role-2">相手：5 2</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>1-4-6</b></details><br><span class="dim">万車率 <b style="color:inherit">34%</b> ・ 配当の目安 6,740円(3,990〜10,790円) ・ 中穴率 59%</span><br><details style="display:inline"><summary class="dim">消し目 24組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-4-6</s> <s>1-4-5</s> <s>1-4-7</s> <s>1-4-2</s> <s>1-4-3</s> <s>1-3-7</s> <s>1-2-5</s> <s>1-3-4</s> <s>4-1-6</s> <s>4-1-7</s> <s>4-1-5</s> <s>1-2-4</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・2・4を頭に、来る確率の高い順に合成2倍まで(最大20点)・13点・当たる確率42.8%・合成2.0倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">5点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">3点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-4-6</b> 16.8倍 <span class="dim">(6.6%)</span> ／ <b>1-4-5</b> 14.9倍 <span class="dim">(5.8%)</span> ／ <b>1-4-7</b> 18.2倍 <span class="dim">(4.8%)</span> ／ <b>1-4-2</b> 19.9倍 <span class="dim">(4.4%)</span> ／ <b>1-4-3</b> 20.7倍 <span class="dim">(4.2%)</span> ／ <b>1-3-7</b> 29.9倍 <span class="dim">(2.9%)</span> ／ <b>1-2-5</b> 31.7倍 <span class="dim">(2.6%)</span> ／ <b>1-3-4</b> 33.7倍 <span class="dim">(2.4%)</span> ／ <b>4-1-6</b> 41.5倍 <span class="dim">(2.2%)</span> ／ <b>4-1-7</b> 39.9倍 <span class="dim">(1.8%)</span> ／ <b>4-1-5</b> 39.9倍 <span class="dim">(1.8%)</span> ／ <b>1-2-4</b> 44.9倍 <span class="dim">(1.7%)</span> ／ <b>1-5-2</b> 44.9倍 <span class="dim">(1.6%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span></div>
+        
+        
+    <div id="race8_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>吉田 優斗<span class="tg tg-ok">普通</span><br><span class="dim">A1・先頭・逃げ</span></td>
+          <td class="lv1" data-car="1"><b>52.4%</b><br><span class="rt-ai">AI 65%</span></td>
+          <td class="lv3" data-car="1">77%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>塚本 和宏<br><span class="dim">A2・2番手・差し</span></td>
+          <td class="lv1" data-car="4"><b>13.6%</b><br><span class="rt-ai">AI 14%</span></td>
+          <td class="lv3" data-car="4">63%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>鳥海 創<br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="3"><b>7.1%</b><br><span class="rt-ai">AI 6%</span></td>
+          <td class="lv3" data-car="3">31%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>中村 美千隆<br><span class="dim">A2・先頭・捲り</span></td>
+          <td class="lv1" data-car="2"><b>12.8%</b><br><span class="rt-ai">AI 6%</span></td>
+          <td class="lv3" data-car="2">39%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>西谷 岳文<br><span class="dim">A2・2番手・差し</span></td>
+          <td class="lv1" data-car="5"><b>7.2%</b><br><span class="rt-ai">AI 5%</span></td>
+          <td class="lv3" data-car="5">39%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>成清 謙二郎<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="7"><b>4.4%</b><br><span class="rt-ai">AI 3%</span></td>
+          <td class="lv3" data-car="7">31%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>大橋 直人<br><span class="dim">A2・3番手・差し</span></td>
+          <td class="lv1" data-car="6"><b>2.4%</b><br><span class="rt-ai">AI 0%</span></td>
+          <td class="lv3" data-car="6">20%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race9" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242609"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": -0.0852, "1-2-4": 0.054, "1-2-5": -0.0412, "1-2-6": -0.0397, "1-2-7": -0.0318, "1-3-2": -0.1451, "1-3-4": -0.0095, "1-3-5": -0.1552, "1-3-6": -0.0526, "1-3-7": -0.0953, "1-4-2": -0.0437, "1-4-3": -0.0472, "1-4-5": -0.0538, "1-4-6": -0.0017, "1-4-7": 0.0567, "1-5-2": -0.1022, "1-5-3": -0.1562, "1-5-4": -0.0171, "1-5-6": -0.1108, "1-5-7": -0.1029, "1-6-2": -0.0319, "1-6-3": 0.0152, "1-6-4": 0.1037, "1-6-5": -0.0421, "1-6-7": 0.0179, "1-7-2": -0.0527, "1-7-3": -0.0562, "1-7-4": 0.1335, "1-7-5": -0.0628, "1-7-6": -0.0107, "2-1-3": -0.0382, "2-1-4": 0.0913, "2-1-5": 0.0153, "2-1-6": 0.0072, "2-1-7": 0.0055, "2-3-1": -0.022, "2-3-4": 0.1099, "2-3-5": 0.0844, "2-3-6": 0.127, "2-3-7": 0.0241, "2-4-1": 0.1465, "2-4-3": 0.1489, "2-4-5": 0.2024, "2-4-6": 0.1943, "2-4-7": 0.1926, "2-5-1": 0.1206, "2-5-3": 0.1736, "2-5-4": 0.2525, "2-5-6": 0.219, "2-5-7": 0.1667, "2-6-1": 0.0908, "2-6-3": 0.1943, "2-6-5": 0.1972, "2-6-7": 0.1369, "2-7-1": 0.0802, "2-7-3": 0.0825, "2-7-4": 0.2121, "2-7-5": 0.136, "2-7-6": 0.128, "3-1-2": -0.104, "3-1-4": 0.0221, "3-1-5": -0.1141, "3-1-6": -0.0018, "3-1-7": -0.0637, "3-2-1": -0.0278, "3-2-4": 0.1041, "3-2-5": 0.0691, "3-2-6": 0.1308, "3-2-7": 0.0183, "3-4-1": 0.0748, "3-4-5": 0.0705, "3-4-6": 0.1827, "3-4-7": 0.1209, "3-5-1": -0.1008, "3-5-2": 0.0062, "3-5-4": 0.0311, "3-5-6": 0.0578, "3-5-7": -0.0547, "3-6-1": 0.0632, "3-6-2": 0.1196, "3-6-4": 0.1951, "3-6-5": 0.1095, "3-6-7": 0.1093, "3-7-1": 0.0097, "3-7-2": 0.0155, "3-7-4": 0.1415, "3-7-5": 0.0054, "3-7-6": 0.1176, "4-1-2": 0.0464, "4-1-3": 0.0429, "4-1-5": 0.0363, "4-1-6": 0.0884, "4-1-7": 0.1468, "4-2-1": 0.1993, "4-2-3": 0.1921, "4-2-5": 0.236, "4-2-6": 0.2375, "4-2-7": 0.2454, "4-3-1": 0.1333, "4-3-2": 0.1296, "4-3-5": 0.1195, "4-3-6": 0.2221, "4-3-7": 0.1795, "4-5-1": 0.1261, "4-5-2": 0.1729, "4-5-3": 0.1188, "4-5-6": 0.1643, "4-5-7": 0.1722, "4-6-1": 0.2459, "4-6-3": 0.2893, "4-6-5": 0.2321, "4-7-1": 0.2196, "4-7-2": 0.1653, "4-7-3": 0.1618, "4-7-5": 0.1551, "4-7-6": 0.2072, "5-1-2": -0.0408, "5-1-3": -0.1045, "5-1-4": 0.025, "5-1-6": -0.059, "5-1-7": -0.0607, "5-2-1": 0.0195, "5-2-3": 0.0724, "5-2-4": 0.1514, "5-2-6": 0.1179, "5-2-7": 0.0656, "5-3-1": -0.0901, "5-3-2": 0.0264, "5-3-4": 0.0418, "5-3-6": 0.0588, "5-3-7": -0.044, "5-4-1": 0.0781, "5-4-2": 0.1441, "5-4-3": 0.0805, "5-4-6": 0.1259, "5-4-7": 0.1242, "5-6-1": 0.0225, "5-6-2": 0.1391, "5-6-3": 0.126, "5-6-4": 0.1544, "5-6-7": 0.0686, "5-7-1": 0.0128, "5-7-2": 0.0788, "5-7-3": 0.0152, "5-7-4": 0.1447, "5-7-6": 0.0606, "6-1-3": 0.065, "6-1-4": 0.1344, "6-1-5": -0.0018, "6-1-7": 0.0486, "6-2-1": 0.0842, "6-2-3": 0.1972, "6-2-4": 0.2161, "6-2-5": 0.181, "6-2-7": 0.1303, "6-3-1": 0.1684, "6-3-2": 0.2248, "6-3-4": 0.3003, "6-3-5": 0.2146, "6-3-7": 0.2145, "6-4-1": 0.1865, "6-4-3": 0.249, "6-4-5": 0.1822, "6-4-7": 0.2326, "6-5-1": 0.0111, "6-5-2": 0.118, "6-5-3": 0.1241, "6-5-7": 0.0572, "6-7-1": 0.1217, "6-7-2": 0.1275, "6-7-3": 0.1842, "6-7-4": 0.2536, "6-7-5": 0.1174, "7-1-2": 0.0579, "7-1-3": 0.0544, "7-1-4": 0.2504, "7-1-5": 0.0478, "7-1-6": 0.0999, "7-2-1": 0.0474, "7-2-3": 0.0402, "7-2-4": 0.1793, "7-2-5": 0.0841, "7-2-6": 0.0857, "7-3-1": -0.0173, "7-3-2": -0.021, "7-3-4": 0.1146, "7-3-5": -0.0312, "7-3-6": 0.0715, "7-4-1": 0.134, "7-4-2": 0.0798, "7-4-3": 0.0763, "7-4-5": 0.0696, "7-4-6": 0.1217, "7-5-1": -0.0248, "7-5-2": 0.0221, "7-5-3": -0.032, "7-5-4": 0.1071, "7-5-6": 0.0135, "7-6-1": 0.0956, "7-6-2": 0.0919, "7-6-3": 0.1389, "7-6-5": 0.0817}};</script><span class="live-id" data-nkid="202611242609"></span>
+      <div class="race-card" style="--pick-color:#1b1b1b;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">9R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 19:16</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>1番 三宅 裕武</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(66%)</span>　<span class="role-1">軸向き：<b>7</b>(59%)</span>　<span class="role-2">相手：2 5</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>7-1-4</b></details><br><span class="dim">万車率 <b style="color:#C8402A">41%</b> ・ 配当の目安 6,710円(4,270〜13,430円) ・ 中穴率 63%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-7-4</s> <s>2-5-1</s> <s>7-1-4</s> <s>2-5-7</s> <s>1-7-2</s> <s>7-1-2</s> <s>2-7-1</s> <s>2-1-7</s> <s>1-7-5</s> <s>2-5-3</s> <s>2-7-5</s> <s>3-6-1</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・2・7を頭に、来る確率の高い順に合成2倍まで(最大20点)・15点・当たる確率44.9%・合成2.0倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">4点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">4点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">2点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-7-4</b> 15.8倍 <span class="dim">(6.6%)</span> ／ <b>2-5-1</b> 19.0倍 <span class="dim">(5.3%)</span> ／ <b>7-1-4</b> 26.1倍 <span class="dim">(4.3%)</span> ／ <b>2-5-7</b> 26.4倍 <span class="dim">(3.8%)</span> ／ <b>1-7-2</b> 26.1倍 <span class="dim">(3.0%)</span> ／ <b>7-1-2</b> 31.8倍 <span class="dim">(2.7%)</span> ／ <b>2-7-1</b> 33.5倍 <span class="dim">(2.7%)</span> ／ <b>2-1-7</b> 31.3倍 <span class="dim">(2.6%)</span> ／ <b>1-7-5</b> 30.3倍 <span class="dim">(2.5%)</span> ／ <b>2-5-3</b> 41.8倍 <span class="dim">(2.3%)</span> ／ <b>2-5-6</b> 49.5倍 <span class="dim">(2.0%)</span> ／ <b>2-1-5</b> 42.7倍 <span class="dim">(1.9%)</span> ／ <b>1-2-7</b> 41.8倍 <span class="dim">(1.8%)</span> ／ <b>2-7-5</b> 52.2倍 <span class="dim">(1.7%)</span> ／ <b>1-7-3</b> 43.7倍 <span class="dim">(1.7%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="line-group"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
+        
+        
+    <div id="race9_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>三宅 裕武<span class="tg tg-ok">普通</span><br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="1"><b>26.4%</b><br><span class="rt-ai">AI 36%</span></td>
+          <td class="lv3" data-car="1">66%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>辻田 祥大<br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="7"><b>16.4%</b><br><span class="rt-ai">AI 23%</span></td>
+          <td class="lv3" data-car="7">59%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>平根 優大<br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="2"><b>32.1%</b><br><span class="rt-ai">AI 17%</span></td>
+          <td class="lv3" data-car="2">54%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>三ッ井<br><span class="dim">A2・2番手・差し</span></td>
+          <td class="lv1" data-car="5"><b>6.8%</b><br><span class="rt-ai">AI 9%</span></td>
+          <td class="lv3" data-car="5">40%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>石川 雅望<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="3"><b>8.8%</b><br><span class="rt-ai">AI 8%</span></td>
+          <td class="lv3" data-car="3">31%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>小林 申太<br><span class="dim">A2・先頭・逃げ</span></td>
+          <td class="lv1" data-car="6"><b>6.1%</b><br><span class="rt-ai">AI 5%</span></td>
+          <td class="lv3" data-car="6">24%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>菊谷 信一<br><span class="dim">A1・3番手・マーク</span></td>
+          <td class="lv1" data-car="4"><b>3.5%</b><br><span class="rt-ai">AI 2%</span></td>
+          <td class="lv3" data-car="4">26%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race10" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242610"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": -0.0622, "1-2-4": -0.0593, "1-2-5": -0.0086, "1-2-6": 0.0393, "1-2-7": 0.0275, "1-3-2": -0.012, "1-3-4": 0.0108, "1-3-5": 0.0109, "1-3-6": 0.1094, "1-3-7": -0.0035, "1-4-2": -0.0626, "1-4-3": -0.0427, "1-4-5": -0.0397, "1-4-6": 0.0587, "1-4-7": -0.0542, "1-5-2": 0.0759, "1-5-3": 0.0453, "1-5-4": 0.0481, "1-5-6": 0.1467, "1-5-7": 0.0844, "1-6-2": 0.0774, "1-6-3": 0.0973, "1-6-4": 0.1002, "1-6-5": 0.1003, "1-6-7": 0.0859, "1-7-2": 0.0913, "1-7-3": 0.0101, "1-7-4": 0.0129, "1-7-5": 0.0636, "1-7-6": 0.1115, "2-1-3": 0.0109, "2-1-4": 0.0137, "2-1-5": 0.0548, "2-1-6": 0.1123, "2-1-7": 0.1101, "2-3-4": 0.1373, "2-3-5": 0.0773, "2-3-6": 0.2359, "2-3-7": 0.1832, "2-4-1": -0.0207, "2-4-3": 0.0751, "2-4-5": 0.018, "2-4-6": 0.1766, "2-4-7": 0.1238, "2-5-1": 0.0197, "2-5-3": 0.0144, "2-5-4": 0.0173, "2-5-6": 0.1159, "2-5-7": 0.1137, "2-6-3": 0.212, "2-6-5": 0.1549, "2-6-7": 0.2608, "2-7-1": 0.126, "2-7-3": 0.1713, "2-7-4": 0.1742, "2-7-5": 0.1648, "2-7-6": 0.2728, "3-1-2": 0.043, "3-1-4": 0.0753, "3-1-5": 0.0563, "3-1-6": 0.1739, "3-1-7": 0.0514, "3-2-1": 0.0205, "3-2-4": 0.1289, "3-2-5": 0.0593, "3-2-6": 0.2275, "3-2-7": 0.1555, "3-4-1": 0.1413, "3-4-2": 0.2173, "3-4-5": 0.1801, "3-4-6": 0.4051, "3-4-7": 0.2258, "3-5-1": 0.0316, "3-5-2": 0.057, "3-5-4": 0.0894, "3-5-6": 0.188, "3-5-7": 0.0655, "3-6-1": 0.1112, "3-6-2": 0.1872, "3-6-4": 0.2701, "3-6-5": 0.15, "3-6-7": 0.1956, "3-7-1": 0.0941, "3-7-2": 0.2207, "3-7-4": 0.2025, "3-7-5": 0.1329, "3-7-6": 0.301, "4-1-2": -0.002, "4-1-3": 0.0275, "4-1-5": 0.0113, "4-1-6": 0.129, "4-1-7": 0.0065, "4-2-1": -0.0331, "4-2-3": 0.0723, "4-2-5": 0.0056, "4-2-6": 0.1738, "4-2-7": 0.1018, "4-3-1": 0.041, "4-3-2": 0.117, "4-3-5": 0.0798, "4-3-6": 0.2985, "4-3-7": 0.1254, "4-5-1": -0.0218, "4-5-2": 0.0036, "4-5-3": 0.0331, "4-5-7": 0.0121, "4-6-1": 0.0574, "4-6-2": 0.1334, "4-6-3": 0.2135, "4-6-5": 0.0962, "4-6-7": 0.1419, "4-7-1": 0.0406, "4-7-2": 0.1671, "4-7-3": 0.146, "4-7-6": 0.2475, "5-1-2": 0.0013, "5-1-3": -0.0293, "5-1-4": -0.0265, "5-1-6": 0.0721, "5-1-7": 0.0098, "5-2-1": -0.0123, "5-2-3": -0.0272, "5-2-4": -0.0243, "5-2-6": 0.0743, "5-2-7": 0.0625, "5-3-1": 0.0177, "5-3-2": 0.0335, "5-3-4": 0.0562, "5-3-6": 0.1548, "5-3-7": 0.0419, "5-4-1": -0.0414, "5-4-2": -0.0256, "5-4-3": -0.0057, "5-4-6": 0.0958, "5-4-7": -0.0171, "5-6-1": 0.0956, "5-6-2": 0.1114, "5-6-3": 0.1313, "5-6-4": 0.1342, "5-7-1": 0.0613, "5-7-2": 0.1277, "5-7-3": 0.0465, "5-7-4": 0.0494, "6-1-3": 0.2448, "6-1-4": 0.2477, "6-1-5": 0.2287, "6-1-7": 0.2238, "6-3-1": 0.1941, "6-3-4": 0.353, "6-3-7": 0.2786, "6-4-1": 0.1347, "6-4-3": 0.2907, "6-4-5": 0.1735, "6-4-7": 0.2191, "6-5-1": 0.1925, "6-5-2": 0.2179, "6-5-3": 0.2474, "6-5-4": 0.2503, "6-7-4": 0.3631, "6-7-5": 0.2935, "7-1-2": 0.1712, "7-1-3": 0.0804, "7-1-4": 0.0833, "7-1-5": 0.1244, "7-1-6": 0.1819, "7-2-1": 0.2293, "7-2-3": 0.2747, "7-2-4": 0.2775, "7-2-5": 0.2681, "7-2-6": 0.3761, "7-3-1": 0.1095, "7-3-4": 0.2083, "7-3-5": 0.1483, "7-4-1": 0.0503, "7-4-2": 0.1864, "7-4-5": 0.0891, "7-4-6": 0.2476, "7-5-2": 0.1763, "7-5-3": 0.0855, "7-5-4": 0.0883, "7-5-6": 0.1869, "7-6-1": 0.1873, "7-6-2": 0.3234, "7-6-4": 0.286, "7-6-5": 0.226}};</script><span class="live-id" data-nkid="202611242610"></span>
+      <div class="race-card" style="--pick-color:#ffffff;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">10R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 19:42</span>
+          
+        </div>
+        <div class="banner-high">1号車 仲野 結音 が本命（予測1着率 67.8%）</div>
+        <div class="sumbox"><div>◎ <b>1番 仲野 結音</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(85%)</span>　<span class="role-1">軸向き：<b>5</b>(58%) <b>3</b>(58%)</span>　<span class="role-2">相手：4</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span style="background:#C8402A;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">M1 万車・3番目ライン・過去116〜136%</span> <b>3-4-6 4-3-6</b><br><span class="dim">万車率 <b style="color:inherit">28%</b> ・ 配当の目安 3,550円(1,540〜6,630円) ・ 中穴率 40%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-5-3</s> <s>1-5-4</s> <s>1-3-4</s> <s>1-3-5</s> <s>1-4-3</s> <s>1-5-2</s> <s>1-5-7</s> <s>1-4-5</s> <s>3-4-1</s> <s>3-4-6</s> <s>3-4-5</s> <s>5-1-4</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・3を頭に、来る確率の高い順に合成2倍まで(最大20点)・5点・当たる確率43.0%・合成2.1倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-n">2点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-n">2点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-5-3</b> 8.0倍 <span class="dim">(11.8%)</span> ／ <b>1-5-4</b> 8.9倍 <span class="dim">(10.6%)</span> ／ <b>1-3-4</b> 11.0倍 <span class="dim">(8.0%)</span> ／ <b>1-3-5</b> 11.8倍 <span class="dim">(7.4%)</span> ／ <b>1-4-3</b> 15.4倍 <span class="dim">(5.2%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="line-group"><span class="car" style="background:#e07a1f;color:#ffffff">7</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#d8322a;color:#ffffff">3</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></span></div>
+        
+        
+    <div id="race10_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="background:#fff4de;">
+          <td><span class="aimk">◎</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>仲野 結音<span class="tg tg-ok">普通</span><br><span class="dim">A1・先頭・捲り</span></td>
+          <td class="lv1" data-car="1"><b>67.8%</b><br><span class="rt-ai">AI 62%</span></td>
+          <td class="lv3" data-car="1">85%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>坪内 恒<br><span class="dim">A1・先頭・逃げ</span></td>
+          <td class="lv1" data-car="3"><b>13.7%</b><br><span class="rt-ai">AI 16%</span></td>
+          <td class="lv3" data-car="3">58%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>吉村 和之<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="5"><b>6.0%</b><br><span class="rt-ai">AI 8%</span></td>
+          <td class="lv3" data-car="5">58%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>岡本 英之<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="4"><b>7.6%</b><br><span class="rt-ai">AI 6%</span></td>
+          <td class="lv3" data-car="4">55%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>樋口 開土<br><span class="dim">A1・先頭・捲り</span></td>
+          <td class="lv1" data-car="7"><b>2.2%</b><br><span class="rt-ai">AI 5%</span></td>
+          <td class="lv3" data-car="7">16%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>江連 和洋<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="2"><b>1.5%</b><br><span class="rt-ai">AI 3%</span></td>
+          <td class="lv3" data-car="2">16%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>増田 利明<br><span class="dim">A1・3番手・捲り</span></td>
+          <td class="lv1" data-car="6"><b>1.2%</b><br><span class="rt-ai">AI 1%</span></td>
+          <td class="lv3" data-car="6">12%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+    <div id="race11" class="race-panel" style="display:none;">
+      <script>window.LIVE=window.LIVE||{};LIVE["202611242611"]={"w0": 0.85204, "w1": -0.02269, "s0": {"1-2-3": -0.039, "1-2-4": -0.0603, "1-2-5": -0.0177, "1-2-6": -0.0618, "1-2-7": 0.0295, "1-3-2": -0.0332, "1-3-4": 0.0045, "1-3-5": -0.0036, "1-3-6": 0.0535, "1-3-7": 0.0942, "1-4-2": 0.0213, "1-4-3": 0.0801, "1-4-5": 0.0509, "1-4-6": 0.0574, "1-4-7": 0.2055, "1-5-2": 0.0482, "1-5-3": 0.0565, "1-5-4": 0.0352, "1-5-6": 0.0337, "1-5-7": 0.125, "1-6-2": 0.0055, "1-6-3": 0.1149, "1-6-4": 0.0431, "1-6-5": 0.0351, "1-6-7": 0.1329, "1-7-2": -0.0068, "1-7-3": 0.0521, "1-7-4": 0.0814, "1-7-5": 0.0228, "1-7-6": 0.0294, "2-1-3": 0.0233, "2-1-4": -0.0075, "2-1-5": 0.0542, "2-1-6": 0.0006, "2-1-7": 0.0823, "2-3-1": -0.0157, "2-3-4": -0.0111, "2-3-5": 0.1012, "2-3-7": 0.0786, "2-4-1": -0.0533, "2-4-3": -0.0179, "2-4-5": 0.013, "2-4-6": -0.0407, "2-4-7": 0.041, "2-5-1": 0.0621, "2-5-3": 0.1481, "2-5-4": 0.0667, "2-5-6": 0.1253, "2-5-7": 0.1564, "2-6-1": 0.0253, "2-6-3": 0.1618, "2-6-4": 0.0298, "2-6-5": 0.1421, "2-6-7": 0.1196, "2-7-1": 0.0792, "2-7-3": 0.1145, "2-7-4": 0.0837, "2-7-5": 0.1454, "3-1-4": 0.0487, "3-1-5": 0.0502, "3-1-6": 0.1169, "3-1-7": 0.1384, "3-2-1": -0.0242, "3-2-4": -0.0197, "3-2-5": 0.083, "3-4-1": 0.0004, "3-4-2": -0.0231, "3-4-5": 0.0065, "3-4-6": 0.0731, "3-4-7": 0.0947, "3-5-1": 0.0714, "3-5-2": 0.1491, "3-5-4": 0.076, "3-5-6": 0.1948, "3-5-7": 0.1658, "3-6-1": 0.1226, "3-6-2": 0.1497, "3-6-4": 0.1271, "3-6-5": 0.1793, "3-6-7": 0.2169, "3-7-1": 0.1323, "3-7-2": 0.1088, "3-7-4": 0.1368, "3-7-5": 0.1384, "3-7-6": 0.2051, "4-1-2": -0.0655, "4-1-3": -0.0067, "4-1-5": -0.0359, "4-1-6": -0.0294, "4-1-7": 0.1124, "4-2-1": -0.0869, "4-2-3": -0.0611, "4-2-5": -0.0398, "4-2-6": -0.0838, "4-2-7": 0.0075, "4-3-1": -0.0247, "4-3-2": -0.0577, "4-3-5": -0.0281, "4-3-6": 0.0289, "4-3-7": 0.0697, "4-5-1": 0.0087, "4-5-2": 0.0262, "4-5-3": 0.0345, "4-5-6": 0.0118, "4-5-7": 0.1031, "4-6-1": 0.016, "4-6-2": -0.0171, "4-6-3": 0.0924, "4-6-5": 0.0126, "4-6-7": 0.1103, "4-7-1": 0.0527, "4-7-2": -0.0309, "4-7-3": 0.028, "4-7-5": -0.0013, "4-7-6": 0.0052, "5-1-2": 0.1182, "5-1-3": 0.1169, "5-1-4": 0.0861, "5-1-6": 0.0941, "5-1-7": 0.1758, "5-2-1": 0.1662, "5-2-3": 0.2521, "5-2-4": 0.1707, "5-2-6": 0.2294, "5-2-7": 0.2605, "5-3-1": 0.078, "5-3-2": 0.1653, "5-3-4": 0.0826, "5-3-6": 0.1918, "5-3-7": 0.1724, "5-4-1": 0.0404, "5-4-2": 0.0771, "5-4-3": 0.0758, "5-4-6": 0.053, "5-4-7": 0.1347, "5-6-1": 0.119, "5-6-2": 0.2062, "5-6-3": 0.2555, "5-6-4": 0.1235, "5-6-7": 0.2133, "5-7-1": 0.1729, "5-7-2": 0.2095, "5-7-3": 0.2083, "5-7-4": 0.1774, "5-7-6": 0.1855, "6-1-3": 0.1743, "6-1-4": 0.0833, "6-1-5": 0.0849, "6-1-7": 0.1731, "6-2-5": 0.12, "6-3-1": 0.2245, "6-3-2": 0.2516, "6-3-4": 0.2291, "6-3-5": 0.2812, "6-3-7": 0.3189, "6-4-1": 0.037, "6-4-2": 0.0136, "6-4-3": 0.1326, "6-4-5": 0.0432, "6-4-7": 0.1314, "6-5-1": 0.1084, "6-5-2": 0.186, "6-5-3": 0.2545, "6-5-4": 0.1129, "6-5-7": 0.2027, "6-7-1": 0.1694, "6-7-4": 0.1739, "6-7-5": 0.1755, "7-1-2": 0.0935, "7-1-3": 0.1524, "7-1-4": 0.1817, "7-1-5": 0.1231, "7-1-6": 0.1296, "7-2-1": 0.1266, "7-2-3": 0.1524, "7-2-4": 0.1312, "7-2-5": 0.1737, "7-3-1": 0.1883, "7-3-4": 0.1929, "7-3-5": 0.1848, "7-4-1": 0.1338, "7-4-2": 0.0502, "7-4-3": 0.109, "7-4-5": 0.0798, "7-4-6": 0.0863, "7-5-1": 0.2223, "7-5-2": 0.2398, "7-5-3": 0.2481, "7-5-4": 0.2268, "7-5-6": 0.2253, "7-6-1": 0.2294}};</script><span class="live-id" data-nkid="202611242611"></span>
+      <div class="race-card" style="--pick-color:#ffffff;">
+        <div class="live-note" style="display:none"></div>
+        <div class="race-head">
+          <span class="raceno">11R</span>
+          <span class="title">S B</span>
+          <span class="deadline">締切 20:10</span>
+          
+        </div>
+        
+        <div class="sumbox"><div>◎ <b>1番 山本 勝利</b><span class="tg tg-ok">普通</span> <span class="st">過去 ◎の勝率46%・3着内80%</span></div><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(81%)</span>　<span class="role-1">軸向き：<b>4</b>(77%)</span>　<span class="role-2">相手：5 2</span><small>（）は3着内率</small></div><div class="mansha-box" style="margin:6px 0 0;padding-top:6px;border-top:1px dashed #ddd;font-size:13px;line-height:1.8"><div style="font-weight:800;font-size:12px;color:#C8402A">回収率重視の買い目(過去の検証で回収率100%超え)</div><span class="dim">回収率100%超えの形に当たらないレース(見送り推奨)</span><br><details><summary class="dim">参考の買い目(過去の回収率72〜85%・勝ち筋ではない)</summary><span style="background:#7A8494;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:999px">参考</span> <span class="dim">1番目のライン並び通り(過去84%)</span> <b>1-4-7</b></details><br><span class="dim">万車率 <b style="color:inherit">26%</b> ・ 配当の目安 3,950円(1,970〜7,650円) ・ 中穴率 45%</span><br><details style="display:inline"><summary class="dim">消し目 15組</summary><span class="dim">AIが推す組(過去は当たりにくかった。買い目からは外していない): <s>1-4-7</s> <s>4-1-7</s> <s>1-4-5</s> <s>1-4-2</s> <s>4-1-5</s> <s>4-1-2</s> <s>4-7-1</s> <s>1-5-2</s> <s>5-2-4</s> <s>1-5-4</s> <s>2-5-4</s> <s>5-1-2</s></span></details> <a href="../picks.html" style="font-size:12px">ルールの説明</a></div><details><summary class="dim">的中重視の出目(1着率10%以上が頭・合成2倍まで。過去の回収率76%)</summary><div class="fb-buy"><b>買うべき出目</b> <span class="dim">(1着率10%以上の1・4・5を頭に、来る確率の高い順に合成2倍まで(最大20点)・8点・当たる確率46.7%・合成2.0倍)</span><br><div class="fm"><div class="fm-head"><span>1着</span><span></span><span>2着</span><span></span><span>3着</span><span></span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e8c221;color:#1b2430">5</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="fm-n">1点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#1b1b1b;color:#ffffff">2</span><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-n">3点</span></div><div class="fm-row"><span class="fm-c"><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="fm-a">→</span><span class="fm-c"><span class="car" style="background:#ffffff;color:#1b2430">1</span></span><span class="fm-n">1点</span></div></div><details><summary class="dim">1点ずつ(オッズ・確率)</summary><b>1-4-7</b> 9.6倍 <span class="dim">(12.1%)</span> ／ <b>4-1-7</b> 12.6倍 <span class="dim">(8.0%)</span> ／ <b>1-4-5</b> 12.4倍 <span class="dim">(7.6%)</span> ／ <b>1-4-2</b> 15.3倍 <span class="dim">(5.8%)</span> ／ <b>4-1-5</b> 18.7倍 <span class="dim">(4.3%)</span> ／ <b>4-1-2</b> 19.7倍 <span class="dim">(3.9%)</span> ／ <b>4-7-1</b> 30.6倍 <span class="dim">(2.7%)</span> ／ <b>1-5-2</b> 33.1倍 <span class="dim">(2.4%)</span></details><div class="dim" style="font-size:11px">2026年の検証(約2万3千レース・消し目は除かずに計算): 平均7.7点・的中率36%・回収率76%。合成2倍まで買うので当たりやすいが、当たっても配当は小さめ。</div></div></details></div>
+        <div class="line-info-block ok"><span class="line-group"><span class="car" style="background:#ffffff;color:#1b2430">1</span><span class="line-arrow">→</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span><span class="line-arrow">→</span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></span><span class="line-group"><span class="car" style="background:#e8c221;color:#1b2430">5</span><span class="line-arrow">→</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></span><span class="line-group"><span class="car" style="background:#2f8f4e;color:#ffffff">6</span><span class="line-arrow">→</span><span class="car" style="background:#d8322a;color:#ffffff">3</span></span></div>
+        
+        
+    <div id="race11_sub_main" class="subtab-panel">
+        
+        <table class="main">
+          <thead><tr><th>印・車</th><th>選手<br><span class="mmv">級班・位置・決まり手</span></th><th>1着率</th><th>3着内</th></tr></thead>
+          <tbody>
+        <tr style="">
+          <td><span class="aimk">◎</span><span class="car" style="background:#ffffff;color:#1b2430">1</span></td>
+          <td>山本 勝利<span class="tg tg-ok">普通</span><br><span class="dim">A1・先頭・逃げ</span></td>
+          <td class="lv1" data-car="1"><b>41.9%</b><br><span class="rt-ai">AI 51%</span></td>
+          <td class="lv3" data-car="1">81%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">○</span><span class="car" style="background:#1f5fc4;color:#ffffff">4</span></td>
+          <td>尾崎 剛<br><span class="dim">A1・2番手・マーク</span></td>
+          <td class="lv1" data-car="4"><b>28.4%</b><br><span class="rt-ai">AI 18%</span></td>
+          <td class="lv3" data-car="4">77%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">▲</span><span class="car" style="background:#e8c221;color:#1b2430">5</span></td>
+          <td>中釜 健次<br><span class="dim">A1・先頭・捲り</span></td>
+          <td class="lv1" data-car="5"><b>15.0%</b><br><span class="rt-ai">AI 9%</span></td>
+          <td class="lv3" data-car="5">47%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk">△</span><span class="car" style="background:#1b1b1b;color:#ffffff">2</span></td>
+          <td>水谷 将司<br><span class="dim">A2・2番手・差し</span></td>
+          <td class="lv1" data-car="2"><b>9.7%</b><br><span class="rt-ai">AI 9%</span></td>
+          <td class="lv3" data-car="2">41%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#2f8f4e;color:#ffffff">6</span></td>
+          <td>齋藤 友幸<br><span class="dim">A1・先頭・捲り</span></td>
+          <td class="lv1" data-car="6"><b>1.2%</b><br><span class="rt-ai">AI 8%</span></td>
+          <td class="lv3" data-car="6">7%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#e07a1f;color:#ffffff">7</span></td>
+          <td>台 和紀<br><span class="dim">A1・3番手・差し</span></td>
+          <td class="lv1" data-car="7"><b>2.5%</b><br><span class="rt-ai">AI 3%</span></td>
+          <td class="lv3" data-car="7">35%</td>
+        </tr>
+        <tr style="">
+          <td><span class="aimk"></span><span class="car" style="background:#d8322a;color:#ffffff">3</span></td>
+          <td>春日 勇人<br><span class="dim">A1・2番手・差し</span></td>
+          <td class="lv1" data-car="3"><b>1.3%</b><br><span class="rt-ai">AI 2%</span></td>
+          <td class="lv3" data-car="3">12%</td>
+        </tr></tbody>
+        </table>
+
+
+        <details class="kguide"><summary>見かた(数字は2026年 約2万4千レースの実際)</summary><ul><li><b>1着率</b> … オッズ込みの1着率(込%)。オッズが出る前はAIの1着率を実際に合わせて直したもの。どの帯も実際とほぼ合う(差1〜2pt)。小さい「AI」はオッズを使わないAIの1着率。</li><li><b>印 ◎○▲△</b> … AI(方程式込み・オッズなし)の1着率の順。◎ 勝率43%・3着内77% / ○ 22%・63% / ▲ 12%・44% / △ 9%・38%。</li><li><b>一言</b>(◎が何番人気か) … 普通=1〜2番人気(◎の勝率46%・3着内80%) / 注意=3番人気(15%・56%) / 危険！=4番人気以下(11%・41%) / 推し=注意・危険のときの1番人気(38%・73%)。</li><li><b>買い目</b> … 推奨=過去の回収率が100%を超えた形 / 参考=買うならこれ(72〜85%)。3連単タブで自分でも組める。</li></ul></details>
+    </div>
+    
+    
+    
+      </div>
+    </div>
+</main>
+<footer>このページはGitHub Actionsにより毎朝自動生成されています。予測はAIモデルによる参考情報であり、的中を保証するものではありません。</footer>
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.race-panel').forEach(function(p){ p.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).style.display = '';
+  btn.classList.add('active');
+}
+
+// レースパネル内の「予想」「3連単」サブタブ切り替え
+function showSubTab(tabId, which, btn){
+  ['main', 'tf', 'dev', 'kf'].forEach(function(key){
+    var panel = document.getElementById(tabId + '_sub_' + key);
+    if(panel) panel.style.display = (which === key) ? '' : 'none';
+  });
+  var bar = btn.parentElement;
+  if(bar){
+    bar.querySelectorAll('.subtab-btn').forEach(function(b){ b.classList.remove('active'); });
+  }
+  btn.classList.add('active');
+}
+
+// 「HH:MM」形式の締切時刻と、日本時間での現在時刻から、締切までの残り分数を返す。
+// 開いた瞬間のブラウザの時計を使うため、ページ生成時刻に関わらず常に正しく判定できる。
+function minutesUntilDeadline(deadlineStr, nowJstMinutes){
+  if(!deadlineStr) return 1e9;
+  const parts = deadlineStr.split(':');
+  if(parts.length !== 2) return 1e9;
+  const deadlineMinutes = parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+  const diff = deadlineMinutes - nowJstMinutes;
+  if(diff < -5) return 1e9 + (-diff); // 5分以上過ぎているものは終了扱いで後方へ
+  return diff < 0 ? 0 : diff;
+}
+
+function getNowJstMinutes(){
+  // タイムゾーンに関わらず、日本時間（Asia/Tokyo）の「今」の分を取得する
+  const parts = new Intl.DateTimeFormat('ja-JP', {
+    timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', hour12: false
+  }).formatToParts(new Date());
+  const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+  const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+  return h*60 + m;
+}
+
+// タップ式の2着・3着ウィジェット（表4・表5の代わり）
+function barRowHtml(c, tappable, onclickAttr){
+  const pct = Math.min(Math.max(c.prob, 2), 100);
+  const activeCls = c.active ? ' active' : '';
+  const clickAttr = tappable ? ' onclick="'+onclickAttr+'"' : '';
+  return '<div class="mw-bar-row'+(tappable?' mw-bar-row-tap':'')+activeCls+'"'+clickAttr+'>' +
+    '<span class="car" style="background:'+c.bg+';color:'+c.fg+';">'+c.car+'</span>' +
+    '<span class="mw-bar-name">'+c.name+'</span>' +
+    '<span class="mw-bar-track"><span class="mw-bar-fill" style="width:'+pct+'%;"></span></span>' +
+    '<span class="mw-bar-val num">'+c.prob.toFixed(0)+'</span>' +
+  '</div>';
+}
+function renderMatrixWidget(tabId){
+  const payload = window.MATRIX_DATA && window.MATRIX_DATA[tabId];
+  if(!payload) return;
+  const car = payload.selected || payload.default;
+  const chipsEl = document.getElementById(tabId+'_chips1');
+  if(!chipsEl) return;
+  chipsEl.innerHTML = payload.cars.map(function(c){
+    const isActive = c.car === car;
+    const bg = isActive ? c.bg : 'transparent';
+    const fg = isActive ? c.fg : 'inherit';
+    return '<button type="button" class="mw-chip'+(isActive?' active':'')+'" ' +
+      'style="background:'+bg+';color:'+fg+';border-color:'+c.bg+';" ' +
+      'onclick="selectMatrixFirst(\''+tabId+'\','+c.car+')">'+c.car+'</button>';
+  }).join('');
+  const data = payload.data[String(car)] || {second:[], third_by_second:{}};
+  const secondCar = payload.selectedSecond && payload.selectedSecond[car] ? payload.selectedSecond[car] : data.default_second;
+  const bars2El = document.getElementById(tabId+'_bars2');
+  bars2El.innerHTML = data.second.length ? data.second.map(function(c2){
+    const marked = Object.assign({}, c2, {active: c2.car === secondCar});
+    return barRowHtml(marked, true, 'selectMatrixSecond(\''+tabId+'\','+car+','+c2.car+')');
+  }).join('') : '<p class="dim">データがありません</p>';
+
+  const label3El = document.getElementById(tabId+'_label3');
+  const bars3El = document.getElementById(tabId+'_bars3');
+  const thirdList = secondCar ? (data.third_by_second[String(secondCar)] || []) : [];
+  if(secondCar){
+    label3El.textContent = car+'→'+secondCar+'のとき3着に来るのは';
+    bars3El.innerHTML = thirdList.length ? thirdList.map(function(c3){ return barRowHtml(c3, false); }).join('') : '<p class="dim">データがありません</p>';
+  } else {
+    label3El.textContent = '';
+    bars3El.innerHTML = '';
+  }
+}
+function selectMatrixFirst(tabId, car){
+  window.MATRIX_DATA[tabId].selected = car;
+  renderMatrixWidget(tabId);
+}
+function selectMatrixSecond(tabId, firstCar, secondCar){
+  const payload = window.MATRIX_DATA[tabId];
+  payload.selectedSecond = payload.selectedSecond || {};
+  payload.selectedSecond[firstCar] = secondCar;
+  renderMatrixWidget(tabId);
+}
+
+// 3連単一覧（1着候補ごとにタップで絞り込み）
+function renderTrifectaGroups(tabId){
+  const payload = window.TRIFECTA_DATA && window.TRIFECTA_DATA[tabId];
+  if(!payload) return;
+  const car = payload.selected || payload.default;
+  const chipsEl = document.getElementById(tabId+'_tf_chips');
+  if(!chipsEl) return;
+  chipsEl.innerHTML = payload.cars.map(function(c){
+    const isActive = c.car === car;
+    const bg = isActive ? c.bg : 'transparent';
+    const fg = isActive ? c.fg : 'inherit';
+    return '<button type="button" class="tf-chip'+(isActive?' active':'')+'"' +
+      ' style="background:'+bg+';color:'+fg+';border-color:'+c.bg+';"' +
+      ' onclick="selectTrifectaCar(\''+tabId+'\','+c.car+')">'+c.car+'号車<span class="mw-chip-sub">'+c.total.toFixed(1)+'%</span></button>';
+  }).join('');
+  const list = payload.groups[String(car)] || [];
+  const listEl = document.getElementById(tabId+'_tf_list');
+  listEl.innerHTML = list.length ? list.map(function(c, i){
+    return '<div class="tf-row">' +
+      '<span class="tf-rank">'+(i+1)+'</span>' +
+      '<span class="tf-combo">' +
+        '<span class="car" style="background:'+payload.cars.find(function(x){return x.car===car;}).bg+';color:'+payload.cars.find(function(x){return x.car===car;}).fg+';">'+car+'</span>' +
+        '<span class="tf-arrow">\u2192</span>' +
+        '<span class="car" style="background:'+carColorLookup(payload,c.second).bg+';color:'+carColorLookup(payload,c.second).fg+';">'+c.second+'</span>' +
+        '<span class="tf-arrow">\u2192</span>' +
+        '<span class="car" style="background:'+carColorLookup(payload,c.third).bg+';color:'+carColorLookup(payload,c.third).fg+';">'+c.third+'</span>' +
+      '</span>' +
+      ((c.badges||[]).length ? '<span class="tf-badge" style="background:#555;color:#fff">消し(AI推奨)</span>' : '') +
+      '<span class="tf-prob">'+c.prob.toFixed(2)+'%</span>' +
+      (c.odds ? '<span class="tf-odds">'+c.odds+'倍</span>' : '') +
+      '<span class="tf-be" title="この倍率以上のオッズなら、予測が正しいとき期待値が100円超えになります">'+(c.prob>0?(100/c.prob).toFixed(c.prob>=1?0:0):'-')+'倍〜</span>' +
+    '</div>';
+  }).join('') : '<p class="dim">データがありません</p>';
+  bdInit(tabId);
+}
+function carColorLookup(payload, car){
+  const found = payload.cars.find(function(x){ return x.car === car; });
+  return found || {bg:'#888', fg:'#fff'};
+}
+function selectTrifectaCar(tabId, car){
+  window.TRIFECTA_DATA[tabId].selected = car;
+  renderTrifectaGroups(tabId);
+}
+
+// ---- 買い目ビルダー ----
+// 実績は人気ベースの確率順で試算した的中率／回収率。本線・押さえは10/24〜10/26の181レース、それ以外は10/23・10/24の86レース
+var BD_PRESETS = [
+  ['honsen','本線(1-5位)','181レース 39%／83%'], ['osae','押さえまで(1-10位)','181レース 52%／76%'],
+  ['osae2','押さえの押さえまで(1-20位)','86レース 72%／84%'], ['osae2only','押さえの押さえだけ(11-20位)','86レース 13%／68%'],
+  ['synth','合成オッズ目標まで広げる','86レース 目標3倍で17%／73%'], ['ana','穴(30-150倍の確率上位10点)','86レース 16%／76%'],
+  ['oana','大穴(100-500倍の確率上位10点)','86レース 8%／109%'], ['aiana','AI穴(AIが人気の1.5倍以上評価・20倍以上)','86レース 3%／29%'],
+  ['custom','自由に設定','—']
+];
+function bdState(p){
+  if(!p.bd) p.bd = {preset:'osae', rf:1, rt:10, omin:'', omax:'', synth:3, csynth:0, max:0, heads:[]};
+  return p.bd;
+}
+function bdUntil(list, T){
+  var out = [], inv = 0;
+  for(var i=0;i<list.length;i++){
+    var c = list[i]; if(!c.o) continue;
+    var ni = inv + 1/c.o;
+    if(1/ni < T) break;
+    out.push(c); inv = ni;
+  }
+  return out;
+}
+function bdSelect(p, st){
+  var A = (p.all||[]).map(function(c,i){ return {k:c[0]+'-'+c[1]+'-'+c[2], f:c[0], p:c[3], o:c[4], ai:c[5], r:i+1}; });
+  if(st.heads.length) A = A.filter(function(c){ return st.heads.indexOf(c.f) >= 0; });
+  var S;
+  switch(st.preset){
+    case 'honsen': S = A.filter(function(c){return c.r<=5;}); break;
+    case 'osae': S = A.filter(function(c){return c.r<=10;}); break;
+    case 'osae2': S = A.filter(function(c){return c.r<=20;}); break;
+    case 'osae2only': S = A.filter(function(c){return c.r>10 && c.r<=20;}); break;
+    case 'synth': S = bdUntil(A, +st.synth || 3); break;
+    case 'ana': S = A.filter(function(c){return c.o && c.o>=30 && c.o<=150;}).slice(0,10); break;
+    case 'oana': S = A.filter(function(c){return c.o && c.o>=100 && c.o<=500;}).slice(0,10); break;
+    case 'aiana': S = A.filter(function(c){return c.o && c.o>=20 && c.ai!=null && c.ai>=1.5*c.p;})
+                      .sort(function(a,b){return b.ai-a.ai;}).slice(0,10); break;
+    default:
+      S = A.filter(function(c){
+        return c.r >= (+st.rf||1) && c.r <= (+st.rt||9999) &&
+          (st.omin==='' || (c.o && c.o >= +st.omin)) && (st.omax==='' || (c.o && c.o <= +st.omax));
+      });
+      if(+st.csynth > 0) S = bdUntil(S, +st.csynth);
+      if(+st.max > 0) S = S.slice(0, +st.max);
+  }
+  return S;
+}
+function bdInit(tabId){
+  var p = window.TRIFECTA_DATA[tabId], el = document.getElementById(tabId+'_bd_ctl');
+  if(!p || !el || !p.all || p.bdReady) return;
+  p.bdReady = true;
+  var st = bdState(p);
+  var opts = BD_PRESETS.map(function(x){ return '<option value="'+x[0]+'"'+(x[0]===st.preset?' selected':'')+'>'+x[1]+'</option>'; }).join('');
+  var heads = p.cars.slice().sort(function(a,b){return a.car-b.car;}).map(function(c){
+    return '<button type="button" class="bd-head" data-car="'+c.car+'" style="border-color:'+c.bg+'" onclick="bdHead(\''+tabId+'\','+c.car+',this)">'+c.car+'</button>';
+  }).join('');
+  el.innerHTML =
+    '<div class="bd-row"><label>買い方 <select id="'+tabId+'_bd_preset" onchange="bdSet(\''+tabId+'\',\'preset\',this.value)">'+opts+'</select></label></div>' +
+    '<div class="bd-row">1着を絞る '+heads+'<span class="bd-hint">(押さない＝全部)</span></div>' +
+    '<div class="bd-row bd-custom" id="'+tabId+'_bd_custom">' +
+      '<label>順位 <input type="number" min="1" value="'+st.rf+'" onchange="bdSet(\''+tabId+'\',\'rf\',this.value)">〜<input type="number" min="1" value="'+st.rt+'" onchange="bdSet(\''+tabId+'\',\'rt\',this.value)">位</label>' +
+      '<label>オッズ <input type="number" min="1" placeholder="下限" onchange="bdSet(\''+tabId+'\',\'omin\',this.value)">〜<input type="number" min="1" placeholder="上限" onchange="bdSet(\''+tabId+'\',\'omax\',this.value)">倍</label>' +
+      '<label>最大 <input type="number" min="0" value="0" onchange="bdSet(\''+tabId+'\',\'max\',this.value)">点(0=制限なし)</label>' +
+      '<label>合成オッズ <input type="number" min="0" step="0.5" value="0" onchange="bdSet(\''+tabId+'\',\'csynth\',this.value)">倍以上を保つ(0=なし)</label>' +
+    '</div>' +
+    '<div class="bd-row" id="'+tabId+'_bd_synthrow"><label>合成オッズの目標 <input type="number" min="0" step="0.5" value="'+st.synth+'" onchange="bdSet(\''+tabId+'\',\'synth\',this.value)">倍以上を保って広げる</label></div>';
+  bdRender(tabId);
+}
+function bdSet(tabId, key, val){
+  var p = window.TRIFECTA_DATA[tabId], st = bdState(p);
+  st[key] = (key==='preset') ? val : (val===''?'':val);
+  bdRender(tabId);
+}
+function bdHead(tabId, car, btn){
+  var p = window.TRIFECTA_DATA[tabId], st = bdState(p), i = st.heads.indexOf(car);
+  if(i >= 0){ st.heads.splice(i,1); btn.classList.remove('on'); btn.style.background=''; btn.style.color=''; }
+  else { st.heads.push(car); btn.classList.add('on'); var c = carColorLookup(p, car); btn.style.background=c.bg; btn.style.color=c.fg; }
+  bdRender(tabId);
+}
+function bdRender(tabId){
+  var p = window.TRIFECTA_DATA[tabId], st = bdState(p), out = document.getElementById(tabId+'_bd_out');
+  if(!out) return;
+  var cu = document.getElementById(tabId+'_bd_custom'), sr = document.getElementById(tabId+'_bd_synthrow');
+  if(cu) cu.style.display = st.preset==='custom' ? '' : 'none';
+  if(sr) sr.style.display = st.preset==='synth' ? '' : 'none';
+  var S = bdSelect(p, st);
+  var hasOdds = S.length && S.every(function(c){return c.o;});
+  var prob = S.reduce(function(a,c){return a+c.p;},0);
+  var inv = hasOdds ? S.reduce(function(a,c){return a+1/c.o;},0) : 0;
+  var syn = inv ? 1/inv : null;
+  var ev = syn ? prob*syn/100 : null;
+  var hist = (BD_PRESETS.filter(function(x){return x[0]===st.preset;})[0]||[])[2];
+  var head = '<div class="bd-sum"><b>'+S.length+'点</b>・当たる見込み <b>'+prob.toFixed(1)+'%</b>' +
+    (syn ? '・合成オッズ <b>'+syn.toFixed(1)+'倍</b>・期待値 <b class="'+(ev>=1?'bd-good':'')+'">'+ev.toFixed(2)+'</b>' : '・オッズ発売前（合成オッズは発売後に表示）') +
+    (hist && hist!=='—' ? '<div class="bd-hist">過去の実績(的中率／回収率): '+hist+(st.heads.length?'(1着を絞らない場合の数字)':'')+'</div>' : '') + '</div>';
+  var list = S.length ? S.map(function(c){
+    var parts = c.k.split('-').map(Number);
+    return '<div class="tf-row"><span class="tf-rank">'+c.r+'</span><span class="tf-combo">' +
+      parts.map(function(n){ var cc = carColorLookup(p,n); return '<span class="car" style="background:'+cc.bg+';color:'+cc.fg+';">'+n+'</span>'; }).join('<span class="tf-arrow">→</span>') +
+      '</span><span class="tf-prob">'+c.p.toFixed(2)+'%</span>' + (c.o?'<span class="tf-odds">'+c.o+'倍</span>':'') +
+      (c.ai!=null?'<span class="tf-odds">AI '+c.ai.toFixed(2)+'%</span>':'') + '</div>';
+  }).join('') : '<p class="dim">条件に合う買い目がありません</p>';
+  var keys = S.map(function(c){return c.k;}).join(' ');
+  out.innerHTML = head + '<div class="tf-list">'+list+'</div>' +
+    (S.length ? '<div class="bd-copy"><button type="button" onclick="bdCopy(this)" data-k="'+keys+'">買い目をコピー</button><span class="bd-keys">'+keys+'</span></div>' : '');
+}
+function bdCopy(btn){
+  var t = btn.getAttribute('data-k');
+  if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ btn.textContent='コピーしました'; }, function(){ btn.textContent='長押しで選択してください'; }); }
+}
+
+// 展開シミュレーションのアニメーション再生（実際のバンク形状の上を動かす）
+// トラック座標系: 中心(200,120)、直線半長80、コーナー基準半径70、レーン幅30
+// （report.py の SVG <path>（dev-track-outline）とここのジオメトリ定数は対応している）
+// 画面の奥（上側 y小）を向正面（バックストレッチ）、手前（下側 y大）をゴール
+// （ホームストレッチ）とする。フィニッシュ（fraction=0=1.0）は、ホームストレッチが
+// 手前右側のコーナーに入る直前（x=cx+halfLen側）に位置する。実際の競輪と同じ
+// 反時計回り（左回り）：ゴール→右コーナー→向正面→左コーナー→ゴール、の順で周回する。
+function devTrackXY(fraction, lane){
+  var cx = 200, cy = 150, halfLen = 80, R = 70, laneW = 42;
+  var r = R + lane * laneW;
+  if(fraction < 0.25){
+    // 右側コーナー（ゴール側→向正面側、外側＝右に膨らむ）
+    var t1 = fraction / 0.25;
+    var a1 = (90 - 180 * t1) * Math.PI / 180;
+    return { x: (cx + halfLen) + r * Math.cos(a1), y: cy + r * Math.sin(a1) };
+  } else if(fraction < 0.5){
+    // 向正面（バックストレッチ、奥＝上側）: 右端→左端
+    var t2 = (fraction - 0.25) / 0.25;
+    return { x: (cx + halfLen) - t2 * (2 * halfLen), y: cy - r };
+  } else if(fraction < 0.75){
+    // 左側コーナー（向正面側→ゴール側、外側＝左に膨らむ）
+    var t3 = (fraction - 0.5) / 0.25;
+    var a3 = (-90 - 180 * t3) * Math.PI / 180;
+    return { x: (cx - halfLen) + r * Math.cos(a3), y: cy + r * Math.sin(a3) };
+  } else {
+    // ホームストレッチ（ゴール、手前＝下側）: 左端→フィニッシュ(x=cx+halfLen)
+    var t4 = (fraction - 0.75) / 0.25;
+    return { x: (cx - halfLen) + t4 * (2 * halfLen), y: cy + r };
+  }
+}
+function devFractionFromPosition(track, positionLaps){
+  // positionLaps は既に「実際の周回距離（周）」そのもの（race_simulation.py の
+  // build_animation 参照）。start_fraction はアニメーション開始地点（向正面あたり）
+  // のトラック位置で、そこに周回距離をそのまま足すだけでよい（0-100换算は不要）。
+  var f = track.start_fraction + positionLaps;
+  return f - Math.floor(f);
+}
+// 進行方向の接線角度（度）を、fractionをごく僅かに前後にずらした2点から求める。
+// 反時計回りに周回しているので、常に「少し先」の点との差分を使う。
+function devTrackAngle(fraction, lane){
+  var eps = 0.004;
+  var f0 = fraction, f1 = fraction + eps;
+  if(f1 >= 1) f1 -= 1;
+  var p0 = devTrackXY(f0, lane);
+  var p1 = devTrackXY(f1, lane);
+  return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+}
+// 車体アイコン（<g class="dev-car-icon">、内側に回転用の<g>_bike、きょうだい要素に
+// 直立したまま表示する車番<text>）の位置と向きをまとめて更新する。
+function setDevCarPose(tabId, car, x, y, angleDeg){
+  var outer = document.getElementById(tabId + '_dev_car_' + car);
+  var bike = document.getElementById(tabId + '_dev_car_' + car + '_bike');
+  if(outer){ outer.setAttribute('transform', 'translate(' + x + ',' + y + ')'); }
+  if(bike){ bike.setAttribute('transform', 'rotate(' + angleDeg.toFixed(1) + ')'); }
+}
+function updateDevLineConnectors(tabId, anim, xyByCar){
+  var groups = {};
+  anim.cars.forEach(function(c){
+    if(c.line_index === null || c.line_index === undefined) return;
+    (groups[c.line_index] = groups[c.line_index] || []).push(c);
+  });
+  Object.keys(groups).forEach(function(idx){
+    var members = groups[idx];
+    if(members.length < 2) return;
+    members.sort(function(a, b){ return a.line_position - b.line_position; });
+    var el = document.getElementById(tabId + '_devline_' + idx);
+    if(!el) return;
+    var pts = members.map(function(c){
+      var xy = xyByCar[c.car];
+      return xy ? (xy.x + ',' + xy.y) : '';
+    }).join(' ');
+    el.setAttribute('points', pts);
+  });
+}
+// Catmull-Romスプラインで5点のチェックポイントを滑らかに通す（各区間の境目で
+// 速度が0にならず、ずっと同じ調子で動き続けるようにするため）。端点は同じ値を
+// 複製して扱う（クランプ）。
+function devCatmullRom(values, u){
+  var n = values.length;
+  var i = Math.floor(u);
+  if(i < 0) i = 0;
+  if(i > n - 2) i = n - 2;
+  var t = u - i;
+  var p0 = values[Math.max(i - 1, 0)];
+  var p1 = values[i];
+  var p2 = values[Math.min(i + 1, n - 1)];
+  var p3 = values[Math.min(i + 2, n - 1)];
+  var t2 = t * t, t3 = t2 * t;
+  return 0.5 * ((2 * p1) + (-p0 + p2) * t +
+    (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
+    (-p0 + 3 * p1 - 3 * p2 + p3) * t3);
+}
+function placeDevCarsAtU(tabId, anim, u){
+  var xyByCar = {};
+  anim.cars.forEach(function(c){
+    var pos = devCatmullRom(c.positions, u);
+    var lane = devCatmullRom(c.lanes, u);
+    var frac = devFractionFromPosition(anim.track, pos);
+    var xy = devTrackXY(frac, lane);
+    var angle = devTrackAngle(frac, lane);
+    xyByCar[c.car] = xy;
+    setDevCarPose(tabId, c.car, xy.x, xy.y, angle);
+  });
+  updateDevLineConnectors(tabId, anim, xyByCar);
+}
+function initDevTrack(tabId){
+  var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+  if(!anim) return;
+  placeDevCarsAtU(tabId, anim, 0);
+}
+function playDevAnimation(tabId){
+  var anim = window.DEV_ANIM_DATA && window.DEV_ANIM_DATA[tabId];
+  if(!anim) return;
+  var totalMs = 9000; // ゆっくり・途切れず動く見た目にするため、やや長めの一定速度で通しで再生する
+  var maxU = anim.checkpoints - 1;
+  placeDevCarsAtU(tabId, anim, 0);
+  var start = null;
+  function frame(now){
+    if(start === null) start = now;
+    var t = Math.min((now - start) / totalMs, 1);
+    placeDevCarsAtU(tabId, anim, t * maxU);
+    if(t < 1){ requestAnimationFrame(frame); }
+  }
+  requestAnimationFrame(frame);
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+  if(window.MATRIX_DATA){
+    Object.keys(window.MATRIX_DATA).forEach(renderMatrixWidget);
+  }
+  if(window.TRIFECTA_DATA){
+    Object.keys(window.TRIFECTA_DATA).forEach(renderTrifectaGroups);
+  }
+  if(window.DEV_ANIM_DATA){
+    Object.keys(window.DEV_ANIM_DATA).forEach(initDevTrack);
+  }
+  if(tabs.length === 0) return;
+  // まとめページ（本命1着率45%超レース一覧など）からの「?r=5」のような直接リンクが
+  // あれば、そのレース番号のタブを優先して開く。無ければ従来どおり締切が一番近い
+  // レースを自動で開く。
+  const rParam = new URLSearchParams(window.location.search).get('r');
+  if(rParam){
+    const direct = tabs.find(function(t){ return t.getAttribute('data-race-no') === rParam; });
+    if(direct){ direct.click(); return; }
+  }
+  // 見ていたレースを覚えておき、「最新を表示」や再読み込みのあとも同じレースを開く(11/22)
+  const SK = 'sel:' + location.pathname;
+  tabs.forEach(function(t){ t.addEventListener('click', function(e){ if(e.isTrusted){ try{ sessionStorage.setItem(SK, t.getAttribute('data-race-no')); }catch(_){} } }); });
+  let saved = null; try{ saved = sessionStorage.getItem(SK); }catch(_){}
+  if(saved){
+    const back = tabs.find(function(t){ return t.getAttribute('data-race-no') === saved; });
+    if(back){ back.click(); return; }
+  }
+  const nowJstMinutes = getNowJstMinutes();
+  let best = tabs[0], bestMins = Infinity;
+  tabs.forEach(function(t){
+    const mins = minutesUntilDeadline(t.getAttribute('data-deadline'), nowJstMinutes);
+    if(mins < bestMins){ bestMins = mins; best = t; }
+  });
+  best.click();
+});
+</script>
+<script>
+(function(){
+  if(!window.LIVE) return;
+  function upd(){
+    fetch('../_live_odds.json?t='+Date.now()).then(function(r){return r.json();}).then(function(J){
+      document.querySelectorAll('.live-id').forEach(function(el){
+        var id=el.dataset.nkid, L=LIVE[id], O=J.races&&J.races[id]; if(!L||!O) return;
+        var inv=0,k; for(k in O.tri){ if(O.tri[k]>0) inv+=1/O.tri[k]; }
+        var s={},m=-1e9; for(k in L.s0){ var o=O.tri[k]; if(!o) continue; var lq=Math.log((1/o)/inv); s[k]=L.w0*lq+L.w1*lq*lq+L.s0[k]; if(s[k]>m)m=s[k]; }
+        var z=0; for(k in s){ s[k]=Math.exp(s[k]-m); z+=s[k]; }
+        var p1={},p3={}; for(k in s){ var p=s[k]/z, c=k.split('-'); p1[c[0]]=(p1[c[0]]||0)+p; [0,1,2].forEach(function(i){p3[c[i]]=(p3[c[i]]||0)+p;}); }
+        var panel=el.closest('.race-panel'); if(!panel) return;
+        panel.querySelectorAll('td.lv1').forEach(function(td){ var b=td.querySelector('b'); var v=p1[td.dataset.car]; if(b&&v!=null){ b.textContent=(v*100).toFixed(1)+'%'; b.style.color='#1E5FA8'; }});
+        panel.querySelectorAll('td.lv3').forEach(function(td){ var v=p3[td.dataset.car]; if(v!=null){ td.textContent=Math.round(v*100)+'%'; td.style.color='#1E5FA8'; }});
+        var n=panel.querySelector('.live-note'); if(n){ n.style.display='block';
+          n.innerHTML='🔵 直前オッズを反映 '+O.at+(O.mins!=null?'(締切'+(O.mins>0?O.mins.toFixed(0)+'分前':'後')+')':'')+' ・ 1着率・3着内を計算し直し(青字)'; }
+      });
+    }).catch(function(){});
+  }
+  upd(); setInterval(upd, 60000);
+})();
+</script>
+</body>
+</html>

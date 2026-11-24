@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24 06:04",
+ "updated": "2026-11-24 14:57",
  "failures": [
   {
    "race": "2026-11-23 yokkaichi 4R",
@@ -8,9 +8,15 @@
     "race_id": "4820261123010004",
     "primary": "skipped",
     "day_url": "https://keirin.kdreams.jp/yokkaichi/raceresult/48202611230100/",
-    "day_html_len": 8427,
-    "day_races": [],
-    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
+    "day_html_len": 105294,
+    "day_races": [
+     1,
+     2,
+     3,
+     5,
+     7
+    ],
+    "day_text_head": "",
     "day_parsed": false
    }
   },
@@ -24,43 +30,35 @@
    }
   },
   {
-   "race": "2026-11-23 kawasaki 6R",
+   "race": "2026-11-24 takeo 1R",
    "diag": {
-    "venue": "kawasaki",
-    "race_id": "3420261123010006",
+    "venue": "takeo",
+    "race_id": "8420261123020001",
     "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/kawasaki/raceresult/34202611230100/",
-    "day_html_len": 8427,
-    "day_races": [],
-    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-23 tamano 6R",
+   "race": "2026-11-24 hiroshima 6R",
    "diag": {
-    "venue": "tamano",
-    "race_id": "6120261123010006",
+    "venue": "hiroshima",
+    "race_id": "6220261122030006",
     "primary": "skipped",
-    "day_url": "https://keirin.kdreams.jp/tamano/raceresult/61202611230100/",
-    "day_html_len": 8427,
-    "day_races": [],
-    "day_text_head": "楽天Kドリームス | 只今システムメンテナンス中のため全てのサービスがご利用できません。 | 申し訳ございませんが、しばらくお待ちください。 | メンテナンス時間： 1:00～7:00 | © Kdreams, Inc. | © Rakuten Group, Inc.",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-23 yokkaichi 7R",
+   "race": "2026-11-24 nara 9R",
    "diag": {
-    "venue": "yokkaichi",
-    "race_id": "4820261123010007",
+    "venue": "nara",
+    "race_id": "5320261122030009",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
- "tracked": 3532,
- "with_result": 2849,
+ "tracked": 3613,
+ "with_result": 2883,
  "without_url": 0,
- "pending_eligible": 683
+ "pending_eligible": 681
 }
