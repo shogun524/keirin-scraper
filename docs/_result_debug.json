@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24 19:02",
+ "updated": "2026-11-24 19:33",
  "failures": [
   {
    "race": "2026-11-24 matsuyama 8R",
@@ -11,17 +11,17 @@
    }
   },
   {
-   "race": "2026-11-24 seibuen 8R",
+   "race": "2026-11-24 matsuyama 10R",
    "diag": {
-    "venue": "seibuen",
-    "race_id": "2620261123020008",
+    "venue": "matsuyama",
+    "race_id": "7520261124010010",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3613,
- "with_result": 2901,
+ "with_result": 2904,
  "without_url": 0,
  "pending_eligible": 684
 }
