@@ -1,0 +1,58 @@
+name: 競輪 オッズの取り直し（5分おき・ページの最新化）
+
+# 11/25: 出走表はフル更新(daily.yml)が保存したものを使い、netkeirin のオッズだけ5分おきに取り直して
+# トップ・印刷・場ごとのページを書き直す。GitHubのcronは間引かれるので、5時間半動き続けて最後に自分を起こし直す。
+on:
+  schedule:
+    - cron: "7 * * * *"   # 保険(止まっていたら起こす)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests beautifulsoup4 numpy pandas lightgbm
+      - name: 5分おきにオッズを取り直してページを更新
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KEIRIN_LIGHT: "1"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          start=$(date +%s)
+          while [ $(( $(date +%s) - start )) -lt 19800 ]; do
+            hm=$(TZ=Asia/Tokyo date +%H%M)
+            if [ "$hm" -lt 0700 ] || [ "$hm" -ge 2330 ]; then echo "時間外 $hm"; break; fi
+            t0=$(date +%s)
+            git pull --rebase --autostash -X theirs -q || git rebase --abort 2>/dev/null
+            # フル更新(出走表・並び・成績)は1時間おき。cronが間引かれて止まっていたら起こす
+            n=$(gh run list --workflow daily.yml --limit 5 --json status,createdAt --jq "[.[]|select(.status==\"in_progress\" or .status==\"queued\" or (.createdAt|fromdateiso8601) > (now-3600))]|length" || echo 1)
+            if [ "$n" = "0" ]; then gh workflow run daily.yml --ref "${GITHUB_REF_NAME}" && echo "daily を起動しました"; fi
+            (cd scripts && timeout 600 python run_daily.py) || echo "軽い更新に失敗"
+            git add docs/
+            if ! git diff --staged --quiet; then
+              git commit -q -m "chore: オッズを取り直してページを更新 ($(TZ=Asia/Tokyo date +'%m-%d %H:%M'))"
+              for i in 1 2 3; do git pull --rebase --autostash -X theirs -q && git push -q && break || { git rebase --abort 2>/dev/null; sleep 5; }; done
+            fi
+            el=$(( $(date +%s) - t0 )); [ $el -lt 300 ] && sleep $(( 300 - el ))
+          done
+      - name: 開催時間中なら自分を起こし直す
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          hm=$(TZ=Asia/Tokyo date +%H%M)
+          if [ "$hm" -ge 0630 ] && [ "$hm" -lt 2300 ]; then gh workflow run refresh.yml --ref "${GITHUB_REF_NAME}" && echo "次の回を起動しました"; fi

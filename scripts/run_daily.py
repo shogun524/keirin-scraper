@@ -133,18 +133,76 @@ def clean_stale_venue_dirs(active_venues):
         print(f"[INFO] 本日開催していない競輪場の古いフォルダを削除しました: {removed}")
 
 
+RACES_CACHE = os.path.join(os.path.dirname(__file__), "..", "cache", "races_today.pkl.gz")
+
+
+def _save_races_cache(races, today):
+    import gzip, pickle
+    try:
+        os.makedirs(os.path.dirname(RACES_CACHE), exist_ok=True)
+        with gzip.open(RACES_CACHE, "wb") as f:
+            pickle.dump((today.isoformat(), races), f)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] 出走表の保存に失敗: {e}")
+
+
+def _load_races_cache(today):
+    import gzip, pickle
+    try:
+        with gzip.open(RACES_CACHE, "rb") as f:
+            d, races = pickle.load(f)
+    except Exception:  # noqa: BLE001
+        return None
+    return races if d == today.isoformat() else None
+
+
+def _light_rest(all_race_data, today, by_venue):
+    """軽い更新: AIの買い目の記録・印刷ページ・場ごとのページ・見た目だけ"""
+    try:
+        import nb_log
+        nb_log.log(all_race_data, today)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] AIの買い目の記録に失敗: {e}")
+    try:
+        with open(os.path.join(DOCS_DIR, "print.html"), "w", encoding="utf-8") as f:
+            f.write(render_print_page(all_race_data, today))
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] print.html の生成に失敗: {e}")
+    for venue, rs in by_venue.items():
+        try:
+            os.makedirs(os.path.join(DOCS_DIR, venue), exist_ok=True)
+            with open(os.path.join(DOCS_DIR, venue, "index.html"), "w", encoding="utf-8") as f:
+                f.write(render_venue_page(venue, rs, today))
+        except Exception as e:  # noqa: BLE001
+            print(f"[WARN] {venue} のページの生成に失敗: {e}")
+    try:
+        import jra_layout
+        jra_layout.skin_keirin_docs(DOCS_DIR)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] ページの見た目をそろえられませんでした: {e}")
+    print("[INFO] 軽い更新(オッズの取り直し)が終わりました")
+
+
 def main():
     # GitHub Actionsのランナーは基本的にUTCで動くため、日本時間の「今日」を明示的に計算する
     today = datetime.datetime.now(JST).date()
     now_str = datetime.datetime.now(JST).strftime("%Y-%m-%d %H:%M")
     print(f"[INFO] {today} (JST) のレースを取得します...（実行時刻: {now_str}）")
 
-    try:
-        races = fetch_all_todays_races(today)
-    except Exception as e:
-        print(f"[ERROR] レース取得中にエラーが発生しました: {e}")
-        traceback.print_exc()
-        races = []
+    # 11/25: KEIRIN_LIGHT=1 のときは「オッズだけ取り直す軽い更新」(5分おき)。
+    # 出走表は直前のフル更新が保存したものを使い、ページは index/print/場ごとだけ書き直す
+    light = bool(os.environ.get("KEIRIN_LIGHT"))
+    races = _load_races_cache(today) if light else None
+    if light and not races:
+        print("[INFO] 今日の出走表の保存がないため、軽い更新はしません")
+        return
+    if races is None:
+        try:
+            races = fetch_all_todays_races(today)
+        except Exception as e:
+            print(f"[ERROR] レース取得中にエラーが発生しました: {e}")
+            traceback.print_exc()
+            races = []
 
     if not races:
         # kドリームズが取れない日（メンテナンス等）は winticket から同じ形式で取る
@@ -158,6 +216,8 @@ def main():
             races = []
 
     print(f"[INFO] {len(races)} レース分のデータを取得しました。")
+    if not light:
+        _save_races_cache(races, today)
 
     os.makedirs(DOCS_DIR, exist_ok=True)
 
@@ -170,7 +230,7 @@ def main():
         {"venue": race["race_info"]["venue"], "race_no": race["race_info"]["race_no"], "url": race["url"]}
         for race in races
         if race["race_info"].get("deadline") and race["race_info"]["deadline"] < now_hm
-    ]
+    ] if not light else []   # 軽い更新では結果ページを取りに行かない(保存済みの集計を読むだけ)
 
     try:
         course_records, course_newly_processed = update_course_records(DOCS_DIR, finished_candidates, now_str)
@@ -191,7 +251,8 @@ def main():
         form_records = {}
 
     try:
-        check_retrain_trigger(DOCS_DIR, course_newly_processed, today.isoformat())
+        if not light:
+          check_retrain_trigger(DOCS_DIR, course_newly_processed, today.isoformat())
     except Exception as e:
         print(f"[WARN] 再学習トリガーの判定に失敗しました: {e}")
 
@@ -220,7 +281,8 @@ def main():
 
     # 「このレースの買い方」の判定の根拠：毎日の自動記録から集計した成績を画面に出す
     try:
-        buy_stats.publish_hist(DOCS_DIR)
+        if not light:
+            buy_stats.publish_hist(DOCS_DIR)
     except Exception as e:
         print(f"[WARN] 買い方の成績の読み込みに失敗しました（初期の文言を使います）: {e}")
 
@@ -340,7 +402,8 @@ def main():
         by_venue.setdefault(rd["race_info"]["venue"], []).append(rd)
 
     # 本日開催していない競輪場の古いフォルダ（前日以前のデータ）を先に削除
-    clean_stale_venue_dirs(set(by_venue.keys()))
+    if not light:
+        clean_stale_venue_dirs(set(by_venue.keys()))
 
     # トップページ（競輪場一覧）
     # 11/21: トップはJRA週末AI予想と同じ形(会場タブ → レースタブ → 表)。前の競輪場一覧の形は today.html に残す
@@ -355,6 +418,10 @@ def main():
     with open(os.path.join(DOCS_DIR, "today.html"), "w", encoding="utf-8") as f:
         f.write(render_index(all_race_data, today))
     print("[INFO] docs/index.html を書き出しました。")
+
+    if light:
+        _light_rest(all_race_data, today, by_venue)
+        return
 
     # 予想成績：今日の予想を記録し、締切を過ぎたレースの結果と照合する（失敗しても他の処理は続ける）
     try:
