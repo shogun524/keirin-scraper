@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24 15:32",
+ "updated": "2026-11-24 16:03",
  "failures": [
   {
    "race": "2026-11-23 yokkaichi 6R",
@@ -39,17 +39,26 @@
    }
   },
   {
-   "race": "2026-11-24 nara 10R",
+   "race": "2026-11-24 shizuoka 11R",
+   "diag": {
+    "venue": "shizuoka",
+    "race_id": "3820261124010011",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-24 nara 11R",
    "diag": {
     "venue": "nara",
-    "race_id": "5320261122030010",
+    "race_id": "5320261122030011",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3613,
- "with_result": 2885,
+ "with_result": 2887,
  "without_url": 0,
- "pending_eligible": 681
+ "pending_eligible": 683
 }
