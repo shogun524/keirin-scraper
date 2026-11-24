@@ -393,12 +393,22 @@ def main():
         print(f"[WARN] 予想の評価レポートの作成に失敗しました: {e}")
         eval_report = load_report(DOCS_DIR)
 
+    # AIの買い目(11/24〜)の記録と採点。成績ページに回収率を出す
+    nb_html = ""
+    try:
+        import nb_log
+        nb_log.tally()
+        nb_log.log(all_race_data, today)
+        nb_html = nb_log.section_html()
+    except Exception as e:
+        print(f"[WARN] AIの買い目の記録・採点に失敗しました: {e}")
+
     # 全競輪場横断の集計ページ（本命が堅い／拮抗／妙味／全レース早見表）。
     # 1ページの失敗が他のページや日次処理全体を止めないよう、ページごとに独立して書き出す。
     for filename, render_fn in (
         ("high_prob.html", render_high_prob_page),
         ("close_race.html", render_close_race_page),
-        ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params, eval_report)),
+        ("results.html", lambda data, d: render_results_page(prediction_log, d, model_params, eval_report).replace('<main class="wide">', '<main class="wide">' + nb_html, 1)),
         ("print.html", render_print_page),
     ):
         try:
