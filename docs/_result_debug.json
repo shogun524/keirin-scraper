@@ -1,24 +1,6 @@
 {
- "updated": "2026-11-24 17:33",
+ "updated": "2026-11-24 18:02",
  "failures": [
-  {
-   "race": "2026-11-24 takeo 1R",
-   "diag": {
-    "venue": "takeo",
-    "race_id": "8420261123020001",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-24 hiroshima 6R",
-   "diag": {
-    "venue": "hiroshima",
-    "race_id": "6220261122030006",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-24 shizuoka 11R",
    "diag": {
@@ -38,17 +20,17 @@
    }
   },
   {
-   "race": "2026-11-24 matsuyama 5R",
+   "race": "2026-11-24 seibuen 6R",
    "diag": {
-    "venue": "matsuyama",
-    "race_id": "7520261124010005",
+    "venue": "seibuen",
+    "race_id": "2620261123020006",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3613,
- "with_result": 2895,
+ "with_result": 2898,
  "without_url": 0,
- "pending_eligible": 684
+ "pending_eligible": 683
 }
