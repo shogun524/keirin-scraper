@@ -3648,12 +3648,6 @@
     "recent": [
       {
         "date": "2026-11-15",
-        "venue": "tachikawa",
-        "finish": 8,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-15",
         "venue": "kawasaki",
         "finish": 7,
         "kimarite": null
@@ -3703,6 +3697,12 @@
       {
         "date": "2026-11-24",
         "venue": "shizuoka",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-24",
+        "venue": "seibuen",
         "finish": 4,
         "kimarite": null
       }
@@ -22182,12 +22182,6 @@
     "name": "野崎",
     "recent": [
       {
-        "date": "2026-10-31",
-        "venue": "utsunomiya",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-04",
         "venue": "omiya",
         "finish": 5,
@@ -22237,6 +22231,12 @@
       },
       {
         "date": "2026-11-23",
+        "venue": "seibuen",
+        "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-24",
         "venue": "seibuen",
         "finish": 6,
         "kimarite": null
@@ -39797,6 +39797,12 @@
         "date": "2026-11-23",
         "venue": "seibuen",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-24",
+        "venue": "seibuen",
+        "finish": 7,
         "kimarite": null
       }
     ]
@@ -69876,6 +69882,12 @@
         "venue": "seibuen",
         "finish": 5,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-24",
+        "venue": "seibuen",
+        "finish": 5,
+        "kimarite": null
       }
     ]
   },
@@ -87978,6 +87990,12 @@
         "venue": "yahiko",
         "finish": 3,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-24",
+        "venue": "seibuen",
+        "finish": 2,
+        "kimarite": null
       }
     ]
   },
@@ -99079,6 +99097,12 @@
         "venue": "komatsushima",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-24",
+        "venue": "seibuen",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -100197,6 +100221,17 @@
       {
         "date": "2026-11-24",
         "venue": "shizuoka",
+        "finish": 3,
+        "kimarite": null
+      }
+    ]
+  },
+  "篠崎 高志": {
+    "name": "篠崎 高志",
+    "recent": [
+      {
+        "date": "2026-11-24",
+        "venue": "seibuen",
         "finish": 3,
         "kimarite": null
       }
