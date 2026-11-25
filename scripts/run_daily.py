@@ -183,6 +183,32 @@ def _light_rest(all_race_data, today, by_venue):
     print("[INFO] 軽い更新(オッズの取り直し)が終わりました")
 
 
+def _fix_titles(races, today):
+    """レース名が取れていない(「級」が無い)レースは netkeirin のレース名で埋める(11/25: 「S B」と出ていた)"""
+    import re
+    bad = [r for r in races if "級" not in str(r["race_info"].get("title") or "")]
+    if not bad:
+        return
+    try:
+        import nk_api
+        from alt_source import kd_code
+        nk = {(str(x["jyo_cd"]).zfill(2), x["race_no"]): x.get("name") or "" for x in nk_api.race_list(today.strftime("%Y%m%d"))}
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] レース名の取り直しに失敗: {e}")
+        nk = {}
+    n = 0
+    for r in bad:
+        info = r["race_info"]
+        name = nk.get((kd_code(r.get("url")), int(info["race_no"]))) or ""
+        if not name and re.fullmatch(r"[A-Za-zＡ-Ｚ ]{1,4}", str(info.get("title") or "")):
+            name = ""   # 「S B」のような取り違えは消す
+        elif not name:
+            continue
+        info["title"] = name
+        n += 1
+    print(f"[INFO] レース名を{n}件直しました")
+
+
 def main():
     # GitHub Actionsのランナーは基本的にUTCで動くため、日本時間の「今日」を明示的に計算する
     today = datetime.datetime.now(JST).date()
@@ -216,6 +242,7 @@ def main():
             races = []
 
     print(f"[INFO] {len(races)} レース分のデータを取得しました。")
+    _fix_titles(races, today)
     if not light:
         _save_races_cache(races, today)
 

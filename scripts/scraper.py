@@ -526,7 +526,8 @@ def parse_race_detail(html, venue, race_no):
     lines = _clean_text(html)
     full_text = " ".join(lines)
 
-    race_title_match = re.search(r"([ＡＢＦS][A-Za-z0-9級予選特選準決勝一般ＧＩＩＩＩＩ　 ]{1,20})", full_text)
+    # 11/25: 前は「S B」(成績欄のS・B回数の見出し)を拾っていた。Ｓ級/Ａ級/Ｌ級…の「級」が付くものだけをレース名にする
+    race_title_match = re.search(r"([ＡＳＬＢASLB]級[0-9０-９予選特選準決勝一般特一次二初日優秀選抜特秀ガールズチャレンジ　 ]{0,14})", full_text)
     race_title = race_title_match.group(1).strip() if race_title_match else ""
 
     deadline_match = re.search(r"締切(?:時間)?\s*(\d{1,2}:\d{2})", full_text)
