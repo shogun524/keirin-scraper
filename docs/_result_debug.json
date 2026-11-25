@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25 15:22",
+ "updated": "2026-11-25 15:52",
  "failures": [
   {
    "race": "2026-11-25 shizuoka 5R",
@@ -11,17 +11,26 @@
    }
   },
   {
-   "race": "2026-11-25 fukui 11R",
+   "race": "2026-11-25 matsuyama 1R",
+   "diag": {
+    "venue": "matsuyama",
+    "race_id": "7520261124020001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-25 fukui 12R",
    "diag": {
     "venue": "fukui",
-    "race_id": "5120261125010011",
+    "race_id": "5120261125010012",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3688,
- "with_result": 2952,
+ "with_result": 2954,
  "without_url": 0,
- "pending_eligible": 689
+ "pending_eligible": 690
 }
