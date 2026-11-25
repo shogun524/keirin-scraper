@@ -1,0 +1,23 @@
+name: 診断 今日のライン買いの成績
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        required: false
+        default: ""
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests beautifulsoup4
+      - run: python tools/today_line.py ${{ github.event.inputs.date }}
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload diag /tmp/today_line.json --clobber
