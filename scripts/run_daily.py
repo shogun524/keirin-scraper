@@ -204,7 +204,7 @@ def _fix_titles(races, today):
             name = ""   # 「S B」のような取り違えは消す
         elif not name:
             continue
-        info["title"] = name
+        info["title"] = re.sub(r"\s+", "", name)   # netkeirin は「Ｓ級　一　般」のように字の間に空白がある
         n += 1
     print(f"[INFO] レース名を{n}件直しました")
 
