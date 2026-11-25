@@ -19635,7 +19635,11 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "2-3-5"
+"line": "2-3-5",
+"settled": true,
+"result": "2-3-5",
+"payout": 1270,
+"final_odds": 12.7
 },
 {
 "date": "2026-11-25",
@@ -19655,7 +19659,31 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "2点・合成5.4倍・万車率38%"
+"line": "2点・合成5.4倍・万車率38%",
+"settled": true,
+"result": "2-3-5",
+"payout": 1270,
+"final_odds": null
+},
+{
+"date": "2026-11-25",
+"rule": "E",
+"ticket": "1-5-4",
+"url": "nk:202611254807:yokkaichi",
+"venue": "四日市",
+"race_no": 7,
+"region": "地区ばらばら",
+"same3": false,
+"chu": false,
+"chu_star": false,
+"cup": "Ａ級 チャレンジ決勝",
+"grade": null,
+"start_at": 1795615920,
+"close_at": 1795615620,
+"cls": "Ａ級 チャレンジ決勝",
+"race_type": "",
+"bet": "3連単",
+"line": "1-5-4・7.8倍"
 },
 {
 "date": "2026-11-25",
@@ -19675,6 +19703,6 @@
 "cls": "Ａ級 チャレンジ決勝",
 "race_type": "",
 "bet": "3連単",
-"line": "1-4-3・2.7倍"
+"line": "1-4-3・2.8倍"
 }
 ]
