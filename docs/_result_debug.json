@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25 12:52",
+ "updated": "2026-11-25 13:22",
  "failures": [
   {
    "race": "2026-11-25 takeo 6R",
@@ -11,17 +11,35 @@
    ]
   },
   {
-   "race": "2026-11-25 fukui 5R",
+   "race": "2026-11-25 shizuoka 5R",
+   "diag": {
+    "venue": "shizuoka",
+    "race_id": "3820261124020005",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-25 fukui 6R",
    "diag": {
     "venue": "fukui",
-    "race_id": "5120261125010005",
+    "race_id": "5120261125010006",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-25 shizuoka 6R",
+   "diag": {
+    "venue": "shizuoka",
+    "race_id": "3820261124020006",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3688,
- "with_result": 2941,
+ "with_result": 2942,
  "without_url": 0,
- "pending_eligible": 688
+ "pending_eligible": 690
 }
