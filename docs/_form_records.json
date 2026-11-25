@@ -9622,12 +9622,6 @@
     "recent": [
       {
         "date": "2026-11-17",
-        "venue": "toyama",
-        "finish": 5,
-        "kimarite": null
-      },
-      {
-        "date": "2026-11-17",
         "venue": "kochi",
         "finish": 6,
         "kimarite": null
@@ -9678,6 +9672,12 @@
         "date": "2026-11-25",
         "venue": "takeo",
         "finish": 6,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-25",
+        "venue": "yokkaichi",
+        "finish": 5,
         "kimarite": null
       }
     ]
@@ -11582,12 +11582,6 @@
     "name": "布居",
     "recent": [
       {
-        "date": "2026-11-05",
-        "venue": "beppu",
-        "finish": 4,
-        "kimarite": null
-      },
-      {
         "date": "2026-11-06",
         "venue": "beppu",
         "finish": 7,
@@ -11638,6 +11632,12 @@
       {
         "date": "2026-11-25",
         "venue": "takeo",
+        "finish": 4,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-25",
+        "venue": "yokkaichi",
         "finish": 4,
         "kimarite": null
       }
@@ -16177,6 +16177,12 @@
         "date": "2026-11-16",
         "venue": "takeo",
         "finish": 2,
+        "kimarite": null
+      },
+      {
+        "date": "2026-11-25",
+        "venue": "yokkaichi",
+        "finish": 3,
         "kimarite": null
       }
     ]
@@ -69404,6 +69410,12 @@
         "venue": "yokkaichi",
         "finish": 1,
         "kimarite": null
+      },
+      {
+        "date": "2026-11-25",
+        "venue": "yokkaichi",
+        "finish": 1,
+        "kimarite": null
       }
     ]
   },
@@ -102168,6 +102180,17 @@
         "date": "2026-11-25",
         "venue": "yokkaichi",
         "finish": 1,
+        "kimarite": null
+      }
+    ]
+  },
+  "川西 亮介": {
+    "name": "川西 亮介",
+    "recent": [
+      {
+        "date": "2026-11-25",
+        "venue": "yokkaichi",
+        "finish": 2,
         "kimarite": null
       }
     ]
