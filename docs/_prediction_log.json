@@ -804030,9 +804030,30 @@
     98.7
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    2,
+    1,
+    6,
+    5,
+    4,
+    7,
+    3
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-25 17:28"
  },
  "2026-11-25_matsuyama_1": {
   "date": "2026-11-25",
@@ -804738,9 +804759,22 @@
     87.8
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    2,
+    4
+   ],
+   "ranks": [
+    1,
+    2,
+    3
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-25 17:28"
  },
  "2026-11-25_matsuyama_4": {
   "date": "2026-11-25",
@@ -804960,9 +804994,30 @@
     86.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    5,
+    6,
+    2,
+    1,
+    3,
+    7,
+    4
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-25 17:28"
  },
  "2026-11-25_matsuyama_5": {
   "date": "2026-11-25",
@@ -805183,7 +805238,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-25_matsuyama_6": {
@@ -811615,9 +811670,30 @@
     61.4
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    2,
+    7,
+    4,
+    5,
+    3,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 1,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-25 17:28"
  },
  "2026-11-25_seibuen_3": {
   "date": "2026-11-25",
@@ -811837,9 +811913,30 @@
     58.6
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    2,
+    4,
+    3,
+    5,
+    1,
+    6
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-25 17:28"
  },
  "2026-11-25_seibuen_4": {
   "date": "2026-11-25",
@@ -812059,9 +812156,30 @@
     59.0
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    7,
+    2,
+    5,
+    3,
+    6,
+    4,
+    1
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-25 17:28"
  },
  "2026-11-25_seibuen_5": {
   "date": "2026-11-25",
