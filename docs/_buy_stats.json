@@ -5,56 +5,56 @@
     "堅い": {
       "syn1.5": {
         "all": {
-          "races": 608,
-          "hits": 370,
-          "points": 6721,
-          "return": 6151.2,
-          "hit_pct": 60.9,
+          "races": 610,
+          "hits": 371,
+          "points": 6735,
+          "return": 6163.3,
+          "hit_pct": 60.8,
           "roi_pct": 91.5
         },
         "live": {
-          "races": 608,
-          "hits": 370,
-          "points": 6721,
-          "return": 6151.2,
-          "hit_pct": 60.9,
+          "races": 610,
+          "hits": 371,
+          "points": 6735,
+          "return": 6163.3,
+          "hit_pct": 60.8,
           "roi_pct": 91.5
         }
       },
       "top5": {
         "all": {
-          "races": 608,
-          "hits": 270,
-          "points": 3040,
-          "return": 2610.5,
+          "races": 610,
+          "hits": 271,
+          "points": 3050,
+          "return": 2622.6,
           "hit_pct": 44.4,
-          "roi_pct": 85.9
+          "roi_pct": 86.0
         },
         "live": {
-          "races": 608,
-          "hits": 270,
-          "points": 3040,
-          "return": 2610.5,
+          "races": 610,
+          "hits": 271,
+          "points": 3050,
+          "return": 2622.6,
           "hit_pct": 44.4,
-          "roi_pct": 85.9
+          "roi_pct": 86.0
         }
       },
       "top10": {
         "all": {
-          "races": 608,
-          "hits": 373,
-          "points": 6080,
-          "return": 5531.0,
+          "races": 610,
+          "hits": 374,
+          "points": 6100,
+          "return": 5543.1,
           "hit_pct": 61.3,
-          "roi_pct": 91.0
+          "roi_pct": 90.9
         },
         "live": {
-          "races": 608,
-          "hits": 373,
-          "points": 6080,
-          "return": 5531.0,
+          "races": 610,
+          "hits": 374,
+          "points": 6100,
+          "return": 5543.1,
           "hit_pct": 61.3,
-          "roi_pct": 91.0
+          "roi_pct": 90.9
         }
       }
     },
