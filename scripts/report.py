@@ -4232,9 +4232,9 @@ def _bets_html(bets, cls="nbets"):
                f'{_set_label(b["first"])}→{_set_label(b["second"])}→{_set_label(b["third"])}')
         if wide:
             form = (f'{f1} − <b>{j(b["sec"])}</b>' + (f' <small>({" ".join(f"{x}-{y}" for x, y in b["tickets"])})</small>' if b["tickets"] else "")
-                    if b["sec"] else f'{lab} (オッズ待ち)')
+                    if b["sec"] and b["fst"] else f'{lab} (オッズ待ち)')
         else:
-            form = (f'{f1} → <b>{j(b["sec"])}</b> → <b>{j(b["thd"])}</b>' if b["thd"] and b["sec"] else f'{lab} (オッズ待ち)')
+            form = (f'{f1} → <b>{j(b["sec"])}</b> → <b>{j(b["thd"])}</b>' if b["thd"] and b["sec"] and b["fst"] else f'{lab} (オッズ待ち)')
         if b["comp"] is None:
             st = '<span class="nb-st wait">オッズ待ち</span>'
         elif b["buy"]:
