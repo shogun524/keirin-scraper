@@ -135,10 +135,14 @@ def section_html():
     head = ('<thead><tr><th class="l">買い方</th><th>レース</th><th>点数</th><th>投資(100円ずつ)</th><th>的中</th><th>的中率</th>'
             '<th>払戻</th><th>回収率</th></tr></thead>')
     trs = ""
-    for rk, name, cond in (("kai", "回収率重視", "合成4倍以上"), ("teki", "的中重視", "合成3倍以上")):
+    for rk, name, cond in (("hon2", "本命2着(全員→1番人気→3着内率1〜3位)", "合成15倍以上"), ("gir", "ガールズ(人気1〜5位→AI1位→人気1〜4位)", "合成4倍以上"),
+                           ("kai", "旧・回収率重視", "合成4倍以上"), ("teki", "旧・的中重視", "合成3倍以上")):
+        if not any(rk in e["rules"] for e in done):
+            continue
         buy = [(e, rk) for e in done if e["rules"].get(rk, {}).get("buy")]
         trs += row(f'<b>{name}</b>（{cond}で買い）・7車立て', [x for x in buy if x[0]["rules"][rk]["verified"]])
-        trs += row(f'{name}・それ以外(参考)', [x for x in buy if not x[0]["rules"][rk]["verified"]])
+        if rk in ("kai", "teki"):
+            trs += row(f'{name}・それ以外(参考)', [x for x in buy if not x[0]["rules"][rk]["verified"]])
         allv = [(e, rk) for e in done if rk in e["rules"] and e["rules"][rk]["verified"] and e["rules"][rk]["comp"]]
         trs += row(f'<small>{name}・条件を無視して7車立てを全部買ったら</small>', allv)
     # 日別(7車立て・条件どおり)
@@ -146,17 +150,18 @@ def section_html():
     dtr = ""
     for dd in days:
         cells = ""
-        for rk in ("kai", "teki"):
+        for rk in ("hon2", "gir"):
             rows = [(e, rk) for e in done if e["date"] == dd and e["rules"].get(rk, {}).get("buy") and e["rules"][rk]["verified"]]
             R, pts, h, ret = _stats(rows)
             cells += f'<td>{R}R {h}的中 <b>{(ret / (pts * 100)):.0%}</b></td>' if pts else '<td>—</td>'
         dtr += f'<tr><td class="l">{dd}</td>{cells}</tr>'
     first = min(e["date"] for e in done)
     return (f'<section><h2 class="section">AIの買い目の成績（回収率）</h2>'
-            f'<p style="font-size:13px;">3連単「1着は全員」。回収率重視＝全員→AI1〜2位→3着内率1〜4位(30点)、的中重視＝全員→AI1〜2位→人気1〜5位(40点)。'
+            f'<p style="font-size:13px;">3連単。本命2着＝全員→1番人気→3着内率1〜3位(10点・合成15倍以上で買い・7車立て一般戦)、'
+            f'ガールズ＝人気1〜5位→AI1位→人気1〜4位(9点・合成4倍以上で買い・7車立て)。11/26から。'
             f'締切前の最後の判定で「買い」だったレースを、1点100円で買ったとして計算（{first}〜、結果確定 {len(done)}レース）。'
-            f'過去の検証(7車立て)は 回収率重視 104〜115%・的中17〜19%、的中重視 94〜96%・的中22〜23%。</p>'
+            f'過去の検証(2025/2026)は 本命2着 225〜261%・的中5〜6%、ガールズ 107〜121%・的中10〜11%(大きい配当を10万円で頭打ちにして103〜155%)。旧＝11/24〜25の買い方。</p>'
             f'<div class="table-scroll"><table class="ov">{head}<tbody>{trs}</tbody></table></div>'
             f'<h3 style="font-size:14px;margin:10px 0 4px;">日別（7車立て・条件どおり）</h3>'
-            f'<div class="table-scroll"><table class="ov"><thead><tr><th class="l">日付</th><th>回収率重視</th><th>的中重視</th></tr></thead>'
+            f'<div class="table-scroll"><table class="ov"><thead><tr><th class="l">日付</th><th>本命2着</th><th>ガールズ</th></tr></thead>'
             f'<tbody>{dtr}</tbody></table></div></section>')

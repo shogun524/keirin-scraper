@@ -4124,13 +4124,26 @@ def _value_tag(ratio):
 #   回収率重視 = 全員 → AI1〜2位 → 3着内率1〜4位(30点)・合成4倍以上のときだけ → 的中17〜19%・回収率115%/104%
 #   的中重視   = 全員 → AI1〜2位 → 人気1〜5位(40点)・合成3倍以上のときだけ   → 的中22〜23%・回収率96%/94%
 NEW_BETS = [
-    dict(key="kai", name="回収率重視", second="ai2", third="q4", cmin=4.0, note="過去 的中17〜19%・回収率104〜115%"),
-    dict(key="teki", name="的中重視", second="ai2", third="pop5", cmin=3.0, note="過去 的中22〜23%・回収率94〜96%"),
+    # 11/26: 7車立ての3連単フォーメーションを総当たり(一般戦 約24万通り・ガールズ 約20万通り、2025/2026の両方)。
+    # 両方の年で100%を超え、10万円を超える配当を10万円で頭打ちにしても100%を超えたものだけ。どちらも「本命を2着に固定」する形。
+    dict(key="hon2", seg="ippan", name="本命2着", first=("all",), second=("M", 0, 1), third=("Q", 0, 3), cmin=15.0,
+         note="過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)"),
+    dict(key="gir", seg="girls", name="ガールズ", first=("M", 0, 5), second=("A", 0, 1), third=("M", 0, 4), cmin=4.0,
+         note="過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)"),
 ]
+_SET_NAME = {"A": "AI", "Q": "3着内率", "M": "人気"}
+
+
+def _set_label(spec):
+    if spec[0] == "all":
+        return "全員"
+    s, a, b = spec
+    return f"{_SET_NAME[s]}{a + 1}位" if b - a == 1 else f"{_SET_NAME[s]}{a + 1}〜{b}位"
 
 
 def new_bets(info, result):
-    """[{name, second, third, tickets, n, comp, buy, note, verified}]。オッズが無いときは comp=None"""
+    """[{name, fst, sec, thd, tickets, n, comp, buy, note, verified}]。オッズが無いときは comp=None。
+    7車立てのガールズはガールズの買い方、それ以外は本命2着(7車立て以外は参考)"""
     if not result or not result.get("rows"):
         return []
     rows = result["rows"]
@@ -4140,19 +4153,25 @@ def new_bets(info, result):
     Q = sorted(cars, key=lambda c: -float(next(r.get("place_rate") or 0 for r in rows if r["car"] == c)))
     ms = _mkt_share(result)
     M = sorted(ms, key=lambda c: -ms[c]) if ms else []
+    src = dict(A=A, Q=Q, M=M)
     od = result.get("tri_odds") or {}
-    verified = len(rows) == 7 and not _is_girls(rows, info.get("title") or "")
+    girls = _is_girls(rows, info.get("title") or "")
+    seg = "girls" if girls else "ippan"
     out = []
     for b in NEW_BETS:
-        sec = A[:2]
-        thd = Q[:4] if b["third"] == "q4" else M[:5]
-        if not thd:
-            out.append(dict(b, sec=sec, thd=[], tickets=[], n=0, comp=None, buy=False, verified=verified))
+        if b["seg"] != seg:
             continue
-        tk = [(a, x, y) for a in cars for x in sec for y in thd if len({a, x, y}) == 3]
+        verified = len(rows) == 7
+        pick = lambda spec: cars if spec[0] == "all" else src[spec[0]][spec[1]:spec[2]]
+        fst, sec, thd = pick(b["first"]), pick(b["second"]), pick(b["third"])
+        if not (fst and sec and thd):
+            out.append(dict(b, fst=fst, sec=sec, thd=thd, tickets=[], n=0, comp=None, buy=False, verified=verified))
+            continue
+        tk = [(a, x, y) for a in fst for x in sec for y in thd if len({a, x, y}) == 3]
         inv = sum(1 / od[k] for k in tk if od.get(k) and od[k] > 1)
         comp = (1 / inv) if inv else None
-        out.append(dict(b, sec=sec, thd=thd, tickets=tk, n=len(tk), comp=comp, buy=bool(comp and comp >= b["cmin"]), verified=verified))
+        out.append(dict(b, fst=fst, sec=sec, thd=thd, tickets=tk, n=len(tk), comp=comp,
+                        buy=bool(comp and comp >= b["cmin"] and verified), verified=verified))
     return out
 
 
@@ -4161,7 +4180,10 @@ def _bets_html(bets, cls="nbets"):
         return ""
     lis = ""
     for b in bets:
-        form = f'全員 → <b>{"・".join(map(str, b["sec"]))}</b> → <b>{"・".join(map(str, b["thd"]))}</b>' if b["thd"] else "全員 → … (オッズ待ち)"
+        j = lambda x: "・".join(map(str, x))
+        f1 = "全員" if b["first"][0] == "all" else f'<b>{j(b["fst"])}</b>'
+        form = (f'{f1} → <b>{j(b["sec"])}</b> → <b>{j(b["thd"])}</b>' if b["thd"] and b["sec"] else
+                f'{_set_label(b["first"])} → {_set_label(b["second"])} → {_set_label(b["third"])} (オッズ待ち)')
         if b["comp"] is None:
             st = '<span class="nb-st wait">オッズ待ち</span>'
         elif b["buy"]:
@@ -4169,8 +4191,9 @@ def _bets_html(bets, cls="nbets"):
         else:
             st = f'<span class="nb-st skip">見送り</span> 合成{b["comp"]:.1f}倍<small>(条件{b["cmin"]:.0f}倍以上)</small>'
         lis += (f'<div class="nb nb-{b["key"]}"><span class="nb-name">{b["name"]}</span> 3連単 {form} '
-                f'<small>{b["n"]}点</small>　{st}</div>')
-    note = "" if bets[0]["verified"] else '<div class="nb-note">※検証は7車立て(ガールズ以外)だけ。このレースは参考</div>'
+                f'<small>{b["n"]}点</small>　{st}'
+                f'<div class="nb-note">{_set_label(b["first"])}→{_set_label(b["second"])}→{_set_label(b["third"])}・{b["note"]}</div></div>')
+    note = "" if bets[0]["verified"] else '<div class="nb-note">※検証は7車立てだけ。このレースは買い対象外(参考)</div>'
     return f'<div class="{cls}">{lis}{note}</div>'
 
 
