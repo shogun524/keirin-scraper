@@ -1,27 +1,25 @@
-name: 診断 予想データの書き出し(表示の確認用)
+name: 診断 今日の買い目の記録と結果
 on:
   workflow_dispatch:
+    inputs:
+      date:
+        required: false
+        default: ""
 permissions:
   contents: write
 jobs:
-  dump:
+  run:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install requests beautifulsoup4 numpy pandas lightgbm
-      - name: 予想を作ってデータを保存(公開はしない)
-        working-directory: scripts
-        env:
-          PYTHONIOENCODING: "utf-8"
-          KEIRIN_DUMP: /tmp/dump.pkl
-        run: python run_daily.py || true
-      - name: リリースに置く
-        env:
+      - run: pip install requests beautifulsoup4
+      - env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release view diag >/dev/null 2>&1 || gh release create diag --title diag --notes "診断用"
-          gzip -c /tmp/dump.pkl > /tmp/dump.pkl.gz && gh release upload diag /tmp/dump.pkl.gz --clobber
+        run: python tools/today_dump.py "${{ github.event.inputs.date }}"
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload diag /tmp/today_dump.json --clobber
