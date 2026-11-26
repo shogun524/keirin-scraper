@@ -76,7 +76,7 @@ def log(all_race_data, today):
         d[key] = dict(date=today.isoformat(), venue=info["venue"], race_no=no, rid=rid or old.get("rid"), close_at=close_at,
                       n_cars=len(res["rows"]), logged_at=int(now),
                       rules={b["key"]: dict(name=b["name"], buy=b["buy"], comp=round(b["comp"], 2) if b["comp"] else None,
-                                            n=b["n"], verified=b["verified"],
+                                            n=b["n"], verified=b["verified"], bt=b.get("bt", "3連単"),
                                             tickets=["-".join(map(str, t)) for t in b["tickets"]]) for b in bets})
         n += 1
     _save(d)
@@ -105,17 +105,27 @@ def tally(max_fetch=150):
         if not pay or not pay.get("3連単"):
             continue
         combo, yen = pay["3連単"][0]
-        e["res"] = {"combo": combo, "pay": int(yen)}
+        e["res"] = {"combo": combo, "pay": int(yen),
+                    "wide": {"-".join(map(str, sorted(int(x) for x in k.split("-")))): int(v) for k, v in (pay.get("ワイド") or [])}}
     _save(d)
     print(f"[INFO] AIの買い目の結果を{k}レース確認しました")
 
 
+def _ret(e, r):
+    """そのレースで1点100円ずつ買ったときの払戻"""
+    ru = e["rules"][r]
+    if ru.get("bt") == "ワイド":
+        w = e["res"].get("wide") or {}
+        return sum(w.get(t, 0) for t in ru["tickets"])
+    return e["res"]["pay"] if e["res"]["combo"] in ru["tickets"] else 0
+
+
 def _stats(rows):
+    rows = [(e, r) for e, r in rows if e["rules"][r].get("bt") != "ワイド" or "wide" in e["res"]]
     R = len(rows)
     pts = sum(e["rules"][r]["n"] for e, r in rows)
-    hit = [(e, r) for e, r in rows if e["res"]["combo"] in e["rules"][r]["tickets"]]
-    ret = sum(e["res"]["pay"] * 1 for e, r in hit)  # 100円ずつ買ったときの払戻
-    return R, pts, len(hit), ret
+    rets = [_ret(e, r) for e, r in rows]
+    return R, pts, sum(1 for x in rets if x), sum(rets)
 
 
 def section_html():
@@ -137,6 +147,9 @@ def section_html():
     trs = ""
     for rk, name, cond in (("hon2", "本命2着(全員→1番人気→3着内率1〜3位)", "合成15倍以上"), ("gir", "ガールズ(人気1〜5位→AI1位→人気1〜4位)", "合成4倍以上"),
                            ("girt", "ガールズ的中重視(3着内率1〜3位→3着内率2〜4位→人気2〜4位)", "合成2倍以上"),
+                           ("sw", "参考・S級ワイド(人気1〜3位−AI2〜3位)", "1点3倍以上の目・4倍以上"),
+                           ("cw", "参考・チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)", "1点3倍以上の目・4倍以上"),
+                           ("c3", "参考・チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)", "1点2倍以上の目・合成6倍以上"),
                            ("kai", "旧・回収率重視", "合成4倍以上"), ("teki", "旧・的中重視", "合成3倍以上")):
         if not any(rk in e["rules"] for e in done):
             continue
@@ -151,7 +164,7 @@ def section_html():
     dtr = ""
     for dd in days:
         cells = ""
-        for rk in ("hon2", "gir", "girt"):
+        for rk in ("hon2", "gir", "girt", "sw", "cw", "c3"):
             rows = [(e, rk) for e in done if e["date"] == dd and e["rules"].get(rk, {}).get("buy") and e["rules"][rk]["verified"]]
             R, pts, h, ret = _stats(rows)
             cells += f'<td>{R}R {h}的中 <b>{(ret / (pts * 100)):.0%}</b></td>' if pts else '<td>—</td>'
@@ -161,8 +174,9 @@ def section_html():
             f'<p style="font-size:13px;">3連単。本命2着＝全員→1番人気→3着内率1〜3位(10点・合成15倍以上で買い・7車立て一般戦)、'
             f'ガールズ＝人気1〜5位→AI1位→人気1〜4位(9点・合成4倍以上で買い・7車立て)。11/26から。'
             f'締切前の最後の判定で「買い」だったレースを、1点100円で買ったとして計算（{first}〜、結果確定 {len(done)}レース）。'
-            f'過去の検証(2025/2026)は 本命2着 225〜261%・的中5〜6%、ガールズ 107〜121%・的中10〜11%(大きい配当を10万円で頭打ちにして103〜155%)。旧＝11/24〜25の買い方。</p>'
+            f'過去の検証(2025/2026)は 本命2着 225〜261%・的中5〜6%、ガールズ 107〜121%・的中10〜11%(大きい配当を10万円で頭打ちにして103〜155%)。旧＝11/24〜25の買い方。'
+            f'参考＝11/27から。1点2〜3倍未満の目を買わない条件で全券種を総当たりした中の上位で、偶然の可能性も高いため実績で確かめ中。</p>'
             f'<div class="table-scroll"><table class="ov">{head}<tbody>{trs}</tbody></table></div>'
             f'<h3 style="font-size:14px;margin:10px 0 4px;">日別（7車立て・条件どおり）</h3>'
-            f'<div class="table-scroll"><table class="ov"><thead><tr><th class="l">日付</th><th>本命2着</th><th>ガールズ</th><th>ガールズ的中重視</th></tr></thead>'
+            f'<div class="table-scroll"><table class="ov"><thead><tr><th class="l">日付</th><th>本命2着</th><th>ガールズ</th><th>ガールズ的中重視</th><th>S級ワイド</th><th>チャレンジワイド</th><th>チャレンジ3連単</th></tr></thead>'
             f'<tbody>{dtr}</tbody></table></div></section>')

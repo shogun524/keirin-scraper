@@ -153,6 +153,9 @@ def race_for_settle(url):
     return R, O
 
 
+WIDE = {}   # fetch_odds_map が一緒に集めるワイドのオッズ(下限) {(場, レース番号): {(小, 大): 倍率}}
+
+
 def fetch_odds_map(races, today):
     """run_daily.py の予想の補正用: Kドリームスのレースに netkeirin の3連単オッズを付ける。
     戻り値 {(場, レース番号): {(1着,2着,3着): 倍率}}(winticket_source.fetch_odds_map と同じ形)"""
@@ -167,12 +170,15 @@ def fetch_odds_map(races, today):
         if not nkr or (nkr.get("close_ts") or 0) < datetime.datetime.now().timestamp() - 600:
             continue
         try:
-            o = nk_api.odds(nkr["race_id"])
+            o = nk_api.odds(nkr["race_id"], types=("9", "7"))
         except Exception as e:  # noqa: BLE001
             print(f"[WARN] {nkr['venue']}{info['race_no']}R オッズ失敗: {e}")
             continue
         m = {tuple(int(x) for x in k.split("-")): v for k, v in (o.get("3連単") or {}).items() if v < 9000}
         if m:
             out[(info["venue"], int(info["race_no"]))] = m
+        w = {tuple(sorted(int(x) for x in k.split("-"))): lo for k, (lo, hi) in (o.get("ワイド") or {}).items() if lo}
+        if w:
+            WIDE[(info["venue"], int(info["race_no"]))] = w
     print(f"[INFO] netkeirin から {len(out)} レース分の3連単オッズを取得(予想の補正用)")
     return out

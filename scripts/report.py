@@ -4132,6 +4132,14 @@ NEW_BETS = [
          note="過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)"),
     dict(key="girt", seg="girls", name="ガールズ的中重視", first=("Q", 0, 3), second=("Q", 1, 4), third=("M", 1, 4), cmin=2.0,
          note="過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)"),
+    # 11/26: 1点2倍(または3倍)未満の目は買わない前提で、全券種のフォーメーションを総当たり(約345万通り)。
+    # 両方の年で100%超えだが、総当たりの中の上位なので偶然の可能性が高い → 「参考・検証中」で実績を見る。
+    dict(key="sw", seg="S", bt="ワイド", ref=True, name="S級ワイド", first=("M", 0, 3), second=("A", 1, 3), cmin=4.0, th=3.0,
+         note="参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)"),
+    dict(key="cw", seg="chal_day", bt="ワイド", ref=True, name="チャレンジワイド", first=("M", 0, 1), second=("Q", 1, 4), cmin=4.0, th=3.0,
+         note="参考・検証中 過去(チャレンジ7車・日中/ナイター) 的中18%・回収率106%/104%(1点3倍未満は買わない)"),
+    dict(key="c3", seg="chal", bt="3連単", ref=True, name="チャレンジ3連単", first=("Q", 0, 3), second=("M", 0, 4), third=("M", 1, 3), cmin=6.0, th=2.0,
+         note="参考・検証中 過去(チャレンジ7車) 的中12%・回収率148%/106%(10万で頭打ち113%/106%、1点2倍未満は買わない)"),
 ]
 _SET_NAME = {"A": "AI", "Q": "3着内率", "M": "人気"}
 
@@ -4143,9 +4151,28 @@ def _set_label(spec):
     return f"{_SET_NAME[s]}{a + 1}位" if b - a == 1 else f"{_SET_NAME[s]}{a + 1}〜{b}位"
 
 
+def _segs(info, girls):
+    """買い方の区分: girls / ippan(ガールズ以外すべて) / S / chal / chal_day(チャレンジの日中・ナイター)"""
+    if girls:
+        return {"girls"}
+    t = (info.get("title") or "").replace("Ｓ", "S")
+    sg = {"ippan"}
+    if t.startswith("S級"):
+        sg.add("S")
+    if "チャレンジ" in t:
+        sg.add("chal")
+        try:
+            h = int(str(info.get("deadline") or "").split(":")[0])
+            if 3 <= h < 21:
+                sg.add("chal_day")
+        except ValueError:
+            pass
+    return sg
+
+
 def new_bets(info, result):
     """[{name, fst, sec, thd, tickets, n, comp, buy, note, verified}]。オッズが無いときは comp=None。
-    7車立てのガールズはガールズの買い方、それ以外は本命2着(7車立て以外は参考)"""
+    7車立てのガールズはガールズの買い方、それ以外は本命2着(7車立て以外は参考)。S級・チャレンジは参考の買い方も"""
     if not result or not result.get("rows"):
         return []
     rows = result["rows"]
@@ -4156,25 +4183,41 @@ def new_bets(info, result):
     ms = _mkt_share(result)
     M = sorted(ms, key=lambda c: -ms[c]) if ms else []
     src = dict(A=A, Q=Q, M=M)
-    od = result.get("tri_odds") or {}
     girls = _is_girls(rows, info.get("title") or "")
-    seg = "girls" if girls else "ippan"
+    segs = _segs(info, girls)
     out = []
     for b in NEW_BETS:
-        if b["seg"] != seg:
+        if b["seg"] not in segs:
             continue
+        bt = b.get("bt", "3連単")
+        od = (result.get("wide_odds") if bt == "ワイド" else result.get("tri_odds")) or {}
         verified = len(rows) == 7
         pick = lambda spec: cars if spec[0] == "all" else src[spec[0]][spec[1]:spec[2]]
-        fst, sec, thd = pick(b["first"]), pick(b["second"]), pick(b["third"])
-        if not (fst and sec and thd):
-            out.append(dict(b, fst=fst, sec=sec, thd=thd, tickets=[], n=0, comp=None, buy=False, verified=verified))
+        fst, sec = pick(b["first"]), pick(b["second"])
+        thd = pick(b["third"]) if b.get("third") else None
+        if not (fst and sec and (thd or bt == "ワイド")):
+            out.append(dict(b, bt=bt, fst=fst, sec=sec, thd=thd, tickets=[], n=0, comp=None, buy=False, verified=verified))
             continue
-        tk = [(a, x, y) for a in fst for x in sec for y in thd if len({a, x, y}) == 3]
+        if bt == "ワイド":
+            tk = sorted({tuple(sorted((a, x))) for a in fst for x in sec if a != x})
+        else:
+            tk = [(a, x, y) for a in fst for x in sec for y in thd if len({a, x, y}) == 3]
+        th = b.get("th", 0)
+        if od and th:   # 1点のオッズが th 倍未満の目は買わない
+            tk = [k for k in tk if (od.get(k) or 0) >= th]
         inv = sum(1 / od[k] for k in tk if od.get(k) and od[k] > 1)
-        comp = (1 / inv) if inv else None
-        out.append(dict(b, fst=fst, sec=sec, thd=thd, tickets=tk, n=len(tk), comp=comp,
+        comp = (1 / inv) if inv else (0.0 if od else None)
+        out.append(dict(b, bt=bt, fst=fst, sec=sec, thd=thd, tickets=tk, n=len(tk), comp=comp,
                         buy=bool(comp and comp >= b["cmin"] and verified), verified=verified))
     return out
+
+
+def _bet_short(x):
+    j = lambda v: "・".join(map(str, v))
+    f1 = "全員" if x["first"][0] == "all" else j(x["fst"])
+    if x.get("bt") == "ワイド":
+        return "ワイド " + " ".join(f"{a}-{b}" for a, b in x["tickets"])
+    return f'{f1}→{j(x["sec"])}→{j(x["thd"])}'
 
 
 def _bets_html(bets, cls="nbets"):
@@ -4184,17 +4227,25 @@ def _bets_html(bets, cls="nbets"):
     for b in bets:
         j = lambda x: "・".join(map(str, x))
         f1 = "全員" if b["first"][0] == "all" else f'<b>{j(b["fst"])}</b>'
-        form = (f'{f1} → <b>{j(b["sec"])}</b> → <b>{j(b["thd"])}</b>' if b["thd"] and b["sec"] else
-                f'{_set_label(b["first"])} → {_set_label(b["second"])} → {_set_label(b["third"])} (オッズ待ち)')
+        wide = b.get("bt") == "ワイド"
+        lab = (f'{_set_label(b["first"])} − {_set_label(b["second"])}' if wide else
+               f'{_set_label(b["first"])}→{_set_label(b["second"])}→{_set_label(b["third"])}')
+        if wide:
+            form = (f'{f1} − <b>{j(b["sec"])}</b>' + (f' <small>({" ".join(f"{x}-{y}" for x, y in b["tickets"])})</small>' if b["tickets"] else "")
+                    if b["sec"] else f'{lab} (オッズ待ち)')
+        else:
+            form = (f'{f1} → <b>{j(b["sec"])}</b> → <b>{j(b["thd"])}</b>' if b["thd"] and b["sec"] else f'{lab} (オッズ待ち)')
         if b["comp"] is None:
             st = '<span class="nb-st wait">オッズ待ち</span>'
         elif b["buy"]:
             st = f'<span class="nb-st buy">買い</span> 合成{b["comp"]:.1f}倍'
         else:
             st = f'<span class="nb-st skip">見送り</span> 合成{b["comp"]:.1f}倍<small>(条件{b["cmin"]:.0f}倍以上)</small>'
-        lis += (f'<div class="nb nb-{b["key"]}"><span class="nb-name">{b["name"]}</span> 3連単 {form} '
+        if b["comp"] is not None and not b["n"]:
+            st = f'<span class="nb-st skip">見送り</span><small>(1点{b["th"]:.0f}倍以上の目なし)</small>'
+        lis += (f'<div class="nb nb-{b["key"]}{" nb-ref" if b.get("ref") else ""}"><span class="nb-name">{b["name"]}</span> {b.get("bt", "3連単")} {form} '
                 f'<small>{b["n"]}点</small>　{st}'
-                f'<div class="nb-note">{_set_label(b["first"])}→{_set_label(b["second"])}→{_set_label(b["third"])}・{b["note"]}</div></div>')
+                f'<div class="nb-note">{lab}・{b["note"]}</div></div>')
     note = "" if bets[0]["verified"] else '<div class="nb-note">※検証は7車立てだけ。このレースは買い対象外(参考)</div>'
     return f'<div class="{cls}">{lis}{note}</div>'
 
@@ -4205,6 +4256,8 @@ NB_CSS = """
   .nbets .nb:first-child { border-top: none; }
   .nbets .nb-name { display: inline-block; font-weight: 700; color: #1F4D3A; margin-right: 4px; }
   .nbets .nb-teki .nb-name, .nbets .nb-girt .nb-name { color: #8A5A00; }
+  .nbets .nb-ref .nb-name { color: #5B6B8A; }
+  .nbets .nb-ref .nb-name::after { content: "参考"; margin-left: 4px; padding: 0 4px; border: 1px solid #5B6B8A; border-radius: 3px; font-size: .68rem; font-weight: 400; }
   .nb-st { display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 700; font-size: .78rem; }
   .nb-st.buy { background: #C0392B; color: #fff; }
   .nb-st.skip { background: #EEE8DA; color: #7A6F5E; }
@@ -4351,16 +4404,16 @@ def render_jra_index(all_race_data, date=None, now=None):
     vlist = [(name, races) for name, races, nxt in venues]
     upcoming.sort()
     lis = "".join(f'<li><a href="?v={vi}&r={no}"><b>{vn}{no}R</b></a> 締切{dl}　'
-                  + "　".join(f'<span class="nb-st buy">{x["name"]}</span> 全員→{"・".join(map(str, x["sec"]))}→{"・".join(map(str, x["thd"]))}'
+                  + "　".join(f'<span class="nb-st buy">{x["name"]}</span> {_bet_short(x)}'
                               f'（{x["n"]}点・合成{x["comp"]:.1f}倍）' for x in buys)
                   + '</li>' for dl, vn, no, vi, buys in upcoming[:15])
     summary = (f'<section class="aibet-summary"><h2>今日の買い目 <small>これからのレース・条件に合うもの</small></h2>'
                + (f'<ul>{lis}</ul>' if lis else '<p class="aibet-none">これからのレースで条件に合うものはありません</p>') + '</section>')
     guide = """<details class="guide"><summary>このサイトの見方</summary><ul>
-  <li><b>AIの買い目</b> … 3連単「1着は全員、2・3着を固める」。人気薄が1着で人気の選手が2・3着の目は売れにくく、オッズが甘くなりやすい。
-    <br>回収率重視 = 全員 → AI1〜2位 → 3着内率1〜4位(30点)。合成4倍以上のときだけ買う(過去 的中17〜19%・回収率104〜115%)。
-    <br>的中重視 = 全員 → AI1〜2位 → 人気1〜5位(40点)。合成3倍以上のときだけ買う(過去 的中22〜23%・回収率94〜96%)。
-    <br>数字は2025・2026年の7車立て(F1・F2・ガールズ以外)約2万5千レースで、AIが学習していない年で採点したもの。重賞・ガールズ・9車立ては未検証。</li>
+  <li><b>AIの買い目</b> … 2025・2026年の7車立てで、両方の年に回収率100%を超えた買い方だけ。
+    <br>本命2着 = 全員 → 1番人気 → 3着内率1〜3位(3連単10点)。合成15倍以上のときだけ買う(過去 的中5〜6%・回収率225〜261%)。
+    <br>ガールズ = 人気1〜5位 → AI1位 → 人気1〜4位。合成4倍以上(過去 的中10〜11%・回収率107〜121%)。ガールズ的中重視 = 3着内率1〜3位 → 3着内率2〜4位 → 人気2〜4位。合成2倍以上(的中25%・101〜102%)。
+    <br><b>参考</b>(11/27〜・検証中) = 1点2〜3倍未満の目は買わない前提で全券種を総当たりした中の上位。S級ワイド(人気1〜3位−AI2〜3位)、チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)、チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)。何百万通りの中の上位なので偶然の可能性が高く、成績ページの実績で確かめています。</li>
   <li><b>AI% ・ 3着内</b> … 機械学習AI(オッズは使わない)が見た1着率・3着内率。込% はAIとオッズを合わせた1着率。</li>
   <li><b>人気</b> … 3連単オッズから見た1着の人気順と、オッズから見た1着率。</li>
   <li><b>万車率・本命/穴</b> … 100倍以上の3連単に入っている支持の割合。級と車立てごとの過去と比べて、下側3割=本命・上側3割=穴。</li>

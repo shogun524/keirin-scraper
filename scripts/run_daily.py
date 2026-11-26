@@ -360,6 +360,20 @@ def main():
                 except (ValueError, TypeError):
                     mtc = None
                 market_fix.apply(result, race["racers"], odds, minutes_to_close=mtc)
+                try:   # ワイドのオッズ(下限)。参考の買い方(S級・チャレンジのワイド)に使う
+                    _k = (race["race_info"]["venue"], race["race_info"]["race_no"])
+                    if race["race_info"].get("source") == "winticket":
+                        result["wide_odds"] = race.get("wt_wide") or {}
+                    else:
+                        import sys as _sys
+                        _w = {}
+                        for _mn in ("alt_source", "winticket_source"):
+                            _m = _sys.modules.get(_mn)
+                            if _m and getattr(_m, "WIDE", None):
+                                _w = _m.WIDE.get(_k) or _m.WIDE.get((_k[0], int(_k[1]))) or _w
+                        result["wide_odds"] = _w
+                except Exception as _e:  # noqa: BLE001
+                    print(f"[WARN] ワイドのオッズ付けに失敗: {_e}")
                 from formula import is_girls
                 market_fix.ana_plan(result, odds, is_girls(result["rows"], race["race_info"].get("title", "")))
             except Exception as e:

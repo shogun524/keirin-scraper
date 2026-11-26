@@ -6,6 +6,13 @@ run_daily.py の後段（予想・各ページ・予想成績ログ）をその�
 """
 import datetime
 
+WIDE = {}   # fetch_odds_map が一緒に集めるワイドのオッズ(下限) {(場, レース番号): {(小, 大): 倍率}}
+
+
+def _wide(R):
+    return {tuple(sorted(o["key"][:2])): o["minOdds"] for o in (R.get("odds") or {}).get("quinellaPlace") or []
+            if o.get("minOdds") and not o.get("absent")}
+
 from winticket_page import (BASE, JST, MARK, SLUG_TO_MODEL, cups_for, fetch_races,
                             get_state, queries, rank_of)
 
@@ -71,6 +78,7 @@ def fetch_all_todays_races(date):
                 # 3連単オッズ {(1着,2着,3着): 倍率}（market_fix で予想の補正に使う。未発売は除く）
                 "wt_odds": {tuple(o["key"]): o["odds"] for o in (R.get("odds") or {}).get("trifecta") or []
                             if o.get("odds") and o["odds"] < 9000},
+                "wt_wide": _wide(R),
             })
         print(f"[INFO] winticket {c['name']}: {len([r for r in out if r['race_info']['venue'] == venue])} レース")
     return out
@@ -93,6 +101,9 @@ def fetch_odds_map(date):
                     if o.get("odds") and o["odds"] < 9000}
             if odds:
                 out[(venue, R["race"])] = odds
+            w = _wide(R)
+            if w:
+                WIDE[(venue, R["race"])] = w
     print(f"[INFO] winticketから {len(out)} レース分のオッズを取得しました（kドリームズ用おすすめ予想）。")
     return out
 
