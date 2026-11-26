@@ -1,8 +1,18 @@
 {
- "updated": "2026-11-27 08:45",
- "failures": [],
+ "updated": "2026-11-27 08:53",
+ "failures": [
+  {
+   "race": "2026-11-27 komatsushima 1R",
+   "diag": {
+    "venue": "komatsushima",
+    "race_id": "7320261126020001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  }
+ ],
  "tracked": 3851,
  "with_result": 3060,
  "without_url": 0,
- "pending_eligible": 712
+ "pending_eligible": 713
 }
