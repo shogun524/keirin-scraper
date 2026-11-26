@@ -1,8 +1,19 @@
 {
- "updated": "2026-11-26 00:01",
- "failures": [],
- "tracked": 3772,
- "with_result": 3057,
+ "updated": "2026-11-27 00:20",
+ "failures": [
+  {
+   "race": "2026-11-26 matsusaka 9R",
+   "error": "着順が壊れて見えるため記録しない",
+   "cars": [
+    5,
+    7,
+    2,
+    4
+   ]
+  }
+ ],
+ "tracked": 3851,
+ "with_result": 3060,
  "without_url": 0,
- "pending_eligible": 707
+ "pending_eligible": 712
 }
