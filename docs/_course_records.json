@@ -35024,7 +35024,7 @@
   "小林__shizuoka": {
     "name": "小林",
     "venue": "shizuoka",
-    "races": 6,
+    "races": 7,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -72919,7 +72919,7 @@
   "山本__fukui": {
     "name": "山本",
     "venue": "fukui",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -76182,7 +76182,7 @@
   "高橋__fukui": {
     "name": "高橋",
     "venue": "fukui",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -88935,7 +88935,7 @@
   "伊藤__toyama": {
     "name": "伊藤",
     "venue": "toyama",
-    "races": 5,
+    "races": 6,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -130951,7 +130951,7 @@
   "山口__shizuoka": {
     "name": "山口",
     "venue": "shizuoka",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -131172,9 +131172,9 @@
   "山本 紳貴__shizuoka": {
     "name": "山本 紳貴",
     "venue": "shizuoka",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -132173,7 +132173,7 @@
   "塩島__shizuoka": {
     "name": "塩島",
     "venue": "shizuoka",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -134370,7 +134370,7 @@
   "安倍__fukui": {
     "name": "安倍",
     "venue": "fukui",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -134435,9 +134435,9 @@
   "渡邉 一成__shizuoka": {
     "name": "渡邉 一成",
     "venue": "shizuoka",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -134981,7 +134981,7 @@
   "山根__shizuoka": {
     "name": "山根",
     "venue": "shizuoka",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -137515,6 +137515,149 @@
   },
   "田野口__toyama": {
     "name": "田野口",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "荻原 尚人__shizuoka": {
+    "name": "荻原 尚人",
+    "venue": "shizuoka",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "坂本 貴史__fukui": {
+    "name": "坂本 貴史",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "稲吉 悠大__fukui": {
+    "name": "稲吉 悠大",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "紺野 哲也__fukui": {
+    "name": "紺野 哲也",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉武__fukui": {
+    "name": "吉武",
+    "venue": "fukui",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "秋末 蓮__toyama": {
+    "name": "秋末 蓮",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉田 健市__toyama": {
+    "name": "吉田 健市",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "荒木 伸哉__toyama": {
+    "name": "荒木 伸哉",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "伊原__toyama": {
+    "name": "伊原",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "武井__toyama": {
+    "name": "武井",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "村瀬__toyama": {
+    "name": "村瀬",
     "venue": "toyama",
     "races": 1,
     "wins": 0,
