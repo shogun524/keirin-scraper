@@ -4130,6 +4130,8 @@ NEW_BETS = [
          note="過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)"),
     dict(key="gir", seg="girls", name="ガールズ", first=("M", 0, 5), second=("A", 0, 1), third=("M", 0, 4), cmin=4.0,
          note="過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)"),
+    dict(key="girt", seg="girls", name="ガールズ的中重視", first=("Q", 0, 3), second=("Q", 1, 4), third=("M", 1, 4), cmin=2.0,
+         note="過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)"),
 ]
 _SET_NAME = {"A": "AI", "Q": "3着内率", "M": "人気"}
 
@@ -4202,7 +4204,7 @@ NB_CSS = """
   .nbets .nb { padding: 3px 0; border-top: 1px dashed #E2D8C3; }
   .nbets .nb:first-child { border-top: none; }
   .nbets .nb-name { display: inline-block; font-weight: 700; color: #1F4D3A; margin-right: 4px; }
-  .nbets .nb-teki .nb-name { color: #8A5A00; }
+  .nbets .nb-teki .nb-name, .nbets .nb-girt .nb-name { color: #8A5A00; }
   .nb-st { display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 700; font-size: .78rem; }
   .nb-st.buy { background: #C0392B; color: #fff; }
   .nb-st.skip { background: #EEE8DA; color: #7A6F5E; }

@@ -136,6 +136,7 @@ def section_html():
             '<th>払戻</th><th>回収率</th></tr></thead>')
     trs = ""
     for rk, name, cond in (("hon2", "本命2着(全員→1番人気→3着内率1〜3位)", "合成15倍以上"), ("gir", "ガールズ(人気1〜5位→AI1位→人気1〜4位)", "合成4倍以上"),
+                           ("girt", "ガールズ的中重視(3着内率1〜3位→3着内率2〜4位→人気2〜4位)", "合成2倍以上"),
                            ("kai", "旧・回収率重視", "合成4倍以上"), ("teki", "旧・的中重視", "合成3倍以上")):
         if not any(rk in e["rules"] for e in done):
             continue
@@ -150,7 +151,7 @@ def section_html():
     dtr = ""
     for dd in days:
         cells = ""
-        for rk in ("hon2", "gir"):
+        for rk in ("hon2", "gir", "girt"):
             rows = [(e, rk) for e in done if e["date"] == dd and e["rules"].get(rk, {}).get("buy") and e["rules"][rk]["verified"]]
             R, pts, h, ret = _stats(rows)
             cells += f'<td>{R}R {h}的中 <b>{(ret / (pts * 100)):.0%}</b></td>' if pts else '<td>—</td>'
@@ -163,5 +164,5 @@ def section_html():
             f'過去の検証(2025/2026)は 本命2着 225〜261%・的中5〜6%、ガールズ 107〜121%・的中10〜11%(大きい配当を10万円で頭打ちにして103〜155%)。旧＝11/24〜25の買い方。</p>'
             f'<div class="table-scroll"><table class="ov">{head}<tbody>{trs}</tbody></table></div>'
             f'<h3 style="font-size:14px;margin:10px 0 4px;">日別（7車立て・条件どおり）</h3>'
-            f'<div class="table-scroll"><table class="ov"><thead><tr><th class="l">日付</th><th>本命2着</th><th>ガールズ</th></tr></thead>'
+            f'<div class="table-scroll"><table class="ov"><thead><tr><th class="l">日付</th><th>本命2着</th><th>ガールズ</th><th>ガールズ的中重視</th></tr></thead>'
             f'<tbody>{dtr}</tbody></table></div></section>')
