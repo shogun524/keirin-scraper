@@ -1,36 +1,18 @@
 {
- "updated": "2026-11-27 15:57",
+ "updated": "2026-11-27 16:53",
  "failures": [
   {
-   "race": "2026-11-27 fukui 4R",
+   "race": "2026-11-27 matsusaka 3R",
    "diag": {
-    "venue": "fukui",
-    "race_id": "5120261125030004",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-27 hiratsuka 11R",
-   "diag": {
-    "venue": "hiratsuka",
-    "race_id": "3520261127010011",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
-  {
-   "race": "2026-11-27 toyama 11R",
-   "diag": {
-    "venue": "toyama",
-    "race_id": "4620261126020011",
+    "venue": "matsusaka",
+    "race_id": "4720261126020003",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3851,
- "with_result": 3104,
+ "with_result": 3110,
  "without_url": 0,
- "pending_eligible": 715
+ "pending_eligible": 714
 }
