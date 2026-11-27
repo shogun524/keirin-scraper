@@ -248,12 +248,12 @@
 <header class="top">
   <div class="inner">
     <h1>競輪AI予想</h1>
-    <p class="meta"><b>2026-11-27(金)</b> ・ 更新 2026-11-27 18:56 ・ オッズ取得 22/79レース</p>
+    <p class="meta"><b>2026-11-27(金)</b> ・ 更新 2026-11-27 19:01 ・ オッズ取得 22/79レース</p>
     <div class="actions">
       <button type="button" class="btn" onclick="location.href=location.pathname+'?t='+Date.now()">↻ 最新を表示</button>
       <a class="btn btn-sub" href="https://github.com/shogun524/keirin-scraper/actions/workflows/daily.yml" target="_blank" rel="noopener">オッズを今すぐ取り直す</a>
     </div>
-    <nav class="links"><a href="print.html">印刷用</a><a href="results.html">成績</a><a href="drops.html">オッズ急落</a></nav>
+    <nav class="links"><a href="aite.html">AI相手選び</a><a href="print.html">印刷用</a><a href="results.html">成績</a><a href="drops.html">オッズ急落</a></nav>
   </div>
   <nav class="tabs"><button class="tab-btn active" data-tab="tab-0">小松島<span class="tab-count">7R</span></button><button class="tab-btn " data-tab="tab-1">佐世保<span class="tab-count">7R</span></button><button class="tab-btn " data-tab="tab-2">福井<span class="tab-count">12R</span></button><button class="tab-btn " data-tab="tab-3">平塚<span class="tab-count">12R</span></button><button class="tab-btn " data-tab="tab-4">富山<span class="tab-count">11R</span></button><button class="tab-btn " data-tab="tab-5">松阪<span class="tab-count">12R</span></button><button class="tab-btn " data-tab="tab-6">久留米<span class="tab-count">9R</span></button><button class="tab-btn " data-tab="tab-7">松戸<span class="tab-count">9R</span></button></nav>
 </header>
@@ -271,6 +271,44 @@
   .nb-st.wait { background: #EEE8DA; color: #7A6F5E; }
   .nbets small { color: #8A7F6E; }
   .nb-note { font-size: .72rem; color: #8A7F6E; }
+
+  .card-extra { padding: 0 14px 12px; }
+  .aite-fold { border-top: 1px solid var(--paper-line); margin-top: 6px; }
+  .aite-fold > summary { cursor: pointer; list-style: none; padding: 10px 0 8px; font-weight: 700; font-size: .88rem;
+    display: flex; align-items: center; gap: 6px; }
+  .aite-fold > summary::-webkit-details-marker { display: none; }
+  .aite-fold > summary::after { content: "開く ▼"; margin-left: auto; font-size: .75rem; font-weight: 500; color: var(--ink-soft); }
+  .aite-fold[open] > summary::after { content: "閉じる ▲"; }
+  .aite-fold > summary small { font-weight: 400; color: var(--ink-soft); font-size: .72rem; }
+  .ah-heads { display: flex; gap: 6px; flex-wrap: wrap; margin: 2px 0 8px; }
+  .ah-heads button { width: 38px; height: 38px; border-radius: 8px; border: 1px solid #0002; font-weight: 700; font-size: 1rem;
+    cursor: pointer; opacity: .45; font-family: inherit; }
+  .ah-heads button.on { opacity: 1; outline: 3px solid var(--ink); outline-offset: 1px; }
+  .ah-cap { font-size: .8rem; margin: 0 0 6px; } .ah-cap b { font-size: .95rem; } .ah-cap small { color: var(--ink-soft); }
+  table.ah { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  table.ah th { font-size: .7rem; font-weight: 500; color: var(--ink-soft); text-align: left; padding: 2px 4px 4px;
+    border-bottom: 2px solid var(--ink); }
+  table.ah td { padding: 6px 4px; border-bottom: 1px solid var(--paper-line); vertical-align: middle; }
+  .ah-pair { display: inline-flex; min-width: 44px; justify-content: center; padding: 4px 6px; border-radius: 6px;
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ah-p2 { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ah-3 { display: flex; flex-wrap: wrap; gap: 2px 8px; }
+  .ah-3 span { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .ah-3 i { display: inline-block; min-width: 16px; text-align: center; border-radius: 3px; font-style: normal; font-size: .7rem;
+    padding: 0 3px; margin-right: 2px; border: 1px solid #0002; }
+  .ah-3 .hi { color: var(--good); } .ah-3 .lo { color: #9a9286; font-weight: 500; }
+  tr.ah-faint td { opacity: .45; }
+  .ah-axis { margin-top: 10px; } .ah-axis h4 { font-size: .75rem; color: var(--ink-soft); font-weight: 500; margin: 0 0 4px; }
+  .ah-bar { display: grid; grid-template-columns: 26px 5.5em 1fr 34px; align-items: center; gap: 6px; font-size: .8rem; padding: 3px 0; }
+  .ah-bar .bx { height: 12px; border-radius: 3px; background: #9fb8a9; }
+  .ah-bar.top .bx { background: var(--turf); } .ah-bar b { font-variant-numeric: tabular-nums; text-align: right; }
+  .ah-bar .nm { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .carx { display: inline-flex; width: 22px; height: 22px; align-items: center; justify-content: center; border-radius: 4px;
+    font-weight: 700; font-size: .8rem; border: 1px solid #0002; }
+  .ah-note { font-size: .7rem; color: var(--ink-soft); margin: 8px 0 0; line-height: 1.6; }
+  .aite-link { display: block; margin-top: 8px; padding: 11px 14px; border-radius: 10px; background: var(--turf); color: #fff;
+    text-decoration: none; font-weight: 700; font-size: .9rem; }
+  .aite-link small { font-weight: 400; color: #CFE3D8; font-size: .72rem; margin-left: 4px; }
 </style><details class="guide"><summary>このサイトの見方</summary><ul>
   <li><b>AIの買い目</b> … 2025・2026年の7車立てで、両方の年に回収率100%を超えた買い方だけ。
     <br>本命2着 = 全員 → 1番人気 → 3着内率1〜3位(3連単10点)。合成15倍以上のときだけ買う(過去 的中5〜6%・回収率225〜261%)。
@@ -281,7 +319,62 @@
   <li><b>万車率・本命/穴</b> … 100倍以上の3連単に入っている支持の割合。級と車立てごとの過去と比べて、下側3割=本命・上側3割=穴。</li>
   <li><b>頭向き・軸向き・相手</b> … 頭向き=1着まで来やすい(過去 1着45%)。軸向き=崩れにくいが1着は少ない(過去 3着内67%)。相手=3着内率35〜55%。</li>
   <li><b>★</b> … AIの買い目が「買い」になっているレース。</li>
-</ul></details><details class="aibet-summary fold"><summary><h2>今日の買い目 <small>これからのレース・条件に合うもの</small></h2></summary><ul><li><a href="?v=6&r=1"><b>久留米1R</b></a> 締切20:35　<span class="nb-st buy">ガールズ</span> 1・2・4・3・5→1→1・2・4・3（9点・合成6.4倍）　<span class="nb-st buy">ガールズ的中重視</span> 2・1・3→1・3・4→2・4・3（11点・合成2.9倍）</li><li><a href="?v=7&r=1"><b>松戸1R</b></a> 締切20:45　<span class="nb-st buy">ガールズ</span> 1・3・2・4・6→1→1・3・2・4（9点・合成4.3倍）</li><li><a href="?v=7&r=2"><b>松戸2R</b></a> 締切21:05　<span class="nb-st buy">ガールズ</span> 1・2・3・4・6→1→1・2・3・4（9点・合成8.3倍）</li><li><a href="?v=6&r=9"><b>久留米9R</b></a> 締切23:15　<span class="nb-st buy">本命2着</span> 全員→1→2・1・4（10点・合成16.2倍）</li></ul></details><section class="tab-panel active" id="tab-0"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-0-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-0-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-0-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-0-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-0-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-0-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-0-6" data-no="7">7R</button></nav><div class="race-panel active" id="race-0-0">
+</ul></details><details class="aibet-summary fold"><summary><h2>今日の買い目 <small>これからのレース・条件に合うもの</small></h2></summary><ul><li><a href="?v=6&r=1"><b>久留米1R</b></a> 締切20:35　<span class="nb-st buy">ガールズ</span> 1・2・4・3・5→1→1・2・4・3（9点・合成6.5倍）　<span class="nb-st buy">ガールズ的中重視</span> 2・1・3→1・3・4→2・4・3（11点・合成2.9倍）</li><li><a href="?v=7&r=1"><b>松戸1R</b></a> 締切20:45　<span class="nb-st buy">ガールズ</span> 1・3・2・4・6→1→1・3・2・4（9点・合成4.2倍）</li><li><a href="?v=7&r=2"><b>松戸2R</b></a> 締切21:05　<span class="nb-st buy">ガールズ</span> 1・2・3・4・5→1→1・2・3・4（9点・合成8.1倍）</li><li><a href="?v=6&r=9"><b>久留米9R</b></a> 締切23:15　<span class="nb-st buy">本命2着</span> 全員→1→2・1・4（10点・合成15.9倍）</li></ul></details>
+<script>
+(function(){
+  var COL = {"1": ["#ffffff", "#1b2430"], "2": ["#1b1b1b", "#ffffff"], "3": ["#d8322a", "#ffffff"], "4": ["#1f5fc4", "#ffffff"], "5": ["#e8c221", "#1b2430"], "6": ["#2f8f4e", "#ffffff"], "7": ["#e07a1f", "#ffffff"], "8": ["#e2699a", "#ffffff"], "9": ["#8a5fb0", "#ffffff"]};
+  var P = null;
+  function load(){ if (!P) P = fetch('aite_data.json?t=' + Date.now()).then(function(r){ return r.json(); }); return P; }
+  function cc(c){ var x = COL[String(c)] || ['#888','#fff']; return 'background:' + x[0] + ';color:' + x[1]; }
+  function draw(box, R, h){
+    var p1 = {}, p12 = {}, p123 = {}, cars = R.cars.map(function(x){ return x[0]; });
+    R.j.forEach(function(t){ var a=t[0], b=t[1], c=t[2], p=t[3]/1e5;
+      p1[a] = (p1[a]||0) + p; p12[a+'-'+b] = (p12[a+'-'+b]||0) + p; p123[a+'-'+b+'-'+c] = p; });
+    if (h == null) h = cars.slice().sort(function(a,b){ return (p1[b]||0)-(p1[a]||0); })[0];
+    var name = {}; R.cars.forEach(function(x){ name[x[0]] = x[1]; });
+    var ph = p1[h] || 1e-9;
+    var html = '<div class="ah-heads">' + cars.map(function(c){
+      return '<button type="button" data-h="' + c + '" class="' + (c==h?'on':'') + '" style="' + cc(c) + '">' + c + '</button>'; }).join('') + '</div>';
+    html += '<p class="ah-cap"><b>' + h + 'アタマの相手</b> <small>' + name[h] + '・' + h + '番の1着率 ' + Math.floor(ph*100) + '%</small></p>';
+    html += '<table class="ah"><thead><tr><th style="width:56px"></th><th style="width:58px">2着率</th><th>3着率(その並びのとき)</th></tr></thead><tbody>';
+    var sec = cars.filter(function(x){ return x!=h; }).sort(function(a,b){ return (p12[h+'-'+b]||0)-(p12[h+'-'+a]||0); });
+    sec.forEach(function(x){
+      var pp = (p12[h+'-'+x]||0), r2 = pp/ph;
+      var th = cars.filter(function(y){ return y!=h && y!=x; }).sort(function(a,b){ return (p123[h+'-'+x+'-'+b]||0)-(p123[h+'-'+x+'-'+a]||0); });
+      var chips = th.map(function(y){ var r3 = pp ? Math.floor((p123[h+'-'+x+'-'+y]||0)/pp*100) : 0;
+        return '<span class="' + (r3>=31?'hi':(r3<=19?'lo':'')) + '"><i style="' + cc(y) + '">' + y + '</i>' + r3 + '</span>'; }).join('');
+      html += '<tr class="' + (r2 < 0.05 ? 'ah-faint' : '') + '"><td><span class="ah-pair" style="' + cc(x) + '">' + h + x + '</span></td>'
+            + '<td class="ah-p2">' + Math.floor(r2*100) + '%</td><td><div class="ah-3">' + chips + '</div></td></tr>';
+    });
+    html += '</tbody></table>';
+    var ax = sec.map(function(x){ var s = 0; R.j.forEach(function(t){ if (t[0]==h && (t[1]==x || t[2]==x)) s += t[3]/1e5; });
+      return [x, Math.round(s/ph*100)]; }).sort(function(a,b){ return b[1]-a[1]; });
+    var mx = Math.max.apply(null, ax.map(function(a){ return a[1]; }).concat([1]));
+    html += '<div class="ah-axis"><h4>軸候補 … ' + h + 'が1着のとき2着か3着に来る率(2着率+3着率)</h4>' + ax.map(function(a, i){
+      return '<div class="ah-bar' + (i==0?' top':'') + '"><span class="carx" style="' + cc(a[0]) + '">' + a[0] + '</span><span class="nm">' + name[a[0]]
+        + '</span><span class="bx" style="width:' + Math.max(2, a[1]/mx*100) + '%"></span><b>' + a[1] + '</b></div>'; }).join('') + '</div>';
+    html += '<p class="ah-note">※' + (R.mode=='odds' ? 'AIとオッズ・ラインを合わせた' : 'AIだけの') + '3連単の出目確率から計算(%は切り捨て・' + R_upd + '時点)。'
+          + '2着率＝' + h + 'が1着のとき2着に来る率。3着率＝その並び(1着→2着)のとき残りが3着に来る率。緑＝31以上、薄い灰＝19以下、薄い行は2着率5%未満の参考値。</p>';
+    box.innerHTML = html;
+    box.querySelectorAll('.ah-heads button').forEach(function(b){ b.addEventListener('click', function(){ draw(box, R, +b.dataset.h); }); });
+  }
+  var R_upd = '';
+  function init(){ document.querySelectorAll('details.aite-fold').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if (!d.open || d.dataset.done) return;
+      var box = d.querySelector('.aite-body');
+      load().then(function(D){
+        R_upd = D.updated;
+        var R = D.races.filter(function(r){ return r.k == d.dataset.k; })[0];
+        if (!R) { box.textContent = 'このレースの確率はまだありません'; return; }
+        d.dataset.done = 1; draw(box, R, null);
+      }).catch(function(){ box.textContent = '読み込めませんでした'; P = null; });
+    });
+  }); }
+  if (document.readyState == 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<section class="tab-panel active" id="tab-0"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-0-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-0-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-0-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-0-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-0-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-0-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-0-6" data-no="7">7R</button></nav><div class="race-panel active" id="race-0-0">
     <article class="race-card">
       <header class="race-card-head">
         <span class="race-num">1<small>R</small></span>
@@ -347,7 +440,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-0-1">
     <article class="race-card">
@@ -415,7 +508,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-0-2">
     <article class="race-card">
@@ -483,7 +576,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-0-3">
     <article class="race-card">
@@ -551,7 +644,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-0-4">
     <article class="race-card">
@@ -619,7 +712,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-0-5">
     <article class="race-card">
@@ -687,7 +780,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-0-6">
     <article class="race-card">
@@ -755,7 +848,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="komatsushima_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=komatsushima_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-1"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-1-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-1-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-1-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-1-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-1-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-1-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-1-6" data-no="7">7R</button></nav><div class="race-panel active" id="race-1-0">
     <article class="race-card">
@@ -823,7 +916,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-1-1">
     <article class="race-card">
@@ -891,7 +984,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-1-2">
     <article class="race-card">
@@ -959,7 +1052,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-1-3">
     <article class="race-card">
@@ -1027,7 +1120,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-1-4">
     <article class="race-card">
@@ -1095,7 +1188,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-1-5">
     <article class="race-card">
@@ -1163,7 +1256,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-1-6">
     <article class="race-card">
@@ -1231,7 +1324,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="sasebo_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=sasebo_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-2"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-2-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-2-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-2-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-2-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-2-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-2-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-2-6" data-no="7">7R</button><button class="race-tab-btn " data-race="race-2-7" data-no="8">8R</button><button class="race-tab-btn " data-race="race-2-8" data-no="9">9R</button><button class="race-tab-btn " data-race="race-2-9" data-no="10">10R</button><button class="race-tab-btn " data-race="race-2-10" data-no="11">11R</button><button class="race-tab-btn " data-race="race-2-11" data-no="12">12R</button></nav><div class="race-panel active" id="race-2-0">
     <article class="race-card">
@@ -1299,7 +1392,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-1">
     <article class="race-card">
@@ -1367,7 +1460,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-2">
     <article class="race-card">
@@ -1435,7 +1528,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-3">
     <article class="race-card">
@@ -1503,7 +1596,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-4">
     <article class="race-card">
@@ -1564,7 +1657,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-5">
     <article class="race-card">
@@ -1632,7 +1725,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-6">
     <article class="race-card">
@@ -1700,7 +1793,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-7">
     <article class="race-card">
@@ -1768,7 +1861,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_8"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_8">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-8">
     <article class="race-card">
@@ -1836,7 +1929,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_9"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_9">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-9">
     <article class="race-card">
@@ -1904,7 +1997,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_10"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_10">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-10">
     <article class="race-card">
@@ -1972,7 +2065,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_11"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_11">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-2-11">
     <article class="race-card">
@@ -2040,7 +2133,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="fukui_12"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=fukui_12">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-3"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-3-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-3-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-3-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-3-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-3-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-3-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-3-6" data-no="7">7R</button><button class="race-tab-btn " data-race="race-3-7" data-no="8">8R</button><button class="race-tab-btn " data-race="race-3-8" data-no="9">9R</button><button class="race-tab-btn " data-race="race-3-9" data-no="10">10R</button><button class="race-tab-btn " data-race="race-3-10" data-no="11">11R</button><button class="race-tab-btn " data-race="race-3-11" data-no="12">12R</button></nav><div class="race-panel active" id="race-3-0">
     <article class="race-card">
@@ -2108,7 +2201,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-1">
     <article class="race-card">
@@ -2176,7 +2269,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-2">
     <article class="race-card">
@@ -2244,7 +2337,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-3">
     <article class="race-card">
@@ -2312,7 +2405,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-4">
     <article class="race-card">
@@ -2380,7 +2473,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-5">
     <article class="race-card">
@@ -2448,7 +2541,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-6">
     <article class="race-card">
@@ -2516,7 +2609,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-7">
     <article class="race-card">
@@ -2584,7 +2677,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_8"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_8">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-8">
     <article class="race-card">
@@ -2652,7 +2745,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_9"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_9">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-9">
     <article class="race-card">
@@ -2720,7 +2813,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_10"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_10">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-10">
     <article class="race-card">
@@ -2788,7 +2881,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_11"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_11">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-3-11">
     <article class="race-card">
@@ -2856,7 +2949,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="hiratsuka_12"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=hiratsuka_12">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-4"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-4-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-4-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-4-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-4-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-4-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-4-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-4-6" data-no="7">7R</button><button class="race-tab-btn " data-race="race-4-7" data-no="8">8R</button><button class="race-tab-btn " data-race="race-4-8" data-no="9">9R</button><button class="race-tab-btn " data-race="race-4-9" data-no="10">10R</button><button class="race-tab-btn " data-race="race-4-10" data-no="11">11R</button></nav><div class="race-panel active" id="race-4-0">
     <article class="race-card">
@@ -2924,7 +3017,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-1">
     <article class="race-card">
@@ -2992,7 +3085,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-2">
     <article class="race-card">
@@ -3060,7 +3153,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-3">
     <article class="race-card">
@@ -3128,7 +3221,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-4">
     <article class="race-card">
@@ -3189,7 +3282,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-5">
     <article class="race-card">
@@ -3257,7 +3350,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-6">
     <article class="race-card">
@@ -3325,7 +3418,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-7">
     <article class="race-card">
@@ -3393,7 +3486,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_8"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_8">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-8">
     <article class="race-card">
@@ -3461,7 +3554,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_9"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_9">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-9">
     <article class="race-card">
@@ -3529,7 +3622,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_10"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_10">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-4-10">
     <article class="race-card">
@@ -3597,7 +3690,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="toyama_11"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=toyama_11">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-5"><nav class="race-tabs"><button class="race-tab-btn active" data-race="race-5-0" data-no="1">1R</button><button class="race-tab-btn " data-race="race-5-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-5-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-5-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-5-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-5-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-5-6" data-no="7">7R</button><button class="race-tab-btn " data-race="race-5-7" data-no="8">8R</button><button class="race-tab-btn next" data-race="race-5-8" data-no="9">9R</button><button class="race-tab-btn " data-race="race-5-9" data-no="10">10R</button><button class="race-tab-btn " data-race="race-5-10" data-no="11">11R</button><button class="race-tab-btn " data-race="race-5-11" data-no="12">12R</button></nav><div class="race-panel active" id="race-5-0">
     <article class="race-card">
@@ -3658,7 +3751,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-1">
     <article class="race-card">
@@ -3726,7 +3819,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-2">
     <article class="race-card">
@@ -3794,7 +3887,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-3">
     <article class="race-card">
@@ -3862,7 +3955,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-4">
     <article class="race-card">
@@ -3930,7 +4023,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-5">
     <article class="race-card">
@@ -3998,7 +4091,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-6">
     <article class="race-card">
@@ -4066,7 +4159,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-7">
     <article class="race-card">
@@ -4134,7 +4227,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_8"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_8">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-8">
     <article class="race-card">
@@ -4143,10 +4236,10 @@
         <div class="race-title">
           <h2>Ｓ級選抜</h2>
           <p class="race-sub">松阪 <span class="post-time">締切 19:08</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">37%</b><span class="sep">・</span>目安 <b>5,920円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>7</b>(71%)</span>　<span class="role-1">軸向き：<b>2</b>(73%)</span>　<span class="role-2">相手：3 5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">37%</b><span class="sep">・</span>目安 <b>5,920円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>7</b>(72%)</span>　<span class="role-1">軸向き：<b>2</b>(73%) <b>3</b>(57%)</span>　<span class="role-2">相手：5</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>7</b> → <b>2・7・3</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成8.4倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>7・2・3</b> − <b>2・3</b> <small>0点</small>　<span class="nb-st skip">見送り</span><small>(1点3倍以上の目なし)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>7</b> → <b>2・7・3</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成7.9倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>7・2・3</b> − <b>2・3</b> <small>0点</small>　<span class="nb-st skip">見送り</span><small>(1点3倍以上の目なし)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -4156,53 +4249,53 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">小森 貴大<br><small class="sub">S1 ・ 両 ・ 先頭 ・ 103.0点</small></td>
           <td class="r od">1番人気<br><small class="plc">40%</small></td>
-          <td class="r pct"><b>62.7</b><small>%</small><br><small class="sub">3着内71%</small><br><small class="mm">込39%</small></td>
+          <td class="r pct"><b>62.7</b><small>%</small><br><small class="sub">3着内72%</small><br><small class="mm">込40%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">大屋 健司<br><small class="sub">S2 ・ 追 ・ 2番手 ・ 104.2点</small></td>
           <td class="r od">2番人気<br><small class="plc">29%</small></td>
-          <td class="r pct"><b>12.2</b><small>%</small><br><small class="sub">3着内73%</small><br><small class="mm">込31%</small></td>
+          <td class="r pct"><b>12.2</b><small>%</small><br><small class="sub">3着内73%</small><br><small class="mm">込30%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">木村 直隆<br><small class="sub">S2 ・ 追 ・ 2番手 ・ 98.9点</small></td>
-          <td class="r od">3番人気<br><small class="plc">14%</small></td>
-          <td class="r pct"><b>12.1</b><small>%</small><br><small class="sub">3着内53%</small><br><small class="mm">込13%</small></td>
+          <td class="r od">3番人気<br><small class="plc">16%</small></td>
+          <td class="r pct"><b>12.1</b><small>%</small><br><small class="sub">3着内57%</small><br><small class="mm">込15%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">森本 桂太郎<br><small class="sub">S2 ・ 逃 ・ 先頭 ・ 94.7点</small></td>
-          <td class="r od">6番人気<br><small class="plc">4%</small></td>
-          <td class="r pct"><b>6.9</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込4%</small></td>
+          <td class="r od">6番人気<br><small class="plc">3%</small></td>
+          <td class="r pct"><b>6.9</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込3%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">戸田 洋平<br><small class="sub">S2 ・ 追 ・ 3番手 ・ 99.2点</small></td>
           <td class="r od">5番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>2.9</b><small>%</small><br><small class="sub">3着内41%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>2.9</b><small>%</small><br><small class="sub">3着内40%</small><br><small class="mm">込5%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">花田 将司<br><small class="sub">S2 ・ 両 ・ 先頭 ・ 95.9点</small></td>
           <td class="r od">4番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>2.3</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>2.3</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込5%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">土屋 裕二<br><small class="sub">S2 ・ 追 ・ 2番手 ・ 95.0点</small></td>
-          <td class="r od">7番人気<br><small class="plc">3%</small></td>
+          <td class="r od">7番人気<br><small class="plc">2%</small></td>
           <td class="r pct"><b>0.9</b><small>%</small><br><small class="sub">3着内14%</small><br><small class="mm">込2%</small></td>
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_9"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_9">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-9">
     <article class="race-card">
@@ -4214,7 +4307,7 @@
           <div class="chips"><p class="manbaken">万車率 <b class="">34%</b><span class="sep">・</span>目安 <b>4,350円</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>7</b>(68%)</span>　<span class="role-1">軸向き：<b>2</b>(77%)</span>　<span class="role-2">相手：5 4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>2</b> → <b>2・7・5</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成7.8倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>2・5・7</b> − <b>2・5</b> <small>0点</small>　<span class="nb-st skip">見送り</span><small>(1点3倍以上の目なし)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>2</b> → <b>2・7・5</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成7.7倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>2・5・7</b> − <b>2・5</b> <small>(5-7)</small> <small>1点</small>　<span class="nb-st skip">見送り</span> 合成3.0倍<small>(条件4倍以上)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -4230,7 +4323,7 @@
           <td class="c"><span class="mark">○</span><br><span class="htag tg-push">推し</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">櫻井 正孝<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 105.3点</small></td>
-          <td class="r od">1番人気<br><small class="plc">42%</small></td>
+          <td class="r od">1番人気<br><small class="plc">41%</small></td>
           <td class="r pct"><b>20.7</b><small>%</small><br><small class="sub">3着内77%</small><br><small class="mm">込42%</small></td>
         </tr>
         <tr class="">
@@ -4244,7 +4337,7 @@
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">原田 翔真<br><small class="sub">S2 ・ 逃 ・ 先頭 ・ 98.0点</small></td>
-          <td class="r od">5番人気<br><small class="plc">5%</small></td>
+          <td class="r od">6番人気<br><small class="plc">5%</small></td>
           <td class="r pct"><b>5.8</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込5%</small></td>
         </tr>
         <tr class="">
@@ -4252,25 +4345,25 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">伊東 佑晟<br><small class="sub">S2 ・ 逃 ・ 単騎 ・ 93.8点</small></td>
           <td class="r od">4番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>5.4</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>5.4</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込7%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">宿口 潤平<br><small class="sub">S2 ・ 追 ・ 3番手 ・ 100.5点</small></td>
-          <td class="r od">6番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>2.0</b><small>%</small><br><small class="sub">3着内49%</small><br><small class="mm">込5%</small></td>
+          <td class="r od">5番人気<br><small class="plc">5%</small></td>
+          <td class="r pct"><b>2.0</b><small>%</small><br><small class="sub">3着内50%</small><br><small class="mm">込6%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">白戸 淳太郎<br><small class="sub">S2 ・ 追 ・ 4番手 ・ 96.4点</small></td>
-          <td class="r od">7番人気<br><small class="plc">2%</small></td>
+          <td class="r od">7番人気<br><small class="plc">1%</small></td>
           <td class="r pct"><b>0.3</b><small>%</small><br><small class="sub">3着内10%</small><br><small class="mm">込1%</small></td>
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_10"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_10">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-10">
     <article class="race-card">
@@ -4282,7 +4375,7 @@
           <div class="chips"><p class="manbaken">万車率 <b class="hi">39%</b><span class="sep">・</span>目安 <b>6,720円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>2</b>(67%) <b>5</b>(58%)</span>　<span class="role-1">軸向き：<b>1</b>(59%)</span>　<span class="role-2">相手：7 3</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>2</b> → <b>2・1・5</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成8.0倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>2・5・1</b> − <b>5・1</b> <small>0点</small>　<span class="nb-st skip">見送り</span><small>(1点3倍以上の目なし)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>2</b> → <b>2・1・5</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成7.9倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>2・5・1</b> − <b>5・1</b> <small>0点</small>　<span class="nb-st skip">見送り</span><small>(1点3倍以上の目なし)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -4320,7 +4413,7 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">堀内 俊介<br><small class="sub">S2 ・ 両 ・ 先頭 ・ 104.2点</small></td>
           <td class="r od">4番人気<br><small class="plc">11%</small></td>
-          <td class="r pct"><b>7.4</b><small>%</small><br><small class="sub">3着内45%</small><br><small class="mm">込12%</small></td>
+          <td class="r pct"><b>7.4</b><small>%</small><br><small class="sub">3着内45%</small><br><small class="mm">込13%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
@@ -4338,7 +4431,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_11"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_11">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-5-11">
     <article class="race-card">
@@ -4347,7 +4440,7 @@
         <div class="race-title">
           <h2>Ｓ級準決勝</h2>
           <p class="race-sub">松阪 <span class="post-time">締切 20:25</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">38%</b><span class="sep">・</span>目安 <b>6,170円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>7</b>(64%)</span>　<span class="role-1">軸向き：<b>4</b>(61%)</span>　<span class="role-2">相手：2 1</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">38%</b><span class="sep">・</span>目安 <b>6,170円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>7</b>(64%)</span>　<span class="role-1">軸向き：<b>4</b>(60%)</span>　<span class="role-2">相手：2 1</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
       <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>7</b> → <b>7・4・2</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成10.2倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div><div class="nb nb-sw nb-ref"><span class="nb-name">S級ワイド</span> ワイド <b>7・4・2</b> − <b>1・2</b> <small>(1-2 2-4)</small> <small>2点</small>　<span class="nb-st skip">見送り</span> 合成2.0倍<small>(条件4倍以上)</small><div class="nb-note">人気1〜3位 − AI2〜3位・参考・検証中 過去(S級7車) 的中20%・回収率120%/107%(1点3倍未満は買わない)</div></div></div>
@@ -4381,7 +4474,7 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">武田 豊樹<br><small class="sub">S1 ・ 追 ・ 2番手 ・ 103.9点</small></td>
           <td class="r od">2番人気<br><small class="plc">22%</small></td>
-          <td class="r pct"><b>12.4</b><small>%</small><br><small class="sub">3着内61%</small><br><small class="mm">込22%</small></td>
+          <td class="r pct"><b>12.4</b><small>%</small><br><small class="sub">3着内60%</small><br><small class="mm">込22%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
@@ -4395,7 +4488,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">竹村 勇祐<br><small class="sub">S2 ・ 追 ・ 2番手 ・ 103.0点</small></td>
           <td class="r od">6番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>7.0</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込4%</small></td>
+          <td class="r pct"><b>7.0</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込4%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
@@ -4406,7 +4499,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsusaka_12"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsusaka_12">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-6"><nav class="race-tabs"><button class="race-tab-btn active next" data-race="race-6-0" data-no="1">★1R</button><button class="race-tab-btn " data-race="race-6-1" data-no="2">2R</button><button class="race-tab-btn " data-race="race-6-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-6-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-6-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-6-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-6-6" data-no="7">7R</button><button class="race-tab-btn " data-race="race-6-7" data-no="8">8R</button><button class="race-tab-btn " data-race="race-6-8" data-no="9">★9R</button></nav><div class="race-panel active" id="race-6-0">
     <article class="race-card">
@@ -4415,10 +4508,10 @@
         <div class="race-title">
           <h2>Ｌ級ガールズ予選２</h2>
           <p class="race-sub">久留米 <span class="post-time">締切 20:35</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">33%</b><span class="sep">・</span>目安 <b>5,080円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(63%)</span>　<span class="role-1">軸向き：<b>2</b>(72%) <b>3</b>(61%)</span>　<span class="role-2">相手：4</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">33%</b><span class="sep">・</span>目安 <b>5,080円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(63%)</span>　<span class="role-1">軸向き：<b>2</b>(71%) <b>3</b>(61%)</span>　<span class="role-2">相手：4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-gir"><span class="nb-name">ガールズ</span> 3連単 <b>1・2・4・3・5</b> → <b>1</b> → <b>1・2・4・3</b> <small>9点</small>　<span class="nb-st buy">買い</span> 合成6.4倍<div class="nb-note">人気1〜5位→AI1位→人気1〜4位・過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)</div></div><div class="nb nb-girt"><span class="nb-name">ガールズ的中重視</span> 3連単 <b>2・1・3</b> → <b>1・3・4</b> → <b>2・4・3</b> <small>11点</small>　<span class="nb-st buy">買い</span> 合成2.9倍<div class="nb-note">3着内率1〜3位→3着内率2〜4位→人気2〜4位・過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)</div></div></div>
+      <div class="nbets"><div class="nb nb-gir"><span class="nb-name">ガールズ</span> 3連単 <b>1・2・4・3・5</b> → <b>1</b> → <b>1・2・4・3</b> <small>9点</small>　<span class="nb-st buy">買い</span> 合成6.5倍<div class="nb-note">人気1〜5位→AI1位→人気1〜4位・過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)</div></div><div class="nb nb-girt"><span class="nb-name">ガールズ的中重視</span> 3連単 <b>2・1・3</b> → <b>1・3・4</b> → <b>2・4・3</b> <small>11点</small>　<span class="nb-st buy">買い</span> 合成2.9倍<div class="nb-note">3着内率1〜3位→3着内率2〜4位→人気2〜4位・過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -4435,21 +4528,21 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">永禮 美瑠<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 54.2点</small></td>
           <td class="r od">2番人気<br><small class="plc">25%</small></td>
-          <td class="r pct"><b>6.7</b><small>%</small><br><small class="sub">3着内72%</small><br><small class="mm">込26%</small></td>
+          <td class="r pct"><b>6.7</b><small>%</small><br><small class="sub">3着内71%</small><br><small class="mm">込26%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">神戸 暖稀羽<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 52.3点</small></td>
           <td class="r od">4番人気<br><small class="plc">11%</small></td>
-          <td class="r pct"><b>1.3</b><small>%</small><br><small class="sub">3着内61%</small><br><small class="mm">込13%</small></td>
+          <td class="r pct"><b>1.3</b><small>%</small><br><small class="sub">3着内61%</small><br><small class="mm mm-hi">込13%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">北津留 千羽<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 50.2点</small></td>
           <td class="r od">3番人気<br><small class="plc">17%</small></td>
-          <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内54%</small><br><small class="mm mm-hi">込20%</small></td>
+          <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内55%</small><br><small class="mm mm-hi">込21%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
@@ -4463,18 +4556,18 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">長澤 彩<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 50.2点</small></td>
           <td class="r od">5番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>0.5</b><small>%</small><br><small class="sub">3着内20%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>0.5</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込3%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">金田 舞夏<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 48.6点</small></td>
           <td class="r od">7番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>0.3</b><small>%</small><br><small class="sub">3着内16%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>0.3</b><small>%</small><br><small class="sub">3着内17%</small><br><small class="mm">込2%</small></td>
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-1">
     <article class="race-card">
@@ -4517,14 +4610,14 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">板根 茜弥<br><small class="sub">L1 ・ 追 ・ 単騎 ・ 51.7点</small></td>
           <td class="r od">4番人気<br><small class="plc">3%</small></td>
-          <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込3%</small></td>
+          <td class="r pct"><b>1.1</b><small>%</small><br><small class="sub">3着内34%</small><br><small class="mm">込3%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">高木 佑真<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 51.4点</small></td>
           <td class="r od">5番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内21%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>1.0</b><small>%</small><br><small class="sub">3着内22%</small><br><small class="mm">込2%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
@@ -4535,7 +4628,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-2">
     <article class="race-card">
@@ -4603,7 +4696,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-3">
     <article class="race-card">
@@ -4664,7 +4757,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-4">
     <article class="race-card">
@@ -4732,7 +4825,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-5">
     <article class="race-card">
@@ -4800,7 +4893,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-6">
     <article class="race-card">
@@ -4822,13 +4915,13 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">谷口 力也<br><small class="sub">A1 ・ 逃 ・ 先頭 ・ 88.8点</small></td>
           <td class="r od">5番人気<br><small class="plc">14%</small></td>
-          <td class="r pct"><b>31.7</b><small>%</small><br><small class="sub">3着内43%</small><br><small class="mm">込14%</small></td>
+          <td class="r pct"><b>31.7</b><small>%</small><br><small class="sub">3着内43%</small><br><small class="mm">込15%</small></td>
         </tr>
         <tr class="">
-          <td class="c"><span class="mark">○</span></td>
+          <td class="c"><span class="mark">○</span><br><span class="htag tg-push">推し</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">那須 久幸<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 90.6点</small></td>
-          <td class="r od">1番人気<br><small class="plc">21%</small></td>
+          <td class="r od">1番人気<br><small class="plc">22%</small></td>
           <td class="r pct"><b>26.0</b><small>%</small><br><small class="sub">3着内59%</small><br><small class="mm">込20%</small></td>
         </tr>
         <tr class="">
@@ -4836,21 +4929,21 @@
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">大西 祐<br><small class="sub">A1 ・ 両 ・ 2番手 ・ 89.7点</small></td>
           <td class="r od">2番人気<br><small class="plc">18%</small></td>
-          <td class="r pct"><b>12.7</b><small>%</small><br><small class="sub">3着内48%</small><br><small class="mm">込18%</small></td>
+          <td class="r pct"><b>12.7</b><small>%</small><br><small class="sub">3着内47%</small><br><small class="mm">込17%</small></td>
         </tr>
         <tr class="">
-          <td class="c"><span class="mark">△</span><br><span class="htag tg-push">推し</span></td>
+          <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">飯田 憲司<br><small class="sub">A1 ・ 両 ・ 先頭 ・ 89.9点</small></td>
-          <td class="r od">3番人気<br><small class="plc">18%</small></td>
-          <td class="r pct"><b>11.5</b><small>%</small><br><small class="sub">3着内46%</small><br><small class="mm">込20%</small></td>
+          <td class="r od">3番人気<br><small class="plc">17%</small></td>
+          <td class="r pct"><b>11.5</b><small>%</small><br><small class="sub">3着内46%</small><br><small class="mm">込19%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">高井 流星<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 88.1点</small></td>
           <td class="r od">4番人気<br><small class="plc">17%</small></td>
-          <td class="r pct"><b>11.0</b><small>%</small><br><small class="sub">3着内49%</small><br><small class="mm">込19%</small></td>
+          <td class="r pct"><b>11.0</b><small>%</small><br><small class="sub">3着内48%</small><br><small class="mm">込18%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
@@ -4864,11 +4957,11 @@
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">田中 洋輔<br><small class="sub">A1 ・ 追 ・ 3番手 ・ 86.9点</small></td>
           <td class="r od">6番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内29%</small><br><small class="mm">込6%</small></td>
+          <td class="r pct"><b>3.1</b><small>%</small><br><small class="sub">3着内30%</small><br><small class="mm">込7%</small></td>
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-7">
     <article class="race-card">
@@ -4877,10 +4970,10 @@
         <div class="race-title">
           <h2>Ａ級準決勝</h2>
           <p class="race-sub">久留米 <span class="post-time">締切 22:55</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">40%</b><span class="sep">・</span>目安 <b>7,110円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(69%)</span>　<span class="role-1">軸向き：<b>2</b>(63%) <b>4</b>(60%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">40%</b><span class="sep">・</span>目安 <b>7,110円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(69%)</span>　<span class="role-1">軸向き：<b>2</b>(63%) <b>4</b>(59%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>2</b> → <b>1・2・4</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成9.4倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>1</b> → <b>1・2・4</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成11.6倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -4889,54 +4982,54 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">船瀬 惇平<br><small class="sub">A1 ・ 逃 ・ 2番手 ・ 92.6点</small></td>
-          <td class="r od">2番人気<br><small class="plc">28%</small></td>
-          <td class="r pct"><b>65.0</b><small>%</small><br><small class="sub">3着内69%</small><br><small class="mm">込25%</small></td>
+          <td class="r od">1番人気<br><small class="plc">30%</small></td>
+          <td class="r pct"><b>65.0</b><small>%</small><br><small class="sub">3着内69%</small><br><small class="mm">込27%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">木村 優駿<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 89.1点</small></td>
-          <td class="r od">3番人気<br><small class="plc">17%</small></td>
-          <td class="r pct"><b>12.5</b><small>%</small><br><small class="sub">3着内60%</small><br><small class="mm">込18%</small></td>
+          <td class="r od">3番人気<br><small class="plc">16%</small></td>
+          <td class="r pct"><b>12.5</b><small>%</small><br><small class="sub">3着内59%</small><br><small class="mm">込17%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">富 弥昭<br><small class="sub">A1 ・ 追 ・ 3番手 ・ 89.2点</small></td>
-          <td class="r od">6番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>6.4</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込6%</small></td>
+          <td class="r od">5番人気<br><small class="plc">7%</small></td>
+          <td class="r pct"><b>6.4</b><small>%</small><br><small class="sub">3着内33%</small><br><small class="mm">込6%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">伊藤 亮<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 90.3点</small></td>
-          <td class="r od">1番人気<br><small class="plc">29%</small></td>
-          <td class="r pct"><b>4.9</b><small>%</small><br><small class="sub">3着内63%</small><br><small class="mm">込32%</small></td>
+          <td class="r od">2番人気<br><small class="plc">28%</small></td>
+          <td class="r pct"><b>4.9</b><small>%</small><br><small class="sub">3着内63%</small><br><small class="mm">込31%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#e07a1f;color:#ffffff">7</span></td>
           <td class="horse">北川 大成<br><small class="sub">A2 ・ 逃 ・ 単騎 ・ 77.5点</small></td>
           <td class="r od">7番人気<br><small class="plc">5%</small></td>
-          <td class="r pct"><b>4.7</b><small>%</small><br><small class="sub">3着内16%</small><br><small class="mm">込4%</small></td>
+          <td class="r pct"><b>4.7</b><small>%</small><br><small class="sub">3着内17%</small><br><small class="mm">込4%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">八尋 英輔<br><small class="sub">A1 ・ 追 ・ 単騎 ・ 87.0点</small></td>
           <td class="r od">4番人気<br><small class="plc">8%</small></td>
-          <td class="r pct"><b>3.8</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込8%</small></td>
+          <td class="r pct"><b>3.8</b><small>%</small><br><small class="sub">3着内34%</small><br><small class="mm">込8%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">下野 義城<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 83.5点</small></td>
-          <td class="r od">5番人気<br><small class="plc">7%</small></td>
+          <td class="r od">6番人気<br><small class="plc">6%</small></td>
           <td class="r pct"><b>2.7</b><small>%</small><br><small class="sub">3着内24%</small><br><small class="mm">込7%</small></td>
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_8"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_8">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-6-8">
     <article class="race-card">
@@ -4945,10 +5038,10 @@
         <div class="race-title">
           <h2>Ａ級準決勝</h2>
           <p class="race-sub">久留米 <span class="post-time">締切 23:15</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="hi">44%</b><span class="sep">・</span>目安 <b>8,360円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(65%)</span>　<span class="role-1">軸向き：<b>2</b>(68%)</span>　<span class="role-2">相手：4 5</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="hi">44%</b><span class="sep">・</span>目安 <b>8,360円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(65%)</span>　<span class="role-1">軸向き：<b>2</b>(68%)</span>　<span class="role-2">相手：4 5 3</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>1</b> → <b>2・1・4</b> <small>10点</small>　<span class="nb-st buy">買い</span> 合成16.2倍<div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>1</b> → <b>2・1・4</b> <small>10点</small>　<span class="nb-st buy">買い</span> 合成15.9倍<div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -4965,13 +5058,13 @@
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">守谷 陽介<br><small class="sub">A1 ・ 両 ・ 2番手 ・ 93.2点</small></td>
           <td class="r od">2番人気<br><small class="plc">26%</small></td>
-          <td class="r pct"><b>13.6</b><small>%</small><br><small class="sub">3着内68%</small><br><small class="mm">込26%</small></td>
+          <td class="r pct"><b>13.6</b><small>%</small><br><small class="sub">3着内68%</small><br><small class="mm">込27%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">中田 拓也<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 89.5点</small></td>
-          <td class="r od">3番人気<br><small class="plc">10%</small></td>
+          <td class="r od">4番人気<br><small class="plc">10%</small></td>
           <td class="r pct"><b>9.3</b><small>%</small><br><small class="sub">3着内37%</small><br><small class="mm">込10%</small></td>
         </tr>
         <tr class="">
@@ -4992,8 +5085,8 @@
           <td class="c"><span class="rk">6</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">高橋 雅之<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 92.5点</small></td>
-          <td class="r od">4番人気<br><small class="plc">10%</small></td>
-          <td class="r pct"><b>6.0</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込9%</small></td>
+          <td class="r od">3番人気<br><small class="plc">10%</small></td>
+          <td class="r pct"><b>6.0</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込10%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
@@ -5004,7 +5097,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="kurume_9"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=kurume_9">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section><section class="tab-panel " id="tab-7"><nav class="race-tabs"><button class="race-tab-btn active next" data-race="race-7-0" data-no="1">★1R</button><button class="race-tab-btn " data-race="race-7-1" data-no="2">★2R</button><button class="race-tab-btn " data-race="race-7-2" data-no="3">3R</button><button class="race-tab-btn " data-race="race-7-3" data-no="4">4R</button><button class="race-tab-btn " data-race="race-7-4" data-no="5">5R</button><button class="race-tab-btn " data-race="race-7-5" data-no="6">6R</button><button class="race-tab-btn " data-race="race-7-6" data-no="7">7R</button><button class="race-tab-btn " data-race="race-7-7" data-no="8">8R</button><button class="race-tab-btn " data-race="race-7-8" data-no="9">9R</button></nav><div class="race-panel active" id="race-7-0">
     <article class="race-card">
@@ -5016,7 +5109,7 @@
           <div class="chips"><p class="manbaken">万車率 <b class="lo">18%</b><span class="sep">・</span>目安 <b>1,280円</b><span class="sep">・</span><b>本命</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(91%)</span>　<span class="role-1">軸向き：<b>3</b>(79%) <b>2</b>(78%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-gir"><span class="nb-name">ガールズ</span> 3連単 <b>1・3・2・4・6</b> → <b>1</b> → <b>1・3・2・4</b> <small>9点</small>　<span class="nb-st buy">買い</span> 合成4.3倍<div class="nb-note">人気1〜5位→AI1位→人気1〜4位・過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)</div></div><div class="nb nb-girt"><span class="nb-name">ガールズ的中重視</span> 3連単 <b>1・3・2</b> → <b>3・2・4</b> → <b>3・2・4</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成1.5倍<small>(条件2倍以上)</small><div class="nb-note">3着内率1〜3位→3着内率2〜4位→人気2〜4位・過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)</div></div></div>
+      <div class="nbets"><div class="nb nb-gir"><span class="nb-name">ガールズ</span> 3連単 <b>1・3・2・4・6</b> → <b>1</b> → <b>1・3・2・4</b> <small>9点</small>　<span class="nb-st buy">買い</span> 合成4.2倍<div class="nb-note">人気1〜5位→AI1位→人気1〜4位・過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)</div></div><div class="nb nb-girt"><span class="nb-name">ガールズ的中重視</span> 3連単 <b>1・3・2</b> → <b>3・2・4</b> → <b>3・2・4</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成1.5倍<small>(条件2倍以上)</small><div class="nb-note">3着内率1〜3位→3着内率2〜4位→人気2〜4位・過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -5025,8 +5118,8 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">大浦 彩瑛<br><small class="sub">L1 ・ 逃 ・ 単騎 ・ 56.2点</small></td>
-          <td class="r od">1番人気<br><small class="plc">61%</small></td>
-          <td class="r pct"><b>82.9</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込57%</small></td>
+          <td class="r od">1番人気<br><small class="plc">60%</small></td>
+          <td class="r pct"><b>82.9</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込56%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
@@ -5039,7 +5132,7 @@
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">磯村 光舞<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 54.6点</small></td>
-          <td class="r od">2番人気<br><small class="plc">17%</small></td>
+          <td class="r od">2番人気<br><small class="plc">18%</small></td>
           <td class="r pct"><b>4.9</b><small>%</small><br><small class="sub">3着内79%</small><br><small class="mm mm-hi">込21%</small></td>
         </tr>
         <tr class="">
@@ -5061,7 +5154,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">中村 鈴花<br><small class="sub">L1 ・ 追 ・ 単騎 ・ 46.3点</small></td>
           <td class="r od">6番人気<br><small class="plc">1%</small></td>
-          <td class="r pct"><b>0.2</b><small>%</small><br><small class="sub">3着内10%</small><br><small class="mm">込1%</small></td>
+          <td class="r pct"><b>0.2</b><small>%</small><br><small class="sub">3着内11%</small><br><small class="mm">込1%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
@@ -5072,7 +5165,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_1"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_1">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-1">
     <article class="race-card">
@@ -5081,10 +5174,10 @@
         <div class="race-title">
           <h2>Ｌ級ガールズ予選２</h2>
           <p class="race-sub">松戸 <span class="post-time">締切 21:05</span></p>
-          <div class="chips"><p class="manbaken">万車率 <b class="lo">16%</b><span class="sep">・</span>目安 <b>900円</b><span class="sep">・</span><b>本命</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(91%)</span>　<span class="role-1">軸向き：<b>2</b>(78%) <b>3</b>(67%)</span><small>（）は3着内率</small></div></div>
+          <div class="chips"><p class="manbaken">万車率 <b class="lo">16%</b><span class="sep">・</span>目安 <b>900円</b><span class="sep">・</span><b>本命</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(90%)</span>　<span class="role-1">軸向き：<b>2</b>(78%) <b>3</b>(66%)</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-gir"><span class="nb-name">ガールズ</span> 3連単 <b>1・2・3・4・6</b> → <b>1</b> → <b>1・2・3・4</b> <small>9点</small>　<span class="nb-st buy">買い</span> 合成8.3倍<div class="nb-note">人気1〜5位→AI1位→人気1〜4位・過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)</div></div><div class="nb nb-girt"><span class="nb-name">ガールズ的中重視</span> 3連単 <b>1・2・3</b> → <b>2・3・4</b> → <b>2・3・4</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成1.3倍<small>(条件2倍以上)</small><div class="nb-note">3着内率1〜3位→3着内率2〜4位→人気2〜4位・過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)</div></div></div>
+      <div class="nbets"><div class="nb nb-gir"><span class="nb-name">ガールズ</span> 3連単 <b>1・2・3・4・5</b> → <b>1</b> → <b>1・2・3・4</b> <small>9点</small>　<span class="nb-st buy">買い</span> 合成8.1倍<div class="nb-note">人気1〜5位→AI1位→人気1〜4位・過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)</div></div><div class="nb nb-girt"><span class="nb-name">ガールズ的中重視</span> 3連単 <b>1・2・3</b> → <b>2・3・4</b> → <b>2・3・4</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成1.3倍<small>(条件2倍以上)</small><div class="nb-note">3着内率1〜3位→3着内率2〜4位→人気2〜4位・過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -5093,35 +5186,35 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">小林 優香<br><small class="sub">L1 ・ 逃 ・ 単騎 ・ 57.6点</small></td>
-          <td class="r od">1番人気<br><small class="plc">75%</small></td>
-          <td class="r pct"><b>96.5</b><small>%</small><br><small class="sub">3着内91%</small><br><small class="mm">込72%</small></td>
+          <td class="r od">1番人気<br><small class="plc">73%</small></td>
+          <td class="r pct"><b>96.5</b><small>%</small><br><small class="sub">3着内90%</small><br><small class="mm">込70%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">西脇 美唯奈<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 53.5点</small></td>
           <td class="r od">2番人気<br><small class="plc">14%</small></td>
-          <td class="r pct"><b>2.6</b><small>%</small><br><small class="sub">3着内78%</small><br><small class="mm">込15%</small></td>
+          <td class="r pct"><b>2.6</b><small>%</small><br><small class="sub">3着内78%</small><br><small class="mm">込16%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">石井 貴子<br><small class="sub">L1 ・ 逃 ・ 単騎 ・ 51.1点</small></td>
           <td class="r od">3番人気<br><small class="plc">7%</small></td>
-          <td class="r pct"><b>0.4</b><small>%</small><br><small class="sub">3着内67%</small><br><small class="mm mm-hi">込8%</small></td>
+          <td class="r pct"><b>0.4</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm mm-hi">込9%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">石田 春海<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 46.8点</small></td>
-          <td class="r od">5番人気<br><small class="plc">1%</small></td>
+          <td class="r od">6番人気<br><small class="plc">1%</small></td>
           <td class="r pct"><b>0.2</b><small>%</small><br><small class="sub">3着内10%</small><br><small class="mm">込1%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">近澤 諒香<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 47.2点</small></td>
-          <td class="r od">6番人気<br><small class="plc">1%</small></td>
+          <td class="r od">5番人気<br><small class="plc">1%</small></td>
           <td class="r pct"><b>0.1</b><small>%</small><br><small class="sub">3着内17%</small><br><small class="mm">込1%</small></td>
         </tr>
         <tr class="">
@@ -5129,7 +5222,7 @@
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">高崎 千賀<br><small class="sub">L1 ・ 両 ・ 単騎 ・ 47.6点</small></td>
           <td class="r od">4番人気<br><small class="plc">2%</small></td>
-          <td class="r pct"><b>0.1</b><small>%</small><br><small class="sub">3着内34%</small><br><small class="mm">込2%</small></td>
+          <td class="r pct"><b>0.1</b><small>%</small><br><small class="sub">3着内35%</small><br><small class="mm">込2%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">7</span></td>
@@ -5140,7 +5233,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_2"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_2">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-2">
     <article class="race-card">
@@ -5208,7 +5301,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_3"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_3">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-3">
     <article class="race-card">
@@ -5276,7 +5369,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_4"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_4">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-4">
     <article class="race-card">
@@ -5340,11 +5433,11 @@
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">萱島 大介<br><small class="sub">A2 ・ 追 ・ 2番手 ・ 82.7点</small></td>
           <td class="r od">6番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>4.3</b><small>%</small><br><small class="sub">3着内38%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>4.3</b><small>%</small><br><small class="sub">3着内39%</small><br><small class="mm">込5%</small></td>
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_5"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_5">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-5">
     <article class="race-card">
@@ -5394,7 +5487,7 @@
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">堀 政美<br><small class="sub">A2 ・ 追 ・ 3番手 ・ 83.4点</small></td>
           <td class="r od">6番人気<br><small class="plc">6%</small></td>
-          <td class="r pct"><b>2.7</b><small>%</small><br><small class="sub">3着内27%</small><br><small class="mm">込5%</small></td>
+          <td class="r pct"><b>2.7</b><small>%</small><br><small class="sub">3着内28%</small><br><small class="mm">込5%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
@@ -5412,7 +5505,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_6"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_6">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-6">
     <article class="race-card">
@@ -5424,7 +5517,7 @@
           <div class="chips"><p class="manbaken">万車率 <b class="hi">37%</b><span class="sep">・</span>目安 <b>5,370円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(87%)</span>　<span class="role-1">軸向き：<b>3</b>(70%)</span>　<span class="role-2">相手：7</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>1</b> → <b>1・3・7</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成11.0倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>1</b> → <b>1・3・7</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成11.2倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -5433,8 +5526,8 @@
           <td class="c"><span class="mark">◎</span><br><span class="htag tg-ok">普通</span></td>
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">今野 大輔<br><small class="sub">A1 ・ 両 ・ 2番手 ・ 94.9点</small></td>
-          <td class="r od">1番人気<br><small class="plc">52%</small></td>
-          <td class="r pct"><b>55.2</b><small>%</small><br><small class="sub">3着内87%</small><br><small class="mm">込56%</small></td>
+          <td class="r od">1番人気<br><small class="plc">53%</small></td>
+          <td class="r pct"><b>55.2</b><small>%</small><br><small class="sub">3着内87%</small><br><small class="mm">込57%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
@@ -5447,21 +5540,21 @@
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#e8c221;color:#1b2430">5</span></td>
           <td class="horse">吉竹 尚城<br><small class="sub">A1 ・ 逃 ・ 先頭 ・ 88.8点</small></td>
-          <td class="r od">5番人気<br><small class="plc">5%</small></td>
+          <td class="r od">5番人気<br><small class="plc">6%</small></td>
           <td class="r pct"><b>9.5</b><small>%</small><br><small class="sub">3着内23%</small><br><small class="mm">込5%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">三浦 雄大<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 93.0点</small></td>
-          <td class="r od">4番人気<br><small class="plc">8%</small></td>
+          <td class="r od">3番人気<br><small class="plc">8%</small></td>
           <td class="r pct"><b>6.1</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込6%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">荒木 貴大<br><small class="sub">A1 ・ 両 ・ 先頭 ・ 90.6点</small></td>
-          <td class="r od">3番人気<br><small class="plc">8%</small></td>
+          <td class="r od">4番人気<br><small class="plc">8%</small></td>
           <td class="r pct"><b>5.3</b><small>%</small><br><small class="sub">3着内26%</small><br><small class="mm">込7%</small></td>
         </tr>
         <tr class="">
@@ -5480,7 +5573,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_7"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_7">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-7">
     <article class="race-card">
@@ -5492,7 +5585,7 @@
           <div class="chips"><p class="manbaken">万車率 <b class="hi">44%</b><span class="sep">・</span>目安 <b>7,940円</b><span class="sep">・</span><b>穴</b></p><div class="roles" title="頭向き=1着まで来やすい(過去 1着45%・3着内78%)　軸向き=崩れにくいが1着は少ない(過去 1着19%・3着内67%。3連単なら2・3着)　相手=3着内率35〜55%(過去 3着内44%)"><span class="role-0">頭向き：<b>1</b>(56%)</span>　<span class="role-1">軸向き：<b>6</b>(66%) <b>3</b>(62%)</span>　<span class="role-2">相手：4</span><small>（）は3着内率</small></div></div>
         </div>
       </header>
-      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>3</b> → <b>6・3・1</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成8.6倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
+      <div class="nbets"><div class="nb nb-hon2"><span class="nb-name">本命2着</span> 3連単 全員 → <b>3</b> → <b>6・3・1</b> <small>10点</small>　<span class="nb-st skip">見送り</span> 合成8.5倍<small>(条件15倍以上)</small><div class="nb-note">全員→人気1位→3着内率1〜3位・過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)</div></div></div>
       <div class="table-scroll">
       <table class="ht"><colgroup><col style="width:26px"><col style="width:50px"><col><col style="width:62px"><col style="width:64px"></colgroup>
         <thead><tr><th>印</th><th>番</th><th>名前</th><th>人気</th><th>AI</th></tr></thead>
@@ -5508,29 +5601,29 @@
           <td class="c"><span class="mark">○</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">水澤 秀哉<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 88.1点</small></td>
-          <td class="r od">3番人気<br><small class="plc">23%</small></td>
+          <td class="r od">3番人気<br><small class="plc">22%</small></td>
           <td class="r pct"><b>21.4</b><small>%</small><br><small class="sub">3着内66%</small><br><small class="mm">込25%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">▲</span></td>
           <td class="c ubc"><span class="carb" style="background:#1f5fc4;color:#ffffff">4</span></td>
           <td class="horse">中島 将尊<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 90.5点</small></td>
-          <td class="r od">5番人気<br><small class="plc">9%</small></td>
-          <td class="r pct"><b>18.7</b><small>%</small><br><small class="sub">3着内37%</small><br><small class="mm">込7%</small></td>
+          <td class="r od">5番人気<br><small class="plc">8%</small></td>
+          <td class="r pct"><b>18.7</b><small>%</small><br><small class="sub">3着内36%</small><br><small class="mm">込7%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#1b1b1b;color:#ffffff">2</span></td>
           <td class="horse">佐藤 朋也<br><small class="sub">A1 ・ 追 ・ 単騎 ・ 92.4点</small></td>
           <td class="r od">4番人気<br><small class="plc">12%</small></td>
-          <td class="r pct"><b>10.2</b><small>%</small><br><small class="sub">3着内32%</small><br><small class="mm">込10%</small></td>
+          <td class="r pct"><b>10.2</b><small>%</small><br><small class="sub">3着内33%</small><br><small class="mm">込10%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">5</span><br><span class="htag tg-push">推し</span></td>
           <td class="c ubc"><span class="carb" style="background:#d8322a;color:#ffffff">3</span></td>
           <td class="horse">江守 昇<br><small class="sub">A1 ・ 追 ・ 2番手 ・ 92.0点</small></td>
           <td class="r od">1番人気<br><small class="plc">26%</small></td>
-          <td class="r pct"><b>8.9</b><small>%</small><br><small class="sub">3着内62%</small><br><small class="mm">込28%</small></td>
+          <td class="r pct"><b>8.9</b><small>%</small><br><small class="sub">3着内62%</small><br><small class="mm">込27%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="rk">6</span></td>
@@ -5548,7 +5641,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_8"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_8">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div><div class="race-panel " id="race-7-8">
     <article class="race-card">
@@ -5570,7 +5663,7 @@
           <td class="c ubc"><span class="carb" style="background:#ffffff;color:#1b2430">1</span></td>
           <td class="horse">杉浦 颯太<br><small class="sub">A2 ・ 逃 ・ 先頭 ・ 94.3点</small></td>
           <td class="r od">1番人気<br><small class="plc">53%</small></td>
-          <td class="r pct"><b>68.4</b><small>%</small><br><small class="sub">3着内85%</small><br><small class="mm">込59%</small></td>
+          <td class="r pct"><b>68.4</b><small>%</small><br><small class="sub">3着内85%</small><br><small class="mm">込60%</small></td>
         </tr>
         <tr class="">
           <td class="c"><span class="mark">○</span></td>
@@ -5590,7 +5683,7 @@
           <td class="c"><span class="mark">△</span></td>
           <td class="c ubc"><span class="carb" style="background:#2f8f4e;color:#ffffff">6</span></td>
           <td class="horse">遠藤 勝弥<br><small class="sub">A1 ・ 両 ・ 2番手 ・ 88.4点</small></td>
-          <td class="r od">5番人気<br><small class="plc">7%</small></td>
+          <td class="r od">5番人気<br><small class="plc">6%</small></td>
           <td class="r pct"><b>5.2</b><small>%</small><br><small class="sub">3着内36%</small><br><small class="mm">込5%</small></td>
         </tr>
         <tr class="">
@@ -5616,7 +5709,7 @@
         </tr></tbody>
       </table>
       </div>
-      
+      <div class="card-extra"><details class="aite-fold" data-k="matsudo_9"><summary>アタマの相手 <small>頭ごとの2着率・3着率</small></summary><div class="aite-body">読み込み中…</div></details><a class="aite-link" href="aite.html?k=matsudo_9">AI相手選び <small>頭・BOX・あるなしで買い目を作る</small> ›</a></div>
       
     </article></div></section></main>
 <footer><p>確率は過去のデータからの推定で、的中や回収を保証するものではありません。車券の最終判断はご自身でお願いします。</p></footer>
