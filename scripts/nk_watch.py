@@ -2,7 +2,7 @@
 """
 締切直前のオッズを細かく記録し続ける(GitHub Actions で数時間動かしっぱなしにする。nk_watch.yml)。
 
-netkeirin の API(nk_api.py)で、締切の約13分前から
+netkeirin の API(nk_api.py)で、締切の約30分前から
   締切4分前まで … 60秒おき / 4分前から締切まで … 30秒おき
 に3連単のオッズを取り、公式の更新時刻(official_dt)が変わったときだけ live/nk_live_YYYYMMDD.jsonl.gz に1行追記する。
 締切後も 1.5分・4分・8分後 に取り直して「最終オッズ」を残す。
@@ -28,7 +28,8 @@ import nk_api  # noqa: E402
 JST = ZoneInfo("Asia/Tokyo")
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 LIVE = os.path.join(ROOT, "live")
-START_MIN = 13          # 締切の何分前から取り始めるか
+START_MIN = 30          # 締切の何分前から取り始めるか(11/27: 13→30分。もっと前からのオッズの動きも確かめるため)
+SLOW_MIN = 13           # これより締切から遠いうちは2分おき(取りすぎない)
 FAST_MIN = 4            # この分数より締切に近づいたら30秒おき
 AFTER = (90, 240, 480)  # 締切後に最終オッズを取り直す秒数
 LIST_EVERY = 600        # レース一覧を取り直す間隔(秒)
@@ -140,7 +141,7 @@ def main():
             left = c - t
             rid = r["race_id"]
             if 0 < left <= START_MIN * 60:
-                every = 30 if left <= FAST_MIN * 60 else 60
+                every = 30 if left <= FAST_MIN * 60 else (60 if left <= SLOW_MIN * 60 else 120)
                 if t - last_poll.get(rid, 0) >= every - 2:
                     todo.append(r)
             elif left <= 0:

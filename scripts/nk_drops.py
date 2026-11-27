@@ -368,6 +368,8 @@ details.more {{ background:#fff; border:1px solid var(--line); border-radius:12p
 <header><h1>締切直前に動いた買い目(競輪・3連単)</h1>
 <p>{now:%Y-%m-%d} ・ 更新 {now:%H:%M:%S}(約2分おき・このページは1分ごとに自動で読み直し) ・ <a href="picks.html">穴レース</a> ・ <a href="index.html">全レース</a></p></header>
 <main>
+<p class="sum" style="border-color:#c8102e">⚠ 検証中・買い推奨ではありません。11/17〜27の約570レースで、この選び方(締切2分前と比べて支持が増えた順に5点)の回収率は84%・的中14%。
+比べる時刻を4〜12分前に変えても83〜106%で、日ごとのぶれが大きく、もうかる形は見つかっていません。11/28からは締切30分前から記録して、もっと前からの動きでも確かめます。</p>
 {summary}
 <h2>締切まもなく(暫定・締切まで変わります)</h2>
 {up_html}
