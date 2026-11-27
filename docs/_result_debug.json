@@ -1,27 +1,36 @@
 {
- "updated": "2026-11-27 10:49",
+ "updated": "2026-11-27 11:20",
  "failures": [
   {
-   "race": "2026-11-27 sasebo 6R",
+   "race": "2026-11-27 fukui 1R",
    "diag": {
-    "venue": "sasebo",
-    "race_id": "8520261127010006",
+    "venue": "fukui",
+    "race_id": "5120261125030001",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-27 komatsushima 7R",
+   "race": "2026-11-27 hiratsuka 1R",
    "diag": {
-    "venue": "komatsushima",
-    "race_id": "7320261126020007",
+    "venue": "hiratsuka",
+    "race_id": "3520261127010001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-27 toyama 1R",
+   "diag": {
+    "venue": "toyama",
+    "race_id": "4620261126020001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3851,
- "with_result": 3071,
+ "with_result": 3074,
  "without_url": 0,
- "pending_eligible": 714
+ "pending_eligible": 715
 }
