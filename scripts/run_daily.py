@@ -459,6 +459,11 @@ def main():
     with open(os.path.join(DOCS_DIR, "today.html"), "w", encoding="utf-8") as f:
         f.write(render_index(all_race_data, today))
     print("[INFO] docs/index.html を書き出しました。")
+    try:   # AI相手選び(aite.html と出目確率のデータ)
+        import aite
+        aite.write(all_race_data, today, DOCS_DIR)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] AI相手選びを書き出せませんでした: {e}")
 
     if light:
         _light_rest(all_race_data, today, by_venue)

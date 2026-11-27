@@ -4369,7 +4369,9 @@ def _jra_card(rd, vi):
                 + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
     # 11/24 シンプルに: 買い目はAIの買い目(回収率重視・的中重視)だけ、詳しいページへのリンクと妙味の列はやめる
     cols = [("印", 26), ("番", 50), ("名前", None), ("人気", 62), ("AI", 64)]
-    return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, _bets_html(new_bets(info, result)), cols, body)
+    import aite
+    return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, _bets_html(new_bets(info, result)), cols, body,
+                       extra_html=aite.card_html(info))
 
 
 def render_jra_index(all_race_data, date=None, now=None):
@@ -4422,7 +4424,10 @@ def render_jra_index(all_race_data, date=None, now=None):
 </ul></details>"""
     meta = f'<b>{date.strftime("%Y-%m-%d")}({wd})</b> ・ 更新 {now.strftime("%Y-%m-%d %H:%M")} ・ オッズ取得 {n_odds}/{n_all}レース'
     links = [("印刷用", "print.html"), ("成績", "results.html"), ("オッズ急落", "drops.html")]
-    page = J.page("競輪AI予想", meta, vlist, f"<style>{NB_CSS}</style>" + guide + summary, links,
+    import aite, json as _json
+    aite_js = aite.INDEX_JS.replace("__COLORS__", _json.dumps({str(k): v for k, v in aite.CAR_COLORS.items()}))
+    links = [("AI相手選び", "aite.html")] + links
+    page = J.page("競輪AI予想", meta, vlist, f"<style>{NB_CSS}{aite.INDEX_CSS}</style>" + guide + summary + aite_js, links,
                   "https://github.com/shogun524/keirin-scraper/actions/workflows/daily.yml",
                   footer_html="<p>確率は過去のデータからの推定で、的中や回収を保証するものではありません。車券の最終判断はご自身でお願いします。</p>")
     # 各会場で「次のレース」を初期表示にする
