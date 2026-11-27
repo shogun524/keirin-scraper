@@ -31,6 +31,21 @@ def _venue_order(all_race_data):
     return {v: i for i, v in enumerate(order)}
 
 
+def _girls(res, info):
+    try:
+        from report import _is_girls
+        return _is_girls(res["rows"], info.get("title") or "")
+    except Exception:  # noqa: BLE001
+        return "ガールズ" in (info.get("title") or "")
+
+
+# おまかせ(11/27): 本命の1着率×頭数・ガールズの形ごとに、2025・2026年の約5万レースで
+# 「どちらの年も的中30%以上」の中から回収率(10万で頭打ち)の低い方の年が一番良いフォーメーションを選んだもの。
+# 集合: all=全員 / p1,a,b=1着率の(a+1)〜b位 / t3,a,b=3着内率の(a+1)〜b位。
+# 別の年で選んで確かめると全体で回収率73%前後(的中31〜33%)。100%は超えない。
+AUTO = {"70": {"f": [["p1", 0, 3], ["t3", 0, 3], ["all"]], "pts": 32.1, "hit": 0.357, "roi": [0.822, 0.812], "R": 507}, "71": {"f": [["p1", 0, 5], ["p1", 1, 4], ["t3", 0, 4]], "pts": 28.3, "hit": 0.315, "roi": [0.768, 0.778], "R": 7670}, "72": {"f": [["p1", 0, 2], ["p1", 0, 4], ["t3", 2, 5]], "pts": 13.7, "hit": 0.338, "roi": [0.788, 0.787], "R": 11811}, "73": {"f": [["p1", 0, 3], ["t3", 0, 3], ["t3", 0, 4]], "pts": 13.3, "hit": 0.429, "roi": [0.764, 0.774], "R": 9559}, "74": {"f": [["t3", 0, 1], ["t3", 0, 2], ["all"]], "pts": 4.9, "hit": 0.396, "roi": [0.772, 0.805], "R": 12542}, "90": {"f": [["p1", 0, 5], ["t3", 0, 5], ["t3", 0, 4]], "pts": 49.8, "hit": 0.342, "roi": [0.874, 0.842], "R": 260}, "91": {"f": [["t3", 0, 3], ["t3", 0, 5], ["t3", 0, 5]], "pts": 36.0, "hit": 0.359, "roi": [0.772, 0.744], "R": 1509}, "92": {"f": [["p1", 0, 2], ["t3", 0, 5], ["t3", 0, 4]], "pts": 18.0, "hit": 0.303, "roi": [0.823, 0.852], "R": 1379}, "93": {"f": [["t3", 0, 5], ["t3", 1, 3], ["t3", 0, 5]], "pts": 24.0, "hit": 0.329, "roi": [0.91, 0.911], "R": 765}, "94": {"f": [["p1", 0, 3], ["p1", 0, 3], ["t3", 0, 4]], "pts": 12.6, "hit": 0.359, "roi": [1.04, 0.989], "R": 647}, "G1": {"f": [["p1", 0, 5], ["t3", 0, 4], ["t3", 1, 3]], "pts": 18.0, "hit": 0.321, "roi": [1.07, 1.049], "R": 131}, "G2": {"f": [["t3", 0, 2], ["p1", 0, 5], ["p1", 3, 6]], "pts": 19.7, "hit": 0.313, "roi": [0.952, 0.953], "R": 409}, "G3": {"f": [["t3", 0, 1], ["all"], ["t3", 2, 5]], "pts": 14.6, "hit": 0.32, "roi": [1.299, 1.119], "R": 603}, "G4": {"f": [["t3", 0, 3], ["p1", 1, 4], ["t3", 1, 3]], "pts": 6.0, "hit": 0.379, "roi": [0.837, 0.869], "R": 2958}}
+
+
 def build_data(all_race_data, today):
     from report import VENUE_NAMES
     vo = _venue_order(all_race_data)
@@ -52,12 +67,12 @@ def build_data(all_race_data, today):
         races.append(dict(
             k=race_key(info), v=VENUE_NAMES.get(info["venue"], info["venue"]), vi=vo.get(info["venue"], 0),
             no=int(info["race_no"]), t=info.get("title") or "", dl=info.get("deadline") or "",
-            mode="odds" if res.get("fix_mode") == "odds" else "ai",
+            mode="odds" if res.get("fix_mode") == "odds" else "ai", g=1 if _girls(res, info) else 0,
             cars=[[r["car"], r.get("name") or "", str(r.get("rank") or "")] for r in sorted(res["rows"], key=lambda r: r["car"])],
             j=j))
     races.sort(key=lambda r: (r["vi"], r["no"]))
     now = datetime.datetime.now(JST)
-    return dict(date=today.isoformat(), updated=now.strftime("%H:%M"), races=races)
+    return dict(date=today.isoformat(), updated=now.strftime("%H:%M"), races=races, auto=AUTO)
 
 
 def write(all_race_data, today, docs):
@@ -206,8 +221,8 @@ PAGE = r"""<!DOCTYPE html>
   .races button.past { opacity:.45; }
   .rinfo { display:flex; justify-content:space-between; font-size:.8rem; color:var(--soft); padding:10px 0 4px; gap:8px; }
   .rinfo b { color:var(--ink); }
-  .modes { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0 6px; }
-  .modes button { border:none; background:#E8E2D3; color:var(--ink); font:inherit; font-size:.95rem; padding:12px 4px; border-radius:999px; cursor:pointer; }
+  .modes { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:8px 0 6px; }
+  .modes button { border:none; background:#E8E2D3; color:var(--ink); font:inherit; font-size:.88rem; padding:12px 2px; border-radius:999px; cursor:pointer; }
   .modes button.on { background:var(--ink); color:#fff; font-weight:700; }
   .desc { font-size:.8rem; color:var(--soft); line-height:1.7; margin:6px 0 10px; }
   .crumb { font-size:.92rem; margin:6px 0 4px; display:flex; flex-wrap:wrap; gap:4px 10px; align-items:center; }
@@ -274,7 +289,7 @@ PAGE = r"""<!DOCTYPE html>
   <nav class="races" id="races"></nav>
   <div class="rinfo" id="rinfo"></div>
   <div class="modes" id="modes">
-    <button type="button" data-m="head">頭を選ぶ</button><button type="button" data-m="box">3車BOX</button><button type="button" data-m="aru">あるなし</button>
+    <button type="button" data-m="head">頭を選ぶ</button><button type="button" data-m="box">3車BOX</button><button type="button" data-m="aru">あるなし</button><button type="button" data-m="auto">おまかせ</button>
   </div>
   <div id="body"><p class="empty">読み込み中…</p></div>
   <details class="how"><summary>数字の見方</summary>
@@ -404,9 +419,37 @@ PAGE = r"""<!DOCTYPE html>
     html += prevHtml(tk, 'あるなし') + '<button type="button" class="add" id="add"' + (tk.length?'':' disabled') + '>一覧に追加</button>';
     return [html, tk];
   }
+  // ---- おまかせ(%の形ごとに過去の結果で選んだフォーメーション)
+  var TBN = ['25%未満','25〜35%','35〜45%','45〜55%','55%以上'];
+  function autoRule(){
+    var r1 = R.cars_.slice().sort(function(a,b){ return R.p1[b]-R.p1[a]; }), r3 = R.cars_.slice().sort(function(a,b){ return R.top3[b]-R.top3[a]; });
+    var top = R.p1[r1[0]] || 0, tb = top < .25 ? 0 : top < .35 ? 1 : top < .45 ? 2 : top < .55 ? 3 : 4;
+    var kind = R.g ? 'G' : (R.cars_.length >= 8 ? '9' : '7');
+    var key = kind + tb, ru = (D.auto || {})[key];
+    if (!ru && kind == 'G') { ru = D.auto['G' + Math.max(1, tb)]; key = 'G' + Math.max(1, tb); }
+    if (!ru) return null;
+    var sets = ru.f.map(function(sp){ return sp[0] == 'all' ? R.cars_.slice() : (sp[0] == 'p1' ? r1 : r3).slice(sp[1], sp[2]); });
+    var lab = ru.f.map(function(sp){ return sp[0] == 'all' ? '全員' : (sp[0] == 'p1' ? '1着率' : '3着内率') + (sp[2]-sp[1] > 1 ? (sp[1]+1) + '〜' + sp[2] + '位' : sp[2] + '位'); });
+    var tk = [];
+    sets[0].forEach(function(a){ sets[1].forEach(function(b){ sets[2].forEach(function(c){ if (a!=b && b!=c && a!=c) tk.push(a+'-'+b+'-'+c); }); }); });
+    return {ru:ru, sets:sets, lab:lab, tk:tk, kind:kind, tb:tb, top:top};
+  }
+  function drawAuto(){
+    var x = autoRule(), html = '<p class="desc">本命の1着率と頭数(ガールズ)の形から、過去2年(約5万レース)でどちらの年も的中30%以上だった中で回収率が一番良かったフォーメーションを自動で組みます。</p>';
+    if (!x) return ['<p class="empty">このレースの形には、おまかせの組み方がありません</p>', []];
+    html += '<div class="prev"><div class="l"><span>このレースの形</span><b>' + (x.kind=='G' ? 'ガールズ' : x.kind + '車') + '・本命' + TBN[x.tb] + '</b></div>'
+      + '<div class="l"><span>本命の1着率</span><b>' + pct(x.top) + '</b></div></div>';
+    html += '<h3>組み方</h3><p class="sub">' + x.lab.join(' → ') + '</p>';
+    ['1着','2着','3着'].forEach(function(nm, i){ html += '<div class="crumb">' + nm + ' ' + x.sets[i].map(function(c){ return car(c,1); }).join('') + '</div>'; });
+    html += '<p class="note">この形の過去の成績: ' + x.ru.R + 'レース・平均' + x.ru.pts + '点・的中' + Math.round(x.ru.hit*100) + '%・回収率 '
+      + Math.round(x.ru.roi[0]*100) + '%(2025) / ' + Math.round(x.ru.roi[1]*100) + '%(2026)。'
+      + 'ただし片方の年で選んだ組み方をもう片方の年で使うと、全体の回収率は73%前後でした(100%は超えません)。</p>';
+    html += prevHtml(x.tk, 'おまかせ') + '<button type="button" class="add" id="add"' + (x.tk.length?'':' disabled') + '>一覧に追加</button>';
+    return [html, x.tk];
+  }
   function draw(){
     document.querySelectorAll('#modes button').forEach(function(b){ b.classList.toggle('on', b.dataset.m == mode); });
-    var r = mode == 'head' ? drawHead() : (mode == 'box' ? drawBox() : drawAru());
+    var r = mode == 'head' ? drawHead() : (mode == 'box' ? drawBox() : (mode == 'aru' ? drawAru() : drawAuto()));
     var body = document.getElementById('body'); body.innerHTML = r[0];
     body.querySelectorAll('.row button').forEach(function(b){ b.addEventListener('click', function(){ click(b); }); });
     var h0 = body.querySelector('[data-act="h0"]'); if (h0) h0.addEventListener('click', function(){ st.h = null; st.s = []; st.t = []; draw(); });
