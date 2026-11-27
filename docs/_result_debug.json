@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27 20:14",
+ "updated": "2026-11-27 20:44",
  "failures": [
   {
    "race": "2026-11-27 matsusaka 6R",
@@ -18,10 +18,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-27 kurume 1R",
+   "diag": {
+    "venue": "kurume",
+    "race_id": "8320261126020001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3851,
- "with_result": 3117,
+ "with_result": 3118,
  "without_url": 0,
- "pending_eligible": 715
+ "pending_eligible": 716
 }
