@@ -156,7 +156,7 @@ INDEX_JS = r"""
       var chips = th.map(function(y){ var r3 = pp ? Math.floor((p123[h+'-'+x+'-'+y]||0)/pp*100) : 0;
         return '<span class="' + (r3>=31?'hi':(r3<=19?'lo':'')) + '"><i style="' + cc(y) + '">' + y + '</i>' + r3 + '</span>'; }).join('');
       html += '<tr class="' + (r2 < 0.05 ? 'ah-faint' : '') + '"><td><span class="ah-pair" style="' + cc(x) + '">' + h + x + '</span></td>'
-            + '<td class="ah-p2">' + Math.floor(r2*100) + '%</td><td><div class="ah-3">' + chips + '</div></td></tr>';
+            + '<td class="ah-p2">' + Math.floor(r2*100) + '%<small style="display:block;font-size:.62rem;font-weight:400;color:var(--ink-soft)">' + h + '-' + x + ' ' + (pp*100).toFixed(1) + '%</small></td><td><div class="ah-3">' + chips + '</div></td></tr>';
     });
     html += '</tbody></table>';
     var ax = sec.map(function(x){ var s = 0; R.j.forEach(function(t){ if (t[0]==h && (t[1]==x || t[2]==x)) s += t[3]/1e5; });
@@ -166,7 +166,7 @@ INDEX_JS = r"""
       return '<div class="ah-bar' + (i==0?' top':'') + '"><span class="carx" style="' + cc(a[0]) + '">' + a[0] + '</span><span class="nm">' + name[a[0]]
         + '</span><span class="bx" style="width:' + Math.max(2, a[1]/mx*100) + '%"></span><b>' + a[1] + '</b></div>'; }).join('') + '</div>';
     html += '<p class="ah-note">※' + (R.mode=='odds' ? 'AIとオッズ・ラインを合わせた' : 'AIだけの') + '3連単の出目確率から計算(%は切り捨て・' + R_upd + '時点)。'
-          + '2着率＝' + h + 'が1着のとき2着に来る率。3着率＝その並び(1着→2着)のとき残りが3着に来る率。緑＝31以上、薄い灰＝19以下、薄い行は2着率5%未満の参考値。</p>';
+          + '2着率＝' + h + 'が1着のとき2着に来る率。3着率＝その並び(1着→2着)のとき残りが3着に来る率。緑＝31以上、薄い灰＝19以下、薄い行は2着率5%未満の参考値。2着率の下の小さい%は、その2車で1着・2着が決まる率(2車単が当たる率)。3連単1点が当たる率は、さらに3着率を掛けた数字(例: 12%×30%＝約4%)。</p>';
     box.innerHTML = html;
     box.querySelectorAll('.ah-heads button').forEach(function(b){ b.addEventListener('click', function(){ draw(box, R, +b.dataset.h); }); });
   }
@@ -233,7 +233,7 @@ PAGE = r"""<!DOCTYPE html>
   .row .nm { font-size:1rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
   .row .nm small { color:var(--soft); font-size:.72rem; margin-left:4px; }
   .row .pc { font-size:1.2rem; font-weight:700; font-variant-numeric:tabular-nums; text-align:right; }
-  .row .pc small { display:block; font-size:.68rem; font-weight:400; color:var(--soft); }
+  .row .pc small { display:block; font-size:.66rem; white-space:nowrap; font-weight:400; color:var(--soft); }
   .row button { border:1px solid var(--turf); background:#fff; color:var(--turf); font:inherit; font-size:.85rem; padding:9px 4px;
     border-radius:8px; cursor:pointer; }
   .row button.on { background:var(--turf); color:#fff; font-weight:700; }
@@ -373,13 +373,13 @@ PAGE = r"""<!DOCTYPE html>
       html += '<h3>2着を選ぶ</h3><p class="sub">' + h + 'が1着のときの2着率(高い順)。何車でも</p>';
       R.cars_.filter(function(c){ return c!=h; }).sort(function(a,b){ return (R.p12[h+'-'+b]||0)-(R.p12[h+'-'+a]||0); }).forEach(function(c){
         var r2 = (R.p12[h+'-'+c]||0) / (R.p1[h]||1);
-        html += row(c, r2, '', st.s.indexOf(c)>=0 ? '2着から外す' : '2着にする', st.s.indexOf(c)>=0, false, 'k2'); });
+        html += row(c, r2, h + '-' + c + 'で決まる率 ' + pct(R.p12[h+'-'+c]||0), st.s.indexOf(c)>=0 ? '2着から外す' : '2着にする', st.s.indexOf(c)>=0, false, 'k2'); });
       if (st.s.length) {
         html += '<h3>3着を選ぶ</h3><p class="sub">' + h + '→' + st.s.join('・') + ' のときの3着率(高い順)。何車でも</p>';
         var base = 0; st.s.forEach(function(b){ base += R.p12[h+'-'+b] || 0; });
         R.cars_.filter(function(c){ return c!=h; }).map(function(c){ var s = 0; st.s.forEach(function(b){ if (b!=c) s += R.P[h+'-'+b+'-'+c] || 0; }); return [c, base ? s/base : 0]; })
           .sort(function(a,b){ return b[1]-a[1]; }).forEach(function(x){
-            html += row(x[0], x[1], '', st.t.indexOf(x[0])>=0 ? '3着から外す' : '3着にする', st.t.indexOf(x[0])>=0, st.s.length==1 && st.s[0]==x[0], 'k3'); });
+            html += row(x[0], x[1], st.s.length == 1 && st.s[0] != x[0] ? h + '-' + st.s[0] + '-' + x[0] + 'が当たる率 ' + pct(R.P[h+'-'+st.s[0]+'-'+x[0]]||0) : '', st.t.indexOf(x[0])>=0 ? '3着から外す' : '3着にする', st.t.indexOf(x[0])>=0, st.s.length==1 && st.s[0]==x[0], 'k3'); });
       }
     }
     var tk = headTickets();
@@ -419,53 +419,47 @@ PAGE = r"""<!DOCTYPE html>
     html += prevHtml(tk, 'あるなし') + '<button type="button" class="add" id="add"' + (tk.length?'':' disabled') + '>一覧に追加</button>';
     return [html, tk];
   }
-  // ---- おまかせ(%の形ごとに過去の結果で選んだフォーメーション)
-  var TBN = ['25%未満','25〜35%','35〜45%','45〜55%','55%以上'];
-  function autoRule(){
-    var r1 = R.cars_.slice().sort(function(a,b){ return R.p1[b]-R.p1[a]; }), r3 = R.cars_.slice().sort(function(a,b){ return R.top3[b]-R.top3[a]; });
-    var top = R.p1[r1[0]] || 0, tb = top < .25 ? 0 : top < .35 ? 1 : top < .45 ? 2 : top < .55 ? 3 : 4;
-    var kind = R.g ? 'G' : (R.cars_.length >= 8 ? '9' : '7');
-    var key = kind + tb, ru = (D.auto || {})[key];
-    if (!ru && kind == 'G') { ru = D.auto['G' + Math.max(1, tb)]; key = 'G' + Math.max(1, tb); }
-    if (!ru) return null;
-    var sets = ru.f.map(function(sp){ return sp[0] == 'all' ? R.cars_.slice() : (sp[0] == 'p1' ? r1 : r3).slice(sp[1], sp[2]); });
-    var lab = ru.f.map(function(sp){ return sp[0] == 'all' ? '全員' : (sp[0] == 'p1' ? '1着率' : '3着内率') + (sp[2]-sp[1] > 1 ? (sp[1]+1) + '〜' + sp[2] + '位' : sp[2] + '位'); });
-    var heads = st.ah.length ? st.ah : [];   // 頭は自分で選ぶ(選んだ車だけを1着に)
+  // ---- おまかせ: 頭だけ選ぶと、その頭のときの2着率・3着率から2着・3着を自動で選ぶ
+  var S2 = 0.15, S3 = 0.20;   // 2着＝頭が1着のときの2着率15%以上、3着＝(頭→選んだ2着)のときの3着率20%以上(どちらも最低1車)
+  function autoFor(h){
+    var ph = R.p1[h] || 1e-9;
+    var c2 = R.cars_.filter(function(x){ return x != h; }).map(function(x){ return [x, (R.p12[h+'-'+x]||0)/ph]; }).sort(function(a,b){ return b[1]-a[1]; });
+    var sec = c2.filter(function(z){ return z[1] >= S2; }); if (!sec.length) sec = c2.slice(0, 1);
+    var base = 0; sec.forEach(function(z){ base += R.p12[h+'-'+z[0]] || 0; });
+    var c3 = R.cars_.filter(function(x){ return x != h; }).map(function(y){ var q = 0;
+      sec.forEach(function(z){ if (z[0] != y) q += R.P[h+'-'+z[0]+'-'+y] || 0; }); return [y, base ? q/base : 0]; }).sort(function(a,b){ return b[1]-a[1]; });
+    var thd = c3.filter(function(z){ return z[1] >= S3; }); if (!thd.length) thd = c3.slice(0, 1);
     var tk = [];
-    if (st.a2 == null) st.a2 = sets[1].slice();   // 2着・3着は最初おまかせの組み方で入れておき、自分で足したり外したりできる
-    if (st.a3 == null) st.a3 = sets[2].slice();
-    heads.forEach(function(a){ st.a2.forEach(function(b){ st.a3.forEach(function(c){ if (a!=b && b!=c && a!=c) tk.push(a+'-'+b+'-'+c); }); }); });
-    return {ru:ru, sets:sets, lab:lab, tk:tk, kind:kind, tb:tb, top:top, r1:r1};
+    sec.forEach(function(b){ thd.forEach(function(c){ if (b[0] != c[0]) tk.push(h+'-'+b[0]+'-'+c[0]); }); });
+    return {sec:sec, thd:thd, tk:tk};
   }
   function drawAuto(){
-    var x = autoRule(), html = '<p class="desc">頭(1着)を自分で選ぶと、2着・3着はおまかせの組み方で最初から入ります(自分で足したり外したりもできます)。2着・3着は、本命の1着率と頭数(ガールズ)の形ごとに、過去2年(約5万レース)の結果から選んだ組み方です。</p>';
-    if (!x) return ['<p class="empty">このレースの形には、おまかせの組み方がありません</p>', []];
-    html += '<div class="prev"><div class="l"><span>このレースの形</span><b>' + (x.kind=='G' ? 'ガールズ' : x.kind + '車') + '・本命' + TBN[x.tb] + '</b></div>'
-      + '<div class="l"><span>本命の1着率</span><b>' + pct(x.top) + '</b></div></div>';
-    html += '<h3>頭を選ぶ</h3><p class="sub">1着にする車を選ぶ(何車でも・1着率の高い順)。おまかせの1着候補は ' + x.lab[0] + '</p>';
-    x.r1.forEach(function(c){ var on = st.ah.indexOf(c) >= 0;
-      html += row(c, R.p1[c]||0, x.sets[0].indexOf(c) >= 0 ? 'おまかせの1着候補' : '', on ? '頭から外す' : '頭にする', on, false, 'kah'); });
-    html += '<div class="crumb">1着 ' + (st.ah.length ? st.ah.map(function(c){ return car(c,1); }).join('') : '未選択') + '</div>';
-    var h0 = st.ah[0], ph = R.p1[h0] || 0;
-    html += '<h3>2着を選ぶ</h3><p class="sub">最初はおまかせ(' + x.lab[1] + ')で入っています。足したり外したりできます' + (h0 != null ? '(%は' + h0 + 'が1着のときの2着率)' : '(%は1着率)') + '</p>';
-    x.r1.forEach(function(c){ var on = st.a2.indexOf(c) >= 0, p2 = (h0 != null && c != h0 && ph) ? (R.p12[h0+'-'+c]||0)/ph : (R.p1[c]||0);
-      html += row(c, p2, x.sets[1].indexOf(c) >= 0 ? 'おまかせ' : '', on ? '2着から外す' : '2着にする', on, h0 == c, 'ka2'); });
-    html += '<h3>3着を選ぶ</h3><p class="sub">最初はおまかせ(' + x.lab[2] + ')で入っています。足したり外したりできます(%は3着内率)</p>';
-    R.cars_.slice().sort(function(a,b){ return R.top3[b]-R.top3[a]; }).forEach(function(c){ var on = st.a3.indexOf(c) >= 0;
-      html += row(c, R.top3[c]||0, x.sets[2].indexOf(c) >= 0 ? 'おまかせ' : '', on ? '3着から外す' : '3着にする', on, h0 == c, 'ka3'); });
-    html += '<button type="button" class="clear" id="autoReset">2着・3着をおまかせに戻す</button>';
-    html += '<p class="note">この形の過去の成績: ' + x.ru.R + 'レース・平均' + x.ru.pts + '点・的中' + Math.round(x.ru.hit*100) + '%・回収率 '
-      + Math.round(x.ru.roi[0]*100) + '%(2025) / ' + Math.round(x.ru.roi[1]*100) + '%(2026)。'
-      + '(1着もおまかせの候補を全部買った場合の数字)。片方の年で選んだ組み方をもう片方の年で使うと、全体の回収率は73%前後でした(100%は超えません)。</p>';
-    html += prevHtml(x.tk, 'おまかせ') + '<button type="button" class="add" id="add"' + (x.tk.length?'':' disabled') + '>一覧に追加</button>';
-    return [html, x.tk];
+    var html = '<p class="desc">頭(1着)だけ選んでください。2着・3着は、その頭が1着のときの2着率・3着率から自動で選びます'
+      + '(2着＝2着率15%以上、3着＝その並びのときの3着率20%以上)。頭は何車選んでもOK。</p>';
+    html += '<h3>頭を選ぶ</h3><p class="sub">1着率の高い順</p>';
+    R.cars_.slice().sort(function(a,b){ return R.p1[b]-R.p1[a]; }).forEach(function(c){ var on = st.ah.indexOf(c) >= 0;
+      html += row(c, R.p1[c]||0, '1着率', on ? '頭から外す' : '頭にする', on, false, 'kah'); });
+    var tk = [];
+    st.ah.forEach(function(h){
+      var x = autoFor(h); tk = tk.concat(x.tk);
+      html += '<h3>' + car(h,1) + ' が頭のとき(自動)</h3>';
+      html += '<p class="sub">2着: ' + x.sec.map(function(z){ return car(z[0],1) + ' ' + Math.round(z[1]*100) + '%'; }).join('　') + '</p>';
+      html += '<p class="sub">3着: ' + x.thd.map(function(z){ return car(z[0],1) + ' ' + Math.round(z[1]*100) + '%'; }).join('　') + '</p>';
+      html += '<div class="prev">' + x.tk.slice().sort(function(a,b){ return (R.P[b]||0)-(R.P[a]||0); }).map(function(k){ var c = k.split('-');
+        return '<div class="tk"><div class="cs">' + car(c[0],1) + '<em>-</em>' + car(c[1],1) + '<em>-</em>' + car(c[2],1) + '</div><div class="p">この目が当たる率 ' + pct(R.P[k]||0)
+          + '<small>' + (R.O[k] ? R.O[k].toFixed(1) + '倍' : 'オッズ待ち') + '</small></div></div>'; }).join('') + '</div>';
+    });
+    if (!st.ah.length) html += '<p class="empty">頭を選ぶと、買い目が自動で出ます</p>';
+    html += '<p class="note">2着率・3着率は「頭が1着だったときだけ」の率です。3連単1点が当たる率は、1着率×2着率×3着率なので、ずっと小さくなります(各目の右に出している%)。'
+      + '過去2年の約5万レースでは、この組み方の的中は30%台・回収率は77〜79%でした(100%は超えません)。</p>';
+    html += prevHtml(tk, 'おまかせ') + '<button type="button" class="add" id="add"' + (tk.length?'':' disabled') + '>一覧に追加</button>';
+    return [html, tk];
   }
   function draw(){
     document.querySelectorAll('#modes button').forEach(function(b){ b.classList.toggle('on', b.dataset.m == mode); });
     var r = mode == 'head' ? drawHead() : (mode == 'box' ? drawBox() : (mode == 'aru' ? drawAru() : drawAuto()));
     var body = document.getElementById('body'); body.innerHTML = r[0];
     body.querySelectorAll('.row button').forEach(function(b){ b.addEventListener('click', function(){ click(b); }); });
-    var ar = body.querySelector('#autoReset'); if (ar) ar.addEventListener('click', function(){ st.a2 = null; st.a3 = null; draw(); });
     var h0 = body.querySelector('[data-act="h0"]'); if (h0) h0.addEventListener('click', function(){ st.h = null; st.s = []; st.t = []; draw(); });
     var add = document.getElementById('add');
     if (add) add.addEventListener('click', function(){
@@ -481,7 +475,7 @@ PAGE = r"""<!DOCTYPE html>
       else if (b.classList.contains('k2')) { tog(st.s, c); st.t = st.t.filter(function(x){ return st.s.length > 1 || st.s.indexOf(x) < 0; }); }
       else if (b.classList.contains('k3')) tog(st.t, c);
     } else if (mode == 'box') tog(st.b, c);
-    else if (mode == 'auto') { if (b.classList.contains('ka2')) tog(st.a2, c); else if (b.classList.contains('ka3')) tog(st.a3, c); else tog(st.ah, c); }
+    else if (mode == 'auto') tog(st.ah, c);
     else if (b.classList.contains('ka')) { st.a = st.a == c ? null : c; if (st.n == st.a) st.n = null; }
     else st.n = st.n == c ? null : c;
     draw();
