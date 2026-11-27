@@ -518,6 +518,22 @@ def parse_recent_results(html):
     return out
 
 
+def parse_comments(html):
+    """出走表の「選手コメント」欄 -> {車番: コメント}"""
+    out = {}
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+        for td in soup.select("td.comment"):
+            tr = td.find_parent("tr")
+            num = tr.select_one("td.num") if tr else None
+            t = td.get_text(" ", strip=True)
+            if num and t and num.get_text(strip=True).isdigit():
+                out.setdefault(int(num.get_text(strip=True)), t)
+    except Exception as e:  # noqa: BLE001
+        print(f"[WARN] 選手コメントの読み取りに失敗: {e}")
+    return out
+
+
 def parse_race_detail(html, venue, race_no):
     """
     racedetail ページのHTMLから、選手データと並び予想テキストを抽出する。
@@ -604,6 +620,10 @@ def parse_race_detail(html, venue, race_no):
     for r in unique_racers:
         if r["car"] in recent:
             r["recent"] = recent[r["car"]]
+    cm = parse_comments(html) if unique_racers else {}   # 選手コメント(11/27〜 AIの補正に使う)
+    for r in unique_racers:
+        if cm.get(r["car"]):
+            r["comment"] = cm[r["car"]]
 
     # 車番が飛んでいないかチェック（例：1〜7号車のはずが6号車しか無い、など）。
     # 選手データの解析自体は成功している（racers=0 にはならない）ため、これまで
