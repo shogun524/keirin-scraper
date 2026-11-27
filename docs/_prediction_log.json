@@ -842186,7 +842186,7 @@
    ]
   ],
   "result": null,
-  "attempts": 1,
+  "attempts": 2,
   "parser_v": 5
  },
  "2026-11-27_matsusaka_7": {
@@ -842407,9 +842407,28 @@
     90.9
    ]
   ],
-  "result": null,
+  "result": {
+   "finish_order": [
+    1,
+    7,
+    2,
+    3,
+    5,
+    4
+   ],
+   "ranks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "winner_kimarite": null
+  },
   "attempts": 0,
-  "parser_v": 5
+  "parser_v": 5,
+  "res_at": "2026-11-27 18:44"
  },
  "2026-11-27_matsusaka_8": {
   "date": "2026-11-27",
@@ -842630,7 +842649,7 @@
    ]
   ],
   "result": null,
-  "attempts": 0,
+  "attempts": 1,
   "parser_v": 5
  },
  "2026-11-27_matsusaka_9": {
