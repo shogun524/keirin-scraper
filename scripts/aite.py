@@ -430,20 +430,25 @@ PAGE = r"""<!DOCTYPE html>
     if (!ru) return null;
     var sets = ru.f.map(function(sp){ return sp[0] == 'all' ? R.cars_.slice() : (sp[0] == 'p1' ? r1 : r3).slice(sp[1], sp[2]); });
     var lab = ru.f.map(function(sp){ return sp[0] == 'all' ? '全員' : (sp[0] == 'p1' ? '1着率' : '3着内率') + (sp[2]-sp[1] > 1 ? (sp[1]+1) + '〜' + sp[2] + '位' : sp[2] + '位'); });
+    var heads = st.ah.length ? st.ah : [];   // 頭は自分で選ぶ(選んだ車だけを1着に)
     var tk = [];
-    sets[0].forEach(function(a){ sets[1].forEach(function(b){ sets[2].forEach(function(c){ if (a!=b && b!=c && a!=c) tk.push(a+'-'+b+'-'+c); }); }); });
-    return {ru:ru, sets:sets, lab:lab, tk:tk, kind:kind, tb:tb, top:top};
+    heads.forEach(function(a){ sets[1].forEach(function(b){ sets[2].forEach(function(c){ if (a!=b && b!=c && a!=c) tk.push(a+'-'+b+'-'+c); }); }); });
+    return {ru:ru, sets:sets, lab:lab, tk:tk, kind:kind, tb:tb, top:top, r1:r1};
   }
   function drawAuto(){
-    var x = autoRule(), html = '<p class="desc">本命の1着率と頭数(ガールズ)の形から、過去2年(約5万レース)でどちらの年も的中30%以上だった中で回収率が一番良かったフォーメーションを自動で組みます。</p>';
+    var x = autoRule(), html = '<p class="desc">頭(1着)を自分で選ぶと、2着・3着はおまかせで組みます。2着・3着は、本命の1着率と頭数(ガールズ)の形ごとに、過去2年(約5万レース)の結果から選んだ組み方です。</p>';
     if (!x) return ['<p class="empty">このレースの形には、おまかせの組み方がありません</p>', []];
     html += '<div class="prev"><div class="l"><span>このレースの形</span><b>' + (x.kind=='G' ? 'ガールズ' : x.kind + '車') + '・本命' + TBN[x.tb] + '</b></div>'
       + '<div class="l"><span>本命の1着率</span><b>' + pct(x.top) + '</b></div></div>';
-    html += '<h3>組み方</h3><p class="sub">' + x.lab.join(' → ') + '</p>';
-    ['1着','2着','3着'].forEach(function(nm, i){ html += '<div class="crumb">' + nm + ' ' + x.sets[i].map(function(c){ return car(c,1); }).join('') + '</div>'; });
+    html += '<h3>頭を選ぶ</h3><p class="sub">1着にする車を選ぶ(何車でも・1着率の高い順)。おまかせの1着候補は ' + x.lab[0] + '</p>';
+    x.r1.forEach(function(c){ var on = st.ah.indexOf(c) >= 0;
+      html += row(c, R.p1[c]||0, x.sets[0].indexOf(c) >= 0 ? 'おまかせの1着候補' : '', on ? '頭から外す' : '頭にする', on, false, 'kah'); });
+    html += '<h3>2着・3着(おまかせ)</h3><p class="sub">2着 ' + x.lab[1] + ' → 3着 ' + x.lab[2] + '(選んだ頭と同じ車は除く)</p>';
+    html += '<div class="crumb">1着 ' + (st.ah.length ? st.ah.map(function(c){ return car(c,1); }).join('') : '未選択') + '</div>';
+    [['2着',1],['3着',2]].forEach(function(z){ html += '<div class="crumb">' + z[0] + ' ' + x.sets[z[1]].map(function(c){ return car(c,1); }).join('') + '</div>'; });
     html += '<p class="note">この形の過去の成績: ' + x.ru.R + 'レース・平均' + x.ru.pts + '点・的中' + Math.round(x.ru.hit*100) + '%・回収率 '
       + Math.round(x.ru.roi[0]*100) + '%(2025) / ' + Math.round(x.ru.roi[1]*100) + '%(2026)。'
-      + 'ただし片方の年で選んだ組み方をもう片方の年で使うと、全体の回収率は73%前後でした(100%は超えません)。</p>';
+      + '(1着もおまかせの候補を全部買った場合の数字)。片方の年で選んだ組み方をもう片方の年で使うと、全体の回収率は73%前後でした(100%は超えません)。</p>';
     html += prevHtml(x.tk, 'おまかせ') + '<button type="button" class="add" id="add"' + (x.tk.length?'':' disabled') + '>一覧に追加</button>';
     return [html, x.tk];
   }
@@ -467,11 +472,12 @@ PAGE = r"""<!DOCTYPE html>
       else if (b.classList.contains('k2')) { tog(st.s, c); st.t = st.t.filter(function(x){ return st.s.length > 1 || st.s.indexOf(x) < 0; }); }
       else if (b.classList.contains('k3')) tog(st.t, c);
     } else if (mode == 'box') tog(st.b, c);
+    else if (mode == 'auto') tog(st.ah, c);
     else if (b.classList.contains('ka')) { st.a = st.a == c ? null : c; if (st.n == st.a) st.n = null; }
     else st.n = st.n == c ? null : c;
     draw();
   }
-  function reset(){ st = {h:null, s:[], t:[], b:[], a:null, n:null}; }
+  function reset(){ st = {h:null, s:[], t:[], b:[], a:null, n:null, ah:[]}; }
   function updBar(){ var L = list.races[R.k] || [];
     document.getElementById('openList').textContent = '買い目の一覧' + (L.length ? '(' + L.length + '点)' : ''); }
   function openSheet(){
