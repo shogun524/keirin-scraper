@@ -1,0 +1,22 @@
+name: 診断 Kドリームスの選手コメント
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        required: true
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests beautifulsoup4
+      - run: python tools/kd_probe.py "${{ github.event.inputs.url }}"
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload diag /tmp/kd_probe.json /tmp/kd_page.html --clobber

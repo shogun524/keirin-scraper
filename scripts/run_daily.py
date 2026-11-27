@@ -343,6 +343,16 @@ def main():
             print(f"[WARN] {race['race_info']['venue']} {race['race_info']['race_no']}R の計算に失敗: {e}")
             result = None
         if result:
+            try:   # 選手コメントでAIの1着率を補正(11/27)。コメントは出走表(netkeirin/winticket)か、買うべきレースの記録から
+                import comment_adj
+                _br = rec_board.get((race["race_info"]["venue"], race["race_info"]["race_no"])) or {}
+                _cm = {str(r.get("car") or r.get("number") or ""): (r.get("comment") or "") for r in race["racers"]}
+                for _k, _v in (_br.get("comments") or {}).items():
+                    if _v and not _cm.get(str(_k)):
+                        _cm[str(_k)] = _v
+                comment_adj.apply(result, _cm)
+            except Exception as e:  # noqa: BLE001
+                print(f"[WARN] コメント補正に失敗: {e}")
             # 全レースを実績に合わせて補正（オッズがあれば人気ベース、無ければAIを補正）。
             # winticket のレースは自前のオッズ、kドリームズのレースは winticket から集めたオッズを使う
             try:
