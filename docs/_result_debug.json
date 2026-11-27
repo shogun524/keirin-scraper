@@ -1,27 +1,27 @@
 {
- "updated": "2026-11-27 09:20",
+ "updated": "2026-11-27 09:51",
  "failures": [
   {
-   "race": "2026-11-27 komatsushima 2R",
+   "race": "2026-11-27 sasebo 3R",
    "diag": {
-    "venue": "komatsushima",
-    "race_id": "7320261126020002",
+    "venue": "sasebo",
+    "race_id": "8520261127010003",
     "primary": "skipped",
     "day_parsed": false
    }
   },
   {
-   "race": "2026-11-27 sasebo 2R",
+   "race": "2026-11-27 komatsushima 4R",
    "diag": {
-    "venue": "sasebo",
-    "race_id": "8520261127010002",
+    "venue": "komatsushima",
+    "race_id": "7320261126020004",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3851,
- "with_result": 3062,
+ "with_result": 3065,
  "without_url": 0,
  "pending_eligible": 714
 }
