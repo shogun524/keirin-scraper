@@ -31,8 +31,8 @@
   .races button.past { opacity:.45; }
   .rinfo { display:flex; justify-content:space-between; font-size:.8rem; color:var(--soft); padding:10px 0 4px; gap:8px; }
   .rinfo b { color:var(--ink); }
-  .modes { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0 6px; }
-  .modes button { border:none; background:#E8E2D3; color:var(--ink); font:inherit; font-size:.95rem; padding:12px 4px; border-radius:999px; cursor:pointer; }
+  .modes { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:8px 0 6px; }
+  .modes button { border:none; background:#E8E2D3; color:var(--ink); font:inherit; font-size:.88rem; padding:12px 2px; border-radius:999px; cursor:pointer; }
   .modes button.on { background:var(--ink); color:#fff; font-weight:700; }
   .desc { font-size:.8rem; color:var(--soft); line-height:1.7; margin:6px 0 10px; }
   .crumb { font-size:.92rem; margin:6px 0 4px; display:flex; flex-wrap:wrap; gap:4px 10px; align-items:center; }
@@ -99,7 +99,7 @@
   <nav class="races" id="races"></nav>
   <div class="rinfo" id="rinfo"></div>
   <div class="modes" id="modes">
-    <button type="button" data-m="head">頭を選ぶ</button><button type="button" data-m="box">3車BOX</button><button type="button" data-m="aru">あるなし</button>
+    <button type="button" data-m="head">頭を選ぶ</button><button type="button" data-m="box">3車BOX</button><button type="button" data-m="aru">あるなし</button><button type="button" data-m="auto">おまかせ</button>
   </div>
   <div id="body"><p class="empty">読み込み中…</p></div>
   <details class="how"><summary>数字の見方</summary>
@@ -229,9 +229,37 @@
     html += prevHtml(tk, 'あるなし') + '<button type="button" class="add" id="add"' + (tk.length?'':' disabled') + '>一覧に追加</button>';
     return [html, tk];
   }
+  // ---- おまかせ(%の形ごとに過去の結果で選んだフォーメーション)
+  var TBN = ['25%未満','25〜35%','35〜45%','45〜55%','55%以上'];
+  function autoRule(){
+    var r1 = R.cars_.slice().sort(function(a,b){ return R.p1[b]-R.p1[a]; }), r3 = R.cars_.slice().sort(function(a,b){ return R.top3[b]-R.top3[a]; });
+    var top = R.p1[r1[0]] || 0, tb = top < .25 ? 0 : top < .35 ? 1 : top < .45 ? 2 : top < .55 ? 3 : 4;
+    var kind = R.g ? 'G' : (R.cars_.length >= 8 ? '9' : '7');
+    var key = kind + tb, ru = (D.auto || {})[key];
+    if (!ru && kind == 'G') { ru = D.auto['G' + Math.max(1, tb)]; key = 'G' + Math.max(1, tb); }
+    if (!ru) return null;
+    var sets = ru.f.map(function(sp){ return sp[0] == 'all' ? R.cars_.slice() : (sp[0] == 'p1' ? r1 : r3).slice(sp[1], sp[2]); });
+    var lab = ru.f.map(function(sp){ return sp[0] == 'all' ? '全員' : (sp[0] == 'p1' ? '1着率' : '3着内率') + (sp[2]-sp[1] > 1 ? (sp[1]+1) + '〜' + sp[2] + '位' : sp[2] + '位'); });
+    var tk = [];
+    sets[0].forEach(function(a){ sets[1].forEach(function(b){ sets[2].forEach(function(c){ if (a!=b && b!=c && a!=c) tk.push(a+'-'+b+'-'+c); }); }); });
+    return {ru:ru, sets:sets, lab:lab, tk:tk, kind:kind, tb:tb, top:top};
+  }
+  function drawAuto(){
+    var x = autoRule(), html = '<p class="desc">本命の1着率と頭数(ガールズ)の形から、過去2年(約5万レース)でどちらの年も的中30%以上だった中で回収率が一番良かったフォーメーションを自動で組みます。</p>';
+    if (!x) return ['<p class="empty">このレースの形には、おまかせの組み方がありません</p>', []];
+    html += '<div class="prev"><div class="l"><span>このレースの形</span><b>' + (x.kind=='G' ? 'ガールズ' : x.kind + '車') + '・本命' + TBN[x.tb] + '</b></div>'
+      + '<div class="l"><span>本命の1着率</span><b>' + pct(x.top) + '</b></div></div>';
+    html += '<h3>組み方</h3><p class="sub">' + x.lab.join(' → ') + '</p>';
+    ['1着','2着','3着'].forEach(function(nm, i){ html += '<div class="crumb">' + nm + ' ' + x.sets[i].map(function(c){ return car(c,1); }).join('') + '</div>'; });
+    html += '<p class="note">この形の過去の成績: ' + x.ru.R + 'レース・平均' + x.ru.pts + '点・的中' + Math.round(x.ru.hit*100) + '%・回収率 '
+      + Math.round(x.ru.roi[0]*100) + '%(2025) / ' + Math.round(x.ru.roi[1]*100) + '%(2026)。'
+      + 'ただし片方の年で選んだ組み方をもう片方の年で使うと、全体の回収率は73%前後でした(100%は超えません)。</p>';
+    html += prevHtml(x.tk, 'おまかせ') + '<button type="button" class="add" id="add"' + (x.tk.length?'':' disabled') + '>一覧に追加</button>';
+    return [html, x.tk];
+  }
   function draw(){
     document.querySelectorAll('#modes button').forEach(function(b){ b.classList.toggle('on', b.dataset.m == mode); });
-    var r = mode == 'head' ? drawHead() : (mode == 'box' ? drawBox() : drawAru());
+    var r = mode == 'head' ? drawHead() : (mode == 'box' ? drawBox() : (mode == 'aru' ? drawAru() : drawAuto()));
     var body = document.getElementById('body'); body.innerHTML = r[0];
     body.querySelectorAll('.row button').forEach(function(b){ b.addEventListener('click', function(){ click(b); }); });
     var h0 = body.querySelector('[data-act="h0"]'); if (h0) h0.addEventListener('click', function(){ st.h = null; st.s = []; st.t = []; draw(); });
