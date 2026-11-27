@@ -233,6 +233,8 @@ PAGE = r"""<!DOCTYPE html>
   .prev .l b { font-size:1.1rem; font-variant-numeric:tabular-nums; }
   .prev .big b { font-size:1.6rem; }
   .prev .good { color:var(--good); } .prev .bad { color:var(--bad); }
+  .prev .vt { margin-top:4px; padding-top:6px; border-top:1px dashed var(--line); } .prev .vt b { font-size:1rem; }
+  .prev .sm { font-size:.74rem; color:var(--soft); }
   .add { width:100%; margin-top:10px; border:none; background:var(--turf); color:#fff; font:inherit; font-weight:700; font-size:1rem;
     padding:13px; border-radius:10px; cursor:pointer; }
   .add:disabled { background:#bdb5a3; cursor:default; }
@@ -277,8 +279,9 @@ PAGE = r"""<!DOCTYPE html>
   <div id="body"><p class="empty">読み込み中…</p></div>
   <details class="how"><summary>数字の見方</summary>
     <p>確率はトップページの予想と同じ3連単の出目確率です(オッズがあるときはAIとオッズ・ラインを合わせたもの、まだ無いときはAIだけ)。
-    <b>AI的中見込み</b>＝選んだ目の確率の合計。<b>必要合成オッズ</b>＝1÷的中見込み(これより今の合成オッズが高ければ、AIの見立てでは得)。
-    <b>見込み回収率</b>＝各目の「確率×オッズ」の平均(参考。確率にオッズの情報が入っているので100%を大きく超えることはまれ)。
+    <b>AI的中見込み</b>＝選んだ目の確率の合計(過去5万レースで、見込みと実際の的中はほぼ同じ)。
+    <b>平均的な合成</b>＝的中見込みの目に普通つく合成オッズ(競輪の払戻率は約75%なので 0.75÷的中見込み)。今の合成がこれより10%以上高ければ緑「妙味あり」、10%以上低ければ赤「辛い」。
+    <b>得になる合成(必要合成オッズ)</b>＝1÷的中見込み。今の合成がこれを超えれば、AIの見立てでは払戻率を差し引いても得。
     オッズは5分おきの更新時点のもので、締切までに変わります。</p></details>
 </main>
 <div class="bar"><div class="in">
@@ -317,13 +320,21 @@ PAGE = r"""<!DOCTYPE html>
   function prevHtml(tks, label){
     var s = stats(tks);
     if (!s.n) return '<div class="prev"><div class="l"><span>' + label + '</span><b>0点</b></div></div>';
-    var need = s.p ? 1/s.p : 0;
-    var cls = s.comp ? (s.comp >= need ? 'good' : 'bad') : '';
+    var need = s.p ? 1/s.p : 0, avg = need * 0.75;   // 競輪の払戻率は約75% → 普通の合成オッズは 必要×0.75 くらい
+    var r = (s.comp && avg) ? s.comp / avg : 0, cls = '', vt = '';
+    if (r) {
+      var d = Math.round((r - 1) * 100);
+      if (r >= 1.3) { cls = 'good'; vt = '平均より' + d + '%甘い(妙味大)'; }
+      else if (r >= 1.1) { cls = 'good'; vt = '平均より' + d + '%甘い(妙味あり)'; }
+      else if (r > 0.9) { vt = '平均並み'; }
+      else { cls = 'bad'; vt = '平均より' + (-d) + '%辛い'; }
+    }
     return '<div class="prev"><div class="l"><span>' + label + '</span><b>' + s.n + '点</b></div>'
       + '<div class="l big"><span>AI的中見込み</span><b>' + pct(s.p) + '</b></div>'
-      + '<div class="l"><span>必要合成オッズ</span><b>' + need.toFixed(1) + '倍</b></div>'
       + '<div class="l"><span>今の合成オッズ</span><b class="' + cls + '">' + (s.comp ? s.comp.toFixed(1) + '倍' : 'オッズ待ち') + '</b></div>'
-      + (s.roi ? '<div class="l"><span>見込み回収率(参考)</span><b class="' + (s.roi >= 1 ? 'good' : '') + '">' + Math.round(s.roi*100) + '%</b></div>' : '')
+      + '<div class="l"><span>平均的な合成(的中見込みから)</span><b>' + avg.toFixed(1) + '倍</b></div>'
+      + (vt ? '<div class="l vt ' + cls + '"><span>オッズの妙味</span><b>' + vt + '</b></div>' : '')
+      + '<div class="l sm"><span>得になる合成(必要合成オッズ)</span><span>' + need.toFixed(1) + '倍</span></div>'
       + '</div>';
   }
   function row(c, p, sub, btn, on, dim, cls){
