@@ -4237,6 +4237,8 @@ def _bets_html(bets, cls="nbets"):
             form = (f'{f1} → <b>{j(b["sec"])}</b> → <b>{j(b["thd"])}</b>' if b["thd"] and b["sec"] and b["fst"] else f'{lab} (オッズ待ち)')
         if b["comp"] is None:
             st = '<span class="nb-st wait">オッズ待ち</span>'
+        elif b["buy"] and b.get("ref"):
+            st = f'<span class="nb-st skip">条件一致</span> 合成{b["comp"]:.1f}倍<small>(検証中・買い推奨ではありません)</small>'
         elif b["buy"]:
             st = f'<span class="nb-st buy">買い</span> 合成{b["comp"]:.1f}倍'
         else:
@@ -4396,7 +4398,7 @@ def render_jra_index(all_race_data, date=None, now=None):
             if rd.get("prediction") and rd["prediction"].get("fix_mode") == "odds":
                 n_odds += 1
             nb = new_bets(info, rd.get("prediction"))
-            buys = [x for x in nb if x["buy"]]
+            buys = [x for x in nb if x["buy"] and not x.get("ref")]   # 参考(検証中)の買い方はトップに出さない
             star = "★" if buys else ""
             card = _jra_card(rd, vi)
             races.append((info["race_no"], star, card))
@@ -4410,12 +4412,15 @@ def render_jra_index(all_race_data, date=None, now=None):
                               f'（{x["n"]}点・合成{x["comp"]:.1f}倍）' for x in buys)
                   + '</li>' for dl, vn, no, vi, buys in upcoming[:15])
     summary = (f'<section class="aibet-summary"><h2>今日の買い目 <small>これからのレース・条件に合うもの</small></h2>'
-               + (f'<ul>{lis}</ul>' if lis else '<p class="aibet-none">これからのレースで条件に合うものはありません</p>') + '</section>')
+               + (f'<ul>{lis}</ul>' if lis else '<p class="aibet-none">これからのレースで条件に合うものはありません</p>')
+               + '<p class="aibet-none">※過去2年の検証は通っていますが、的中は5〜11%で外れが長く続くことがあり、もうかる保証はありません。'
+                 '実績は成績ページで毎日更新しています。お金を入れるなら、なくなっても困らない額を先に決めてください。'
+                 'S級ワイドなどの「参考」は検証中のため、ここには出しません。</p></section>')
     guide = """<details class="guide"><summary>このサイトの見方</summary><ul>
   <li><b>AIの買い目</b> … 2025・2026年の7車立てで、両方の年に回収率100%を超えた買い方だけ。
     <br>本命2着 = 全員 → 1番人気 → 3着内率1〜3位(3連単10点)。合成15倍以上のときだけ買う(過去 的中5〜6%・回収率225〜261%)。
     <br>ガールズ = 人気1〜5位 → AI1位 → 人気1〜4位。合成4倍以上(過去 的中10〜11%・回収率107〜121%)。ガールズ的中重視 = 3着内率1〜3位 → 3着内率2〜4位 → 人気2〜4位。合成2倍以上(的中25%・101〜102%)。
-    <br><b>参考</b>(11/27〜・検証中) = 1点2〜3倍未満の目は買わない前提で全券種を総当たりした中の上位。S級ワイド(人気1〜3位−AI2〜3位)、チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)、チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)。何百万通りの中の上位なので偶然の可能性が高く、成績ページの実績で確かめています。</li>
+    <br><b>参考</b>(11/27〜・検証中・買い推奨ではない。トップの「今日の買い目」には出さず、各レースに「条件一致」とだけ表示) = 1点2〜3倍未満の目は買わない前提で全券種を総当たりした中の上位。S級ワイド(人気1〜3位−AI2〜3位)、チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)、チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)。何百万通りの中の上位なので偶然の可能性が高く、成績ページの実績で確かめています。</li>
   <li><b>AI% ・ 3着内</b> … 機械学習AI(オッズは使わない)が見た1着率・3着内率。込% はAIとオッズを合わせた1着率。</li>
   <li><b>人気</b> … 3連単オッズから見た1着の人気順と、オッズから見た1着率。</li>
   <li><b>万車率・本命/穴</b> … 100倍以上の3連単に入っている支持の割合。級と車立てごとの過去と比べて、下側3割=本命・上側3割=穴。</li>
