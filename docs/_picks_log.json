@@ -22450,7 +22450,11 @@
 "cls": "Ａ級準決勝",
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
-"line": "6-3-7・12.6倍"
+"line": "6-3-7・12.6倍",
+"settled": true,
+"result": "6-3-1",
+"payout": 0,
+"final_odds": 12.6
 },
 {
 "date": "2026-11-27",
@@ -22469,6 +22473,10 @@
 "cls": "Ａ級準決勝",
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
-"line": "1点・合成12.6倍"
+"line": "1点・合成12.6倍",
+"settled": true,
+"result": "6-3-1",
+"payout": 0,
+"final_odds": 12.6
 }
 ]
