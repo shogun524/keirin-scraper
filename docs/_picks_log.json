@@ -22186,7 +22186,11 @@
 "cls": "Ｓ級準決勝",
 "race_type": "Ｓ級準決勝",
 "bet": "3連単",
-"line": "1-4-6"
+"line": "1-4-6",
+"settled": true,
+"result": "4-1-6",
+"payout": 0,
+"final_odds": 15.8
 },
 {
 "date": "2026-11-27",
@@ -22206,7 +22210,31 @@
 "cls": "Ｓ級準決勝",
 "race_type": "Ｓ級準決勝",
 "bet": "3連単",
-"line": "2点・合成7.1倍・万車率38%"
+"line": "2点・合成7.1倍・万車率38%",
+"settled": true,
+"result": "4-1-6",
+"payout": 1290,
+"final_odds": null
+},
+{
+"date": "2026-11-27",
+"rule": "E",
+"ticket": "3-1-4",
+"url": "nk:202611278303:kurume",
+"venue": "久留米",
+"race_no": 3,
+"region": "地区ばらばら",
+"same3": false,
+"chu": false,
+"chu_star": false,
+"cup": "Ａ級 一 般",
+"grade": null,
+"start_at": 1795782000,
+"close_at": 1795781700,
+"cls": "Ａ級一般",
+"race_type": "Ａ級一般",
+"bet": "3連単",
+"line": "3-1-4・7.3倍"
 },
 {
 "date": "2026-11-27",
@@ -22217,8 +22245,8 @@
 "race_no": 5,
 "region": "3人同地区(九州)",
 "same3": true,
-"chu": true,
-"chu_star": true,
+"chu": false,
+"chu_star": false,
 "cup": "Ａ級 選 抜",
 "grade": null,
 "start_at": 1795784400,
@@ -22227,26 +22255,6 @@
 "race_type": "Ａ級選抜",
 "bet": "3連単",
 "line": "2-5-6"
-},
-{
-"date": "2026-11-27",
-"rule": "F",
-"ticket": "2-5-6",
-"url": "nk:202611278305:kurume",
-"venue": "久留米",
-"race_no": 5,
-"region": "3人同地区(九州)",
-"same3": true,
-"chu": true,
-"chu_star": true,
-"cup": "Ａ級 選 抜",
-"grade": null,
-"start_at": 1795784400,
-"close_at": 1795784100,
-"cls": "Ａ級選抜",
-"race_type": "Ａ級選抜",
-"bet": "3連単",
-"line": "2-5-6・51.2倍"
 },
 {
 "date": "2026-11-27",
@@ -22266,7 +22274,7 @@
 "cls": "Ａ級選抜",
 "race_type": "Ａ級選抜",
 "bet": "3連単",
-"line": "1-2-5・5.8倍"
+"line": "1-2-5・6.7倍"
 },
 {
 "date": "2026-11-27",
@@ -22286,25 +22294,25 @@
 "cls": "Ａ級選抜",
 "race_type": "Ａ級選抜",
 "bet": "3連単",
-"line": "1-3-6・8.2倍"
+"line": "1-3-6・9.5倍"
 },
 {
 "date": "2026-11-27",
-"rule": "K6",
-"ticket": "4-2-5",
+"rule": "M2",
+"ticket": "1-4-7",
 "tickets": [
-"4-2-5"
+"1-4-7"
 ],
-"url": "nk:202611278309:kurume",
+"url": "nk:202611278307:kurume",
 "venue": "久留米",
-"race_no": 9,
+"race_no": 7,
 "cup": "Ａ級 準決勝",
 "grade": null,
-"start_at": 1795789200,
-"close_at": 1795788900,
+"start_at": 1795786800,
+"close_at": 1795786500,
 "cls": "Ａ級準決勝",
 "race_type": "Ａ級準決勝",
 "bet": "3連単",
-"line": "1点・合成43.1倍"
+"line": "1点・合成28.6倍・万車率50%"
 }
 ]
