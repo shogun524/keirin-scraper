@@ -4130,8 +4130,6 @@ NEW_BETS = [
          note="過去(7車・F1/F2) 的中5〜6%・回収率225〜261%(10万で頭打ち146〜155%)"),
     dict(key="gir", seg="girls", name="ガールズ", first=("M", 0, 5), second=("A", 0, 1), third=("M", 0, 4), cmin=4.0,
          note="過去(ガールズ7車) 的中10〜11%・回収率107〜121%(10万で頭打ち103〜111%)"),
-    dict(key="girt", seg="girls", name="ガールズ的中重視", first=("Q", 0, 3), second=("Q", 1, 4), third=("M", 1, 4), cmin=2.0,
-         note="過去(ガールズ7車) 的中25〜26%・回収率101〜102%(10万で頭打ち95〜100%)"),
     # 11/26: 1点2倍(または3倍)未満の目は買わない前提で、全券種のフォーメーションを総当たり(約345万通り)。
     # 両方の年で100%超えだが、総当たりの中の上位なので偶然の可能性が高い → 「参考・検証中」で実績を見る。
     dict(key="sw", seg="S", bt="ワイド", ref=True, name="S級ワイド", first=("M", 0, 3), second=("A", 1, 3), cmin=4.0, th=3.0,
@@ -4221,6 +4219,7 @@ def _bet_short(x):
 
 
 def _bets_html(bets, cls="nbets"):
+    bets = [b for b in bets if not b.get("ref")]   # 11/28 シンプルに: 参考(検証中)の買い方はカードに出さない(成績の記録は続ける)
     if not bets:
         return ""
     lis = ""
@@ -4337,9 +4336,6 @@ def _jra_card(rd, vi):
         bg, fg = car_color(c)
         mk = mks.get(c, "")
         mk_cell = f'<span class="mark">{mk}</span>' if mk else f'<span class="rk">{sorted(shown, key=lambda x: -shown[x]).index(c) + 1}</span>'
-        t = tags.get(c)
-        if t:
-            mk_cell += f'<br><span class="htag {t[1]}">{t[0]}</span>'
         li = r.get("line_info")
         pos = ("単騎" if not li or li.get("line_size", 1) == 1 else ("先頭" if li["position"] == 1 else f'{li["position"]}番手'))
         sub = " ・ ".join(x for x in [str(r.get("rank") or ""), str(r.get("tactic") or ""), pos,
@@ -4369,8 +4365,7 @@ def _jra_card(rd, vi):
                   + (f'<span class="sep">・</span><b>{"本命" if lv == "hon" else "穴"}</b>' if lv else "") + '</p>')
     else:
         chips += '<p class="manbaken muted">万車率 オッズ待ち</p>'
-    chips += _role_line(result, "roles")
-    line_txt = rd.get("line_prediction_text") or ""
+    line_txt = rd.get("line_prediction_text") or ""   # 11/28 シンプルに: 頭向き・軸向き・相手の行はやめる
     sub_html = (f'{VENUE_NAMES.get(info["venue"], info["venue"])} <span class="post-time">締切 {info.get("deadline") or ""}</span>'
                 + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
     # 11/24 シンプルに: 買い目はAIの買い目(回収率重視・的中重視)だけ、詳しいページへのリンクと妙味の列はやめる
@@ -4423,12 +4418,11 @@ def render_jra_index(all_race_data, date=None, now=None):
     guide = """<details class="guide"><summary>このサイトの見方</summary><ul>
   <li><b>AIの買い目</b> … 2025・2026年の7車立てで、両方の年に回収率100%を超えた買い方だけ。
     <br>本命2着 = 全員 → 1番人気 → 3着内率1〜3位(3連単10点)。合成15倍以上のときだけ買う(過去 的中5〜6%・回収率225〜261%)。
-    <br>ガールズ = 人気1〜5位 → AI1位 → 人気1〜4位。合成4倍以上(過去 的中10〜11%・回収率107〜121%)。ガールズ的中重視 = 3着内率1〜3位 → 3着内率2〜4位 → 人気2〜4位。合成2倍以上(的中25%・101〜102%)。
-    <br><b>参考</b>(11/27〜・検証中・買い推奨ではない。トップの「今日の買い目」には出さず、各レースに「条件一致」とだけ表示) = 1点2〜3倍未満の目は買わない前提で全券種を総当たりした中の上位。S級ワイド(人気1〜3位−AI2〜3位)、チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)、チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)。何百万通りの中の上位なので偶然の可能性が高く、成績ページの実績で確かめています。</li>
+    <br>ガールズ = 人気1〜5位 → AI1位 → 人気1〜4位。合成4倍以上(過去 的中10〜11%・回収率107〜121%)。
+    <br><b>参考</b>(11/27〜・検証中・買い推奨ではない。サイトには出さず、成績ページで記録だけ) = 1点2〜3倍未満の目は買わない前提で全券種を総当たりした中の上位。S級ワイド(人気1〜3位−AI2〜3位)、チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)、チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)。何百万通りの中の上位なので偶然の可能性が高く、成績ページの実績で確かめています。</li>
   <li><b>1着率 ・ 3着内</b> … オッズが出ているときはAIとオッズ(ライン・選手コメント込み)を合わせた率、出る前はAIだけの率。過去5万レースで、表示した%と実際の結果がほぼ一致しています。並び順もこの1着率の順。</li>
   <li><b>人気</b> … 3連単オッズから見た1着の人気順と、オッズから見た1着率。</li>
   <li><b>万車率・本命/穴</b> … 100倍以上の3連単に入っている支持の割合。級と車立てごとの過去と比べて、下側3割=本命・上側3割=穴。</li>
-  <li><b>頭向き・軸向き・相手</b> … 頭向き=1着まで来やすい(過去 1着45%)。軸向き=崩れにくいが1着は少ない(過去 3着内67%)。相手=3着内率35〜55%。</li>
   <li><b>★</b> … AIの買い目が「買い」になっているレース。</li>
 </ul></details>"""
     meta = f'<b>{date.strftime("%Y-%m-%d")}({wd})</b> ・ 更新 {now.strftime("%Y-%m-%d %H:%M")} ・ オッズ取得 {n_odds}/{n_all}レース'
