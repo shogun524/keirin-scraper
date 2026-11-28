@@ -84,6 +84,11 @@
   .tk .p { margin-left:auto; font-variant-numeric:tabular-nums; font-weight:700; text-align:right; }
   .tk .p small { display:block; font-weight:400; color:var(--soft); font-size:.7rem; }
   .tk button { border:none; background:none; color:var(--soft); font:inherit; font-size:.85rem; cursor:pointer; padding:4px; }
+  .alloc { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:12px 0 6px; }
+  .alloc label { font-weight:700; font-size:.95rem; } .alloc input { width:110px; font:inherit; font-size:1.05rem; padding:6px 8px; border:1px solid var(--line); border-radius:8px; text-align:right; }
+  .alloc .how { display:flex; gap:6px; margin:8px 0 4px; } .alloc .how button { flex:1; border:1px solid var(--turf); background:#fff; color:var(--turf); font:inherit; font-size:.85rem; padding:8px; border-radius:8px; cursor:pointer; }
+  .alloc .how button.on { background:var(--turf); color:#fff; font-weight:700; }
+  .tk input.sel { width:20px; height:20px; accent-color:var(--turf); flex:0 0 auto; } .tk.off { opacity:.45; }
   .empty { color:var(--soft); font-size:.9rem; padding:18px 0; }
   .note { font-size:.74rem; color:var(--soft); line-height:1.7; margin:10px 0; }
   .clear { display:block; margin:10px auto; border:none; background:none; color:var(--turf); font:inherit; text-decoration:underline; cursor:pointer; }
@@ -231,29 +236,29 @@
     return [html, tk];
   }
   // ---- おまかせ: 頭だけ選ぶと、その頭のときの2着率・3着率から2着・3着を自動で選ぶ
-  var S2 = 0.15, S3 = 0.20;   // 2着＝頭が1着のときの2着率15%以上、3着＝(頭→選んだ2着)のときの3着率20%以上(どちらも最低1車)
+  var S2 = 0.10, S3 = 0.15;   // 2着＝頭が1着のときの2着率10%以上、3着＝(頭→選んだ2着)のときの3着率15%以上(どちらも最低2車)
   function autoFor(h){
     var ph = R.p1[h] || 1e-9;
     var c2 = R.cars_.filter(function(x){ return x != h; }).map(function(x){ return [x, (R.p12[h+'-'+x]||0)/ph]; }).sort(function(a,b){ return b[1]-a[1]; });
-    var sec = c2.filter(function(z){ return z[1] >= S2; }); if (!sec.length) sec = c2.slice(0, 1);
+    var sec = c2.filter(function(z){ return z[1] >= S2; }); if (sec.length < 2) sec = c2.slice(0, 2);
     var base = 0; sec.forEach(function(z){ base += R.p12[h+'-'+z[0]] || 0; });
     var c3 = R.cars_.filter(function(x){ return x != h; }).map(function(y){ var q = 0;
       sec.forEach(function(z){ if (z[0] != y) q += R.P[h+'-'+z[0]+'-'+y] || 0; }); return [y, base ? q/base : 0]; }).sort(function(a,b){ return b[1]-a[1]; });
-    var thd = c3.filter(function(z){ return z[1] >= S3; }); if (!thd.length) thd = c3.slice(0, 1);
+    var thd = c3.filter(function(z){ return z[1] >= S3; }); if (thd.length < 2) thd = c3.slice(0, 2);
     var tk = [];
     sec.forEach(function(b){ thd.forEach(function(c){ if (b[0] != c[0]) tk.push(h+'-'+b[0]+'-'+c[0]); }); });
-    // 穴: この頭の3連単のうち、本線に入っていない20倍以上の目で、確率のわりにオッズが甘い(平均より10%以上)ものを最大4点
+    // 穴: この頭の3連単のうち、本線に入っていない20倍以上の目で、確率のわりにオッズが甘い(平均より10%以上)ものを最大8点
     var ana = [];
     R.cars_.forEach(function(b){ R.cars_.forEach(function(c){ var k = h+'-'+b+'-'+c;
       if (b == h || c == h || b == c || tk.indexOf(k) >= 0) return;
       var o = R.O[k], p = R.P[k] || 0; if (!(o >= 20) || p <= 0) return;
       var v = p * o / 0.75; if (v >= 1.1) ana.push([k, v]); }); });
     ana.sort(function(a,b){ return b[1]-a[1]; });
-    return {sec:sec, thd:thd, tk:tk, ana:ana.slice(0, 4)};
+    return {sec:sec, thd:thd, tk:tk, ana:ana.slice(0, 8)};
   }
   function drawAuto(){
     var html = '<p class="desc">頭(1着)だけ選んでください。2着・3着は、その頭が1着のときの2着率・3着率から自動で選びます'
-      + '(2着＝2着率15%以上、3着＝その並びのときの3着率20%以上)。頭は何車選んでもOK。</p>';
+      + '(2着＝2着率10%以上、3着＝その並びのときの3着率15%以上。どちらも最低2車)。頭は何車選んでもOK。</p>';
     html += '<h3>頭を選ぶ</h3><p class="sub">1着率の高い順</p>';
     R.cars_.slice().sort(function(a,b){ return R.p1[b]-R.p1[a]; }).forEach(function(c){ var on = st.ah.indexOf(c) >= 0;
       html += row(c, R.p1[c]||0, '1着率', on ? '頭から外す' : '頭にする', on, false, 'kah'); });
@@ -310,26 +315,65 @@
   function reset(){ st = {h:null, s:[], t:[], b:[], a:null, n:null, ah:[], a2:null, a3:null, ana:false}; }
   function updBar(){ var L = list.races[R.k] || [];
     document.getElementById('openList').textContent = '買い目の一覧' + (L.length ? '(' + L.length + '点)' : ''); }
+  var BK = 'aite-budget';
+  function getB(){ try { return +(localStorage.getItem(BK) || 1000); } catch(e){ return 1000; } }
+  function setB(v){ try { localStorage.setItem(BK, String(v)); } catch(e){} }
+  function allocate(tks, budget, how){
+    // how='high': 高いオッズほど多く(金額∝オッズ)、'flat': 均等。100円単位・1点100円以上
+    var n = tks.length, out = {};
+    if (!n || budget < n * 100) return null;
+    var w = tks.map(function(k){ var o = R.O[k] || 1; return how == 'flat' ? 1 : (how == 'max' ? o : Math.sqrt(o)); }), sw = w.reduce(function(a,b){ return a+b; }, 0);
+    var raw = w.map(function(x){ return budget * x / sw; }), st = raw.map(function(x){ return Math.max(100, Math.floor(x/100)*100); });
+    var left = budget - st.reduce(function(a,b){ return a+b; }, 0);
+    while (left < 0) { var i = st.indexOf(Math.max.apply(null, st)); if (st[i] <= 100) break; st[i] -= 100; left += 100; }
+    var ord = raw.map(function(x, i){ return [x - st[i], w[i], i]; }).sort(function(a,b){ return b[0]-a[0] || b[1]-a[1]; });
+    for (var j = 0; left >= 100; j = (j + 1) % n) { st[ord[j][2]] += 100; left -= 100; }
+    tks.forEach(function(k, i){ out[k] = st[i]; });
+    return out;
+  }
   function openSheet(){
-    var L = (list.races[R.k] || []).slice().sort(function(a,b){ return (R.P[b]||0)-(R.P[a]||0); });
+    var L = (list.races[R.k] || []).slice().sort(function(a,b){ return (R.O[a]||0)-(R.O[b]||0); });
+    list.off = list.off || {}; var off = list.off[R.k] || [];
     var html = '<div class="hd"><h2>買い目の一覧</h2><span>' + esc(R.v) + ' ' + R.no + 'R</span><button type="button" id="close" aria-label="閉じる">×</button></div>';
-    if (!L.length) html += '<p class="empty">まだ買い目がありません。頭・BOX・あるなしで選んで「一覧に追加」を押してください。</p>';
-    L.forEach(function(k){ var c = k.split('-');
-      html += '<div class="tk"><div class="cs">' + car(c[0],1) + '<em>-</em>' + car(c[1],1) + '<em>-</em>' + car(c[2],1) + '</div>'
-        + '<div class="p">' + pct(R.P[k]||0) + '<small>' + (R.O[k] ? R.O[k].toFixed(1) + '倍' : 'オッズ待ち') + '</small></div>'
-        + '<button type="button" data-k="' + k + '">外す</button></div>'; });
+    if (!L.length) html += '<p class="empty">まだ買い目がありません。頭・BOX・あるなし・おまかせで選んで「一覧に追加」を押してください。</p>';
+    var on = L.filter(function(k){ return off.indexOf(k) < 0; });
+    var B = getB(), how = list.how || 'high', A = on.length ? allocate(on, B, how) : null;
     if (L.length) {
-      html += prevHtml(L, '合計');
-      html += '<p class="note">同じ目が重なっても1回だけ数えます。一覧はその日いっぱい、このブラウザに残ります。</p><button type="button" class="clear" id="clr">このレースの一覧を全部消す</button>';
+      html += '<div class="alloc"><label>資金 <input id="budget" type="number" inputmode="numeric" min="100" step="100" value="' + B + '"> 円</label>'
+        + '<div class="how"><button type="button" data-how="high" class="' + (how=='high'?'on':'') + '">高めに多く</button><button type="button" data-how="max" class="' + (how=='max'?'on':'') + '">もっと高めに</button><button type="button" data-how="flat" class="' + (how=='flat'?'on':'') + '">均等</button></div>'
+        + '<p class="sub">チェックした目に配分します。「高めに多く」はオッズが高い目ほど多く(金額は√オッズに比例)、「もっと高めに」はさらに高い目に寄せます(金額はオッズに比例)。100円単位・1点100円以上。</p></div>';
+      if (on.length && !A) html += '<p class="empty" style="color:var(--bad)">資金が足りません(' + on.length + '点なら最低' + (on.length*100).toLocaleString() + '円)</p>';
     }
+    L.forEach(function(k){ var c = k.split('-'), sel = off.indexOf(k) < 0, y = A && A[k], o = R.O[k];
+      html += '<div class="tk' + (sel ? '' : ' off') + '"><input type="checkbox" class="sel" data-k="' + k + '"' + (sel ? ' checked' : '') + '>'
+        + '<div class="cs">' + car(c[0],1) + '<em>-</em>' + car(c[1],1) + '<em>-</em>' + car(c[2],1) + '</div>'
+        + '<div class="p">' + (y ? y.toLocaleString() + '円' : pct(R.P[k]||0)) + '<small>' + (o ? o.toFixed(1) + '倍' : 'オッズ待ち')
+        + (y && o ? '・当たれば' + Math.floor(y * o).toLocaleString() + '円' : (y ? '' : '')) + '</small></div>'
+        + '<button type="button" class="rm" data-k="' + k + '">外す</button></div>'; });
+    if (A) {
+      var tot = 0, mn = 1e18, mx = 0, gami = 0;
+      on.forEach(function(k){ tot += A[k]; var r = R.O[k] ? A[k] * R.O[k] : 0; if (r) { mn = Math.min(mn, r); mx = Math.max(mx, r); } });
+      on.forEach(function(k){ if (R.O[k] && A[k] * R.O[k] < tot) gami++; });
+      html += '<div class="prev"><div class="l"><span>合計</span><b>' + on.length + '点・' + tot.toLocaleString() + '円</b></div>'
+        + (mx ? '<div class="l"><span>当たったときの払戻</span><b>' + Math.floor(mn).toLocaleString() + '〜' + Math.floor(mx).toLocaleString() + '円</b></div>' : '')
+        + '<div class="l"><span>当たっても元が取れない目(トリガミ)</span><b class="' + (gami ? 'bad' : 'good') + '">' + gami + '点</b></div>'
+        + '<div class="l big"><span>AI的中見込み</span><b>' + pct(on.reduce(function(a,k){ return a + (R.P[k]||0); }, 0)) + '</b></div></div>';
+      html += '<p class="note">「高めに多く」は、当たったときの払戻が高い目ほど大きくなる配分です。安い目が当たるとトリガミになりやすいので、上の点数を見て調整してください。オッズは5分おきの更新時点のものです。</p>';
+    }
+    if (L.length) html += '<button type="button" class="clear" id="clr">このレースの一覧を全部消す</button>';
     var others = Object.keys(list.races).filter(function(k){ return k != R.k && list.races[k].length; });
     if (others.length) html += '<p class="note">ほかのレースの一覧: ' + others.map(function(k){ var x = D.races.filter(function(r){ return r.k==k; })[0];
       return x ? '<a href="?k=' + k + '">' + esc(x.v) + x.no + 'R(' + list.races[k].length + '点)</a>' : ''; }).join(' ') + '</p>';
     html += '<button type="button" class="add" id="close2">閉じて選ぶに戻る</button>';
-    var sh = document.getElementById('sheet'); sh.innerHTML = html; sh.classList.add('open'); document.getElementById('sheetBg').classList.add('open');
-    sh.querySelectorAll('.tk button').forEach(function(b){ b.addEventListener('click', function(){
+    var sh = document.getElementById('sheet'), y0 = sh.scrollTop; sh.innerHTML = html; sh.classList.add('open'); document.getElementById('sheetBg').classList.add('open'); sh.scrollTop = y0;
+    sh.querySelectorAll('.tk .rm').forEach(function(b){ b.addEventListener('click', function(){
       list.races[R.k] = (list.races[R.k]||[]).filter(function(x){ return x != b.dataset.k; }); saveList(); updBar(); openSheet(); }); });
-    var clr = document.getElementById('clr'); if (clr) clr.addEventListener('click', function(){ delete list.races[R.k]; saveList(); updBar(); openSheet(); });
+    sh.querySelectorAll('.tk .sel').forEach(function(b){ b.addEventListener('change', function(){
+      var o = list.off[R.k] || []; if (b.checked) o = o.filter(function(x){ return x != b.dataset.k; }); else o.push(b.dataset.k);
+      list.off[R.k] = o; saveList(); openSheet(); }); });
+    sh.querySelectorAll('.how button').forEach(function(b){ b.addEventListener('click', function(){ list.how = b.dataset.how; saveList(); openSheet(); }); });
+    var bi = document.getElementById('budget'); if (bi) bi.addEventListener('change', function(){ var v = Math.max(100, Math.round((+bi.value || 0) / 100) * 100); setB(v); openSheet(); });
+    var clr = document.getElementById('clr'); if (clr) clr.addEventListener('click', function(){ delete list.races[R.k]; if (list.off) delete list.off[R.k]; saveList(); updBar(); openSheet(); });
     ['close','close2'].forEach(function(id){ document.getElementById(id).addEventListener('click', closeSheet); });
   }
   function closeSheet(){ document.getElementById('sheet').classList.remove('open'); document.getElementById('sheetBg').classList.remove('open'); }
