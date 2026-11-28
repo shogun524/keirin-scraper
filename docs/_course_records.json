@@ -137373,7 +137373,7 @@
   "寺本__toyama": {
     "name": "寺本",
     "venue": "toyama",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -137490,9 +137490,9 @@
   "小林 真矢香__toyama": {
     "name": "小林 真矢香",
     "venue": "toyama",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -137503,7 +137503,7 @@
   "向井__toyama": {
     "name": "向井",
     "venue": "toyama",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -137516,7 +137516,7 @@
   "田野口__toyama": {
     "name": "田野口",
     "venue": "toyama",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -141442,7 +141442,7 @@
   "丹波__hiratsuka": {
     "name": "丹波",
     "venue": "hiratsuka",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -141728,9 +141728,9 @@
   "一守 大葵__hiratsuka": {
     "name": "一守 大葵",
     "venue": "hiratsuka",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141754,9 +141754,9 @@
   "戸塚 涼介__hiratsuka": {
     "name": "戸塚 涼介",
     "venue": "hiratsuka",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141884,9 +141884,9 @@
   "福田 拓也__hiratsuka": {
     "name": "福田 拓也",
     "venue": "hiratsuka",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141910,9 +141910,9 @@
   "寺沼 伊織__hiratsuka": {
     "name": "寺沼 伊織",
     "venue": "hiratsuka",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -142768,7 +142768,7 @@
   "坂本__hiratsuka": {
     "name": "坂本",
     "venue": "hiratsuka",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -144405,6 +144405,136 @@
   },
   "山田 圭二__toyama": {
     "name": "山田 圭二",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "樫山 恭柄__hiratsuka": {
+    "name": "樫山 恭柄",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "高橋__hiratsuka": {
+    "name": "高橋",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "杉山__hiratsuka": {
+    "name": "杉山",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "鷲田 佳史__hiratsuka": {
+    "name": "鷲田 佳史",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "比佐__hiratsuka": {
+    "name": "比佐",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "山崎__hiratsuka": {
+    "name": "山崎",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤井__hiratsuka": {
+    "name": "藤井",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "疋田__hiratsuka": {
+    "name": "疋田",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉田 恵利__toyama": {
+    "name": "吉田 恵利",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "中川 諒子__toyama": {
+    "name": "中川 諒子",
     "venue": "toyama",
     "races": 1,
     "wins": 0,
