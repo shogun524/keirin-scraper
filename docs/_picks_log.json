@@ -23598,7 +23598,11 @@
 "cls": "Ｓ級特選",
 "race_type": "Ｓ級特選",
 "bet": "3連単",
-"line": "7-4-2"
+"line": "7-4-2",
+"settled": true,
+"result": "6-2-4",
+"payout": 0,
+"final_odds": 93.5
 },
 {
 "date": "2026-11-28",
@@ -23618,7 +23622,11 @@
 "cls": "Ｓ級特選",
 "race_type": "Ｓ級特選",
 "bet": "3連単",
-"line": "7-4-2・93.5倍"
+"line": "7-4-2・93.5倍",
+"settled": true,
+"result": "6-2-4",
+"payout": 0,
+"final_odds": 93.5
 },
 {
 "date": "2026-11-28",
@@ -23638,47 +23646,51 @@
 "cls": "Ｓ級特選",
 "race_type": "Ｓ級特選",
 "bet": "3連単",
-"line": "2点・合成21.4倍・万車率30%"
-},
-{
-"date": "2026-11-28",
-"rule": "D",
-"ticket": "4-3-6",
-"url": "nk:202611283103:matsudo",
-"venue": "松戸",
-"race_no": 3,
-"region": "地区ばらばら",
-"same3": false,
-"chu": false,
-"chu_star": false,
-"cup": "Ａ級 一 般",
-"grade": null,
-"start_at": 1795869000,
-"close_at": 1795868700,
-"cls": "Ａ級一般",
-"race_type": "Ａ級一般",
-"bet": "3連単",
-"line": "4-3-6・28.6倍"
+"line": "2点・合成21.4倍・万車率30%",
+"settled": true,
+"result": "6-2-4",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-28",
 "rule": "E",
-"ticket": "3-1-5",
-"url": "nk:202611288304:kurume",
-"venue": "久留米",
-"race_no": 4,
-"region": "地区ばらばら",
-"same3": false,
+"ticket": "5-7-1",
+"url": "nk:202611284711:matsusaka",
+"venue": "松阪",
+"race_no": 11,
+"region": "3人同地区(中部)",
+"same3": true,
 "chu": false,
 "chu_star": false,
+"cup": "Ａ級 決 勝",
+"grade": null,
+"start_at": 1795863660,
+"close_at": 1795863360,
+"cls": "Ａ級決勝",
+"race_type": "Ａ級決勝",
+"bet": "3連単",
+"line": "5-7-1・7.5倍"
+},
+{
+"date": "2026-11-28",
+"rule": "M3",
+"ticket": "1-7-4 / 7-1-4",
+"tickets": [
+"1-7-4",
+"7-1-4"
+],
+"url": "nk:202611283104:matsudo",
+"venue": "松戸",
+"race_no": 4,
 "cup": "Ａ級 一 般",
 "grade": null,
-"start_at": 1795869600,
-"close_at": 1795869300,
+"start_at": 1795870200,
+"close_at": 1795869900,
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "3-1-5・10.0倍"
+"line": "2点・合成8.9倍・万車率55%"
 },
 {
 "date": "2026-11-28",
@@ -23736,7 +23748,26 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "1点・合成30.0倍・万車率52%"
+"line": "1点・合成32.9倍・万車率55%"
+},
+{
+"date": "2026-11-28",
+"rule": "M2",
+"ticket": "2-3-6",
+"tickets": [
+"2-3-6"
+],
+"url": "nk:202611283106:matsudo",
+"venue": "松戸",
+"race_no": 6,
+"cup": "Ａ級 特 選",
+"grade": null,
+"start_at": 1795872600,
+"close_at": 1795872300,
+"cls": "Ａ級特選",
+"race_type": "Ａ級特選",
+"bet": "3連単",
+"line": "1点・合成23.9倍・万車率50%"
 },
 {
 "date": "2026-11-28",
@@ -23776,7 +23807,7 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "4-2-7・57.9倍"
+"line": "4-2-7・62.7倍"
 },
 {
 "date": "2026-11-28",
@@ -23796,7 +23827,7 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "4-2-6・24.1倍"
+"line": "4-2-6・24.4倍"
 },
 {
 "date": "2026-11-28",
@@ -23815,27 +23846,7 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "1点・合成24.1倍"
-},
-{
-"date": "2026-11-28",
-"rule": "E",
-"ticket": "1-6-4",
-"url": "nk:202611288309:kurume",
-"venue": "久留米",
-"race_no": 9,
-"region": "地区ばらばら",
-"same3": false,
-"chu": false,
-"chu_star": false,
-"cup": "Ａ級 決 勝",
-"grade": null,
-"start_at": 1795875600,
-"close_at": 1795875300,
-"cls": "Ａ級決勝",
-"race_type": "Ａ級決勝",
-"bet": "3連単",
-"line": "1-6-4-5・9.8倍"
+"line": "1点・合成24.4倍"
 },
 {
 "date": "2026-11-28",
@@ -23855,6 +23866,6 @@
 "cls": "Ａ級決勝",
 "race_type": "Ａ級決勝",
 "bet": "3連単",
-"line": "1-2-3・4.8倍"
+"line": "1-2-3・4.5倍"
 }
 ]

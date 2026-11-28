@@ -1,16 +1,6 @@
 {
- "updated": "2026-11-28 19:49",
+ "updated": "2026-11-28 20:20",
  "failures": [
-  {
-   "race": "2026-11-28 matsusaka 1R",
-   "error": "着順が壊れて見えるため記録しない",
-   "cars": [
-    5,
-    7,
-    4,
-    2
-   ]
-  },
   {
    "race": "2026-11-28 kokura 10R",
    "diag": {
@@ -19,10 +9,19 @@
     "primary": "skipped",
     "day_parsed": false
    }
+  },
+  {
+   "race": "2026-11-28 kokura 11R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261128010011",
+    "primary": "skipped",
+    "day_parsed": false
+   }
   }
  ],
  "tracked": 3929,
- "with_result": 3175,
+ "with_result": 3176,
  "without_url": 0,
- "pending_eligible": 733
+ "pending_eligible": 734
 }
