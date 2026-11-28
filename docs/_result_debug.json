@@ -1,15 +1,6 @@
 {
- "updated": "2026-11-28 18:08",
+ "updated": "2026-11-28 19:09",
  "failures": [
-  {
-   "race": "2026-11-28 hiratsuka 8R",
-   "diag": {
-    "venue": "hiratsuka",
-    "race_id": "3520261127020008",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-28 matsusaka 1R",
    "error": "着順が壊れて見えるため記録しない",
@@ -21,17 +12,17 @@
    ]
   },
   {
-   "race": "2026-11-28 kokura 6R",
+   "race": "2026-11-28 matsusaka 9R",
    "diag": {
-    "venue": "kokura",
-    "race_id": "8120261128010006",
+    "venue": "matsusaka",
+    "race_id": "4720261126030009",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3929,
- "with_result": 3167,
+ "with_result": 3172,
  "without_url": 0,
  "pending_eligible": 733
 }
