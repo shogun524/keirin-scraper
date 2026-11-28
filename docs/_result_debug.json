@@ -1,18 +1,27 @@
 {
- "updated": "2026-11-28 14:00",
+ "updated": "2026-11-28 14:31",
  "failures": [
   {
-   "race": "2026-11-28 toyama 7R",
+   "race": "2026-11-28 hiratsuka 8R",
+   "diag": {
+    "venue": "hiratsuka",
+    "race_id": "3520261127020008",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-28 toyama 8R",
    "diag": {
     "venue": "toyama",
-    "race_id": "4620261126030007",
+    "race_id": "4620261126030008",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3929,
- "with_result": 3148,
+ "with_result": 3149,
  "without_url": 0,
- "pending_eligible": 731
+ "pending_eligible": 732
 }
