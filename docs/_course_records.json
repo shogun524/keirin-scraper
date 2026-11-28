@@ -38170,7 +38170,7 @@
   "佐藤__sasebo": {
     "name": "佐藤",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -94369,7 +94369,7 @@
   "小川__sasebo": {
     "name": "小川",
     "venue": "sasebo",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136632,9 +136632,9 @@
   "田中 千尋__komatsushima": {
     "name": "田中 千尋",
     "venue": "komatsushima",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -136671,7 +136671,7 @@
   "奥井__komatsushima": {
     "name": "奥井",
     "venue": "komatsushima",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136684,7 +136684,7 @@
   "仲井__komatsushima": {
     "name": "仲井",
     "venue": "komatsushima",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136775,7 +136775,7 @@
   "松下__komatsushima": {
     "name": "松下",
     "venue": "komatsushima",
-    "races": 4,
+    "races": 5,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136801,7 +136801,7 @@
   "鈴木__komatsushima": {
     "name": "鈴木",
     "venue": "komatsushima",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -140844,9 +140844,9 @@
   "小川 大地__sasebo": {
     "name": "小川 大地",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -140922,9 +140922,9 @@
   "角田 吏__sasebo": {
     "name": "角田 吏",
     "venue": "sasebo",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141104,9 +141104,9 @@
   "村上 順規__sasebo": {
     "name": "村上 順規",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141182,9 +141182,9 @@
   "勝沼 遼__sasebo": {
     "name": "勝沼 遼",
     "venue": "sasebo",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141195,9 +141195,9 @@
   "武田 和也__sasebo": {
     "name": "武田 和也",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -141273,9 +141273,9 @@
   "渡邊 政幸__sasebo": {
     "name": "渡邊 政幸",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -144110,6 +144110,110 @@
     "races": 1,
     "wins": 0,
     "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "篠崎 新純__komatsushima": {
+    "name": "篠崎 新純",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "黒沢 夢姫__komatsushima": {
+    "name": "黒沢 夢姫",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "藤井__sasebo": {
+    "name": "藤井",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "亀井__sasebo": {
+    "name": "亀井",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "安部__sasebo": {
+    "name": "安部",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "内田__sasebo": {
+    "name": "内田",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "照屋__sasebo": {
+    "name": "照屋",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "宮道__sasebo": {
+    "name": "宮道",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
     "kimarite": {
       "逃": 0,
       "捲": 0,
