@@ -60,6 +60,7 @@
   .prev .good { color:var(--good); } .prev .bad { color:var(--bad); }
   .prev .vt { margin-top:4px; padding-top:6px; border-top:1px dashed var(--line); } .prev .vt b { font-size:1rem; }
   .prev .sm { font-size:.74rem; color:var(--soft); }
+  .prev.ana { border-color:#E0B25A; background:#FFF9EC; }
   .add { width:100%; margin-top:10px; border:none; background:var(--turf); color:#fff; font:inherit; font-weight:700; font-size:1rem;
     padding:13px; border-radius:10px; cursor:pointer; }
   .add:disabled { background:#bdb5a3; cursor:default; }
@@ -241,7 +242,14 @@
     var thd = c3.filter(function(z){ return z[1] >= S3; }); if (!thd.length) thd = c3.slice(0, 1);
     var tk = [];
     sec.forEach(function(b){ thd.forEach(function(c){ if (b[0] != c[0]) tk.push(h+'-'+b[0]+'-'+c[0]); }); });
-    return {sec:sec, thd:thd, tk:tk};
+    // 穴: この頭の3連単のうち、本線に入っていない20倍以上の目で、確率のわりにオッズが甘い(平均より10%以上)ものを最大4点
+    var ana = [];
+    R.cars_.forEach(function(b){ R.cars_.forEach(function(c){ var k = h+'-'+b+'-'+c;
+      if (b == h || c == h || b == c || tk.indexOf(k) >= 0) return;
+      var o = R.O[k], p = R.P[k] || 0; if (!(o >= 20) || p <= 0) return;
+      var v = p * o / 0.75; if (v >= 1.1) ana.push([k, v]); }); });
+    ana.sort(function(a,b){ return b[1]-a[1]; });
+    return {sec:sec, thd:thd, tk:tk, ana:ana.slice(0, 4)};
   }
   function drawAuto(){
     var html = '<p class="desc">頭(1着)だけ選んでください。2着・3着は、その頭が1着のときの2着率・3着率から自動で選びます'
@@ -258,10 +266,18 @@
       html += '<div class="prev">' + x.tk.slice().sort(function(a,b){ return (R.P[b]||0)-(R.P[a]||0); }).map(function(k){ var c = k.split('-');
         return '<div class="tk"><div class="cs">' + car(c[0],1) + '<em>-</em>' + car(c[1],1) + '<em>-</em>' + car(c[2],1) + '</div><div class="p">この目が当たる率 ' + pct(R.P[k]||0)
           + '<small>' + (R.O[k] ? R.O[k].toFixed(1) + '倍' : 'オッズ待ち') + '</small></div></div>'; }).join('') + '</div>';
+      html += '<p class="sub"><b>穴</b>(本線以外で20倍以上・確率のわりにオッズが甘い目)</p>';
+      if (x.ana.length) {
+        if (st.ana) tk = tk.concat(x.ana.map(function(z){ return z[0]; }));
+        html += '<div class="prev ana">' + x.ana.map(function(z){ var k = z[0], c = k.split('-');
+          return '<div class="tk"><div class="cs">' + car(c[0],1) + '<em>-</em>' + car(c[1],1) + '<em>-</em>' + car(c[2],1) + '</div><div class="p">当たる率 ' + pct(R.P[k]||0)
+            + '<small>' + R.O[k].toFixed(1) + '倍・平均より' + Math.round((z[1]-1)*100) + '%甘い</small></div></div>'; }).join('') + '</div>';
+      } else html += '<p class="sub">' + (R.mode == 'odds' ? 'この頭では見つかりません' : 'オッズが出たら出ます') + '</p>';
     });
+    if (st.ah.length) html += '<button type="button" class="clear" id="anaTog">' + (st.ana ? '穴を一覧に入れない' : '穴も一覧に入れる') + '</button>';
     if (!st.ah.length) html += '<p class="empty">頭を選ぶと、買い目が自動で出ます</p>';
     html += '<p class="note">2着率・3着率は「頭が1着だったときだけ」の率です。3連単1点が当たる率は、1着率×2着率×3着率なので、ずっと小さくなります(各目の右に出している%)。'
-      + '過去2年の約5万レースでは、この組み方の的中は30%台・回収率は77〜79%でした(100%は超えません)。</p>';
+      + '過去2年の約5万レースでは、この組み方の的中は30%台・回収率は77〜79%でした(100%は超えません)。穴は当たる率が低い(多くは1%前後)ので、外れが続くのが普通です。</p>';
     html += prevHtml(tk, 'おまかせ') + '<button type="button" class="add" id="add"' + (tk.length?'':' disabled') + '>一覧に追加</button>';
     return [html, tk];
   }
@@ -270,6 +286,7 @@
     var r = mode == 'head' ? drawHead() : (mode == 'box' ? drawBox() : (mode == 'aru' ? drawAru() : drawAuto()));
     var body = document.getElementById('body'); body.innerHTML = r[0];
     body.querySelectorAll('.row button').forEach(function(b){ b.addEventListener('click', function(){ click(b); }); });
+    var at = body.querySelector('#anaTog'); if (at) at.addEventListener('click', function(){ st.ana = !st.ana; draw(); });
     var h0 = body.querySelector('[data-act="h0"]'); if (h0) h0.addEventListener('click', function(){ st.h = null; st.s = []; st.t = []; draw(); });
     var add = document.getElementById('add');
     if (add) add.addEventListener('click', function(){
@@ -290,7 +307,7 @@
     else st.n = st.n == c ? null : c;
     draw();
   }
-  function reset(){ st = {h:null, s:[], t:[], b:[], a:null, n:null, ah:[], a2:null, a3:null}; }
+  function reset(){ st = {h:null, s:[], t:[], b:[], a:null, n:null, ah:[], a2:null, a3:null, ana:false}; }
   function updBar(){ var L = list.races[R.k] || [];
     document.getElementById('openList').textContent = '買い目の一覧' + (L.length ? '(' + L.length + '点)' : ''); }
   function openSheet(){
