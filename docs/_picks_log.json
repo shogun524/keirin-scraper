@@ -23694,7 +23694,11 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "4-3-6・20.9倍"
+"line": "4-3-6・20.9倍",
+"settled": true,
+"result": "4-2-1",
+"payout": 0,
+"final_odds": 20.9
 },
 {
 "date": "2026-11-28",
@@ -23714,7 +23718,11 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "1-2-5-7・10.0倍"
+"line": "1-2-5-7・10.0倍",
+"settled": true,
+"result": "4-2-1",
+"payout": 0,
+"final_odds": 10.0
 },
 {
 "date": "2026-11-28",
@@ -23740,7 +23748,11 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "8点・合成5.0倍・万車率19%"
+"line": "8点・合成5.0倍・万車率19%",
+"settled": true,
+"result": "4-2-1",
+"payout": 0,
+"final_odds": null
 },
 {
 "date": "2026-11-28",
@@ -23760,7 +23772,11 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "3-1-5・4.6倍"
+"line": "3-1-5・4.6倍",
+"settled": true,
+"result": "3-1-5",
+"payout": 460,
+"final_odds": 4.6
 },
 {
 "date": "2026-11-28",
@@ -23780,46 +23796,11 @@
 "cls": "Ａ級一般",
 "race_type": "Ａ級一般",
 "bet": "3連単",
-"line": "1-7-4・9.3倍"
-},
-{
-"date": "2026-11-28",
-"rule": "D",
-"ticket": "2-3-4",
-"url": "nk:202611288305:kurume",
-"venue": "久留米",
-"race_no": 5,
-"region": "前2人同県",
-"same3": false,
-"chu": false,
-"chu_star": false,
-"cup": "Ａ級 特 選",
-"grade": null,
-"start_at": 1795870800,
-"close_at": 1795870500,
-"cls": "Ａ級特選",
-"race_type": "Ａ級特選",
-"bet": "3連単",
-"line": "2-3-4・14.6倍"
-},
-{
-"date": "2026-11-28",
-"rule": "K4",
-"ticket": "2-3-4",
-"tickets": [
-"2-3-4"
-],
-"url": "nk:202611288305:kurume",
-"venue": "久留米",
-"race_no": 5,
-"cup": "Ａ級 特 選",
-"grade": null,
-"start_at": 1795870800,
-"close_at": 1795870500,
-"cls": "Ａ級特選",
-"race_type": "Ａ級特選",
-"bet": "3連単",
-"line": "1点・合成14.6倍"
+"line": "1-7-4・8.0倍",
+"settled": true,
+"result": "2-4-3",
+"payout": 0,
+"final_odds": 8.0
 },
 {
 "date": "2026-11-28",
@@ -23830,8 +23811,8 @@
 "race_no": 7,
 "region": "3人同地区(中国)",
 "same3": true,
-"chu": true,
-"chu_star": true,
+"chu": false,
+"chu_star": false,
 "cup": "Ａ級 特 選",
 "grade": null,
 "start_at": 1795873200,
@@ -23850,8 +23831,8 @@
 "race_no": 7,
 "region": "3人同地区(中国)",
 "same3": true,
-"chu": true,
-"chu_star": true,
+"chu": false,
+"chu_star": false,
 "cup": "Ａ級 特 選",
 "grade": null,
 "start_at": 1795873200,
@@ -23859,7 +23840,7 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "4-2-7・59.2倍"
+"line": "4-2-7・44.5倍"
 },
 {
 "date": "2026-11-28",
@@ -23878,7 +23859,7 @@
 "cls": "Ａ級特選",
 "race_type": "Ａ級特選",
 "bet": "3連単",
-"line": "1点・合成31.3倍"
+"line": "1点・合成32.1倍"
 },
 {
 "date": "2026-11-28",
@@ -23898,6 +23879,6 @@
 "cls": "Ａ級決勝",
 "race_type": "Ａ級決勝",
 "bet": "3連単",
-"line": "1-2-3・4.0倍"
+"line": "1-2-3・4.2倍"
 }
 ]
