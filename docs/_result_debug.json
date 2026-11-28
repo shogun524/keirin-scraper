@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28 20:20",
+ "updated": "2026-11-28 20:50",
  "failures": [
   {
    "race": "2026-11-28 kokura 10R",
@@ -11,17 +11,26 @@
    }
   },
   {
-   "race": "2026-11-28 kokura 11R",
+   "race": "2026-11-28 kurume 1R",
    "diag": {
-    "venue": "kokura",
-    "race_id": "8120261128010011",
+    "venue": "kurume",
+    "race_id": "8320261126030001",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-28 matsudo 1R",
+   "diag": {
+    "venue": "matsudo",
+    "race_id": "3120261126030001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3929,
- "with_result": 3176,
+ "with_result": 3178,
  "without_url": 0,
- "pending_eligible": 734
+ "pending_eligible": 735
 }
