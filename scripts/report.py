@@ -4328,11 +4328,15 @@ def _jra_card(rd, vi):
           else honmei_tags.calib_win({c: v / 100 for c, v in aip.items()}))
     top = max(aip, key=aip.get) if aip else None
     body = ""
-    for r in sorted(rows, key=lambda r: -aip[r["car"]]):
+    # 1着率は1つに統一(11/28): オッズがあるときはAIとオッズを合わせた込%(過去5万レースで当たり方が一番正確)、無いときはAI
+    shown = ({r["car"]: r["adjusted"] for r in rows} if odds_mode else {c: v * 100 for c, v in cw.items()})
+    top = max(shown, key=shown.get) if shown else top
+    mks = {c: m for c, m in zip(sorted(shown, key=lambda c: -shown[c]), "◎○▲△")}   # 印もこの1着率の順
+    for r in sorted(rows, key=lambda r: -shown.get(r["car"], 0)):
         c = r["car"]
         bg, fg = car_color(c)
         mk = mks.get(c, "")
-        mk_cell = f'<span class="mark">{mk}</span>' if mk else f'<span class="rk">{sorted(aip, key=lambda x: -aip[x]).index(c) + 1}</span>'
+        mk_cell = f'<span class="mark">{mk}</span>' if mk else f'<span class="rk">{sorted(shown, key=lambda x: -shown[x]).index(c) + 1}</span>'
         t = tags.get(c)
         if t:
             mk_cell += f'<br><span class="htag {t[1]}">{t[0]}</span>'
@@ -4340,11 +4344,11 @@ def _jra_card(rd, vi):
         pos = ("単騎" if not li or li.get("line_size", 1) == 1 else ("先頭" if li["position"] == 1 else f'{li["position"]}番手'))
         sub = " ・ ".join(x for x in [str(r.get("rank") or ""), str(r.get("tactic") or ""), pos,
                                       f'{r.get("score"):.1f}点' if isinstance(r.get("score"), (int, float)) else ""] if x)
-        ai = cw.get(c, 0) * 100
+        ai = shown.get(c, 0)
         p3 = r.get("place_rate", 0)
         if not result.get("ml") and not odds_mode:
             p3 = honmei_tags.calib_place(p3 / 100) * 100
-        mm = f'<br><small class="mm{" mm-hi" if ms.get(c) and r["adjusted"] / 100 / ms[c] >= 1.15 else ""}">込{r["adjusted"]:.0f}%</small>' if odds_mode else ""
+        mm = ""
         odds = (f'{pop[c]}番人気<br><small class="plc">{ms[c] * 100:.0f}%</small>' if c in pop else '<span class="na">オッズ待ち</span>')
         vt = _value_tag(r["adjusted"] / 100 / ms[c]) if odds_mode and ms.get(c) else ""
         body += f"""
@@ -4370,7 +4374,7 @@ def _jra_card(rd, vi):
     sub_html = (f'{VENUE_NAMES.get(info["venue"], info["venue"])} <span class="post-time">締切 {info.get("deadline") or ""}</span>'
                 + (f' <small>並び {J.esc(line_txt)}</small>' if line_txt and len(line_txt) < 40 else ""))
     # 11/24 シンプルに: 買い目はAIの買い目(回収率重視・的中重視)だけ、詳しいページへのリンクと妙味の列はやめる
-    cols = [("印", 26), ("番", 50), ("名前", None), ("人気", 62), ("AI", 64)]
+    cols = [("印", 26), ("番", 50), ("名前", None), ("人気", 62), ("1着率", 64)]
     import aite
     return J.race_card(no, J.esc(info.get("title", "")), sub_html, chips, _bets_html(new_bets(info, result)), cols, body,
                        extra_html=aite.card_html(info))
@@ -4421,7 +4425,7 @@ def render_jra_index(all_race_data, date=None, now=None):
     <br>本命2着 = 全員 → 1番人気 → 3着内率1〜3位(3連単10点)。合成15倍以上のときだけ買う(過去 的中5〜6%・回収率225〜261%)。
     <br>ガールズ = 人気1〜5位 → AI1位 → 人気1〜4位。合成4倍以上(過去 的中10〜11%・回収率107〜121%)。ガールズ的中重視 = 3着内率1〜3位 → 3着内率2〜4位 → 人気2〜4位。合成2倍以上(的中25%・101〜102%)。
     <br><b>参考</b>(11/27〜・検証中・買い推奨ではない。トップの「今日の買い目」には出さず、各レースに「条件一致」とだけ表示) = 1点2〜3倍未満の目は買わない前提で全券種を総当たりした中の上位。S級ワイド(人気1〜3位−AI2〜3位)、チャレンジワイド(1番人気−3着内率2〜4位・日中/ナイター)、チャレンジ3連単(3着内率1〜3位→人気1〜4位→人気2〜3位)。何百万通りの中の上位なので偶然の可能性が高く、成績ページの実績で確かめています。</li>
-  <li><b>AI% ・ 3着内</b> … 機械学習AI(オッズは使わない)が見た1着率・3着内率。込% はAIとオッズを合わせた1着率。</li>
+  <li><b>1着率 ・ 3着内</b> … オッズが出ているときはAIとオッズ(ライン・選手コメント込み)を合わせた率、出る前はAIだけの率。過去5万レースで、表示した%と実際の結果がほぼ一致しています。並び順もこの1着率の順。</li>
   <li><b>人気</b> … 3連単オッズから見た1着の人気順と、オッズから見た1着率。</li>
   <li><b>万車率・本命/穴</b> … 100倍以上の3連単に入っている支持の割合。級と車立てごとの過去と比べて、下側3割=本命・上側3割=穴。</li>
   <li><b>頭向き・軸向き・相手</b> … 頭向き=1着まで来やすい(過去 1着45%)。軸向き=崩れにくいが1着は少ない(過去 3着内67%)。相手=3着内率35〜55%。</li>
