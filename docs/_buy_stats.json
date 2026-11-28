@@ -117,56 +117,56 @@
     "混戦": {
       "syn1.5": {
         "all": {
-          "races": 241,
+          "races": 242,
           "hits": 127,
-          "points": 7194,
+          "points": 7206,
           "return": 5531.9,
-          "hit_pct": 52.7,
-          "roi_pct": 76.9
+          "hit_pct": 52.5,
+          "roi_pct": 76.8
         },
         "live": {
-          "races": 241,
+          "races": 242,
           "hits": 127,
-          "points": 7194,
+          "points": 7206,
           "return": 5531.9,
-          "hit_pct": 52.7,
-          "roi_pct": 76.9
+          "hit_pct": 52.5,
+          "roi_pct": 76.8
         }
       },
       "top5": {
         "all": {
-          "races": 241,
+          "races": 242,
           "hits": 51,
-          "points": 1205,
+          "points": 1210,
           "return": 1117.3,
-          "hit_pct": 21.2,
-          "roi_pct": 92.7
+          "hit_pct": 21.1,
+          "roi_pct": 92.3
         },
         "live": {
-          "races": 241,
+          "races": 242,
           "hits": 51,
-          "points": 1205,
+          "points": 1210,
           "return": 1117.3,
-          "hit_pct": 21.2,
-          "roi_pct": 92.7
+          "hit_pct": 21.1,
+          "roi_pct": 92.3
         }
       },
       "top10": {
         "all": {
-          "races": 241,
+          "races": 242,
           "hits": 80,
-          "points": 2410,
+          "points": 2420,
           "return": 2293.2,
-          "hit_pct": 33.2,
-          "roi_pct": 95.2
+          "hit_pct": 33.1,
+          "roi_pct": 94.8
         },
         "live": {
-          "races": 241,
+          "races": 242,
           "hits": 80,
-          "points": 2410,
+          "points": 2420,
           "return": 2293.2,
-          "hit_pct": 33.2,
-          "roi_pct": 95.2
+          "hit_pct": 33.1,
+          "roi_pct": 94.8
         }
       }
     }
