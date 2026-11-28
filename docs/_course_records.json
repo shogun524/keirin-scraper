@@ -38612,7 +38612,7 @@
   "三木__sasebo": {
     "name": "三木",
     "venue": "sasebo",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -94837,7 +94837,7 @@
   "三浦__sasebo": {
     "name": "三浦",
     "venue": "sasebo",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136320,7 +136320,7 @@
   "田川__komatsushima": {
     "name": "田川",
     "venue": "komatsushima",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136333,7 +136333,7 @@
   "岩原__komatsushima": {
     "name": "岩原",
     "venue": "komatsushima",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -136515,7 +136515,7 @@
   "長野__komatsushima": {
     "name": "長野",
     "venue": "komatsushima",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -140571,7 +140571,7 @@
   "永田__sasebo": {
     "name": "永田",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -140766,7 +140766,7 @@
   "清水__sasebo": {
     "name": "清水",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -140883,7 +140883,7 @@
   "横田__sasebo": {
     "name": "横田",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -140896,7 +140896,7 @@
   "村松__sasebo": {
     "name": "村松",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -141039,7 +141039,7 @@
   "櫻木__komatsushima": {
     "name": "櫻木",
     "venue": "komatsushima",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -141156,7 +141156,7 @@
   "竜門__sasebo": {
     "name": "竜門",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -141234,7 +141234,7 @@
   "梶應__sasebo": {
     "name": "梶應",
     "venue": "sasebo",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -143889,6 +143889,123 @@
     "races": 1,
     "wins": 0,
     "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "宇根 秀俊__komatsushima": {
+    "name": "宇根 秀俊",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "米村 光星__komatsushima": {
+    "name": "米村 光星",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "土井 勲__komatsushima": {
+    "name": "土井 勲",
+    "venue": "komatsushima",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "川口 秀人__sasebo": {
+    "name": "川口 秀人",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "阿部 龍也__sasebo": {
+    "name": "阿部 龍也",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "野崎 修一__sasebo": {
+    "name": "野崎 修一",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "近内 三孝__sasebo": {
+    "name": "近内 三孝",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 1,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "樋口 奨平__sasebo": {
+    "name": "樋口 奨平",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "岡崎 昭次__sasebo": {
+    "name": "岡崎 昭次",
+    "venue": "sasebo",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
     "kimarite": {
       "逃": 0,
       "捲": 0,
