@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28 15:31",
+ "updated": "2026-11-28 16:01",
  "failures": [
   {
    "race": "2026-11-28 hiratsuka 8R",
@@ -11,17 +11,36 @@
    }
   },
   {
-   "race": "2026-11-28 toyama 10R",
+   "race": "2026-11-28 matsusaka 1R",
+   "error": "着順が壊れて見えるため記録しない",
+   "cars": [
+    5,
+    7,
+    4,
+    2
+   ]
+  },
+  {
+   "race": "2026-11-28 toyama 11R",
    "diag": {
     "venue": "toyama",
-    "race_id": "4620261126030010",
+    "race_id": "4620261126030011",
+    "primary": "skipped",
+    "day_parsed": false
+   }
+  },
+  {
+   "race": "2026-11-28 kokura 1R",
+   "diag": {
+    "venue": "kokura",
+    "race_id": "8120261128010001",
     "primary": "skipped",
     "day_parsed": false
    }
   }
  ],
  "tracked": 3929,
- "with_result": 3153,
+ "with_result": 3155,
  "without_url": 0,
- "pending_eligible": 732
+ "pending_eligible": 734
 }

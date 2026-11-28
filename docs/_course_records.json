@@ -9726,7 +9726,7 @@
   "佐々木__hiratsuka": {
     "name": "佐々木",
     "venue": "hiratsuka",
-    "races": 2,
+    "races": 3,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -13717,9 +13717,9 @@
   "北岡 マリア__toyama": {
     "name": "北岡 マリア",
     "venue": "toyama",
-    "races": 5,
+    "races": 6,
     "wins": 3,
-    "top3": 5,
+    "top3": 6,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -137360,7 +137360,7 @@
   "加瀬__toyama": {
     "name": "加瀬",
     "venue": "toyama",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -137464,9 +137464,9 @@
   "熊谷 芽緯__toyama": {
     "name": "熊谷 芽緯",
     "venue": "toyama",
-    "races": 2,
-    "wins": 1,
-    "top3": 2,
+    "races": 3,
+    "wins": 2,
+    "top3": 3,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -138114,9 +138114,9 @@
   "照井 力斗__matsusaka": {
     "name": "照井 力斗",
     "venue": "matsusaka",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -138439,7 +138439,7 @@
   "小林__matsusaka": {
     "name": "小林",
     "venue": "matsusaka",
-    "races": 3,
+    "races": 4,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -142027,9 +142027,9 @@
   "田中 まい__toyama": {
     "name": "田中 まい",
     "venue": "toyama",
-    "races": 1,
+    "races": 2,
     "wins": 0,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -142040,7 +142040,7 @@
   "又多__toyama": {
     "name": "又多",
     "venue": "toyama",
-    "races": 1,
+    "races": 2,
     "wins": 0,
     "top3": 0,
     "kimarite": {
@@ -142365,9 +142365,9 @@
   "久田 裕也__hiratsuka": {
     "name": "久田 裕也",
     "venue": "hiratsuka",
-    "races": 1,
+    "races": 2,
     "wins": 1,
-    "top3": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -142638,9 +142638,9 @@
   "高山 雄丞__matsusaka": {
     "name": "高山 雄丞",
     "venue": "matsusaka",
-    "races": 1,
-    "wins": 0,
-    "top3": 1,
+    "races": 2,
+    "wins": 1,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -142794,9 +142794,9 @@
   "谷口 遼平__hiratsuka": {
     "name": "谷口 遼平",
     "venue": "hiratsuka",
-    "races": 1,
-    "wins": 1,
-    "top3": 1,
+    "races": 2,
+    "wins": 2,
+    "top3": 2,
     "kimarite": {
       "逃": 0,
       "捲": 0,
@@ -144808,6 +144808,97 @@
   },
   "大越__toyama": {
     "name": "大越",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "小川 将人__matsusaka": {
+    "name": "小川 将人",
+    "venue": "matsusaka",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "阿竹 智史__hiratsuka": {
+    "name": "阿竹 智史",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 1,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "川口__hiratsuka": {
+    "name": "川口",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "佐藤__hiratsuka": {
+    "name": "佐藤",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "室井__hiratsuka": {
+    "name": "室井",
+    "venue": "hiratsuka",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "高尾__toyama": {
+    "name": "高尾",
+    "venue": "toyama",
+    "races": 1,
+    "wins": 0,
+    "top3": 0,
+    "kimarite": {
+      "逃": 0,
+      "捲": 0,
+      "差": 0,
+      "マ": 0
+    }
+  },
+  "吉村__toyama": {
+    "name": "吉村",
     "venue": "toyama",
     "races": 1,
     "wins": 0,
