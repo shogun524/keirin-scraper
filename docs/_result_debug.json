@@ -1,28 +1,6 @@
 {
- "updated": "2026-11-28 23:02",
+ "updated": "2026-11-28 23:20",
  "failures": [
-  {
-   "race": "2026-11-28 kurume 1R",
-   "error": "結果の車番が出走車番と一致しない",
-   "cars": [
-    2,
-    1,
-    7,
-    6,
-    5,
-    3,
-    4
-   ]
-  },
-  {
-   "race": "2026-11-28 matsudo 1R",
-   "diag": {
-    "venue": "matsudo",
-    "race_id": "3120261126030001",
-    "primary": "skipped",
-    "day_parsed": false
-   }
-  },
   {
    "race": "2026-11-28 kurume 2R",
    "error": "結果の車番が出走車番と一致しない",
@@ -58,10 +36,36 @@
     7,
     1
    ]
+  },
+  {
+   "race": "2026-11-28 kurume 4R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    3,
+    1,
+    5,
+    4,
+    2,
+    6,
+    7
+   ]
+  },
+  {
+   "race": "2026-11-28 matsudo 4R",
+   "error": "結果の車番が出走車番と一致しない",
+   "cars": [
+    2,
+    4,
+    3,
+    1,
+    6,
+    7,
+    5
+   ]
   }
  ],
  "tracked": 3929,
  "with_result": 3179,
  "without_url": 0,
- "pending_eligible": 747
+ "pending_eligible": 749
 }
